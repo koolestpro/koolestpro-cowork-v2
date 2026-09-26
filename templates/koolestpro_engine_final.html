@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koolestpro — Design First, Develop Fast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#030303;font-family:'DM Mono',monospace;color:#fff;min-height:100vh;}
+
+/* ── PAGE STRUCTURE ── */
+.page-section{max-width:600px;margin:0 auto;padding:56px 20px 0;}
+.section-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.06);}
+.section-divider{height:1px;background:linear-gradient(to right,rgba(255,149,0,0.25),rgba(123,47,190,0.2),transparent);margin:48px auto;max-width:600px;}
+
+/* ── LK FRAME ── */
+.lk-frame{width:540px;background:#0a0a0a;border-radius:14px;box-shadow:0 20px 80px rgba(0,0,0,0.95);overflow:hidden;border:1px solid rgba(255,255,255,0.05);}
+.lk-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.lk-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FF9500,#E040A0,#7B2FBE);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.lk-av span{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;}
+.lk-name{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:#fff;}
+.lk-sub{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.28);margin-top:1px;}
+.lk-dtag{margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.28);background:rgba(255,255,255,0.05);padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,0.07);}
+#viewport{width:540px;height:540px;overflow:hidden;cursor:grab;position:relative;user-select:none;}
+#viewport:active{cursor:grabbing;}
+#track{display:flex;width:calc(540px*8);height:540px;transition:transform .32s cubic-bezier(.4,0,.2,1);}
+.slide{width:540px;height:540px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;}
+.lk-dots{display:flex;justify-content:center;gap:5px;padding:10px 0 4px;background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.04);}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all .25s;cursor:pointer;}
+.dot.active{background:#FF9500;transform:scale(1.5);}
+.lk-pager{text-align:center;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.16);padding-bottom:8px;background:#0a0a0a;}
+.lk-actions{display:flex;align-items:center;padding:8px 14px;border-top:1px solid rgba(255,255,255,0.04);gap:4px;background:#0a0a0a;}
+.lka{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.28);transition:background .15s;}
+.lka:hover{background:rgba(255,255,255,0.04);}
+.lk-cap{padding:8px 14px 12px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.32);line-height:1.5;border-top:1px solid rgba(255,255,255,0.04);background:#0a0a0a;}
+
+/* ── SHARED SLIDE ELEMENTS ── */
+.cnt{position:relative;z-index:5;padding:44px 44px 58px;height:100%;display:flex;flex-direction:column;}
+.ctr{position:absolute;bottom:18px;left:28px;font-family:'Syne',sans-serif;font-size:10px;font-weight:300;letter-spacing:1.5px;color:rgba(255,255,255,0.16);z-index:10;}
+.attr{position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.16);z-index:10;}
+.swb{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;background:linear-gradient(to right,transparent,rgba(0,0,0,0.45));z-index:8;}
+.glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px);}
+.dgrid{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.022) 1px,transparent 1px);background-size:26px 26px;}
+.ring{position:absolute;border-radius:50%;pointer-events:none;border:1px solid rgba(255,255,255,0.04);top:50%;left:50%;transform:translate(-50%,-50%);}
+
+/* eyebrow pills */
+.ep{display:inline-block;background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:20px;width:fit-content;}
+.eb{display:inline-block;border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.45);font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:4px;margin-bottom:20px;width:fit-content;}
+
+/* headings */
+.h1{font-family:'Syne',sans-serif;font-weight:800;font-size:62px;line-height:0.92;letter-spacing:-2px;color:#fff;}
+.h2{font-family:'Syne',sans-serif;font-weight:800;font-size:38px;line-height:1.0;letter-spacing:-1px;color:#fff;}
+.hl{color:#FF9500;}
+.hlg{background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-n{font-family:'Syne',sans-serif;font-weight:800;font-size:112px;line-height:0.85;letter-spacing:-4px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.body{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.65;}
+.grule{height:3px;width:52px;border-radius:2px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);margin:16px 0;}
+
+/* ✕ pills */
+.prow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.px{position:relative;font-family:'DM Mono',monospace;font-size:11px;padding:5px 28px 5px 12px;border:1px solid rgba(255,255,255,0.09);border-radius:20px;color:rgba(255,255,255,0.28);}
+.px::after{content:'✕';position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:9px;color:#FF9500;opacity:.7;}
+
+/* gradient dot bullets */
+.blist{display:flex;flex-direction:column;}
+.brow{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.brow:last-child{border-bottom:none;}
+.bdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;background:linear-gradient(135deg,#FF9500,#7B2FBE);}
+.bt{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:#fff;}
+
+/* 2×2 grid */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.055);border-radius:12px;overflow:hidden;margin-top:18px;}
+.fc{background:#0d0d0d;padding:20px 18px;}
+.fl{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:8px;}
+.fd{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.38);line-height:1.5;}
+
+/* fw steps */
+.fw{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.fw:last-child{border-bottom:none;}
+.fwn{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#FF9500,#7B2FBE);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;margin-top:2px;}
+.fwt{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;}
+.fwd{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.33);line-height:1.5;}
+
+/* recap */
+.rcl{display:flex;flex-direction:column;}
+.rc{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.rc:last-child{border-bottom:none;}
+.rcbar{width:2px;min-height:26px;background:linear-gradient(to bottom,#FF9500,#7B2FBE);border-radius:2px;flex-shrink:0;align-self:stretch;margin-top:3px;}
+.rct{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.52);line-height:1.55;}
+.rct strong{color:#fff;font-weight:500;}
+
+/* badge */
+.badge{display:flex;align-items:center;gap:10px;margin-top:auto;}
+.bav{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF9500,#7B2FBE);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.bav span{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;}
+.bn{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#fff;}
+.bh{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.28);margin-top:1px;}
+
+/* swipe hint */
+.swipe-hint{display:flex;align-items:center;gap:8px;}
+.swipe-hint span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.sarrow{width:48px;height:1px;background:linear-gradient(to right,rgba(255,255,255,0.15),#FF9500);}
+
+/* ── GRAPHIC CARDS ── */
+.graphic-row{display:flex;gap:16px;flex-wrap:wrap;}
+.gcard{width:540px;height:540px;position:relative;overflow:hidden;border-radius:4px;background:#080808;flex-shrink:0;}
+.gcard-wrap{display:flex;flex-direction:column;gap:10px;}
+.g-dl-row{display:flex;gap:8px;}
+
+/* ── POSTS ── */
+.posts-shell{width:540px;background:#0d0d0d;border-radius:14px;border:1px solid rgba(255,255,255,0.055);overflow:hidden;}
+.tnav{display:flex;border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;}
+.tbtn{flex-shrink:0;padding:12px 14px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.28);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tbtn.active{color:#FF9500;border-bottom-color:#FF9500;}
+.tbtn:hover:not(.active){color:rgba(255,255,255,0.55);}
+.tpanel{display:none;padding:26px 26px 30px;}
+.tpanel.active{display:block;}
+.pcontent{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.8;white-space:pre-wrap;}
+.pcontent strong{color:#fff;font-weight:500;}
+.plabel{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:12px;}
+.twblock{padding:14px;background:rgba(255,255,255,0.025);border-radius:10px;border:1px solid rgba(255,255,255,0.055);margin-bottom:8px;}
+.twnum{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);margin-bottom:6px;}
+.twtext{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6;}
+.cpbtn{float:right;padding:4px 10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:6px;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);cursor:pointer;transition:all .2s;margin-bottom:8px;}
+.cpbtn:hover{background:rgba(255,149,0,0.08);border-color:rgba(255,149,0,0.25);color:#FF9500;}
+
+/* ── DOWNLOAD PANEL ── */
+#dlpanel{width:540px;margin:14px auto 0;background:#0d0d0d;border-radius:12px;padding:18px 22px;border:1px solid rgba(255,255,255,0.055);}
+.dltitle{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;color:rgba(255,255,255,0.22);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
+#dlbtns{display:flex;flex-wrap:wrap;gap:7px;}
+.dlnote{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.14);margin-top:10px;line-height:1.6;}
+
+/* btn helpers */
+.btn-ghost{padding:7px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:7px;color:rgba(255,255,255,0.4);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:background .2s;}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);}
+.btn-grad{padding:7px 14px;background:linear-gradient(90deg,#FF9500,#7B2FBE);border:none;border-radius:7px;color:#fff;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;transition:opacity .2s;}
+.btn-grad:hover{opacity:.82;}
+.export-mode .glow {
+  filter: none !important;
+  opacity: 0.6;
+}
+
+.export-mode .hlg,
+.export-mode .stat-n {
+  background-size: 100% 100% !important;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     SECTION 1 — CAROUSEL
+══════════════════════════════════ -->
+<div class="page-section">
+  <div class="section-label">01 &nbsp;LinkedIn Carousel</div>
+</div>
+<div style="max-width:600px;margin:0 auto;padding:0 20px 0;">
+<div class="lk-frame">
+
+  <div class="lk-header" data-chrome>
+    <div class="lk-av"><span>R</span></div>
+    <div>
+      <div class="lk-name">Ridwan Adekunle <span style="font-size:9px;font-weight:400;color:#FF9500;background:rgba(255,149,0,0.1);padding:1px 6px;border-radius:3px;margin-left:4px;">1st</span></div>
+      <div class="lk-sub">Shopify CRO & UX Designer · @koolestpro</div>
+    </div>
+    <div class="lk-dtag">Document</div>
+  </div>
+
+  <div id="viewport">
+  <div id="track">
+
+  <!-- ═══ SLIDE 1: COVER ═══ -->
+  <div class="slide" style="background:#080808;">
+    <div class="glow" style="top:-80px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(255,149,0,0.22),rgba(224,64,160,0.08),transparent 70%);"></div>
+    <div class="dgrid"></div>
+    <div class="cnt" style="justify-content:space-between;">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:22px;">FOR SHOPIFY STORE OWNERS</div>
+        <div class="h1">You build<br>first. Then<br><span class="hlg">wonder why.</span></div>
+        <div class="grule" style="margin-top:22px;margin-bottom:14px;"></div>
+        <div class="body">Design First, Develop Fast — the workflow that eliminates rework and ships stores that convert.</div>
+      </div>
+      <div>
+        <div class="swipe-hint" style="margin-bottom:14px;">
+          <span>SWIPE</span><div class="sarrow"></div>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3.5l3.5 3.5-3.5 3.5" stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.18);">Ridwan - Shopify CRO & UX Designer</div>
+      </div>
+    </div>
+    <div class="ctr">01 / 08</div>
+    <div class="swb"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- ═══ SLIDE 2: PAIN ═══ -->
+  <div class="slide" style="background:#0a0a0a;">
+    <div class="glow" style="bottom:-100px;right:-50px;width:280px;height:280px;background:radial-gradient(circle,rgba(224,64,160,0.1),transparent 70%);"></div>
+    <div class="dgrid"></div>
+    <div class="cnt">
+      <div class="ep">SOUND FAMILIAR?</div>
+      <div class="h2" style="margin-bottom:16px;">Building blind<br>is <span class="hl">exhausting.</span></div>
+      <div class="prow">
+        <span class="px">design in the browser</span>
+        <span class="px">build as you go</span>
+        <span class="px">fix after launch</span>
+      </div>
+      <div class="blist">
+        <div class="brow"><div class="bdot"></div><div class="bt" style="font-size:14px;">Rebuilding the same section 3× before it feels right</div></div>
+        <div class="brow"><div class="bdot"></div><div class="bt" style="font-size:14px;">Live page is done — store still doesn't convert</div></div>
+        <div class="brow"><div class="bdot"></div><div class="bt" style="font-size:14px;">Client feedback changes everything mid-build</div></div>
+      </div>
+    </div>
+    <div class="ctr">02 / 08</div>
+    <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+    <div class="swb"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- ═══ SLIDE 3: STAT ═══ -->
+  <div class="slide" style="background:#0d0b08;">
+    <div class="glow" style="top:-60px;left:-40px;width:340px;height:340px;background:radial-gradient(circle,rgba(255,149,0,0.14),rgba(224,64,160,0.05),transparent 70%);"></div>
+    <div class="cnt" style="justify-content:center;align-items:center;text-align:center;">
+      <div class="eb" style="margin-bottom:22px;">THE TRUTH</div>
+      <div class="stat-n">60%</div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:14px 0 4px;">OF DEV TIME IS REWORK</div>
+      <div style="height:2px;width:36px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin:14px auto;"></div>
+      <div class="body" style="text-align:center;max-width:320px;">Most of it preventable with one simple change — lock the design before you open the builder.</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.16);margin-top:10px;">McKinsey Engineering Productivity</div>
+    </div>
+    <div class="ctr">03 / 08</div>
+    <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+    <div class="swb"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- ═══ SLIDE 4: SOLUTION ═══ -->
+  <div class="slide" style="background:#080808;">
+    <div class="glow" style="top:-70px;right:-50px;width:260px;height:260px;background:radial-gradient(circle,rgba(123,47,190,0.14),transparent 70%);"></div>
+    <div class="dgrid"></div>
+    <div class="cnt" style="justify-content:center;">
+      <div class="ep">THE FIX</div>
+      <div class="h2" style="margin-bottom:0;">Figma decides.<br>Shopify <span class="hl">executes.</span><br>Never both at once.</div>
+      <div class="grule"></div>
+      <div class="body">Lock the design before writing a single line of code. All decisions made in Figma. Zero guessing in Shopify Liquid, Replo, or Instant.</div>
+    </div>
+    <div class="ctr">04 / 08</div>
+    <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+    <div class="swb"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- ═══ SLIDE 5: HOW IT WORKS ═══ -->
+  <div class="slide" style="background:#0a0a0a;">
+    <div class="glow" style="top:-60px;left:-40px;width:240px;height:240px;background:radial-gradient(circle,rgba(255,149,0,0.1),transparent 70%);"></div>
+    <div class="dgrid"></div>
+    <div class="cnt">
+      <div class="eb">THE FRAMEWORK</div>
+      <div class="h2" style="font-size:32px;margin-bottom:18px;">3 steps.<br>No rework.</div>
+      <div>
+        <div class="fw"><div class="fwn">1</div><div><div class="fwt">Clarify — goal, audience, one action</div><div class="fwd">Define what the page must do before opening Figma.</div></div></div>
+        <div class="fw"><div class="fwn">2</div><div><div class="fwt">Design — wireframe, then lock</div><div class="fwd">Solve structure first, apply brand second. Get sign-off. No exceptions.</div></div></div>
+        <div class="fw"><div class="fwn">3</div><div><div class="fwt">Develop — translate, not explore</div><div class="fwd">Open Liquid, Replo, or Instant. Execute. Every decision is already made.</div></div></div>
+      </div>
+      <div style="margin-top:14px;padding:10px 14px;background:rgba(255,149,0,0.05);border-radius:8px;border-left:2px solid #FF9500;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.38);line-height:1.5;">If you're making design decisions in the builder — you skipped step 2.</div>
+    </div>
+    <div class="ctr">05 / 08</div>
+    <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+    <div class="swb"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- ═══ SLIDE 6: WHAT YOU GET ═══ -->
+  <div class="slide" style="background:#080808;">
+    <div class="glow" style="bottom:-80px;right:-50px;width:260px;height:260px;background:radial-gradient(circle,rgba(224,64,160,0.1),transparent 70%);"></div>
+    <div class="cnt">
+      <div class="ep">WHAT YOU GET</div>
+      <div class="h2" style="font-size:34px;">Everything works<br>the <span class="hl">first time.</span></div>
+      <div class="fgrid">
+        <div class="fc"><div class="fl">3× FASTER</div><div class="fd">8 hours of guessing → 2.5 hours of executing</div></div>
+        <div class="fc"><div class="fl">1 REVISION</div><div class="fd">Client approved Figma — live page just matches it</div></div>
+        <div class="fc"><div class="fl">NO REWORK</div><div class="fd">All decisions made once in Figma, never revisited in code</div></div>
+        <div class="fc"><div class="fl">MORE MARGIN</div><div class="fd">Less time per project = more projects, same hours</div></div>
+      </div>
+    </div>
+    <div class="ctr">06 / 08</div>
+    <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+    <div class="swb"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- ═══ SLIDE 7: RECAP ═══ -->
+  <div class="slide" style="background:#0a0a0a;">
+    <div class="glow" style="top:-60px;right:-40px;width:240px;height:240px;background:radial-gradient(circle,rgba(123,47,190,0.12),transparent 70%);"></div>
+    <div class="dgrid"></div>
+    <div class="cnt">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:14px;">Recap</div>
+      <div class="h2" style="font-size:28px;margin-bottom:16px;">Here's what matters:</div>
+      <div class="rcl">
+        <div class="rc"><div class="rcbar"></div><div class="rct"><strong>Building without a locked design = expensive rework.</strong> Every time.</div></div>
+        <div class="rc"><div class="rcbar"></div><div class="rct"><strong>Figma decides.</strong> Your builder executes. Never both at once.</div></div>
+        <div class="rc"><div class="rcbar"></div><div class="rct"><strong>3× faster delivery.</strong> 1 revision round. Same work, less time.</div></div>
+        <div class="rc"><div class="rcbar"></div><div class="rct"><strong>Clients pay more</strong> when they see a Figma prototype before build starts.</div></div>
+        <div class="rc"><div class="rcbar"></div><div class="rct"><strong>Design First, Develop Fast</strong> is a philosophy — not a tool setting.</div></div>
+      </div>
+    </div>
+    <div class="ctr">07 / 08</div>
+    <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+    <div class="swb"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- ═══ SLIDE 8: CTA ═══ -->
+  <div class="slide" style="background:#080808;">
+    <div class="glow" style="top:-80px;right:-60px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,149,0,0.18),rgba(224,64,160,0.08),transparent 70%);"></div>
+    <div class="glow" style="bottom:-80px;left:-40px;width:260px;height:260px;background:radial-gradient(circle,rgba(123,47,190,0.14),transparent 70%);"></div>
+    <div class="ring" style="width:480px;height:480px;"></div>
+    <div class="ring" style="width:360px;height:360px;"></div>
+    <div class="ring" style="width:240px;height:240px;"></div>
+    <div class="cnt" style="align-items:center;text-align:center;justify-content:space-between;padding-top:44px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div class="bav"><span>R</span></div>
+        <div class="bn">Ridwan</div>
+        <div class="bh">@koolestpro · Shopify CRO & UX Designer</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
+        <div class="h2" style="font-size:34px;text-align:center;">Still designing<br>in the <span class="hl">builder?</span></div>
+        <div class="body" style="text-align:center;max-width:320px;">I help Shopify store owners build pages that ship fast and convert better.</div>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:13px 30px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);color:#fff;font-family:'DM Mono',monospace;font-weight:700;font-size:12px;border-radius:32px;">DM me "BUILD" →</div>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.18);">Follow @koolestpro for weekly Shopify workflows</div>
+    </div>
+    <div style="position:absolute;bottom:16px;right:24px;display:flex;align-items:center;gap:5px;z-index:9;">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2);">Save this post</span>
+    </div>
+    <div class="ctr">08 / 08</div>
+  </div>
+
+  </div></div><!-- /track /viewport -->
+
+  <div class="lk-dots" id="dots" data-chrome></div>
+  <div class="lk-pager" id="pager" data-chrome>Slide 1 of 8</div>
+  <div class="lk-actions" data-chrome>
+    <div class="lka"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>Like</div>
+    <div class="lka"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</div>
+    <div class="lka"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Repost</div>
+    <div class="lka"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send</div>
+    <div class="lka" style="margin-left:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
+  </div>
+  <div class="lk-cap" data-chrome>
+    <strong style="color:rgba(255,255,255,0.65);">You build first. Then wonder why it doesn't convert.</strong><br>
+    Most Shopify devs skip the design phase entirely. Here's the workflow that fixes that...
+    <span style="color:#FF9500;cursor:pointer;">...see more</span>
+  </div>
+</div><!-- /lk-frame -->
+
+<div id="dlpanel">
+  <div class="dltitle">Export Slides</div>
+  <div id="dlbtns"></div>
+  <div class="dlnote">PNG at 1080×1080px · PDF assembles all 8 slides · Wait ~5s after page load for fonts</div>
+</div>
+</div><!-- /section -->
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════
+     SECTION 2 — GRAPHICS (3 VARIATIONS)
+══════════════════════════════════ -->
+<div class="page-section">
+  <div class="section-label">02 &nbsp;Single Graphics — 3 Variations</div>
+</div>
+
+<div style="max-width:600px;margin:0 auto;padding:0 20px 0;">
+
+<!-- VARIATION A: EDITORIAL -->
+<div class="gcard-wrap" style="margin-bottom:32px;">
+  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:10px;">A — Editorial Typographic</div>
+  <div class="gcard" id="g-editorial" style="background:#080808;">
+    <!-- thin gradient top bar -->
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);z-index:10;"></div>
+    <!-- corner bracket -->
+    <div style="position:absolute;top:28px;left:48px;width:22px;height:2px;background:rgba(255,149,0,0.35);z-index:5;"></div>
+    <div style="position:absolute;top:28px;left:48px;width:2px;height:22px;background:rgba(255,149,0,0.35);z-index:5;"></div>
+
+    <div style="position:relative;z-index:5;padding:60px 54px;height:100%;display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-family:'Syne',sans-serif;font-size:124px;font-weight:800;line-height:0.6;font-style:italic;background:linear-gradient(90deg,rgba(255,149,0,0.18),rgba(123,47,190,0.12));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:22px;">"</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:44px;line-height:0.98;letter-spacing:-1.5px;color:#fff;">Design First,<br>Develop <span style="background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Fast.</span></div>
+      <div style="height:3px;width:52px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin:22px 0 14px;"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.3);">— Ridwan Adekunle · @koolestpro</div>
+    </div>
+    <div style="position:absolute;bottom:26px;left:54px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.16);z-index:5;">Digital Craftsmanship</div>
+    <div style="position:absolute;bottom:26px;right:54px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.18);z-index:5;">koolestpro.com</div>
+  </div>
+  <div class="g-dl-row">
+    <button class="btn-ghost" onclick="dlGraphic('g-editorial','editorial_quote')">↓ PNG</button>
+    <button class="btn-grad" onclick="dlGraphicPDF('g-editorial','editorial_quote')">↓ PDF</button>
+  </div>
+</div>
+
+<!-- VARIATION B: STAT/DATA -->
+<div class="gcard-wrap" style="margin-bottom:32px;">
+  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:10px;">B — Stat / Data Card</div>
+  <div class="gcard" id="g-stat" style="background:#080808;">
+    <div class="glow" style="top:-40px;left:60px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,149,0,0.2),rgba(224,64,160,0.1),transparent 65%);"></div>
+    <div class="dgrid"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);z-index:10;"></div>
+
+    <div style="position:relative;z-index:5;padding:44px 50px;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;">
+      <div class="ep" style="margin-bottom:16px;">THE TRUTH</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:120px;line-height:0.82;letter-spacing:-5px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">60%</div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin:14px 0 6px;">OF DEV TIME IS REWORK</div>
+      <div style="height:2px;width:40px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin-bottom:14px;"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;max-width:350px;">Most preventable with one change: lock the design before the build.</div>
+    </div>
+    <div style="position:absolute;bottom:26px;left:50px;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.16);z-index:5;">McKinsey Engineering Productivity</div>
+    <div style="position:absolute;bottom:26px;right:50px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.18);z-index:5;">@koolestpro</div>
+  </div>
+  <div class="g-dl-row">
+    <button class="btn-ghost" onclick="dlGraphic('g-stat','stat_card')">↓ PNG</button>
+    <button class="btn-grad" onclick="dlGraphicPDF('g-stat','stat_card')">↓ PDF</button>
+  </div>
+</div>
+
+<!-- VARIATION C: ATMOSPHERIC -->
+<div class="gcard-wrap" style="margin-bottom:8px;">
+  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:10px;">C — Atmospheric / Cinematic</div>
+  <div class="gcard" id="g-atmos" style="background:#060606;">
+    <!-- large overlapping glows — the whole visual -->
+    <div class="glow" style="top:-60px;right:-40px;width:380px;height:380px;background:radial-gradient(circle,rgba(255,149,0,0.22),rgba(224,64,160,0.12),transparent 65%);"></div>
+    <div class="glow" style="bottom:-60px;left:-40px;width:340px;height:340px;background:radial-gradient(circle,rgba(123,47,190,0.2),rgba(224,64,160,0.06),transparent 65%);"></div>
+    <div class="ring" style="width:500px;height:500px;border-color:rgba(255,255,255,0.03);"></div>
+    <div class="ring" style="width:380px;height:380px;border-color:rgba(255,255,255,0.03);"></div>
+    <div class="ring" style="width:260px;height:260px;border-color:rgba(255,255,255,0.03);"></div>
+    <div class="ring" style="width:150px;height:150px;border-color:rgba(255,255,255,0.03);"></div>
+
+    <div style="position:relative;z-index:5;padding:60px 54px;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+      <div style="font-family:'Syne',sans-serif;font-size:80px;font-weight:800;line-height:0.7;font-style:italic;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px;">"</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:36px;line-height:1.08;letter-spacing:-0.8px;color:#fff;max-width:380px;">Design isn't<br>decoration,<br>it's <span style="background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">direction.</span></div>
+      <div style="height:2px;width:40px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin:22px auto 14px;"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.25);">— Ridwan · @koolestpro</div>
+    </div>
+    <div style="position:absolute;bottom:26px;left:0;right:0;text-align:center;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.15);z-index:5;">koolestpro.com</div>
+  </div>
+  <div class="g-dl-row">
+    <button class="btn-ghost" onclick="dlGraphic('g-atmos','atmospheric_quote')">↓ PNG</button>
+    <button class="btn-grad" onclick="dlGraphicPDF('g-atmos','atmospheric_quote')">↓ PDF</button>
+  </div>
+</div>
+
+</div><!-- /section -->
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════
+     SECTION 3 — POST COPY
+══════════════════════════════════ -->
+<div class="page-section">
+  <div class="section-label">03 &nbsp;Post Copy</div>
+</div>
+<div style="max-width:600px;margin:0 auto;padding:0 20px 80px;">
+<div class="posts-shell">
+  <div class="tnav">
+    <button class="tbtn active" onclick="switchTab('lilong',this)">LI Long-form</button>
+    <button class="tbtn" onclick="switchTab('lihook',this)">LI Hook</button>
+    <button class="tbtn" onclick="switchTab('thread',this)">X Thread</button>
+    <button class="tbtn" onclick="switchTab('singles',this)">X Singles ×3</button>
+    <button class="tbtn" onclick="switchTab('ig',this)">Instagram</button>
+  </div>
+
+  <div class="tpanel active" id="tab-lilong">
+    <div class="plabel">LinkedIn · Long-form</div>
+    <button class="cpbtn" onclick="cp('lilong-txt')">Copy</button>
+    <div class="pcontent" id="lilong-txt">You build the page first. Then guess why it doesn't convert.
+
+I've done this. Most Shopify developers have.
+
+You open your builder, start building, make layout decisions on the fly, show the client a half-built page, get vague feedback, rebuild it twice, and still wonder why the final result feels off.
+
+The fix isn't a better tool. It's a better order.
+
+Design First, Develop Fast:
+
+→ Open Figma before you touch your builder. Always.
+→ Wireframe first — blocks and text only. Solve structure before style.
+→ High-fidelity second — apply brand, hierarchy, spacing. Get client approval on this.
+→ Lock the design. Not "good enough to start" — actually locked.
+→ Then open Shopify Liquid, Replo, or Instant and execute. Every decision is already made.
+
+The result:
+Build time drops from 8 hours to 2.5.
+Revision rounds go from 4 to 1.
+Clients pay more because the process looks premium.
+
+If you're making a design decision inside the builder, you skipped a step.
+
+Save this. Share it with a Shopify developer who's still building blind.</div>
+  </div>
+
+  <div class="tpanel" id="tab-lihook">
+    <div class="plabel">LinkedIn · Hook Post</div>
+    <button class="cpbtn" onclick="cp('lihook-txt')">Copy</button>
+    <div class="pcontent" id="lihook-txt">Most Shopify developers are designers inside the builder.
+
+That's the problem.
+
+Your builder is for executing. Figma is for deciding. When those two jobs get mixed up, you rebuild the same section 4 times and still don't know why the page feels wrong.
+
+Lock the design first. Then build.
+
+What does your current workflow look like — Figma first, or straight to the builder?</div>
+  </div>
+
+  <div class="tpanel" id="tab-thread">
+    <div class="plabel">Twitter/X · Thread</div>
+    <div class="twblock"><div class="twnum">1 / 7 — Hook</div><div class="twtext">Most Shopify developers waste 60% of their build time on rework. The fix isn't a better tool. It's a better order. Design First, Develop Fast 🧵</div></div>
+    <div class="twblock"><div class="twnum">2 / 7</div><div class="twtext">The problem: you open your builder and start building. Layout decisions get made on the fly. Client sees a half-built page. Feedback is vague. You rebuild it twice.</div></div>
+    <div class="twblock"><div class="twnum">3 / 7</div><div class="twtext">Root cause: you're designing and developing at the same time. Two different jobs. Two different mindsets. Doing both simultaneously means you do neither well.</div></div>
+    <div class="twblock"><div class="twnum">4 / 7</div><div class="twtext">Design First:
+→ Wireframe in Figma (structure only)
+→ High-fi in Figma (brand + spacing)
+→ Get client approval on the Figma
+→ Lock it. No exceptions.</div></div>
+    <div class="twblock"><div class="twnum">5 / 7</div><div class="twtext">Then Develop Fast:
+→ Open Liquid, Replo, or Instant
+→ Translate the design — don't explore it
+→ Every decision is already made
+→ You're executing, not guessing</div></div>
+    <div class="twblock"><div class="twnum">6 / 7</div><div class="twtext">The numbers:
+→ Build time: 8hrs → 2.5hrs
+→ Revision rounds: 4 → 1
+→ Client satisfaction: up
+→ Your margin: up
+
+Rule: if you're making design decisions in the builder, you skipped a step.</div></div>
+    <div class="twblock"><div class="twnum">7 / 7 — CTA</div><div class="twtext">Design First, Develop Fast is a workflow philosophy, not a PageBuilder tip.
+
+Lock the design. Then build.
+
+Follow @koolestpro for weekly Shopify design and development workflows.</div></div>
+  </div>
+
+  <div class="tpanel" id="tab-singles">
+    <div class="plabel">Twitter/X · 3 Single Tweets</div>
+    <div style="margin-bottom:20px;">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);letter-spacing:1px;margin-bottom:8px;">VARIATION 1 — THE RULE</div>
+      <button class="cpbtn" onclick="cp('s1')">Copy</button>
+      <div class="twblock"><div class="twtext" id="s1">If you're making design decisions inside your builder, you skipped a step. Lock the Figma first. Then build. That one change cuts your rework in half.</div></div>
+    </div>
+    <div style="margin-bottom:20px;">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);letter-spacing:1px;margin-bottom:8px;">VARIATION 2 — THE CONTRAST</div>
+      <button class="cpbtn" onclick="cp('s2')">Copy</button>
+      <div class="twblock"><div class="twtext" id="s2">Shopify devs who use Figma first: 2.5hr build · 1 revision round.
+
+Shopify devs who build directly: 8hr build · 4 revision rounds.
+
+Same project. Same tools. Completely different process. The order is everything.</div></div>
+    </div>
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);letter-spacing:1px;margin-bottom:8px;">VARIATION 3 — THE HOT TAKE</div>
+      <button class="cpbtn" onclick="cp('s3')">Copy</button>
+      <div class="twblock"><div class="twtext" id="s3">Unpopular opinion: Shopify builders aren't slow. Developers using them without a locked design are slow.
+
+Figma is where you think. The builder is where you build. Stop mixing the two.</div></div>
+    </div>
+  </div>
+
+  <div class="tpanel" id="tab-ig">
+    <div class="plabel">Instagram · Caption</div>
+    <button class="cpbtn" onclick="cp('ig-txt')">Copy</button>
+    <div class="pcontent" id="ig-txt">You're designing inside your builder. That's why it's taking so long.
+
+Figma is where you make decisions. Shopify Liquid (or your builder) is where you execute them. Mix the two and you'll spend 8 hours on a page that should take 2.
+
+Design First, Develop Fast:
+→ Wireframe the layout in Figma
+→ Lock the high-fidelity design
+→ Get client approval before you build
+→ Then translate — not explore
+
+Save this for your next Shopify project.
+Follow @koolestpro for more design and development workflows.
+
+#ShopifyDesign #Figma #ShopifyDeveloper #WebDesign #eCommerce #CRO #ConversionOptimization #Shopify #UXDesign #DigitalMarketing #ShopifyLiquid #Replo</div>
+  </div>
+
+</div><!-- /posts-shell -->
+</div><!-- /section -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// ── SWIPE ──
+const track=document.getElementById('track'),vp=document.getElementById('viewport'),dotsEl=document.getElementById('dots'),pager=document.getElementById('pager');
+const TOTAL=8,W=540;let cur=0,startX=0,dragging=false;
+for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.addEventListener('click',()=>goTo(i));dotsEl.appendChild(d);}
+function goTo(i){cur=Math.max(0,Math.min(TOTAL-1,i));track.style.transform=`translateX(${-cur*W}px)`;document.querySelectorAll('.dot').forEach((d,idx)=>d.classList.toggle('active',idx===cur));pager.textContent=`Slide ${cur+1} of ${TOTAL}`;}
+vp.addEventListener('mousedown',e=>{dragging=true;startX=e.clientX;track.style.transition='none';});
+vp.addEventListener('touchstart',e=>{dragging=true;startX=e.touches[0].clientX;track.style.transition='none';},{passive:true});
+vp.addEventListener('mousemove',e=>{if(!dragging)return;track.style.transform=`translateX(${-cur*W+e.clientX-startX}px)`;});
+vp.addEventListener('touchmove',e=>{if(!dragging)return;track.style.transform=`translateX(${-cur*W+e.touches[0].clientX-startX}px)`;},{passive:true});
+const end=ex=>{if(!dragging)return;dragging=false;track.style.transition='transform .32s cubic-bezier(.4,0,.2,1)';const dx=ex-startX;if(dx<-50)goTo(cur+1);else if(dx>50)goTo(cur-1);else goTo(cur);};
+vp.addEventListener('mouseup',e=>end(e.clientX));vp.addEventListener('mouseleave',e=>end(e.clientX));vp.addEventListener('touchend',e=>end(e.changedTouches[0].clientX));
+
+// ── TABS ──
+function switchTab(id,btn){
+  document.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+}
+
+// ── COPY ──
+function cp(id){
+  navigator.clipboard.writeText(document.getElementById(id).textContent.trim()).then(()=>{
+    const el=document.getElementById(id);
+    const btn=el.previousElementSibling;
+    if(btn&&btn.classList.contains('cpbtn')){const o=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=o,2000);}
+  });
+}
+
+document.body.classList.add("export-mode");
+
+// ── SLIDE CAPTURE ──
+async function captureSlide(i){
+  const t=document.getElementById('track');
+  t.style.transition='none';t.style.transform=`translateX(${-i*W}px)`;
+  await new Promise(r=>setTimeout(r,420));
+  const toHide=document.querySelectorAll('[data-chrome],#dlpanel');
+  toHide.forEach(el=>el.style.visibility='hidden');
+  const canvas=await html2canvas(document.getElementById('viewport'),{scale:2,useCORS:true,width:W,height:W,backgroundColor:null,logging:false});
+  toHide.forEach(el=>el.style.visibility='');
+  t.style.transition='transform .32s cubic-bezier(.4,0,.2,1)';
+  return canvas;
+}
+
+// ── DOWNLOAD BUTTONS ──
+(function(){
+  const panel=document.getElementById('dlbtns');
+  for(let i=0;i<TOTAL;i++){
+    const btn=document.createElement('button');btn.textContent=`↓ ${i+1}`;btn.className='btn-ghost';btn.style.padding='6px 10px';btn.style.fontSize='10px';
+    btn.onclick=async()=>{const o=btn.textContent;btn.textContent='…';const c=await captureSlide(i);const a=document.createElement('a');a.download=`koolestpro_slide_${String(i+1).padStart(2,'0')}.png`;a.href=c.toDataURL('image/png');a.click();btn.textContent=o;};
+    panel.appendChild(btn);
+  }
+  const sep=document.createElement('div');sep.style.cssText='width:100%;height:1px;background:rgba(255,255,255,0.05);margin:10px 0 2px;';panel.appendChild(sep);
+
+  const allBtn=document.createElement('button');allBtn.textContent='↓ Download All';allBtn.className='btn-ghost';allBtn.style.fontWeight='700';
+  allBtn.onclick=async()=>{const o=allBtn.textContent;allBtn.textContent='Downloading…';allBtn.disabled=true;for(let i=0;i<TOTAL;i++){const c=await captureSlide(i);const a=document.createElement('a');a.download=`koolestpro_slide_${String(i+1).padStart(2,'0')}.png`;a.href=c.toDataURL('image/png');a.click();await new Promise(r=>setTimeout(r,700));}allBtn.textContent='✓ Done';allBtn.disabled=false;setTimeout(()=>allBtn.textContent=o,2500);};
+  panel.appendChild(allBtn);
+
+  const pdfBtn=document.createElement('button');pdfBtn.textContent='↓ Download PDF';pdfBtn.className='btn-grad';
+  pdfBtn.onclick=async()=>{
+    const o=pdfBtn.textContent;pdfBtn.textContent='Building…';pdfBtn.disabled=true;
+    const {jsPDF}=window.jspdf;const doc=new jsPDF({orientation:'portrait',unit:'pt',format:[1080,1080]});
+    for(let i=0;i<TOTAL;i++){if(i>0)doc.addPage([1080,1080],'portrait');const c=await captureSlide(i);doc.addImage(c.toDataURL('image/png'),'PNG',0,0,1080,1080);pdfBtn.textContent=`PDF ${i+1}/${TOTAL}`;await new Promise(r=>setTimeout(r,200));}
+    doc.save('koolestpro_design_first_develop_fast.pdf');pdfBtn.textContent='✓ Ready';pdfBtn.disabled=false;setTimeout(()=>pdfBtn.textContent=o,3000);
+  };
+  panel.appendChild(pdfBtn);
+})();
+
+// ── GRAPHIC DOWNLOADS ──
+async function dlGraphic(cardId,filename){
+  const card=document.getElementById(cardId);
+  const c=await html2canvas(card,{scale:2,useCORS:true,width:540,height:540,backgroundColor:null,logging:false});
+  const a=document.createElement('a');a.download=`koolestpro_${filename}.png`;a.href=c.toDataURL('image/png');a.click();
+}
+async function dlGraphicPDF(cardId,filename){
+  const card=document.getElementById(cardId);
+  const c=await html2canvas(card,{scale:2,useCORS:true,width:540,height:540,backgroundColor:null,logging:false});
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({orientation:'portrait',unit:'pt',format:[1080,1080]});
+  doc.addImage(c.toDataURL('image/png'),'PNG',0,0,1080,1080);doc.save(`koolestpro_${filename}.pdf`);
+}
+
+// ── NOTION ──
+const NOTION_DS={
+  ideaBank:'00b6dbd4-143e-4509-8e11-b376ff1c6e9e',
+  postGroups:'01c139ba-982d-4dbd-88c4-8f78a94434a6',
+  subposts:'5d7c51e6-2f14-44b2-8591-29ce15e1eb4d'
+};
+
+function switchNotionTab(id,btn){
+  document.getElementById('ce-ntab-idea').style.display=id==='idea'?'block':'none';
+  document.getElementById('ce-ntab-post').style.display=id==='post'?'block':'none';
+  document.querySelectorAll('.ce-ntbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function notionCall(prompt){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:1000,
+      mcp_servers:[{type:'url',url:'https://mcp.notion.com/mcp',name:'notion-mcp'}],
+      messages:[{role:'user',content:prompt}]
+    })
+  });
+  return res.json();
+}
+
+async function ceAddIdea(){
+  const title=document.getElementById('ce-idea-title').value.trim();
+  if(!title){document.getElementById('ce-idea-status').textContent='⚠ Idea name required';return;}
+  const pillar=document.getElementById('ce-idea-pillar').value;
+  const priority=document.getElementById('ce-idea-priority').value;
+  const format=document.getElementById('ce-idea-format').value;
+  const notes=document.getElementById('ce-idea-notes').value.trim();
+  const today=new Date().toISOString().split('T')[0];
+  const status=document.getElementById('ce-idea-status');
+  status.textContent='Sending…';
+  try{
+    await notionCall(`Create a new page in the Notion Idea Bank (data source ID: ${NOTION_DS.ideaBank}) with: Idea="${title}", Pillar="${pillar}", Priority="${priority}", Suggested Format="${format}", Suggested Type="Tip", Notes="${notes}", Promoted=false, Date Captured start="${today}". Use notion-mcp create-pages. Confirm when done.`);
+    status.textContent='✓ Added to Idea Bank';status.style.color='#16A34A';
+    document.getElementById('ce-idea-title').value='';
+    document.getElementById('ce-idea-notes').value='';
+    setTimeout(()=>{status.textContent='';status.style.color='rgba(255,255,255,0.3)';},4000);
+  }catch(e){status.textContent='✗ Error';status.style.color='#DC2626';}
+}
+
+async function ceSendPost(){
+  const title=document.getElementById('ce-pg-title').value.trim();
+  if(!title){document.getElementById('ce-pg-status').textContent='⚠ Title required';return;}
+  const pillar=document.getElementById('ce-pg-pillar').value;
+  const capLiA=document.getElementById('lilong-txt')?.textContent.trim().slice(0,400)||'';
+  const capLiHook=document.getElementById('lihook-txt')?.textContent.trim().slice(0,400)||'';
+  const capIG=document.getElementById('ig-txt')?.textContent.trim().slice(0,400)||'';
+  const today=new Date().toISOString().split('T')[0];
+  const status=document.getElementById('ce-pg-status');
+  status.textContent='Creating…';
+  try{
+    await notionCall(`Do two things using Notion MCP tools:
+1. Create a Post Group in Post Groups DB (data source: ${NOTION_DS.postGroups}): Group Title="${title}", Content Type="Tip", Pillar="${pillar}", Status="Ready to Post", Sub-post Count=3, Date Started start="${today}".
+2. Create 3 sub-posts in Sub-posts DB (data source: ${NOTION_DS.subposts}):
+   - Sub-post Title="${title} — Carousel", Angle="Carousel", Platform=["LinkedIn","Instagram"], Status="Ready", Post Group="${title}", Caption LI A="${capLiA}…"
+   - Sub-post Title="${title} — Hook Post", Angle="Text Post", Platform=["LinkedIn"], Status="Ready", Post Group="${title}", Caption LI A="${capLiHook}…"
+   - Sub-post Title="${title} — IG Caption", Angle="Single Graphic", Platform=["Instagram"], Status="Ready", Post Group="${title}", Caption IG="${capIG}…"
+Confirm when done.`);
+    status.textContent='✓ Created in Notion';status.style.color='#16A34A';
+    setTimeout(()=>{status.textContent='';status.style.color='rgba(255,255,255,0.3)';},5000);
+  }catch(e){status.textContent='✗ Error';status.style.color='#DC2626';}
+}
+async function waitForRender() {
+  await document.fonts.ready;
+  await new Promise(r => setTimeout(r, 500)); // allow layout to settle
+}
+async function downloadSlide(slide, filename) {
+  await waitForRender();
+
+  const canvas = await html2canvas(slide, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#080808",
+    logging: false,
+    foreignObjectRendering: true
+  });
+
+  const link = document.createElement("a");
+  link.download = filename + ".png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
+
+async function downloadPDF() {
+  await waitForRender();
+
+  const slides = document.querySelectorAll(".slide");
+
+  const pdf = new jspdf.jsPDF({
+    orientation: "portrait",
+    unit: "px",
+    format: [1080, 1080]
+  });
+
+  for (let i = 0; i < slides.length; i++) {
+    const canvas = await html2canvas(slides[i], {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#080808",
+      foreignObjectRendering: true
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+
+    if (i !== 0) pdf.addPage();
+
+    pdf.addImage(imgData, "PNG", 0, 0, 1080, 1080);
+  }
+
+  pdf.save("koolestpro-carousel.pdf");
+}
+
+function toggleChromeUI(show) {
+  document.querySelectorAll("[data-chrome]").forEach(el => {
+    el.style.display = show ? "" : "none";
+  });
+}
+
+toggleChromeUI(false);
+await downloadPDF();
+toggleChromeUI(true);
+</script>
+
+<!-- ══ SEND TO NOTION ══ -->
+<div class="section-divider"></div>
+<div class="page-section" style="padding-top:0;padding-bottom:0;">
+  <div class="section-label">04 &nbsp;Send to Notion</div>
+</div>
+<div style="max-width:600px;margin:0 auto;padding:0 20px 60px;">
+<div style="width:540px;background:#0d0d0d;border-radius:14px;border:1px solid rgba(255,255,255,0.055);overflow:hidden;">
+
+  <div style="display:flex;border-bottom:1px solid rgba(255,255,255,0.06);">
+    <button class="tbtn ce-ntbtn active" onclick="switchNotionTab('idea',this)">💡 Add to Idea Bank</button>
+    <button class="tbtn ce-ntbtn" onclick="switchNotionTab('post',this)">📦 Send as Post Group</button>
+  </div>
+
+  <!-- IDEA TAB -->
+  <div id="ce-ntab-idea" style="padding:22px 24px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:8px;">Add to Idea Bank</div>
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);line-height:1.6;margin-bottom:14px;">Capture a raw idea directly into your Notion Idea Bank. One line is enough.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:5px;letter-spacing:1px;">IDEA NAME *</div>
+        <input id="ce-idea-title" type="text" placeholder="e.g. Why Shopify stores lose sales above the fold"
+          style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:9px 12px;font-family:'DM Mono',monospace;font-size:11px;color:#fff;outline:none;">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:5px;letter-spacing:1px;">PILLAR</div>
+          <select id="ce-idea-pillar" style="width:100%;background:#111;border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:9px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#fff;outline:none;">
+            <option value="Conversion Strategy">Conversion Strategy</option>
+            <option value="Digital Craftsmanship">Digital Craftsmanship</option>
+            <option value="Builders Journey">Builders Journey</option>
+          </select>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:5px;letter-spacing:1px;">PRIORITY</div>
+          <select id="ce-idea-priority" style="width:100%;background:#111;border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:9px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#fff;outline:none;">
+            <option value="Hot">🔥 Hot</option>
+            <option value="Warm" selected>🌤 Warm</option>
+            <option value="Cold">❄️ Cold</option>
+          </select>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:5px;letter-spacing:1px;">FORMAT</div>
+          <select id="ce-idea-format" style="width:100%;background:#111;border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:9px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#fff;outline:none;">
+            <option value="Carousel">Carousel</option>
+            <option value="Single Graphic">Single Graphic</option>
+            <option value="Text Post">Text Post</option>
+            <option value="Thread">Thread</option>
+            <option value="Video">Video</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:5px;letter-spacing:1px;">NOTES (optional)</div>
+        <textarea id="ce-idea-notes" rows="2" placeholder="Any extra context..."
+          style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:9px 12px;font-family:'DM Mono',monospace;font-size:11px;color:#fff;outline:none;resize:none;"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:14px;">
+      <button onclick="ceAddIdea()" style="padding:10px 20px;background:linear-gradient(90deg,#FF9500,#7B2FBE);border:none;border-radius:8px;color:#fff;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;cursor:pointer;">Send to Notion →</button>
+      <span id="ce-idea-status" style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);"></span>
+    </div>
+  </div>
+
+  <!-- POST GROUP TAB -->
+  <div id="ce-ntab-post" style="display:none;padding:22px 24px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:8px;">Send as Post Group</div>
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);line-height:1.6;margin-bottom:14px;">Creates a Post Group + 3 sub-posts in Notion. Captions are auto-pulled from the Post Copy tabs above — fill those first.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:5px;letter-spacing:1px;">POST GROUP TITLE *</div>
+        <input id="ce-pg-title" type="text" placeholder="e.g. Design First, Develop Fast"
+          style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:9px 12px;font-family:'DM Mono',monospace;font-size:11px;color:#fff;outline:none;">
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:5px;letter-spacing:1px;">PILLAR</div>
+        <select id="ce-pg-pillar" style="width:100%;background:#111;border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:9px 12px;font-family:'DM Mono',monospace;font-size:11px;color:#fff;outline:none;">
+          <option value="Digital Craftsmanship">Digital Craftsmanship</option>
+          <option value="Conversion Strategy">Conversion Strategy</option>
+          <option value="Builders Journey">Builders Journey</option>
+        </select>
+      </div>
+      <div style="padding:10px 14px;background:rgba(255,149,0,0.05);border-radius:8px;border-left:2px solid rgba(255,149,0,0.3);">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,149,0,0.7);margin-bottom:6px;">Sub-posts that will be created</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);line-height:1.7;">
+          1 · Carousel → LinkedIn + Instagram (caption from LI Long-form tab)<br>
+          2 · Hook Post → LinkedIn (caption from LI Hook tab)<br>
+          3 · Single Graphic → Instagram (caption from Instagram tab)
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:14px;">
+      <button onclick="ceSendPost()" style="padding:10px 20px;background:linear-gradient(90deg,#FF9500,#7B2FBE);border:none;border-radius:8px;color:#fff;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;cursor:pointer;">Create in Notion →</button>
+      <span id="ce-pg-status" style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);"></span>
+    </div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>

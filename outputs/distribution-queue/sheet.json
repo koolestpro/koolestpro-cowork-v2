@@ -1,0 +1,16 @@
+{
+  "sheetName": "Koolestpro Distribution Queue",
+  "sheetId": "1I5SrLnwAfVV5260Y_nAytio49gh-NKmJeJdFXH3nqzg",
+  "viewUrl": "https://docs.google.com/spreadsheets/d/1I5SrLnwAfVV5260Y_nAytio49gh-NKmJeJdFXH3nqzg/edit",
+  "createdBy": "V2 distribution build 2026-07-14",
+  "columns": [
+    "post_id", "pipeline_item_id", "stream", "platform", "scheduled_date",
+    "scheduled_time_et", "asset_paths", "caption", "caption_source_tab",
+    "status", "qa_status", "posted_at", "content_system_folder"
+  ],
+  "notes": [
+    "This Sheet is the operational review/publish queue. The DURABLE source of truth is the local queue.json/queue.csv in this same folder — the Sheet mirrors it.",
+    "The connected Google Drive connector can CREATE this Sheet but cannot append/edit rows in place. Ongoing row-append + status write-back (Ready->Posted) is Make.com's job (Step 7, pending).",
+    "To re-mirror after a queue change, re-run the create/import via the Drive connector or (once built) the Make.com Sheets module."
+  ]
+}

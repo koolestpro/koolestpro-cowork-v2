@@ -1,0 +1,137 @@
+{
+  "brand": "Versed",
+  "brandSlug": "versed",
+  "isRealBrand": true,
+  "isClient": false,
+  "created": "2026-08-21T09:02:00.000Z",
+  "updated": "2026-08-21T09:02:00.000Z",
+  "howToUse": "Each key under 'assets' maps one generated image to its ready-to-post caption. Automation should join on 'assetPath' (the exact relative path from the koolestpro-cowork-v2 project root) or on the key itself. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md).",
+  "relatedPipelineItemIds": [
+    "static-ad-versed_dew-point-gel-cream-20260821"
+  ],
+  "brandSafety": "Versed is not a Koolestpro client. Every caption in this file already carries an explicit unofficial-concept disclaimer. Do not remove it when posting.",
+  "sourcedFacts": {
+    "productPage": "https://versedskin.com/products/dew-point",
+    "price": "$14.99",
+    "size": "2 fl. oz. / 60 ml",
+    "rating": "4.7 out of 5",
+    "reviewCount": 456,
+    "pdpBadges": [
+      "Dermatologist-Tested",
+      "For Sensitive Skin",
+      "Cruelty Free",
+      "Vegan"
+    ],
+    "claimsUsed": [
+      "absorbs into skin instantly",
+      "never feels greasy",
+      "won't clog pores",
+      "for normal to oily skin",
+      "sits seamlessly under makeup"
+    ],
+    "reviewQuote": "It's like a fresh glass of water for a thirsty skin! (Graziella C., featured on the PDP)",
+    "notUsed": "Free-shipping threshold was deliberately left off ad 4: public sources disagree ($25 / $35 / $40) and it could not be confirmed on Versed's own site. A first render of ad 4 that included it was discarded and regenerated."
+  },
+  "knownGaps": "None. All 5 images exist on disk and were visually reviewed on 2026-08-21 before being recorded here. combined-showcase.png is 1072x1584 / 1.72MB, under the ~4MB X ceiling, so no compressed -x variant was needed.",
+  "assets": {
+    "SA-VERSED-PROBLEM": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-1-problem-solution.png",
+      "caption": "Name the annoyance before the product turns up. Moisturizer that leaves oily skin shiny by noon, then the jar in the corner as the fix. This is the problem/solution angle for Versed's Dew Point gel-cream. Unofficial concept work built from Versed's own public product info, not something the brand commissioned. The product shot is AI generated.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-VERSED-BENEFIT": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-2-benefit-result.png",
+      "caption": "Absorbs instantly. Never greasy. Sits under makeup. Won't clog pores. Four callouts wired straight to the jar, and every one of them came off Versed's own product page. The benefit/result angle for Dew Point Gel-Cream Moisturizer. Unofficial concept work built from Versed's own public product info, not something the brand commissioned. The product shot is AI generated.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-VERSED-PROOF": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-3-social-proof.png",
+      "caption": "4.7 stars from 456 reviews, and a real buyer calling it a fresh glass of water for thirsty skin. Let the customer's line carry the claim instead of the brand's. The social proof angle for Versed's Dew Point. Unofficial concept work built from Versed's own public product info, not something the brand commissioned. The product shot is AI generated.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-VERSED-OFFER": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-4-offer-urgency.png",
+      "caption": "There was no live Versed promo to point at, so the urgency comes from the cart rather than a made-up countdown. Still thinking about it, $14.99, one CTA bar you can't scroll past. The offer/urgency angle for Dew Point. Unofficial concept work built from Versed's own public product info, not something the brand commissioned. The product shot is AI generated.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-VERSED-COMBO": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/combined-showcase.png",
+      "caption": "Four static ad directions for Versed's Dew Point gel-cream moisturizer: problem/solution, a benefit breakdown, social proof, and a cart-urgency frame. Same jar, four different reasons someone stops scrolling. Unofficial concept work built from Versed's own public product info, not something the brand commissioned. The product shot is AI generated.",
+      "hashtags": [
+        "#ecommerce",
+        "#cro",
+        "#shopify",
+        "#adcreative",
+        "#dtc"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-VERSED-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/combined-showcase.png",
+      "caption": "Four static ad directions from one jar of moisturizer.\n\nProblem. Benefit. Proof. Offer.\n\nSame product, four different reasons to stop scrolling.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-VERSED-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-1-problem-solution.png",
+      "caption": "The problem angle only works if you name the annoyance before the product turns up.\n\nGreasy by noon. Then the jar, small, in the corner, as the fix.\n\nLead with the product and there's nothing for the reader to agree with first.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-VERSED-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-3-social-proof.png",
+      "caption": "Every number on this one came off Versed's own product page.\n\n4.7 stars. 456 reviews. A real buyer calling it a fresh glass of water for thirsty skin.\n\nMaking up a review count is the fastest way to get a client in trouble.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    }
+  }
+}

@@ -1,0 +1,113 @@
+===== tab-linkedin =====
+Bebemoss makes handmade toys. Every one crocheted by a woman artisan, a lot of them refugees. I like the brand, which is exactly why the collection page bothered me.
+
+It opens with five sentences about the mission. On a phone that block is 519px tall and the screen is 844, so the whole first screen is copy. The first toy creeps in at the bottom edge with its name and price still cut off.
+
+Nobody taps "Soft Toys" to read a mission statement. They tap it to see toys.
+
+Two other things while I was in there.
+
+A pink "Save 10%" tab is docked to the bottom left. The page runs 8,200px and that tab rides the whole way down. On my screen it sat right on top of a toy's name and price.
+
+And there are 48 products with no filter and no sort. Bebemoss already names its ranges in its own copy, Safari, Ocean, Woodland, Garden Life, Dreams. None of that is something a shopper can tap.
+
+So I rebuilt the top of the page. Same photos, same prices, same brand.
+
+- Mission down to one line, with a "Read our story" link for anyone who wants the rest
+- Those five ranges as filter chips, price sort sitting next to them
+- Grid starts at the fold, four toys with names and prices before you scroll
+- Save pill shrunk and moved bottom right, clear of the card text
+
+The story still sells. It just sells better standing next to the toys instead of in front of them.
+
+If your collection page opens with a paragraph, go look at it on your phone right now.
+
+Ridwan
+
+#ecommerce #cro #shopify #dtc #conversionrateoptimization
+
+===== tab-ig =====
+This toy brand's story is beautiful. It's also the entire first screen.
+
+Bebemoss sells handmade crochet toys. Their collection page opens with five sentences about the mission. On a phone that paragraph is 519px tall, the screen is 844, so you scroll past all of it before you see a single toy.
+
+Two more things I found:
+A pink "Save 10%" tab docked bottom left, riding the full 8,200px scroll, sitting on top of a toy's name and price.
+48 products with no filter and no sort, even though the brand names its own ranges in its own copy.
+
+I rebuilt the top. Same photos, same prices:
+Mission to one line, story link kept
+Five ranges as filter chips
+Price sort added
+Grid starts at the fold
+Save pill moved clear of the text
+
+Save this if your collection page opens with a paragraph.
+
+@koolestpro
+#ecommerce #cro #shopify #dtc #collectionpage
+
+===== tab-hook =====
+1. This toy brand's story is beautiful. It's also the entire first screen.
+
+2. 519px of mission statement. 844px of screen. Zero toys.
+
+3. Nobody taps "Soft Toys" to read a mission statement.
+
+4. Their discount popup has been sitting on a product's price this whole time.
+
+5. 48 products, no filter, no sort, and the brand already named its own ranges.
+
+===== tab-twitter-angles =====
+ANGLE A:
+Bebemoss sells handmade crochet toys. Lovely brand.
+
+Their collection page opens with a 519px mission paragraph on an 844px screen.
+
+You scroll past the whole first screen before you see a toy.
+
+ANGLE B:
+Found a "Save 10%" tab docked to the bottom left of a collection page.
+
+The page is 8,200px long. The tab rides the whole way down.
+
+It was sitting on top of a product's name and price.
+
+ANGLE C:
+48 products. No filter. No sort.
+
+The brand names its own ranges in its own copy: Safari, Ocean, Woodland, Garden Life, Dreams.
+
+None of it is tappable. The taxonomy exists, it just never made it onto the page.
+
+===== tab-twitter-thread =====
+1/ Bebemoss makes handmade crochet toys, each one made by a woman artisan.
+
+Good brand. Their collection page still buries the toys. Quick teardown.
+
+2/ The page opens with five sentences about the mission.
+
+That block is 519px tall. A phone screen is 844.
+
+So the entire first screen is copy.
+
+3/ The first toy only reaches the bottom edge, with its name and price still cut off.
+
+Someone who tapped "Soft Toys" already decided they want toys. The first screen answers a question they did not ask.
+
+4/ Second thing: a pink "Save 10%" tab docked bottom left.
+
+The page runs 8,200px and the tab rides all of it. On my screen it covered a toy's name and its price.
+
+5/ Third: 48 products, no filter, no sort.
+
+Bebemoss names its ranges in its own copy. Safari, Ocean, Woodland, Garden Life, Dreams. None of it is tappable.
+
+6/ Rebuild, same photos and same prices:
+
+Mission to one line with a story link. Five ranges as filter chips. Price sort. Grid starts at the fold. Save pill moved clear of the card text.
+
+7/ The story still sells. It sells better standing next to the toys than in front of them.
+
+If your collection page opens with a paragraph, open it on your phone.
+

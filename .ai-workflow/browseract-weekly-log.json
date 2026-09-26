@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "description": "Log of koolestpro-browseract-weekly scheduled task runs. Each entry records which rotation slot ran, how many leads were pushed to KoolestFlow, and any errors, so Ridwan can audit without opening KoolestFlow every week."
+  },
+  "runs": [
+    {
+      "week": "2026-W36",
+      "ranAt": "2026-09-01T17:15:09.000Z",
+      "areaUsed": "Lekki, Lagos",
+      "keywordUsed": "fashion boutique",
+      "leadsPushed": 0,
+      "status": "error",
+      "note": "Discovery + enrichment + scoring succeeded (5 prospects, all Qualified, fit 75-100), but the push did NOT land. The Vercel deployment accepted POST /api/state and reported 'Pushed 5 new prospect(s), total now 5', yet a follow-up GET /api/state returned 0 prospects - the serverless backend is not persisting writes. Ridwan's real prospect data lives on the local instance (KOOLESTFLOW_LOCAL_BASE_URL), which the cloud sandbox cannot reach. The 5 scored prospects were saved to .ai-workflow/pending-push/2026-W36_lekki-fashion-boutique.json; re-push with push_prospects_file.py --ignore-ledger from Ridwan's own terminal (no BrowserAct credits re-spent). Also: enrichment timed out for Brumsluxe Fashion and Polo Avenue, so their 'no website / Build track' tag is unverified. Rotation was still advanced to index 1."
+    },
+    {
+      "week": "2026-W37",
+      "ranAt": "2026-09-08T10:49:02.000Z",
+      "areaUsed": "Victoria Island, Lagos",
+      "keywordUsed": "skincare shop",
+      "leadsScored": 5,
+      "leadsPushed": 0,
+      "status": "queued",
+      "pendingPushFile": ".ai-workflow/pending-push/2026-W37_victoria-island-lagos-skincare-shop.json",
+      "note": "5 scored and queued for local import. 0 skipped as already taken. Enrichment stalled for: Beauthirst cosmetics. leadsPushed stays 0 until import_pending_push.sh confirms the local push."
+    },
+    {
+      "week": "2026-W38",
+      "ranAt": "2026-09-16T18:49:21.000Z",
+      "areaUsed": "Ikeja, Lagos",
+      "keywordUsed": "baby and kids store",
+      "leadsScored": 5,
+      "leadsPushed": 0,
+      "status": "queued",
+      "pendingPushFile": ".ai-workflow/pending-push/2026-W38_ikeja-lagos-baby-and-kids-store.json",
+      "note": "5 scored and queued for local import. 0 skipped as already taken. leadsPushed stays 0 until import_pending_push.sh confirms the local push."
+    }
+  ]
+}

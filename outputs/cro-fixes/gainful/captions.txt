@@ -1,0 +1,140 @@
+===== tab-linkedin =====
+Gainful asks you four questions before it gives you one reason to trust it.
+
+Their protein customizer is a good idea. Pick a dietary preference, pick a goal, get a formula matched to it. On mobile it opens with two different 25% discounts stacked on top of each other, one for subscribing and one for a new customer code, and nothing on the page tells you whether they stack or which one you should take.
+
+Then it asks for four decisions. Dietary preference. Primary goal. Serving size. Flavour packets.
+
+And it never offers you a way to buy.
+
+I searched every button and link on that page. There is no add to cart. No buy button. No checkout. The only call to action anywhere is Take The Quiz, sitting 3,693 pixels down, and it sends you into a different funnel than the one you were already halfway through.
+
+The words guarantee, money back, cancel anytime and risk free do not appear on the page either. That last one matters, because the loudest thing on the screen is asking you to start a subscription.
+
+So I rebuilt the top of it. Same type, same warm grey, same black pills, same photography.
+
+One promo strip instead of two, and the subscribe offer moved down to the buy area where it is an actual choice.
+Price given its own line at 29px with a per serving figure under it, because on a configurator the price is the running total.
+A sticky bar carrying the live price and an add to cart, so the endpoint is visible from the first tap.
+Cancel or skip anytime, sitting right where the subscription is being asked for.
+The review count turned into a link you can actually check.
+One line above the two selectors naming what they produce.
+
+Nothing invented. Every number is Gainful's own, read off the live page: $31.47, 14 servings, 20g protein, 100 calories, 6 ingredients, 2,123 ratings.
+
+If your page asks the shopper to do work, it owes them somewhere to put it.
+
+Ridwan
+
+The review quote in the rebuild is an illustrative placeholder, labelled as such in the file, not a real Gainful customer.
+
+===== tab-ig =====
+Gainful asks you four questions before it gives you one reason to trust it.
+
+Dietary preference. Primary goal. Serving size. Flavour packets.
+
+Then nothing. No add to cart anywhere on the page. I checked every button and link on it. The only CTA is Take The Quiz, 3,693 pixels down, and it routes you into a different funnel.
+
+No guarantee either. No cancel anytime. On a page whose top bar is selling a subscription.
+
+So I rebuilt the top of it, same brand, nothing redesigned:
+
+One promo strip instead of two competing 25% offers
+Price as an anchor with a per serving read
+A sticky add to cart carrying the live price
+Cancel or skip anytime, next to the subscribe offer
+The review count as a real link
+
+Every number is theirs. $31.47, 14 servings, 20g protein, 2,123 ratings.
+
+If your page asks the shopper to do work, give them somewhere to put it.
+
+#ecommerce #shopify #cro #conversionrateoptimization #dtc #uxdesign
+
+===== tab-hook =====
+1. Gainful asks you four questions before it gives you one reason to trust it.
+
+2. I searched every button on this page for an add to cart. There isn't one.
+
+3. Their protein customizer has no way to buy the protein.
+
+4. Two 25% discounts stacked on top of each other, and nothing says which one you get.
+
+5. The page asks for four decisions and offers you nowhere to put them.
+
+6. A subscription offer with no cancellation terms anywhere on the page.
+
+7. The only CTA on this page sits 3,693 pixels down and sends you somewhere else.
+
+===== tab-twitter-angles =====
+ANGLE 1: the missing button
+
+Gainful's protein customizer asks for 4 decisions.
+
+Dietary preference. Goal. Serving size. Flavour packets.
+
+Then gives you nowhere to buy.
+
+I searched every button and link on the page. There is no add to cart on it.
+
+---
+
+ANGLE 2: the two offers
+
+Two 25% discounts stacked at the top of the page.
+
+One for subscribing. One for a new customer code.
+
+Nothing tells you whether they stack, or which one is the better deal.
+
+Ambiguity at the offer level is the expensive kind. It hits every visitor before they see the product.
+
+---
+
+ANGLE 3: the missing safety net
+
+The words guarantee, money back, cancel anytime and risk free appear nowhere on Gainful's customizer page.
+
+The loudest thing on the screen is asking you to start a subscription.
+
+Asking for a recurring commitment without stating the exit terms suppresses the take rate you were trying to raise.
+
+===== tab-twitter-thread =====
+1/ Gainful asks you four questions before it gives you one reason to trust it.
+
+Their protein customizer, on mobile. A teardown.
+
+2/ It opens with two different 25% offers stacked on top of each other.
+
+One for subscribing. One for a new customer code.
+
+Nothing says whether they stack or which one you should take.
+
+3/ Then it asks for four decisions.
+
+Dietary preference. Primary goal. Serving size. Flavour packets.
+
+4/ And it never offers you a way to buy.
+
+I searched every button and link on the page. No add to cart. No buy button. No checkout.
+
+5/ The only CTA anywhere is Take The Quiz, 3,693 pixels down.
+
+It sends you into a different funnel than the one you were already halfway through.
+
+6/ Guarantee. Money back. Cancel anytime. Risk free.
+
+None of those words appear on the page.
+
+The loudest thing on the screen is selling a subscription.
+
+7/ So I rebuilt the top. Same type, same warm grey, same black pills.
+
+One promo strip. Price as an anchor with a per serving read. A sticky add to cart. Cancel or skip anytime.
+
+8/ Every number is Gainful's own, read off the live page.
+
+$31.47. 14 servings. 20g protein. 100 calories. 6 ingredients. 2,123 ratings.
+
+9/ If your page asks the shopper to do work, it owes them somewhere to put it.
+

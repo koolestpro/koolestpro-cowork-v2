@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "description": "Weekly trend-radar Tips topic candidates. koolestpro-tips-weekly reads the last entry in weeks[] for its Layer 1 topic pick. See docs/koolestpro-content-operating-plan.md Step 11.",
+    "updatedAt": "2026-08-14T21:53:15.269661+00:00"
+  },
+  "weeks": [
+    {
+      "week": "2026-W31",
+      "sourcesUsed": [],
+      "sourcesSkipped": [
+        {
+          "source": "x",
+          "reason": "X_BEARER_TOKEN not set in .env. Needs the Bearer Token specifically (developer.x.com -> app -> Keys and tokens tab), separate from the OAuth2 client id/secret already powering the Make.com posting scenario."
+        },
+        {
+          "source": "reddit",
+          "reason": "REDDIT_API_BASE_URL / REDDIT_API_TOKEN not set. Ridwan has not signed up for a third-party Reddit read provider yet (config has reddit disabled)."
+        },
+        {
+          "source": "instagram",
+          "reason": "Claude-in-Chrome has 2 browsers connected to this account, and the browser tool requires an interactive user pick (AskUserQuestion) before any navigation/reading can happen. No user is present to answer in this unattended scheduled-task run, and picking a browser unprompted is disallowed by the tool itself, so Instagram browsing was skipped this week rather than guessed at."
+        }
+      ],
+      "candidateTopics": [],
+      "pickedTopic": null,
+      "note": "All three sources were unreachable this run due to missing credentials (X, Reddit) and an unattended-context browser-selection gate (Instagram) -- not a relevance/quality judgment. koolestpro-tips-weekly should fall back to its existing backlog-first logic for this cycle.",
+      "writtenAt": "2026-07-31T10:22:38.952510+00:00"
+    },
+    {
+      "week": "2026-W33",
+      "sourcesUsed": [
+        "x"
+      ],
+      "sourcesSkipped": [
+        {
+          "source": "reddit",
+          "reason": "reddit_search.py is technically live (Apify Reddit Scraper Lite, wired 2026-08-11) but the run+poll pattern needs 25-180s to complete, and this sandbox enforces a hard ~45s per-command ceiling with no cross-call process persistence (confirmed: a backgrounded/nohup'd run vanished between bash calls, same constraint already documented elsewhere in this project for other Apify/batch work). Two attempts both hit the ceiling before the actor finished, one at max-results=20 and one at max-results=5. A run was actually started on Apify's side for the first attempt (the ledger shows a $0.50 reservation went through before the timeout), so that reservation was likely spent on Apify's end without us ever retrieving the results -- worth a look next time this runs from a real terminal instead of this scheduled-task sandbox. trend-radar-config.json still has reddit.enabled=false / provider=null, which is now stale relative to the script's live status -- flagging for Ridwan rather than silently editing project config from an unattended run."
+        },
+        {
+          "source": "instagram",
+          "reason": "3 browsers now connected via Claude-in-Chrome (up from 2 in prior weeks): Browser 1 (9b21df33), Browser 2 (98863bc7), Browser 3 (a29d6620), all macOS/local. The tool still mandates an interactive AskUserQuestion browser pick before any navigation. No user is present in this unattended scheduled run and picking unprompted is disallowed by the tool itself, so Instagram was skipped -- identical structural blocker to 2026-W31 and the earlier 2026-W33 run."
+        }
+      ],
+      "candidateTopics": [
+        {
+          "rank": 1,
+          "topic": "The order your landing page sections actually need to be in",
+          "angle": "Framework (Problem -> Solution -> Trust -> Offer -> Action)",
+          "sourceUrl": "https://x.com/i/web/status/2088371332270719107",
+          "score": 5,
+          "rationale": "A builder posted about structuring an offer section with a deliberate Problem->Solution->Trust->Offer->Action sequence, on-topic for the Conversion Strategy pillar. Real but thin engagement (5 likes, 99 impressions) -- a plausible framework-carousel seed, not evidence of a genuine trend."
+        },
+        {
+          "rank": 2,
+          "topic": "Responsive is not the same as mobile-optimized",
+          "angle": "Myth vs Reality",
+          "sourceUrl": "https://x.com/i/web/status/2088370357153472721",
+          "score": 3,
+          "rationale": "A promo post asking 'is your Shopify store actually ready for mobile? responsive isn't enough' -- fits the Myth vs Reality default format and the Conversion Strategy pillar cleanly. Low engagement (3 likes), promotional origin, would need to be built from first principles rather than reacting to this specific post."
+        },
+        {
+          "rank": 3,
+          "topic": "Carousels as a UI pattern are falling out of favor in web design (distinct from content carousels)",
+          "angle": "Contrarian/Observation",
+          "sourceUrl": "https://x.com/i/web/status/2088380581117603843",
+          "score": 3,
+          "rationale": "A reply calling UI carousels 'a disaster' that persists anyway -- genuinely on-pillar for Digital Craftsmanship, but this is about carousel UI components on websites, not social content carousels, and needs careful framing so it doesn't read as undercutting Ridwan's own carousel-heavy content format. Weak signal (3 likes) and borderline-confusing topic overlap -- lowest priority of the three."
+        }
+      ],
+      "pickedTopic": null,
+      "note": "X search ran successfully this time (X_BEARER_TOKEN is live, contrary to what earlier weeks assumed -- earlier 'not set' conclusions were likely from an incomplete env check, not an actual missing credential). 50 results pulled, 41 survived the relevance filter, but engagement across the board was minimal (max 6 raw score, i.e. a handful of likes/retweets on posts made within the last hour). The X API v2 'recent search' tier available here sorts by recency, not popularity, and this project's access level rejects engagement-threshold operators like min_faves:N (confirmed via a live 400 error), so there is no way to ask the API directly for genuinely popular content in this window -- what came back is closer to 'recent chatter matching keywords' than 'trending topics'. Given that, forcing a pickedTopic from this batch would misrepresent noise as signal, so pickedTopic is null this week per Step 4's guidance not to force a pick from weak material. koolestpro-tips-weekly should fall back to its existing backlog-first logic. The 3 candidateTopics above are left as honestly-labeled low-confidence seeds Ridwan can glance at, not auto-picks. No Format Radar finding this week either -- nothing pulled represented a genuinely new content format with real engagement behind it, and Instagram (the source most likely to surface a format signal) didn't run.",
+      "writtenAt": "2026-08-14T21:53:15.269661+00:00"
+    }
+  ]
+}

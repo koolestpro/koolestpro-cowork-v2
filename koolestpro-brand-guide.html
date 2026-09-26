@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Koolestpro — Brand System Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#090909;font-family:'DM Mono',monospace;color:#fff;min-height:100vh;}
+
+/* ─── NAV ─────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:100;background:rgba(3,3,3,0.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);padding:0 32px;}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:0;height:52px;}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;margin-right:32px;flex-shrink:0;}
+.nav-logo span{color:#FF9500;}
+.nav-links{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;}
+.nav-links::-webkit-scrollbar{display:none;}
+.nav-link{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);padding:0 14px;height:52px;display:flex;align-items:center;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;text-decoration:none;}
+.nav-link:hover,.nav-link.active{color:#FF9500;border-bottom-color:#FF9500;}
+.nav-version{margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;flex-shrink:0;}
+
+/* ─── LAYOUT ──────────────────────────────────────── */
+.page{max-width:960px;margin:0 auto;padding:64px 32px 120px;}
+
+/* ─── HERO ────────────────────────────────────────── */
+.hero{padding:80px 0 64px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:80px;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.06);}
+.hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:64px;line-height:1;letter-spacing:-2px;margin-bottom:24px;}
+.hero-sub{font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:560px;margin-bottom:40px;}
+.hero-pillars{display:flex;gap:16px;flex-wrap:wrap;}
+.hero-pill{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border-radius:100px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);}
+
+/* ─── SECTION ─────────────────────────────────────── */
+.section{margin-bottom:96px;scroll-margin-top:70px;}
+.section-header{margin-bottom:40px;}
+.section-label-tag{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.2);display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.section-label-tag::before{content:'';width:24px;height:1px;background:rgba(255,149,0,0.4);}
+.section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:32px;letter-spacing:-1px;}
+.section-desc{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7;margin-top:10px;max-width:560px;}
+
+/* ─── CARD ────────────────────────────────────────── */
+.card{background:#1b1f23;border-radius:12px;padding:28px;margin-bottom:16px;}
+.card-sm{background:#1b1f23;border-radius:10px;padding:20px;}
+.card-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:12px;}
+.card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px;}
+.card-body{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.75;}
+.card-highlight{font-family:'DM Mono',monospace;font-size:13px;color:#e0e0e0;line-height:1.7;font-style:italic;border-left:2px solid #FF9500;padding-left:16px;margin:12px 0;}
+
+/* ─── GRID ────────────────────────────────────────── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+@media(max-width:720px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+/* ─── COLOR SWATCHES ──────────────────────────────── */
+.swatch-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;}
+.swatch{border-radius:10px;overflow:hidden;flex:1;min-width:120px;cursor:pointer;position:relative;}
+.swatch-color{height:80px;transition:transform 0.15s;}
+.swatch:hover .swatch-color{transform:scaleY(1.05);}
+.swatch-info{background:#1b1f23;padding:12px 14px;}
+.swatch-name{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:#e0e0e0;margin-bottom:3px;}
+.swatch-hex{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);}
+.swatch-role{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+.copy-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;padding:10px 20px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity 0.2s;z-index:999;}
+.copy-toast.show{opacity:1;}
+
+/* ─── GRADIENT STRIP ──────────────────────────────── */
+.grad-strip{height:6px;border-radius:3px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);margin-bottom:24px;}
+.grad-strip-sm{height:3px;border-radius:2px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);}
+
+/* ─── TYPE SPECIMEN ───────────────────────────────── */
+.type-row{display:flex;align-items:baseline;gap:24px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.type-meta{width:160px;flex-shrink:0;}
+.type-meta-name{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);}
+.type-meta-spec{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);margin-top:3px;}
+.type-sample{flex:1;overflow:hidden;}
+
+/* ─── VOICE CHART ─────────────────────────────────── */
+.voice-row{display:grid;grid-template-columns:140px 1fr 1fr 1fr;gap:0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.voice-row.header{border-bottom:1px solid rgba(255,255,255,0.08);}
+.voice-cell{padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.6);line-height:1.5;}
+.voice-cell.trait{font-weight:700;color:#FF9500;font-size:12px;}
+.voice-cell.hd{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);}
+.voice-cell.do{color:rgba(120,220,130,0.8);}
+.voice-cell.dont{color:rgba(255,80,80,0.7);}
+
+/* ─── PILLAR CARDS ────────────────────────────────── */
+.pillar{background:#1b1f23;border-radius:12px;padding:28px;position:relative;overflow:hidden;}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.pillar-1::before{background:linear-gradient(90deg,#FF9500,#E8A000);}
+.pillar-2::before{background:linear-gradient(90deg,#E040A0,#B030C0);}
+.pillar-3::before{background:linear-gradient(90deg,#7B2FBE,#5020A0);}
+.pillar-number{font-family:'Syne',sans-serif;font-weight:800;font-size:48px;color:rgba(255,255,255,0.06);position:absolute;top:16px;right:20px;line-height:1;}
+.pillar-tag{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.pillar-tag-1{color:#FF9500;}
+.pillar-tag-2{color:#E040A0;}
+.pillar-tag-3{color:#9B5FDE;}
+.pillar-title{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;margin-bottom:10px;}
+.pillar-desc{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.75;}
+.pillar-types{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px;}
+.pillar-type{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);}
+
+/* ─── CHECKLIST ───────────────────────────────────── */
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;}
+.check-item:last-child{border-bottom:none;}
+.check-box{width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s;margin-top:1px;}
+.check-box.checked{background:#FF9500;border-color:#FF9500;}
+.check-box svg{opacity:0;transition:opacity 0.15s;}
+.check-box.checked svg{opacity:1;}
+.check-text{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.55);line-height:1.5;}
+.check-item.checked .check-text{color:rgba(255,255,255,0.25);text-decoration:line-through;}
+.check-progress{height:4px;border-radius:2px;background:rgba(255,255,255,0.06);margin-bottom:20px;overflow:hidden;}
+.check-bar{height:100%;background:linear-gradient(90deg,#FF9500,#E040A0);border-radius:2px;transition:width 0.3s ease;width:0%;}
+.check-score{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:6px;}
+
+/* ─── MESSAGE BLOCK ───────────────────────────────── */
+.msg-block{background:rgba(255,149,0,0.04);border:1px solid rgba(255,149,0,0.12);border-radius:10px;padding:20px 24px;margin-bottom:12px;}
+.msg-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#FF9500;margin-bottom:8px;}
+.msg-text{font-family:'Syne',sans-serif;font-weight:600;font-size:14px;color:#e0e0e0;line-height:1.6;}
+
+/* ─── AUDIENCE TABLE ──────────────────────────────── */
+.aud-table{width:100%;border-collapse:collapse;}
+.aud-table th{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);padding:10px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.07);}
+.aud-table td{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.55);padding:14px;border-bottom:1px solid rgba(255,255,255,0.04);line-height:1.5;vertical-align:top;}
+.aud-table td:first-child{font-weight:700;color:#e0e0e0;}
+.aud-table tr:last-child td{border-bottom:none;}
+
+/* ─── DO / DONT ───────────────────────────────────── */
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:600px){.do-dont{grid-template-columns:1fr;}}
+.do-card{background:rgba(80,200,100,0.04);border:1px solid rgba(80,200,100,0.12);border-radius:10px;padding:20px;}
+.dont-card{background:rgba(255,80,80,0.04);border:1px solid rgba(255,80,80,0.12);border-radius:10px;padding:20px;}
+.do-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.do-label.do{color:rgba(100,210,120,0.8);}
+.do-label.dont{color:rgba(255,100,100,0.8);}
+.do-item{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.55);line-height:1.6;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.do-item:last-child{border-bottom:none;}
+.do-item::before{content:'✓  ';color:rgba(100,210,120,0.7);}
+.dont-item::before{content:'✕  ';color:rgba(255,100,100,0.7);}
+
+/* ─── GRADIENT DEMO ───────────────────────────────── */
+.grad-demo{background:#1b1f23;border-radius:10px;padding:20px;display:flex;align-items:center;justify-content:center;min-height:80px;}
+.grad-demo-label{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);text-align:center;margin-top:8px;}
+
+/* ─── SPECTRUM BAR ────────────────────────────────── */
+.spectrum{margin:20px 0;}
+.spectrum-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);display:flex;justify-content:space-between;margin-bottom:6px;}
+.spectrum-track{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;position:relative;}
+.spectrum-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#FF9500,#E040A0);}
+.spectrum-dot{position:absolute;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:#FF9500;border:2px solid #090909;box-shadow:0 0 0 2px #FF9500;}
+
+/* ─── PHRASE CHIPS ────────────────────────────────── */
+.phrase-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.phrase-chip{font-family:'DM Mono',monospace;font-size:10px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);}
+
+/* ─── TAG ─────────────────────────────────────────── */
+.tag{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:rgba(255,149,0,0.15);color:#FF9500;margin-right:4px;}
+.tag.pink{background:rgba(224,64,160,0.15);color:#E040A0;}
+.tag.purple{background:rgba(123,47,190,0.2);color:#9B5FDE;}
+
+/* ─── DIVIDER ─────────────────────────────────────── */
+.divider{height:1px;background:rgba(255,255,255,0.05);margin:48px 0;}
+
+/* ─── FOOTER ──────────────────────────────────────── */
+footer{text-align:center;padding:48px 32px;border-top:1px solid rgba(255,255,255,0.05);}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;margin-bottom:8px;}
+.footer-logo span{color:#FF9500;}
+.footer-sub{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:1px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Koolest<span>pro</span></div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#identity">Identity</a>
+      <a class="nav-link" href="#voice">Voice</a>
+      <a class="nav-link" href="#messaging">Messaging</a>
+      <a class="nav-link" href="#pillars">Pillars</a>
+      <a class="nav-link" href="#visual">Visual</a>
+      <a class="nav-link" href="#checklist">Checklist</a>
+    </div>
+    <div class="nav-version">v1.0 · Apr 2026</div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero" id="identity">
+    <div class="hero-eyebrow">Brand System Guide</div>
+    <div class="hero-title">
+      <svg width="560" height="76" viewBox="0 0 560 76" style="display:block;overflow:visible;max-width:100%;">
+        <defs>
+          <linearGradient id="grad-hero" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF9500"/>
+            <stop offset="50%" stop-color="#E040A0"/>
+            <stop offset="100%" stop-color="#7B2FBE"/>
+          </linearGradient>
+        </defs>
+        <text y="68" font-family="Syne, sans-serif" font-weight="800" font-size="64" letter-spacing="-2" fill="url(#grad-hero)">Koolestpro</text>
+      </svg>
+    </div>
+    <p class="hero-sub">The complete brand system for Ridwan Adekunle — Shopify CRO &amp; UX Designer. Voice, visual identity, messaging, and consistency rules all in one place.</p>
+    <div class="hero-pillars">
+      <div class="hero-pill">Digital Craftsmanship</div>
+      <div class="hero-pill">Conversion Strategy</div>
+      <div class="hero-pill">Builder's Journey</div>
+    </div>
+  </div>
+
+  <!-- CORE IDENTITY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-label-tag">01 — Core Identity</div>
+      <div class="section-title">Who We Are</div>
+      <p class="section-desc">The foundational statements that define Koolestpro's purpose, direction, and difference.</p>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:16px;">
+      <div class="card-sm">
+        <div class="card-label">Mission</div>
+        <div class="card-highlight">We help Shopify store owners stop losing sales to bad design — by rebuilding pages that convert.</div>
+      </div>
+      <div class="card-sm">
+        <div class="card-label">Vision</div>
+        <div class="card-highlight">Every DTC brand deserves a store that works as hard as its products.</div>
+      </div>
+      <div class="card-sm">
+        <div class="card-label">Purpose</div>
+        <div class="card-highlight">Bridge the gap between beautiful design and measurable conversion — without sacrificing either.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Value Proposition</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px;line-height:1.4;color:#e0e0e0;margin-bottom:16px;">
+        For DTC brands bleeding revenue through poor UX, Koolestpro is the CRO design studio that diagnoses what's killing your conversions — and rebuilds it so you can lift sales 15–30%.
+      </div>
+      <div class="card-body">Unlike generalist designers who just make things pretty, Koolestpro combines conversion strategy with Shopify-native execution — every design decision is tied to a measurable outcome.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Positioning Statement</div>
+      <div class="card-highlight">Koolestpro is the CRO design studio for Shopify store owners who know their store looks fine but can't figure out why it doesn't convert — because good design and good conversion are the same thing.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BRAND VOICE -->
+  <div class="section" id="voice">
+    <div class="section-header">
+      <div class="section-label-tag">02 — Brand Voice</div>
+      <div class="section-title">How We Sound</div>
+      <p class="section-desc">Koolestpro has one voice — direct, practical, and expert. The tone shifts by context, but the personality never changes.</p>
+    </div>
+
+    <!-- Spectrum sliders -->
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-label">Voice Position</div>
+      <div class="spectrum">
+        <div class="spectrum-label"><span>Formal</span><span>Casual</span></div>
+        <div class="spectrum-track"><div class="spectrum-fill" style="width:65%;"></div><div class="spectrum-dot" style="left:calc(65% - 7px);"></div></div>
+      </div>
+      <div class="spectrum">
+        <div class="spectrum-label"><span>Simple</span><span>Technical</span></div>
+        <div class="spectrum-track"><div class="spectrum-fill" style="width:72%;"></div><div class="spectrum-dot" style="left:calc(72% - 7px);"></div></div>
+      </div>
+      <div class="spectrum">
+        <div class="spectrum-label"><span>Serious</span><span>Playful</span></div>
+        <div class="spectrum-track"><div class="spectrum-fill" style="width:40%;"></div><div class="spectrum-dot" style="left:calc(40% - 7px);"></div></div>
+      </div>
+      <div class="spectrum">
+        <div class="spectrum-label"><span>Reserved</span><span>Expressive</span></div>
+        <div class="spectrum-track"><div class="spectrum-fill" style="width:60%;"></div><div class="spectrum-dot" style="left:calc(60% - 7px);"></div></div>
+      </div>
+    </div>
+
+    <!-- Voice chart -->
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div class="voice-row header">
+        <div class="voice-cell hd">Trait</div>
+        <div class="voice-cell hd">What it means</div>
+        <div class="voice-cell hd">✓ Do this</div>
+        <div class="voice-cell hd">✕ Not this</div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-cell trait">Direct</div>
+        <div class="voice-cell">No fluff. No warmup. Get to the point immediately.</div>
+        <div class="voice-cell do">"Your PDP loses sales at scroll 60 because there's no social proof below the fold."</div>
+        <div class="voice-cell dont">"Have you ever wondered why some stores convert better than others? Today we'll explore…"</div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-cell trait">Practical</div>
+        <div class="voice-cell">Every piece of content has a takeaway. Theory only earns its place when it leads to action.</div>
+        <div class="voice-cell do">"Fix: Move your reviews block above the second CTA. Takes 20 minutes. Tests immediately."</div>
+        <div class="voice-cell dont">"It's important to consider the holistic user experience when thinking about trust signals."</div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-cell trait">Expert</div>
+        <div class="voice-cell">Speaks with authority from real project experience, not textbook knowledge.</div>
+        <div class="voice-cell do">"On motherofmacros.com, moving the CTA above the fold lifted add-to-cart by 22%."</div>
+        <div class="voice-cell dont">"Studies suggest that CTA placement can impact conversion rates significantly."</div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-cell trait">Builder</div>
+        <div class="voice-cell">In the trenches. Shows the work, not just the result.</div>
+        <div class="voice-cell do">"Here's exactly how I rebuilt this section in Replo — 3 components, 45 minutes."</div>
+        <div class="voice-cell dont">"I specialize in delivering premium Shopify solutions for discerning brands."</div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-cell trait">Generous</div>
+        <div class="voice-cell">Shares knowledge freely. Doesn't gatekeep the method to protect the mystique.</div>
+        <div class="voice-cell do">"Here's the full audit framework I use on every client store — use it."</div>
+        <div class="voice-cell dont">"Book a discovery call to find out how we approach CRO strategy."</div>
+      </div>
+    </div>
+
+    <!-- Signature phrases -->
+    <div class="card" style="margin-top:16px;">
+      <div class="card-label">Signature Phrases &amp; Frames</div>
+      <div class="card-body" style="margin-bottom:8px;">Words and frames that feel distinctly Koolestpro. Use them to open posts, name sections, and anchor CTAs.</div>
+      <div class="phrase-chips">
+        <div class="phrase-chip">The Conversion Layer</div>
+        <div class="phrase-chip">Solve → Ship → Sharpen</div>
+        <div class="phrase-chip">Design First, Develop Fast</div>
+        <div class="phrase-chip">The USER Model</div>
+        <div class="phrase-chip">3C Framework</div>
+        <div class="phrase-chip">Template → Tweak → Transform</div>
+        <div class="phrase-chip">CRO Fix</div>
+        <div class="phrase-chip">The build is alive</div>
+        <div class="phrase-chip">Here's the audit</div>
+        <div class="phrase-chip">Real store. Real numbers.</div>
+        <div class="phrase-chip">This is the fix</div>
+        <div class="phrase-chip">You're losing sales here</div>
+      </div>
+    </div>
+
+    <!-- Tone by context -->
+    <div class="card" style="margin-top:16px;">
+      <div class="card-label">Tone Shifts by Context</div>
+      <table class="aud-table">
+        <thead>
+          <tr>
+            <th>Context</th>
+            <th>Tone Adjustment</th>
+            <th>Example Opening</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>LinkedIn Carousel</td>
+            <td>Direct + punchy. Hook in slide 1. Teach in slides 2–7. CTA in slide 8.</td>
+            <td>"Your PDP is leaking sales. Here's exactly where."</td>
+          </tr>
+          <tr>
+            <td>Client Proposal</td>
+            <td>Confident + data-grounded. Lead with their problem, prove with evidence, close with ROI.</td>
+            <td>"I audited [store] and found 4 conversion blockers on your PDP alone."</td>
+          </tr>
+          <tr>
+            <td>Fiverr Gig</td>
+            <td>Clear + outcome-focused. Buyers scan. Lead with result, not process.</td>
+            <td>"I'll rebuild your Shopify page to convert 15–30% better — or rework it free."</td>
+          </tr>
+          <tr>
+            <td>YouTube</td>
+            <td>Slightly warmer, more step-by-step. Show hands on keyboard. Explain the why.</td>
+            <td>"Watch me audit this live Shopify store in under 20 minutes."</td>
+          </tr>
+          <tr>
+            <td>Cold Outreach</td>
+            <td>Ultra-direct. Name the exact problem you spotted. One clear ask.</td>
+            <td>"I noticed [specific issue] on [store] — this is likely why your [metric] is low."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Do / Don't copy -->
+    <div style="margin-top:16px;">
+      <div class="card-label" style="margin-bottom:12px;">Copy — Do &amp; Don't</div>
+      <div class="do-dont">
+        <div class="do-card">
+          <div class="do-label do">✓ Sounds Like Koolestpro</div>
+          <div class="do-item">Most PDPs lose the sale between the fold and the cart. Here's the 3-part fix.</div>
+          <div class="do-item">I rebuilt Eddie Bauer's PDP. Before → After. Here's every decision.</div>
+          <div class="do-item">You don't need a new design. You need to fix what's already there.</div>
+          <div class="do-item">CRO isn't a redesign. It's a diagnosis.</div>
+          <div class="do-item">The conversion layer is invisible. That's why stores bleed revenue.</div>
+        </div>
+        <div class="dont-card">
+          <div class="do-label dont">✕ Doesn't Sound Like Koolestpro</div>
+          <div class="do-item dont-item">Excited to share some thoughts on e-commerce best practices today!</div>
+          <div class="do-item dont-item">As a passionate designer, I believe every brand deserves beautiful work.</div>
+          <div class="do-item dont-item">Leveraging cutting-edge UX methodology to drive synergistic outcomes.</div>
+          <div class="do-item dont-item">DM me for a free consultation to discuss your project needs!</div>
+          <div class="do-item dont-item">I've been blessed to work with some amazing clients on exciting projects.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MESSAGING FRAMEWORK -->
+  <div class="section" id="messaging">
+    <div class="section-header">
+      <div class="section-label-tag">03 — Messaging</div>
+      <div class="section-title">What We Say</div>
+      <p class="section-desc">Ready-to-use pitches, audience-specific messages, and proof points for every channel.</p>
+    </div>
+
+    <!-- Elevator pitches -->
+    <div class="card-label" style="margin-bottom:12px;">Elevator Pitches</div>
+    <div class="msg-block">
+      <div class="msg-label">10 seconds — The Hook</div>
+      <div class="msg-text">"I help Shopify stores stop losing sales to bad design — by fixing the pages that should convert but don't."</div>
+    </div>
+    <div class="msg-block">
+      <div class="msg-label">30 seconds — The Problem + Proof</div>
+      <div class="msg-text">"Most Shopify stores look fine but convert terribly. That's because design and conversion strategy are treated as separate things — they're not. I audit stores for exactly where the revenue leaks are, then rebuild those pages with CRO baked into every decision. Clients typically see 15–30% lift on rebuilt pages."</div>
+    </div>
+    <div class="msg-block" style="margin-bottom:32px;">
+      <div class="msg-label">60 seconds — The Full Pitch</div>
+      <div class="msg-text">"I'm a Shopify CRO and UX designer based in Nigeria. I work with DTC brands whose stores look professional but underperform on conversion — usually because the design and the strategy are two different people's jobs, so neither is done fully. I combine both. I start with a structured audit: I map the customer journey, identify every friction point, and quantify where revenue is leaking. Then I rebuild — not redesign — the pages that matter most. Every element has a reason: the placement of social proof, the hierarchy of the CTA, the scroll depth where the buyer makes their decision. I've worked on stores including Eddie Bauer and client brands in food, gadgets, and lifestyle DTC. The typical result is 15–30% lift in conversion on rebuilt pages."</div>
+    </div>
+
+    <!-- Audience messages -->
+    <div class="card-label" style="margin-bottom:12px;">Message by Audience</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table class="aud-table">
+        <thead>
+          <tr>
+            <th>Audience</th>
+            <th>Their Pain</th>
+            <th>Key Message</th>
+            <th>CTA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Shopify Store Owners</td>
+            <td>"My store gets traffic but doesn't convert."</td>
+            <td>"You don't have a design problem. You have a conversion layer problem. I fix that."</td>
+            <td>Book CRO audit</td>
+          </tr>
+          <tr>
+            <td>DTC Brands (mid-market)</td>
+            <td>"Our agency made it look good but sales didn't move."</td>
+            <td>"Beautiful isn't the goal. Converting is. I specialize in the gap between the two."</td>
+            <td>Show me your PDP</td>
+          </tr>
+          <tr>
+            <td>Designers / Developers</td>
+            <td>"How do I add CRO to my design practice?"</td>
+            <td>"Design without conversion strategy is decoration. Here's the system I use."</td>
+            <td>Follow for the framework</td>
+          </tr>
+          <tr>
+            <td>Fiverr Buyers</td>
+            <td>"I need my page fixed fast without guessing."</td>
+            <td>"I'll audit your page, identify the 3 biggest revenue blockers, and fix them — with proof."</td>
+            <td>Order the CRO audit gig</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Key messages -->
+    <div class="card" style="margin-top:16px;">
+      <div class="card-label">Core Message Architecture</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:3px 8px;border-radius:3px;flex-shrink:0;margin-top:2px;">Primary</div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:#e0e0e0;line-height:1.6;">"Most Shopify stores bleed revenue through pages that look fine but don't convert — I diagnose and fix the exact points where the sale breaks."</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="background:rgba(224,64,160,0.2);color:#E040A0;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:3px 8px;border-radius:3px;flex-shrink:0;margin-top:2px;">Supporting 1</div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6;">Design and conversion strategy are the same job — not two separate briefs.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="background:rgba(123,47,190,0.2);color:#9B5FDE;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:3px 8px;border-radius:3px;flex-shrink:0;margin-top:2px;">Supporting 2</div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6;">Every element on a Shopify page is either helping or hurting conversion. There is no neutral design.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="background:rgba(123,47,190,0.2);color:#9B5FDE;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:3px 8px;border-radius:3px;flex-shrink:0;margin-top:2px;">Supporting 3</div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6;">CRO isn't a phase after design. It's what design is for.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONTENT PILLARS -->
+  <div class="section" id="pillars">
+    <div class="section-header">
+      <div class="section-label-tag">04 — Content Pillars</div>
+      <div class="section-title">What We Publish</div>
+      <p class="section-desc">Three pillars structure all Koolestpro content. Every post belongs to one. The ratio: 40% Craft · 40% Conversion · 20% Builder.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="pillar pillar-1">
+        <div class="pillar-number">1</div>
+        <div class="pillar-tag pillar-tag-1">Digital Craftsmanship</div>
+        <div class="pillar-title">The How-To</div>
+        <div class="pillar-desc">Technical depth. Step-by-step execution. Shopify-native methods. This is where you teach the actual craft — Liquid, Replo, Instant, animations, metafields.</div>
+        <div class="pillar-types">
+          <div class="pillar-type">Tutorial</div>
+          <div class="pillar-type">Tip</div>
+          <div class="pillar-type">Walkthrough</div>
+          <div class="pillar-type">Framework</div>
+        </div>
+      </div>
+      <div class="pillar pillar-2">
+        <div class="pillar-number">2</div>
+        <div class="pillar-tag pillar-tag-2">Conversion Strategy</div>
+        <div class="pillar-title">The Why</div>
+        <div class="pillar-desc">CRO audits, before/after rebuilds, conversion psychology. The strategic layer — why buyers stop, where revenue leaks, what the data says.</div>
+        <div class="pillar-types">
+          <div class="pillar-type">CRO Fix</div>
+          <div class="pillar-type">Case Study</div>
+          <div class="pillar-type">Audit</div>
+          <div class="pillar-type">Before/After</div>
+        </div>
+      </div>
+      <div class="pillar pillar-3">
+        <div class="pillar-number">3</div>
+        <div class="pillar-tag pillar-tag-3">Builder's Journey</div>
+        <div class="pillar-title">The Who</div>
+        <div class="pillar-desc">Behind the scenes of building a design practice from Nigeria. Real client stories, lessons from projects, the process of building in public.</div>
+        <div class="pillar-types">
+          <div class="pillar-type">Personal</div>
+          <div class="pillar-type">Reflection</div>
+          <div class="pillar-type">Process</div>
+          <div class="pillar-type">Story</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Publishing cadence -->
+    <div class="card" style="margin-top:16px;">
+      <div class="card-label">Publishing Cadence — LinkedIn</div>
+      <div style="display:flex;gap:0;margin-top:8px;">
+        <div style="flex:1;padding:16px;border-right:1px solid rgba(255,255,255,0.06);text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:#FF9500;">Mon</div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Tip / Craft</div>
+        </div>
+        <div style="flex:1;padding:16px;border-right:1px solid rgba(255,255,255,0.06);text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:#E040A0;">Wed</div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">CRO Fix / Case Study</div>
+        </div>
+        <div style="flex:1;padding:16px;text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:#9B5FDE;">Fri</div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Personal / Builder</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- VISUAL IDENTITY -->
+  <div class="section" id="visual">
+    <div class="section-header">
+      <div class="section-label-tag">05 — Visual Identity</div>
+      <div class="section-title">How We Look</div>
+      <p class="section-desc">The complete visual system — colors, typography, gradient rules, and imagery guidelines.</p>
+    </div>
+
+    <!-- COLOR PALETTE -->
+    <div class="card-label" style="margin-bottom:16px;">Color Palette — click any swatch to copy hex</div>
+
+    <div class="swatch-row">
+      <div class="swatch" onclick="copyHex('#FF9500','Koolest Orange')">
+        <div class="swatch-color" style="background:#FF9500;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Koolest Orange</div>
+          <div class="swatch-hex">#FF9500</div>
+          <div class="swatch-role">Primary · CTA · Accent</div>
+        </div>
+      </div>
+      <div class="swatch" onclick="copyHex('#E040A0','Conversion Pink')">
+        <div class="swatch-color" style="background:#E040A0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Conversion Pink</div>
+          <div class="swatch-hex">#E040A0</div>
+          <div class="swatch-role">Gradient midpoint</div>
+        </div>
+      </div>
+      <div class="swatch" onclick="copyHex('#7B2FBE','Builder Purple')">
+        <div class="swatch-color" style="background:#7B2FBE;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Builder Purple</div>
+          <div class="swatch-hex">#7B2FBE</div>
+          <div class="swatch-role">Gradient end · Depth</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="swatch-row">
+      <div class="swatch" onclick="copyHex('#090909','Near Black')">
+        <div class="swatch-color" style="background:#090909;border:1px solid rgba(255,255,255,0.08);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Near Black</div>
+          <div class="swatch-hex">#090909</div>
+          <div class="swatch-role">Page background</div>
+        </div>
+      </div>
+      <div class="swatch" onclick="copyHex('#1b1f23','Surface Dark')">
+        <div class="swatch-color" style="background:#1b1f23;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Surface Dark</div>
+          <div class="swatch-hex">#1b1f23</div>
+          <div class="swatch-role">Cards · LinkedIn frame</div>
+        </div>
+      </div>
+      <div class="swatch" onclick="copyHex('#e0e0e0','Off White')">
+        <div class="swatch-color" style="background:#e0e0e0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Off White</div>
+          <div class="swatch-hex">#e0e0e0</div>
+          <div class="swatch-role">Primary text</div>
+        </div>
+      </div>
+      <div class="swatch" onclick="copyHex('rgba(255,255,255,0.4)','Muted Text')">
+        <div class="swatch-color" style="background:rgba(255,255,255,0.4);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Muted Text</div>
+          <div class="swatch-hex">rgba(255,255,255,0.4)</div>
+          <div class="swatch-role">Secondary text</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gradient rules -->
+    <div class="card" style="margin-top:8px;">
+      <div class="card-label">The Signature Gradient</div>
+      <div class="grad-strip"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">
+        <code style="color:#FF9500;">linear-gradient(90deg, #FF9500, #E040A0, #7B2FBE)</code><br><br>
+        Used on: CTA buttons, gradient bars, avatar rings, section accents, stat highlights.<br><br>
+        <strong style="color:rgba(255,80,80,0.8);">⚠ Rule:</strong> Gradient text MUST use SVG <code>&lt;linearGradient&gt;</code>, NOT CSS <code>-webkit-background-clip:text</code>. CSS gradient text breaks in PNG/PDF export.
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="card-label" style="margin-top:32px;margin-bottom:16px;">Typography System</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div class="type-row" style="padding:20px 24px 16px;">
+        <div class="type-meta">
+          <div class="type-meta-name">Display / Hero</div>
+          <div class="type-meta-spec">Syne 800 · 48–104px</div>
+        </div>
+        <div class="type-sample">
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:52px;letter-spacing:-2px;line-height:1;color:#e0e0e0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Koolestpro</div>
+        </div>
+      </div>
+      <div class="type-row" style="padding:16px 24px;">
+        <div class="type-meta">
+          <div class="type-meta-name">Section Title</div>
+          <div class="type-meta-spec">Syne 800 · 32–40px</div>
+        </div>
+        <div class="type-sample">
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:36px;letter-spacing:-1px;color:#e0e0e0;">Conversion Layer</div>
+        </div>
+      </div>
+      <div class="type-row" style="padding:16px 24px;">
+        <div class="type-meta">
+          <div class="type-meta-name">Card Headline</div>
+          <div class="type-meta-spec">Syne 700 · 18–24px</div>
+        </div>
+        <div class="type-sample">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.5px;color:#e0e0e0;">Your PDP Is Leaking Sales</div>
+        </div>
+      </div>
+      <div class="type-row" style="padding:16px 24px;">
+        <div class="type-meta">
+          <div class="type-meta-name">Body / UI</div>
+          <div class="type-meta-spec">DM Mono 400 · 11–13px</div>
+        </div>
+        <div class="type-sample">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.7;">Most stores lose the sale between the fold and the cart. Not because the design is bad — because the conversion layer is missing entirely.</div>
+        </div>
+      </div>
+      <div class="type-row" style="padding:16px 24px;">
+        <div class="type-meta">
+          <div class="type-meta-name">Label / Meta</div>
+          <div class="type-meta-spec">DM Mono 700 · 9–10px</div>
+        </div>
+        <div class="type-sample">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);">CRO Fix · Case Study · 5 min read</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imagery rules -->
+    <div class="card" style="margin-top:16px;">
+      <div class="card-label">Imagery &amp; Photo Guidelines</div>
+      <div class="grid-2" style="margin-top:8px;">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:8px;letter-spacing:1px;">Ridwan's Photo Assets</div>
+          <div class="do-item" style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;"><span style="color:#FF9500;">avatar-circle.jpg</span> — Serious pose. LK header, CTA slides.</div>
+          <div class="do-item" style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;"><span style="color:#FF9500;">avatar-circle-smile.jpg</span> — Smiling. Warmer CTA slides.</div>
+          <div class="do-item" style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;"><span style="color:#FF9500;">photo-main.jpg</span> — Full body, black bg. Before/after slides.</div>
+          <div class="do-item" style="padding:6px 0;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;"><span style="color:#FF9500;">photo-thinking.jpg</span> — Hand on chin. Framework/edu slides.</div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:8px;letter-spacing:1px;">Visual Style Rules</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.9;">
+            ✓ Dark backgrounds only (#090909 or #1b1f23)<br>
+            ✓ Real Shopify store screenshots (not mockups)<br>
+            ✓ Annotated before/after with visible metrics<br>
+            ✓ Clean monochrome UI components<br>
+            ✕ Stock photos or generic device mockups<br>
+            ✕ Bright/white backgrounds<br>
+            ✕ Gradients on text via CSS (SVG only)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONSISTENCY CHECKLIST -->
+  <div class="section" id="checklist">
+    <div class="section-header">
+      <div class="section-label-tag">06 — Brand Consistency</div>
+      <div class="section-title">Pre-Publish Checklist</div>
+      <p class="section-desc">Run this before every piece of content goes live. Tap each item when confirmed.</p>
+    </div>
+
+    <div class="grid-2">
+      <!-- Voice checks -->
+      <div class="card">
+        <div class="card-label">Voice &amp; Copy</div>
+        <div class="check-score" id="score-voice">0 / 6 checked</div>
+        <div class="check-progress"><div class="check-bar" id="bar-voice"></div></div>
+        <div id="checks-voice">
+          <div class="check-item" onclick="toggle(this,'voice')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Opens with the problem or insight — not a warmup</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'voice')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Has a concrete, actionable takeaway</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'voice')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">No filler phrases ("excited to share", "it's important to…")</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'voice')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Uses specific numbers or real client context where possible</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'voice')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">CTA is clear and single — one ask, not three</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'voice')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Fits within one of the 3 content pillars</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual checks -->
+      <div class="card">
+        <div class="card-label">Visual &amp; Design</div>
+        <div class="check-score" id="score-visual">0 / 6 checked</div>
+        <div class="check-progress"><div class="check-bar" id="bar-visual"></div></div>
+        <div id="checks-visual">
+          <div class="check-item" onclick="toggle(this,'visual')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Colors are from the approved palette only</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'visual')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Gradient text uses SVG linearGradient (not CSS clip)</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'visual')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Fonts are Syne (headlines) + DM Mono (body) only</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'visual')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Real Ridwan photo used (not "R" placeholder)</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'visual')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Stat SVGs are 300px+ wide (no clipping on export)</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'visual')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">.swb and UI chrome hidden in download export</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data checks -->
+      <div class="card">
+        <div class="card-label">Data &amp; Integrity</div>
+        <div class="check-score" id="score-data">0 / 5 checked</div>
+        <div class="check-progress"><div class="check-bar" id="bar-data"></div></div>
+        <div id="checks-data">
+          <div class="check-item" onclick="toggle(this,'data')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Post JSON has unique id field</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'data')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">folder path points to an actual existing HTML file</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'data')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Status is Created / Ready (never auto-set Published)</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'data')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Metrics cited are from real client work (no invented numbers)</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'data')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">SVG gradient IDs are unique (no collision across sections)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Channel checks -->
+      <div class="card">
+        <div class="card-label">Channel Fit</div>
+        <div class="check-score" id="score-channel">0 / 5 checked</div>
+        <div class="check-progress"><div class="check-bar" id="bar-channel"></div></div>
+        <div id="checks-channel">
+          <div class="check-item" onclick="toggle(this,'channel')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">LinkedIn: carousel has 8–10 slides, hook in slide 1</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'channel')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Caption opens with the problem — not the solution</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'channel')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Fiverr: outcome-first, no jargon in first line</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'channel')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">YouTube: step-by-step, screen-share, shows real work</div>
+          </div>
+          <div class="check-item" onclick="toggle(this,'channel')">
+            <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="check-text">Cold email: names specific problem spotted on their store</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset -->
+    <div style="text-align:center;margin-top:24px;">
+      <button onclick="resetAll()" style="font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border-radius:6px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);cursor:pointer;">Reset All Checks</button>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<footer>
+  <div class="footer-logo">Koolest<span>pro</span></div>
+  <div class="footer-sub">Brand System v1.0 · Ridwan Adekunle · Ibadan, Nigeria · Updated April 2026</div>
+</footer>
+
+<div class="copy-toast" id="copy-toast">Copied!</div>
+
+<script>
+// ── Copy hex to clipboard ────────────────────────────────────
+function copyHex(hex, name) {
+  navigator.clipboard.writeText(hex).catch(() => {});
+  const t = document.getElementById('copy-toast');
+  t.textContent = name + ' · ' + hex + ' copied';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ── Checklist logic ──────────────────────────────────────────
+const counts = {voice:6, visual:6, data:5, channel:5};
+
+function toggle(el, group) {
+  el.classList.toggle('checked');
+  const box = el.querySelector('.check-box');
+  box.classList.toggle('checked');
+  updateScore(group);
+}
+
+function updateScore(group) {
+  const container = document.getElementById('checks-' + group);
+  const items = container.querySelectorAll('.check-item');
+  let done = 0;
+  items.forEach(i => { if(i.classList.contains('checked')) done++; });
+  const total = counts[group];
+  document.getElementById('score-' + group).textContent = done + ' / ' + total + ' checked';
+  document.getElementById('bar-' + group).style.width = (done/total*100) + '%';
+}
+
+function resetAll() {
+  document.querySelectorAll('.check-item').forEach(i => {
+    i.classList.remove('checked');
+    i.querySelector('.check-box').classList.remove('checked');
+  });
+  Object.keys(counts).forEach(g => {
+    document.getElementById('score-' + g).textContent = '0 / ' + counts[g] + ' checked';
+    document.getElementById('bar-' + g).style.width = '0%';
+  });
+}
+
+// ── Active nav link on scroll ────────────────────────────────
+const sections = document.querySelectorAll('.section, .hero');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const id = e.target.id;
+      const active = document.querySelector('.nav-link[href="#' + id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, {threshold: 0.3});
+
+sections.forEach(s => { if(s.id) observer.observe(s); });
+</script>
+</body>
+</html>

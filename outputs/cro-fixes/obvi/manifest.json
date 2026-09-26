@@ -1,0 +1,44 @@
+{
+  "sourceFile": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi_homepage-hero_content.html",
+  "exportedAt": "2026-08-02T08:37:23.891931+00:00",
+  "postBrand": "Obvi",
+  "postSlug": "obvi_homepage-hero",
+  "postType": "CRO Fix",
+  "files": {
+    "ba-graphic": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/koolestpro_obvi_before-after.png",
+      "bytes": 1717971
+    },
+    "anno-graphic": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/koolestpro_obvi_annotated-changes.png",
+      "bytes": 763497
+    },
+    "slide-1": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide1.png",
+      "bytes": 248147
+    },
+    "slide-2": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide2.png",
+      "bytes": 240536
+    },
+    "slide-3": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide3.png",
+      "bytes": 220002
+    },
+    "slide-4": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide4.png",
+      "bytes": 233620
+    },
+    "slide-5": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide5.png",
+      "bytes": 249124
+    },
+    "slide-6": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide6.png",
+      "bytes": 413847
+    },
+    "captions": {
+      "path": "/sessions/confident-laughing-gauss/mnt/koolestpro-cowork-v2/outputs/cro-fixes/obvi/captions.txt"
+    }
+  }
+}

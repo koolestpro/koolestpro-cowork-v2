@@ -1,0 +1,177 @@
+{
+  "brand": "KURA",
+  "brandSlug": "kura",
+  "cloudName": "drl0rscuf",
+  "discovered": "2026-07-18",
+  "howToUse": "These KURA page-presentation videos were ALREADY hosted in Cloudinary (uploaded for Ridwan's GitHub portfolio via replo-rebuilds). Do NOT re-upload them with upload_assets.py \u2014 reference these URLs directly as asset_urls on the distribution queue rows. Stored format is .mov; ALWAYS post the .mp4 delivery URL below (Cloudinary transcodes on the fly, verified 2026-07-18) because LinkedIn/Instagram prefer real mp4. Add /q_auto/ after /upload/ for a compressed variant if a platform rejects the file size.",
+  "urlPattern": {
+    "base": "https://res.cloudinary.com/drl0rscuf/video/upload/",
+    "note": "append {version}/portfolio/videos/{publicId}.mp4 \u2014 swapping the .mov extension for .mp4 triggers on-the-fly transcode (verified: returns video/mp4)",
+    "compressed": "https://res.cloudinary.com/drl0rscuf/video/upload/q_auto/{version}/portfolio/videos/{publicId}.mp4"
+  },
+  "pages": {
+    "homepage": {
+      "cover": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1784640601/koolestpro/kura-showcase/kura-hp01-cover-fixed.mp4",
+        "w": 960,
+        "h": 720,
+        "seconds": 21.48,
+        "bytes": 34739548,
+        "supersedes": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794078/portfolio/videos/kura-homepage-cover-mp4.mp4",
+        "note": "FIXED 2026-07-21: old cover had the phone bezel overlapping/cutting across the laptop's screen content (device-overlap bug in frame_video.py build_cover). Re-composited side-by-side, no overlap, via corrected script. Old asset kept live at the original URL (unlisted) in case of rollback need."
+      },
+      "laptop": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794110/portfolio/videos/kura-homepage-laptop-mp4.mp4",
+        "w": 960,
+        "h": 720,
+        "seconds": 21.48,
+        "bytes": 32903860
+      },
+      "mobile": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794173/portfolio/videos/kura-homepage-mobile-mp4.mp4",
+        "w": 1080,
+        "h": 1350,
+        "seconds": 21.48,
+        "bytes": 33817262
+      }
+    },
+    "advertorial": {
+      "cover": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778793959/portfolio/videos/kura-advertorial-cover-mp4.mp4",
+        "w": 960,
+        "h": 720,
+        "seconds": 21.48,
+        "bytes": 40099086
+      },
+      "laptop": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794002/portfolio/videos/kura-advertorial-laptop-mp4.mp4",
+        "w": 960,
+        "h": 720,
+        "seconds": 21.48,
+        "bytes": 38073304
+      },
+      "mobile": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794045/portfolio/videos/kura-advertorial-mobile-mp4.mp4",
+        "w": 1080,
+        "h": 1350,
+        "seconds": 21.48,
+        "bytes": 38428565
+      }
+    },
+    "listicle": {
+      "cover": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794527/portfolio/videos/kura-listicle-cover-mp4.mp4",
+        "w": 960,
+        "h": 720,
+        "seconds": 21.48,
+        "bytes": 35826200
+      },
+      "laptop": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795178/portfolio/videos/kura-listicle-laptop-mp4.mp4",
+        "w": 960,
+        "h": 720,
+        "seconds": 21.48,
+        "bytes": 34570541
+      },
+      "mobile": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795217/portfolio/videos/kura-listicle-mobile-mp4.mp4",
+        "w": 1080,
+        "h": 1350,
+        "seconds": 21.48,
+        "bytes": 36076993
+      }
+    },
+    "post-purchase": {
+      "cover": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778848326/portfolio/videos/kura-post-purchase-cover-mp4.mp4",
+        "w": 960,
+        "h": 720,
+        "seconds": 9.88,
+        "bytes": 12609743
+      },
+      "laptop": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778848338/portfolio/videos/kura-post-purchase-laptop-mp4.mp4",
+        "w": 960,
+        "h": 720,
+        "seconds": 9.88,
+        "bytes": 11163739
+      },
+      "mobile": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778848352/portfolio/videos/kura-post-purchase-mobile-mp4.mp4",
+        "w": 1080,
+        "h": 1350,
+        "seconds": 9.88,
+        "bytes": 12929299
+      }
+    },
+    "pdp": {
+      "cover": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795747/portfolio/videos/kura-pdp-cover-mp4.mp4",
+        "w": 1440,
+        "h": 1080,
+        "seconds": 26.33,
+        "bytes": 43236335
+      },
+      "coverAlt": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795773/portfolio/videos/kura-laptop-mobile-mp4.mp4",
+        "w": 1440,
+        "h": 1080,
+        "seconds": 25.03,
+        "bytes": 26016631,
+        "note": "Second cover video for the PDP (confirmed by Ridwan 2026-07-18). Use as an alternate cover so the same clip isn't repeated across weeks."
+      },
+      "laptop": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794790/portfolio/videos/kura-desktop-mp4.mp4",
+        "w": 1440,
+        "h": 1080,
+        "seconds": 21.48,
+        "bytes": 30153212,
+        "note": "Confirmed by Ridwan 2026-07-18 as the PDP laptop video (public id says 'desktop')."
+      },
+      "mobile": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795259/portfolio/videos/kura-mobile-mp4.mp4",
+        "w": 1080,
+        "h": 1920,
+        "seconds": 21.48,
+        "bytes": 43995311,
+        "note": "Confirmed by Ridwan 2026-07-18 as the PDP mobile video. NOTE: this is the ONLY true 9:16 asset in the whole library \u2014 prioritise it for Instagram Reels."
+      },
+      "mobileAlt": {
+        "url": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795814/portfolio/videos/kura-pdp-mobile-mov.mp4",
+        "w": 720,
+        "h": 1280,
+        "seconds": 30.73,
+        "bytes": 29776286,
+        "note": "Second PDP mobile cut (9:16-ish at 720x1280). Alternate to the main mobile video."
+      }
+    }
+  },
+  "images": {
+    "note": "Uploaded 2026-07-18 from outputs/templates/kura_hp-01_2026-07-13/ via the koolestpro_unsigned preset. These are the homepage (hp-01) Template Showcase stills \u2014 the only KURA page with local image deliverables so far.",
+    "homepage": {
+      "cover": {
+        "url": "https://res.cloudinary.com/drl0rscuf/image/upload/v1784399736/kura-hp01-cover.png",
+        "role": "device-mockup cover still (laptop + phone, brand gradient bg)"
+      },
+      "preview": {
+        "url": "https://res.cloudinary.com/drl0rscuf/image/upload/v1784399741/kura-hp01-preview.png",
+        "role": "3-phone angled preview, 8:5 landscape"
+      },
+      "mosaic": {
+        "url": "https://res.cloudinary.com/drl0rscuf/image/upload/v1784399749/kura-hp01-mosaic.png",
+        "role": "full-page 2-column mosaic of the whole homepage"
+      }
+    }
+  },
+  "generalPurpose": {
+    "note": "Per Ridwan (2026-07-18): surplus/alternate cuts are free to use as general filler posting \u2014 e.g. Twitter/X singles, Instagram Sunday filler, or a second-angle repost \u2014 rather than being tied to one page's scheduled slot.",
+    "candidates": [
+      "pdp.coverAlt",
+      "pdp.mobileAlt"
+    ]
+  },
+  "knownGaps": [
+    "RESOLVED 2026-07-18: the three KURA homepage stills are now in Cloudinary (see images.homepage above).",
+    "Only the hp-01 (homepage) page has image deliverables. The other KURA pages (pdp, advertorial, listicle, post-purchase) have videos in Cloudinary but no stills generated yet \u2014 run page-presentation-kit against those pages if image posts are wanted for them."
+  ]
+}

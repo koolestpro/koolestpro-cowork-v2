@@ -1,0 +1,131 @@
+{
+  "label": "April 2026",
+  "slug": "2026-04",
+  "topic": "starting point",
+  "generatedAt": "2026-04-24T11:30:31.170Z",
+  "totalIdeas": 15,
+  "htmlPath": "outputs/ideas/ideas_2026-04.html",
+  "jsonPath": "outputs/ideas/ideas_2026-04.json",
+  "ideas": [
+    {
+      "title": "Your Mobile Menu Is Losing You 15% of Sales",
+      "brief": "Analysis of mobile navigation patterns that kill conversion - hamburger menu depth, search placement, and category visibility fixes that restored checkout flow",
+      "type": "CRO Fix",
+      "pillar": "Conversion Strategy",
+      "priority": "Hot",
+      "angle": "Specific mobile UX problem with conversion impact data"
+    },
+    {
+      "title": "GSAP ScrollTrigger: 4 Animations That Actually Convert",
+      "brief": "Technical breakdown of scroll-triggered animations that enhance rather than distract - reveal patterns, progress indicators, and sticky elements with Liquid integration",
+      "type": "Tip",
+      "pillar": "Digital Craftsmanship",
+      "priority": "Warm",
+      "angle": "Advanced technical skill with business ROI"
+    },
+    {
+      "title": "I Built 12 Stores in Q1. Here's What I Learned About Client Expectations",
+      "brief": "Personal reflection on managing scope creep, timeline expectations, and the 3 conversations that prevent 90% of project friction",
+      "type": "Personal",
+      "pillar": "Builder's Journey",
+      "priority": "Warm",
+      "angle": "Vulnerable insight from high-volume experience"
+    },
+    {
+      "title": "Subscription Upsell Math: When Bundle Discounts Backfire",
+      "brief": "Case study of subscription box brand where 20% bundle discount decreased LTV by 35% - psychology of perceived value vs actual commitment",
+      "type": "Case Study",
+      "pillar": "Conversion Strategy",
+      "priority": "Hot",
+      "angle": "Counter-intuitive pricing strategy with real numbers"
+    },
+    {
+      "title": "Figma Component System for Shopify: The 15-Minute Setup",
+      "brief": "Step-by-step component library that mirrors Shopify section structure - auto-layout, variants, and handoff annotations that eliminate developer guesswork",
+      "type": "Tip",
+      "pillar": "Digital Craftsmanship",
+      "priority": "Warm",
+      "angle": "Design First, Develop Fast framework in action"
+    },
+    {
+      "title": "Why I Charge 50% More for Fashion Stores",
+      "brief": "The hidden complexity of fashion eCommerce - variant matrices, lookbook integration, size guide optimization, and why generic themes fail this vertical",
+      "type": "Personal",
+      "pillar": "Builder's Journey",
+      "priority": "Hot",
+      "angle": "Industry-specific pricing strategy revelation"
+    },
+    {
+      "title": "Trust Signals That Kill Sales: The Over-Credibility Problem",
+      "brief": "Analysis of trust badge overload, review widget spam, and security seal redundancy - when too many trust signals create decision paralysis",
+      "type": "CRO Fix",
+      "pillar": "Conversion Strategy",
+      "priority": "Warm",
+      "angle": "Unexpected trust signal optimization angle"
+    },
+    {
+      "title": "Instant Page Builder: Custom Section Architecture",
+      "brief": "Advanced Instant techniques for complex layouts - nested sections, conditional logic, and dynamic content blocks that maintain theme performance",
+      "type": "Tip",
+      "pillar": "Digital Craftsmanship",
+      "priority": "Cold",
+      "angle": "Deep tool expertise for advanced users"
+    },
+    {
+      "title": "The Email Capture That Converted 47% of Mobile Traffic",
+      "brief": "Breakdown of exit-intent alternative for mobile - timing, copy, and incentive strategy that worked for direct-to-consumer wellness brand",
+      "type": "Case Study",
+      "pillar": "Conversion Strategy",
+      "priority": "Hot",
+      "angle": "Mobile-specific lead generation with high conversion data"
+    },
+    {
+      "title": "My 3AM Debugging Sessions Taught Me This About Liquid",
+      "brief": "Personal story about liquid syntax gotchas, object relationships, and the debugging approach that saves hours of theme development frustration",
+      "type": "Personal",
+      "pillar": "Digital Craftsmanship",
+      "priority": "Warm",
+      "angle": "Vulnerable technical learning experience"
+    },
+    {
+      "title": "Checkout Abandonment Fix: The Payment Method Order",
+      "brief": "A/B test results showing 12% conversion lift from reordering payment options - regional preferences and cognitive load considerations",
+      "type": "CRO Fix",
+      "pillar": "Conversion Strategy",
+      "priority": "Hot",
+      "angle": "Micro-optimization with significant impact"
+    },
+    {
+      "title": "Design System Tokens for Shopify: CSS Custom Properties Setup",
+      "brief": "Implementation guide for scalable design systems using CSS variables - color schemes, spacing scales, and typography that work across theme updates",
+      "type": "Tip",
+      "pillar": "Digital Craftsmanship",
+      "priority": "Cold",
+      "angle": "Advanced design system methodology"
+    },
+    {
+      "title": "I Lost a $15K Project Over This Communication Mistake",
+      "brief": "Story of project scope misalignment, the specific email that caused the breakdown, and the client communication framework developed to prevent repeats",
+      "type": "Personal",
+      "pillar": "Builder's Journey",
+      "priority": "Warm",
+      "angle": "Expensive lesson learned with prevention strategy"
+    },
+    {
+      "title": "Product Video Placement: Above vs Below the Fold Data",
+      "brief": "Split test analysis across 8 stores comparing hero video placement - engagement rates, scroll behavior, and conversion impact by product category",
+      "type": "Case Study",
+      "pillar": "Conversion Strategy",
+      "priority": "Warm",
+      "angle": "Video optimization with cross-vertical data"
+    },
+    {
+      "title": "Typography Hierarchy That Converts: The 6-Level System",
+      "brief": "Font weight, size, and spacing progression that guides purchase decisions - how typographic contrast creates conversion funnels within page layouts",
+      "type": "Tip",
+      "pillar": "Digital Craftsmanship",
+      "priority": "Cold",
+      "angle": "Design fundamentals with conversion focus"
+    }
+  ]
+}

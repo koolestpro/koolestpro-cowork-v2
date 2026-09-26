@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "Outreach packages for real-brand CRO/static-ad concepts. See docs/koolestpro-content-operating-plan.md Step 7.",
+    "updatedAt": "2026-07-12T00:00:00.000Z",
+    "recordSchema": {
+      "id": "string, unique, e.g. outreach-<brand-slug>-<date>",
+      "brand": "string",
+      "relatedTargetId": "string, links to targets_pool.json targets[].id",
+      "relatedContentItemId": "string, links to pipeline_data.json items[].id for the public post, if any",
+      "contactName": "string",
+      "contactMethod": "email | dm | other",
+      "improvementSummary": "string, what was improved - lead with this",
+      "beforeAfterLink": "string, URL or local path to the visual",
+      "pitchDraft": "string, short permission-based pitch per Step 7 notes",
+      "followUpSequence": "array of {step, sendAt, message}",
+      "status": "Not Contacted | Contacted | Replied | Booked | Closed-Won | Closed-Lost",
+      "createdAt": "ISO timestamp",
+      "lastUpdatedAt": "ISO timestamp"
+    }
+  },
+  "outreach": [
+    {
+      "id": "outreach-v1ce-20260712",
+      "brand": "V1CE",
+      "relatedTargetId": "target-v1ce-1751673600004",
+      "relatedContentItemId": "cro-fix-v1ce_tap-review-card-20260707",
+      "contactName": "Instagram @v1cecard (primary); fallback: v1ce.co/pages/contact-us contact form. Found via web search 2026-07-12 — not verified as monitored, confirm before relying on it for the follow-up sequence timing.",
+      "contactMethod": "dm",
+      "improvementSummary": "Removed the stacked cookie-consent + email-quiz popup blocking the PDP on load, moved price and the top benefit line above the style/quantity picker, backed the 5-star rating with a trust badge (was sitting next to just 2 reviews), added a return/guarantee line near the CTA, repositioned the chat bubble off the sticky Add to Cart zone, and swapped the hero image to remove a competing brand's product from frame.",
+      "beforeAfterLink": "outputs/cro-fixes/v1ce_tap-review-card_content.html",
+      "pitchDraft": "Hey — quick one. I put together an unofficial redesign concept for your NFC review-card product page. Right now a cookie modal and an email quiz stack on load, and the price + benefits sit below the style picker. I moved things around so a buyer sees why the product matters before they're asked to choose anything. Not asking for anything — just wanted to share since I think it'd move the needle. Want me to send the before/after and the 3 changes I'd prioritize first?",
+      "followUpSequence": [
+        { "step": 1, "sendAt": "day 0", "message": "Hey — quick one. I put together an unofficial redesign concept for your NFC review-card product page. Right now a cookie modal and an email quiz stack on load, and the price + benefits sit below the style picker. I moved things around so a buyer sees why the product matters before they're asked to choose anything. Not asking for anything — just wanted to share since I think it'd move the needle. Want me to send the before/after and the 3 changes I'd prioritize first?" },
+        { "step": 2, "sendAt": "day 4 (if no reply)", "message": "No worries if you're slammed — bumping this in case it got buried. Happy to send the before/after whenever's useful, no pressure." },
+        { "step": 3, "sendAt": "day 10 (if no reply)", "message": "Last note from me on this one. Here's the before/after in case it's ever useful: [link]. Either way, good luck with the store." }
+      ],
+      "status": "Not Contacted",
+      "createdAt": "2026-07-12T00:00:00.000Z",
+      "lastUpdatedAt": "2026-07-12T00:00:00.000Z"
+    },
+    {
+      "id": "outreach-obvi-20260712",
+      "brand": "Obvi",
+      "relatedTargetId": "target-obvi-1751673600012",
+      "relatedContentItemId": "static-ad-obvi_super-collagen-protein-20260711",
+      "contactName": "hello@myobvi.com (general inbox, primary). Instagram @obvi (122K followers) as a DM alternate. Co-founder Ronak Shah's email (Ronak@myobvi.com) surfaced publicly via an Authority Magazine interview but is not a first-touch contact — only consider it if the general inbox and Instagram both go unanswered. Found via web search 2026-07-12.",
+      "contactMethod": "email",
+      "improvementSummary": "Built 4 static ad directions for Super Collagen Protein — problem/solution, benefit/result, social proof, and a subscribe-and-save offer angle — sourced only from Obvi's own public product info (grass-fed collagen peptides, 19g protein per serving, reviewer-reported skin/hair/joint benefits). No invented stats or review counts.",
+      "beforeAfterLink": "outputs/static-ads/obvi_super-collagen-protein_20260711/index.html",
+      "pitchDraft": "Hey — I put together 4 static ad concepts for Super Collagen Protein (problem/solution, a benefit breakdown, social proof, and a subscribe-and-save angle), built off what's already on your product page. Not affiliated with the brand, just thought one of these could work as a scroll-stopper. Want me to send the set over?",
+      "followUpSequence": [
+        { "step": 1, "sendAt": "day 0", "message": "Hey — I put together 4 static ad concepts for Super Collagen Protein (problem/solution, a benefit breakdown, social proof, and a subscribe-and-save angle), built off what's already on your product page. Not affiliated with the brand, just thought one of these could work as a scroll-stopper. Want me to send the set over?" },
+        { "step": 2, "sendAt": "day 4 (if no reply)", "message": "Bumping this in case it got buried — happy to send the 4 ad directions over whenever's useful." },
+        { "step": 3, "sendAt": "day 10 (if no reply)", "message": "Last note from me on this one. Here's the set in case it's ever useful: [link]. Either way, love what you're building." }
+      ],
+      "status": "Not Contacted",
+      "createdAt": "2026-07-12T00:00:00.000Z",
+      "lastUpdatedAt": "2026-07-12T00:00:00.000Z"
+    }
+  ]
+}

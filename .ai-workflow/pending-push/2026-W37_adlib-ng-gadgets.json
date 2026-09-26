@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "week": "2026-W37",
+    "ranAt": "2026-09-09T11:27:51.000Z",
+    "source": "apify-ad-library",
+    "sourceQuery": "Country=NG; Keyword=gadgets; Actor=curious_coder~facebook-ads-library-scraper",
+    "country": "NG",
+    "city": "Lagos",
+    "niche": "Electronics & Gadgets",
+    "ledgerAlreadyRecorded": false,
+    "note": "Scored in the cloud, not yet pushed. import_pending_push.sh pushes this into local KoolestFlow and records the brands in the taken-brands ledger."
+  },
+  "prospects": [
+    {
+      "id": "koolestflow-adlibrary-vcee-gadgets",
+      "brand_name": "Vcee Gadgets",
+      "website_url": "https://vvicsgadgets.com.ng/unbreakable/",
+      "instagram_url": "",
+      "email": "",
+      "whatsapp": "",
+      "country": "NG",
+      "city": "Lagos",
+      "timezone": "",
+      "track": "Scale",
+      "niche": "Electronics & Gadgets",
+      "audience_type": "E-commerce/DTC",
+      "source": "apify-ad-library",
+      "source_query": "Country=NG; Keyword=gadgets; Actor=curious_coder~facebook-ads-library-scraper",
+      "source_url": "https://vvicsgadgets.com.ng/unbreakable/",
+      "notes": "Track: Scale. | Recommended: SEO for spec/comparison search terms, paid search + retargeting, bundle upsell flow. | Channel: Instagram DM primary, WhatsApp second. Manual send only — no DM automation (ban risk). | Pricing frame: Nigeria ladder: Starter N250k-500k / Business N500k-1M / Premium N1M+ (see growth plan D7) | Site quality score: 78/100 (Moderate load time (3.9s); Has mobile viewport meta tag; No meta description — basic SEO gap) | Ad destination type: own_site (https://vvicsgadgets.com.ng/unbreakable/) | Sourced via Meta Ad Library (Apify). Review before outreach.",
+      "signals": "Ad currently active; 292 Facebook page likes; Ad also runs on Instagram; Ad destination is their own site and it checks out (quality 78/100)",
+      "fit_score": 75,
+      "confidence": "medium",
+      "status": "Qualified",
+      "pipeline_stage": "First Message Ready",
+      "next_action": "Send first DM"
+    }
+  ]
+}

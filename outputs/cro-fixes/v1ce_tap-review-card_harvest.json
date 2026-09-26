@@ -1,0 +1,49 @@
+{
+  "pipeline_item_id": "cro-fix-v1ce_tap-review-card-20260714",
+  "brand": "V1CE",
+  "slug": "v1ce_tap-review-card",
+  "type": "CRO Fix",
+  "content_system_folder": "outputs/cro-fixes/",
+  "companion_html": "outputs/cro-fixes/v1ce_tap-review-card_content.html",
+  "harvested_at": "2026-07-14T16:19:59.321924+00:00",
+  "captions": {
+    "linkedin": "Ever land on a page, fight through two pop-ups, and then get asked to pick a style and a quantity before anyone's told you why the product matters?\n\nThat's what happens on this NFC review-card store. Cookie modal first. Dismiss it, an email quiz pops up asking which \"card is actually you.\" Dismiss that, and the cookie modal comes back. Once you're finally through, you're picking Google vs TripAdvisor vs Facebook before you've read a single benefit.\n\nHere's what I changed and why:\n\n1. Removed the blocking popup sequence, so the page loads straight to the product\n2. Moved the price and top benefit line above the style picker (both were real and correct, just sequenced too late)\n3. Kept the full benefit list and bulk-pricing table together lower down, for a buyer who's ready to compare quantities\n4. Repositioned the chat bubble off the sticky CTA zone\n5. Swapped the hero image for a clean shot with no competing brand in frame\n6. Added a return/guarantee line near the CTA\n7. Paired the 5-star rating with a supporting trust badge, since it's currently backed by 2 reviews\n\nSame product, same brand, same price. Just put the reasons to buy before the decisions to make.\n\nDM me \"AUDIT\" if you want me to do this for your store.\n\n#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #ProductPage #Shopify #UXDesign"
+  },
+  "captions_full": {
+    "linkedin": {
+      "text": "Ever land on a page, fight through two pop-ups, and then get asked to pick a style and a quantity before anyone's told you why the product matters?\n\nThat's what happens on this NFC review-card store. Cookie modal first. Dismiss it, an email quiz pops up asking which \"card is actually you.\" Dismiss that, and the cookie modal comes back. Once you're finally through, you're picking Google vs TripAdvisor vs Facebook before you've read a single benefit.\n\nHere's what I changed and why:\n\n1. Removed the blocking popup sequence, so the page loads straight to the product\n2. Moved the price and top benefit line above the style picker (both were real and correct, just sequenced too late)\n3. Kept the full benefit list and bulk-pricing table together lower down, for a buyer who's ready to compare quantities\n4. Repositioned the chat bubble off the sticky CTA zone\n5. Swapped the hero image for a clean shot with no competing brand in frame\n6. Added a return/guarantee line near the CTA\n7. Paired the 5-star rating with a supporting trust badge, since it's currently backed by 2 reviews\n\nSame product, same brand, same price. Just put the reasons to buy before the decisions to make.\n\nDM me \"AUDIT\" if you want me to do this for your store.\n\n#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #ProductPage #Shopify #UXDesign",
+      "source_tab": "tab-linkedin"
+    },
+    "instagram": {
+      "text": "This store's price is fine — £29.99, right next to the title. What your customer actually notices is everything that happens before they reach it: two stacked pop-ups, then a style and quantity decision before a single benefit shows up.\n\nA high-converting page answers \"why\" before it asks \"which one.\" This one asks first.\n\nFollow @koolestpro for weekly CRO breakdowns.\n\n#ShopifyDesign #CRO #eCommerce #CustomerPsychology #ConversionRate #Shopify #UXDesign #ProductPage",
+      "source_tab": "tab-ig"
+    },
+    "hook": {
+      "text": "1. Ever land on a page, fight through two pop-ups, and then get asked to pick a style and a quantity before anyone's told you why the product matters?\n2. This store's price is fine. What's missing is the reason to buy it — buried under two configuration choices the page asks you to make first.\n3. High-converting PDPs answer \"why\" before they ask \"which one.\" This one asks backwards, even though everything it needs is already on the page.\n4. A Shopify store selling NFC review cards — here's the exact sequencing problem I'd fix first, not a redesign from scratch.",
+      "source_tab": "tab-hook"
+    },
+    "x_angles": {
+      "text": "Tweet A (The Rule):\nIf your buyer has to dismiss 2 pop-ups and pick a style before they see why your product matters, the price was never the problem. The order was.\n\nTweet B (The Contrast):\nBefore: cookie modal → email quiz → cookie modal again → pick a style → pick a quantity → finally, the price and the reasons.\nAfter: product, price, benefits, then configure. Nothing else changed.\n\nTweet C (The Hot Take):\nA 5-star rating next to \"2 reviews\" doesn't build trust. It invites questions you're not ready to answer yet.",
+      "source_tab": "tab-twitter-angles"
+    },
+    "x_thread": {
+      "text": "1/ A Shopify store selling NFC review cards asks you to pick a style and a quantity before it tells you why the product matters. Here's what I'd fix first.\n2/ Landed on the page. Cookie modal. Dismissed it. Email quiz. Dismissed that. Cookie modal again. Finally through — and the very next thing asked of me was Style: Google/TripAdvisor/Facebook, then quantity.\n3/ The price (£29.99) and the full benefit list are both real and both fine. They just sit inside a buy-box card you only reach after configuring.\n4/ The fix: kill the popup loop, surface price + the strongest benefit line above the Style/Qty pickers, add a return/guarantee note near the CTA. Same brand, same product, same price.\n5/ Having the right price and the right benefits on the page isn't enough if the buyer has to decide before they see either one. DM \"AUDIT\" if you want this done for your store.",
+      "source_tab": "tab-twitter-thread"
+    }
+  },
+  "assets": {
+    "images": [
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_annotated-changes.png",
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_before-after.png",
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_tap-review-card_slide1.png",
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_tap-review-card_slide2.png",
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_tap-review-card_slide3.png",
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_tap-review-card_slide4.png",
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_tap-review-card_slide5.png",
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_tap-review-card_slide6.png",
+      "outputs/cro-fixes/v1ce/koolestpro_v1ce_tap-review-card_slide7.png"
+    ],
+    "video": []
+  },
+  "warnings": []
+}

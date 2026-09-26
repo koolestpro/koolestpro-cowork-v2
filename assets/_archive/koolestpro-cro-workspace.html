@@ -1,0 +1,2628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Koolestpro CRO Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090909;
+      --bg-elevated: #101010;
+      --bg-card: #121212;
+      --bg-card-strong: #171717;
+      --bg-soft: rgba(255, 255, 255, 0.03);
+      --surface-glow: rgba(255, 149, 0, 0.06);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text: #ffffff;
+      --text-dim: rgba(255, 255, 255, 0.66);
+      --text-faint: rgba(255, 255, 255, 0.34);
+      --orange: #ff9500;
+      --pink: #e040a0;
+      --purple: #7b2fbe;
+      --green: #4fe28a;
+      --red: #ff7a7a;
+      --yellow: #ffcc66;
+      --grad: linear-gradient(135deg, #ff9500 0%, #e040a0 52%, #7b2fbe 100%);
+      --grad-soft: linear-gradient(135deg, rgba(255, 149, 0, 0.14) 0%, rgba(224, 64, 160, 0.14) 52%, rgba(123, 47, 190, 0.14) 100%);
+      --shadow-card: 0 18px 45px rgba(0, 0, 0, 0.28);
+      --shadow-glow: 0 0 0 1px rgba(255, 149, 0, 0.12), 0 24px 60px rgba(224, 64, 160, 0.08);
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --syne: "Syne", sans-serif;
+      --mono: "DM Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 149, 0, 0.18), transparent 24%),
+        radial-gradient(circle at 90% 8%, rgba(224, 64, 160, 0.14), transparent 22%),
+        radial-gradient(circle at 70% 100%, rgba(123, 47, 190, 0.12), transparent 26%),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 28px 20px 80px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: rgba(255, 149, 0, 0.55);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 0 4px rgba(255, 149, 0, 0.08);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .app-shell {
+      max-width: 1540px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--grad-soft);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-badge::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: 13px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+    }
+
+    .brand-badge span {
+      position: relative;
+      z-index: 1;
+      font-family: var(--syne);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.04em;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .label-tiny {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .brand-copy h1 {
+      font-family: var(--syne);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-dim);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.22);
+      color: var(--text);
+    }
+
+    .btn-primary {
+      background: var(--grad);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 16px 34px rgba(224, 64, 160, 0.18);
+    }
+
+    .btn-primary:hover {
+      border-color: transparent;
+      color: #ffffff;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
+        rgba(17, 17, 17, 0.92);
+      padding: 38px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 22px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255, 149, 0, 0.08), transparent 42%),
+        linear-gradient(220deg, rgba(224, 64, 160, 0.08), transparent 40%),
+        linear-gradient(315deg, rgba(123, 47, 190, 0.08), transparent 42%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .hero h2 {
+      font-family: var(--syne);
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      max-width: 11ch;
+      margin: 12px 0 18px;
+    }
+
+    .hero p {
+      max-width: 70ch;
+      color: var(--text-dim);
+    }
+
+    .gradient-line {
+      width: 90px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--grad);
+      margin: 20px 0 24px;
+    }
+
+    .hero-pills,
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill,
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .hero-side {
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-side h3,
+    .section-title,
+    .panel-title,
+    .modal-title {
+      font-family: var(--syne);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-side h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .hero-side p {
+      color: var(--text-dim);
+      margin-bottom: 18px;
+    }
+
+    .hero-side-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-side-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-side-item:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .hero-side-no {
+      min-width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 149, 0, 0.12);
+      color: var(--orange);
+      font-size: 11px;
+    }
+
+    .hero-side-copy strong {
+      display: block;
+      color: var(--text);
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .hero-side-copy span {
+      color: var(--text-dim);
+      font-size: 12px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card,
+    .surface {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.015));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat-card {
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 2px;
+      background: var(--grad);
+      opacity: 0.9;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+
+    .stat-value {
+      font-family: var(--syne);
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .stat-meta {
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+
+    .control-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .search-wrap {
+      flex: 1 1 280px;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .search-wrap input {
+      padding-left: 44px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-faint);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .control-select {
+      min-width: 180px;
+      flex: 0 1 210px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(340px, 0.92fr) minmax(460px, 1.15fr);
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 26px;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-kicker {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 8px;
+    }
+
+    .panel-title {
+      font-size: 24px;
+      line-height: 1.08;
+    }
+
+    .panel-sub {
+      color: var(--text-dim);
+      font-size: 12px;
+      max-width: 62ch;
+      margin-top: 8px;
+    }
+
+    .opportunity-list {
+      display: grid;
+      gap: 12px;
+      max-height: 980px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .opportunity-list::-webkit-scrollbar,
+    .detail-scroll::-webkit-scrollbar,
+    .keywords-grid::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .opportunity-list::-webkit-scrollbar-thumb,
+    .detail-scroll::-webkit-scrollbar-thumb,
+    .keywords-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+    }
+
+    .opp-card {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.024);
+      padding: 18px;
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .opp-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .opp-card.active {
+      border-color: rgba(255, 149, 0, 0.35);
+      background: linear-gradient(180deg, rgba(255, 149, 0, 0.06), rgba(255, 255, 255, 0.03));
+      box-shadow: var(--shadow-glow);
+    }
+
+    .opp-card-head,
+    .inline-split,
+    .form-grid,
+    .comparison-grid,
+    .keyword-meta,
+    .filter-note,
+    .footer-meta {
+      display: grid;
+      gap: 12px;
+    }
+
+    .opp-card-head {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      margin-bottom: 10px;
+    }
+
+    .opp-card-title {
+      font-family: var(--syne);
+      font-size: 20px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .opp-card-sub {
+      color: var(--text-dim);
+      font-size: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .opp-meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tag-gradient {
+      background: var(--grad-soft);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .tag-hot {
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(255, 149, 0, 0.92), rgba(224, 64, 160, 0.92));
+      border-color: transparent;
+    }
+
+    .tag-warm {
+      color: var(--yellow);
+      background: rgba(255, 204, 102, 0.08);
+      border-color: rgba(255, 204, 102, 0.18);
+    }
+
+    .tag-cold {
+      color: var(--text-faint);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .stage-pill {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      white-space: nowrap;
+    }
+
+    .progress-wrap {
+      margin-top: 12px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--text-faint);
+      font-size: 11px;
+      margin-bottom: 7px;
+    }
+
+    .progress-track {
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--grad);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    .empty-state {
+      padding: 28px 20px;
+      border-radius: 18px;
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.02);
+      text-align: center;
+      color: var(--text-dim);
+    }
+
+    .empty-state h4 {
+      font-family: var(--syne);
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .detail-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 860px;
+    }
+
+    .detail-scroll {
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .detail-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .detail-name {
+      font-family: var(--syne);
+      font-size: 34px;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      margin: 8px 0 10px;
+      max-width: 14ch;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .detail-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .pipeline-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .pipeline-step {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      min-height: 84px;
+    }
+
+    .pipeline-step.active {
+      border-color: rgba(255, 149, 0, 0.35);
+      background: linear-gradient(180deg, rgba(255, 149, 0, 0.08), rgba(224, 64, 160, 0.04));
+      box-shadow: inset 0 0 0 1px rgba(255, 149, 0, 0.08);
+    }
+
+    .pipeline-no {
+      font-size: 10px;
+      color: var(--text-faint);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .pipeline-name {
+      font-family: var(--syne);
+      font-size: 16px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .pipeline-desc {
+      color: var(--text-dim);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .form-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.span-2 {
+      grid-column: span 2;
+    }
+
+    .field-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .quick-link {
+      font-size: 11px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 149, 0, 0.22);
+      color: var(--orange);
+      background: rgba(255, 149, 0, 0.06);
+    }
+
+    .quick-link:hover {
+      border-color: rgba(255, 149, 0, 0.5);
+      background: rgba(255, 149, 0, 0.12);
+    }
+
+    .accordion {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.022);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .accordion summary {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 18px;
+      cursor: pointer;
+    }
+
+    .accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .accordion-title {
+      font-family: var(--syne);
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .accordion-meta {
+      color: var(--text-faint);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .accordion-body {
+      padding: 0 18px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .comparison-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 16px;
+    }
+
+    .compare-card {
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .compare-card.before {
+      box-shadow: inset 0 0 0 1px rgba(255, 122, 122, 0.06);
+    }
+
+    .compare-card.after {
+      box-shadow: inset 0 0 0 1px rgba(79, 226, 138, 0.06);
+    }
+
+    .compare-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .compare-label::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.7;
+    }
+
+    .compare-card.before .compare-label {
+      color: var(--red);
+    }
+
+    .compare-card.after .compare-label {
+      color: var(--green);
+    }
+
+    .preview-frame {
+      min-height: 220px;
+      border-radius: 16px;
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+        rgba(0, 0, 0, 0.18);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .preview-empty {
+      text-align: center;
+      color: var(--text-faint);
+      font-size: 12px;
+      padding: 18px;
+      max-width: 28ch;
+    }
+
+    .insight-box {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 149, 0, 0.06);
+      border: 1px solid rgba(255, 149, 0, 0.12);
+      margin-top: 16px;
+    }
+
+    .insight-box strong {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    .insight-box p {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.78fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .keywords-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .keyword-card {
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .keyword-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .keyword-card h4 {
+      font-family: var(--syne);
+      font-size: 22px;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .keyword-card p,
+    .keyword-meta p,
+    .side-note p,
+    .small-note {
+      color: var(--text-dim);
+      font-size: 12px;
+    }
+
+    .keyword-total {
+      min-width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: var(--grad-soft);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      place-items: center;
+      font-family: var(--syne);
+      font-size: 24px;
+    }
+
+    .keyword-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .keyword-chip {
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 11px;
+      line-height: 1.35;
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    }
+
+    .keyword-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 149, 0, 0.3);
+      background: rgba(255, 149, 0, 0.06);
+    }
+
+    .side-note {
+      padding: 20px;
+    }
+
+    .side-note-block {
+      padding: 16px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .side-note-block:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .side-note h4 {
+      font-family: var(--syne);
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .side-note-title {
+      color: var(--text);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .mini-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--text-dim);
+      font-size: 12px;
+    }
+
+    .mini-item strong {
+      color: var(--text);
+      font-weight: 500;
+      min-width: 18px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: inline-block;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--text);
+      background: rgba(18, 18, 18, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-card);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1200;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal {
+      width: min(720px, 100%);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+        rgba(14, 14, 14, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 30px;
+      line-height: 0.98;
+    }
+
+    .modal-sub {
+      color: var(--text-dim);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .modal-close {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-faint);
+      flex-shrink: 0;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .footer-meta {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .micro-card {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .micro-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .danger-btn {
+      border-color: rgba(255, 122, 122, 0.22);
+      color: #ff9090;
+    }
+
+    .danger-btn:hover {
+      border-color: rgba(255, 122, 122, 0.46);
+      color: #ffc0c0;
+    }
+
+    @media (max-width: 1260px) {
+      .stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .workspace,
+      .bottom-grid,
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-shell {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .form-grid,
+      .comparison-grid,
+      .keywords-grid,
+      .footer-meta,
+      .pipeline-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .field.span-2 {
+        grid-column: span 1;
+      }
+
+      .hero,
+      .panel,
+      .side-note,
+      .modal {
+        padding: 20px;
+      }
+
+      .detail-name {
+        font-size: 28px;
+      }
+
+      .hero h2 {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-inline: 14px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar,
+      .panel-header,
+      .detail-top,
+      .modal-head {
+        align-items: stretch;
+      }
+
+      .topbar-actions,
+      .detail-actions,
+      .control-bar {
+        width: 100%;
+      }
+
+      .btn,
+      .control-select,
+      .topbar-actions .btn,
+      .detail-actions .btn {
+        width: 100%;
+      }
+
+      .opp-card-head {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="brand-mark">
+        <div class="brand-badge"><span>k</span></div>
+        <div class="brand-copy">
+          <span class="label-tiny">Koolestpro CRO System</span>
+          <h1>Store Finding + Fix Tracking Workspace</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn" id="import-btn" type="button">Import Backup</button>
+        <button class="btn" id="export-btn" type="button">Export Backup</button>
+        <button class="btn btn-primary" id="open-create-btn" type="button">New Opportunity</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="label-tiny">Central CRO Workspace</span>
+          <h2>Find the store. Audit the page. Attach the fix. Show the before / after.</h2>
+          <div class="gradient-line"></div>
+          <p>This is structured around your real content pipeline: keyword discovery, store capture, page audit, CRO fix tracking, and before/after documentation. It is seeded with the categories and keyword bank from your shared list, then persists your work in the browser so you can keep building the library over time.</p>
+          <div class="hero-pills" style="margin-top: 20px;">
+            <span class="pill">Dark + gradient system</span>
+            <span class="pill">Syne + DM Mono</span>
+            <span class="pill">Any page type</span>
+            <span class="pill">Filterable workflow</span>
+            <span class="pill">Before / after blocks</span>
+          </div>
+        </div>
+        <div class="hero-side">
+          <h3>What qualifies as a strong candidate</h3>
+          <p>Use the quick filter from your sourcing strategy so every saved listing can become content, not just a random swipe file.</p>
+          <div class="hero-side-list">
+            <div class="hero-side-item">
+              <div class="hero-side-no">01</div>
+              <div class="hero-side-copy">
+                <strong>Validation</strong>
+                <span>The offer is already running through ads or has visible traffic signals.</span>
+              </div>
+            </div>
+            <div class="hero-side-item">
+              <div class="hero-side-no">02</div>
+              <div class="hero-side-copy">
+                <strong>Opportunity</strong>
+                <span>The mobile page is weak above the fold, cluttered, or missing trust and clarity.</span>
+              </div>
+            </div>
+            <div class="hero-side-item">
+              <div class="hero-side-no">03</div>
+              <div class="hero-side-copy">
+                <strong>Content potential</strong>
+                <span>You can clearly improve headline, CTA, trust, and proof to create a compelling before/after story.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" id="stats-grid"></section>
+
+    <div class="control-bar">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="search-input" type="search" placeholder="Search store, keyword, page type, tags, or notes">
+      </div>
+      <select class="control-select" id="category-filter" aria-label="Filter by category"></select>
+      <select class="control-select" id="stage-filter" aria-label="Filter by stage"></select>
+      <select class="control-select" id="page-type-filter" aria-label="Filter by page type"></select>
+    </div>
+
+    <section class="workspace">
+      <div class="surface panel">
+        <div class="panel-header">
+          <div>
+            <div class="section-kicker">Opportunity Board</div>
+            <h3 class="panel-title">Tracked Listings</h3>
+            <p class="panel-sub">Every card can move from discovery to published comparison. Click a card to edit its audit, attach its fix, and document the before/after angle.</p>
+          </div>
+          <div class="chip-row" id="results-meta"></div>
+        </div>
+        <div class="opportunity-list" id="opportunity-list"></div>
+      </div>
+
+      <div class="surface panel detail-shell">
+        <div class="detail-scroll" id="detail-panel"></div>
+      </div>
+    </section>
+
+    <section class="bottom-grid">
+      <div class="surface panel">
+        <div class="panel-header">
+          <div>
+            <div class="section-kicker">Keyword Bank</div>
+            <h3 class="panel-title">Seeded Categories</h3>
+            <p class="panel-sub">These are the exact categories and keyword angles from your shared source. Click any keyword to create a new opportunity with that keyword preloaded.</p>
+          </div>
+        </div>
+        <div class="keywords-grid" id="keyword-bank"></div>
+      </div>
+
+      <aside class="surface side-note">
+        <div class="section-kicker">Operator Notes</div>
+        <h4>Use this like a real content pipeline.</h4>
+
+        <div class="side-note-block">
+          <div class="side-note-title">Avoid</div>
+          <p>Skip big brands, luxury brands, super niche tech products, and dead stores with no traffic validation. Those are weak content plays for this workflow.</p>
+        </div>
+
+        <div class="side-note-block">
+          <div class="side-note-title">Best Angles</div>
+          <div class="mini-list">
+            <div class="mini-item"><strong>1.</strong><span>This brand is spending on ads but their mobile UX is killing conversions.</span></div>
+            <div class="mini-item"><strong>2.</strong><span>I redesigned this product page above the fold and fixed the trust + CTA flow.</span></div>
+            <div class="mini-item"><strong>3.</strong><span>Why this viral product page is losing money and how the fix changes the story.</span></div>
+          </div>
+        </div>
+
+        <div class="side-note-block">
+          <div class="side-note-title">Page Types</div>
+          <p>Use this for PDPs, homepages, collection pages, advertorials, listicles, cart flows, bundle pages, quiz pages, landing pages, and any custom page type. The page type field stays freeform.</p>
+        </div>
+
+        <div class="footer-meta">
+          <div class="micro-card">
+            <strong>Storage</strong>
+            <span class="small-note">Entries persist in local storage inside the current browser only. Use Export Backup, then Import Backup in another browser to retrieve the same workspace there.</span>
+          </div>
+          <div class="micro-card">
+            <strong>Workflow</strong>
+            <span class="small-note">Track the page, the problem, the fix, the supporting asset, and the final comparison all in one place.</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="create-modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="create-modal-title">
+      <div class="modal-head">
+        <div>
+          <div class="section-kicker">New Opportunity</div>
+          <h3 class="modal-title" id="create-modal-title">Capture a store candidate</h3>
+          <p class="modal-sub">Start from a category and keyword, then attach the exact store page you want to turn into content.</p>
+        </div>
+        <button class="modal-close" id="close-create-btn" type="button" aria-label="Close modal">✕</button>
+      </div>
+
+      <form id="create-form">
+        <div class="form-grid">
+          <div class="field">
+            <label class="field-label" for="create-category">Category</label>
+            <select id="create-category" name="category"></select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="create-keyword">Keyword</label>
+            <select id="create-keyword" name="keyword"></select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="create-store-name">Store Name</label>
+            <input id="create-store-name" name="storeName" type="text" placeholder="Example: Nouri Labs">
+          </div>
+          <div class="field">
+            <label class="field-label" for="create-priority">Priority</label>
+            <select id="create-priority" name="priority">
+              <option value="Hot">Hot</option>
+              <option value="Warm">Warm</option>
+              <option value="Cold">Cold</option>
+            </select>
+          </div>
+          <div class="field span-2">
+            <label class="field-label" for="create-store-url">Store URL</label>
+            <input id="create-store-url" name="storeUrl" type="url" placeholder="https://brand.com">
+          </div>
+          <div class="field span-2">
+            <label class="field-label" for="create-page-url">Listing / Page URL</label>
+            <input id="create-page-url" name="pageUrl" type="url" placeholder="https://brand.com/products/example">
+          </div>
+          <div class="field">
+            <label class="field-label" for="create-page-type">Page Type</label>
+            <input id="create-page-type" name="pageType" type="text" list="page-type-options" placeholder="PDP, homepage, advertorial, collection...">
+          </div>
+          <div class="field">
+            <label class="field-label" for="create-source">Listing Source</label>
+            <input id="create-source" name="source" type="text" placeholder="Meta Ads Library, TikTok, Search">
+          </div>
+          <div class="field span-2">
+            <label class="field-label" for="create-tags">Tags</label>
+            <input id="create-tags" name="tags" type="text" placeholder="pillar, category, store type, market">
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn" type="button" id="cancel-create-btn">Cancel</button>
+          <button class="btn btn-primary" type="submit">Create Opportunity</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <datalist id="page-type-options">
+    <option value="Product page"></option>
+    <option value="Homepage"></option>
+    <option value="Collection page"></option>
+    <option value="Landing page"></option>
+    <option value="Advertorial"></option>
+    <option value="Quiz page"></option>
+    <option value="Cart"></option>
+    <option value="Bundle page"></option>
+    <option value="Sales page"></option>
+    <option value="Listicle"></option>
+    <option value="Offer page"></option>
+    <option value="Custom"></option>
+  </datalist>
+
+  <input id="import-file-input" type="file" accept="application/json,.json" hidden>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "koolestpro-cro-workspace-v1";
+
+    const STAGES = [
+      {
+        id: "keyword-discovery",
+        label: "Keyword Discovery",
+        short: "Discovery",
+        description: "Store the category and search term that surfaced the opportunity."
+      },
+      {
+        id: "store-captured",
+        label: "Store Capture",
+        short: "Captured",
+        description: "You found the brand and attached the live page you want to review."
+      },
+      {
+        id: "page-audit",
+        label: "Page Audit",
+        short: "Audit",
+        description: "Document friction, missing trust, weak hierarchy, and CTA gaps."
+      },
+      {
+        id: "cro-fix",
+        label: "CRO Fix",
+        short: "Fix",
+        description: "Attach the recommendation, redesign, or implementation path."
+      },
+      {
+        id: "before-after",
+        label: "Before / After",
+        short: "Compare",
+        description: "Package the change with a clear narrative and side-by-side proof."
+      },
+      {
+        id: "published",
+        label: "Published",
+        short: "Published",
+        description: "The final content asset is ready or already shipped."
+      }
+    ];
+
+    const CATEGORY_LIBRARY = [
+      {
+        id: "problem-solution",
+        name: "Problem-Solution",
+        badge: "Goldmine",
+        why: "Highly emotional buyers, heavy ad spend, weak above-the-fold structure, and a lot of dropship-style clutter.",
+        croAngle: "Fix headline clarity, explain the product immediately, add trust above the fold, and surface the CTA faster.",
+        keywords: [
+          "hair growth oil",
+          "hair loss treatment women",
+          "stretch mark cream",
+          "dark spot corrector",
+          "acne treatment serum",
+          "anti-aging cream",
+          "neck firming cream",
+          "under eye bags removal",
+          "hyperpigmentation solution",
+          "cellulite remover"
+        ]
+      },
+      {
+        id: "fitness-body-transformation",
+        name: "Fitness / Body Transformation",
+        badge: "Visual",
+        why: "These products are visual, emotionally driven, and often sold through spammy pages with poor spacing and hierarchy.",
+        croAngle: "Replace hype with clarity, improve proof placement, and fix CTA visibility on mobile.",
+        keywords: [
+          "waist trainer",
+          "belly fat burner gel",
+          "postpartum belly wrap",
+          "booty lifting leggings",
+          "slimming tea detox",
+          "weight loss drops"
+        ]
+      },
+      {
+        id: "home-problem-solvers",
+        name: "Home Problem Solvers",
+        badge: "Clarity",
+        why: "Strong pain-to-solution products with instant purchase intent and lots of low-quality pages.",
+        croAngle: "Show the problem and solution immediately, sharpen the headline, and add proof without clutter.",
+        keywords: [
+          "bed bug killer",
+          "mold remover spray",
+          "drain cleaner tool",
+          "car scratch remover",
+          "pet hair remover",
+          "mosquito killer lamp"
+        ]
+      },
+      {
+        id: "beauty-tools-gadgets",
+        name: "Beauty Tools / Gadgets",
+        badge: "Benefits",
+        why: "They look technical but usually overload users with features and bury the actual outcome.",
+        croAngle: "Turn features into outcomes, simplify the first screen, and reduce cognitive load above the fold.",
+        keywords: [
+          "laser hair removal device",
+          "face lifting device",
+          "blackhead remover vacuum",
+          "teeth whitening kit",
+          "ice roller face",
+          "microcurrent facial device"
+        ]
+      },
+      {
+        id: "trending-tiktok-products",
+        name: "Trending TikTok Products",
+        badge: "Speed",
+        why: "These stores scale fast and usually prioritize speed over UX quality, which creates perfect content opportunities.",
+        croAngle: "Show how the viral angle got attention but the page still leaks conversions because clarity and trust are weak.",
+        keywords: [
+          "viral tiktok product",
+          "must have gadget",
+          "life hack product",
+          "amazon finds 2026",
+          "tiktok made me buy it"
+        ]
+      },
+      {
+        id: "baby-mom-niche",
+        name: "Baby / Mom Niche",
+        badge: "Trust",
+        why: "High emotion and high trust requirements. Many pages fail because trust, reassurance, and readability are underdeveloped.",
+        croAngle: "Add trust immediately, improve readability, and reduce friction before the user has to think twice.",
+        keywords: [
+          "baby carrier ergonomic",
+          "baby sleep aid",
+          "colic relief drops",
+          "postpartum recovery kit",
+          "diaper rash cream"
+        ]
+      }
+    ];
+
+    const PRIORITY_CLASS = {
+      Hot: "tag-hot",
+      Warm: "tag-warm",
+      Cold: "tag-cold"
+    };
+
+    const state = loadState();
+
+    const statsGrid = document.getElementById("stats-grid");
+    const searchInput = document.getElementById("search-input");
+    const categoryFilter = document.getElementById("category-filter");
+    const stageFilter = document.getElementById("stage-filter");
+    const pageTypeFilter = document.getElementById("page-type-filter");
+    const opportunityList = document.getElementById("opportunity-list");
+    const detailPanel = document.getElementById("detail-panel");
+    const resultsMeta = document.getElementById("results-meta");
+    const keywordBank = document.getElementById("keyword-bank");
+    const importBtn = document.getElementById("import-btn");
+    const exportBtn = document.getElementById("export-btn");
+    const openCreateBtn = document.getElementById("open-create-btn");
+    const createModalBackdrop = document.getElementById("create-modal-backdrop");
+    const closeCreateBtn = document.getElementById("close-create-btn");
+    const cancelCreateBtn = document.getElementById("cancel-create-btn");
+    const createForm = document.getElementById("create-form");
+    const createCategorySelect = document.getElementById("create-category");
+    const createKeywordSelect = document.getElementById("create-keyword");
+    const importFileInput = document.getElementById("import-file-input");
+    const toast = document.getElementById("toast");
+
+    initialize();
+
+    function initialize() {
+      hydrateFilters();
+      hydrateCreateForm();
+      bindGlobalEvents();
+      renderAll();
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          return {
+            opportunities: [],
+            filters: {
+              search: "",
+              category: "all",
+              stage: "all",
+              pageType: "all"
+            },
+            selectedId: null
+          };
+        }
+
+        const parsed = JSON.parse(raw);
+        return {
+          opportunities: Array.isArray(parsed.opportunities) ? parsed.opportunities : [],
+          filters: {
+            search: parsed.filters?.search || "",
+            category: parsed.filters?.category || "all",
+            stage: parsed.filters?.stage || "all",
+            pageType: parsed.filters?.pageType || "all"
+          },
+          selectedId: parsed.selectedId || null
+        };
+      } catch (error) {
+        console.error("Failed to load workspace state:", error);
+        return {
+          opportunities: [],
+          filters: {
+            search: "",
+            category: "all",
+            stage: "all",
+            pageType: "all"
+          },
+          selectedId: null
+        };
+      }
+    }
+
+    function saveState(showSavedToast = false) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      if (showSavedToast) {
+        showToast("Saved to workspace");
+      }
+    }
+
+    function bindGlobalEvents() {
+      searchInput.addEventListener("input", (event) => {
+        state.filters.search = event.target.value;
+        renderAll();
+      });
+
+      categoryFilter.addEventListener("change", (event) => {
+        state.filters.category = event.target.value;
+        renderAll();
+      });
+
+      stageFilter.addEventListener("change", (event) => {
+        state.filters.stage = event.target.value;
+        renderAll();
+      });
+
+      pageTypeFilter.addEventListener("change", (event) => {
+        state.filters.pageType = event.target.value;
+        renderAll();
+      });
+
+      importBtn.addEventListener("click", () => importFileInput.click());
+      importFileInput.addEventListener("change", handleImportFile);
+      exportBtn.addEventListener("click", exportWorkspace);
+      openCreateBtn.addEventListener("click", () => openCreateModal());
+      closeCreateBtn.addEventListener("click", closeCreateModal);
+      cancelCreateBtn.addEventListener("click", closeCreateModal);
+
+      createModalBackdrop.addEventListener("click", (event) => {
+        if (event.target === createModalBackdrop) {
+          closeCreateModal();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && createModalBackdrop.classList.contains("show")) {
+          closeCreateModal();
+        }
+      });
+
+      createCategorySelect.addEventListener("change", () => {
+        populateCreateKeywords(createCategorySelect.value);
+      });
+
+      createForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const formData = new FormData(createForm);
+        const category = formData.get("category");
+        const keyword = formData.get("keyword");
+        const opportunity = createOpportunity({
+          category,
+          keyword,
+          storeName: formData.get("storeName")?.toString().trim() || "",
+          priority: formData.get("priority") || "Warm",
+          storeUrl: formData.get("storeUrl")?.toString().trim() || "",
+          pageUrl: formData.get("pageUrl")?.toString().trim() || "",
+          pageType: formData.get("pageType")?.toString().trim() || "",
+          source: formData.get("source")?.toString().trim() || "",
+          tags: formData.get("tags")?.toString().trim() || "",
+          stage: "store-captured"
+        });
+
+        state.opportunities.unshift(opportunity);
+        state.selectedId = opportunity.id;
+        saveState();
+        closeCreateModal();
+        renderAll();
+        showToast("Opportunity added");
+      });
+    }
+
+    function hydrateFilters() {
+      categoryFilter.innerHTML = [
+        '<option value="all">All categories</option>',
+        ...CATEGORY_LIBRARY.map((category) => `<option value="${category.id}">${escapeHtml(category.name)}</option>`)
+      ].join("");
+
+      stageFilter.innerHTML = [
+        '<option value="all">All stages</option>',
+        ...STAGES.map((stage) => `<option value="${stage.id}">${escapeHtml(stage.label)}</option>`)
+      ].join("");
+
+      searchInput.value = state.filters.search;
+      categoryFilter.value = state.filters.category;
+      stageFilter.value = state.filters.stage;
+    }
+
+    function hydrateCreateForm() {
+      createCategorySelect.innerHTML = CATEGORY_LIBRARY
+        .map((category) => `<option value="${category.id}">${escapeHtml(category.name)}</option>`)
+        .join("");
+      populateCreateKeywords(createCategorySelect.value || CATEGORY_LIBRARY[0].id);
+    }
+
+    function populateCreateKeywords(categoryId, preferredKeyword) {
+      const category = CATEGORY_LIBRARY.find((item) => item.id === categoryId) || CATEGORY_LIBRARY[0];
+      createKeywordSelect.innerHTML = category.keywords
+        .map((keyword) => `<option value="${escapeAttribute(keyword)}">${escapeHtml(keyword)}</option>`)
+        .join("");
+      if (preferredKeyword && category.keywords.includes(preferredKeyword)) {
+        createKeywordSelect.value = preferredKeyword;
+      }
+    }
+
+    function renderAll() {
+      ensureSelectedOpportunity();
+      renderStats();
+      renderOpportunityList();
+      renderDetailPanel();
+      renderKeywordBank();
+      renderPageTypeFilter();
+      syncControlValues();
+      saveState();
+    }
+
+    function syncControlValues() {
+      searchInput.value = state.filters.search;
+      categoryFilter.value = state.filters.category;
+      stageFilter.value = state.filters.stage;
+      if ([...pageTypeFilter.options].some((option) => option.value === state.filters.pageType)) {
+        pageTypeFilter.value = state.filters.pageType;
+      } else {
+        pageTypeFilter.value = "all";
+        state.filters.pageType = "all";
+      }
+    }
+
+    function renderStats() {
+      const opportunities = state.opportunities;
+      const totalKeywords = CATEGORY_LIBRARY.reduce((sum, category) => sum + category.keywords.length, 0);
+      const activeAudits = opportunities.filter((item) => ["page-audit", "cro-fix"].includes(item.stage)).length;
+      const fixesAttached = opportunities.filter((item) => item.fixSummary?.trim() || item.fixAsset?.trim()).length;
+      const comparisonReady = opportunities.filter((item) => {
+        return (item.beforeNotes?.trim() || item.beforeImage?.trim()) &&
+          (item.afterNotes?.trim() || item.afterImage?.trim()) &&
+          item.comparisonSummary?.trim();
+      }).length;
+      const published = opportunities.filter((item) => item.stage === "published").length;
+
+      const cards = [
+        {
+          label: "Keyword Bank",
+          value: totalKeywords,
+          meta: `${CATEGORY_LIBRARY.length} seeded categories`
+        },
+        {
+          label: "Tracked Listings",
+          value: opportunities.length,
+          meta: "store pages in the workspace"
+        },
+        {
+          label: "Active Audits",
+          value: activeAudits,
+          meta: "currently in audit or fix"
+        },
+        {
+          label: "Fixes Attached",
+          value: fixesAttached,
+          meta: "records with a fix note or asset"
+        },
+        {
+          label: "Comparison Ready",
+          value: comparisonReady,
+          meta: `${published} published so far`
+        }
+      ];
+
+      statsGrid.innerHTML = cards.map((card) => `
+        <article class="stat-card">
+          <div class="stat-label">${escapeHtml(card.label)}</div>
+          <div class="stat-value">${escapeHtml(String(card.value))}</div>
+          <div class="stat-meta">${escapeHtml(card.meta)}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderPageTypeFilter() {
+      const pageTypes = [...new Set(
+        state.opportunities
+          .map((item) => normalize(item.pageType))
+          .filter(Boolean)
+      )].sort((a, b) => a.localeCompare(b));
+
+      pageTypeFilter.innerHTML = [
+        '<option value="all">All page types</option>',
+        ...pageTypes.map((pageType) => `<option value="${escapeAttribute(pageType)}">${escapeHtml(pageType)}</option>`)
+      ].join("");
+    }
+
+    function renderOpportunityList() {
+      const filtered = getFilteredOpportunities();
+      const total = state.opportunities.length;
+      const selected = state.selectedId;
+
+      resultsMeta.innerHTML = `
+        <span class="chip">${filtered.length} results</span>
+        <span class="chip">${total} total</span>
+      `;
+
+      if (!filtered.length) {
+        opportunityList.innerHTML = `
+          <div class="empty-state">
+            <h4>No listings match these filters</h4>
+            <p>Clear the filters or create a new opportunity from the keyword bank below.</p>
+          </div>
+        `;
+        return;
+      }
+
+      opportunityList.innerHTML = filtered.map((item) => {
+        const stage = getStage(item.stage);
+        const category = getCategory(item.category);
+        const progress = getCompletion(item);
+        const tagTokens = parseTags(item.tags).slice(0, 3);
+        return `
+          <article class="opp-card ${selected === item.id ? "active" : ""}" data-id="${item.id}">
+            <div class="opp-card-head">
+              <div>
+                <div class="opp-card-title">${escapeHtml(item.storeName || "Untitled Store")}</div>
+                <div class="opp-card-sub">
+                  <span>${escapeHtml(item.pageType || "Any page type")}</span>
+                  <span>•</span>
+                  <span>${escapeHtml(item.keyword || "No keyword yet")}</span>
+                </div>
+              </div>
+              <span class="stage-pill">${escapeHtml(stage.short)}</span>
+            </div>
+
+            <div class="opp-meta-row">
+              <span class="tag tag-gradient">${escapeHtml(category.name)}</span>
+              <span class="tag ${PRIORITY_CLASS[item.priority] || ""}">${escapeHtml(item.priority || "Warm")}</span>
+              ${item.source ? `<span class="tag">${escapeHtml(item.source)}</span>` : ""}
+            </div>
+
+            ${tagTokens.length ? `<div class="opp-meta-row">${tagTokens.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+
+            <div class="progress-wrap">
+              <div class="progress-meta">
+                <span>${escapeHtml(progress.label)}</span>
+                <span>${progress.percent}%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-bar" style="width:${progress.percent}%"></div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      opportunityList.querySelectorAll(".opp-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          state.selectedId = card.dataset.id;
+          renderAll();
+        });
+      });
+    }
+
+    function renderDetailPanel() {
+      const selected = getSelectedOpportunity();
+      if (!selected) {
+        detailPanel.innerHTML = `
+          <div class="empty-state" style="margin: auto 0;">
+            <h4>No opportunity selected</h4>
+            <p>Create a new listing from the button above or click a keyword card below to start tracking a store candidate.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const category = getCategory(selected.category);
+      const stage = getStage(selected.stage);
+      const completion = getCompletion(selected);
+      const tagTokens = parseTags(selected.tags);
+
+      detailPanel.innerHTML = `
+        <details class="accordion" open>
+          <summary>
+            <div>
+              <div class="accordion-title">Selected Opportunity</div>
+              <div class="accordion-meta">Core store capture, stage tracking, and source details</div>
+            </div>
+            <span class="status-dot"></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="detail-top">
+              <div>
+                <div class="detail-name">${escapeHtml(selected.storeName || "Untitled Store")}</div>
+                <div class="detail-badges">
+                  <span class="tag tag-gradient">${escapeHtml(category.name)}</span>
+                  <span class="tag ${PRIORITY_CLASS[selected.priority] || ""}">${escapeHtml(selected.priority || "Warm")}</span>
+                  <span class="tag">${escapeHtml(stage.label)}</span>
+                  ${selected.pageType ? `<span class="tag">${escapeHtml(selected.pageType)}</span>` : ""}
+                  ${selected.keyword ? `<span class="tag">${escapeHtml(selected.keyword)}</span>` : ""}
+                </div>
+              </div>
+              <div class="detail-actions">
+                <button class="btn" type="button" id="duplicate-selected-btn">Duplicate</button>
+                <button class="btn danger-btn" type="button" id="delete-selected-btn">Delete</button>
+              </div>
+            </div>
+
+            <div class="progress-wrap" style="margin-bottom: 18px;">
+              <div class="progress-meta">
+                <span>${escapeHtml(completion.label)}</span>
+                <span>${completion.percent}% complete</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-bar" style="width:${completion.percent}%"></div>
+              </div>
+            </div>
+
+            <div class="pipeline-strip">
+              ${STAGES.map((item, index) => `
+                <div class="pipeline-step ${item.id === selected.stage ? "active" : ""}">
+                  <div class="pipeline-no">Step ${index + 1}</div>
+                  <div class="pipeline-name">${escapeHtml(item.label)}</div>
+                  <div class="pipeline-desc">${escapeHtml(item.description)}</div>
+                </div>
+              `).join("")}
+            </div>
+
+            <div class="form-grid" id="detail-form">
+              <div class="field">
+                <label class="field-label" for="storeName">Store Name</label>
+                <input id="storeName" data-field="storeName" type="text" value="${escapeAttribute(selected.storeName || "")}" placeholder="Brand name">
+              </div>
+              <div class="field">
+                <label class="field-label" for="stage">Pipeline Stage</label>
+                <select id="stage" data-field="stage">
+                  ${STAGES.map((item) => `<option value="${item.id}" ${item.id === selected.stage ? "selected" : ""}>${escapeHtml(item.label)}</option>`).join("")}
+                </select>
+              </div>
+              <div class="field">
+                <label class="field-label" for="category">Category</label>
+                <select id="category" data-field="category">
+                  ${CATEGORY_LIBRARY.map((item) => `<option value="${item.id}" ${item.id === selected.category ? "selected" : ""}>${escapeHtml(item.name)}</option>`).join("")}
+                </select>
+              </div>
+              <div class="field">
+                <label class="field-label" for="keyword">Keyword</label>
+                <input id="keyword" data-field="keyword" type="text" list="all-keyword-options" value="${escapeAttribute(selected.keyword || "")}" placeholder="Keyword used to find this store">
+              </div>
+              <div class="field">
+                <label class="field-label" for="pageType">Page Type</label>
+                <input id="pageType" data-field="pageType" type="text" list="page-type-options" value="${escapeAttribute(selected.pageType || "")}" placeholder="PDP, homepage, advertorial...">
+              </div>
+              <div class="field">
+                <label class="field-label" for="priority">Priority</label>
+                <select id="priority" data-field="priority">
+                  <option value="Hot" ${selected.priority === "Hot" ? "selected" : ""}>Hot</option>
+                  <option value="Warm" ${selected.priority === "Warm" ? "selected" : ""}>Warm</option>
+                  <option value="Cold" ${selected.priority === "Cold" ? "selected" : ""}>Cold</option>
+                </select>
+              </div>
+              <div class="field span-2">
+                <label class="field-label" for="storeUrl">Store URL</label>
+                <input id="storeUrl" data-field="storeUrl" type="url" value="${escapeAttribute(selected.storeUrl || "")}" placeholder="https://brand.com">
+              </div>
+              <div class="field span-2">
+                <label class="field-label" for="pageUrl">Listing / Page URL</label>
+                <input id="pageUrl" data-field="pageUrl" type="url" value="${escapeAttribute(selected.pageUrl || "")}" placeholder="https://brand.com/products/example">
+              </div>
+              <div class="field">
+                <label class="field-label" for="source">Listing Source</label>
+                <input id="source" data-field="source" type="text" value="${escapeAttribute(selected.source || "")}" placeholder="Meta Ads Library, TikTok, Search">
+              </div>
+              <div class="field">
+                <label class="field-label" for="pillar">Pillar / Angle</label>
+                <input id="pillar" data-field="pillar" type="text" value="${escapeAttribute(selected.pillar || "")}" placeholder="Conversion Strategy, UGC proof, clarity">
+              </div>
+              <div class="field span-2">
+                <label class="field-label" for="tags">Tags</label>
+                <input id="tags" data-field="tags" type="text" value="${escapeAttribute(selected.tags || "")}" placeholder="pillar, category, audience, market">
+              </div>
+            </div>
+
+            <div class="quick-links">
+              ${selected.storeUrl ? `<a class="quick-link" href="${escapeAttribute(selected.storeUrl)}" target="_blank" rel="noreferrer">Open store</a>` : ""}
+              ${selected.pageUrl ? `<a class="quick-link" href="${escapeAttribute(selected.pageUrl)}" target="_blank" rel="noreferrer">Open page</a>` : ""}
+              ${selected.fixAsset ? `<a class="quick-link" href="${escapeAttribute(selected.fixAsset)}" target="_blank" rel="noreferrer">Open fix asset</a>` : ""}
+              ${selected.liveUrl ? `<a class="quick-link" href="${escapeAttribute(selected.liveUrl)}" target="_blank" rel="noreferrer">Open after page</a>` : ""}
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion" open>
+          <summary>
+            <div>
+              <div class="accordion-title">Audit Notes</div>
+              <div class="accordion-meta">Capture the friction before you touch the fix</div>
+            </div>
+            <span class="status-dot"></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="form-grid">
+              <div class="field span-2">
+                <label class="field-label" for="validationNotes">Validation Notes</label>
+                <textarea id="validationNotes" data-field="validationNotes" placeholder="Ad running? Product validated? Why is this a strong candidate?">${escapeHtml(selected.validationNotes || "")}</textarea>
+              </div>
+              <div class="field span-2">
+                <label class="field-label" for="auditNotes">Audit Breakdown</label>
+                <textarea id="auditNotes" data-field="auditNotes" placeholder="Document the above-the-fold issue, trust gap, hierarchy problem, CTA friction, or proof problem.">${escapeHtml(selected.auditNotes || "")}</textarea>
+              </div>
+              <div class="field">
+                <label class="field-label" for="headlineGap">Headline / Clarity Gap</label>
+                <textarea id="headlineGap" data-field="headlineGap" placeholder="What is unclear, misleading, or missing?">${escapeHtml(selected.headlineGap || "")}</textarea>
+              </div>
+              <div class="field">
+                <label class="field-label" for="trustGap">Trust / Proof Gap</label>
+                <textarea id="trustGap" data-field="trustGap" placeholder="What trust element is missing above the fold?">${escapeHtml(selected.trustGap || "")}</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion" open>
+          <summary>
+            <div>
+              <div class="accordion-title">CRO Fix Attachment</div>
+              <div class="accordion-meta">What changed and where the fix lives</div>
+            </div>
+            <span class="status-dot"></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="form-grid">
+              <div class="field span-2">
+                <label class="field-label" for="fixSummary">Fix Summary</label>
+                <textarea id="fixSummary" data-field="fixSummary" placeholder="Describe the CRO fix: new hierarchy, trust stack, CTA repositioning, copy rewrite, mobile spacing, proof placement.">${escapeHtml(selected.fixSummary || "")}</textarea>
+              </div>
+              <div class="field">
+                <label class="field-label" for="fixAsset">Fix Asset URL / Path</label>
+                <input id="fixAsset" data-field="fixAsset" type="text" value="${escapeAttribute(selected.fixAsset || "")}" placeholder="Figma file, local HTML path, Loom, screenshot link">
+              </div>
+              <div class="field">
+                <label class="field-label" for="liveUrl">After Page URL</label>
+                <input id="liveUrl" data-field="liveUrl" type="text" value="${escapeAttribute(selected.liveUrl || "")}" placeholder="If the fix is live, paste the final page URL">
+              </div>
+              <div class="field span-2">
+                <label class="field-label" for="implementationNotes">Implementation Notes</label>
+                <textarea id="implementationNotes" data-field="implementationNotes" placeholder="What exactly should be built or already has been built?">${escapeHtml(selected.implementationNotes || "")}</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion" open>
+          <summary>
+            <div>
+              <div class="accordion-title">Before / After Comparison</div>
+              <div class="accordion-meta">Attach the story and proof side by side</div>
+            </div>
+            <span class="status-dot"></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="comparison-grid">
+              <div class="compare-card before">
+                <div class="compare-label">Before</div>
+                <div class="preview-frame">${renderPreview(selected.beforeImage, "Attach a screenshot path or image URL for the original page.")}</div>
+                <div class="field">
+                  <label class="field-label" for="beforeImage">Before Image</label>
+                  <input id="beforeImage" data-field="beforeImage" type="text" value="${escapeAttribute(selected.beforeImage || "")}" placeholder="Image URL or local path">
+                </div>
+                <div class="field">
+                  <label class="field-label" for="beforeNotes">Before Notes</label>
+                  <textarea id="beforeNotes" data-field="beforeNotes" placeholder="What exactly was wrong before the fix?">${escapeHtml(selected.beforeNotes || "")}</textarea>
+                </div>
+              </div>
+
+              <div class="compare-card after">
+                <div class="compare-label">After</div>
+                <div class="preview-frame">${renderPreview(selected.afterImage, "Attach a screenshot path or image URL for the improved page.")}</div>
+                <div class="field">
+                  <label class="field-label" for="afterImage">After Image</label>
+                  <input id="afterImage" data-field="afterImage" type="text" value="${escapeAttribute(selected.afterImage || "")}" placeholder="Image URL or local path">
+                </div>
+                <div class="field">
+                  <label class="field-label" for="afterNotes">After Notes</label>
+                  <textarea id="afterNotes" data-field="afterNotes" placeholder="What changed and why is the after state better?">${escapeHtml(selected.afterNotes || "")}</textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="insight-box">
+              <strong>Comparison Summary</strong>
+              <p>Use this block for the punchline you want to turn into a post, reel, or carousel.</p>
+              <div style="margin-top: 14px;">
+                <textarea id="comparisonSummary" data-field="comparisonSummary" placeholder="Example: This viral page buried clarity and trust. The fix brought the product promise, proof, and CTA into the first viewport.">${escapeHtml(selected.comparisonSummary || "")}</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary>
+            <div>
+              <div class="accordion-title">Content Packaging</div>
+              <div class="accordion-meta">Hook, angle, and publishing notes</div>
+            </div>
+            <span class="status-dot"></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="form-grid">
+              <div class="field span-2">
+                <label class="field-label" for="contentHook">Content Hook</label>
+                <textarea id="contentHook" data-field="contentHook" placeholder="This brand is spending on ads but their mobile UX is killing conversions...">${escapeHtml(selected.contentHook || "")}</textarea>
+              </div>
+              <div class="field span-2">
+                <label class="field-label" for="publishNotes">Publishing Notes</label>
+                <textarea id="publishNotes" data-field="publishNotes" placeholder="Format, platform, voice angle, captions, or creator notes.">${escapeHtml(selected.publishNotes || "")}</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        ${tagTokens.length ? `
+          <div class="insight-box" style="margin-top: 18px;">
+            <strong>Tag Cloud</strong>
+            <div class="chip-row">${tagTokens.map((tag) => `<span class="chip">${escapeHtml(tag)}</span>`).join("")}</div>
+          </div>
+        ` : ""}
+
+        <datalist id="all-keyword-options">
+          ${CATEGORY_LIBRARY.flatMap((category) => category.keywords).map((keyword) => `<option value="${escapeAttribute(keyword)}"></option>`).join("")}
+        </datalist>
+      `;
+
+      detailPanel.querySelectorAll("[data-field]").forEach((field) => {
+        field.addEventListener("input", handleDetailFieldChange);
+        field.addEventListener("change", handleDetailFieldChange);
+      });
+
+      const categoryField = detailPanel.querySelector('#category[data-field="category"]');
+      if (categoryField) {
+        categoryField.addEventListener("change", (event) => {
+          const nextCategory = event.target.value;
+          if (!state.selectedId) return;
+          const record = getSelectedOpportunity();
+          const categoryData = getCategory(nextCategory);
+          if (record && categoryData && !categoryData.keywords.includes(record.keyword)) {
+            record.keyword = categoryData.keywords[0] || record.keyword;
+          }
+          updateOpportunity(state.selectedId, { category: nextCategory, keyword: record.keyword });
+          renderAll();
+        });
+      }
+
+      const duplicateBtn = document.getElementById("duplicate-selected-btn");
+      if (duplicateBtn) {
+        duplicateBtn.addEventListener("click", duplicateSelectedOpportunity);
+      }
+
+      const deleteBtn = document.getElementById("delete-selected-btn");
+      if (deleteBtn) {
+        deleteBtn.addEventListener("click", deleteSelectedOpportunity);
+      }
+    }
+
+    function handleDetailFieldChange(event) {
+      if (!state.selectedId) return;
+      const field = event.target.dataset.field;
+      if (!field) return;
+      updateOpportunity(state.selectedId, { [field]: event.target.value });
+      const rerenderFields = new Set([
+        "storeName",
+        "stage",
+        "priority",
+        "keyword",
+        "pageType",
+        "storeUrl",
+        "pageUrl",
+        "source",
+        "fixAsset",
+        "liveUrl",
+        "beforeImage",
+        "afterImage",
+        "tags"
+      ]);
+
+      if (event.type === "change" && rerenderFields.has(field)) {
+        renderAll();
+      } else {
+        renderStats();
+        renderOpportunityList();
+      }
+
+      if (event.type === "change") {
+        showToast("Saved to workspace");
+      }
+    }
+
+    function renderKeywordBank() {
+      keywordBank.innerHTML = CATEGORY_LIBRARY.map((category) => `
+        <article class="keyword-card">
+          <div class="keyword-card-head">
+            <div>
+              <div class="section-kicker">${escapeHtml(category.badge)}</div>
+              <h4>${escapeHtml(category.name)}</h4>
+              <p>${escapeHtml(category.why)}</p>
+            </div>
+            <div class="keyword-total">${category.keywords.length}</div>
+          </div>
+
+          <div class="keyword-meta">
+            <p><strong style="color:#fff;">CRO angle:</strong> ${escapeHtml(category.croAngle)}</p>
+          </div>
+
+          <div class="keyword-list">
+            ${category.keywords.map((keyword) => `
+              <button class="keyword-chip" type="button" data-category="${category.id}" data-keyword="${escapeAttribute(keyword)}">
+                ${escapeHtml(keyword)}
+              </button>
+            `).join("")}
+          </div>
+        </article>
+      `).join("");
+
+      keywordBank.querySelectorAll(".keyword-chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          openCreateModal({
+            category: chip.dataset.category,
+            keyword: chip.dataset.keyword
+          });
+        });
+      });
+    }
+
+    function getFilteredOpportunities() {
+      const search = state.filters.search.trim().toLowerCase();
+      return state.opportunities.filter((item) => {
+        if (state.filters.category !== "all" && item.category !== state.filters.category) {
+          return false;
+        }
+
+        if (state.filters.stage !== "all" && item.stage !== state.filters.stage) {
+          return false;
+        }
+
+        if (state.filters.pageType !== "all" && normalize(item.pageType) !== state.filters.pageType) {
+          return false;
+        }
+
+        if (!search) {
+          return true;
+        }
+
+        const haystack = [
+          item.storeName,
+          item.keyword,
+          item.pageType,
+          item.tags,
+          item.auditNotes,
+          item.fixSummary,
+          item.comparisonSummary,
+          item.source,
+          item.pillar
+        ].join(" ").toLowerCase();
+
+        return haystack.includes(search);
+      });
+    }
+
+    function getSelectedOpportunity() {
+      if (!state.selectedId) return null;
+      return state.opportunities.find((item) => item.id === state.selectedId) || null;
+    }
+
+    function ensureSelectedOpportunity() {
+      const selectedExists = state.selectedId && state.opportunities.some((item) => item.id === state.selectedId);
+      if (selectedExists) return;
+      state.selectedId = state.opportunities[0]?.id || null;
+    }
+
+    function createOpportunity(partial = {}) {
+      const category = getCategory(partial.category || CATEGORY_LIBRARY[0].id);
+      const keyword = partial.keyword || category.keywords[0] || "";
+      const now = new Date().toISOString();
+      return {
+        id: partial.id || `opp-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        category: category.id,
+        keyword,
+        storeName: partial.storeName || "",
+        storeUrl: partial.storeUrl || "",
+        pageUrl: partial.pageUrl || "",
+        pageType: partial.pageType || "",
+        stage: partial.stage || "keyword-discovery",
+        priority: partial.priority || "Warm",
+        source: partial.source || "",
+        pillar: partial.pillar || "Conversion Strategy",
+        tags: partial.tags || "",
+        validationNotes: partial.validationNotes || "",
+        auditNotes: partial.auditNotes || "",
+        headlineGap: partial.headlineGap || "",
+        trustGap: partial.trustGap || "",
+        fixSummary: partial.fixSummary || "",
+        implementationNotes: partial.implementationNotes || "",
+        fixAsset: partial.fixAsset || "",
+        liveUrl: partial.liveUrl || "",
+        beforeImage: partial.beforeImage || "",
+        beforeNotes: partial.beforeNotes || "",
+        afterImage: partial.afterImage || "",
+        afterNotes: partial.afterNotes || "",
+        comparisonSummary: partial.comparisonSummary || "",
+        contentHook: partial.contentHook || "",
+        publishNotes: partial.publishNotes || "",
+        createdAt: partial.createdAt || now,
+        updatedAt: partial.updatedAt || now
+      };
+    }
+
+    function updateOpportunity(id, changes) {
+      const item = state.opportunities.find((record) => record.id === id);
+      if (!item) return;
+      Object.assign(item, changes, { updatedAt: new Date().toISOString() });
+      saveState();
+    }
+
+    function duplicateSelectedOpportunity() {
+      const selected = getSelectedOpportunity();
+      if (!selected) return;
+      const copy = createOpportunity({
+        ...selected,
+        storeName: `${selected.storeName || "Untitled Store"} Copy`,
+        createdAt: undefined
+      });
+      state.opportunities.unshift(copy);
+      state.selectedId = copy.id;
+      saveState();
+      renderAll();
+      showToast("Opportunity duplicated");
+    }
+
+    function deleteSelectedOpportunity() {
+      const selected = getSelectedOpportunity();
+      if (!selected) return;
+      const confirmed = window.confirm(`Delete "${selected.storeName || "this opportunity"}"?`);
+      if (!confirmed) return;
+
+      state.opportunities = state.opportunities.filter((item) => item.id !== selected.id);
+      const remaining = getFilteredOpportunities();
+      state.selectedId = remaining[0]?.id || state.opportunities[0]?.id || null;
+      saveState();
+      renderAll();
+      showToast("Opportunity deleted");
+    }
+
+    function getCompletion(item) {
+      const checks = [
+        item.category,
+        item.keyword,
+        item.storeName,
+        item.storeUrl,
+        item.pageUrl,
+        item.pageType,
+        item.validationNotes,
+        item.auditNotes,
+        item.fixSummary,
+        item.beforeNotes || item.beforeImage,
+        item.afterNotes || item.afterImage,
+        item.comparisonSummary
+      ];
+      const complete = checks.filter((value) => normalize(value)).length;
+      const percent = Math.round((complete / checks.length) * 100);
+
+      let label = "Captured";
+      if (percent >= 90) label = "Ready to publish";
+      else if (percent >= 70) label = "Comparison ready";
+      else if (percent >= 45) label = "Fix in progress";
+      else if (percent >= 20) label = "Audit started";
+
+      return { percent, label };
+    }
+
+    function renderPreview(src, fallback) {
+      if (!normalize(src)) {
+        return `<div class="preview-empty">${escapeHtml(fallback)}</div>`;
+      }
+      return `<img src="${escapeAttribute(src)}" alt="Comparison preview">`;
+    }
+
+    function getCategory(categoryId) {
+      return CATEGORY_LIBRARY.find((item) => item.id === categoryId) || CATEGORY_LIBRARY[0];
+    }
+
+    function getStage(stageId) {
+      return STAGES.find((item) => item.id === stageId) || STAGES[0];
+    }
+
+    function parseTags(value) {
+      return (value || "")
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean);
+    }
+
+    function normalize(value) {
+      return String(value || "").trim();
+    }
+
+    function openCreateModal(prefill = {}) {
+      createForm.reset();
+      const category = prefill.category || CATEGORY_LIBRARY[0].id;
+      createCategorySelect.value = category;
+      populateCreateKeywords(category, prefill.keyword);
+      if (prefill.keyword) {
+        createKeywordSelect.value = prefill.keyword;
+      }
+      createModalBackdrop.classList.add("show");
+      createModalBackdrop.setAttribute("aria-hidden", "false");
+      requestAnimationFrame(() => {
+        document.getElementById("create-store-name").focus();
+      });
+    }
+
+    function closeCreateModal() {
+      createModalBackdrop.classList.remove("show");
+      createModalBackdrop.setAttribute("aria-hidden", "true");
+    }
+
+    function exportWorkspace() {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        categories: CATEGORY_LIBRARY,
+        opportunities: state.opportunities
+      };
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `koolestpro-cro-workspace-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      showToast("Workspace exported");
+    }
+
+    async function handleImportFile(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        const importedOpportunities = Array.isArray(parsed?.opportunities) ? parsed.opportunities : null;
+
+        if (!importedOpportunities) {
+          throw new Error("This file does not contain a valid workspace export.");
+        }
+
+        const shouldReplace = window.confirm(
+          `Import ${importedOpportunities.length} opportunity records and replace the current browser workspace?`
+        );
+
+        if (!shouldReplace) {
+          importFileInput.value = "";
+          return;
+        }
+
+        state.opportunities = importedOpportunities.map((item) => createOpportunity(item));
+        state.selectedId = state.opportunities[0]?.id || null;
+        state.filters = {
+          search: "",
+          category: "all",
+          stage: "all",
+          pageType: "all"
+        };
+        saveState();
+        renderAll();
+        showToast("Workspace imported");
+      } catch (error) {
+        console.error("Failed to import workspace:", error);
+        window.alert(error.message || "Import failed. Use a JSON file exported from this workspace.");
+      } finally {
+        importFileInput.value = "";
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1700);
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value).replace(/`/g, "&#96;");
+    }
+  </script>
+</body>
+</html>

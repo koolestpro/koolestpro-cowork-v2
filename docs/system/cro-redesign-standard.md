@@ -1,0 +1,97 @@
+# CRO Redesign Standard — the quality of the "after" page (2026-09-12)
+
+This is about the craft of the rebuilt page itself, not the before/after graphic. Ridwan's
+bar is the Majco Greens "after" (`outputs/majco-green.png`), which is far ahead of most of
+our rebuilds. This standard defines what a rebuild must reach before it is called done.
+
+## The one idea
+
+**The first screen carries the whole decision.** In the Majco before, the value prop sat in
+a block *below* the hero, so the image and the reason to buy were two separate things. The
+after moves everything a shopper needs onto the hero image itself: a value headline, social
+proof, a benefit line, benefit chips, a single CTA, and a trust bar. A shopper who never
+scrolls can decide.
+
+A rebuild that still splits "pretty image" from "the reason to buy" has not reached the bar,
+even if every audit finding was addressed.
+
+## The ten dimensions
+
+1. **First-screen decision.** Hero = a real product/lifestyle photo, full bleed, with a
+   legibility scrim (gradient overlay or solid band). Over it: value headline, proof,
+   benefit line, CTA, trust. Nothing that the decision needs is left below the fold.
+2. **Value headline, not the product name.** The headline states the outcome in the
+   shopper's words ("Nourish Your Day, Naturally."), not the SKU. The product name can sit
+   smaller above or below it. Max 2 lines at display weight.
+3. **Proof, immediately.** Star rating + real review count, inline, rendered on load. Never
+   dependent on a third-party widget that can paint as bare text. If the number is real, use
+   it; if not, do not invent one.
+4. **Price, connected.** Price sits with the product name at display weight, not floated
+   away from it. Show the payment plan when one exists. Show price-per-serving/use when the
+   category makes it meaningful.
+5. **Benefit support.** 2-4 specific benefit chips or a single benefit line (e.g. "Clean
+   Ingredients / Plant Based / No Junk"). Specific to this product, never generic
+   ("Premium quality").
+6. **Trust, near the CTA.** Shipping, returns, secure checkout, guarantee, in a compact row
+   with real icons, right by the buy action.
+7. **One primary CTA.** A single, high-contrast, thumb-reachable button. One secondary
+   action at most. Never two buttons competing.
+8. **Design system.** A committed type scale (display over UI; body never below the type
+   floor; uppercase labels only with letter-spacing), an 8px spacing rhythm, two brand
+   colours plus neutrals, consistent radii. The brand's real fonts and real logo assets.
+9. **Motion restraint.** Motion is optional and never blocks content. Honor
+   `prefers-reduced-motion`. No preloader, no page curtain, no popup gating the page.
+10. **Honesty.** Every claim, number and asset is traceable to the real page or the audit.
+    Concept brands are labelled. Nothing is invented to make the design land.
+
+## Rubric (score each 1-5; below 3 on any dimension is not shippable)
+
+| # | Dimension | 1 (weak) | 3 (ok) | 5 (bar) |
+|---|---|---|---|---|
+| 1 | First-screen decision | image only | image + some info | whole decision on the hero |
+| 2 | Value headline | product name only | benefit line somewhere | outcome headline over hero |
+| 3 | Proof | widget-dependent | stars or count | stars + real count, inline |
+| 4 | Price | floated/disconnected | near title | with payment plan, at weight |
+| 5 | Benefit support | none | one generic line | 2-4 specific chips |
+| 6 | Trust | none | in footer | icon row by the CTA |
+| 7 | Primary CTA | competing | one, low contrast | one, high contrast, reachable |
+| 8 | Design system | ad hoc | consistent type | full scale + rhythm + assets |
+| 9 | Motion | blocking | subtle | absent or reduced-motion safe |
+| 10 | Honesty | unverified claims | mostly real | fully traceable |
+
+## Build checklist (run before "done")
+
+- [ ] Is the whole decision on the first screen, or did I leave the reason to buy below?
+- [ ] Does the hero use a real photo with a real scrim, not a text-only band?
+- [ ] Is the headline an outcome, not the product name?
+- [ ] Stars + real review count render inline on load?
+- [ ] Price sits with the name, with the payment plan if one exists?
+- [ ] 2-4 specific benefit chips, no generic filler?
+- [ ] Trust row by the CTA with real icons?
+- [ ] One high-contrast CTA, thumb-reachable?
+- [ ] Type floor respected; spacing on an 8px rhythm; real brand fonts and logo?
+- [ ] Reduced-motion safe; nothing gates the page?
+- [ ] Every claim traceable; concept brands labelled?
+- [ ] Verified on the rendered screenshot, not the markup.
+
+## Anti-patterns (junior tells)
+
+- A split layout where the hero is decoration and the value prop is a slab underneath.
+- Text-only hero, or a hero so busy the headline needs a dark band to be read.
+- Two CTA buttons of equal weight.
+- Tiny uppercase eyebrows carrying the whole concept with nothing else supporting them.
+- Generic benefit words: "Premium", "High quality", "Best in class".
+- A third-party reviews widget as the only proof.
+- Recreating a logo in a similar web font instead of pulling the real file.
+- Unverified numbers, or a concept brand framed like a paying client.
+- Dead space at the bottom of the frame; a preloader or popup gating the page.
+
+## Current rebuilds vs this standard
+
+- **Caraway fry pan** (`outputs/cro-fixes/caraway_fry-pan-pdp_rebuild.html`): strong on
+  proof (3), price (4) and honesty (10); the audit findings are all fixed. Against the bar
+  it is missing (1) a value headline over the hero, (5) benefit chips, and (6) a trust row
+  by the CTA. Next pass for this page: move the decision onto the hero (outcome headline +
+  proof + benefit chips + trust) so a non-scrolling shopper can decide.
+- **The standard is the target for every new rebuild**, not a retro-fix project. Existing
+  posted work is not redone; runs from here build to this bar.

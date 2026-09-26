@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All — Lumora Skin</title>
+<meta name="description" content="Demo product grid for Lumora Skin, built by Koolestpro.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="demo-badge">🧪 <b>DEMO STORE</b> — built by Koolestpro to show what a free Nigeria starter site looks like. Not a real brand, not for sale.</div>
+
+<header class="site">
+  <div class="nav-row">
+    <a href="index.html" class="logo">Lumora<span class="dot">.</span></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="collection.html" class="active">Shop</a>
+      <a href="index.html#story">Our Story</a>
+    </nav>
+    <a href="index.html" class="btn btn-outline" style="padding:9px 18px;font-size:13px;">Home</a>
+  </div>
+</header>
+
+<div class="page-head">
+  <h1>Shop All</h1>
+  <p id="product-count">12 products &middot; free delivery in Lagos on orders over ₦25,000</p>
+</div>
+
+<div class="section" style="padding-top:14px;">
+  <div class="filter-bar" id="filter-bar"></div>
+  <div class="grid" id="product-grid"></div>
+</div>
+
+<footer class="site">
+  <div class="footer-credit">
+    This is a demo store built by <a href="https://koolestpro.com" target="_blank" rel="noopener">Koolestpro — koolestpro.com</a>. Real business, no website yet? Yours can look like this in under an hour, free.
+  </div>
+</footer>
+
+<div class="wa-bar" id="wa-bar"></div>
+
+<script src="assets/site.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const initialCat = params.get("cat") || "All";
+  const categories = ["All", ...new Set(PRODUCTS.map(p => p.category))];
+
+  const filterBar = document.getElementById("filter-bar");
+  const grid = document.getElementById("product-grid");
+
+  function renderChips(active) {
+    filterBar.innerHTML = categories.map(c => `
+      <button class="filter-chip ${c === active ? "active" : ""}" data-cat="${c}">${c}</button>
+    `).join("");
+    filterBar.querySelectorAll(".filter-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        renderChips(btn.dataset.cat);
+        renderGrid(btn.dataset.cat);
+      });
+    });
+  }
+
+  function renderGrid(cat) {
+    const list = cat === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === cat);
+    grid.innerHTML = list.map(productCardHtml).join("");
+    document.getElementById("product-count").textContent =
+      `${list.length} product${list.length === 1 ? "" : "s"} · free delivery in Lagos on orders over ₦25,000`;
+  }
+
+  renderChips(categories.includes(initialCat) ? initialCat : "All");
+  renderGrid(categories.includes(initialCat) ? initialCat : "All");
+</script>
+</body>
+</html>

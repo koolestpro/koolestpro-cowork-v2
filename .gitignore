@@ -1,0 +1,48 @@
+# ---- Secrets: never commit. Copy .env.example -> .env on each machine. ----
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*credentials*.json
+*token*.json
+
+# ---- Companion repos (they have their own GitHub repos, linked as submodules) ----
+# site/            -> github.com/koolestpro/koolestpro
+# cold-email-app/  -> github.com/koolestpro/cold-dm-app
+# replo-rebuilds/  -> github.com/koolestpro/koolestpro-portfolio
+
+# ---- Dependencies, builds, caches ----
+node_modules/
+.next/
+dist/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.tsbuildinfo
+.playwright-mcp/
+
+# ---- OS / editor noise ----
+.DS_Store
+._*
+.vscode/
+*.code-workspace
+
+# ---- Heavy rendered media (lives on your Mac + Cloudinary, not in git) ----
+*.mp4
+*.mov
+*.m4v
+*.webm
+*.gif
+video-gen/_pilot/
+video-gen/_tiktok_ref/
+video-gen/_promo/
+
+# ---- Local-only runtime files ----
+*.log
+*.bak
+*.bak-*
+.ai-workflow/.leadgen-state.json

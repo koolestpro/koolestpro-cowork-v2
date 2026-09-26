@@ -1,0 +1,48 @@
+{
+  "sourceFile": "/sessions/wizardly-zen-franklin/mnt/koolestpro-cowork-v2/outputs/cro-fixes/caraway_fry-pan-pdp_content.html",
+  "exportedAt": "2026-09-07T08:32:32.057540+00:00",
+  "postBrand": "Caraway",
+  "postSlug": "caraway_fry-pan-pdp",
+  "postType": "CRO Fix",
+  "files": {
+    "ba-graphic": {
+      "path": "/tmp/caraway_verify3/ba-graphic.png",
+      "bytes": 365981
+    },
+    "anno-graphic": {
+      "path": "/tmp/caraway_verify3/anno-graphic.png",
+      "bytes": 270316
+    },
+    "slide-1": {
+      "path": "/tmp/caraway_verify3/slide-1.png",
+      "bytes": 482158
+    },
+    "slide-2": {
+      "path": "/tmp/caraway_verify3/slide-2.png",
+      "bytes": 145391
+    },
+    "slide-3": {
+      "path": "/tmp/caraway_verify3/slide-3.png",
+      "bytes": 131963
+    },
+    "slide-4": {
+      "path": "/tmp/caraway_verify3/slide-4.png",
+      "bytes": 332020
+    },
+    "slide-5": {
+      "path": "/tmp/caraway_verify3/slide-5.png",
+      "bytes": 255646
+    },
+    "slide-6": {
+      "path": "/tmp/caraway_verify3/slide-6.png",
+      "bytes": 115873
+    },
+    "slide-7": {
+      "path": "/tmp/caraway_verify3/slide-7.png",
+      "bytes": 425200
+    },
+    "captions": {
+      "path": "/tmp/caraway_verify3/captions.txt"
+    }
+  }
+}

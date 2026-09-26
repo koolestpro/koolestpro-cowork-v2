@@ -1,0 +1,18 @@
+{
+  "name": "koolestpro-cowork",
+  "version": "2.0.0",
+  "description": "Content pipeline automation for @koolestpro — generate CRO Fix, Tip, and Idea content with one command",
+  "scripts": {
+    "ideas": "node run_ideas.js",
+    "tip": "node run_tip.js",
+    "cro": "node run_cro_fix.js",
+    "deepseek-task": "node run_deepseek_task.js",
+    "dashboard": "open content_pipeline.html || xdg-open content_pipeline.html || start content_pipeline.html"
+  },
+  "author": "Ridwan Adekunle (@koolestpro)",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "engines": { "node": ">=14.0.0" }
+}

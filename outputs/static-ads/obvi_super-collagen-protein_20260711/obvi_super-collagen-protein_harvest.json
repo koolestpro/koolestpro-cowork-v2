@@ -1,0 +1,43 @@
+{
+  "pipeline_item_id": "static-ad-obvi_super-collagen-protein-20260711",
+  "brand": "Obvi",
+  "slug": "obvi_super-collagen-protein",
+  "type": "Static Ad",
+  "content_system_folder": "outputs/static-ads/",
+  "companion_html": "outputs/static-ads/obvi_super-collagen-protein_20260711/index.html",
+  "harvested_at": "2026-07-14T16:19:59.837474+00:00",
+  "captions": {
+    "linkedin": "Four static ad directions for Obvi's Super Collagen Protein: problem/solution, a benefit breakdown, social proof, and a subscribe & save offer. Same tub, four different reasons someone stops scrolling. Unofficial concept work built off Obvi's own public product info — not something the brand commissioned.",
+    "x": [
+      "Four static ad directions from one product. Same tub, four different hooks.",
+      "Built these around what Obvi's own reviews keep repeating: skin, hair, joints. A real pattern, not a made-up stat.",
+      "Subscribe & Save might be the most underused angle in supplement ads. Testing it here."
+    ]
+  },
+  "captions_full": {
+    "linkedin": {
+      "text": "Four static ad directions for Obvi's Super Collagen Protein: problem/solution, a benefit breakdown, social proof, and a subscribe & save offer. Same tub, four different reasons someone stops scrolling. Unofficial concept work built off Obvi's own public product info — not something the brand commissioned.",
+      "source_tab": "copy-block:LinkedIn Caption"
+    },
+    "x": {
+      "text": [
+        "Four static ad directions from one product. Same tub, four different hooks.",
+        "Built these around what Obvi's own reviews keep repeating: skin, hair, joints. A real pattern, not a made-up stat.",
+        "Subscribe & Save might be the most underused angle in supplement ads. Testing it here."
+      ],
+      "source_tab": "copy-block:X Posts"
+    }
+  },
+  "assets": {
+    "images": [
+      "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-1-problem-solution.png",
+      "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-2-benefit-result.png",
+      "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-3-social-proof.png",
+      "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-4-offer-urgency.png",
+      "outputs/static-ads/obvi_super-collagen-protein_20260711/base-product.png",
+      "outputs/static-ads/obvi_super-collagen-protein_20260711/combined-showcase.png"
+    ],
+    "video": []
+  },
+  "warnings": []
+}

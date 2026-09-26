@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "week": "2026-W36",
+    "ranAt": "2026-09-02T16:24:23.000Z",
+    "source": "apify-ad-library",
+    "sourceQuery": "Country=NG; Keyword=home decor; Actor=curious_coder~facebook-ads-library-scraper",
+    "country": "NG",
+    "city": "Lagos",
+    "niche": "Home & Living",
+    "ledgerAlreadyRecorded": false,
+    "note": "Scored in the cloud, not yet pushed. import_pending_push.sh pushes this into local KoolestFlow and records the brands in the taken-brands ledger."
+  },
+  "prospects": [
+    {
+      "id": "koolestflow-adlibrary-gu-homes-ng",
+      "brand_name": "Gu-homes.ng",
+      "website_url": "",
+      "instagram_url": "http://instagram.com/home_decor_store_in_lagos",
+      "email": "",
+      "whatsapp": "",
+      "country": "NG",
+      "city": "Lagos",
+      "timezone": "",
+      "track": "Build",
+      "niche": "Home & Living",
+      "audience_type": "E-commerce/DTC",
+      "source": "apify-ad-library",
+      "source_query": "Country=NG; Keyword=home decor; Actor=curious_coder~facebook-ads-library-scraper",
+      "source_url": "http://instagram.com/home_decor_store_in_lagos",
+      "notes": "Track: Build. | Recommended: Room-scene visual storefront, bundle/collection pages, delivery-transparency CTA. | Channel: Instagram DM primary, WhatsApp second. Manual send only — no DM automation (ban risk). | Pricing frame: Nigeria ladder: Starter N250k-500k / Business N500k-1M / Premium N1M+ (see growth plan D7) | Ad destination type: instagram (http://instagram.com/home_decor_store_in_lagos) | Sourced via Meta Ad Library (Apify). Review before outreach.",
+      "signals": "Ad currently active; 362 Facebook page likes; Ad also runs on Instagram; Page categories (Brand) don't obviously match niche 'Home & Living' — verify relevance manually; Ad destination is a instagram link, not a website (free-template candidate)",
+      "fit_score": 70,
+      "confidence": "medium",
+      "status": "Qualified",
+      "pipeline_stage": "First Message Ready",
+      "next_action": "Send first DM"
+    }
+  ]
+}

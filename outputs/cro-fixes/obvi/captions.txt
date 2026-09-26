@@ -1,0 +1,113 @@
+===== tab-linkedin =====
+Obvi has over 800,000 customers and a best seller sitting at 1,489 reviews.
+
+The biggest words on their mobile homepage say "BACK IN STOCK."
+
+That is a warehouse update. It only lands for someone who already tried to buy and got told no. Everyone else, which on a homepage fed by paid social is nearly everyone, reads the largest text on the screen and learns nothing about what the product does.
+
+The part that would actually sell is right underneath at 13px, welded into one 40 word sentence. Metabolism, cravings, weight loss, hair, skin and nails, all in a single breath. Four real reasons to buy and not one of them scannable.
+
+Then there is the bit I had to zoom in on to believe. The accessibility widget renders on top of the bottom left corner of the SHOP NOW button. Tap a little low and you get a settings panel instead of the store.
+
+So I rebuilt the top of the page. Same pink, same purple, same wordmark, same product photo.
+
+Headline states the outcome, using Obvi's own line from further down their page.
+"Back in stock" moved to a small pill where it still works for returning buyers.
+The paragraph became four benefit lines you can read in a second.
+The 800,000 customer proof got weight instead of grey 11px type.
+One primary button carrying the real offer, quiz demoted to a link under it.
+The real best seller pulled up with its real price of $29.74 and its real 1,489 reviews.
+Widget moved clear of every tap target.
+
+Nothing was redesigned. The brand was already doing its job. The hero was just spending its biggest slot announcing inventory.
+
+Quick test for your own homepage. If the headline would still make sense written on a warehouse whiteboard, it is not selling.
+
+Ridwan
+
+Prices, review counts and certifications shown are Obvi's own, read off the live site. Statements about supplements have not been evaluated by the FDA.
+
+===== tab-ig =====
+800,000 customers. And the biggest words on the homepage say BACK IN STOCK.
+
+That is a warehouse update, not a reason to buy. If you have never heard of Obvi, the largest text on the screen tells you nothing about what the product does.
+
+The real value prop sits under it at 13px, four benefits welded into one 40 word sentence. And the accessibility widget renders on top of the corner of the SHOP NOW button.
+
+I rebuilt the hero. Same pink, same purple, same product photo:
+
+Headline that names the outcome
+Stock news demoted to a small pill
+Four scannable benefit lines instead of a paragraph
+The 800,000 proof given real weight
+One button carrying the real offer
+Real best seller at its real price with its real review count
+Widget moved clear of every button
+
+Your headline is your most expensive real estate. Do not spend it on inventory news.
+
+Save this if your homepage looks fine and still is not selling.
+
+@koolestpro
+#ecommerce #cro #shopify #dtc #conversionrateoptimization
+
+Prices and review counts shown are Obvi's own. Statements about supplements have not been evaluated by the FDA.
+
+===== tab-hook =====
+1. Their homepage's biggest words announce inventory. Not a single reason to buy.
+
+2. 800,000 customers, and the headline still says BACK IN STOCK.
+
+3. The accessibility widget is sitting on top of their SHOP NOW button. Nobody noticed.
+
+4. Your headline is the most expensive real estate you own. Stop spending it on stock updates.
+
+5. If your homepage headline would make sense on a warehouse whiteboard, it is not selling.
+
+===== tab-twitter-angles =====
+ANGLE A:
+Obvi's mobile homepage headline is "BACK IN STOCK."
+
+That is a warehouse update, not a reason to buy.
+
+The actual value prop sits under it at 13px, four benefits welded into one sentence.
+
+ANGLE B:
+Found this on a supplement brand with 800,000+ customers.
+
+Their accessibility widget renders on top of the bottom corner of the primary SHOP NOW button.
+
+Tap a little low and you get a settings panel instead of the store.
+
+ANGLE C:
+Quick test for your homepage.
+
+If the headline would still make sense written on a warehouse whiteboard, it is not selling.
+
+"Back in stock" is a warehouse sentence.
+
+===== tab-twitter-thread =====
+1/ Obvi has 800,000+ customers and a best seller with 1,489 reviews.
+
+The biggest text on their mobile homepage says "BACK IN STOCK." Quick teardown.
+
+2/ "Back in stock" only lands for someone who already tried to buy and got told no.
+
+Everyone else learns nothing about what the product actually does.
+
+3/ The real value prop is right under it at 13px. Metabolism, cravings, weight loss, hair, skin and nails, all in one 40 word sentence.
+
+Four reasons to buy. None of them scannable.
+
+4/ Then the accessibility widget renders on top of the bottom left corner of the SHOP NOW button.
+
+Tap low, get a settings panel instead of the store.
+
+5/ Two CTAs sit side by side at the same weight, and the secondary one is physically bigger than the primary. Neither wins.
+
+6/ Rebuild, same brand. Outcome headline, four scannable benefit lines, proof given weight, one primary button with the real offer, real best seller at $29.74 with 1,489 reviews, widget moved clear.
+
+7/ Nothing was redesigned. The brand was fine. The hero was just spending its biggest slot announcing inventory.
+
+Ridwan, @koolestpro
+

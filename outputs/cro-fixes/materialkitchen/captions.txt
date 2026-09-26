@@ -1,0 +1,99 @@
+===== tab-linkedin =====
+Material Kitchen makes some of the best-looking kitchen gear I've come across.
+
+And their homepage still leaves sales on the table.
+
+Here's what you get when you land on it on mobile: a beautiful hero photo, a headline, and one button that says "Shop The MK Free Collection."
+
+That's the whole above-the-fold. No price. No rating. No proof. The "free shipping, 30-day trial, guaranteed for life" part is real — but it's stuck in a tiny bar at the very top that nobody reads. And on a fresh visit, a full-screen email popup can drop over all of it before you've seen anything.
+
+So a first-time buyer is quietly asking "is this actually any good?" and the page hands them nothing to hold onto until they've scrolled past about 12,000 pixels of it.
+
+I rebuilt the above-the-fold. Same brand, same photo, same fonts. All I did was move the selling to where the eye already is:
+
+- Killed the popup so the hero shows straight away
+- Put a real 5-star customer quote right under the headline
+- Pulled the guarantee, trial and shipping into visible trust chips
+- Surfaced a real bestseller with its real price ($195, down from $225)
+- Made the button carry the offer instead of a vague "shop"
+
+None of this is a redesign. The store was already gorgeous. The fix was clearing the path and putting proof, price and trust in front of people before they go looking for it.
+
+If your store looks great but the sales don't match, this is usually the reason.
+
+— Ridwan
+
+===== tab-ig =====
+This kitchen brand's design is stunning. Its homepage still leaks sales 👇
+
+On mobile, the above-the-fold gives you a pretty hero, a headline, and one vague button. No price. No proof. No trust. The good stuff (lifetime guarantee, 30-day trial) is buried in a tiny top bar — and a full-screen email popup can cover the whole thing on a fresh visit.
+
+I rebuilt it. Same brand, same photo. I just moved the selling up:
+
+→ Popup gone, hero shows instantly
+→ A real 5-star quote under the headline
+→ Guarantee + trial + shipping as trust chips
+→ A real bestseller with its real price ($195, was $225)
+→ A button that carries the offer
+
+Beautiful design isn't conversion. Clear the path, put the proof where people already look.
+
+Save this if your store looks great but doesn't convert.
+
+@koolestpro
+#ecommerce #cro #shopify #dtc #conversionrateoptimization
+
+===== tab-hook =====
+1. This kitchen brand's design is stunning. Its homepage still leaks sales.
+
+2. Beautiful store. Every part that actually sells was hidden below the scroll.
+
+3. The fix for most "pretty but low-converting" stores isn't a redesign. It's this.
+
+4. A gorgeous hero and one vague button is not an above-the-fold. Here's what's missing.
+
+5. Your homepage greets first-time buyers with a popup and zero proof. Let's fix that.
+
+===== tab-twitter-angles =====
+ANGLE A:
+Material Kitchen's homepage is beautiful and still leaks sales.
+
+Above the fold: a hero, a headline, one vague button. No price, no proof, no trust.
+
+Pretty ≠ converting.
+
+ANGLE B:
+Watched a first-time buyer land on a premium kitchen store.
+
+Popup over the hero. No rating. No price. Nothing to trust.
+
+The guarantee they'd want? Buried in a 10px top bar.
+
+ANGLE C:
+The fix for most "looks great, converts bad" stores:
+
+Don't redesign. Move the proof, price and trust above the fold — where the eye already is.
+
+Did it on Material Kitchen. Same brand, tighter above-the-fold.
+
+===== tab-twitter-thread =====
+1/ Material Kitchen makes gorgeous kitchen gear.
+
+Their homepage still leaks sales. Quick teardown 🧵
+
+2/ On mobile, the above-the-fold is: hero photo, headline, one button ("Shop The Collection").
+
+No price. No rating. No proof. That's it.
+
+3/ The trust they'd want — free shipping, 30-day trial, guaranteed for life — is real, but stuck in a tiny bar at the very top nobody reads.
+
+4/ And on a fresh visit, a full-screen email popup can cover the whole hero before you've seen anything.
+
+5/ So the buyer's question — "is this any good?" — goes unanswered until they scroll ~12,000px. Most won't.
+
+6/ Rebuild: same brand, same photo. Popup gone. 5-star quote under the headline. Trust chips. Real bestseller + real price. Offer on the button.
+
+7/ Beautiful design isn't conversion. Clear the path, put the proof where people already look.
+
+If your store looks great but doesn't convert, this is usually why. — @koolestpro
+

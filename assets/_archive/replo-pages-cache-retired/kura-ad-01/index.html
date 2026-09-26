@@ -1,0 +1,1008 @@
+<!--
+  BRAND:    KURA
+  PRODUCT:  The KURA Board
+  PAGE:     Advertorial — ad-01-editorial-story
+  BUILT:    2026-05-04
+  EDIT:     See CLAUDE.md → Editing Guide for how to modify this file
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT: Page title -->
+  <title>The One Item In Your Kitchen That's Making You Sick — The Kitchen Standard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- EDIT: Fonts — Bebas Neue / Cormorant Garamond / DM Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+
+  <!-- Preload hero -->
+  <link rel="preload" as="image" href="./images/hero.jpg" />
+
+  <style>
+
+    /* ══════════════════════════════════════════════════════════════
+       KURA DESIGN TOKENS
+       ══════════════════════════════════════════════════════════════ */
+    :root {
+      /* ── BRAND COLORS ── */
+      --color-masthead:     #2B3445;   /* Deep Slate — masthead bg            */
+      --color-masthead-txt: #F6EFE2;   /* Warm Cream — masthead text          */
+      --color-primary:      #181820;   /* Off-Black  — body text              */
+      --color-accent:       #2B3445;   /* Deep Slate — links                  */
+      --color-accent-hover: #1a2133;   /* Deeper Slate — link hover           */
+      --color-cta:          #C47A3A;   /* Burnished Copper — CTA button       */
+      --color-cta-hover:    #a8672f;   /* Copper dark — CTA hover             */
+      --color-bg:           #ffffff;   /* White — article bg                  */
+      --color-bg-alt:       #F6EFE2;   /* Warm Cream — alternate sections     */
+      --color-bg-dark:      #2B3445;   /* Deep Slate — final offer block      */
+      --color-text:         #181820;   /* Off-Black                           */
+      --color-muted:        #6b7280;   /* Muted grey — captions / meta        */
+      --color-border:       #CDD3DC;   /* Cool Silver — borders               */
+      --color-rail-bg:      #F6EFE2;   /* Warm Cream — sticky rail card       */
+      --color-quote-accent: #C47A3A;   /* Copper — pullquote bar              */
+      --color-white:        #ffffff;
+      --color-star:         #C47A3A;   /* Copper stars — matches brand        */
+      --color-verified:     #2a7a4b;
+      --shadow-card:        0 2px 12px rgba(43,52,69,.06);
+      --shadow-card-lg:     0 6px 28px rgba(43,52,69,.12);
+
+      /* ── BRAND FONTS ── */
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-serif:   'Cormorant Garamond', serif;
+      --font-body:    'DM Sans', sans-serif;
+
+      /* ── EDITORIAL MEASURES ── */
+      --article-max:    680px;
+      --article-wide:   960px;
+      --rail-width:     300px;
+      --layout-gap:      40px;
+
+      /* ── SPACING & SHAPE ── */
+      --radius-sm:      4px;
+      --radius-md:      8px;
+      --radius-lg:      14px;
+      --radius-pill:    100px;
+      --max-width:      1280px;
+      --section-v:       72px;
+      --section-v-mob:   48px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       RESET & BASE
+       ══════════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-bg);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--color-accent-hover); }
+
+    /* ══════════════════════════════════════════════════════════════
+       SCROLL FADE-IN
+       ══════════════════════════════════════════════════════════════ */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════════════════════════
+       FOCUS VISIBLE
+       ══════════════════════════════════════════════════════════════ */
+    :focus-visible { outline: 2px solid var(--color-cta); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+    /* ══════════════════════════════════════════════════════════════
+       CTA BUTTON
+       ══════════════════════════════════════════════════════════════ */
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-cta); color: var(--color-white);
+      font-family: var(--font-body); font-weight: 700; font-size: 13px;
+      letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+      padding: 14px 28px; border-radius: var(--radius-sm);
+      border: none; cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease; line-height: 1;
+    }
+    .cta-btn:hover { background: var(--color-cta-hover); color: var(--color-white); transform: translateY(-1px); text-decoration: none; }
+    .cta-btn:active { transform: translateY(0); }
+    .cta-btn--full { width: 100%; justify-content: center; }
+    .cta-btn--sm { font-size: 12px; padding: 11px 22px; }
+
+    /* ══════════════════════════════════════════════════════════════
+       S1 — MASTHEAD / OFFER BAR
+       ══════════════════════════════════════════════════════════════ */
+    .masthead { background: var(--color-masthead); }
+    .masthead__top {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: var(--max-width); margin: 0 auto; padding: 14px 20px; gap: 16px;
+    }
+    .masthead__pub {
+      font-family: var(--font-display); font-size: 20px; letter-spacing: 0.1em;
+      color: var(--color-masthead-txt); text-decoration: none;
+    }
+    .masthead__pub:hover { color: var(--color-masthead-txt); text-decoration: none; }
+    .masthead__disclosure {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(246,239,226,.5); border: 1px solid rgba(246,239,226,.22);
+      padding: 3px 8px; border-radius: var(--radius-sm);
+    }
+    .masthead__offer { background: var(--color-cta); text-align: center; padding: 8px 20px; }
+    /* EDIT: Offer bar */
+    .masthead__offer a {
+      font-size: 13px; font-weight: 600; color: var(--color-white);
+      text-decoration: none; letter-spacing: 0.03em;
+    }
+    .masthead__offer a:hover { color: var(--color-white); text-decoration: underline; }
+
+    /* ══════════════════════════════════════════════════════════════
+       S2 — ARTICLE HEADER
+       ══════════════════════════════════════════════════════════════ */
+    .article-header { background: var(--color-bg); padding: 44px 20px 0; }
+    .article-header__inner { max-width: var(--article-max); margin: 0 auto; }
+    .article-header__category {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-cta); margin-bottom: 16px;
+    }
+    .article-header__headline {
+      font-family: var(--font-display); font-size: 34px; line-height: 1.05;
+      letter-spacing: 0.01em; color: var(--color-primary); margin-bottom: 18px;
+    }
+    .article-header__subheadline {
+      font-family: var(--font-serif); font-size: 19px; line-height: 1.55;
+      color: var(--color-muted); font-style: italic; margin-bottom: 26px;
+    }
+    .article-header__byline {
+      display: flex; align-items: center; gap: 12px;
+      padding-bottom: 20px; border-bottom: 1px solid var(--color-border); margin-bottom: 36px;
+    }
+    .article-header__author-img {
+      width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+      flex-shrink: 0; background: var(--color-border);
+    }
+    .article-header__meta { font-size: 13px; color: var(--color-muted); line-height: 1.4; }
+    .article-header__meta strong { display: block; color: var(--color-primary); font-weight: 600; }
+    .article-header__hero { max-width: var(--article-wide); margin: 0 auto; padding: 0 20px 44px; }
+    .article-header__hero-img {
+      width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+      border-radius: var(--radius-md); background: var(--color-border);
+    }
+    .article-header__caption { font-size: 12px; color: var(--color-muted); margin-top: 8px; font-style: italic; }
+
+    /* ══════════════════════════════════════════════════════════════
+       S3 — AUTHORITY STRIP
+       ══════════════════════════════════════════════════════════════ */
+    .authority-strip {
+      background: var(--color-bg-alt); padding: 32px 20px;
+      border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+    }
+    .authority-strip__inner { max-width: var(--article-wide); margin: 0 auto; }
+    .authority-strip__counters {
+      display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 24px;
+    }
+    .authority-counter { text-align: center; flex: 1; min-width: 120px; }
+    .authority-counter__number {
+      font-family: var(--font-display); font-size: 30px; letter-spacing: 0.03em;
+      color: var(--color-primary); line-height: 1;
+    }
+    .authority-counter__label {
+      font-size: 11px; color: var(--color-muted); margin-top: 4px;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .authority-strip__featured {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .authority-strip__featured-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-muted); white-space: nowrap;
+    }
+    .pub-logos { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; justify-content: center; }
+    .pub-logo {
+      font-family: var(--font-display); font-size: 13px; letter-spacing: 0.1em;
+      color: var(--color-muted); text-transform: uppercase; opacity: 0.55;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       ARTICLE LAYOUT — S4 through S13
+       ══════════════════════════════════════════════════════════════ */
+    .article-layout {
+      max-width: calc(var(--article-max) + var(--rail-width) + var(--layout-gap) + 40px);
+      margin: 0 auto; padding: 0 20px;
+    }
+    .article-layout__grid { display: grid; grid-template-columns: 1fr; gap: 0; align-items: start; }
+    .article-col { min-width: 0; padding: var(--section-v-mob) 0; }
+    .sticky-offer { display: none; }
+
+    @media (min-width: 1280px) {
+      .article-layout__grid { grid-template-columns: 1fr var(--rail-width); gap: var(--layout-gap); }
+      .sticky-offer { display: block; position: sticky; top: 96px; align-self: start; padding-top: var(--section-v); }
+    }
+
+    /* ── Article typography ── */
+    .article-body { max-width: var(--article-max); }
+    .article-body p { font-size: 17px; line-height: 1.85; color: var(--color-text); margin-bottom: 24px; }
+    .article-body p:last-child { margin-bottom: 0; }
+    .article-body h2 {
+      font-family: var(--font-display); font-size: 28px; letter-spacing: 0.02em;
+      color: var(--color-primary); margin: 44px 0 18px; line-height: 1.1;
+    }
+    .article-body .source-note {
+      font-size: 12px; color: var(--color-muted); font-style: italic;
+      border-left: 2px solid var(--color-border); padding-left: 12px;
+      margin-top: -14px; margin-bottom: 28px;
+    }
+    .article-divider { border: none; border-top: 1px solid var(--color-border); margin: 44px 0; }
+
+    /* ══════════════════════════════════════════════════════════════
+       S4 — OPENING HOOK
+       ══════════════════════════════════════════════════════════════ */
+    .opening-hook__thesis {
+      font-family: var(--font-display); font-size: 32px; line-height: 1.1;
+      letter-spacing: 0.02em; color: var(--color-primary); margin-bottom: 30px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       S5 — PROBLEM DEEP DIVE
+       ══════════════════════════════════════════════════════════════ */
+    .problem-section__image {
+      width: 100%; aspect-ratio: 3 / 2; object-fit: cover;
+      border-radius: var(--radius-md); margin: 32px 0 28px; background: var(--color-border);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       S6 & S12 — INLINE CTA
+       ══════════════════════════════════════════════════════════════ */
+    .inline-cta {
+      background: var(--color-bg-alt); border-left: 4px solid var(--color-cta);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 24px 24px 24px 28px; margin: 44px 0; max-width: var(--article-max);
+    }
+    .inline-cta__claim {
+      font-family: var(--font-serif); font-size: 19px; line-height: 1.55;
+      font-style: italic; color: var(--color-primary); margin-bottom: 18px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       S7 — SOLUTION INTRO
+       ══════════════════════════════════════════════════════════════ */
+    .solution-section__label {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-cta); margin-bottom: 14px;
+    }
+    .solution-section__product-img {
+      width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+      border-radius: var(--radius-md); margin: 28px 0; background: var(--color-border);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       S8 — EXPERT QUOTE CARD
+       ══════════════════════════════════════════════════════════════ */
+    .quote-card {
+      background: var(--color-bg-alt); border-radius: var(--radius-lg);
+      padding: 32px 28px; margin: 44px 0; position: relative; max-width: var(--article-max);
+    }
+    .quote-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--color-quote-accent); border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    }
+    .quote-card__mark {
+      font-family: var(--font-serif); font-size: 64px; line-height: 0.6;
+      color: var(--color-quote-accent); margin-bottom: 18px; display: block;
+    }
+    .quote-card__text {
+      font-family: var(--font-serif); font-size: 20px; line-height: 1.65;
+      font-style: italic; color: var(--color-primary); margin-bottom: 22px;
+    }
+    .quote-card__author { display: flex; align-items: center; gap: 12px; }
+    .quote-card__author-img {
+      width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+      background: var(--color-border); flex-shrink: 0;
+    }
+    .quote-card__author-name { font-size: 14px; font-weight: 700; color: var(--color-primary); }
+    .quote-card__author-role { font-size: 12px; color: var(--color-muted); }
+
+    /* ══════════════════════════════════════════════════════════════
+       S9 — MECHANISM
+       ══════════════════════════════════════════════════════════════ */
+    .mechanism-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 28px 0 36px; }
+    .mechanism-card {
+      background: var(--color-bg); border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent); border-radius: var(--radius-md);
+      padding: 20px 20px 20px 24px; box-shadow: var(--shadow-card);
+    }
+    .mechanism-card__number {
+      font-family: var(--font-display); font-size: 12px; letter-spacing: 0.12em;
+      color: var(--color-cta); margin-bottom: 6px;
+    }
+    .mechanism-card__title { font-size: 15px; font-weight: 700; color: var(--color-primary); margin-bottom: 6px; }
+    .mechanism-card__body { font-size: 14px; color: var(--color-muted); line-height: 1.65; }
+
+    @media (min-width: 768px) { .mechanism-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ══════════════════════════════════════════════════════════════
+       S10 — TRUST BAR
+       ══════════════════════════════════════════════════════════════ */
+    .trust-bar {
+      display: flex; flex-wrap: wrap; gap: 16px; padding: 20px 0;
+      border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+      margin: 36px 0;
+    }
+    .trust-bar__item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-muted); }
+    .trust-bar__icon { color: var(--color-cta); flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════════════════════════
+       S11 — USE CASE STORY
+       ══════════════════════════════════════════════════════════════ */
+    .story-section__img {
+      width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+      border-radius: var(--radius-md); margin: 28px 0; background: var(--color-border);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       S13 — INGREDIENT / FEATURE GRID
+       ══════════════════════════════════════════════════════════════ */
+    .ingredient-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 28px 0 36px; }
+    .ingredient-card {
+      background: var(--color-bg-alt); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); padding: 18px;
+    }
+    .ingredient-card__icon {
+      width: 32px; height: 32px; background: var(--color-masthead);
+      border-radius: var(--radius-sm); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 12px; color: var(--color-white);
+    }
+    .ingredient-card__title { font-size: 14px; font-weight: 700; color: var(--color-primary); margin-bottom: 4px; }
+    .ingredient-card__body { font-size: 13px; color: var(--color-muted); line-height: 1.55; }
+
+    @media (min-width: 768px) { .ingredient-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ══════════════════════════════════════════════════════════════
+       S14 — FINAL OFFER
+       ══════════════════════════════════════════════════════════════ */
+    .final-offer { background: var(--color-bg-dark); padding: var(--section-v-mob) 20px; }
+    .final-offer__inner { max-width: 680px; margin: 0 auto; text-align: center; }
+    .final-offer__label {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-cta); margin-bottom: 14px;
+    }
+    .final-offer__headline {
+      font-family: var(--font-display); font-size: 36px; letter-spacing: 0.02em;
+      color: var(--color-white); margin-bottom: 14px; line-height: 1.1;
+    }
+    .final-offer__body { font-size: 15px; color: rgba(246,239,226,.75); margin-bottom: 28px; line-height: 1.75; }
+    .final-offer__product-img {
+      width: 100%; max-width: 280px; aspect-ratio: 1 / 1; object-fit: contain;
+      margin: 0 auto 28px; background: transparent;
+    }
+    .final-offer__price { font-family: var(--font-display); font-size: 44px; color: var(--color-white); letter-spacing: 0.03em; margin-bottom: 4px; }
+    .final-offer__price-original { font-size: 13px; color: rgba(246,239,226,.4); text-decoration: line-through; margin-bottom: 24px; }
+    .final-offer__trust {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 16px; font-size: 12px; color: rgba(246,239,226,.45);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       S15 — CUSTOMER PROOF
+       ══════════════════════════════════════════════════════════════ */
+    .customer-proof { background: var(--color-bg-alt); padding: var(--section-v-mob) 20px; }
+    .customer-proof__inner { max-width: var(--article-wide); margin: 0 auto; }
+    .customer-proof__heading {
+      font-family: var(--font-display); font-size: 28px; letter-spacing: 0.02em;
+      color: var(--color-primary); margin-bottom: 8px;
+    }
+    .customer-proof__subtext { font-size: 14px; color: var(--color-muted); margin-bottom: 32px; }
+    .review-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 36px; }
+    .review-card {
+      background: var(--color-bg); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-card);
+    }
+    .review-card__stars { display: flex; gap: 3px; margin-bottom: 12px; color: var(--color-star); }
+    .review-card__title { font-size: 15px; font-weight: 700; color: var(--color-primary); margin-bottom: 8px; }
+    .review-card__body { font-size: 14px; color: var(--color-muted); line-height: 1.65; margin-bottom: 14px; }
+    .review-card__author { font-size: 12px; font-weight: 600; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .review-card__verified {
+      font-size: 11px; color: var(--color-verified); font-weight: 500;
+      display: flex; align-items: center; gap: 4px; margin-top: 4px;
+    }
+    @media (min-width: 768px) { .review-grid { grid-template-columns: repeat(3, 1fr); } }
+    .customer-proof__cta { text-align: center; }
+
+    /* ══════════════════════════════════════════════════════════════
+       STICKY OFFER RAIL
+       ══════════════════════════════════════════════════════════════ */
+    .sticky-offer__card {
+      background: var(--color-rail-bg); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card-lg);
+    }
+    .sticky-offer__img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--color-border); }
+    .sticky-offer__body { padding: 20px; }
+    .sticky-offer__label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-cta); margin-bottom: 8px;
+    }
+    .sticky-offer__product {
+      font-family: var(--font-display); font-size: 20px; letter-spacing: 0.05em;
+      color: var(--color-primary); margin-bottom: 8px; line-height: 1.2;
+    }
+    .sticky-offer__pitch { font-size: 13px; color: var(--color-muted); line-height: 1.55; margin-bottom: 16px; }
+    .sticky-offer__price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+    .sticky-offer__price { font-family: var(--font-display); font-size: 28px; color: var(--color-primary); letter-spacing: 0.03em; }
+    .sticky-offer__price-orig { font-size: 13px; color: var(--color-muted); text-decoration: line-through; }
+    .sticky-offer__trust {
+      font-size: 11px; color: var(--color-muted); display: flex; align-items: center;
+      gap: 5px; margin-top: 10px; justify-content: center;
+    }
+
+    /* Mobile inline offer */
+    .mobile-offer-cta {
+      background: var(--color-rail-bg); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); padding: 20px; margin: 0 0 36px; box-shadow: var(--shadow-card);
+    }
+    .mobile-offer-cta__product {
+      font-family: var(--font-display); font-size: 18px; letter-spacing: 0.05em;
+      color: var(--color-primary); margin-bottom: 6px;
+    }
+    .mobile-offer-cta__pitch { font-size: 13px; color: var(--color-muted); margin-bottom: 14px; }
+    @media (min-width: 1280px) { .mobile-offer-cta { display: none; } }
+
+    /* ══════════════════════════════════════════════════════════════
+       TABLET + DESKTOP UPGRADES
+       ══════════════════════════════════════════════════════════════ */
+    @media (min-width: 768px) {
+      .article-header__headline { font-size: 46px; }
+      .article-header__subheadline { font-size: 21px; }
+      .opening-hook__thesis { font-size: 38px; }
+      .article-body p { font-size: 18px; }
+      .final-offer { padding: var(--section-v) 20px; }
+      .final-offer__headline { font-size: 48px; }
+      .customer-proof { padding: var(--section-v) 20px; }
+    }
+
+    @media (min-width: 1280px) {
+      .article-header { padding: 56px 20px 0; }
+      .article-header__headline { font-size: 54px; }
+      .article-layout { padding: 0 48px; }
+      .article-col { padding: var(--section-v) 0; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ═══ SECTION 1: MASTHEAD / OFFER BAR ══════════════════════════ -->
+<header class="masthead" role="banner">
+  <div class="masthead__top">
+    <!-- EDIT: Publication name -->
+    <a href="#" class="masthead__pub">THE KITCHEN STANDARD</a>
+    <span class="masthead__disclosure" aria-label="Advertorial">Advertorial</span>
+  </div>
+  <!-- EDIT: Offer bar -->
+  <div class="masthead__offer" role="complementary" aria-label="Special offer">
+    <a href="#offer">Limited Time: Get 15% Off The KURA Board &mdash; Check Availability &rarr;</a>
+  </div>
+</header>
+
+<!-- ═══ SECTION 2: ARTICLE HEADER ════════════════════════════════ -->
+<article>
+  <header class="article-header fade-in">
+    <div class="article-header__inner">
+      <!-- EDIT: Category label -->
+      <span class="article-header__category">Kitchen Hygiene</span>
+
+      <!-- EDIT: Headline -->
+      <h1 class="article-header__headline">The One Item In Your Kitchen That&rsquo;s Making You Sick</h1>
+
+      <!-- EDIT: Subheadline -->
+      <p class="article-header__subheadline">New research shows cutting boards are the most common source of cross-contamination in the home kitchen &mdash; and why the fix most people try isn&rsquo;t working.</p>
+
+      <div class="article-header__byline">
+        <!-- IMAGE: Author photo — drop author.jpg into ./images/ -->
+        <img
+          src="./images/author.jpg"
+          alt="Claire Donovan, food writer"
+          class="article-header__author-img"
+          width="40" height="40" loading="lazy"
+        />
+        <div class="article-header__meta">
+          <!-- EDIT: Author name -->
+          <strong>Claire Donovan</strong>
+          <!-- EDIT: Date and read time -->
+          <time datetime="2026-05-04">May 4, 2026</time> &middot; 7 min read
+        </div>
+      </div>
+    </div>
+
+    <div class="article-header__hero">
+      <figure>
+        <!-- IMAGE: Article hero — drop hero.jpg into ./images/ -->
+        <img
+          src="./images/hero.jpg"
+          alt="Home cook using a stainless steel cutting board in a bright modern kitchen"
+          class="article-header__hero-img"
+          width="960" height="540" loading="eager"
+        />
+        <figcaption class="article-header__caption">The surface you prep on every day may be the biggest hygiene risk in your kitchen. Photo: The Kitchen Standard</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <!-- ═══ SECTION 3: AUTHORITY STRIP ══════════════════════════════ -->
+  <section class="authority-strip fade-in" aria-label="Publication reach">
+    <div class="authority-strip__inner">
+      <div class="authority-strip__counters">
+        <div class="authority-counter">
+          <div class="authority-counter__number">186K</div>
+          <div class="authority-counter__label">Monthly Readers</div>
+        </div>
+        <div class="authority-counter">
+          <div class="authority-counter__number">9,200+</div>
+          <div class="authority-counter__label">Home Cooks Reached</div>
+        </div>
+        <div class="authority-counter">
+          <div class="authority-counter__number">4.8 / 5</div>
+          <div class="authority-counter__label">Reader Rating</div>
+        </div>
+      </div>
+
+      <div class="authority-strip__featured">
+        <span class="authority-strip__featured-label">As featured in</span>
+        <div class="pub-logos" aria-label="Featured publications">
+          <span class="pub-logo">Bon App&eacute;tit</span>
+          <span class="pub-logo">Food52</span>
+          <span class="pub-logo">Serious Eats</span>
+          <span class="pub-logo">The Kitchn</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ARTICLE LAYOUT: S4–S13 ══════════════════════════════════ -->
+  <div class="article-layout">
+    <div class="article-layout__grid">
+
+      <!-- ── ARTICLE COLUMN ── -->
+      <div class="article-col">
+
+        <!-- Mobile inline offer -->
+        <div class="mobile-offer-cta" aria-label="Product offer">
+          <div class="mobile-offer-cta__product">THE KURA BOARD</div>
+          <p class="mobile-offer-cta__pitch">Food-grade 304 stainless steel. Non-porous. Dishwasher safe. The last cutting board you&rsquo;ll ever buy.</p>
+          <a href="#offer" class="cta-btn cta-btn--full cta-btn--sm">Check Availability &rarr;</a>
+        </div>
+
+        <!-- ═══ SECTION 4: OPENING HOOK ══════════════════════════ -->
+        <section class="article-body fade-in" aria-labelledby="opening-thesis">
+
+          <h2 class="opening-hook__thesis" id="opening-thesis">You clean your cutting board every night. It&rsquo;s still not clean.</h2>
+
+          <p>Most people assume a quick rinse &mdash; or even a full dishwasher cycle &mdash; leaves their cutting board hygienic. The board looks clean. It smells fine. So what else is there to worry about?</p>
+
+          <p>Quite a lot, as it turns out. The moment a knife blade contacts the surface of a wooden or plastic board, it opens a groove. A micro-channel. Something too small to see, impossible to scrub out, and perfectly sized to trap raw meat juices, fish residue, and the kind of bacteria &mdash; Salmonella, E. coli, Listeria &mdash; that cause the foodborne illness affecting an estimated 48 million Americans every year.</p>
+
+          <p>The FDA identifies cutting boards as one of the most significant vectors for cross-contamination in home kitchens. Not a rare edge case. The common one. The everyday risk, hiding in plain sight on your counter.</p>
+
+          <p>Most home cooks respond the way they&rsquo;ve been taught: replace the board more often, use different boards for meat and vegetables, or switch from wood to plastic &mdash; which, as it turns out, is no better. Plastic warps, stains, and sheds microparticles into food over time. None of these approaches solve the problem. Because the problem is the material itself.</p>
+
+        </section>
+
+        <!-- ═══ SECTION 5: PROBLEM DEEP DIVE ═════════════════════ -->
+        <section class="article-body fade-in" aria-labelledby="problem-heading">
+
+          <!-- IMAGE: Problem image — villain.png already copied to ./images/problem.jpg -->
+          <img
+            src="./images/problem.jpg"
+            alt="Worn, stained wooden cutting board with deep knife grooves — a common source of bacteria in home kitchens"
+            class="problem-section__image"
+            width="680" height="453" loading="lazy"
+          />
+
+          <h2 id="problem-heading">Every Cut Opens a Bacteria Trap</h2>
+
+          <p>A 2018 study published in the <em>Journal of Food Protection</em> found that pathogenic bacteria could survive inside wooden cutting board grooves for up to 48 hours after contact &mdash; even after standard cleaning protocols were followed. A separate study found that plastic boards harbor bacteria at comparable rates, and that surface deterioration accelerates the problem over time.</p>
+
+          <p>The root issue isn&rsquo;t hygiene habits. It&rsquo;s surface porosity. Organic and plastic materials absorb liquid at the microscopic level. They crack, warp, and split with heat and moisture exposure. And every surface imperfection &mdash; every groove, every hairline scratch &mdash; becomes a potential colony site.</p>
+
+          <p class="source-note">Sources: Journal of Food Protection, 2018 &mdash; &ldquo;Bacterial Survival on Wooden and Plastic Cutting Board Surfaces&rdquo;; FDA Food Safety Guidelines for the Home Kitchen, 2021.</p>
+
+          <p>Antimicrobial coatings, bamboo alternatives, mineral oil treatments, baking soda scrubs &mdash; the kitchen industry has cycled through workarounds for decades. None of them address the material&rsquo;s fundamental limitation. If the surface is porous, it will harbor bacteria. The fix isn&rsquo;t a better cleaning routine. It&rsquo;s a different surface entirely.</p>
+
+        </section>
+
+        <!-- ═══ SECTION 6: INLINE CTA 1 ══════════════════════════ -->
+        <div class="inline-cta fade-in" role="complementary" aria-label="Key takeaway">
+          <p class="inline-cta__claim">&ldquo;If your cutting board can absorb a drop of water, it can absorb everything else that touched it today.&rdquo;</p>
+          <a href="#offer" class="cta-btn cta-btn--sm">See Today&rsquo;s Offer &rarr;</a>
+        </div>
+
+        <!-- ═══ SECTION 7: SOLUTION INTRODUCTION ═════════════════ -->
+        <section class="article-body fade-in" aria-labelledby="solution-heading">
+
+          <span class="solution-section__label">The Upgrade</span>
+
+          <h2 id="solution-heading">Why Steel Changes Everything</h2>
+
+          <p>Professional kitchen environments &mdash; commercial restaurants, hospital catering, research laboratories &mdash; use stainless steel prep surfaces almost exclusively. Not for aesthetics. Because steel is non-porous at the molecular level. It cannot absorb liquids. It cannot harbor bacteria the way organic materials do. It is the only food-contact surface that can be genuinely, measurably sanitized.</p>
+
+          <!-- IMAGE: Product image — product.png already in ./images/ -->
+          <img
+            src="./images/product.png"
+            alt="The KURA Board — food-grade 304 stainless steel cutting board"
+            class="solution-section__product-img"
+            width="680" height="510" loading="lazy"
+          />
+
+          <p>The KURA Board is built from food-grade 304 stainless steel &mdash; the same specification used in professional kitchens worldwide. At 0.7mm thickness, it&rsquo;s rigid and stable. The surface is smooth enough for clean, precise cuts without dulling blade edges, and it&rsquo;s entirely non-reactive to acids, oils, and proteins. It won&rsquo;t warp. It won&rsquo;t crack. It won&rsquo;t absorb anything.</p>
+
+          <p>Drop it in the dishwasher. Rinse it under the tap. Either way, you&rsquo;re done in seconds with a board that is genuinely, verifiably clean &mdash; not just visually clean. No soaking. No special treatment. No wondering whether last night&rsquo;s raw salmon is still in there somewhere.</p>
+
+        </section>
+
+        <!-- ═══ SECTION 8: EXPERT QUOTE CARD ═════════════════════ -->
+        <figure class="quote-card fade-in" role="blockquote">
+          <span class="quote-card__mark" aria-hidden="true">&ldquo;</span>
+          <blockquote class="quote-card__text">The single most impactful upgrade a home cook can make to their kitchen hygiene isn&rsquo;t a new cleaning product or a new technique &mdash; it&rsquo;s moving away from porous surfaces entirely. What professional kitchens have known for decades, home cooks are only beginning to catch up with.</blockquote>
+          <figcaption class="quote-card__author">
+            <!-- IMAGE: Expert photo — drop person.jpg into ./images/ -->
+            <img
+              src="./images/person.jpg"
+              alt="Dr. Sarah Holt, Food Safety Consultant"
+              class="quote-card__author-img"
+              width="44" height="44" loading="lazy"
+            />
+            <div>
+              <div class="quote-card__author-name">Dr. Sarah Holt</div>
+              <div class="quote-card__author-role">Food Safety Consultant &amp; Culinary Science Writer</div>
+            </div>
+          </figcaption>
+        </figure>
+
+        <!-- ═══ SECTION 9: MECHANISM ══════════════════════════════ -->
+        <section class="article-body fade-in" aria-labelledby="mechanism-heading">
+
+          <h2 id="mechanism-heading">How The KURA Board Works</h2>
+
+          <p>The difference isn&rsquo;t marketing. It&rsquo;s material science. Here&rsquo;s why steel outperforms every alternative on the three properties that actually matter in food prep.</p>
+
+          <div class="mechanism-grid" role="list">
+
+            <div class="mechanism-card" role="listitem">
+              <div class="mechanism-card__number">01</div>
+              <div class="mechanism-card__title">Non-Porous by Design</div>
+              <p class="mechanism-card__body">304 stainless steel has zero surface porosity. No grooves, no channels, no absorption pathways. Bacteria have nowhere to hide and nothing to feed on. A standard rinse removes everything.</p>
+            </div>
+
+            <div class="mechanism-card" role="listitem">
+              <div class="mechanism-card__number">02</div>
+              <div class="mechanism-card__title">Warp-Proof Construction</div>
+              <p class="mechanism-card__body">Unlike wood or plastic that expands, contracts, and eventually warps with heat and moisture, stainless steel holds its geometry indefinitely. Flat on day one. Flat after five years of daily use.</p>
+            </div>
+
+            <div class="mechanism-card" role="listitem">
+              <div class="mechanism-card__number">03</div>
+              <div class="mechanism-card__title">Knife-Safe Finish</div>
+              <p class="mechanism-card__body">The brushed steel surface reduces blade drag for cleaner, more precise cuts &mdash; and keeps knife edges sharper for longer. No rough grain pulling at the blade with every chop.</p>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ═══ SECTION 10: TRUST / SAFETY ═══════════════════════ -->
+        <section class="article-body fade-in" aria-label="Safety and compliance">
+
+          <hr class="article-divider" />
+
+          <div class="trust-bar" role="list">
+
+            <div class="trust-bar__item" role="listitem">
+              <svg class="trust-bar__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 8.5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Food-Grade 304 Stainless Steel
+            </div>
+
+            <div class="trust-bar__item" role="listitem">
+              <svg class="trust-bar__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 8.5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              100% Dishwasher Safe
+            </div>
+
+            <div class="trust-bar__item" role="listitem">
+              <svg class="trust-bar__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 8.5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              No coatings, no chemicals, no additives
+            </div>
+
+            <div class="trust-bar__item" role="listitem">
+              <svg class="trust-bar__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 8.5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Used in professional kitchens worldwide
+            </div>
+
+          </div>
+
+          <p>The KURA Board contains no coatings, surface treatments, or chemical additives of any kind. 304 stainless steel is inert, non-reactive, and food-safe as a base material. There is nothing applied to the surface &mdash; what you see is what it is: pure steel, shaped and finished for kitchen use. No certification needed, because there is nothing to certify.</p>
+
+          <hr class="article-divider" />
+
+        </section>
+
+        <!-- ═══ SECTION 11: USE CASE STORY ═══════════════════════ -->
+        <section class="article-body fade-in" aria-labelledby="story-heading">
+
+          <h2 id="story-heading">From &ldquo;Never Again&rdquo; to Every Night</h2>
+
+          <!-- IMAGE: Lifestyle image — drop lifestyle.jpg into ./images/ -->
+          <img
+            src="./images/lifestyle.jpg"
+            alt="Home cook preparing a meal using The KURA Board in a bright, modern kitchen"
+            class="story-section__img"
+            width="680" height="383" loading="lazy"
+          />
+
+          <p>When Marcus and his partner moved into their first home, they bought a large wooden chopping board as a housewarming gift to themselves. Within six months it had started splitting along the grain. Within a year, the surface was stained brown despite regular scrubbing. After a bout of food poisoning their doctor attributed to cross-contamination, they threw it out and started looking for something better.</p>
+
+          <p>Marcus found the KURA Board while researching what professional chefs actually use. &ldquo;I expected to pay three or four times more for something this quality,&rdquo; he said. &ldquo;The first time I ran it through the dishwasher and pulled it out looking exactly like day one, I understood why restaurants use steel. I&rsquo;ve since bought a second one for my sister.&rdquo;</p>
+
+        </section>
+
+        <!-- ═══ SECTION 12: INLINE CTA 2 ════════════════════════ -->
+        <div class="inline-cta fade-in" role="complementary" aria-label="Reader offer">
+          <p class="inline-cta__claim">&ldquo;Over 9,200 home cooks have already made the switch. Every single one says they&rsquo;d never go back to wood or plastic.&rdquo;</p>
+          <a href="#offer" class="cta-btn cta-btn--sm">Claim The Bundle &rarr;</a>
+        </div>
+
+        <!-- ═══ SECTION 13: FEATURE GRID ═══════════════════════ -->
+        <section class="article-body fade-in" aria-labelledby="features-heading">
+
+          <h2 id="features-heading">What Makes The KURA Board Different</h2>
+
+          <p>Five material and design properties that put The KURA Board in an entirely different category from every wooden and plastic alternative.</p>
+
+          <div class="ingredient-grid" role="list">
+
+            <div class="ingredient-card" role="listitem">
+              <div class="ingredient-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M8 2C4 2 2 6 2 9c0 3 2 5 6 5s6-2 6-5c0-3-2-7-6-7z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M8 14V8" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="ingredient-card__title">Food-Grade 304 Steel</div>
+              <p class="ingredient-card__body">The industry standard for professional food-contact surfaces. Non-toxic, non-reactive, safe for every ingredient and every prep method.</p>
+            </div>
+
+            <div class="ingredient-card" role="listitem">
+              <div class="ingredient-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <circle cx="8" cy="8" r="5" stroke="#fff" stroke-width="1.5"/>
+                  <path d="M8 5v3l2 2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="ingredient-card__title">Zero Porosity</div>
+              <p class="ingredient-card__body">The molecular structure of steel eliminates the absorption pathways that make wood and plastic boards persistent bacterial hotspots.</p>
+            </div>
+
+            <div class="ingredient-card" role="listitem">
+              <div class="ingredient-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 13L8 3l5 10" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M5 10h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="ingredient-card__title">Warp-Proof Geometry</div>
+              <p class="ingredient-card__body">Steel does not expand or contract with heat and moisture. The board is flat on day one and flat after five years of daily use.</p>
+            </div>
+
+            <div class="ingredient-card" role="listitem">
+              <div class="ingredient-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="3" y="3" width="10" height="10" rx="2" stroke="#fff" stroke-width="1.5"/>
+                  <path d="M6 8h4M8 6v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="ingredient-card__title">Knife-Safe Finish</div>
+              <p class="ingredient-card__body">Engineered for smooth, clean cuts without micro-abrasion. Blade edges stay sharper for longer compared to wood or glass alternatives.</p>
+            </div>
+
+            <div class="ingredient-card" role="listitem">
+              <div class="ingredient-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M8 2l1.5 4h4l-3.2 2.4 1.2 4L8 10l-3.5 2.4 1.2-4L2.5 6h4z" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="ingredient-card__title">Lifetime Build</div>
+              <p class="ingredient-card__body">No delamination, no staining, no degradation. One KURA Board replaces every cutting board you would otherwise buy in a decade.</p>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div><!-- /.article-col -->
+
+      <!-- ── STICKY OFFER RAIL (desktop only) ── -->
+      <aside class="sticky-offer" aria-label="Product offer">
+        <div class="sticky-offer__card">
+          <!-- IMAGE: Rail product image — product.png in ./images/ -->
+          <img
+            src="./images/product.png"
+            alt="The KURA Board"
+            class="sticky-offer__img"
+            width="300" height="225" loading="lazy"
+          />
+          <div class="sticky-offer__body">
+            <div class="sticky-offer__label">Today&rsquo;s Offer</div>
+            <div class="sticky-offer__product">THE KURA BOARD</div>
+            <p class="sticky-offer__pitch">Food-grade 304 stainless steel. Non-porous, warp-proof, dishwasher safe. The last cutting board you&rsquo;ll ever buy.</p>
+            <div class="sticky-offer__price-row">
+              <span class="sticky-offer__price">$40.80</span>
+              <span class="sticky-offer__price-orig">$48.00</span>
+            </div>
+            <a href="#offer" class="cta-btn cta-btn--full">Check Availability</a>
+            <div class="sticky-offer__trust">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="3" y="8" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5.5 8V6a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Secure checkout
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div><!-- /.article-layout__grid -->
+  </div><!-- /.article-layout -->
+
+</article>
+
+<!-- ═══ SECTION 14: FINAL OFFER BLOCK ═══════════════════════════ -->
+<section class="final-offer fade-in" id="offer" aria-labelledby="offer-heading">
+  <div class="final-offer__inner">
+    <div class="final-offer__label">Limited Time Offer</div>
+
+    <!-- EDIT: Final offer headline -->
+    <h2 class="final-offer__headline" id="offer-heading">Get The KURA Board &mdash; 15% Off Today</h2>
+
+    <p class="final-offer__body">The last cutting board you will ever buy. Free of bacteria traps, free of warping, and free of the quiet doubt that your prep surface isn&rsquo;t as clean as it should be. Join 9,200+ home cooks who made the switch and never looked back.</p>
+
+    <!-- IMAGE: Final offer packshot — offer.png in ./images/ -->
+    <img
+      src="./images/offer.png"
+      alt="The KURA Board — stainless steel cutting board"
+      class="final-offer__product-img"
+      width="280" height="280" loading="lazy"
+    />
+
+    <div class="final-offer__price">$40.80</div>
+    <p class="final-offer__price-original">Regular price: $48.00</p>
+
+    <a href="#" class="cta-btn" style="font-size:15px;padding:18px 44px;letter-spacing:0.1em;">Get The KURA Board Now</a>
+
+    <div class="final-offer__trust">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <rect x="3" y="8" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M5.5 8V6a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Secure checkout &middot; 30-day satisfaction guarantee &middot; Free shipping on all orders
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 15: CUSTOMER PROOF ══════════════════════════════ -->
+<section class="customer-proof fade-in" aria-labelledby="proof-heading">
+  <div class="customer-proof__inner">
+    <h2 class="customer-proof__heading" id="proof-heading">What KURA Customers Are Saying</h2>
+    <p class="customer-proof__subtext">9,200+ verified reviews &middot; 4.8 out of 5 stars</p>
+
+    <div class="review-grid" role="list">
+
+      <article class="review-card" role="listitem">
+        <div class="review-card__stars" role="img" aria-label="5 out of 5 stars">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+        </div>
+        <h3 class="review-card__title">&ldquo;So easy to clean&rdquo;</h3>
+        <p class="review-card__body">Threw out my old wooden board the same day this arrived. Wipes clean after raw chicken. I genuinely can&rsquo;t go back.</p>
+        <div class="review-card__author">James K. &mdash; Atlanta, Georgia</div>
+        <div class="review-card__verified">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="7" fill="#2a7a4b"/>
+            <path d="M5 8.5l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Verified Purchase
+        </div>
+      </article>
+
+      <article class="review-card" role="listitem">
+        <div class="review-card__stars" role="img" aria-label="5 out of 5 stars">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+        </div>
+        <h3 class="review-card__title">&ldquo;Unbelievable quality&rdquo;</h3>
+        <p class="review-card__body">The size is perfect, the weight feels solid, and it doesn&rsquo;t slide while I&rsquo;m cutting. Worth every penny &mdash; this is what a kitchen essential should be.</p>
+        <div class="review-card__author">Linda R. &mdash; Austin, Texas</div>
+        <div class="review-card__verified">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="7" fill="#2a7a4b"/>
+            <path d="M5 8.5l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Verified Purchase
+        </div>
+      </article>
+
+      <article class="review-card" role="listitem">
+        <div class="review-card__stars" role="img" aria-label="5 out of 5 stars">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l1.8 5h5.2l-4.2 3 1.6 5L8 11l-4.4 3 1.6-5L1 6h5.2z"/></svg>
+        </div>
+        <h3 class="review-card__title">&ldquo;I was skeptical at first&rdquo;</h3>
+        <p class="review-card__body">I didn&rsquo;t think metal would work as a cutting board. But it&rsquo;s smooth, doesn&rsquo;t dull my knives, and it&rsquo;s the cleanest board I&rsquo;ve ever owned. Genuinely no going back.</p>
+        <div class="review-card__author">Marcus T. &mdash; Chicago, Illinois</div>
+        <div class="review-card__verified">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="7" fill="#2a7a4b"/>
+            <path d="M5 8.5l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Verified Purchase
+        </div>
+      </article>
+
+    </div><!-- /.review-grid -->
+
+    <div class="customer-proof__cta">
+      <a href="#offer" class="cta-btn">Get The KURA Board Today</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ JAVASCRIPT ════════════════════════════════════════════════ -->
+<script>
+  (function () {
+    var els = document.querySelectorAll('.fade-in');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    els.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

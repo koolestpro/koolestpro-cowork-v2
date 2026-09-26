@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tap Review Card – V1CE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#f5f5f5;display:flex;justify-content:center;min-height:100vh}
+.page{width:390px;background:#fff;position:relative;padding-bottom:40px}
+/* sticky header */
+.header{position:sticky;top:12px;z-index:100;margin:12px 12px 20px;background:#fff;border:1px solid #e0e0e0;border-radius:50px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.hamburger{width:24px;height:18px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
+.hamburger span{display:block;height:2px;background:#000;border-radius:2px}
+.logo{font-size:22px;font-weight:700;letter-spacing:-0.5px;color:#000}
+.cart{width:22px;height:22px;position:relative;cursor:pointer}
+.cart svg{width:100%;height:100%;fill:none;stroke:#000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* content */
+.content{padding:0 16px}
+.prod-title{font-size:26px;font-weight:600;margin:20px 0 4px;color:#000}
+.rating-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.stars{display:flex;gap:2px}
+.stars svg{width:16px;height:16px;fill:#000}
+.reviews-link{font-size:13px;color:#000;text-decoration:underline;cursor:pointer}
+.trust-badge{font-size:11px;color:#666;background:#f2f2f2;border-radius:20px;padding:3px 10px;font-weight:500}
+.value-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fafafa;border:1px solid #ececec;border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.value-strip .price{font-size:20px;font-weight:700;color:#000;white-space:nowrap}
+.value-strip .benefit{font-size:12px;color:#444;text-align:right;line-height:1.4}
+.urgency{display:flex;align-items:center;gap:8px;background:#f0f8ff;padding:8px 12px;border-radius:8px;margin-bottom:14px;font-size:13px;color:#333}
+.urgency .icon{width:28px;height:28px;background:#007bff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.urgency .icon svg{width:16px;height:16px;fill:#fff}
+.urgency strong{font-weight:600}
+.warranty-line{display:flex;align-items:center;gap:6px;justify-content:center;font-size:11px;color:#666;margin-top:8px}
+.warranty-line svg{width:14px;height:14px;fill:none;stroke:#666;stroke-width:1.5;flex-shrink:0}
+.style-selector{margin-bottom:14px}
+.style-label{font-size:13px;font-weight:500;margin-bottom:6px;color:#000}
+.style-pills{display:flex;gap:8px}
+.pill{padding:6px 16px;border-radius:50px;border:1px solid #ccc;font-size:13px;cursor:pointer;background:#fff;color:#000}
+.pill.active{background:#000;color:#fff;border-color:#000}
+.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.qty-label{font-size:13px;font-weight:500;color:#000}
+.qty-box{display:flex;align-items:center;border:1px solid #ccc;border-radius:8px;overflow:hidden}
+.qty-btn{padding:6px 14px;font-size:16px;cursor:pointer;background:#fff;border:none;color:#000;font-weight:500}
+.qty-num{padding:6px 16px;font-size:16px;font-weight:500;border-left:1px solid #ccc;border-right:1px solid #ccc;background:#fff;color:#000}
+/* buy-box card */
+.buy-box{border:1px solid #e0e0e0;border-radius:12px;padding:16px;margin-bottom:16px}
+.buy-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.buy-row-left{display:flex;align-items:center;gap:8px}
+.radio{width:18px;height:18px;border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.radio-inner{width:10px;height:10px;background:#000;border-radius:50%}
+.buy-label{font-size:14px;font-weight:600;color:#000}
+.buy-price{font-size:16px;font-weight:700;color:#000}
+.bullets{list-style:none;margin-bottom:12px}
+.bullets li{font-size:13px;color:#333;padding:3px 0;display:flex;align-items:center;gap:6px}
+.bullets li::before{content:"✓";font-weight:700;color:#000;font-size:14px}
+.bulk-row{display:flex;gap:8px;margin-bottom:14px}
+.bulk-item{flex:1;border:1px solid #e0e0e0;border-radius:8px;padding:8px 4px;text-align:center;font-size:11px;color:#333;line-height:1.4}
+.bulk-item strong{display:block;font-size:13px;color:#000}
+.cta{width:100%;padding:14px;background:#000;color:#fff;border:none;border-radius:50px;font-size:16px;font-weight:600;cursor:pointer;margin-bottom:8px}
+.vat-note{text-align:center;font-size:11px;color:#888}
+/* hero image */
+.hero-wrap{position:relative;margin-bottom:16px}
+.hero-wrap img{width:100%;border-radius:12px;display:block}
+.arrow-nav{position:absolute;bottom:12px;right:12px;display:flex;gap:8px}
+.arrow{width:32px;height:32px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
+.arrow svg{width:14px;height:14px;fill:#000}
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- header -->
+  <div class="header">
+    <div class="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="logo">V1CE</div>
+    <div class="cart">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 9l1.7-4.2a1 1 0 0 1 .93-.63h12.74a1 1 0 0 1 .93.63L21 9"/>
+        <path d="M3 9h18l-1.4 9.3a2 2 0 0 1-2 1.7H6.4a2 2 0 0 1-2-1.7L3 9z"/>
+        <path d="M9 12.5v4M12 12.5v4M15 12.5v4"/>
+      </svg>
+    </div>
+  </div>
+  <!-- content -->
+  <div class="content">
+    <!-- hero image -->
+    <div class="hero-wrap">
+      <img src="../../../assets/v1ce/v1ce_hero_real.jpg" alt="Tap Review Card">
+      <div class="arrow-nav">
+        <div class="arrow">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </div>
+        <div class="arrow">
+          <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+        </div>
+      </div>
+    </div>
+    <h1 class="prod-title">Tap Review Card</h1>
+    <!-- rating -->
+    <div class="rating-row">
+      <div class="stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <a href="#" class="reviews-link">2 Reviews</a>
+      <span class="trust-badge">Also trusted by HSBC &amp; IBM</span>
+    </div>
+    <!-- value strip: price + top benefit surfaced BEFORE style/qty config (CRO fix — was buried in buy-box below) -->
+    <div class="value-strip">
+      <span class="price">£29.99</span>
+      <span class="benefit">Tap to leave a review — no app needed</span>
+    </div>
+    <!-- urgency -->
+    <div class="urgency">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      </div>
+      <span>Low Stock: Order today for delivery: <strong>Jul 7 - Jul 8</strong></span>
+    </div>
+    <!-- style selector -->
+    <div class="style-selector">
+      <div class="style-label">Style: Google</div>
+      <div class="style-pills">
+        <div class="pill">TripAdvisor</div>
+        <div class="pill active">Google</div>
+        <div class="pill">Facebook</div>
+      </div>
+    </div>
+    <!-- quantity -->
+    <div class="qty-row">
+      <span class="qty-label">Quantity:</span>
+      <div class="qty-box">
+        <button class="qty-btn">−</button>
+        <span class="qty-num">1</span>
+        <button class="qty-btn">+</button>
+      </div>
+    </div>
+    <!-- buy-box -->
+    <div class="buy-box">
+      <div class="buy-row">
+        <div class="buy-row-left">
+          <div class="radio"><div class="radio-inner"></div></div>
+          <span class="buy-label">Tap Review Card</span>
+        </div>
+        <span class="buy-price">£29.99</span>
+      </div>
+      <ul class="bullets">
+        <li>Tap to leave a review</li>
+        <li>Direct customers to any review site</li>
+        <li>See who's engaging</li>
+        <li>Place anywhere for convenience</li>
+        <li>Build your online reputation</li>
+      </ul>
+      <div class="bulk-row">
+        <div class="bulk-item"><strong>Buy 3+</strong>Save 13%<br>£26</div>
+        <div class="bulk-item"><strong>Buy 5+</strong>Save 20%<br>£24</div>
+        <div class="bulk-item"><strong>Buy 10+</strong>Save 24%<br>£23</div>
+      </div>
+      <button class="cta">Add to Cart</button>
+      <div class="vat-note">VAT Included, Shipping Calculated at Checkout</div>
+      <div class="warranty-line">
+        <svg viewBox="0 0 24 24"><path d="M12 2l7 3v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5l7-3z"/></svg>
+        <span>Backed by V1CE warranty &amp; support</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

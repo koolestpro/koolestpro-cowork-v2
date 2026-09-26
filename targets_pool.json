@@ -1,0 +1,348 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "Ranked pool of Shopify/DTC and DTC/B2B ecommerce targets for weekly CRO/static-ad/template content production. See docs/koolestpro-content-operating-plan.md Steps 1-2.",
+    "updatedAt": "2026-08-23T11:20:00.000Z",
+    "recordSchema": {
+      "id": "string, unique, e.g. target-<brand-slug>-<timestamp>",
+      "brand": "string",
+      "url": "string",
+      "category": "string, must match one of meta-level categories[]",
+      "pageType": "string, must match one of meta-level pageTypes[]",
+      "leadPotential": "High | Medium | Low",
+      "visualPotential": "High | Medium | Low | Unrated (pending a live mobile page review - never selected for public content while Unrated)",
+      "mobileIssueSummary": "string, 1-2 sentences on the visible mobile problem",
+      "isRealBrand": "boolean",
+      "isClient": "boolean",
+      "status": "Available | Selected | Used | Backlog | Rejected \u2014 status alone should almost never become 'Used' going forward (see 2026-07-12 V1CE correction below); per-stream eligibility is tracked in usedFor instead, since one target can legitimately serve multiple streams and even the same stream more than once over time.",
+      "usedFor": "array of {stream, date, pipelineItemId} - drives rotation logic in Step 2. A target having an entry for stream X does NOT permanently exclude it from stream X again later (established 2026-07-12) \u2014 selection logic should prefer targets with ZERO entries for the stream it's picking for, and only reuse a target that already has one when nothing else qualifies, using a different page/section/angle than the prior entry and noting that explicitly. It DOES mean the target won't be picked for that same stream on back-to-back or near-term runs while fresher options exist.",
+      "notes": "string",
+      "addedAt": "ISO timestamp",
+      "lastUsedAt": "ISO timestamp or null"
+    }
+  },
+  "categories": [
+    "beauty-skincare",
+    "fashion-apparel",
+    "home-kitchen",
+    "fitness-wellness",
+    "baby-pet-lifestyle",
+    "food-beverage-supplements",
+    "nfc-local-business-growth",
+    "digital-business-cards",
+    "qr-review-tools",
+    "loyalty-cards",
+    "appointment-review-tools",
+    "other"
+  ],
+  "pageTypes": [
+    "Product Page",
+    "Landing Page",
+    "Collection Page",
+    "Advertorial/Listicle",
+    "Offer/Bundle Page",
+    "Homepage Section",
+    "FAQ Page",
+    "Post-Purchase Page"
+  ],
+  "targets": [
+    {
+      "id": "target-minimalist-1751673600001",
+      "brand": "Minimalist",
+      "url": "https://beminimalist.co/",
+      "category": "beauty-skincare",
+      "pageType": "Product Page",
+      "leadPotential": "Medium",
+      "visualPotential": "Medium",
+      "mobileIssueSummary": "Homepage hero (mobile, 400x860) is actually clean: clear product hero, benefit checkmarks, decent hierarchy. Only the homepage was reviewed live - product page itself still needs a look before this becomes a strong CRO Fix candidate.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [],
+      "notes": "India-based science-backed skincare brand, already retail-distributed (Nykaa, Amazon.in) - likely has some CRO support already, so Medium not High. Reviewed 2026-07-05: homepage only, looked solid.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": null
+    },
+    {
+      "id": "target-versed-1751673600002",
+      "brand": "Versed",
+      "url": "https://versedskin.com/",
+      "category": "beauty-skincare",
+      "pageType": "Product Page",
+      "leadPotential": "Medium",
+      "visualPotential": "Medium",
+      "mobileIssueSummary": "Collection page (mobile, 400x860): above-the-fold shows only the page title + a Filter control - zero products visible until the user scrolls past a large cookie banner and hero image. Once scrolled, the 2-column product grid itself is clean with visible prices and Add to Cart buttons.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "static-ad",
+          "date": "2026-08-21",
+          "pipelineItemId": "static-ad-versed_dew-point-gel-cream-20260821",
+          "note": "Fresh target, zero prior static-ad entries. Product: Dew Point Gel-Cream Moisturizer ($14.99, 4.7/5 from 456 reviews). Beauty/skincare chosen to rotate away from home-kitchen (Material Kitchen, 2026-07-31) and nfc (V1CE, 2026-08-14). Concept work only, Versed is not a client."
+        }
+      ],
+      "notes": "Established clean-beauty DTC brand with retail distribution - mid-scale, so Medium lead potential. Reviewed 2026-07-05: /collections/all.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-08-21T09:02:00.000Z"
+    },
+    {
+      "id": "target-tapro-1751673600003",
+      "brand": "TAPro",
+      "url": "https://taprocard.com/",
+      "category": "nfc-local-business-growth",
+      "pageType": "Product Page",
+      "leadPotential": "High",
+      "visualPotential": "Medium",
+      "mobileIssueSummary": "Homepage (mobile, 400x860): a tall promo banner (headline + tag pills + CTA) pushes the actual logo/nav below the fold, and a floating live-chat bubble sits directly on top of the sticky bottom nav bar, overlapping the 'Home' label - visual clutter and a mis-tap risk.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-08-31",
+          "pipelineItemId": "cro-fix-tapro_google-review-cards-20260831"
+        }
+      ],
+      "notes": "Small NFC tap-to-review card business - thin CRO resources typical of this niche, high lead potential. Reviewed 2026-07-05: homepage.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-08-31T09:26:04.513860Z"
+    },
+    {
+      "id": "target-v1ce-1751673600004",
+      "brand": "V1CE",
+      "url": "https://v1ce.co/",
+      "category": "nfc-local-business-growth",
+      "pageType": "Product Page",
+      "leadPotential": "High",
+      "visualPotential": "High",
+      "mobileIssueSummary": "Product page (mobile, 400x860): loads with a full-screen cookie-consent modal; tapping it away immediately triggers a second full-screen email-capture quiz modal, and the cookie modal reappeared afterward - two stacked blocking popups delay any view of the actual PDP content. Very visually obvious, strong before/after candidate.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-07-07",
+          "pipelineItemId": "cro-fix-v1ce_tap-review-card-20260707"
+        },
+        {
+          "stream": "template-showcase",
+          "date": "2026-07-12",
+          "pipelineItemId": "template-showcase-v1ce_tap-review-card-pdp-20260712",
+          "note": "1B local fallback \u2014 replo-rebuilds wasn't connected this run, so this showcased the already-finished CRO Fix rebuild HTML (outputs/cro-fixes/v1ce/v1ce_tap-review-card_rebuild_v2.html) rather than a fresh replo-rebuilds page or a new build against this target's brief."
+        },
+        {
+          "stream": "static-ad",
+          "date": "2026-08-14",
+          "pipelineItemId": "static-ad-v1ce_nfc-review-card-20260814"
+        }
+      ],
+      "notes": "NFC review/digital business card company, same niche/reasoning as TAPro - valid DTC/B2B ecommerce target per plan Step 2. Reviewed 2026-07-05: /product/nfc-review-cards. Selected 2026-07-05 for the first weekly CRO Fix - audit brief at outputs/audits/v1ce_tap-review-card_audit.md, rebuild delegated to DeepSeek via .ai-workflow/deepseek-task.md. Normalized 2026-07-12: status was stuck at 'Used' (pre-dates the per-stream usedFor rotation pattern introduced for Obvi 2026-07-11), which incorrectly locked this High/High target out of every future stream. Flipped back to 'Available' with object-format usedFor so it's eligible for template-showcase or a future static-ad run \u2014 only excluded from repeating 'cro-fix' until a rotation reason applies. Used again 2026-07-12 for the first koolestpro-template-showcase-weekly run (1B local fallback, replo-rebuilds not connected) \u2014 still eligible for a future template-showcase run against a different page/section if replo-rebuilds connects later. Used 2026-08-14 for the weekly static-ad stream \u2014 first static-ad use for this target, NFC review card angle (4 concepts: problem/solution, benefit/result, social proof, offer/urgency).",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-08-14T22:58:00.000Z"
+    },
+    {
+      "id": "target-gainful-1751673600005",
+      "brand": "Gainful",
+      "url": "https://www.gainful.com/",
+      "category": "fitness-wellness",
+      "pageType": "Landing Page",
+      "leadPotential": "Medium",
+      "visualPotential": "Medium",
+      "mobileIssueSummary": "Configurator page (mobile, 390x844): two competing 25% offers stack above the product (subscribe-and-save vs new-customer code FLAV25), price is small regular-weight text sharing a line with the star rating, and a full-DOM scan found NO add-to-cart, buy or checkout control anywhere on the page. The words guarantee / money back / cancel anytime / risk-free also appear nowhere. Reviewed 2026-08-23. NOTE: the customizer widget itself failed to render on 6 of 7 headless loads (see outputs/audits/gainful_customize-your-protein_audit.md) but that could not be attributed to the site vs the sandbox, so it was excluded from the post's claims and needs a real-device check.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-08-23",
+          "pipelineItemId": "cro-fix-gainful_customize-your-protein-20260823",
+          "note": "Customize Your Protein configurator page, above the fold. First cro-fix use of this target."
+        }
+      ],
+      "notes": "Quiz-driven personalized nutrition funnel - good landing-page target. Established subscription brand, so Medium not High. Reviewed 2026-07-05: /pages/customize-your-protein. | 2026-08-23: used for cro-fix (see usedFor). status deliberately left Available.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-08-23T11:20:00.000Z"
+    },
+    {
+      "id": "target-transparent-labs-1751673600006",
+      "brand": "Transparent Labs",
+      "url": "https://www.transparentlabs.com/",
+      "category": "fitness-wellness",
+      "pageType": "Product Page",
+      "leadPotential": "Medium",
+      "visualPotential": "Low",
+      "mobileIssueSummary": "Collection page (mobile, 400x860): clean and well-organized - breadcrumb, clear heading, category pill filters, best-seller badges. No obvious mobile issue in the reviewed view. Not a strong CRO Fix candidate right now; better suited to a portfolio/template showcase reference than a public before/after.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [],
+      "notes": "Established sports-nutrition brand with wide retail distribution (Vitamin Shoppe) - Medium lead potential. Reviewed 2026-07-05: /collections/all.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": null
+    },
+    {
+      "id": "target-caraway-1751673600007",
+      "brand": "Caraway",
+      "url": "https://www.carawayhome.com/",
+      "category": "home-kitchen",
+      "pageType": "Product Page",
+      "leadPotential": "Medium",
+      "visualPotential": "Medium",
+      "mobileIssueSummary": "Product page (mobile, 400x860): the secondary category nav row (Shop All / Cookware / Bakeware / Storage & Organization / Kitchen Tools) overflows the viewport with no visible scroll affordance, so mobile users may not realize there's more to see. Otherwise well executed (rating, price, breadcrumb all clear).",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-09-07T07:39:18.590566+00:00",
+          "pipelineItemId": "cro-fix-caraway_fry-pan-pdp-20260907",
+          "note": "First cro-fix use of this target. Page audited: /products/fry-pan (mobile PDP). Findings: price disconnected from title, review/star widget can render as bare text on first paint, product photo can land past the fold when a sweepstakes banner is present. status deliberately left Available per pipeline step 10."
+        },
+        {
+          "stream": "static-ad",
+          "date": "2026-09-09",
+          "pipelineItemId": "static-ad-caraway_fry-pan-20260909",
+          "note": "First static-ad use. Featured product: 10.5\" Non-Stick Ceramic Fry Pan ($125, 4.7/5 from 18,878 reviews). Zero prior static-ad history, tiebreaker was category distance from the last five static ads (Versed/beauty, V1CE/nfc, Material Kitchen/home-kitchen, Bebemoss/baby-pet, Obvi/supplements). Images generated manually via ChatGPT after gpt-image hit a 429 credit_balance_exhausted billing wall on both project keys (2026-09-04); prompt pack banked in .ai-workflow/pending-static-ad-caraway_fry-pan.md, images returned and ingested 2026-09-09."
+        }
+      ],
+      "notes": "Venture-scaled cookware DTC brand, likely already has agency/CRO support, so Medium not High - but still a strong visual/portfolio candidate. Reviewed 2026-07-05: /products/fry-pan.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-09-09T14:10:00.000Z"
+    },
+    {
+      "id": "target-material-kitchen-1751673600008",
+      "brand": "Material Kitchen",
+      "url": "https://materialkitchen.com/",
+      "category": "home-kitchen",
+      "pageType": "Collection Page",
+      "leadPotential": "High",
+      "visualPotential": "High",
+      "mobileIssueSummary": "Homepage (mobile, 400x860): roughly 400px of completely empty whitespace sits between the header and the first headline/CTA - no product image or visual interest above the fold at all. Very demonstrable, high-impact before/after opportunity.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-07-19",
+          "pipelineItemId": "cro-fix-materialkitchen_homepage-above-the-fold-20260719",
+          "note": "First cro-fix use. Homepage above-the-fold (mobile). Note: the stale mobileIssueSummary ('~400px empty whitespace between header and first headline') no longer matches the live site \u2014 the current hero is strong; the real, verified issues audited were a full-screen email popup over the hero on first visit, zero social proof / price / trust above the fold, and heavy inter-section whitespace. Rebuild surfaced a 5-star proof quote, trust chips, a real bestseller (Trio of Knives $195/$225), and an offer CTA."
+        },
+        {
+          "stream": "static-ad",
+          "date": "2026-07-31",
+          "pipelineItemId": "static-ad-materialkitchen_trio-of-knives-20260731",
+          "note": "First static-ad use. Featured product: The Trio of Knives ($195, was $225; 5.0 rating, 472 reviews). Rotated in fresh for this stream, away from Bebemoss/baby-pet-lifestyle and Obvi/food-beverage-supplements, the two most recent static-ad runs."
+        }
+      ],
+      "notes": "Smaller design-led kitchen tools brand - good collection-page target for variety. Reviewed 2026-07-05: homepage.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-07-31T18:59:57.221500+00:00"
+    },
+    {
+      "id": "target-cuts-clothing-1751673600009",
+      "brand": "Cuts Clothing",
+      "url": "https://www.cutsclothing.com/",
+      "category": "fashion-apparel",
+      "pageType": "Product Page",
+      "leadPotential": "High",
+      "visualPotential": "Low",
+      "mobileIssueSummary": "Homepage (mobile, 400x860): strong hero image, clear category shortcuts (Men's New, Best Sellers, Women's All, Rewards, Bundles), scrolling promo marquee. No obvious mobile issue in the reviewed view - matches its reputation for punching above its size.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [],
+      "notes": "Mid-market men's apparel brand described as executing at the level of brands 10x its size - lean team, high lead potential. Reviewed 2026-07-05: homepage (redirected to /en-gb/).",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": null
+    },
+    {
+      "id": "target-kyte-baby-1751673600010",
+      "brand": "Kyte Baby",
+      "url": "https://kytebaby.com/",
+      "category": "baby-pet-lifestyle",
+      "pageType": "Product Page",
+      "leadPotential": "Medium",
+      "visualPotential": "Medium",
+      "mobileIssueSummary": "Homepage (mobile, 400x860): the cookie-consent bottom sheet (covers ~30% of viewport) did not dismiss after tapping Accept and remained docked while scrolling, permanently covering product imagery. Rest of the page (search bar, lifestyle photography) is well executed.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-09-20",
+          "pipelineItemId": "cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920"
+        }
+      ],
+      "notes": "Scaled multi-country bamboo sleepwear brand with brand collabs (Disney/Star Wars) - likely has some CRO support already, so Medium not High. Reviewed 2026-07-05: homepage (redirected to /en-uk).",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-09-20T09:34:25Z"
+    },
+    {
+      "id": "target-bebemoss-1751673600011",
+      "brand": "Bebemoss",
+      "url": "https://bebemoss.com/",
+      "category": "baby-pet-lifestyle",
+      "pageType": "Product Page",
+      "leadPotential": "High",
+      "visualPotential": "High",
+      "mobileIssueSummary": "Collection page (mobile, 400x860): above-the-fold is a large mission-statement paragraph (4-5 sentences) with zero products, prices, or CTAs visible - the actual product grid only appears after scrolling well past the text block. Classic buried-product-grid issue, very demonstrable before/after.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "static-ad",
+          "date": "2026-07-17",
+          "pipelineItemId": "static-ad-bebemoss_ginger-sleepy-bunny-20260717",
+          "note": "First static-ad use. Hero product: Ginger the Sleepy Bunny ($44). 4-angle showcase (problem/benefit/proof/offer). Fresh target, zero prior stream use before this."
+        },
+        {
+          "stream": "cro-fix",
+          "date": "2026-08-18",
+          "pipelineItemId": "cro-fix-bebemoss_toys-collection-20260818",
+          "note": "First cro-fix use. Page audited: /collections/toys (soft toys collection page), a different page from the static-ad use on 2026-07-17, which used the Ginger the Sleepy Bunny product. Findings: 519px mission paragraph filling the entire 844px fold with zero products, a docked Save 10% tab covering card titles/prices across the 8,200px scroll, and 48 products with no filter or sort. status deliberately left Available per the pipeline's step 10."
+        }
+      ],
+      "notes": "Small artisan/social-impact handmade toy brand (Fair Trade, women-artisan cooperative) - high lead potential, likely thin CRO resources. Reviewed 2026-07-05: /collections/toys.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-08-19T10:00:41.072858+00:00"
+    },
+    {
+      "id": "target-obvi-1751673600012",
+      "brand": "Obvi",
+      "url": "https://myobvi.com/",
+      "category": "food-beverage-supplements",
+      "pageType": "Offer/Bundle Page",
+      "leadPotential": "High",
+      "visualPotential": "High",
+      "mobileIssueSummary": "Homepage (mobile, 390x844, re-reviewed 2026-08-02): the H1 is 'BACK IN STOCK!' at 30px, an inventory status rather than a value proposition, while the actual value prop sits below it at 13px as a single 40-word sentence. The third-party accessibility widget renders on top of the bottom-left corner of the primary SHOP NOW button. No product or price above the fold, and the secondary 'Take the quiz' CTA is physically larger than the primary. Supersedes the 2026-07-05 note, which described a hero that no longer exists.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "static-ad",
+          "date": "2026-07-11",
+          "pipelineItemId": "static-ad-obvi_super-collagen-protein-20260711"
+        },
+        {
+          "stream": "cro-fix",
+          "date": "2026-08-02",
+          "pipelineItemId": "cro-fix-obvi_homepage-hero-20260802",
+          "note": "First cro-fix use (prior use was static-ad on 2026-07-11, different stream). Scope: homepage mobile hero above the fold. NOTE: the mobileIssueSummary written 2026-07-05 is now stale - the site was rebuilt and the hero DOES have an H1, paragraph, two CTAs and a proof badge today. Real findings this run: H1 reads 'BACK IN STOCK!' (30px) instead of a value prop, value prop trapped in a 13px 40-word paragraph, the accessibility widget renders on top of the SHOP NOW button's bottom-left corner, no product/price above the fold, two CTAs at equal weight with the secondary larger than the primary."
+        }
+      ],
+      "notes": "Founder-run, content-first supplement brand (quiz + bundle funnel) - lean team despite 8-figure revenue, high lead potential. Reviewed 2026-07-05: homepage.",
+      "addedAt": "2026-07-05T00:00:00.000Z",
+      "lastUsedAt": "2026-08-02T09:45:00+00:00"
+    }
+  ]
+}

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5 Liquid Snippets That Fix Cart Abandonment — @koolestpro</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#080808;color:#fff;font-family:'DM Mono',monospace;padding:40px 20px 80px;}
+
+.section-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 auto 16px;max-width:580px;padding-left:4px;}
+.section-divider{height:1px;background:rgba(255,255,255,0.06);margin:40px auto;max-width:580px;}
+
+/* ── LinkedIn Frame ── */
+.lk-frame{max-width:580px;margin:0 auto;background:#0e0e0e;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);}
+.lk-header{display:flex;align-items:flex-start;gap:10px;padding:14px 16px 10px;}
+.lk-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;}
+.lk-meta{flex:1;}
+.lk-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#e0e0e0;display:flex;align-items:center;gap:6px;}
+.lk-badge{background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;}
+.lk-sub{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.lk-doc-tag{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);margin-top:5px;}
+
+/* ── Viewport ── */
+#viewport{width:540px;height:540px;overflow:hidden;position:relative;cursor:grab;margin:0 auto;background:#080808;}
+#viewport:active{cursor:grabbing;}
+#track{display:flex;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);will-change:transform;}
+
+/* ── Slides ── */
+.slide{width:540px;height:540px;flex-shrink:0;position:relative;overflow:hidden;}
+
+/* ── Navigation ── */
+.nav-row{display:flex;align-items:center;justify-content:center;gap:16px;padding:16px 0 8px;max-width:580px;margin:0 auto;}
+.nav-arrow{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;color:rgba(255,255,255,0.5);}
+.nav-arrow:hover{background:rgba(255,149,0,0.12);border-color:rgba(255,149,0,0.3);color:#FF9500;}
+.nav-arrow svg{width:16px;height:16px;}
+#dots{display:flex;justify-content:center;gap:6px;}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.25s;}
+.dot.active{background:#FF9500;width:18px;border-radius:3px;}
+#counter{text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.35);padding-bottom:4px;}
+
+/* ── Actions ── */
+.lk-actions{display:flex;gap:20px;padding:10px 16px;border-top:1px solid rgba(255,255,255,0.06);}
+.lk-action{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:5px;cursor:pointer;}
+
+/* ── Caption ── */
+.lk-caption{padding:10px 16px 16px;font-family:'DM Mono',monospace;font-size:12px;line-height:1.6;color:rgba(255,255,255,0.5);}
+.lk-caption strong{color:#e0e0e0;}
+
+/* ── Download Panel ── */
+#download-panel{max-width:580px;margin:20px auto 0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;}
+#download-panel h3{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:14px;letter-spacing:1.5px;text-transform:uppercase;}
+#dl-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.dl-btn{font-family:'DM Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:rgba(255,255,255,0.6);cursor:pointer;transition:all 0.2s;}
+.dl-btn:hover{border-color:#FF9500;color:#FF9500;}
+.dl-all{background:rgba(255,149,0,0.1);border-color:rgba(255,149,0,0.3)!important;color:#FF9500!important;}
+.dl-pdf{background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);border:none!important;color:#fff!important;font-weight:700;}
+#download-panel p{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);}
+
+/* ── Code block styling ── */
+.code-panel{background:#0d0d0d;border:1px solid rgba(255,149,0,0.15);border-radius:10px;overflow:hidden;position:relative;}
+.code-label{font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;padding:6px 12px 4px;border-bottom:1px solid rgba(255,149,0,0.08);}
+.code-body{font-family:'DM Mono',monospace;font-size:10px;line-height:1.7;color:rgba(255,255,255,0.75);padding:10px 12px;white-space:pre;overflow-x:auto;overflow-y:auto;max-height:172px;}
+.code-body .kw{color:#FF9500;}
+
+/* ── Swipe chevron (hidden in export) ── */
+.swb{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:32px;color:rgba(255,255,255,0.15);pointer-events:none;z-index:10;font-family:'Syne',sans-serif;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1 — LINKEDIN CAROUSEL
+════════════════════════════════════════════ -->
+<div class="section-label">① LinkedIn Carousel Preview</div>
+
+<div class="lk-frame">
+  <!-- Header -->
+  <div class="lk-header" data-chrome>
+    <div class="lk-avatar">
+      <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle_mvcdss"
+           style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
+           onerror="this.style.display='none'">
+    </div>
+    <div class="lk-meta">
+      <div class="lk-name">Ridwan Adekunle <span class="lk-badge">1st</span></div>
+      <div class="lk-sub">Shopify CRO &amp; UX Designer · Helping DTC brands convert 15–30% more</div>
+      <div class="lk-doc-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        Document
+      </div>
+    </div>
+  </div>
+
+  <!-- Viewport -->
+  <div id="viewport">
+    <div id="track">
+
+      <!-- ════ SLIDE 1: COVER ════ -->
+      <div class="slide" style="background:#080808;">
+        <div style="position:absolute;top:-60px;right:-40px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.22),rgba(224,64,160,0.08),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;bottom:-60px;left:-30px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.12),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.025) 1px,transparent 1px);background-size:26px 26px;"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);"></div>
+
+        <div style="position:relative;z-index:2;padding:44px 42px 36px;height:100%;display:flex;flex-direction:column;justify-content:space-between;">
+          <div style="display:inline-block;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;padding:4px 12px;border-radius:4px;width:fit-content;">5 LIQUID SNIPPETS</div>
+
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 0 20px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-2px;color:#fff;margin-bottom:18px;">Cart abandonment is<br>a code problem.</div>
+            <div style="height:3px;width:52px;border-radius:2px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);margin-bottom:18px;"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.42);line-height:1.65;">Here's the exact Liquid that fixes it —<br>each one with conversion lift data.</div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.32);">SWIPE</span>
+              <div style="width:48px;height:1px;background:linear-gradient(to right,rgba(255,255,255,0.15),#FF9500);"></div>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);">@koolestpro</div>
+          </div>
+        </div>
+        <div class="swb">›</div>
+      </div>
+
+      <!-- ════ SLIDE 2: SNIPPET 01 ════ -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div style="position:absolute;top:-60px;right:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:26px 26px;"></div>
+
+        <div style="position:relative;z-index:2;padding:38px 36px 32px;height:100%;display:flex;flex-direction:column;">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:#FF9500;text-transform:uppercase;margin-bottom:6px;">SNIPPET 01 / 05</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:#fff;margin-bottom:16px;line-height:1.15;">Dynamic Urgency Timer</div>
+
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:14px;">Cart page — live countdown that resets per session. Creates time pressure without fake evergreen timers.</div>
+
+          <div class="code-panel" style="flex:1;">
+            <div class="code-label">LIQUID</div>
+            <div class="code-body"><span class="kw">{% assign</span> timer_mins = 10 <span class="kw">%}</span>
+&lt;div id="urgency-timer" data-mins="<span class="kw">{{</span> timer_mins <span class="kw">}}</span>"&gt;&lt;/div&gt;
+&lt;script&gt;
+  const key = 'cart_timer_end';
+  const mins = <span class="kw">{{</span> timer_mins <span class="kw">}}</span>;
+  if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, Date.now() + mins * 60000);
+  }
+  function tick() {
+      const diff = sessionStorage.getItem(key) - Date.now();
+      if (diff &lt;= 0) {
+          document.getElementById('urgency-timer').textContent = 'Offer expired';
+          return;
+      }
+      const m = Math.floor(diff/60000), s = Math.floor((diff%60000)/1000);
+      document.getElementById('urgency-timer').textContent =
+          `Offer expires in ${m}:${String(s).padStart(2,'0')}`;
+      setTimeout(tick, 1000);
+  }
+  tick();
+&lt;/script&gt;</div>
+          </div>
+
+          <div style="position:absolute;bottom:28px;right:28px;text-align:right;z-index:3;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:72px;letter-spacing:-3px;color:#FF9500;line-height:1;">+14%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">avg. cart completion lift</div>
+          </div>
+        </div>
+        <div class="swb">›</div>
+      </div>
+
+      <!-- ════ SLIDE 3: SNIPPET 02 ════ -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(224,64,160,0.14),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:26px 26px;"></div>
+
+        <div style="position:relative;z-index:2;padding:38px 36px 32px;height:100%;display:flex;flex-direction:column;">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:#FF9500;text-transform:uppercase;margin-bottom:6px;">SNIPPET 02 / 05</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:#fff;margin-bottom:16px;line-height:1.15;">Real-Time Stock Counter</div>
+
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:14px;">Pulls live inventory_quantity, shows scarcity badge only when stock is critically low (&lt; 5 units). Zero fake numbers.</div>
+
+          <div class="code-panel" style="flex:1;">
+            <div class="code-label">LIQUID</div>
+            <div class="code-body"><span class="kw">{% for</span> item in cart.items <span class="kw">%}</span>
+  <span class="kw">{% assign</span> qty = item.variant.inventory_quantity <span class="kw">%}</span>
+  <span class="kw">{% if</span> qty &gt; 0 and qty &lt; 5 <span class="kw">%}</span>
+    &lt;p class="stock-warn"&gt;
+      ⚠️ Only <span class="kw">{{</span> qty <span class="kw">}}</span> left — <span class="kw">{{</span> item.title <span class="kw">}}</span>
+    &lt;/p&gt;
+  <span class="kw">{% endif %}</span>
+<span class="kw">{% endfor %}</span></div>
+          </div>
+
+          <div style="position:absolute;bottom:28px;right:28px;text-align:right;z-index:3;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:72px;letter-spacing:-3px;color:#FF9500;line-height:1;">+11%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">add-to-cart rate on low-stock</div>
+          </div>
+        </div>
+        <div class="swb">›</div>
+      </div>
+
+      <!-- ════ SLIDE 4: SNIPPET 03 ════ -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div style="position:absolute;top:-60px;right:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.14),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:26px 26px;"></div>
+
+        <div style="position:relative;z-index:2;padding:38px 36px 32px;height:100%;display:flex;flex-direction:column;">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:#FF9500;text-transform:uppercase;margin-bottom:6px;">SNIPPET 03 / 05</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:#fff;margin-bottom:16px;line-height:1.15;">Free Shipping Progress Bar</div>
+
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:14px;">Calculates gap to free shipping threshold and shows a live fill bar. One of the highest-ROI cart tweaks you can ship in a day.</div>
+
+          <div class="code-panel" style="flex:1;">
+            <div class="code-label">LIQUID</div>
+            <div class="code-body"><span class="kw">{% assign</span> threshold = 5000 <span class="kw">%}</span> <span class="kw">{%- comment -%}</span>in cents<span class="kw">{%- endcomment -%}</span>
+<span class="kw">{% assign</span> total = cart.total_price <span class="kw">%}</span>
+<span class="kw">{% assign</span> pct = total | times: 100 | divided_by: threshold <span class="kw">%}</span>
+<span class="kw">{% if</span> pct &gt; 100 <span class="kw">%}{% assign</span> pct = 100 <span class="kw">%}{% endif %}</span>
+<span class="kw">{% assign</span> remaining = threshold | minus: total | money <span class="kw">%}</span>
+
+<span class="kw">{% if</span> total &lt; threshold <span class="kw">%}</span>
+  &lt;p&gt;Add <span class="kw">{{</span> remaining <span class="kw">}}</span> more for free shipping&lt;/p&gt;
+<span class="kw">{% else %}</span>
+  &lt;p&gt;🎉 You've unlocked free shipping!&lt;/p&gt;
+<span class="kw">{% endif %}</span>
+&lt;div style="background:#eee;height:6px;border-radius:3px;"&gt;
+  &lt;div style="width:<span class="kw">{{</span> pct <span class="kw">}}</span>%;background:#FF9500;height:6px;border-radius:3px;"&gt;&lt;/div&gt;
+&lt;/div&gt;</div>
+          </div>
+
+          <div style="position:absolute;bottom:28px;right:28px;text-align:right;z-index:3;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:72px;letter-spacing:-3px;color:#FF9500;line-height:1;">+17%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">AOV lift when bar is visible</div>
+          </div>
+        </div>
+        <div class="swb">›</div>
+      </div>
+
+      <!-- ════ SLIDE 5: SNIPPET 04 ════ -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.14),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:26px 26px;"></div>
+
+        <div style="position:relative;z-index:2;padding:38px 36px 32px;height:100%;display:flex;flex-direction:column;">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:#FF9500;text-transform:uppercase;margin-bottom:6px;">SNIPPET 04 / 05</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:#fff;margin-bottom:16px;line-height:1.15;">Exit-Intent Discount Reveal</div>
+
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:14px;">Listens for mouse leaving viewport, then unhides a discount code block. Catches abandoners at the last second without a popup wall.</div>
+
+          <div class="code-panel" style="flex:1;">
+            <div class="code-label">LIQUID</div>
+            <div class="code-body">&lt;div id="exit-offer" style="display:none;
+     padding:16px;background:#fff3cd;
+     border-radius:8px;"&gt;
+  Use code &lt;strong&gt;STAYWITHUS&lt;/strong&gt;
+  for 10% off — just for you.
+&lt;/div&gt;
+
+&lt;script&gt;
+  let shown = false;
+  document.addEventListener(
+    'mouseleave', function(e) {
+    if (e.clientY &lt; 10 &amp;&amp; !shown) {
+      shown = true;
+      document.getElementById('exit-offer')
+        .style.display = 'block';
+    }
+  });
+&lt;/script&gt;</div>
+          </div>
+
+          <div style="position:absolute;bottom:28px;right:28px;text-align:right;z-index:3;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:72px;letter-spacing:-3px;color:#FF9500;line-height:1;">+9%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">recovery rate on abandoning</div>
+          </div>
+        </div>
+        <div class="swb">›</div>
+      </div>
+
+      <!-- ════ SLIDE 6: SNIPPET 05 ════ -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div style="position:absolute;top:-60px;right:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(224,64,160,0.12),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:26px 26px;"></div>
+
+        <div style="position:relative;z-index:2;padding:38px 36px 32px;height:100%;display:flex;flex-direction:column;">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:#FF9500;text-transform:uppercase;margin-bottom:6px;">SNIPPET 05 / 05</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:#fff;margin-bottom:16px;line-height:1.15;">Cross-Sell Block in Cart</div>
+
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:14px;">Uses Shopify Product Recommendations API to surface one complementary product dynamically. Increases units per transaction without cluttering the cart.</div>
+
+          <div class="code-panel" style="flex:1;">
+            <div class="code-label">LIQUID</div>
+            <div class="code-body"><span class="kw">{% if</span> cart.item_count &gt; 0 <span class="kw">%}</span>
+  <span class="kw">{% assign</span> seed = cart.items.first.product_id <span class="kw">%}</span>
+  &lt;div id="cart-recs" data-product="<span class="kw">{{</span> seed <span class="kw">}}</span>"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    fetch(`/recommendations/products.json
+         ?product_id=<span class="kw">{{</span> seed <span class="kw">}}</span>&amp;limit=1`)
+      .then(r =&gt; r.json())
+      .then(data =&gt; {
+        if (!data.products.length) return;
+        const p = data.products[0];
+        document.getElementById('cart-recs')
+          .innerHTML = `&lt;p&gt;You might also like:
+            &lt;a href="${p.url}"&gt;${p.title}&lt;/a&gt;&lt;/p&gt;`;
+      });
+  &lt;/script&gt;
+<span class="kw">{% endif %}</span></div>
+          </div>
+
+          <div style="position:absolute;bottom:28px;right:28px;text-align:right;z-index:3;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:72px;letter-spacing:-3px;color:#FF9500;line-height:1;">+8%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">avg. units per transaction</div>
+          </div>
+        </div>
+        <div class="swb">›</div>
+      </div>
+
+      <!-- ════ SLIDE 7: RECAP ════ -->
+      <div class="slide" style="background:#080808;">
+        <div style="position:absolute;top:-70px;right:-50px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.12),rgba(123,47,190,0.06),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.025) 1px,transparent 1px);background-size:26px 26px;"></div>
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);"></div>
+
+        <div style="position:relative;z-index:2;padding:44px 40px 36px;height:100%;display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div style="display:inline-block;background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:20px;">THE TAKEAWAY</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:32px;line-height:1.15;letter-spacing:-1px;color:#fff;margin-bottom:20px;">Most cart pages ship with zero of these.</div>
+            <div style="height:3px;width:52px;border-radius:2px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);margin-bottom:20px;"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:24px;">
+              Urgency timer. Stock scarcity. Shipping bar. Exit offer. Cross-sell. That's 5 proven levers — each one is a half-day Shopify implementation.
+            </div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff;line-height:1.4;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">
+              Your cart is the last page before money. Treat it like it.
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.32);">SWIPE</span>
+              <div style="width:48px;height:1px;background:linear-gradient(to right,rgba(255,255,255,0.15),#FF9500);"></div>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);">@koolestpro</div>
+          </div>
+        </div>
+        <div class="swb">›</div>
+      </div>
+
+      <!-- ════ SLIDE 8: CTA ════ -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div style="position:absolute;bottom:-70px;left:-50px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.1),rgba(255,149,0,0.06),transparent 70%);pointer-events:none;filter:blur(60px);"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:26px 26px;"></div>
+
+        <div style="position:relative;z-index:2;padding:44px 40px 36px;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+          <div style="width:180px;height:180px;border-radius:50%;overflow:hidden;margin:0 auto 20px;flex-shrink:0;border:2px solid rgba(255,149,0,0.3);">
+            <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle-smile_esjvt2"
+                 style="width:100%;height:100%;object-fit:cover;object-position:center top;"
+                 onerror="this.style.display='none'">
+          </div>
+
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;margin-bottom:2px;">Ridwan Adekunle</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:28px;">@koolestpro</div>
+
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;line-height:1.2;letter-spacing:-1px;color:#fff;margin-bottom:14px;">Want me to audit<br>your cart page?</div>
+
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.75;margin-bottom:24px;">
+            I find the 3 highest-impact fixes specific<br>to your store. DM me "CART" to start.
+          </div>
+
+          <div style="display:inline-block;font-family:'DM Mono',monospace;font-size:10px;padding:8px 16px;border:1px solid rgba(255,149,0,0.2);border-radius:8px;color:rgba(255,255,255,0.4);">
+            ♻️ Repost to help a Shopify founder plug the leak.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /track -->
+  </div><!-- /viewport -->
+
+  <!-- Navigation -->
+  <div class="nav-row" data-chrome>
+    <div class="nav-arrow" id="nav-prev">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div id="dots"></div>
+    <div class="nav-arrow" id="nav-next">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="counter" data-chrome>01 / 08</div>
+
+  <!-- Actions -->
+  <div class="lk-actions" data-chrome>
+    <div class="lk-action">👍 Like</div>
+    <div class="lk-action">💬 Comment</div>
+    <div class="lk-action">♻️ Repost</div>
+    <div class="lk-action">📤 Send</div>
+  </div>
+
+  <!-- Caption -->
+  <div class="lk-caption" data-chrome>
+    <strong>@koolestpro</strong> · Cart abandonment isn't just a UX problem — it's a code problem. Here are 5 Liquid snippets you can implement in a day, each with real conversion lift data. Save this. ♻️
+  </div>
+</div><!-- /lk-frame -->
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2 — DOWNLOAD PANEL
+════════════════════════════════════════════ -->
+<div class="section-label">② Download Slides</div>
+<div id="download-panel">
+  <h3>Export Carousel</h3>
+  <div id="dl-buttons">
+    <button class="dl-btn dl-all" onclick="downloadAll()">↓ All 8 PNGs</button>
+    <button class="dl-btn dl-pdf" onclick="downloadPDF()">↓ All 8 PDF</button>
+    <div class="dl-sep" style="height:1px;background:rgba(255,255,255,0.06);margin:4px 0;width:100%;"></div>
+  </div>
+  <p>Downloads each slide at 1080×1080px. Uses html2canvas — browser may block multiple downloads; allow popups if needed.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3 — CONTENT PIPELINE EXPORT
+════════════════════════════════════════════ -->
+<div style="max-width:600px;margin:0 auto;padding:0 20px 60px;">
+<div style="background:#0a0a0a;border:1px solid rgba(255,149,0,0.2);border-radius:12px;padding:24px;margin-bottom:16px;">
+  <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:8px;">Content Pipeline</div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:18px;">Export this post to the content system. Downloads a <code>.json</code> file — open <code>ridwan_content_system_updated.html</code> and sync to register it.</div>
+  <button onclick="sendToPipeline()" style="background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:12px 28px;border:none;border-radius:8px;cursor:pointer;letter-spacing:0.5px;">Send to Content Pipeline →</button>
+  <div id="pipeline-status" style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);margin-top:12px;min-height:16px;"></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+// ── PIPELINE EXPORT CONSTANTS ────────────────────────────────────────
+const POST_BRAND  = 'Koolestpro';
+const POST_SLUG   = '5-liquid-snippets-cart-abandonment';
+const POST_TYPE   = 'Tip';
+const POST_FOLDER = 'outputs/tips/5-liquid-snippets-cart-abandonment_20260514.html';
+
+// ── CAROUSEL ─────────────────────────────────────────────────────────
+const track = document.getElementById('track');
+const vp = document.getElementById('viewport');
+const dotsEl = document.getElementById('dots');
+const counterEl = document.getElementById('counter');
+const TOTAL = 8;
+const W = 540;
+let cur = 0;
+let startX = 0;
+let dragging = false;
+
+// Build dots
+for (let i = 0; i < TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsEl.appendChild(d);
+}
+
+function goTo(i) {
+  cur = Math.max(0, Math.min(TOTAL - 1, i));
+  track.style.transform = `translateX(${-cur * W}px)`;
+  document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === cur));
+  counterEl.textContent = `${String(cur + 1).padStart(2, '0')} / ${String(TOTAL).padStart(2, '0')}`;
+}
+
+// Arrow buttons
+document.getElementById('nav-prev').addEventListener('click', () => goTo(cur - 1));
+document.getElementById('nav-next').addEventListener('click', () => goTo(cur + 1));
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') goTo(cur - 1);
+  if (e.key === 'ArrowRight') goTo(cur + 1);
+});
+
+// Touch / Mouse drag
+vp.addEventListener('mousedown', e => {
+  dragging = true;
+  startX = e.clientX;
+  track.style.transition = 'none';
+});
+vp.addEventListener('touchstart', e => {
+  dragging = true;
+  startX = e.touches[0].clientX;
+  track.style.transition = 'none';
+}, { passive: true });
+vp.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  track.style.transform = `translateX(${-cur * W + e.clientX - startX}px)`;
+});
+vp.addEventListener('touchmove', e => {
+  if (!dragging) return;
+  track.style.transform = `translateX(${-cur * W + e.touches[0].clientX - startX}px)`;
+}, { passive: true });
+
+function endDrag(ex) {
+  if (!dragging) return;
+  dragging = false;
+  track.style.transition = 'transform 0.35s cubic-bezier(0.4,0,0.2,1)';
+  const dx = ex - startX;
+  if (dx < -50) goTo(cur + 1);
+  else if (dx > 50) goTo(cur - 1);
+  else goTo(cur);
+}
+vp.addEventListener('mouseup', e => endDrag(e.clientX));
+vp.addEventListener('mouseleave', e => endDrag(e.clientX));
+vp.addEventListener('touchend', e => endDrag(e.changedTouches[0].clientX));
+
+// ── SLIDE CAPTURE ────────────────────────────────────────────────────
+async function captureSlide(i) {
+  const slides = document.querySelectorAll('.slide');
+  const target = slides[i];
+
+  // Hide chrome elements temporarily
+  const toHide = document.querySelectorAll('[data-chrome], #download-panel, .posts-shell, .swb, .section-label, .section-divider, .gcard-wrap');
+  const prevDisplays = [];
+  toHide.forEach(el => {
+    prevDisplays.push(el.style.display);
+    el.style.display = 'none';
+  });
+
+  await document.fonts.ready;
+  await new Promise(r => setTimeout(r, 300));
+
+  const canvas = await html2canvas(target, {
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: '#080808',
+    logging: false,
+    imageTimeout: 8000
+  });
+
+  // Restore
+  toHide.forEach((el, idx) => {
+    el.style.display = prevDisplays[idx];
+  });
+
+  return canvas;
+}
+
+function triggerDownload(href, filename) {
+  const a = document.createElement('a');
+  a.href = href;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+// ── DOWNLOAD ALL ─────────────────────────────────────────────────────
+async function downloadAll() {
+  for (let i = 0; i < TOTAL; i++) {
+    const c = await captureSlide(i);
+    triggerDownload(c.toDataURL('image/png'), `koolestpro_cart_abandonment_slide_${String(i + 1).padStart(2, '0')}.png`);
+    await new Promise(r => setTimeout(r, 700));
+  }
+}
+
+async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [1080, 1080] });
+  for (let i = 0; i < TOTAL; i++) {
+    if (i > 0) doc.addPage([1080, 1080], 'portrait');
+    const c = await captureSlide(i);
+    doc.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, 1080, 1080);
+  }
+  doc.save('koolestpro_cart_abandonment.pdf');
+}
+
+// ── INDIVIDUAL SLIDE BUTTONS ────────────────────────────────────────
+window.addEventListener('load', () => {
+  const dlBtns = document.getElementById('dl-buttons');
+  const sep = dlBtns.querySelector('.dl-sep');
+  for (let i = 0; i < TOTAL; i++) {
+    const n = String(i + 1).padStart(2, '0');
+    const bPng = document.createElement('button');
+    bPng.className = 'dl-btn';
+    bPng.textContent = '↓ ' + n;
+    bPng.onclick = async () => {
+      const c = await captureSlide(i);
+      triggerDownload(c.toDataURL('image/png'), `koolestpro_cart_abandonment_slide_${n}.png`);
+    };
+    dlBtns.insertBefore(bPng, sep);
+    const bPdf = document.createElement('button');
+    bPdf.className = 'dl-btn dl-pdf';
+    bPdf.style.cssText = 'font-size:10px;padding:7px 10px;';
+    bPdf.textContent = 'PDF ' + n;
+    bPdf.onclick = async () => {
+      const c = await captureSlide(i);
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [1080, 1080] });
+      doc.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, 1080, 1080);
+      doc.save(`koolestpro_cart_abandonment_slide_${n}.pdf`);
+    };
+    dlBtns.insertBefore(bPdf, sep);
+  }
+});
+
+// ── PIPELINE EXPORT ──────────────────────────────────────────────────
+function sendToPipeline() {
+  const now = new Date();
+  const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+  const data = {
+    id:         'tip-' + POST_SLUG + '-' + dateStr,
+    type:       POST_TYPE,
+    title:      '5 Liquid Snippets That Fix Cart Abandonment',
+    slug:       POST_SLUG,
+    status:     'Created',
+    day:        '',
+    created:    now.toISOString(),
+    folder:     POST_FOLDER,
+    week:       'Week of ' + now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }),
+    month:      now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+    monthSlug:  now.toISOString().slice(0, 7)
+  };
+  console.log('EXPORT_POST_JSON', JSON.stringify(data));
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = POST_SLUG + '_pipeline.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  const s = document.getElementById('pipeline-status');
+  if (s) s.textContent = '✓ Exported — open ridwan_content_system_updated.html and sync.';
+}
+</script>
+</body>
+</html>

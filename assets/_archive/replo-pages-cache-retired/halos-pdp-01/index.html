@@ -1,0 +1,1850 @@
+<!--
+  BRAND:    HALOS
+  PRODUCT:  The HALOS Panel
+  PAGE:     Product Detail Page — pdp-01-story-arc
+  BUILT:    2026-07-13
+  EDIT:     See AGENTS.md → Editing Guide for how to modify this file
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The HALOS Panel — Red Light Therapy Device | HALOS Wellness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── DESIGN TOKENS ──────────────────────────────────────── */
+:root {
+  --slate:    #1C1616;
+  --cream:    #FDF7F2;
+  --cream-d:  #F5EDE5;
+  --copper:   #C8854A;
+  --copper-h: #B07040;
+  --silver:   #E8E0D8;
+  --offblack: #3D3430;
+  --white:    #FFFFFF;
+  --muted:    #9B8D82;
+  --font-display: 'Playfair Display', serif;
+  --font-serif:   'Cormorant Garamond', serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+/* ─── RESET ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--offblack); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
+img { display: block; width: 100%; object-fit: cover; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ─── ANNOUNCEMENT BAR ───────────────────────────────────── */
+.ann-bar {
+  background: var(--slate);
+  color: var(--silver);
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ann-bar span { color: var(--copper); }
+
+/* ─── NAVIGATION ─────────────────────────────────────────── */
+.nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--silver);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.14em;
+  color: var(--slate);
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-links a {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--slate);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--copper); }
+.nav-icons { display: flex; gap: 20px; align-items: center; }
+.nav-icons svg { width: 20px; height: 20px; stroke: var(--slate); fill: none; stroke-width: 1.5; cursor: pointer; }
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--slate);
+  transition: all 0.3s;
+  border-radius: 1px;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu overlay */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--silver);
+  padding: 8px 0;
+  z-index: 199;
+  flex-direction: column;
+}
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--slate);
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--silver);
+  transition: color 0.2s;
+}
+.nav-mobile-menu a:last-child { border-bottom: none; }
+.nav-mobile-menu a:hover { color: var(--copper); }
+
+/* ─── PDP HERO ───────────────────────────────────────────── */
+.pdp-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 48px;
+  align-items: start;
+  background: var(--cream);
+}
+
+/* Gallery Column */
+.gallery-col { display: flex; flex-direction: column; gap: 32px; }
+.gallery-inner { display: flex; flex-direction: row-reverse; gap: 12px; }
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 80px;
+  flex-shrink: 0;
+}
+.thumb {
+  width: 80px;
+  height: 80px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 2px;
+  transition: border-color 0.2s;
+  flex-shrink: 0;
+}
+.thumb.active { border-color: var(--copper); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.main-image {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--cream-d);
+}
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s;
+  aspect-ratio: 4 / 3;
+}
+
+/* Mini FAQ in left column */
+.mini-faq { border-top: 1px solid var(--silver); }
+.mini-faq.mobile { display: none;}
+.mini-faq.desktop { display: block; }
+.mini-faq-item { border-bottom: 1px solid var(--silver); }
+.mini-faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--slate);
+  user-select: none;
+}
+.mini-faq-q .icon {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--silver);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--copper);
+  flex-shrink: 0;
+  transition: transform 0.25s;
+}
+.mini-faq-item.open .icon { transform: rotate(45deg); }
+.mini-faq-a {
+  display: none;
+  padding: 0 4px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.mini-faq-item.open .mini-faq-a { display: block; }
+
+/* Buy Box (right, sticky) */
+.buy-box {
+  position: sticky;
+  top: 84px;
+  padding: 0 0 0 48px;
+}
+.buy-box .stars {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.buy-box .stars .star-row { color: var(--copper); font-size: 16px; letter-spacing: 2px; }
+.buy-box .stars .review-count {
+  font-size: 13px;
+  color: var(--copper);
+  font-weight: 500;
+}
+.buy-box h1 {
+  font-family: var(--font-display);
+  font-size: 40px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--slate);
+  margin-bottom: 20px;
+}
+.feature-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 4px;
+}
+.feature-para {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--offblack);
+  margin-bottom: 16px;
+}
+.specs-block {
+  background: var(--cream-d);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--slate);
+}
+.specs-block strong { font-weight: 500; }
+.bullets { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 20px; }
+.bullet-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--offblack);
+}
+.bullet-item .check {
+  width: 18px; height: 18px;
+  background: var(--copper);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: white; font-size: 10px;
+}
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.price-main {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--copper);
+  letter-spacing: 0.04em;
+}
+.price-save {
+  background: var(--copper);
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+.variant-label {
+  font-size: 13px;
+  color: var(--slate);
+  margin-bottom: 10px;
+}
+.variant-label strong { font-weight: 500; }
+.variant-btns { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.variant-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--silver);
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--slate);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.variant-btn.active { border-color: var(--copper); background: var(--copper); color: white; }
+.variant-btn:hover:not(.active) { border-color: var(--slate); }
+.atc-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--copper);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  transition: background 0.2s;
+}
+.atc-btn:hover { background: var(--copper-h); }
+.payment-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.payment-icon {
+  height: 24px;
+  border: 1px solid var(--silver);
+  border-radius: 3px;
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--slate);
+  background: white;
+  letter-spacing: 0.04em;
+}
+.secure-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+/* ─── SECTION BASE ───────────────────────────────────────── */
+.section { padding: 80px 48px; }
+.section-inner { max-width: 1304px; margin: 0 auto; }
+.sec-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 10px;
+  display: inline-block;
+  border: 1px dashed var(--copper);
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+.sec-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  letter-spacing: 0.04em;
+  color: var(--slate);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.sec-title-serif {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 600;
+  color: var(--slate);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+/* ─── SECTION 2: WHY HALOS ────────────────────────────────── */
+.why-kura { background: var(--white); }
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.why-left h2 { margin-bottom: 24px; }
+.why-bullets { display: flex; flex-direction: column; gap: 12px; margin-bottom: 0; }
+.why-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--offblack);
+}
+.why-bullet .ck {
+  width: 20px; height: 20px;
+  background: var(--copper);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: white; font-size: 10px;
+}
+.review-card {
+  border: 1px solid var(--silver);
+  border-top: 3px solid var(--copper);
+  padding: 28px;
+  background: var(--white);
+}
+.review-card .r-stars { color: var(--copper); font-size: 15px; margin-bottom: 8px; }
+.review-card .r-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 10px;
+}
+.review-card .r-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+.review-card .r-author { font-size: 12px; color: var(--muted); }
+
+/* ─── SECTION 3: VILLAIN ─────────────────────────────────── */
+.villain { background: var(--cream); }
+.villain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.villain-left {}
+.villain-left .sec-title { color: var(--offblack); margin-bottom: 20px; }
+.villain-left p { font-size: 15px; line-height: 1.8; color: #444; margin-bottom: 24px; max-width: 480px; }
+.villain-cta { color: var(--copper); font-size: 14px; font-weight: 500; cursor: pointer; }
+.villain-cta:hover { text-decoration: underline; }
+.villain-img { overflow: hidden; border-radius: 2px; aspect-ratio: 1; }
+.villain-img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ─── SECTION 4: HERO/SOLUTION ───────────────────────────── */
+.hero-sol { background: var(--cream-d); }
+.hero-sol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.hero-sol-left {}
+.hero-sol-left .sec-title { margin-bottom: 8px; }
+.hero-sol-oneliner {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.benefit-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.tile {
+  border: 1px solid var(--silver);
+  background: var(--white);
+  padding: 20px 16px;
+  text-align: center;
+  border-radius: 2px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.tile:hover { border-color: var(--copper); box-shadow: 0 4px 16px rgba(200,133,74,0.1); }
+.tile .t-icon {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 10px;
+  color: var(--copper);
+}
+.tile .t-icon svg { width: 100%; height: 100%; }
+.tile .t-label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--slate);
+  line-height: 1.2;
+}
+.hero-sol-right {
+  position: relative;
+}
+.hero-sol-right img { border-radius: 2px; }
+.hero-sol-stars {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(255,255,255,0.95);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--copper);
+  font-weight: 500;
+}
+
+/* ─── SECTION 5: BEFORE/AFTER ────────────────────────────── */
+.ba-section { background: var(--white); text-align: center; }
+.ba-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3.5vw, 38px);
+  font-weight: 600;
+  color: var(--slate);
+  max-width: 800px;
+  margin: 0 auto 40px;
+  line-height: 1.3;
+}
+.ba-images { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 800px; margin: 0 auto; }
+.ba-img-wrap { position: relative; }
+.ba-img-wrap img { border-radius: 2px; aspect-ratio: 1; }
+.ba-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--slate);
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+.ba-badge.after { background: var(--copper); }
+
+/* ─── SECTION 6: HOW IT WORKS ────────────────────────────── */
+.hiw { background: var(--cream); }
+.hiw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.hiw-steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--silver);
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 56px;
+  height: 56px;
+  background: var(--slate);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+.step-content h4 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: var(--slate);
+  margin-bottom: 6px;
+}
+.step-content p { font-size: 13px; line-height: 1.7; color: var(--muted); }
+.hiw-img img { border-radius: 2px; height: 100%; object-fit: cover; }
+
+/* ─── SECTION 7: REVIEWS ─────────────────────────────────── */
+.reviews-section { background: var(--slate); }
+.reviews-section .sec-label { color: var(--copper); border-color: var(--copper); }
+.reviews-stat {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 52px);
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.reviews-stat span { color: var(--copper); }
+.reviews-stars { color: var(--copper); font-size: 22px; margin-bottom: 40px; letter-spacing: 3px; }
+.reviews-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 40px; }
+.rev-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.rev-card .rv-avatar {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+.rev-card .rv-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cream);
+  text-align: center;
+  padding: 12px 16px 4px;
+}
+.rev-card .rv-location {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  padding: 0 16px 10px;
+}
+.rev-card .rv-toggle {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  color: var(--copper);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.rev-card .rv-toggle:hover { background: rgba(255,255,255,0.05); color: var(--cream); }
+.rev-card .rv-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s ease;
+  padding: 0 16px;
+}
+.rev-card.open .rv-content {
+  max-height: 300px;
+  padding: 0 16px 16px;
+}
+.rev-card .rv-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 8px;
+}
+.rev-card .rv-stars { color: var(--copper); font-size: 13px; margin-bottom: 8px; }
+.rev-card .rv-body {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--silver);
+  font-style: italic;
+}
+.reviews-cta {
+  text-align: center;
+}
+.cta-btn {
+  display: inline-block;
+  background: var(--copper);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+.cta-btn:hover { background: var(--copper-h); }
+.cta-secure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 12px;
+}
+.cta-secure svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ─── SECTION 9: TRUST STATS ─────────────────────────────── */
+.trust-stats { background: var(--white); }
+.trust-stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.stat-card {
+  border: 1px solid var(--silver);
+  padding: 32px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.stat-ring {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+.stat-ring svg { width: 80px; height: 80px; transform: rotate(-90deg); }
+.stat-ring .track { fill: none; stroke: var(--silver); stroke-width: 6; }
+.stat-ring .fill { fill: none; stroke: var(--copper); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+.stat-ring .label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--slate);
+  letter-spacing: 0.04em;
+}
+.stat-text p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.stat-text strong { display: block; font-family: var(--font-display); font-size: 18px; color: var(--slate); letter-spacing: 0.04em; margin-bottom: 4px; }
+
+/* ─── SECTION 10: COMPARISON ─────────────────────────────── */
+.comparison { background: var(--cream); }
+.comp-header { text-align: center; margin-bottom: 48px; }
+.comp-header .sec-label { display: inline-block; margin-bottom: 12px; }
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.comp-table { width: 100%; border-collapse: collapse; }
+.comp-table thead tr th {
+  padding: 14px 20px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.comp-table thead th:first-child { text-align: left; color: var(--muted); }
+.comp-table thead th.us {
+  background: var(--slate);
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.1em;
+}
+.comp-table thead th.them { color: var(--muted); }
+.comp-table tbody tr { border-bottom: 1px solid var(--silver); }
+.comp-table tbody tr:last-child { border-bottom: none; }
+.comp-table tbody td {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--offblack);
+  text-align: center;
+}
+.comp-table tbody td:first-child { text-align: left; color: var(--slate); font-weight: 400; }
+.comp-table .yes { color: var(--copper); font-size: 20px; }
+.comp-table .no { color: #C0392B; font-size: 20px; }
+.comp-reviews { display: flex; flex-direction: column; gap: 16px; }
+.comp-rev {
+  border: 1px solid var(--silver);
+  padding: 20px;
+  background: var(--white);
+}
+.comp-rev .cr-stars { color: var(--copper); font-size: 13px; margin-bottom: 6px; }
+.comp-rev .cr-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 8px;
+}
+.comp-rev .cr-body { font-size: 13px; color: #555; line-height: 1.65; font-style: italic; margin-bottom: 8px; }
+.comp-rev .cr-author { font-size: 11px; color: var(--muted); }
+
+/* ─── SECTION 11: FAQs ───────────────────────────────────── */
+.faqs-section { background: var(--white); }
+.faqs-section .sec-title { text-align: center; margin-bottom: 48px; }
+.faq-list { max-width: 800px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid var(--silver); }
+.faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--slate);
+  user-select: none;
+  gap: 20px;
+}
+.faq-q .faq-icon {
+  width: 24px; height: 24px;
+  border: 1px solid var(--silver);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--copper);
+  flex-shrink: 0;
+  transition: transform 0.25s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  display: none;
+  padding: 0 8px 20px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ─── SECTION 12: TRUST PILLARS ──────────────────────────── */
+.trust-pillars { background: var(--cream-d); }
+.trust-pillars .sec-title { text-align: center; margin-bottom: 48px; }
+.pillars-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+.pillar {
+  text-align: left;
+  padding-top: 24px;
+  border-top: 3px solid var(--copper);
+}
+.pillar-icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 14px;
+  color: var(--copper);
+}
+.pillar-icon svg { width: 100%; height: 100%; }
+.pillar h4 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--slate);
+  margin-bottom: 8px;
+}
+.pillar p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+/* ─── SECTION 13: EMAIL SIGNUP ───────────────────────────── */
+.email-section {
+  background: var(--slate);
+  padding: 64px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+.email-left h3 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.email-left p { font-size: 13px; color: var(--silver); }
+.email-form {
+  display: flex;
+  gap: 0;
+  flex: 1;
+  max-width: 560px;
+}
+.email-form input {
+  flex: 1;
+  padding: 14px 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.07);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  border-radius: 0;
+}
+.email-form input::placeholder { color: rgba(255,255,255,0.35); }
+.email-form button {
+  background: var(--copper);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.email-form button:hover { background: var(--copper-h); }
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer {
+  background: var(--offblack);
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+footer .f-logo {
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 0.14em;
+  color: var(--cream);
+}
+footer p { font-size: 12px; color: var(--muted); }
+
+/* ─── SCROLL FADE IN ─────────────────────────────────────── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible { opacity: 1; transform: none; }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET  (max-width: 1024px)
+══════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .nav { padding: 0 24px; }
+  .nav-links { gap: 20px; }
+
+  .pdp-wrap {
+    grid-template-columns: 1fr;
+    padding: 28px 24px;
+    gap: 40px;
+  }
+  .buy-box {
+    position: static;
+    padding: 0;
+    border-left: none;
+    padding-top: 32px;
+  }
+
+  .why-grid,
+  .villain-grid,
+  .hero-sol-grid,
+  .hiw-grid,
+  .comp-grid { gap: 40px; }
+
+  .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+  .trust-stats-grid { gap: 16px; }
+  .section { padding: 60px 24px; }
+  .email-section { padding: 48px 24px; gap: 32px; }
+  footer { padding: 24px; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE  (max-width: 768px)
+══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Nav */
+  .nav { padding: 0 20px; height: 56px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-mobile-menu { top: 56px; }
+
+  /* Announcement bar */
+  .ann-bar {
+    font-size: 10px;
+    padding: 8px 16px;
+    letter-spacing: 0.06em;
+  }
+
+  /* PDP Hero */
+  .pdp-wrap {
+    padding: 20px 16px;
+    gap: 28px;
+  }
+
+  /* Gallery — thumbnails move to a horizontal row below the main image */
+  .gallery-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .thumbnails {
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .thumbnails::-webkit-scrollbar { display: none; }
+  .thumb {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+  .main-image { aspect-ratio: 4/3; }
+  .mini-faq.mobile { display: block;}
+  .mini-faq.desktop { display: none;}
+
+  /* Buy box */
+  .buy-box {
+    border-top: 1px solid var(--silver);
+    padding-top: 24px;
+    border-left: none;
+  }
+  .buy-box h1 { font-size: 32px; }
+  .bullets { gap: 8px 16px; }
+
+  /* Sections */
+  .section { padding: 48px 16px; }
+
+  /* All 2-col grids → single column */
+  .why-grid,
+  .villain-grid,
+  .hero-sol-grid,
+  .hiw-grid { grid-template-columns: 1fr; gap: 32px; }
+
+  /* Villain image — show after text */
+  .villain-grid { direction: ltr; }
+
+  /* Benefit tiles — 2 columns on mobile */
+  .benefit-tiles { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* Reviews — 1 column */
+  .reviews-grid { grid-template-columns: 1fr; gap: 12px; }
+
+  /* Trust stats — 1 column */
+  .trust-stats-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Comparison — 1 column */
+  .comp-grid { grid-template-columns: 1fr; gap: 32px; }
+  .comp-table thead th { padding: 10px 12px; }
+  .comp-table tbody td { padding: 12px; font-size: 13px; }
+
+  /* Pillars — 1 column */
+  .pillars-grid { grid-template-columns: 1fr; gap: 24px; }
+
+  /* Before/after */
+  .ba-images { grid-template-columns: 1fr 1fr; gap: 12px; max-width: 100%; }
+
+  /* HIW image — hide on mobile to save space */
+  .hiw-img { display: none; }
+
+  /* Email section */
+  .email-section {
+    flex-direction: column;
+    padding: 40px 16px;
+    gap: 24px;
+    text-align: center;
+    align-items: stretch;
+  }
+  .email-form { max-width: 100%; flex-direction: column; }
+  .email-form input { border-radius: 2px 2px 0 0; }
+  .email-form button {
+    border-radius: 0 0 2px 2px;
+    padding: 14px 20px;
+    text-align: center;
+  }
+
+  /* Footer */
+  footer {
+    padding: 20px 16px;
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+
+  /* CTA secure line */
+  .cta-secure { flex-wrap: wrap; font-size: 11px; }
+
+  /* Sec titles */
+  .sec-title { font-size: clamp(30px, 8vw, 48px); }
+
+  /* Hero sol stars badge */
+  .hero-sol-stars { font-size: 12px; padding: 8px 12px; }
+
+  /* Stat card */
+  .stat-card { padding: 20px 16px; gap: 14px; }
+  .stat-ring { width: 64px; height: 64px; }
+  .stat-ring svg { width: 64px; height: 64px; }
+  .stat-ring .label { font-size: 16px; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE  (max-width: 480px)
+══════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .reviews-grid { grid-template-columns: 1fr; }
+  .benefit-tiles { grid-template-columns: 1fr 1fr; }
+  .ba-images { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+  .variant-btns { flex-direction: column; }
+  .variant-btn { text-align: center; }
+  .buy-box h1 { font-size: 28px; }
+  .price-main { font-size: 30px; }
+  .ann-bar { font-size: 9px; letter-spacing: 0.05em; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ ANNOUNCEMENT BAR ══════════════════════════════════ -->
+<div class="ann-bar">
+  Free Shipping on All Orders &nbsp;·&nbsp; <span>60-Day Risk-Free Trial</span>
+</div>
+
+<!-- ═══ NAVIGATION ════════════════════════════════════════ -->
+<nav class="nav">
+  <a href="#" class="nav-logo">HALOS</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Catalog</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-icons">
+    <!-- Search icon -->
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+    <!-- Cart icon -->
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <!-- Hamburger (mobile only) -->
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="nav-mobile-menu" id="mobile-menu">
+  <a href="#">Home</a>
+  <a href="#">Catalog</a>
+  <a href="#">Contact</a>
+</div>
+
+
+<!-- ═══ SECTION 1: PDP HERO ══════════════════════════════ -->
+<div class="pdp-wrap">
+
+  <!-- LEFT: Gallery + Mini FAQ -->
+  <div class="gallery-col">
+    <div class="gallery-inner">
+      <!-- Main image -->
+      <div class="main-image">
+        <img id="main-img" src="images/hero.png" alt="The HALOS Panel — Red Light Therapy Device">
+      </div>
+      <!-- Thumbnails -->
+      <div class="thumbnails">
+        <!-- IMAGE: Hero product shot -->
+        <div class="thumb active" onclick="switchImg(this, 'images/hero.png')">
+          <img src="images/hero.png" alt="The HALOS Panel">
+        </div>
+        <!-- IMAGE: Lifestyle shot -->
+        <div class="thumb" onclick="switchImg(this, 'images/lifestyle.png')">
+          <img src="images/lifestyle.png" alt="HALOS Panel lifestyle in use">
+        </div>
+        <!-- IMAGE: Flat lay / specs -->
+        <div class="thumb" onclick="switchImg(this, 'images/sizes.png')">
+          <img src="images/sizes.png" alt="HALOS Panel flat lay">
+        </div>
+        <!-- IMAGE: Person / testimonial -->
+        <div class="thumb" onclick="switchImg(this, 'images/person.png')">
+          <img src="images/person.png" alt="HALOS Panel user">
+        </div>
+      </div>
+    </div>
+
+    <!-- Mini FAQ (below gallery) -->
+    <div class="mini-faq desktop">
+      <div class="mini-faq-item">
+        <div class="mini-faq-q" onclick="toggleMini(this)">
+          Is red light therapy safe?
+          <span class="icon">+</span>
+        </div>
+        <div class="mini-faq-a">Yes. Non-invasive, no UV light, safe for all skin types and tones. Used in dermatology clinics worldwide.</div>
+      </div>
+      <div class="mini-faq-item">
+        <div class="mini-faq-q" onclick="toggleMini(this)">
+          How soon will I see results?
+          <span class="icon">+</span>
+        </div>
+        <div class="mini-faq-a">Most users see visible improvements in skin tone and texture within 4–6 weeks. Redness and inflammation often improve within 2 weeks.</div>
+      </div>
+      <div class="mini-faq-item">
+        <div class="mini-faq-q" onclick="toggleMini(this)">
+          Can I use it with my skincare?
+          <span class="icon">+</span>
+        </div>
+        <div class="mini-faq-a">Yes — red light enhances product absorption. Apply serums after your session for deeper penetration.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Buy Box (sticky) -->
+  <div class="buy-box">
+    <div class="stars">
+      <span class="star-row">★★★★★</span>
+      <!-- EDIT: Review count -->
+      <span class="review-count">(4.8) 4,800+ Reviews from Real Users</span>
+    </div>
+
+    <!-- EDIT: Product title -->
+    <h1>THE HALOS PANEL</h1>
+
+    <!-- EDIT: Product feature description -->
+    <p class="feature-para">The HALOS Panel delivers clinical-grade red and near-infrared light therapy. 60 medical-grade LEDs at 660nm and 850nm — the two most clinically validated wavelengths for skin rejuvenation, collagen production, and inflammation reduction.</p>
+
+    <div class="specs-block">
+      <strong>Product:</strong> The HALOS Panel<br>
+      <strong>Technology:</strong> 660nm Red Light + 850nm Near-Infrared<br>
+      <strong>LEDs:</strong> 60 Medical-Grade LEDs<br>
+      <strong>Treatment Area:</strong> Full face + neck<br>
+      <strong>Session Time:</strong> 10 minutes daily<br>
+      <strong>Package:</strong> Panel + Stand + Power Adapter + Quick-Start Guide
+    </div>
+
+    <div class="bullets">
+      <div class="bullet-item"><span class="check">✓</span> Stimulates collagen production — firmer, more youthful skin</div>
+      <div class="bullet-item"><span class="check">✓</span> Reduces inflammation and redness at the cellular level</div>
+      <div class="bullet-item"><span class="check">✓</span> Evens skin tone — fades hyperpigmentation and sun spots</div>
+      <div class="bullet-item"><span class="check">✓</span> 10-minute daily ritual — no setup, no downtime</div>
+      <div class="bullet-item"><span class="check">✓</span> Same clinical wavelengths as professional dermatology devices</div>
+    </div>
+
+    <!-- EDIT: Price -->
+    <div class="price-row">
+      <span class="price-main">$149.00</span>
+      <span class="price-save">SAVE 25%</span>
+    </div>
+
+    <!-- EDIT: Variant label -->
+    <p class="variant-label"><strong>Choose your Option:</strong> The HALOS Panel</p>
+    <div class="variant-btns">
+      <!-- EDIT: Product variants -->
+      <button class="variant-btn active" onclick="selectVariant(this)">The HALOS Panel</button>
+      <button class="variant-btn" onclick="selectVariant(this)">Panel + Travel Case</button>
+      <button class="variant-btn" onclick="selectVariant(this)">Panel + Glow Serum</button>
+    </div>
+
+    <!-- EDIT: ATC button -->
+    <button class="atc-btn">ADD TO CART</button>
+
+    <div class="secure-line">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Secure Checkout Guaranteed
+    </div>
+    <div class="payment-row">
+      <img src="images/pay-option.png" alt="Payment options: Visa, Mastercard, Amex, PayPal">
+    </div>
+  </div>
+  <!-- Mini FAQ (below payments) -->
+    <div class="mini-faq mobile">
+      <div class="mini-faq-item">
+        <div class="mini-faq-q" onclick="toggleMini(this)">
+          Is red light therapy safe?
+          <span class="icon">+</span>
+        </div>
+        <div class="mini-faq-a">Yes. Non-invasive, no UV light, safe for all skin types and tones. Used in dermatology clinics worldwide.</div>
+      </div>
+      <div class="mini-faq-item">
+        <div class="mini-faq-q" onclick="toggleMini(this)">
+          How soon will I see results?
+          <span class="icon">+</span>
+        </div>
+        <div class="mini-faq-a">Most users see visible improvements in skin tone and texture within 4–6 weeks. Redness and inflammation often improve within 2 weeks.</div>
+      </div>
+      <div class="mini-faq-item">
+        <div class="mini-faq-q" onclick="toggleMini(this)">
+          Can I use it with my skincare?
+          <span class="icon">+</span>
+        </div>
+        <div class="mini-faq-a">Yes — red light enhances product absorption. Apply serums after your session for deeper penetration.</div>
+      </div>
+    </div>
+</div>
+
+
+<!-- ═══ SECTION 2: WHY HALOS ══════════════════════════════ -->
+<section class="section why-kura fade-in">
+  <div class="section-inner">
+    <div class="why-grid">
+      <div class="why-left">
+        <span class="sec-label">Why Choose HALOS</span>
+        <!-- EDIT: Section title -->
+        <h2 class="sec-title">WHY THE<br>HALOS PANEL?</h2>
+        <div class="why-bullets">
+          <!-- EDIT: Benefit bullets -->
+          <div class="why-bullet"><span class="ck">✓</span> Clinically validated wavelengths — 660nm + 850nm</div>
+          <div class="why-bullet"><span class="ck">✓</span> 60 medical-grade LEDs — same power as clinic devices</div>
+          <div class="why-bullet"><span class="ck">✓</span> 10-minute daily ritual — fits any routine</div>
+          <div class="why-bullet"><span class="ck">✓</span> Enhances skincare absorption — serums work deeper</div>
+          <div class="why-bullet"><span class="ck">✓</span> 60-day risk-free guarantee — love it or return it</div>
+        </div>
+      </div>
+      <div class="why-right">
+        <div class="review-card">
+          <div class="r-stars">★★★★★</div>
+          <!-- EDIT: Review title -->
+          <div class="r-title">"My skin hasn't looked this good in years"</div>
+          <!-- EDIT: Review body -->
+          <p class="r-body">"I've spent thousands on serums and facials. The HALOS Panel did more for my skin texture in 6 weeks than two years of expensive creams. The redness around my nose is almost completely gone."</p>
+          <!-- EDIT: Review author -->
+          <div class="r-author">— Claire D., Portland, Oregon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 3: THE PROBLEM ════════════════════════════ -->
+<section class="section villain fade-in">
+  <div class="section-inner">
+    <div class="villain-grid">
+      <div class="villain-left">
+        <span class="sec-label">The Problem</span>
+        <!-- EDIT: Problem headline -->
+        <h2 class="sec-title">YOUR SKINCARE<br>HAS HIT A WALL.</h2>
+        <!-- EDIT: Problem paragraph 1 -->
+        <p>You've tried the serums. The creams. The $80 moisturizer that promised to transform your skin. And maybe some of it helped — for a while. But topicals can only reach the surface. They can't trigger collagen at the cellular level. They can't reduce deep inflammation.</p>
+        <!-- EDIT: Problem paragraph 2 -->
+        <p>Clinic treatments work — but they cost hundreds per session and require ongoing appointments that eat into your schedule and your wallet. There has to be a better way.</p>
+        <a href="#" class="villain-cta">What if one device could deliver clinic-grade results from your nightstand — proven by over 4,000 clinical studies? →</a>
+      </div>
+      <div class="villain-img">
+        <!-- IMAGE: Problem/skincare frustration -->
+        <img src="images/villain.png" alt="Skincare frustration — expensive products that don't deliver">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 4: THE UPGRADE ════════════════════════════ -->
+<section class="section hero-sol fade-in">
+  <div class="section-inner">
+    <div class="hero-sol-grid">
+      <div class="hero-sol-left">
+        <span class="sec-label">The Upgrade</span>
+        <!-- EDIT: Section title -->
+        <h2 class="sec-title">MEET THE<br>HALOS PANEL</h2>
+        <!-- EDIT: One-liner -->
+        <p class="hero-sol-oneliner">Professional light therapy. Ten minutes. Your own space. Your own time.</p>
+        <div class="benefit-tiles">
+          <!-- STIMULATES COLLAGEN -->
+          <div class="tile">
+            <div class="t-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="t-label">STIMULATES<br>COLLAGEN</div>
+          </div>
+          <!-- CALMS INFLAMMATION -->
+          <div class="tile">
+            <div class="t-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="t-label">CALMS<br>INFLAMMATION</div>
+          </div>
+          <!-- EVENS SKIN TONE -->
+          <div class="tile">
+            <div class="t-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18"/>
+                <path d="M8 14c0 1.1.9 2 2 2h4a2 2 0 0 0 0-4h-4a2 2 0 0 1 0-4h4c1.1 0 2 .9 2 2"/>
+              </svg>
+            </div>
+            <div class="t-label">EVENS<br>SKIN TONE</div>
+          </div>
+          <!-- SPEEDS RECOVERY -->
+          <div class="tile">
+            <div class="t-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="13 2 3 14 10 14 8.5 22 19 10 12 10 14.5 2 13 2"/>
+              </svg>
+            </div>
+            <div class="t-label">SPEEDS<br>RECOVERY</div>
+          </div>
+          <!-- 10-MIN RITUAL -->
+          <div class="tile">
+            <div class="t-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="t-label">10-MIN<br>RITUAL</div>
+          </div>
+          <!-- CLINIC-GRADE -->
+          <div class="tile">
+            <div class="t-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="t-label">CLINIC-<br>GRADE</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-sol-right">
+        <!-- IMAGE: HALOS Panel hero -->
+        <img src="images/lifestyle.png" alt="HALOS Panel — professional light therapy at home">
+        <div class="hero-sol-stars">★★★★★ &nbsp; 4.8 (4,800+)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 5: BEFORE/AFTER ═══════════════════════════ -->
+<section class="section ba-section fade-in">
+  <div class="section-inner">
+    <!-- EDIT: Before/after pull quote -->
+    <p class="ba-quote">"I didn't think at-home light therapy could actually work. Then I saw my skin after 6 weeks."</p>
+    <div class="ba-images">
+      <div class="ba-img-wrap">
+        <!-- IMAGE: Before — problem skin -->
+        <img src="images/villain.png" alt="Before — dull, uneven skin tone">
+        <span class="ba-badge">Before</span>
+      </div>
+      <div class="ba-img-wrap">
+        <!-- IMAGE: After — radiant skin -->
+        <img src="images/lifestyle.png" alt="After — radiant, even skin tone with HALOS">
+        <span class="ba-badge after">After</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 6: HOW IT WORKS ═══════════════════════════ -->
+<section class="section hiw fade-in">
+  <div class="section-inner">
+    <div class="hiw-grid">
+      <div class="hiw-steps">
+        <span class="sec-label">How It Works</span>
+        <!-- EDIT: How it works headline -->
+        <h2 class="sec-title" style="margin-bottom:32px;">YOUR 10-MINUTE<br>RITUAL</h2>
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <!-- EDIT: Step 1 -->
+            <h4>PLACE &amp; POWER ON</h4>
+            <p>Set the HALOS Panel on your bedside table. Plug in. Press power. The amber LEDs glow instantly.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <!-- EDIT: Step 2 -->
+            <h4>SIT &amp; LET THE LIGHT WORK</h4>
+            <p>Position yourself 6–12 inches away. Read, meditate, or just breathe. Ten minutes. The light does the work.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <!-- EDIT: Step 3 -->
+            <h4>SEE THE RESULTS</h4>
+            <p>Daily consistency delivers visible improvements in skin tone, texture, and firmness within 4–6 weeks.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hiw-img">
+        <!-- IMAGE: HALOS Panel lifestyle -->
+        <img src="images/person.png" alt="HALOS Panel — 10-minute daily ritual">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 7: REVIEWS ════════════════════════════════ -->
+<section class="section reviews-section fade-in">
+  <div class="section-inner">
+    <div class="reviews-stars">★★★★★</div>
+    <!-- EDIT: Reviews stat headline -->
+    <div class="reviews-stat">TRUSTED BY <span>4,800+</span> REAL USERS</div>
+    <div class="reviews-grid">
+      <!-- EDIT: Review 1 -->
+      <div class="rev-card">
+        <img class="rv-avatar" src="images/reviewer-1.jpg" alt="Rachel — HALOS user" loading="lazy" />
+        <div class="rv-name">Rachel K.</div>
+        <div class="rv-location">San Diego, California</div>
+        <button class="rv-toggle" onclick="toggleReview(this)">Read their story</button>
+        <div class="rv-content">
+          <div class="rv-label">So easy to use every day</div>
+          <div class="rv-stars">★★★★★</div>
+          <p class="rv-body">"I keep it on my nightstand and use it while I read before bed. Six weeks in and my husband asked if I'd had a facial. Nope — just my HALOS."</p>
+        </div>
+      </div>
+      <!-- EDIT: Review 2 -->
+      <div class="rev-card">
+        <img class="rv-avatar" src="images/reviewer-2.jpg" alt="Marcus — HALOS user" loading="lazy" />
+        <div class="rv-name">Marcus R.</div>
+        <div class="rv-location">Denver, Colorado</div>
+        <button class="rv-toggle" onclick="toggleReview(this)">Read their story</button>
+        <div class="rv-content">
+          <div class="rv-label">Bought it for skin, stayed for recovery</div>
+          <div class="rv-stars">★★★★★</div>
+          <p class="rv-body">"I'm a runner and started using HALOS for post-run recovery. Knee pain improved and my skin looks better than it has in years. Double win."</p>
+        </div>
+      </div>
+      <!-- EDIT: Review 3 -->
+      <div class="rev-card">
+        <img class="rv-avatar" src="images/reviewer-3.jpg" alt="Jennifer — HALOS user" loading="lazy" />
+        <div class="rv-name">Jennifer L.</div>
+        <div class="rv-location">Austin, Texas</div>
+        <button class="rv-toggle" onclick="toggleReview(this)">Read their story</button>
+        <div class="rv-content">
+          <div class="rv-label">Finally — something that actually works</div>
+          <div class="rv-stars">★★★★★</div>
+          <p class="rv-body">"I've wasted money on LED masks that did nothing. HALOS has real power — you can feel the warmth. Three months in and my fine lines are visibly softer."</p>
+        </div>
+      </div>
+      <!-- EDIT: Review 4 -->
+      <div class="rev-card">
+        <img class="rv-avatar" src="images/reviewer-4.jpg" alt="David — HALOS user" loading="lazy" />
+        <div class="rv-name">David P.</div>
+        <div class="rv-location">Chicago, Illinois</div>
+        <button class="rv-toggle" onclick="toggleReview(this)">Read their story</button>
+        <div class="rv-content">
+          <div class="rv-label">My dermatologist noticed the difference</div>
+          <div class="rv-stars">★★★★★</div>
+          <p class="rv-body">"At my last checkup, my derm asked what I'd changed. When I told her about HALOS, she wasn't surprised — she said the wavelengths are exactly what she uses in-office."</p>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-cta">
+      <a href="#" class="cta-btn">GET THE HALOS PANEL — SAVE 25%</a>
+      <div class="cta-secure">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Secure Checkout Guaranteed &nbsp;·&nbsp; Visa · Mastercard · PayPal · Apple Pay
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 8: MID-PAGE CTA ═══════════════════════════ -->
+<section class="section cta-strip fade-in" style="background:var(--copper); text-align:center; padding:48px;">
+  <div class="section-inner">
+    <!-- EDIT: Mid-page CTA -->
+    <button class="atc-btn" onclick="document.querySelector('.buy-box').scrollIntoView({behavior:'smooth'});" style="background:var(--white); color:var(--copper); max-width:400px; margin:0 auto;">GET THE HALOS PANEL — SAVE 25%</button>
+    <p style="color:rgba(255,255,255,.8); font-size:12px; margin-top:12px;">Secure Checkout &middot; 60-Day Guarantee</p>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 9: TRUST STATS ════════════════════════════ -->
+<section class="section trust-stats fade-in">
+  <div class="section-inner">
+    <div class="trust-stats-grid">
+      <!-- EDIT: Stat 1 -->
+      <div class="stat-card">
+        <div class="stat-ring">
+          <svg viewBox="0 0 80 80" aria-hidden="true">
+            <circle class="track" cx="40" cy="40" r="34"/>
+            <circle class="fill" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="4.3"/>
+          </svg>
+          <div class="label">98%</div>
+        </div>
+        <div class="stat-text">
+          <strong>98% VISIBLE RESULTS</strong>
+          <p>report visible improvement in skin tone and texture within 6 weeks</p>
+        </div>
+      </div>
+      <!-- EDIT: Stat 2 -->
+      <div class="stat-card">
+        <div class="stat-ring">
+          <svg viewBox="0 0 80 80" aria-hidden="true">
+            <circle class="track" cx="40" cy="40" r="34"/>
+            <circle class="fill" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="6.4"/>
+          </svg>
+          <div class="label">4K+</div>
+        </div>
+        <div class="stat-text">
+          <strong>4,000+ STUDIES</strong>
+          <p>published clinical studies support red light therapy efficacy</p>
+        </div>
+      </div>
+      <!-- EDIT: Stat 3 -->
+      <div class="stat-card">
+        <div class="stat-ring">
+          <svg viewBox="0 0 80 80" aria-hidden="true">
+            <circle class="track" cx="40" cy="40" r="34"/>
+            <circle class="fill" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="8.5"/>
+          </svg>
+          <div class="label">60D</div>
+        </div>
+        <div class="stat-text">
+          <strong>60-DAY GUARANTEE</strong>
+          <p>risk-free guarantee — love it or return it for a full refund</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 10: COMPARISON ════════════════════════════ -->
+<section class="section comparison fade-in">
+  <div class="section-inner">
+    <div class="comp-header">
+      <span class="sec-label">How HALOS Compares</span>
+      <!-- EDIT: Comparison title -->
+      <h2 class="sec-title">HALOS VS. THE REST</h2>
+    </div>
+    <div class="comp-grid">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="us">HALOS</th>
+            <th class="them">Other LED Devices</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- EDIT: Comparison rows -->
+          <tr><td>Dual wavelength (660nm + 850nm)</td><td class="yes">✓</td><td class="no">✗</td></tr>
+          <tr><td>Medical-grade LEDs (clinically validated irradiance)</td><td class="yes">✓</td><td class="no">✗</td></tr>
+          <tr><td>Full face + neck coverage</td><td class="yes">✓</td><td class="no">✗</td></tr>
+          <tr><td>10-minute auto shutoff</td><td class="yes">✓</td><td class="no">✗</td></tr>
+          <tr><td>60-day risk-free guarantee</td><td class="yes">✓</td><td class="no">✗</td></tr>
+        </tbody>
+      </table>
+      <div class="comp-reviews">
+        <!-- EDIT: Comparison review 1 -->
+        <div class="comp-rev">
+          <div class="cr-stars">★★★★★</div>
+          <div class="cr-title">"Tried everything"</div>
+          <p class="cr-body">"I've had expensive facials, microcurrent, LED masks. HALOS is the first thing that gave me consistent visible results. My skin tone is the most even it's ever been."</p>
+          <div class="cr-author">— Rebecca A., Dallas, Texas</div>
+        </div>
+        <!-- EDIT: Comparison review 2 -->
+        <div class="comp-rev">
+          <div class="cr-stars">★★★★★</div>
+          <div class="cr-title">"My recovery is faster"</div>
+          <p class="cr-body">"As a CrossFit athlete, recovery matters. I use HALOS post-workout and the difference in muscle soreness is real. The skin benefits are a bonus."</p>
+          <div class="cr-author">— Anthony D., Seattle, Washington</div>
+        </div>
+        <!-- EDIT: Comparison review 3 -->
+        <div class="comp-rev">
+          <div class="cr-stars">★★★★★</div>
+          <div class="cr-title">"Best wellness purchase this year"</div>
+          <p class="cr-body">"Simple. Effective. Consistent. I use it daily and my skin has never looked healthier. This is what at-home skincare should be."</p>
+          <div class="cr-author">— Michelle S., Miami, Florida</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 11: FAQs ══════════════════════════════════ -->
+<section class="section faqs-section fade-in">
+  <div class="section-inner">
+    <!-- EDIT: FAQ section title -->
+    <h2 class="sec-title">FAQS</h2>
+    <div class="faq-list">
+      <!-- EDIT: FAQ 1 -->
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Will the HALOS Panel dull my skin or cause burns?<span class="faq-icon">+</span></div>
+        <div class="faq-a">No. Red and near-infrared light therapy is non-thermal and non-invasive. It does not use UV light and will not burn or damage skin in any way.</div>
+      </div>
+      <!-- EDIT: FAQ 2 -->
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is red light therapy actually proven?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. Over 4,000 published clinical studies support the efficacy of red and NIR light for skin rejuvenation, collagen production, and inflammation reduction.</div>
+      </div>
+      <!-- EDIT: FAQ 3 -->
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How is this different from a $40 LED mask?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Most consumer LED masks use low-power diodes with insufficient irradiance. HALOS uses medical-grade LEDs at clinically validated power levels — the same output as professional dermatology devices.</div>
+      </div>
+      <!-- EDIT: FAQ 4 -->
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How long until I see results?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Most users see visible improvements in 4–6 weeks. Redness often improves within 2 weeks. Collagen remodeling is gradual — the best results compound over months.</div>
+      </div>
+      <!-- EDIT: FAQ 5 -->
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I use it alongside my current skincare?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. Red light therapy enhances product absorption. Apply your serums and moisturizers after your HALOS session for deeper penetration.</div>
+      </div>
+      <!-- EDIT: FAQ 6 -->
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is it safe for all skin types?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. Safe for all skin tones and types. Non-invasive, non-thermal, zero UV. Used safely in dermatology clinics worldwide for decades.</div>
+      </div>
+      <!-- EDIT: FAQ 7 -->
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How long does each session take?<span class="faq-icon">+</span></div>
+        <div class="faq-a">10 minutes. The panel has a built-in auto shutoff timer. Use it daily — consistency is what drives results.</div>
+      </div>
+      <!-- EDIT: FAQ 8 -->
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What's included in the box?<span class="faq-icon">+</span></div>
+        <div class="faq-a">The HALOS Panel, a detachable tabletop stand, a power adapter (110–240V), a quick-start guide, and a 60-day results journal. Free shipping.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 12: TRUST PILLARS ════════════════════════ -->
+<section class="section trust-pillars fade-in">
+  <div class="section-inner">
+    <!-- EDIT: Trust pillars headline -->
+    <h2 class="sec-title">WHY 4,800+ USERS<br>TRUST HALOS</h2>
+    <div class="pillars-grid">
+      <!-- EDIT: Pillar 1 — Clinically Validated -->
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h4>CLINICALLY VALIDATED</h4>
+        <p>Backed by over 4,000 published studies. The same wavelengths used by dermatologists and professional athletes worldwide.</p>
+      </div>
+      <!-- EDIT: Pillar 2 — Proven to Work -->
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="6"/>
+            <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+          </svg>
+        </div>
+        <h4>PROVEN TO WORK</h4>
+        <p>Tested in real homes by real people. 98% of users report visible improvement. Thousands of five-star reviews from verified buyers.</p>
+      </div>
+      <!-- EDIT: Pillar 3 — Built to Last -->
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h4>BUILT TO LAST</h4>
+        <p>Medical-grade components rated for years of daily use. Unlike cheap LED masks that degrade, the HALOS Panel is built for consistent daily performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 13: EMAIL SIGNUP ══════════════════════════ -->
+<div class="email-section">
+  <div class="email-left">
+    <!-- EDIT: Email heading and subtext -->
+    <h3>Join the HALOS Wellness Community</h3>
+    <p>Get exclusive deals, new product launches, and science-backed skincare tips straight to your inbox.</p>
+  </div>
+  <div class="email-form">
+    <input type="email" placeholder="Enter your email address">
+    <button type="submit">Subscribe</button>
+  </div>
+</div>
+
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<footer>
+  <div class="f-logo">HALOS</div>
+  <p>© 2026 HALOS Wellness — Powered by Shopify</p>
+</footer>
+
+
+<!-- ═══ JAVASCRIPT ════════════════════════════════════════ -->
+<script>
+  /* Hamburger menu */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', function() {
+    this.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  /* Close mobile menu when a link is clicked */
+  mobileMenu.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  /* Gallery */
+  function switchImg(thumb, src) {
+    document.querySelectorAll('.thumb').forEach(function(t) { t.classList.remove('active'); });
+    thumb.classList.add('active');
+    var main = document.getElementById('main-img');
+    main.style.opacity = '0';
+    setTimeout(function() { main.src = src; main.style.opacity = '1'; }, 200);
+  }
+
+  /* Mini FAQ */
+  function toggleMini(el) {
+    var item = el.parentElement;
+    item.classList.toggle('open');
+  }
+
+  /* Review toggle */
+  function toggleReview(btn) {
+    var card = btn.parentElement;
+    var isOpen = card.classList.contains('open');
+    document.querySelectorAll('.rev-card.open').forEach(function(c) {
+      if (c !== card) { c.classList.remove('open'); c.querySelector('.rv-toggle').textContent = 'Read their story'; }
+    });
+    if (isOpen) {
+      card.classList.remove('open');
+      btn.textContent = 'Read their story';
+    } else {
+      card.classList.add('open');
+      btn.textContent = 'Hide story';
+    }
+  }
+
+  /* Full FAQs */
+  function toggleFaq(el) {
+    var item = el.parentElement;
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  /* Variant buttons */
+  function selectVariant(btn) {
+    document.querySelectorAll('.variant-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var label = document.querySelector('.variant-label');
+    label.innerHTML = '<strong>Choose your Option:</strong> ' + btn.textContent;
+  }
+
+  /* Scroll fade-in */
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+
+  /* ATC button feedback */
+  var atcButtons = document.querySelectorAll('.atc-btn');
+  atcButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var orig = this.textContent;
+      this.textContent = 'ADDED TO CART';
+      this.style.background = '#1C1616';
+      setTimeout(function() { 
+        btn.textContent = orig; 
+        btn.style.background = ''; 
+      }, 2000);
+    });
+  });
+</script>
+
+</body>
+</html>

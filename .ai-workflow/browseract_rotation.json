@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "description": "Rotation list + pointer for koolestpro-browseract-weekly. Each week the scheduled task reads currentIndex, uses that entry, then advances currentIndex (wrapping) and writes this file back via device_commit_files. See docs/koolestpro-growth-operating-plan.md Section C2 for the category set this rotation is drawn from.",
+    "updatedAt": "2026-09-16T18:49:21.000Z",
+    "currentIndex": 3,
+    "limitPerRun": 5
+  },
+  "areas": [
+    {
+      "area": "Lekki, Lagos",
+      "keyword": "fashion boutique",
+      "niche": "Fashion & Apparel",
+      "country": "Nigeria",
+      "city": "Lagos",
+      "audienceType": "E-commerce/DTC"
+    },
+    {
+      "area": "Victoria Island, Lagos",
+      "keyword": "skincare shop",
+      "niche": "Beauty & Skincare",
+      "country": "Nigeria",
+      "city": "Lagos",
+      "audienceType": "E-commerce/DTC"
+    },
+    {
+      "area": "Ikeja, Lagos",
+      "keyword": "baby and kids store",
+      "niche": "Kids & Baby",
+      "country": "Nigeria",
+      "city": "Lagos",
+      "audienceType": "E-commerce/DTC"
+    },
+    {
+      "area": "Surulere, Lagos",
+      "keyword": "home decor store",
+      "niche": "Home & Living",
+      "country": "Nigeria",
+      "city": "Lagos",
+      "audienceType": "E-commerce/DTC"
+    },
+    {
+      "area": "Yaba, Lagos",
+      "keyword": "gadget store",
+      "niche": "Electronics & Gadgets",
+      "country": "Nigeria",
+      "city": "Lagos",
+      "audienceType": "E-commerce/DTC"
+    },
+    {
+      "area": "Lagos",
+      "keyword": "food and snacks shop",
+      "niche": "Food & Beverage",
+      "country": "Nigeria",
+      "city": "Lagos",
+      "audienceType": "E-commerce/DTC"
+    }
+  ]
+}

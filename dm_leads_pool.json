@@ -1,0 +1,158 @@
+{
+ "meta": {
+  "version": "1.0.0",
+  "description": "Lightweight lead list for the Nigeria-market DM outreach track (businesses with no storefront to audit, sold via Instagram/TikTok DM). Kept separate from targets_pool.json, whose schema assumes every target has a url worth auditing. Sourced via BrowserAct (see CLAUDE.md 'BrowserAct Data API'). See docs/koolestpro-growth-operating-plan.md for the Nigeria/Africa track this feeds.",
+  "updatedAt": "2026-08-11T16:20:00+00:00",
+  "recordSchema": {
+   "id": "string, unique, e.g. lead-<slug-of-businessName>-<date>",
+   "businessName": "string",
+   "address": "string, full address as scraped",
+   "category": "string, free text business category (not the Shopify/DTC categories from targets_pool.json)",
+   "rating": "string, e.g. '4.7/5.0', or null if not captured",
+   "reviewCount": "number or null",
+   "avgPricePerPerson": "string or null, currency-agnostic range as scraped",
+   "instagramHandle": "string or null - NOT provided by the Google Maps scraper, needs manual lookup before DM outreach is possible",
+   "phone": "string or null - same gap as above",
+   "segment": "nigeria-dm (fixed for this file, matches the growth plan's Nigeria/Africa track)",
+   "contactMethod": "instagram-dm | whatsapp | other - set once a real handle/number is found",
+   "status": "Available | NeedsContactInfo | Contacted | Replied | Converted | Rejected",
+   "leadPotential": "High | Medium | Low | Unrated - simple heuristic on rating+reviewCount, not a substitute for a human look",
+   "notes": "string",
+   "source": {
+    "provider": "browseract",
+    "workflowId": "string",
+    "workflowName": "string",
+    "taskId": "string"
+   },
+   "addedAt": "ISO timestamp",
+   "lastUpdatedAt": "ISO timestamp or null"
+  },
+  "knownGaps": [
+   "Google Maps Scraper template returns no website, Instagram handle, or phone number - every lead here needs a manual/secondary lookup step before it's actually DM-able. Status starts at 'NeedsContactInfo' for that reason, not 'Available'.",
+   "leadPotential is a placeholder heuristic (rating >= 4.5 and reviewCount >= 15 => Medium, higher volume => High) - not validated against real conversion data yet.",
+   "SUPERSEDED 2026-08-11: KoolestFlow (cold-dm-app.vercel.app) is now the real destination for BrowserAct-sourced leads, pushed live via .ai-workflow/tools/browseract_koolestflow_bridge.py. This file is kept as a historical/staging log for koolestpro-cowork-v2-specific runs, not the primary destination going forward."
+  ]
+ },
+ "leads": [
+  {
+   "id": "lead-kikysky-skincare-and-spiritual-store-20260811",
+   "businessName": "Kikysky Skincare and Spiritual Store",
+   "address": "1 Baale St, off freedom way, Lagos, Lagos, , Nigeria",
+   "category": "skincare shop",
+   "rating": "5.0/5.0",
+   "reviewCount": 17,
+   "avgPricePerPerson": null,
+   "instagramHandle": null,
+   "phone": null,
+   "segment": "nigeria-dm",
+   "contactMethod": null,
+   "status": "NeedsContactInfo",
+   "leadPotential": "Medium",
+   "notes": "Test run of the Google Maps Scraper workflow, 2026-08-11 - first live BrowserAct output in this project.",
+   "source": {
+    "provider": "browseract",
+    "workflowId": "112089423433150347",
+    "workflowName": "Google Maps Scraper-0811",
+    "taskId": "112090362967777163"
+   },
+   "addedAt": "2026-08-11T15:10:00+00:00",
+   "lastUpdatedAt": null
+  },
+  {
+   "id": "lead-blackhills-cosmetics-20260811",
+   "businessName": "Blackhills Cosmetics",
+   "address": "Gowon Estate, Lagos, Lagos, , Nigeria",
+   "category": "skincare shop",
+   "rating": "5.0/5.0",
+   "reviewCount": 52,
+   "avgPricePerPerson": null,
+   "instagramHandle": null,
+   "phone": null,
+   "segment": "nigeria-dm",
+   "contactMethod": null,
+   "status": "MigratedToKoolestFlow",
+   "leadPotential": "High",
+   "notes": "Test run of the Google Maps Scraper workflow, 2026-08-11. | Migrated to KoolestFlow (cold-dm-app.vercel.app) 2026-08-11 via browseract_koolestflow_bridge.py, id=koolestflow-browseract-blackhills-cosmetics.",
+   "source": {
+    "provider": "browseract",
+    "workflowId": "112089423433150347",
+    "workflowName": "Google Maps Scraper-0811",
+    "taskId": "112090362967777163"
+   },
+   "addedAt": "2026-08-11T15:10:00+00:00",
+   "lastUpdatedAt": null
+  },
+  {
+   "id": "lead-royal-mentor-global-cosmetics-skincare-shop-20260811",
+   "businessName": "Royal Mentor Global - Cosmetics & Skincare Shop",
+   "address": "N.8 koseh A14, Balogun W St, Lagos, Lagos, , Nigeria",
+   "category": "skincare shop",
+   "rating": "5.0/5.0",
+   "reviewCount": 21,
+   "avgPricePerPerson": null,
+   "instagramHandle": null,
+   "phone": null,
+   "segment": "nigeria-dm",
+   "contactMethod": null,
+   "status": "NeedsContactInfo",
+   "leadPotential": "Medium",
+   "notes": "Test run of the Google Maps Scraper workflow, 2026-08-11.",
+   "source": {
+    "provider": "browseract",
+    "workflowId": "112089423433150347",
+    "workflowName": "Google Maps Scraper-0811",
+    "taskId": "112090362967777163"
+   },
+   "addedAt": "2026-08-11T15:10:00+00:00",
+   "lastUpdatedAt": null
+  },
+  {
+   "id": "lead-candyb-skincare-hub-20260811",
+   "businessName": "Candyb Skincare Hub",
+   "address": "pa orelope plaza, 85/87 Idimu Rd, LGA, Lagos, Lagos, , Nigeria",
+   "category": "skincare shop",
+   "rating": "4.7/5.0",
+   "reviewCount": 15,
+   "avgPricePerPerson": null,
+   "instagramHandle": null,
+   "phone": null,
+   "segment": "nigeria-dm",
+   "contactMethod": null,
+   "status": "NeedsContactInfo",
+   "leadPotential": "Medium",
+   "notes": "Test run of the Google Maps Scraper workflow, 2026-08-11.",
+   "source": {
+    "provider": "browseract",
+    "workflowId": "112089423433150347",
+    "workflowName": "Google Maps Scraper-0811",
+    "taskId": "112090362967777163"
+   },
+   "addedAt": "2026-08-11T15:10:00+00:00",
+   "lastUpdatedAt": null
+  },
+  {
+   "id": "lead-mos-beauty-hub-mo-organics-skincare-20260811",
+   "businessName": "Mos Beauty Hub (Mo Organics Skincare)",
+   "address": "Off 131, By marsha, roundabout, 6A Ogunlana Lane, Ogunlana Dr, Lagos, Lagos, , Nigeria",
+   "category": "skincare shop",
+   "rating": "4.9/5.0",
+   "reviewCount": 27,
+   "avgPricePerPerson": null,
+   "instagramHandle": null,
+   "phone": null,
+   "segment": "nigeria-dm",
+   "contactMethod": null,
+   "status": "NeedsContactInfo",
+   "leadPotential": "High",
+   "notes": "Test run of the Google Maps Scraper workflow, 2026-08-11.",
+   "source": {
+    "provider": "browseract",
+    "workflowId": "112089423433150347",
+    "workflowName": "Google Maps Scraper-0811",
+    "taskId": "112090362967777163"
+   },
+   "addedAt": "2026-08-11T15:10:00+00:00",
+   "lastUpdatedAt": null
+  }
+ ]
+}

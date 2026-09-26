@@ -1,0 +1,1035 @@
+<!--
+  BRAND:    HALOS
+  PRODUCT:  The HALOS Panel
+  PAGE:     Homepage — Custom Editorial Design
+  BUILT:    2026-07-14
+  EDIT:     See AGENTS.md → Editing Guide for how to modify this file
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HALOS — Clinical-Grade Red Light Therapy for Radiant Skin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --black:    #1C1616;
+      --ivory:    #FDF7F2;
+      --gold:     #C8854A;
+      --gold-h:   #D69A5E;
+      --stone:    #E8E0D8;
+      --text:     #3D3430;
+      --dust:     #9B8D82;
+      --white:    #FFFFFF;
+
+      --display:  'Playfair Display', serif;
+      --serif:    'Cormorant Garamond', serif;
+      --body:     'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      color: var(--text);
+      background: var(--ivory);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; border: none; }
+
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 64px;
+      transition: background .3s, box-shadow .3s;
+    }
+    .nav.scrolled { background: rgba(28,22,22,.95); box-shadow: 0 1px 0 rgba(255,255,255,.06); }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      color: #fff;
+    }
+    .nav-cta {
+      background: var(--gold);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 2px;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--gold-h); }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════════ */
+    .hero {
+      background: var(--black);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(200,133,74,.18) 0%, rgba(200,133,74,.06) 35%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      width: 100%;
+      padding: 100px 32px 60px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-text {
+      animation: fadeUp .9s ease both;
+    }
+    .hero-eyebrow {
+      font-family: var(--body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 600;
+      line-height: 1.06;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,.7);
+      max-width: 420px;
+      margin-bottom: 32px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: #fff;
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 14px 36px;
+      border-radius: 2px;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: var(--gold-h); }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,.8);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 14px 24px;
+      transition: color .2s;
+    }
+    .btn-ghost:hover { color: var(--gold); }
+    .btn-ghost svg { width: 16px; height: 16px; }
+    .hero-visual {
+      animation: fadeUp .9s ease .2s both;
+      position: relative;
+    }
+    .hero-visual img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .hero-badge {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      background: var(--gold);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 2px;
+      text-align: center;
+    }
+    .hero-badge .badge-num {
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .hero-badge .badge-label {
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      opacity: .8;
+      margin-top: 2px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TRUST STRIP
+    ═══════════════════════════════════════════════════════ */
+    .trust-strip {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .trust-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 32px;
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,.6);
+      font-weight: 500;
+    }
+    .trust-item svg { width: 18px; height: 18px; stroke: var(--gold); flex-shrink: 0; }
+
+    /* ═══════════════════════════════════════════════════════
+       SECTION SHARED
+    ═══════════════════════════════════════════════════════ */
+    .section { padding: 100px 32px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .sec-label {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .sec-title {
+      font-family: var(--display);
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--black);
+      margin-bottom: 16px;
+    }
+    .sec-sub {
+      font-size: 16px;
+      color: var(--dust);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* Fade-in */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════════════════════════════════════════
+       SCIENCE OF LIGHT
+    ═══════════════════════════════════════════════════════ */
+    .science { background: var(--white); }
+    .science-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .science-text .sec-title { margin-bottom: 20px; }
+    .science-text p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--dust);
+      margin-bottom: 16px;
+    }
+    .wavelengths {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .wave-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .wave-bar {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      position: relative;
+    }
+    .wave-bar.wave-red { background: linear-gradient(to right, #C8854A, #E8A060, #C8854A); }
+    .wave-bar.wave-nir { background: linear-gradient(to right, #A06040, #C8854A, #A06040); }
+    .wave-label {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--text);
+      min-width: 100px;
+    }
+    .wave-nm {
+      font-size: 11px;
+      color: var(--dust);
+      letter-spacing: .06em;
+      min-width: 60px;
+    }
+    .wave-desc {
+      font-size: 13px;
+      color: var(--dust);
+      min-width: 140px;
+    }
+    .science-visual {
+      position: relative;
+    }
+    .science-visual img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .science-callout {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      background: var(--black);
+      color: var(--gold);
+      padding: 16px 20px;
+      border-radius: 2px;
+    }
+    .science-callout .callout-num {
+      font-family: var(--display);
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .science-callout .callout-label {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--dust);
+      margin-top: 4px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       THE PANEL
+    ═══════════════════════════════════════════════════════ */
+    .panel-section { background: var(--ivory); }
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .panel-visual { order: 1; }
+    .panel-visual img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .panel-text { order: 0; }
+    .panel-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .spec-item {
+      border: 1px solid var(--stone);
+      padding: 16px;
+      border-radius: 2px;
+    }
+    .spec-item .spec-num {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .spec-item .spec-label {
+      font-size: 11px;
+      color: var(--dust);
+      letter-spacing: .06em;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       THE RITUAL
+    ═══════════════════════════════════════════════════════ */
+    .ritual { background: var(--white); text-align: center; }
+    .ritual .sec-title { margin: 0 auto 40px; max-width: 700px; }
+    .ritual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .ritual-card {
+      text-align: center;
+      padding: 40px 24px 32px;
+      position: relative;
+    }
+    .ritual-num {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .ritual-icon {
+      width: 40px; height: 40px;
+      margin: 0 auto 14px;
+    }
+    .ritual-icon svg { width: 40px; height: 40px; stroke: var(--gold); }
+    .ritual-title {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: 8px;
+    }
+    .ritual-desc {
+      font-size: 14px;
+      color: var(--dust);
+      line-height: 1.7;
+    }
+    .ritual-time {
+      font-family: var(--display);
+      font-size: 14px;
+      letter-spacing: .08em;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       REAL GLOW (Testimonials)
+    ═══════════════════════════════════════════════════════ */
+    .real-glow { background: var(--black); color: #fff; }
+    .real-glow .sec-title { color: #fff; }
+    .real-glow .sec-label { color: var(--gold); }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .testimonial-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .testimonial-card img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .testimonial-card:hover img { transform: scale(1.04); }
+    .testimonial-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,22,22,.9) 0%, rgba(28,22,22,.25) 40%, transparent 70%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 16px;
+    }
+    .testimonial-overlay .t-stars {
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+    .testimonial-overlay .t-quote {
+      font-family: var(--serif);
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.5;
+      color: rgba(255,255,255,.9);
+      margin-bottom: 6px;
+    }
+    .testimonial-overlay .t-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gold);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       FINAL LIGHT (CTA)
+    ═══════════════════════════════════════════════════════ */
+    .final-light {
+      background: var(--black);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-light::before {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(200,133,74,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .final-light .sec-title {
+      color: #fff;
+      font-size: clamp(32px, 5vw, 56px);
+      margin-bottom: 12px;
+    }
+    .final-light .sec-sub {
+      color: rgba(255,255,255,.6);
+      margin: 0 auto 32px;
+    }
+    .final-price {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .final-price .price-was {
+      font-size: 18px;
+      color: rgba(255,255,255,.4);
+      text-decoration: line-through;
+    }
+    .final-price .price-now {
+      font-family: var(--display);
+      font-size: 44px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .final-price .price-save {
+      background: var(--gold);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .final-secure {
+      font-size: 12px;
+      color: rgba(255,255,255,.4);
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .final-secure svg { width: 14px; height: 14px; stroke: rgba(255,255,255,.3); }
+
+    /* ═══════════════════════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════════════════════ */
+    .faq-section { background: var(--black); border-top: 1px solid rgba(255,255,255,.06); }
+    .faq-section .sec-title { color: #fff; text-align: center; margin-bottom: 40px; }
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,.06); }
+    .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      text-align: left;
+      background: none;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .faq-q:hover { color: var(--gold); }
+    .faq-q span { flex: 1; padding-right: 16px; }
+    .faq-q-icon {
+      flex-shrink: 0;
+      font-size: 18px;
+      color: rgba(255,255,255,.3);
+      transition: color .2s;
+      width: 16px;
+      text-align: center;
+    }
+    .faq-q:hover .faq-q-icon { color: var(--gold); }
+    .faq-item.open .faq-q-icon .icon-plus { display: none; }
+    .faq-item:not(.open) .faq-q-icon .icon-minus { display: none; }
+    .faq-a {
+      display: none;
+      padding: 0 0 22px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: rgba(255,255,255,.5);
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ═══════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════ */
+    .footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 40px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      color: #fff;
+    }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,.3); width: 100%; text-align: center; margin-top: 10px; }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .hero-desc { margin: 0 auto 32px; }
+      .hero-actions { justify-content: center; }
+      .hero-visual img { max-width: 400px; margin: 0 auto; }
+      .hero-badge { right: 8px; bottom: -12px; padding: 10px 14px; }
+      .hero-badge .badge-num { font-size: 22px; }
+      .science-grid { grid-template-columns: 1fr; gap: 40px; }
+      .science-visual { max-width: 400px; margin: 0 auto; }
+      .panel-grid { grid-template-columns: 1fr; gap: 40px; }
+      .panel-visual { order: -1; max-width: 400px; margin: 0 auto; }
+      .ritual-grid { grid-template-columns: 1fr; gap: 12px; }
+      .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-inner { gap: 24px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 20px; height: 56px; }
+      .section { padding: 64px 20px; }
+      .hero { min-height: auto; }
+      .hero-inner { padding: 80px 20px 48px; }
+      .hero-title { font-size: 36px; }
+      .hero-badge { right: -4px; bottom: -8px; }
+      .hero-badge .badge-num { font-size: 18px; }
+      .trust-inner { justify-content: flex-start; gap: 16px; }
+      .trust-item { font-size: 11px; gap: 6px; }
+      .trust-item svg { width: 14px; height: 14px; }
+      .sec-title { font-size: 30px; }
+      .science-callout { left: -4px; top: -8px; padding: 10px 14px; }
+      .science-callout .callout-num { font-size: 26px; }
+      .testimonial-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .testimonial-overlay { padding: 12px 10px; }
+      .testimonial-overlay .t-quote { font-size: 12px; }
+      .final-price { flex-wrap: wrap; }
+      .panel-specs { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═════════════════════ NAV ═════════════════════════ -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">HALOS</a>
+    <a href="#" class="nav-cta">SHOP NOW</a>
+  </nav>
+
+  <!-- ═════════════════════ HERO ═════════════════════════ -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Clinical-Grade Light Therapy</p>
+        <h1 class="hero-title">The Science of <em>Radiance</em></h1>
+        <p class="hero-desc">The HALOS Panel delivers professional-grade red and near-infrared light therapy in a sleek, at-home device. 60 medical-grade LEDs. 660nm + 850nm dual wavelengths. Ten minutes a day.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary">SHOP THE PANEL</a>
+          <a href="#science" class="btn-ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            How it works
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="images/hero.jpg" alt="The HALOS Panel — Red Light Therapy Device" />
+        <div class="hero-badge">
+          <div class="badge-num">4,000+</div>
+          <div class="badge-label">Clinical Studies</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ TRUST STRIP ═══════════════════ -->
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        Clinically Validated
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        4.8 · 4,800+ Reviews
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        10-Minute Ritual
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12a9 9 0 1 1-6.219-8.56"/><path d="M21 3v5h-5"/></svg>
+        60-Day Guarantee
+      </div>
+    </div>
+  </div>
+
+  <!-- ═════════════════════ SCIENCE OF LIGHT ══════════════ -->
+  <section class="section science" id="science">
+    <div class="section-inner">
+      <div class="science-grid reveal">
+        <div class="science-text">
+          <span class="sec-label">The Science</span>
+          <h2 class="sec-title">Why Light Heals</h2>
+          <p>Red and near-infrared light therapy — called photobiomodulation — is one of the most studied treatments in dermatology. Over 4,000 clinical trials have demonstrated its ability to stimulate collagen, reduce inflammation, and accelerate cellular repair.</p>
+          <p>The key is the wavelength. Two specific bands — 660nm and 850nm — penetrate skin at different depths, triggering distinct biological responses. The HALOS Panel delivers both, at the exact irradiance levels used in professional clinics.</p>
+
+          <div class="wavelengths">
+            <div class="wave-row">
+              <span class="wave-label">660nm</span>
+              <div class="wave-bar wave-red"></div>
+              <span class="wave-desc">Surface Renewal</span>
+            </div>
+            <div class="wave-row">
+              <span class="wave-label">850nm</span>
+              <div class="wave-bar wave-nir"></div>
+              <span class="wave-desc">Deep Repair</span>
+            </div>
+          </div>
+        </div>
+        <div class="science-visual">
+          <img src="images/detail.jpg" alt="HALOS Panel LED grid close-up" />
+          <div class="science-callout">
+            <div class="callout-num">4,000+</div>
+            <div class="callout-label">Clinical Studies</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ THE PANEL ═════════════════════ -->
+  <section class="section panel-section">
+    <div class="section-inner">
+      <div class="panel-grid reveal">
+        <div class="panel-visual">
+          <img src="images/product.png" alt="The HALOS Panel" />
+        </div>
+        <div class="panel-text">
+          <span class="sec-label">The Device</span>
+          <h2 class="sec-title">The HALOS Panel</h2>
+          <p class="sec-sub">60 medical-grade LEDs. Dual wavelength output. One button. The same technology used in dermatology clinics — redesigned for your nightstand.</p>
+
+          <div class="panel-specs">
+            <div class="spec-item">
+              <div class="spec-num">60</div>
+              <div class="spec-label">Medical-Grade LEDs</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-num">2</div>
+              <div class="spec-label">Dual Wavelengths</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-num">10</div>
+              <div class="spec-label">Minute Sessions</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-num">60</div>
+              <div class="spec-label">Day Risk-Free Trial</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ THE RITUAL ════════════════════ -->
+  <section class="section ritual">
+    <div class="section-inner reveal">
+      <span class="sec-label">The Practice</span>
+      <h2 class="sec-title">Your 10-Minute Daily Ritual</h2>
+
+      <div class="ritual-grid">
+        <div class="ritual-card">
+          <div class="ritual-num">1</div>
+          <div class="ritual-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <p class="ritual-time">Step One</p>
+          <p class="ritual-title">PLACE & POWER ON</p>
+          <p class="ritual-desc">Set the HALOS Panel on your bedside table. Plug in. Press the power button. The amber LEDs glow instantly — no waiting, no setup.</p>
+        </div>
+
+        <div class="ritual-card">
+          <div class="ritual-num">2</div>
+          <div class="ritual-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <p class="ritual-time">Step Two</p>
+          <p class="ritual-title">SIT & LET LIGHT WORK</p>
+          <p class="ritual-desc">Position yourself 6–12 inches away. Close your eyes. Read a book, meditate, or just breathe. The light does the work — you just show up.</p>
+        </div>
+
+        <div class="ritual-card">
+          <div class="ritual-num">3</div>
+          <div class="ritual-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          </div>
+          <p class="ritual-time">Step Three</p>
+          <p class="ritual-title">TEN MINUTES. DONE.</p>
+          <p class="ritual-desc">The panel shuts off automatically. Go about your day. Visible improvements in skin tone, texture, and firmness appear within 4–6 weeks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ REAL GLOW ══════════════════════ -->
+  <section class="section real-glow">
+    <div class="section-inner reveal">
+      <span class="sec-label">Social Proof</span>
+      <h2 class="sec-title">Real Glow.<br>Real People.</h2>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <img src="images/reviewer-1.jpg" alt="Claire — HALOS user" loading="lazy" />
+          <div class="testimonial-overlay">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-quote">"My skin hasn't looked this good in years. HALOS did more in 6 weeks than two years of creams."</p>
+            <p class="t-name">Claire D. — Portland, OR</p>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <img src="images/reviewer-2.jpg" alt="Marcus — HALOS user" loading="lazy" />
+          <div class="testimonial-overlay">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-quote">"Runner here. Started for recovery. Knee pain reduced. Skin looks better than ever."</p>
+            <p class="t-name">Marcus R. — Denver, CO</p>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <img src="images/reviewer-3.jpg" alt="Jennifer — HALOS user" loading="lazy" />
+          <div class="testimonial-overlay">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-quote">"Wasted money on LED masks that did nothing. HALOS has real power — you can feel it."</p>
+            <p class="t-name">Jennifer L. — Austin, TX</p>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <img src="images/reviewer-4.jpg" alt="David — HALOS user" loading="lazy" />
+          <div class="testimonial-overlay">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-quote">"My derm asked what I'd changed. Same tech she uses in-office."</p>
+            <p class="t-name">David P. — Chicago, IL</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ FINAL LIGHT ════════════════════ -->
+  <section class="section final-light">
+    <div class="section-inner reveal">
+      <span class="sec-label">Your Skin</span>
+      <h2 class="sec-title">Ready to Restore Your Radiance?</h2>
+      <p class="sec-sub">Clinical-grade light therapy, designed for your daily ritual. Ten minutes. Zero hassle. Real results. Backed by science and a 60-day guarantee.</p>
+
+      <div class="final-price">
+        <span class="price-was">$199</span>
+        <span class="price-now">$149</span>
+        <span class="price-save">Save 25%</span>
+      </div>
+
+      <a href="#" class="btn-primary">GET THE HALOS PANEL</a>
+
+      <div class="final-secure">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Secure Checkout · Free Shipping · 60-Day Guarantee
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ FAQ ════════════════════════════ -->
+  <section class="section faq-section">
+    <div class="section-inner reveal">
+      <h2 class="sec-title">Frequently Asked Questions</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">
+            <span>Is red light therapy actually proven?</span>
+            <span class="faq-q-icon"><span class="icon-plus">+</span><span class="icon-minus">−</span></span>
+          </button>
+          <div class="faq-a">Yes. Over 4,000 published clinical studies support red and near-infrared light for skin rejuvenation, collagen production, and inflammation reduction. The specific wavelengths in HALOS — 660nm and 850nm — are the most researched in dermatology.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">
+            <span>How is this different from a cheap LED mask?</span>
+            <span class="faq-q-icon"><span class="icon-plus">+</span><span class="icon-minus">−</span></span>
+          </button>
+          <div class="faq-a">Most consumer LED masks use low-power diodes with insufficient irradiance. HALOS uses medical-grade LEDs at clinically validated power levels — the same output as professional dermatology devices. If you can't feel the warmth, it's not doing the work.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">
+            <span>How long until I see results?</span>
+            <span class="faq-q-icon"><span class="icon-plus">+</span><span class="icon-minus">−</span></span>
+          </button>
+          <div class="faq-a">Most users see visible improvements in skin tone and texture within 4–6 weeks of consistent daily use. Redness and inflammation often improve within the first two weeks. Collagen remodeling is gradual — the best results compound over months.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">
+            <span>Is it safe for all skin types?</span>
+            <span class="faq-q-icon"><span class="icon-plus">+</span><span class="icon-minus">−</span></span>
+          </button>
+          <div class="faq-a">Yes. Red and near-infrared light therapy is non-invasive, non-thermal, and safe for all skin tones and types. It does not use UV light and will not burn or damage skin. Used safely in dermatology clinics worldwide for decades.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ FOOTER ═════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">HALOS</div>
+      <div class="footer-links">
+        <a href="#">The Panel</a>
+        <a href="#science">Science</a>
+        <a href="#">Reviews</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 HALOS. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    /* Nav scroll state */
+    var nav = document.getElementById('nav');
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    /* Scroll reveal */
+    (function() {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function(el) { el.classList.add('visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      els.forEach(function(el) { obs.observe(el); });
+    })();
+
+    /* ATC feedback */
+    document.querySelectorAll('.btn-primary').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var orig = btn.textContent;
+        btn.textContent = 'Added ✓';
+        btn.style.background = '#4a9e5c';
+        setTimeout(function() { btn.textContent = orig; btn.style.background = ''; }, 2000);
+      });
+    });
+
+    /* FAQ toggle */
+    function toggleFAQ(btn) {
+      var item = btn.parentElement;
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customize Your Protein — Gainful (CRO rebuild)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'DM Sans',sans-serif; }
+  body { background:#E8E8E8; display:flex; justify-content:center; padding:0; }
+  .phone { width:390px; height:844px; background:#FFF; position:relative; overflow:hidden; }
+
+  .promo { background:#DFF265; color:#2B2A28; text-align:center; font-size:13px; font-weight:700; padding:9px 16px; }
+
+  .hdr { display:flex; align-items:center; justify-content:space-between; padding:10px 16px; }
+  .hdr .g { width:27px; height:27px; background:#2B2A28; color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; border-radius:4px; }
+  .hdr .ic { display:flex; gap:13px; }
+  .hdr svg { width:19px; height:19px; fill:none; stroke:#2B2A28; stroke-width:1.8; }
+
+  .card { background:#EDEBE7; margin:10px 12px 0; border-radius:14px; padding:16px 14px 14px; }
+  h1 { font-size:22px; font-weight:500; color:#2B2A28; line-height:1.18; }
+  .proof { display:flex; align-items:center; gap:6px; margin-top:6px; }
+  .stars { color:#2B2A28; font-size:14px; letter-spacing:1px; }
+  .proof a { color:#2B2A28; font-size:12.5px; text-decoration:underline; }
+  .q { font-size:13.5px; font-weight:500; color:#2B2A28; margin-top:11px; }
+  .selects { display:flex; gap:9px; margin-top:8px; }
+  .sel { flex:1; background:#FFF; border:1px solid #D5D2CB; border-radius:10px; padding:7px 22px 7px 11px; position:relative; }
+  .sel label { display:block; font-size:9px; color:#6B6862; text-transform:uppercase; letter-spacing:.5px; }
+  .sel .val { font-size:13px; font-weight:500; color:#2B2A28; margin-top:1px; }
+  .sel .chev { position:absolute; right:10px; top:50%; transform:translateY(-50%); width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid #6B6862; }
+
+  .rec { background:#FFF; border-radius:12px; padding:13px; margin-top:11px; }
+  .rec h2 { font-size:15.5px; font-weight:700; color:#2B2A28; }
+  .stats { display:flex; gap:18px; margin-top:9px; }
+  .stat b { display:block; font-size:17px; font-weight:700; color:#2B2A28; line-height:1.1; }
+  .stat span { font-size:10.5px; color:#6B6862; }
+
+  .tubrow { display:flex; gap:11px; margin-top:9px; align-items:center; }
+  .tubrow img { width:74px; height:auto; flex-shrink:0; }
+  .tubrow .tubtxt { flex:1; }
+  .tubrow p { font-size:12.5px; color:#2B2A28; line-height:1.38; }
+  .nf { display:inline-block; font-size:12.5px; color:#2B2A28; text-decoration:underline; margin-top:6px; }
+
+  .price { margin-top:10px; display:flex; align-items:baseline; gap:9px; }
+  .price b { font-size:29px; font-weight:700; color:#2B2A28; line-height:1; }
+  .price span { font-size:12.5px; color:#6B6862; }
+
+  .quote { border-left:2px solid #DFF265; padding-left:10px; margin-top:10px; }
+  .quote p { font-style:italic; font-size:12.5px; color:#2B2A28; line-height:1.38; }
+  .quote span { display:block; font-size:11.5px; color:#6B6862; font-style:normal; margin-top:3px; }
+
+  .serv { display:flex; gap:7px; margin-top:11px; }
+  .pill { flex:1; text-align:center; padding:9px 4px; border-radius:999px; font-size:12.5px; font-weight:500; }
+  .pill.on { background:#2B2A28; color:#FFF; }
+  .pill.off { background:#FFF; border:1px solid #D5D2CB; color:#2B2A28; }
+
+  .divr { border-top:1px solid #DEDBD4; margin:12px 0 10px; }
+  .flav h3 { font-size:14px; font-weight:500; color:#2B2A28; }
+  .skip { display:flex; align-items:center; gap:8px; margin-top:7px; font-size:12.5px; color:#2B2A28; }
+  .skip .box { width:17px; height:17px; border:1px solid #D5D2CB; border-radius:4px; background:#FFF; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .skip .box svg { width:11px; height:11px; stroke:#2B2A28; stroke-width:2.4; fill:none; }
+
+  .sticky { position:absolute; bottom:0; left:0; right:0; background:#FFF; border-top:1px solid #E2DFD8; box-shadow:0 -6px 16px rgba(0,0,0,.08); padding:9px 16px 12px; }
+  .mode { display:flex; gap:8px; margin-bottom:9px; }
+  .mode .m { flex:1; text-align:center; padding:6px 4px; border-radius:999px; font-size:11px; font-weight:500; }
+  .mode .m.off { background:#FFF; border:1px solid #D5D2CB; color:#2B2A28; }
+  .mode .m.on { background:#2B2A28; color:#FFF; }
+  .buy { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .buy .pr b { font-size:17px; font-weight:700; color:#2B2A28; line-height:1.1; }
+  .buy .pr span { display:block; font-size:11px; color:#6B6862; }
+  .buy button { background:#2B2A28; color:#FFF; border:none; border-radius:999px; padding:13px 26px; font-size:14.5px; font-weight:700; cursor:pointer; }
+  .risk { display:flex; align-items:center; gap:6px; font-size:12px; color:#6B6862; margin-top:8px; }
+  .risk svg { width:13px; height:13px; stroke:#6B6862; stroke-width:2.4; fill:none; flex-shrink:0; }
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- FIX 1 — one promo strip only. The black "Subscribe and Save 25%" bar that sat above
+       the header on the live page is gone; that offer now lives in the purchase bar below,
+       where it is an actual choice rather than a second competing headline. -->
+  <div class="promo">New customers: 25% off with code FLAV25</div>
+
+  <div class="hdr">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    <div class="g">G</div>
+    <div class="ic">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <h1>Customize Your Protein Powder</h1>
+
+    <!-- FIX 5a — the bare "(2,123)" becomes a real, verifiable link to the reviews. -->
+    <div class="proof">
+      <span class="stars">★★★★★</span>
+      <a href="#">2,123 reviews</a>
+    </div>
+
+    <!-- FIX 6 — one line naming what the two inputs actually produce. -->
+    <p class="q">Answer two questions, get your formula.</p>
+
+    <div class="selects">
+      <div class="sel">
+        <label>Dietary Preference</label>
+        <div class="val">None</div>
+        <div class="chev"></div>
+      </div>
+      <div class="sel">
+        <label>Primary Goal</label>
+        <div class="val">Lose Weight</div>
+        <div class="chev"></div>
+      </div>
+    </div>
+
+    <div class="rec">
+      <h2>Your Protein: Lean Whey Protein</h2>
+      <div class="stats">
+        <div class="stat"><b>20g</b><span>protein</span></div>
+        <div class="stat"><b>100</b><span>calories</span></div>
+        <div class="stat"><b>6</b><span>ingredients</span></div>
+      </div>
+
+      <div class="tubrow">
+        <img src="gainful_tub.png" alt="Lean Whey Protein tub">
+        <div class="tubtxt">
+          <p>Ideal for those looking to speed up and enhance their results on their weight loss journey</p>
+          <a href="#" class="nf">Nutrition Facts</a>
+        </div>
+      </div>
+
+      <!-- FIX 2 — price gets its own row at display weight, with a real per-serving unit
+           price derived from $31.47 / 14. On the live page this was small regular-weight
+           text sharing a line with the star rating. -->
+      <div class="price">
+        <b>$31.47</b>
+        <span>$2.25 per serving</span>
+      </div>
+
+      <!-- FIX 5b — PLACEHOLDER REVIEW. Illustrative only, NOT a real Gainful customer quote.
+           Replace with a genuine review from Gainful's own review corpus before any public
+           or client-facing use. -->
+      <div class="quote">
+        <p>"Swapped in the lean formula when I started cutting. Mixes clean, no chalky aftertaste."</p>
+        <span>Dana R., goal: Lose Weight</span>
+      </div>
+    </div>
+
+    <div class="serv">
+      <div class="pill on">14 Servings</div>
+      <div class="pill off">28 Servings</div>
+      <div class="pill off">42 Servings</div>
+    </div>
+
+    <div class="divr"></div>
+    <div class="flav">
+      <h3>Select flavor packets</h3>
+      <div class="skip">
+        <div class="box"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+        Skip flavors and save $5.98
+      </div>
+    </div>
+  </div>
+
+  <!-- FIX 3 — the sticky purchase bar. The live page has no add-to-cart, no buy button and
+       no primary CTA anywhere on it. FIX 4 — "Cancel or skip anytime" is the risk-reversal
+       line; it is deliberately NOT a money-back guarantee, because Gainful publishes no
+       such terms and inventing one is not allowed. -->
+  <div class="sticky">
+    <div class="mode">
+      <div class="m off">One-time</div>
+      <div class="m on">Subscribe &amp; save 25%</div>
+    </div>
+    <div class="buy">
+      <div class="pr">
+        <b>$31.47</b>
+        <span>14 servings</span>
+      </div>
+      <button>Add to cart</button>
+    </div>
+    <div class="risk">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+      Cancel or skip anytime
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

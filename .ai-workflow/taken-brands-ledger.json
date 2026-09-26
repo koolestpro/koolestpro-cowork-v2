@@ -1,0 +1,152 @@
+{
+  "meta": {
+    "description": "Every brand ever pushed to KoolestFlow via koolestflow_client.py, from any discovery source (Ad Library, BrowserAct/Maps, etc). Checked before every push so a brand is never sent to KoolestFlow twice, even across sources or if it's later removed from KoolestFlow itself.",
+    "dedupeKeyFormula": "lowercased brand_name + city, non-alphanumeric stripped, joined with '|'"
+  },
+  "brands": {
+    "ceraveskincare|lagos": {
+      "brandName": "CeraVe Skincare",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "https://www.konga.com/content/cerave",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-cerave-skincare",
+      "takenAt": "2026-08-26T00:00:00.000Z",
+      "backfilled": true
+    },
+    "solunaskin|lagos": {
+      "brandName": "Soluna SKIN",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "https://weareluna.store/collections/skin-care/products/ems-thermal-neck-lifting-and-tighten-massager-electric-microcurrent-wrinkle-remover-led-photon-face-beauty-device-for-woman",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-soluna-skin",
+      "takenAt": "2026-08-26T00:00:00.000Z",
+      "backfilled": true
+    },
+    "liachoieunhakoreanskincareexpert|lagos": {
+      "brandName": "Lia Choi Eun-ha 리아 최 은하 - Korean Skincare Expert",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "https://interview.lovi.care/",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-lia-choi-eun-ha-korean-skincare-expert",
+      "takenAt": "2026-08-26T00:00:00.000Z",
+      "backfilled": true
+    },
+    "kimjisookoreanskincareexpert|lagos": {
+      "brandName": "Kim Ji Soo 김지수 - Korean Skincare Expert",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "https://interview.lovi.care/",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-kim-ji-soo-korean-skincare-expert",
+      "takenAt": "2026-08-26T00:00:00.000Z",
+      "backfilled": true
+    },
+    "bookstheyloveng|lagos": {
+      "brandName": "Bookstheylove.ng",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=kids; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-bookstheylove-ng",
+      "takenAt": "2026-08-27T17:02:01.000Z"
+    },
+    "burgerkingnigeria|lagos": {
+      "brandName": "Burger King Nigeria",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "https://burgerkingng.com/stores/utm_source=%7B%7Bsite_source_name%7D%7D&utm_medium=%7B%7Bplacement%7D%7D&utm_campaign=%7B%7Bcampaign.name%7D%7D&utm_content=%7B%7Bad.id%7D%7D",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=kids; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-burger-king-nigeria",
+      "takenAt": "2026-08-27T17:02:01.000Z"
+    },
+    "zoomexclusivedentalcarelagos|lagos": {
+      "brandName": "Zoom Exclusive Dental Care Lagos",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "https://zoomexclusive.com/openday-appointment",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=kids; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-zoom-exclusive-dental-care-lagos",
+      "takenAt": "2026-08-27T17:02:01.000Z"
+    },
+    "testrunbrowseractadlibrary|lagos": {
+      "brandName": "Test Run BrowserAct AdLibrary",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "cowork-test",
+      "sourceQuery": "manual test push",
+      "koolestflowId": "test-run-2026-08-31-001",
+      "takenAt": "2026-08-31T17:54:32.000Z"
+    },
+    "aristomanluxury|lagos": {
+      "brandName": "AristoMan Luxury",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "https://aristomanluxury.com/shop/",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=fashion; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-aristoman-luxury",
+      "takenAt": "2026-09-01T07:26:04.000Z"
+    },
+    "lamorecollectionsboutique|lagos": {
+      "brandName": "LAMORE COLLECTIONS BOUTIQUE",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Lekki, Lagos; Keyword=fashion boutique",
+      "koolestflowId": "koolestflow-browseract-lamore-collections-boutique",
+      "takenAt": "2026-09-01T17:14:38.000Z"
+    },
+    "brumsluxefashion|lagos": {
+      "brandName": "Brumsluxe Fashion",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Lekki, Lagos; Keyword=fashion boutique",
+      "koolestflowId": "koolestflow-browseract-brumsluxe-fashion",
+      "takenAt": "2026-09-01T17:14:38.000Z"
+    },
+    "debrasgracelekki|lagos": {
+      "brandName": "DEBRA'S GRACE LEKKI",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Lekki, Lagos; Keyword=fashion boutique",
+      "koolestflowId": "koolestflow-browseract-debra-s-grace-lekki",
+      "takenAt": "2026-09-01T17:14:38.000Z"
+    },
+    "poloavenueluxuryfashionaccessoriesboutiqueinlagosvictoriaisland|lagos": {
+      "brandName": "Polo Avenue - Luxury Fashion Accessories Boutique in Lagos - Victoria Island",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Lekki, Lagos; Keyword=fashion boutique",
+      "koolestflowId": "koolestflow-browseract-polo-avenue-luxury-fashion-accessories-boutique-in",
+      "takenAt": "2026-09-01T17:14:38.000Z"
+    },
+    "cart2closetfashionstoreluxurystorequalityaffordableandunique|lagos": {
+      "brandName": "Cart2Closet - Fashion Store • Luxury Store • Quality, Affordable and Unique",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Lekki, Lagos; Keyword=fashion boutique",
+      "koolestflowId": "koolestflow-browseract-cart2closet-fashion-store-luxury-store-quality-aff",
+      "takenAt": "2026-09-01T17:14:38.000Z"
+    }
+  }
+}

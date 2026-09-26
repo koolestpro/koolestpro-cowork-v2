@@ -1,0 +1,157 @@
+{
+  "meta": {
+    "description": "Log of koolestpro-adlibrary-weekly scheduled task runs. Each entry records which rotation slot ran, how many leads were pushed to KoolestFlow, and any errors."
+  },
+  "runs": [
+    {
+      "week": "2026-W34",
+      "ranAt": "2026-08-20T22:25:32.000Z",
+      "countryUsed": "NG",
+      "keywordUsed": "fashion",
+      "leadsPushed": 5,
+      "status": "ok",
+      "note": "10 ads returned. 3 mega-brands filtered (Temu, Jumia, Bigbasket), 2 in-run duplicates skipped, 5 pushed. QUALITY FLAG: all 5 are AI photo/selfie mobile-app advertisers whose ad copy merely mentions fashion, not Nigerian fashion e-commerce brands. All link to play.google.com, so website/track came back null and 4 of 5 landed 'Needs Review'. The 'fashion' keyword matches ad text, not advertiser category. Worth adding an app-store-destination exclusion and/or a more specific keyword before the next fashion slot."
+    },
+    {
+      "week": "2026-W35",
+      "ranAt": "2026-08-26T08:48:46.000Z",
+      "countryUsed": "NG",
+      "keywordUsed": "skincare",
+      "leadsPushed": 4,
+      "status": "ok",
+      "note": "10 ads found for NG/skincare. 3 skipped as mega-brands (page likes over 100k): TikTok Shop Thailand, United (x2 separate ads). 6 remaining ads scored, of which 2 were duplicate ad entries for a brand already pushed earlier in the same batch (not pre-existing KoolestFlow prospects, as first reported - corrected 2026-08-26 after pulling live KoolestFlow state to verify). 4 unique brands pushed: see brandsTaken. All 4 now also recorded in .ai-workflow/taken-brands-ledger.json.",
+      "brandsTaken": [
+        "CeraVe Skincare",
+        "Soluna SKIN",
+        "Lia Choi Eun-ha 리아 최 은하 - Korean Skincare Expert",
+        "Kim Ji Soo 김지수 - Korean Skincare Expert"
+      ],
+      "brandsSkipped": {
+        "megaBrand": [
+          "TikTok Shop Thailand",
+          "United",
+          "United"
+        ],
+        "duplicateWithinBatch": []
+      }
+    },
+    {
+      "week": "2026-W35",
+      "ranAt": "2026-08-27T16:57:45.000Z",
+      "countryUsed": "NG",
+      "keywordUsed": "kids",
+      "leadsPushed": 0,
+      "brandsTaken": [],
+      "brandsSkipped": {
+        "megaBrand": [
+          "Jumia",
+          "Amazon.com",
+          "Amazon.com",
+          "Amazon.com",
+          "Uproot Clean",
+          "Uproot Clean",
+          "Uproot Clean"
+        ],
+        "noNigeriaSignal": [
+          "Cholesterol Relief Community",
+          "Cholesterol Relief Community",
+          "Seven Star Martial Arts Kids"
+        ],
+        "marketplaceLowVolume": [],
+        "alreadyTaken": []
+      },
+      "status": "ok",
+      "note": "Filters correctly rejected all 10 raw ads for NG/kids: 3 mega-brands (Jumia, Amazon x3, Uproot Clean x3) and 3 non-Nigerian ads with no NG signal (Cholesterol Relief Community x2, Seven Star Martial Arts Kids). 0 pushed - correct behaviour per the 2026-08-27 fix, not a bug. Yield will vary by keyword; this niche/keyword combo had no qualifying NG leads this run."
+    },
+    {
+      "week": "2026-W35",
+      "ranAt": "2026-08-27T17:04:07.000Z",
+      "countryUsed": "NG",
+      "keywordUsed": "kids (re-run with location_hint='Lagos' fix, not a new rotation slot)",
+      "leadsPushed": 3,
+      "brandsTaken": [
+        "Bookstheylove.ng",
+        "Burger King Nigeria",
+        "Zoom Exclusive Dental Care Lagos"
+      ],
+      "brandsSkipped": {
+        "megaBrand": [
+          "Nestlé"
+        ],
+        "noNigeriaSignal": [
+          "Young High Flyer Academy",
+          "Phytobyte NG",
+          "Onyeche cosmetic2 backup page",
+          "Toysenter",
+          "Asuad_Signatures"
+        ],
+        "marketplaceLowVolume": [],
+        "alreadyTaken": [
+          "Bookstheylove.ng (duplicate ad within same batch)"
+        ]
+      },
+      "status": "ok",
+      "note": "Ad-hoc verification run after the first two real NG runs today (skincare, kids, home decor) all returned 0-3 genuinely Nigerian leads out of 10 raw ads each - discovered that appending the city as literal search text ('kids Lagos' vs 'kids') dramatically changes result relevance, since country=NG/is_targeted_country params don't. build_ad_library_url() now always appends --city (or 'Nigeria' as fallback) to the search keyword for NG runs - see script docstring and growth plan Build Log 2026-08-27 for full detail. Also fixed has_nigeria_signal() to check page_name in addition to ad body text and link_url - it was missing signals like 'Lagos' or '.ng' sitting in the business's own page name (Zoom Exclusive Dental Care Lagos, Bookstheylove.ng). Verified persistence held for 60s after push. Note: Burger King Nigeria was NOT filtered as a mega-brand (only 5785 page likes on this specific page) despite being a large international franchise, not really a fit for a from-scratch website pitch since they already have burgerkingng.com - like-count-only mega-brand filtering has this blind spot, flagged for Ridwan's manual review rather than auto-filtered (no reliable automated way to detect 'famous chain' vs 'local business' from this actor's data alone)."
+    },
+    {
+      "week": "2026-W36",
+      "ranAt": "2026-09-02T16:24:23.000Z",
+      "countryUsed": "NG",
+      "keywordUsed": "home decor",
+      "leadsScored": 1,
+      "leadsPushed": 0,
+      "pendingPushFile": ".ai-workflow/pending-push/2026-W36_adlib-ng-home-decor.json",
+      "brandsQueued": [
+        "Gu-homes.ng"
+      ],
+      "brandsSkipped": {
+        "megaBrand": [],
+        "noNigeriaSignal": [
+          "decorsbyhoneyhome",
+          "ardenhostesses",
+          "Homedecor by csi",
+          "Homedecor by csi",
+          "decorsbyhoneyhome",
+          "Vaminella concept 01",
+          "Euniqueinteriors1",
+          "Houseofbasketsng",
+          "Adeleye olamide precious"
+        ],
+        "marketplaceLowVolume": [],
+        "alreadyTaken": []
+      },
+      "status": "queued",
+      "note": "10 raw ads for NG/home decor, only 1 cleared the Nigeria-signal check: Gu-homes.ng (Track Build, instagram.com/home_decor_store_in_lagos, fit_score 70, medium confidence). This is a low yield run - 9 of 10 ads had no detectable Nigeria signal in page name/body/link despite the --city='Lagos' append, including a couple with 'ng'-adjacent names (Houseofbasketsng) that still didn't trip the checker; worth a look if home decor keeps underperforming other niches. No mega-brands this run. Queued to pending-push per the hybrid pipeline (2026-09-01) - not pushed to KoolestFlow from this cloud run; Ridwan's Mac-side launchd importer (import_pending_push.sh) will drain it into local KoolestFlow and record the ledger on next run."
+    },
+    {
+      "week": "2026-W38",
+      "ranAt": "2026-09-16T18:31:23.000Z",
+      "countryUsed": "NG",
+      "keywordUsed": "food",
+      "leadsScored": 0,
+      "leadsPushed": 0,
+      "pendingPushFile": ".ai-workflow/pending-push/2026-W38_adlib-ng-food.json",
+      "brandsQueued": [],
+      "brandsSkipped": {
+        "megaBrand": [
+          "Power Oil",
+          "Power Oil",
+          "Power Oil"
+        ],
+        "noNigeriaSignal": [
+          "Bussin Grills Marketing",
+          "Bambau Cafe",
+          "Hub Topmost",
+          "Funmi's kitchen",
+          "Boatnaija.com",
+          "mayschills",
+          "mayschills"
+        ],
+        "marketplaceLowVolume": [],
+        "alreadyTaken": []
+      },
+      "status": "queued",
+      "note": "10 raw ads for NG/food, 0 cleared filters. Power Oil (296,545 page likes, matched 3 separate ads) is a well-known Nigerian cooking-oil brand (PZ Wilmar) - correctly caught by the mega-brand like-count filter, but flagging per rule 6 since it's a recognizable national brand, not just a generic big-follower page. The other 7 ads (Bussin Grills Marketing, Bambau Cafe, Hub Topmost, Funmi's kitchen, Boatnaija.com, mayschills x2) had no detectable Nigeria signal in page name/body/link despite the --city='Lagos' append - 'Funmi' and 'Boatnaija.com' read like plausible Nigerian names/domains but didn't trip the automated checker, worth Ridwan's eyeball if food keeps underperforming. Queued (0 prospects) to pending-push per the hybrid pipeline - not pushed to KoolestFlow from this cloud run."
+    }
+  ]
+}

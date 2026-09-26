@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation Budget V2 (Prototype) — @koolestpro</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0e0e0e;color:#fff;font-family:'DM Mono',monospace;padding:40px 20px 80px;}
+
+.section-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:48px 0 16px;padding-left:4px;}
+.section-divider{height:1px;background:rgba(255,255,255,0.05);margin:48px 0;}
+
+/* ── LK Frame ── */
+.lk-frame{max-width:588px;margin:0 auto;background:#1a1a1a;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);}
+.lk-header{display:flex;align-items:flex-start;gap:10px;padding:14px 16px 10px;}
+.lk-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FF9500,#7B2FBE);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;overflow:hidden;padding:0;}
+.lk-meta{flex:1;}
+.lk-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#e0e0e0;display:flex;align-items:center;gap:6px;}
+.lk-badge{background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;}
+.lk-sub{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.lk-doc-tag{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);margin-top:4px;}
+
+/* ── Viewport ── */
+#viewport{width:540px;height:680px;overflow:hidden;position:relative;cursor:grab;margin:0 auto;background:#080808;}
+#viewport:active{cursor:grabbing;}
+#track{display:flex;transition:transform 0.32s cubic-bezier(0.4,0,0.2,1);will-change:transform;}
+
+/* ── Slides ── */
+.slide{width:540px;height:680px;flex-shrink:0;position:relative;overflow:hidden;}
+
+/* ── Swipe button (hidden in download) ── */
+.swb{position:absolute;right:0;top:50%;transform:translateY(-50%);width:32px;height:80px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:22px;cursor:pointer;z-index:20;background:linear-gradient(to right,transparent,rgba(0,0,0,0.25));user-select:none;}
+
+/* ── Dots ── */
+#dots{display:flex;justify-content:center;gap:6px;padding:12px 0;}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.18);cursor:pointer;transition:all 0.2s;}
+.dot.active{background:#FF9500;width:20px;border-radius:3px;}
+
+/* ── Pager ── */
+#pager{text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.28);padding-bottom:8px;}
+
+/* ── LK Actions ── */
+.lk-actions{display:flex;gap:20px;padding:10px 16px;border-top:1px solid rgba(255,255,255,0.06);}
+.lk-action{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:5px;cursor:pointer;}
+.lk-action:last-child{margin-left:auto;}
+.lk-caption{padding:10px 16px 16px;font-family:'DM Mono',monospace;font-size:12px;line-height:1.65;color:rgba(255,255,255,0.45);}
+.lk-caption strong{color:#e0e0e0;}
+
+/* ── Download Panel ── */
+#download-panel{max-width:588px;margin:20px auto 0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;}
+#download-panel h3{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,0.45);margin-bottom:14px;letter-spacing:1.5px;text-transform:uppercase;}
+#dl-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+.dl-btn{font-family:'DM Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.55);cursor:pointer;transition:all 0.2s;}
+.dl-btn:hover{border-color:#FF9500;color:#FF9500;}
+.dl-all{background:rgba(255,149,0,0.08);border-color:rgba(255,149,0,0.28)!important;color:#FF9500!important;}
+.dl-pdf{background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);border:none!important;color:#fff!important;font-weight:700;}
+#download-panel p{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.18);}
+#download-status{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.32);margin-top:10px;min-height:14px;}
+
+/* ── Graphic Cards ── */
+.gcard{width:540px;height:680px;position:relative;overflow:hidden;border-radius:4px;margin:0 auto;}
+.gcard-wrap{margin-bottom:48px;}
+.gcard-btns{display:flex;gap:8px;margin-top:10px;max-width:540px;margin-left:auto;margin-right:auto;}
+
+/* ── Post Copy Tabs ── */
+.tabs-wrap{max-width:588px;margin:0 auto;}
+.tab-buttons{display:flex;gap:4px;flex-wrap:wrap;}
+.tab-btn{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:6px 6px 0 0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-bottom:none;color:rgba(255,255,255,0.38);cursor:pointer;transition:all 0.2s;}
+.tab-btn.active{background:rgba(255,149,0,0.08);border-color:rgba(255,149,0,0.28);color:#FF9500;}
+.tab-panel{display:none;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:0 8px 8px 8px;padding:24px;}
+.tab-panel.active{display:block;}
+.tab-panel pre{font-family:'DM Mono',monospace;font-size:12px;line-height:1.9;color:rgba(255,255,255,0.65);white-space:pre-wrap;word-break:break-word;}
+.copy-btn{margin-top:16px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:8px 20px;border-radius:6px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.28);color:#FF9500;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all 0.2s;}
+.copy-btn:hover{background:rgba(255,149,0,0.16);}
+
+/* ── Funnel path boxes (inside slides) ── */
+.fp-row{display:flex;align-items:center;gap:0;}
+.fp-box{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.5px;padding:6px 10px;border-radius:6px;text-align:center;line-height:1.25;white-space:nowrap;}
+.fp-arrow{font-size:14px;padding:0 5px;opacity:0.5;}
+</style>
+</head>
+<body>
+
+<div style="max-width:588px;margin:0 auto 28px;padding:14px 18px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.3);border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;color:#FF9500;line-height:1.7;">&#9888; V2 FORMAT PROTOTYPE &mdash; review only, not yet sent to the content pipeline. Slides 1, 3 &amp; 7 unchanged; slides 2, 4, 5, 6 rebuilt to one idea per slide. Compare against outputs/tips/animation-budget-motion-conversion_2026-07-17.html.</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — LINKEDIN CAROUSEL PREVIEW
+══════════════════════════════════════════ -->
+<div class="section-label">① LinkedIn Carousel Preview</div>
+
+<div class="lk-frame">
+  <div class="lk-header" data-chrome>
+    <div class="lk-av">
+      <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle_mvcdss" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none'">
+    </div>
+    <div class="lk-meta">
+      <div class="lk-name">Ridwan Adekunle <span class="lk-badge">1st</span></div>
+      <div class="lk-sub">Shopify CRO &amp; UX Designer · Helping DTC brands convert 15–30% more</div>
+      <div class="lk-doc-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        Document
+      </div>
+    </div>
+  </div>
+
+  <!-- Viewport -->
+  <div id="viewport">
+    <div id="track">
+
+<div class="slide" style="background:#080808;">
+<div style="position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.07),transparent 70%);filter:blur(70px);pointer-events:none;"></div>
+<div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+<div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;"></div>
+<div style="position:relative;z-index:2;padding:46px 44px;height:100%;display:flex;flex-direction:column;">
+<div style="position:relative;height:250px;border-radius:12px;overflow:hidden;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);flex-shrink:0;"><div style="position:absolute;top:-60px;right:-40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.18),transparent 70%);filter:blur(50px);pointer-events:none;"></div><div style="position:absolute;bottom:-50px;left:-30px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.16),transparent 70%);filter:blur(45px);pointer-events:none;"></div><div style="position:absolute;top:96px;left:66px;width:180px;height:46px;border-radius:23px;background:rgba(255,149,0,0.08);"></div><div style="position:absolute;top:88px;left:78px;width:180px;height:46px;border-radius:23px;background:rgba(255,149,0,0.16);"></div><div style="position:absolute;top:80px;left:90px;width:180px;height:46px;border-radius:23px;background:rgba(255,149,0,0.3);"></div><div style="position:absolute;top:72px;left:102px;width:180px;height:46px;border-radius:23px;background:rgba(255,149,0,0.55);"></div><div style="position:absolute;top:64px;left:114px;width:180px;height:46px;border-radius:23px;background:linear-gradient(90deg,#FF9500,#E040A0);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:#fff;letter-spacing:1px;">ADD TO CART</div><div style="position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,0.5);border:1px solid rgba(255,149,0,0.4);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></div></div><div style="display:flex;align-items:center;gap:10px;margin-top:16px;"><div style="width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,149,0,0.4);flex-shrink:0;"><img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle_mvcdss" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.style.display='none'"></div><div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:#fff;">Ridwan Adekunle</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);margin-top:1px;">Shopify CRO &amp; UX Designer</div></div></div><div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:14px;">Conversion Strategy</div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;line-height:1.18;letter-spacing:-0.5px;color:#fff;">Your store's animations aren't making it look premium. They're making it convert <span style="color:#FF9500;">worse.</span></div></div><div style="display:flex;align-items:center;gap:8px;"><span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);">Swipe</span><div style="width:48px;height:1px;background:linear-gradient(to right,rgba(255,255,255,0.2),#FF9500);"></div><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div style="position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.18);z-index:10;">Ridwan - Shopify CRO &amp; UX Designer</div>
+</div>
+
+<div class="slide" style="background:#0a0a0a;">
+<div style="position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.07),transparent 70%);filter:blur(70px);pointer-events:none;"></div>
+<div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+<div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;"></div>
+<div style="position:relative;z-index:2;padding:46px 44px;height:100%;display:flex;flex-direction:column;">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;"><div style="display:inline-block;background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;">The myth</div><div style="width:44px;height:44px;border-radius:50%;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594zM20 2v4m2-2h-4"/><circle cx="4" cy="20" r="2"/></svg></div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:44px;line-height:1.16;letter-spacing:-1.5px;color:#fff;">More motion.<br>More premium.<br>More sales.</div><div style="font-family:'DM Mono',monospace;font-size:15px;color:rgba(255,255,255,0.5);line-height:1.6;margin-top:24px;max-width:400px;">That's the trap every Shopify brand falls into. It's wrong.</div></div>
+</div>
+<div style="position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.18);z-index:10;">Ridwan - Shopify CRO &amp; UX Designer</div>
+</div>
+
+<div class="slide" style="background:#0d0b08;">
+<div style="position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.07),transparent 70%);filter:blur(70px);pointer-events:none;"></div>
+<div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+<div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;"></div>
+<div style="position:relative;z-index:2;padding:46px 44px;height:100%;display:flex;flex-direction:column;">
+<div style="margin-bottom:20px;"><div style="display:inline-block;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:4px;">The number</div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:78px;line-height:1;letter-spacing:-2px;color:#FF9500;">100ms</div><div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:10px;">of extra delay &asymp; 1% fewer sales</div><div style="height:3px;width:52px;border-radius:2px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);margin:18px 0;"></div><div style="font-family:'DM Mono',monospace;font-size:15px;color:rgba(255,255,255,0.5);line-height:1.65;max-width:420px;">Amazon's own load-time data. Motion is the easiest way to add that delay by accident.</div><div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.28);margin-top:16px;">Source: Amazon load-time study</div></div>
+</div>
+<div style="position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.18);z-index:10;">Ridwan - Shopify CRO &amp; UX Designer</div>
+</div>
+
+<div class="slide" style="background:#080808;">
+<div style="position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.07),transparent 70%);filter:blur(70px);pointer-events:none;"></div>
+<div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+<div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;"></div>
+<div style="position:relative;z-index:2;padding:46px 44px;height:100%;display:flex;flex-direction:column;">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;"><div style="display:inline-block;background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;">The reality</div><div style="width:44px;height:44px;border-radius:50%;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:38px;line-height:1.16;letter-spacing:-1px;color:#fff;">Motion is a <span style="color:#FF9500;">budget</span>, not a decoration.</div><div style="height:3px;width:52px;border-radius:2px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);margin:18px 0;"></div><div style="font-family:'DM Mono',monospace;font-size:15px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:400px;">Every animation spends attention and speed. It has to buy something back.</div></div>
+</div>
+<div style="position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.18);z-index:10;">Ridwan - Shopify CRO &amp; UX Designer</div>
+</div>
+
+<div class="slide" style="background:#0a0a0a;">
+<div style="position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.07),transparent 70%);filter:blur(70px);pointer-events:none;"></div>
+<div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+<div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;"></div>
+<div style="position:relative;z-index:2;padding:46px 44px;height:100%;display:flex;flex-direction:column;">
+<div style="margin-bottom:18px;"><div style="display:inline-block;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:4px;">Where motion earns its place</div></div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:34px;line-height:1.18;letter-spacing:-1px;color:#fff;">Only 3 things earn the budget.</div><div style="flex:1;display:flex;flex-direction:column;justify-content:space-evenly;margin:6px 0;"><div style="display:flex;align-items:center;gap:18px;padding:14px 0;"><div style="width:46px;height:46px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#FF9500,#7B2FBE);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:19px;color:#fff;">1</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:25px;color:#fff;">Selection feedback</div></div><div style="display:flex;align-items:center;gap:18px;padding:14px 0;"><div style="width:46px;height:46px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#FF9500,#7B2FBE);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:19px;color:#fff;">2</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:25px;color:#fff;">Add-to-cart confirmation</div></div><div style="display:flex;align-items:center;gap:18px;padding:14px 0;"><div style="width:46px;height:46px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#FF9500,#7B2FBE);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:19px;color:#fff;">3</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:25px;color:#fff;">Proof reveal</div></div></div><div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);"><img src="https://res.cloudinary.com/drl0rscuf/image/upload/v1785272337/koolestpro/tips-carousel/halos-pdp-atc-composite.png" style="width:100%;display:block;" onerror="this.parentNode.style.display='none'"></div><div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.32);margin-top:10px;">From a real PDP I built for HALOS.</div>
+</div>
+<div style="position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.18);z-index:10;">Ridwan - Shopify CRO &amp; UX Designer</div>
+</div>
+
+<div class="slide" style="background:#0a0a0a;">
+<div style="position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.07),transparent 70%);filter:blur(70px);pointer-events:none;"></div>
+<div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+<div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;"></div>
+<div style="position:relative;z-index:2;padding:46px 44px;height:100%;display:flex;flex-direction:column;">
+<div style="display:flex;align-items:center;justify-content:space-between;"><div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);">The only question that matters</div><div style="width:44px;height:44px;border-radius:50%;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3m.08 4h.01"/></svg></div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:36px;line-height:1.22;letter-spacing:-1px;color:#fff;">Does this animation fire on a decision the shopper is making?</div><div style="height:3px;width:52px;border-radius:2px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);margin:18px 0;"></div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:24px;color:#FF9500;">If not, cut it.</div></div>
+</div>
+<div style="position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.18);z-index:10;">Ridwan - Shopify CRO &amp; UX Designer</div>
+</div>
+
+<div class="slide" style="background:#080808;">
+<div style="position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.07),transparent 70%);filter:blur(70px);pointer-events:none;"></div>
+<div style="position:absolute;bottom:-60px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+<div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;"></div>
+<div style="position:relative;z-index:2;padding:46px 44px;height:100%;display:flex;flex-direction:column;">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;"><div style="width:150px;height:150px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,149,0,0.4);margin-bottom:22px;flex-shrink:0;"><img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle-smile_esjvt2" style="width:100%;height:100%;object-fit:cover;object-position:center top;" onerror="this.style.display='none'"></div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:32px;line-height:1.14;letter-spacing:-1px;color:#fff;">Want to know which animations are costing you sales?</div><div style="font-family:'DM Mono',monospace;font-size:15px;color:rgba(255,255,255,0.5);line-height:1.6;margin:16px 0 26px;max-width:380px;">I'll audit your store's motion and CRO.</div><div style="display:inline-flex;align-items:center;gap:8px;padding:13px 30px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);color:#fff;font-family:'DM Mono',monospace;font-weight:700;font-size:14px;border-radius:32px;">DM me "AUDIT" &rarr;</div><div style="font-family:'DM Mono',monospace;font-size:15px;color:rgba(255,255,255,0.3);margin-top:22px;">Follow @koolestpro for more</div><div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.2);margin-top:6px;">Save this for your next build.</div></div>
+</div>
+<div style="position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.18);z-index:10;">Ridwan - Shopify CRO &amp; UX Designer</div>
+</div>
+
+    </div><!-- /track -->
+    <div class="swb" id="main-swb" onclick="goTo(current+1)">›</div>
+  </div><!-- /viewport -->
+
+  <div id="dots"></div>
+  <div id="pager">1 / 7</div>
+
+  <div class="lk-actions" data-chrome>
+    <div class="lk-action">👍 Like</div>
+    <div class="lk-action">💬 Comment</div>
+    <div class="lk-action">♻️ Repost</div>
+    <div class="lk-action">↗ Send</div>
+  </div>
+
+  <div class="lk-caption" data-chrome>
+    <strong>Your store's animations aren't making it look premium. They're making it convert worse.</strong><br>
+    Motion isn't free. Every effect adds delay, and delay costs sales. Spend it on decisions, cut it everywhere else.<br>
+    <span class="lk-see-more">...see more</span>
+  </div>
+</div><!-- /lk-frame -->
+
+<!-- Download Panel -->
+<div id="download-panel">
+  <h3>Download Slides</h3>
+  <div id="dl-buttons">
+    <button class="dl-btn" onclick="dlSlide(0)">Slide 1</button>
+    <button class="dl-btn" onclick="dlSlide(1)">Slide 2</button>
+    <button class="dl-btn" onclick="dlSlide(2)">Slide 3</button>
+    <button class="dl-btn" onclick="dlSlide(3)">Slide 4</button>
+    <button class="dl-btn" onclick="dlSlide(4)">Slide 5</button>
+    <button class="dl-btn" onclick="dlSlide(5)">Slide 6</button>
+    <button class="dl-btn" onclick="dlSlide(6)">Slide 7</button>
+    <button class="dl-btn dl-all" onclick="dlAll()">Download All PNGs</button>
+    <button class="dl-btn dl-pdf" onclick="dlPDF()">Export PDF</button>
+  </div>
+  <p>PNG exports at 2× resolution (1080×1360px). PDF contains all 7 slides in sequence.</p>
+  <div id="download-status" aria-live="polite"></div>
+</div>
+
+<script>
+// ── Constants ──
+const POST_BRAND  = 'Koolestpro';
+const POST_SLUG   = 'animation-budget-motion-conversion-v2';
+const POST_TYPE   = 'Tip';
+const POST_FOLDER = 'outputs/tips/animation-budget-motion-conversion-v2_2026-07-28.html';
+const TOTAL = 7;
+
+// ── Carousel ──
+let current = 0;
+const track = document.getElementById('track');
+const pager = document.getElementById('pager');
+const dotsEl = document.getElementById('dots');
+const slides = document.querySelectorAll('.slide');
+
+function buildDots() {
+  dotsEl.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+}
+
+function goTo(n) {
+  current = Math.max(0, Math.min(n, TOTAL - 1));
+  track.style.transform = `translateX(-${current * 540}px)`;
+  pager.textContent = `${current + 1} / ${TOTAL}`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  document.getElementById('main-swb').style.display = current >= TOTAL - 1 ? 'none' : '';
+}
+
+buildDots();
+
+// Touch/swipe
+let startX = 0;
+const vp = document.getElementById('viewport');
+vp.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+vp.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - startX;
+  if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+});
+vp.addEventListener('mousedown', e => { startX = e.clientX; });
+vp.addEventListener('mouseup', e => {
+  const dx = e.clientX - startX;
+  if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+});
+
+// ── Download helpers ──
+async function waitForSlideAssets(slide) {
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+
+  const images = Array.from(slide.querySelectorAll('img'));
+  await Promise.all(images.map(img => {
+    if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+    if (img.decode) return img.decode().catch(() => {});
+    return new Promise(resolve => {
+      img.onload = resolve;
+      img.onerror = resolve;
+    });
+  }));
+}
+
+function setDownloadStatus(message) {
+  const status = document.getElementById('download-status');
+  if (status) status.textContent = message || '';
+}
+
+async function captureSlide(idx) {
+  const slide = slides[idx];
+  if (!slide) throw new Error(`Slide ${idx + 1} was not found.`);
+
+  const toHide = document.querySelectorAll('[data-chrome], #download-panel, .posts-shell, .swb, .section-label, .section-divider, .gcard-wrap');
+  toHide.forEach(el => el.style.visibility = 'hidden');
+  const prevTransform = track.style.transform;
+  const prevTransition = track.style.transition;
+  track.style.transform = `translateX(-${idx * 540}px)`;
+  track.style.transition = 'none';
+
+  try {
+    await waitForSlideAssets(slide);
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    return await html2canvas(slide, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#080808',
+      logging: false
+    });
+  } finally {
+    track.style.transform = prevTransform;
+    track.style.transition = prevTransition;
+    toHide.forEach(el => el.style.visibility = '');
+  }
+}
+
+async function dlSlide(idx) {
+  try {
+    setDownloadStatus(`Preparing slide ${idx + 1}...`);
+    const canvas = await captureSlide(idx);
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = `koolestpro_animation-budget-v2_slide${idx + 1}.png`;
+    a.click();
+    setDownloadStatus(`Slide ${idx + 1} downloaded.`);
+  } catch (err) {
+    console.error(err);
+    setDownloadStatus(`Slide ${idx + 1} failed: ${err.message}`);
+  }
+}
+
+async function dlAll() {
+  for (let i = 0; i < TOTAL; i++) {
+    await dlSlide(i);
+    await new Promise(r => setTimeout(r, 300));
+  }
+}
+
+async function dlPDF() {
+  try {
+    if (!window.jspdf || !window.jspdf.jsPDF) throw new Error('PDF library did not load. Check your internet connection and refresh this page.');
+    if (!window.html2canvas) throw new Error('Canvas export library did not load. Check your internet connection and refresh this page.');
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [540, 680], compress: true });
+    for (let i = 0; i < TOTAL; i++) {
+      setDownloadStatus(`Adding slide ${i + 1} of ${TOTAL} to PDF...`);
+      const canvas = await captureSlide(i);
+      const imgData = canvas.toDataURL('image/jpeg', 0.92);
+      if (i > 0) pdf.addPage([540, 680], 'portrait');
+      pdf.addImage(imgData, 'JPEG', 0, 0, 540, 680);
+    }
+    setDownloadStatus('Saving PDF...');
+    pdf.save('koolestpro_animation-budget-v2.pdf');
+    setDownloadStatus('PDF downloaded.');
+  } catch (err) {
+    console.error(err);
+    setDownloadStatus(`PDF failed: ${err.message}`);
+  }
+}
+
+// ── Graphic card download ──
+async function dlCard(id, name) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const toHide = document.querySelectorAll('[data-chrome], #download-panel, .section-label, .section-divider, .gcard-btns');
+  toHide.forEach(x => x.style.visibility = 'hidden');
+  try {
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const canvas = await html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#080808', logging: false });
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'koolestpro_animation-budget_' + name + '.png';
+    a.click();
+  } finally {
+    toHide.forEach(x => x.style.visibility = '');
+  }
+}
+
+// ── Tab logic ──
+function openTab(el, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function copyText(id) {
+  const text = document.getElementById(id).querySelector('pre').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector(`[onclick="copyText('${id}')"]`);
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1800); }
+  });
+}
+
+// ── Pipeline Export ──
+function sendToPipeline() {
+  const now = new Date();
+  const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+  const data = {
+    id: POST_TYPE.toLowerCase() + '-' + POST_SLUG + '-' + dateStr,
+    type: POST_TYPE,
+    title: "Your store's animations are costing you sales",
+    slug: POST_SLUG,
+    status: 'Created',
+    day: '',
+    created: now.toISOString(),
+    folder: POST_FOLDER,
+    week: 'Week of ' + now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }),
+    month: now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+    monthSlug: now.toISOString().slice(0, 7)
+  };
+  console.log('EXPORT_POST_JSON', JSON.stringify(data));
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = POST_SLUG + '_pipeline.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  const s = document.getElementById('pipeline-status');
+  if (s) s.textContent = '✓ Exported — open ridwan_content_system_updated.html and sync.';
+}
+</script>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — POST COPY
+══════════════════════════════════════════ -->
+<div class="section-divider"></div>
+<div class="section-label">③ Post Copy</div>
+
+<div class="tabs-wrap">
+  <div class="tab-buttons">
+    <button class="tab-btn active" onclick="openTab(this,'tab-linkedin')">LinkedIn</button>
+    <button class="tab-btn" onclick="openTab(this,'tab-hook')">Hook</button>
+    <button class="tab-btn" onclick="openTab(this,'tab-twitter-thread')">X Thread</button>
+    <button class="tab-btn" onclick="openTab(this,'tab-twitter-angles')">X Singles</button>
+    <button class="tab-btn" onclick="openTab(this,'tab-ig')">Instagram</button>
+  </div>
+
+  <div id="tab-linkedin" class="tab-panel active">
+    <pre>Your store's animations aren't making it look premium. They're making it convert worse.
+
+I know that's not what you want to hear after a weekend of adding scroll effects.
+
+Here's the trap most Shopify brands fall into: more motion feels more high-end, and high-end feels like it should sell more. So they animate everything.
+
+But motion isn't free. Amazon found that every 100ms of extra delay cost them about 1% in sales. Animations are the easiest way to add that delay without realising it.
+
+The fix is to treat motion as a budget, not decoration. You get a small amount of attention and speed to spend on a page. Every animation spends some of it, so it has to buy something back.
+
+Where it actually earns its place:
+
+Selection feedback, so a shopper trusts their variant or bundle registered.
+Add-to-cart confirmation, right when money is on the line.
+Proof reveal, so reviews and guarantees land as they scroll to decide.
+
+Everything else is spending budget for nothing: hero parallax, section-by-section fades, floating shapes.
+
+Run every animation through one question: does it fire on a decision the shopper is making? If not, cut it.
+
+Save this before your next build. And if you want to know which animations are quietly costing you sales, my DMs are open.</pre>
+    <button class="copy-btn" onclick="copyText('tab-linkedin')">Copy</button>
+  </div>
+
+  <div id="tab-hook" class="tab-panel">
+    <pre>Your store's animations aren't making it look premium. They're making it convert worse.
+
+Motion isn't free. Every effect adds delay, and delay costs sales.
+
+Spend it on decisions. Cut it everywhere else.
+
+What's the first animation you'd defend to the death, and are you sure it's earning its place?</pre>
+    <button class="copy-btn" onclick="copyText('tab-hook')">Copy</button>
+  </div>
+
+  <div id="tab-twitter-thread" class="tab-panel">
+    <pre>1/ Your store's animations aren't making it look premium. They're making it convert worse. A thread on the motion myth quietly killing your Shopify sales:
+
+2/ The myth: more motion = more premium = more sales. So brands animate every section. Fade-ins everywhere. Parallax heroes. It looks high-end in the Figma preview.
+
+3/ The problem: motion isn't free. Amazon found every 100ms of extra delay cost about 1% in sales. Animations are the easiest way to add that delay without noticing.
+
+4/ The reframe: motion is a budget, not decoration. You get a little attention and speed to spend per page. Every animation spends some of it. It has to buy something back.
+
+5/ Where it earns its place: selection feedback (variant registered), add-to-cart confirmation (money's on the line), proof reveal (reviews land as they decide).
+
+6/ Everything else is spending budget for nothing: hero parallax, section-by-section fades, floating shapes. Cut them.
+
+7/ One question for every animation: does it fire on a decision the shopper is making? If not, kill it. Follow @koolestpro for more Shopify CRO.</pre>
+    <button class="copy-btn" onclick="copyText('tab-twitter-thread')">Copy</button>
+  </div>
+
+  <div id="tab-twitter-angles" class="tab-panel">
+    <pre>THE RULE
+Motion is a budget, not decoration. You get a little attention and speed per page. Every animation spends some of it, so it had better buy something back.
+
+THE CONTRAST
+A scroll reveal on your reviews: earns its place. A parallax hero: spends the same budget and hands you nothing back.
+
+THE HOT TAKE
+Most of the animations you added to look premium are quietly lowering your add-to-cart rate. Fancy and converting are not the same thing.</pre>
+    <button class="copy-btn" onclick="copyText('tab-twitter-angles')">Copy</button>
+  </div>
+
+  <div id="tab-ig" class="tab-panel">
+    <pre>Your store's animations aren't making it look premium. They're making it convert worse.
+
+Motion isn't free. Every effect adds delay, and Amazon found 100ms of delay costs about 1% in sales.
+
+Treat motion as a budget. Spend it on decisions: selection feedback, add-to-cart confirmation, proof reveals.
+
+Cut the parallax and the section-by-section fades. They're spending budget for nothing.
+
+Save this. Follow @koolestpro for more Shopify CRO tips.
+
+#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign #DigitalMarketing #ShopifyLiquid</pre>
+    <button class="copy-btn" onclick="copyText('tab-ig')">Copy</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PIPELINE EXPORT
+══════════════════════════════════════════ -->
+<div class="section-divider"></div>
+<div style="max-width:588px;margin:0 auto;padding:0 0 60px;">
+  <div style="background:#0a0a0a;border:1px solid rgba(255,149,0,0.18);border-radius:12px;padding:24px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:8px;">Content Pipeline</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:18px;">Export this post to the content system. Downloads a <code>.json</code> file — open <code>ridwan_content_system_updated.html</code> and sync to register it.</div>
+    <button onclick="sendToPipeline()" style="background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:12px 28px;border:none;border-radius:8px;cursor:pointer;letter-spacing:0.5px;">Send to Content Pipeline →</button>
+    <div id="pipeline-status" style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);margin-top:12px;min-height:16px;"></div>
+  </div>
+</div>
+
+</body>
+</html>

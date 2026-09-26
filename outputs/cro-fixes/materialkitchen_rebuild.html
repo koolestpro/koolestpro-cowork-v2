@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Material Kitchen – Rebuild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#d9d6cf;display:flex;justify-content:center;min-height:100vh;font-family:Inter,sans-serif}
+.phone{width:390px;background:#FBF8EF;color:#1B1B1B;overflow:hidden}
+.announce{background:#C87F5A;color:#fff;text-align:center;font-size:13px;padding:8px 10px;line-height:1.3;font-weight:500}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#FBF8EF}
+.hamburger{display:flex;flex-direction:column;gap:4px;cursor:default}
+.hamburger span{display:block;width:20px;height:2px;background:#1B1B1B;border-radius:1px}
+.wordmark{font-family:Fraunces,serif;font-size:24px;font-weight:600;letter-spacing:-0.3px;color:#1B1B1B}
+.cart{font-size:14px;font-weight:500;color:#1B1B1B;cursor:default}
+.hero-img{width:100%;display:block}
+.hero-text{padding:18px 20px 0}
+.hero-text h1{font-family:Fraunces,serif;font-size:30px;line-height:1.15;color:#1B1B1B;font-weight:600}
+.hero-text .sub{font-size:15px;color:#6b6a63;margin-top:8px;line-height:1.4}
+.proof-strip{display:flex;align-items:center;gap:8px;margin:14px 20px 0;padding:10px 0;border-top:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08)}
+.stars{color:#C89B3C;font-size:15px;letter-spacing:1px;white-space:nowrap}
+.quote{font-size:13px;color:#1B1B1B;font-style:italic;line-height:1.3}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 20px 0}
+.chip{border:1px solid rgba(31,61,51,.25);border-radius:999px;padding:6px 10px;font-size:11.5px;color:#1F3D33;font-weight:500;white-space:nowrap}
+.cta{display:block;margin:16px 20px 0;background:#1F3D33;color:#fff;text-align:center;padding:15px;font-size:15px;font-weight:600;border-radius:2px;text-decoration:none;cursor:default}
+.bestseller{display:flex;justify-content:space-between;align-items:center;margin:16px 20px 20px;padding-top:14px;border-top:1px solid rgba(0,0,0,.1)}
+.bs-left{display:flex;flex-direction:column;gap:2px}
+.bs-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C87F5A;font-weight:600}
+.bs-name{font-family:Fraunces,serif;font-size:16px;color:#1B1B1B;font-weight:600}
+.bs-price{display:flex;align-items:baseline;gap:6px;margin-top:2px}
+.bs-sale{font-size:15px;font-weight:700;color:#1B1B1B}
+.bs-orig{font-size:13px;color:#9a9a90;text-decoration:line-through}
+.bs-add{border:1px solid #1F3D33;color:#1F3D33;padding:8px 12px;font-size:12px;font-weight:500;border-radius:2px;cursor:default;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="phone">
+<div class="announce">Free US shipping over $100 · 30-day trial · Guaranteed for life</div>
+<div class="header">
+<div class="hamburger"><span></span><span></span><span></span></div>
+<div class="wordmark">material</div>
+<div class="cart">Cart</div>
+</div>
+<img class="hero-img" src="materialkitchen_hero.jpg" alt="Material Kitchen cutting board">
+<div class="hero-text">
+<h1>Meet Your New Favorite Cutting Board</h1>
+<div class="sub">Dishwasher-safe, non-porous, bio-based prepware — guaranteed for life.</div>
+</div>
+<div class="proof-strip">
+<span class="stars">★★★★★</span>
+<span class="quote">"It cut through tomatoes like a hot knife through butter."</span>
+</div>
+<div class="chips">
+<span class="chip">Guaranteed for life</span>
+<span class="chip">30-day trial</span>
+<span class="chip">Free shipping $100+</span>
+</div>
+<a class="cta" href="#">Shop the MK Free board</a>
+<div class="bestseller">
+<div class="bs-left">
+<span class="bs-label">Best seller</span>
+<span class="bs-name">The Trio of Knives</span>
+<div class="bs-price">
+<span class="bs-sale">$195</span>
+<span class="bs-orig">$225</span>
+</div>
+</div>
+<span class="bs-add">Add to cart</span>
+</div>
+</div>
+</body>
+</html>

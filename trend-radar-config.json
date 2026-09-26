@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "description": "Project-specific config for the koolestpro-trend-radar skill. See docs/koolestpro-content-operating-plan.md Step 11 and CLAUDE.md's 'Trend & Format Radar — Export Routing' section. This file is what makes the skill portable — the Islamic content project (or any future project) gets its own copy of this file with different pillars/keywords/paths, the skill's own logic stays identical.",
+    "createdAt": "2026-07-30"
+  },
+  "pillars": [
+    { "name": "Digital Craftsmanship", "keywords": ["Figma", "Shopify Liquid", "Replo", "GSAP", "design systems", "UI UX design"] },
+    { "name": "Conversion Strategy", "keywords": ["CRO", "conversion rate optimization", "landing page", "above the fold", "trust signals", "product page design"] },
+    { "name": "Builder's Journey", "keywords": ["freelancing", "personal brand", "client work", "solo founder", "productivity systems"] }
+  ],
+  "nicheQueryTerms": ["Shopify", "ecommerce CRO", "DTC brand", "web design", "landing page design", "conversion optimization"],
+  "brandSafetyAvoidTerms": [],
+  "sources": {
+    "x": {
+      "enabled": true,
+      "maxReadsPerWeek": 50,
+      "monthlyBudgetUSD": 5.0,
+      "note": "Shares Ridwan's existing $5-7/month X credit pool with Make.com posting. Raise maxReadsPerWeek before raising cadence if more volume is needed, per Step 11."
+    },
+    "reddit": {
+      "enabled": false,
+      "maxReadsPerWeek": 100,
+      "monthlyBudgetUSD": 1.0,
+      "provider": null,
+      "note": "Blocked until Ridwan signs up for a third-party Reddit read API provider (Reddit's own official API floors at $12,000/year). Set REDDIT_API_BASE_URL / REDDIT_API_TOKEN in .env once chosen — no code changes needed, see reddit_search.py."
+    },
+    "instagram": {
+      "enabled": false,
+      "disabledReason": "2026-09-18: paused during the Instagram 'automated behaviour' warning investigation. Browsing Instagram with an automated browser inside Ridwan's logged-in Chrome is exactly what that warning targets. Do not re-enable without Ridwan's explicit OK.",
+      "method": "claude-in-chrome",
+      "note": "No trend-discovery API exists for Instagram (confirmed 2026-07-30). Supplementary signal only, may not run reliably inside an unattended scheduled task — degrade gracefully if so."
+    }
+  },
+  "outputPaths": {
+    "tipsTopicLog": "trend-radar-log.json",
+    "contentPipelineHtml": "content_pipeline.html",
+    "spendLedger": "trend-radar-spend-ledger.json"
+  },
+  "layer1": {
+    "feedsPostType": "Tip",
+    "consumingScheduledTask": "koolestpro-tips-weekly",
+    "autoPickTopRanked": true,
+    "note": "CRO Fix, Static Ad, and Template Showcase are target-brand-driven, not topic-driven — Ridwan confirmed those streams stay as-is, this only feeds Tips."
+  },
+  "layer2": {
+    "name": "Format Radar",
+    "onlySurfaceWhenBarCleared": true,
+    "noManufacturedQuota": true,
+    "note": "Silence most weeks is expected and fine. See content_pipeline.html's format-radar-data block."
+  }
+}

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koolestpro — The Conversion Layer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#030303;font-family:'DM Mono',monospace;color:#fff;min-height:100vh;padding-bottom:80px;}
+
+/* ── PAGE STRUCTURE ── */
+.page-section{max-width:600px;margin:0 auto;padding:56px 20px 0;}
+.section-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.06);}
+.section-divider{height:1px;background:linear-gradient(to right,rgba(255,149,0,0.22),rgba(123,47,190,0.18),transparent);margin:52px auto;max-width:600px;}
+
+/* ── LK FRAME ── */
+.lk-frame{width:540px;background:#0a0a0a;border-radius:14px;box-shadow:0 20px 80px rgba(0,0,0,0.95);overflow:hidden;border:1px solid rgba(255,255,255,0.05);margin:0 auto;}
+.lk-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.lk-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FF9500,#E040A0,#7B2FBE);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.lk-av span{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;}
+.lk-name{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:#fff;}
+.lk-sub{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.28);margin-top:1px;}
+.lk-dtag{margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.28);background:rgba(255,255,255,0.05);padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,0.07);}
+#viewport{width:540px;height:540px;overflow:hidden;cursor:grab;position:relative;user-select:none;}
+#viewport:active{cursor:grabbing;}
+#track{display:flex;width:calc(540px*8);height:540px;transition:transform .32s cubic-bezier(.4,0,.2,1);}
+.slide{width:540px;height:540px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;}
+.lk-dots{display:flex;justify-content:center;gap:5px;padding:10px 0 4px;background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.04);}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all .25s;cursor:pointer;}
+.dot.active{background:#FF9500;transform:scale(1.5);}
+.lk-pager{text-align:center;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.16);padding-bottom:8px;background:#0a0a0a;}
+.lk-actions{display:flex;align-items:center;padding:8px 14px;border-top:1px solid rgba(255,255,255,0.04);gap:4px;background:#0a0a0a;}
+.lka{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.28);transition:background .15s;}
+.lka:hover{background:rgba(255,255,255,0.04);}
+.lk-caption{padding:8px 14px 12px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.32);line-height:1.5;border-top:1px solid rgba(255,255,255,0.04);background:#0a0a0a;}
+
+/* ── SHARED SLIDE ELEMENTS ── */
+.cnt{position:relative;z-index:5;padding:44px 44px 58px;height:100%;display:flex;flex-direction:column;}
+.ctr{position:absolute;bottom:18px;left:28px;font-family:'Syne',sans-serif;font-size:10px;font-weight:300;letter-spacing:1.5px;color:rgba(255,255,255,0.16);z-index:10;}
+.attr{position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.18);z-index:10;}
+.swb{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;background:linear-gradient(to right,transparent,rgba(0,0,0,0.4));z-index:8;}
+.glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px);}
+.dgrid{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.022) 1px,transparent 1px);background-size:26px 26px;}
+.ring{position:absolute;border-radius:50%;pointer-events:none;border:1px solid rgba(255,255,255,0.04);top:50%;left:50%;transform:translate(-50%,-50%);}
+.grule{height:3px;width:44px;border-radius:2px;background:linear-gradient(to right,#FF9500,#E040A0,#7B2FBE);margin:14px 0;}
+
+/* eyebrow pills */
+.ep-solid{display:inline-block;background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:18px;width:fit-content;}
+.ep-outline{display:inline-block;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:4px;margin-bottom:18px;width:fit-content;}
+
+/* ── DOWNLOAD PANEL ── */
+#download-panel{width:540px;margin:14px auto 0;background:#0d0d0d;border-radius:12px;padding:18px 22px;border:1px solid rgba(255,255,255,0.055);}
+.dl-title{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;color:rgba(255,255,255,0.22);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
+#dl-buttons{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.dl-note{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.14);margin-top:10px;line-height:1.6;}
+.btn-g{padding:6px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:7px;color:rgba(255,255,255,0.4);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:background .2s;}
+.btn-g:hover{background:rgba(255,255,255,0.09);}
+.btn-grad{padding:7px 14px;background:linear-gradient(90deg,#FF9500,#7B2FBE);border:none;border-radius:7px;color:#fff;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;transition:opacity .2s;}
+.btn-grad:hover{opacity:.82;}
+.btn-export{padding:8px 16px;background:rgba(255,149,0,0.1);border:1px solid rgba(255,149,0,0.3);border-radius:8px;color:#FF9500;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:1px;transition:opacity .2s;}
+.btn-export:hover{opacity:.8;}
+
+/* ── GRAPHIC VARIATIONS ── */
+.gcard-wrap{width:540px;margin:0 auto 28px;}
+.gcard{width:540px;height:540px;position:relative;overflow:hidden;border-radius:10px;}
+.gcard-btns{display:flex;gap:8px;margin-top:10px;}
+.gcard-label{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+
+/* ── POSTS / TABS ── */
+.posts-shell{width:540px;margin:0 auto;background:#0d0d0d;border-radius:14px;border:1px solid rgba(255,255,255,0.055);overflow:hidden;}
+.tab-nav{display:flex;border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;}
+.tab-btn{flex-shrink:0;padding:12px 12px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.28);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab-btn.active{color:#FF9500;border-bottom-color:#FF9500;}
+.tab-panel{display:none;padding:22px 24px 26px;}
+.tab-panel.active{display:block;}
+.post-content{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.55);line-height:1.85;white-space:pre-wrap;}
+.post-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:10px;}
+.copy-btn{float:right;padding:4px 10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:6px;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);cursor:pointer;transition:all .2s;margin-bottom:8px;}
+.copy-btn:hover{background:rgba(255,149,0,0.08);border-color:rgba(255,149,0,0.25);color:#FF9500;}
+.tw-block{padding:13px;background:rgba(255,255,255,0.025);border-radius:10px;border:1px solid rgba(255,255,255,0.055);margin-bottom:8px;}
+.tw-text{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.55);line-height:1.6;white-space:pre-wrap;}
+.tw-var{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);letter-spacing:1px;margin-bottom:6px;margin-top:12px;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1 — LINKEDIN CAROUSEL
+═══════════════════════════════════════════════════════════ -->
+<div class="page-section">
+  <div class="section-label">01 &nbsp;LinkedIn Carousel</div>
+</div>
+
+<div style="max-width:600px;margin:0 auto;padding:0 20px;">
+
+<div class="lk-frame">
+
+  <!-- LK Header -->
+  <div class="lk-header" data-chrome>
+    <div class="lk-av" style="padding:0;overflow:hidden;">
+      <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle_mvcdss"
+           style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
+           onerror="this.outerHTML='<span style=\'font-family:Syne,sans-serif;font-weight:800;font-size:15px;color:#fff;\'>R</span>'">
+    </div>
+    <div>
+      <div class="lk-name">Ridwan Adekunle <span style="font-size:9px;font-weight:400;color:#FF9500;background:rgba(255,149,0,0.1);padding:1px 6px;border-radius:3px;margin-left:4px;">1st</span></div>
+      <div class="lk-sub">Shopify CRO & UX Designer · @koolestpro</div>
+    </div>
+    <div class="lk-dtag">Document</div>
+  </div>
+
+  <!-- Carousel Viewport -->
+  <div id="viewport">
+    <div id="track">
+
+      <!-- SLIDE 1 — COVER -->
+      <div class="slide" style="background:#080808;">
+        <div class="glow" style="top:-80px;right:-60px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.06),transparent 70%);"></div>
+        <div class="dgrid"></div>
+        <div class="cnt">
+          <!-- Pillar pill -->
+          <div style="display:inline-block;border:1px solid rgba(255,149,0,0.3);color:rgba(255,149,0,0.7);font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:auto;width:fit-content;">CONVERSION STRATEGY</div>
+
+          <!-- Main headline -->
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:58px;line-height:0.9;letter-spacing:-2.5px;color:#fff;margin-bottom:14px;">
+            Stop designing.<br>Start
+            <span style="color:#FF9500;">diagnosing.</span>
+          </div>
+
+          <div style="height:3px;width:40px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin-bottom:14px;"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.32);line-height:1.5;max-width:300px;">Most Shopify redesigns look better.<br>Most don't lift conversions. Here's why.</div>
+
+          <!-- Swipe indicator -->
+          <div style="display:flex;align-items:center;gap:8px;margin-top:auto;">
+            <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);">SWIPE</span>
+            <div style="width:48px;height:1px;background:linear-gradient(to right,rgba(255,255,255,0.15),#FF9500);"></div>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="ctr">01 / 08</div>
+        <!-- no attribution on cover — handled by header -->
+        <div class="swb">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM / PAIN -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div class="glow" style="top:-60px;left:-40px;width:280px;height:280px;background:radial-gradient(circle,rgba(255,149,0,0.1),transparent 70%);"></div>
+        <div class="dgrid"></div>
+        <div class="cnt">
+          <div class="ep-solid">THE PROBLEM</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:36px;line-height:1.05;letter-spacing:-1px;color:#fff;margin-bottom:16px;">Most redesigns cost<br>you conversions.</div>
+          <div class="grule"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;">
+            <span style="position:relative;font-family:'DM Mono',monospace;font-size:10px;padding:5px 26px 5px 10px;border:1px solid rgba(255,255,255,0.1);border-radius:20px;color:rgba(255,255,255,0.3);">Redesign by gut feel<span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:9px;color:#FF9500;">✕</span></span>
+            <span style="position:relative;font-family:'DM Mono',monospace;font-size:10px;padding:5px 26px 5px 10px;border:1px solid rgba(255,255,255,0.1);border-radius:20px;color:rgba(255,255,255,0.3);">Copy the competitor<span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:9px;color:#FF9500;">✕</span></span>
+            <span style="position:relative;font-family:'DM Mono',monospace;font-size:10px;padding:5px 26px 5px 10px;border:1px solid rgba(255,255,255,0.1);border-radius:20px;color:rgba(255,255,255,0.3);">Add more sections<span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:9px;color:#FF9500;">✕</span></span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div style="width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:3px;background:linear-gradient(135deg,#FF9500,#7B2FBE);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.55;">They fix how it looks, not how it converts</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div style="width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:3px;background:linear-gradient(135deg,#FF9500,#7B2FBE);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.55;">The strategy layer was never touched</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;">
+            <div style="width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:3px;background:linear-gradient(135deg,#FF9500,#7B2FBE);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.55;">Design started before the diagnosis finished</div>
+          </div>
+        </div>
+        <div class="ctr">02 / 08</div>
+        <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+        <div class="swb"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 3 — STAT / TRUTH -->
+      <div class="slide" style="background:#0d0b08;">
+        <div class="glow" style="top:-60px;left:-40px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,149,0,0.14),rgba(224,64,160,0.05),transparent 70%);"></div>
+        <div class="dgrid"></div>
+        <div class="cnt" style="justify-content:center;align-items:center;text-align:center;">
+          <div class="ep-outline" style="margin-bottom:14px;">THE TRUTH</div>
+
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:114px;line-height:1;letter-spacing:-4px;color:#FF9500;text-align:center;">73%</div>
+
+          <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:10px 0 4px;">OF REDESIGNS DON'T LIFT CONVERSIONS</div>
+          <div style="height:2px;width:32px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin:12px auto;"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.38);text-align:center;max-width:340px;line-height:1.6;">Because they start with Figma, not with the buyer's journey.</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.16);margin-top:12px;">Source: CXL Institute</div>
+        </div>
+        <div class="ctr">03 / 08</div>
+        <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+        <div class="swb"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 4 — SOLUTION INTRO -->
+      <div class="slide" style="background:#080808;">
+        <div class="glow" style="bottom:-80px;right:-60px;width:340px;height:340px;background:radial-gradient(circle,rgba(123,47,190,0.14),transparent 70%);"></div>
+        <div class="dgrid"></div>
+        <div class="cnt">
+          <div class="ep-solid">THE FIX</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:40px;line-height:1.05;letter-spacing:-1.5px;color:#fff;margin-bottom:16px;">Meet The<br>Conversion Layer.</div>
+          <div class="grule"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:380px;">A strategic audit layer you run <strong style="color:rgba(255,255,255,0.7);">before</strong> you touch design.</div>
+          <div style="margin-top:14px;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:380px;">It asks the questions your buyer is silently asking. It finds the friction before your designer creates more of it.</div>
+          <div style="margin-top:22px;padding:14px 18px;background:rgba(255,149,0,0.06);border-left:2px solid rgba(255,149,0,0.5);border-radius:0 6px 6px 0;">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#FF9500;margin-bottom:5px;">MY 3C FRAMEWORK</div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);">Clarify → Construct → Convert</div>
+          </div>
+        </div>
+        <div class="ctr">04 / 08</div>
+        <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+        <div class="swb"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 5 — HOW IT WORKS (3C FRAMEWORK) -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div class="glow" style="top:-50px;right:-50px;width:260px;height:260px;background:radial-gradient(circle,rgba(255,149,0,0.1),transparent 70%);"></div>
+        <div class="cnt">
+          <div class="ep-outline">3C FRAMEWORK</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:32px;line-height:1.1;letter-spacing:-0.8px;color:#fff;margin-bottom:20px;">Clarify → Construct → Convert</div>
+
+          <!-- Step 1 -->
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#FF9500,#E040A0);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:#fff;">1</div>
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;margin-bottom:3px;">CLARIFY</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.42);line-height:1.55;">What does this page need to communicate? What's the one question the buyer needs answered?</div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#E040A0,#7B2FBE);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:#fff;">2</div>
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;margin-bottom:3px;">CONSTRUCT</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.42);line-height:1.55;">What's the logical flow of the buyer's journey on this page? Does the layout follow that flow?</div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#7B2FBE,#FF9500);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:#fff;">3</div>
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;margin-bottom:3px;">CONVERT</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.42);line-height:1.55;">What's the single action this page must drive? Is every element pointing toward that one action?</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="ctr">05 / 08</div>
+        <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+        <div class="swb"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 6 — PROOF / BEFORE FIGMA -->
+      <div class="slide" style="background:#080808;">
+        <div class="glow" style="bottom:-60px;left:-50px;width:280px;height:280px;background:radial-gradient(circle,rgba(123,47,190,0.12),transparent 70%);"></div>
+        <div class="dgrid"></div>
+        <div class="cnt">
+          <div class="ep-solid">HOW TO USE IT</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:32px;line-height:1.1;letter-spacing:-0.8px;color:#fff;margin-bottom:16px;">3 steps before<br>you open Figma.</div>
+          <div class="grule"></div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;margin-top:8px;">
+            <div style="background:#0d0d0d;padding:16px 14px;">
+              <div style="font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:7px;">① RUN THE AUDIT</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.38);line-height:1.5;">Map friction, confusion, and broken trust signals using the 3C Framework</div>
+            </div>
+            <div style="background:#0d0d0d;padding:16px 14px;border-left:1px solid rgba(255,255,255,0.05);">
+              <div style="font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:7px;">② DEFINE THE JOB</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.38);line-height:1.5;">Give the page one specific job — not "show products," something measurable and precise</div>
+            </div>
+            <div style="background:#0d0d0d;padding:16px 14px;border-top:1px solid rgba(255,255,255,0.05);">
+              <div style="font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:7px;">③ OPEN FIGMA</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.38);line-height:1.5;">Now every design decision has a clear brief — no guessing, no bloat</div>
+            </div>
+            <div style="background:#0d0d0d;padding:16px 14px;border-top:1px solid rgba(255,255,255,0.05);border-left:1px solid rgba(255,255,255,0.05);">
+              <div style="font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:7px;">THE RESULT</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.38);line-height:1.5;">Designs that look better AND convert better — not one or the other</div>
+            </div>
+          </div>
+        </div>
+        <div class="ctr">06 / 08</div>
+        <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+        <div class="swb"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 7 — RECAP -->
+      <div class="slide" style="background:#0a0a0a;">
+        <div class="glow" style="top:-50px;right:-50px;width:260px;height:260px;background:radial-gradient(circle,rgba(255,149,0,0.09),transparent 70%);"></div>
+        <div class="cnt">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.16);margin-bottom:14px;">RECAP</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:30px;line-height:1.1;letter-spacing:-0.8px;color:#fff;margin-bottom:20px;">Before you open Figma next time.</div>
+
+          <div style="display:flex;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div style="width:3px;border-radius:2px;flex-shrink:0;background:linear-gradient(to bottom,#FF9500,#E040A0);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.55;"><strong style="color:rgba(255,255,255,0.75);">Stop:</strong> designing before you diagnose</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div style="width:3px;border-radius:2px;flex-shrink:0;background:linear-gradient(to bottom,#E040A0,#7B2FBE);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.55;"><strong style="color:rgba(255,255,255,0.75);">Run:</strong> the 3C Framework — Clarify, Construct, Convert</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div style="width:3px;border-radius:2px;flex-shrink:0;background:linear-gradient(to bottom,#7B2FBE,#FF9500);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.55;"><strong style="color:rgba(255,255,255,0.75);">Give:</strong> every page one specific job before a pixel is moved</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:11px 0;">
+            <div style="width:3px;border-radius:2px;flex-shrink:0;background:linear-gradient(to bottom,#FF9500,#7B2FBE);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.55;"><strong style="color:rgba(255,255,255,0.75);">The goal:</strong> a page that's beautiful AND purposeful — that's the Conversion Layer</div>
+          </div>
+        </div>
+        <div class="ctr">07 / 08</div>
+        <div class="attr">Ridwan - Shopify CRO & UX Designer</div>
+        <div class="swb"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 8 — CTA -->
+      <div class="slide" style="background:#080808;">
+        <div class="glow" style="top:-80px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(255,149,0,0.13),rgba(224,64,160,0.05),transparent 70%);"></div>
+        <div class="glow" style="bottom:-80px;left:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(123,47,190,0.12),transparent 70%);"></div>
+        <div class="ring" style="width:400px;height:400px;"></div>
+        <div class="ring" style="width:300px;height:300px;"></div>
+        <div class="cnt" style="align-items:center;text-align:center;">
+          <!-- Avatar — real photo -->
+          <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;margin:0 auto 20px;flex-shrink:0;background:linear-gradient(135deg,#FF9500,#E040A0,#7B2FBE);">
+            <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle-smile_esjvt2"
+                 style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+                 onerror="this.style.display='none'">
+          </div>
+
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:32px;line-height:1.1;letter-spacing:-0.8px;color:#fff;max-width:340px;margin-bottom:10px;">Want a free Conversion Layer audit on your store?</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:24px;">I'll run the 3C Framework on one page. No pitch.</div>
+
+          <!-- CTA button -->
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);color:#fff;font-family:'DM Mono',monospace;font-weight:700;font-size:12px;border-radius:32px;margin-bottom:20px;">DM me "AUDIT" →</div>
+
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.22);letter-spacing:1px;">Follow <span style="color:#FF9500;">@koolestpro</span> · Shopify CRO & UX Designer</div>
+        </div>
+        <div class="ctr">08 / 08</div>
+        <!-- save prompt -->
+        <div style="position:absolute;bottom:16px;right:24px;display:flex;align-items:center;gap:5px;z-index:9;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <span style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.22);">Save this post</span>
+        </div>
+      </div>
+
+    </div><!-- /track -->
+  </div><!-- /viewport -->
+
+  <!-- LK Footer Chrome -->
+  <div class="lk-dots" id="dots" data-chrome></div>
+  <div class="lk-pager" id="pager" data-chrome>Slide 1 of 8</div>
+  <div class="lk-actions" data-chrome>
+    <div class="lka"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>Like</div>
+    <div class="lka"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</div>
+    <div class="lka"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Repost</div>
+    <div class="lka" style="margin-left:auto;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
+  </div>
+  <div class="lk-caption" data-chrome>
+    <strong style="color:rgba(255,255,255,0.65);">73% of Shopify redesigns don't lift conversions.</strong><br>
+    Because they open Figma before running a diagnosis. Here's the framework I use before... <span style="color:#FF9500;cursor:pointer;">...see more</span>
+  </div>
+
+</div><!-- /lk-frame -->
+
+<!-- DOWNLOAD PANEL -->
+<div id="download-panel" data-chrome>
+  <div class="dl-title">Export Slides</div>
+  <div id="dl-buttons"></div>
+  <div class="dl-note">PNG at 1080×1080px · PDF assembles all 8 slides · Wait ~5s after page load for fonts</div>
+</div>
+
+</div><!-- /padding wrap -->
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2 — SINGLE GRAPHICS (3 VARIATIONS)
+═══════════════════════════════════════════════════════════ -->
+<div class="page-section">
+  <div class="section-label">02 &nbsp;Single Graphics</div>
+</div>
+
+<div style="max-width:600px;margin:0 auto;padding:0 20px;">
+
+  <!-- VARIATION A — Editorial Typographic -->
+  <div class="gcard-wrap">
+    <div class="gcard-label">Variation A — Editorial</div>
+    <div class="gcard" id="gcard-a" style="background:#080808;">
+      <!-- Top gradient bar -->
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;">
+        <svg width="100%" height="3" preserveAspectRatio="none"><defs><linearGradient id="grad-vara-bar" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FF9500"/><stop offset="50%" stop-color="#E040A0"/><stop offset="100%" stop-color="#7B2FBE"/></linearGradient></defs><rect width="100%" height="3" fill="url(#grad-vara-bar)"/></svg>
+      </div>
+      <!-- Corner bracket -->
+      <div style="position:absolute;top:22px;left:22px;width:18px;height:18px;border-top:2px solid rgba(255,149,0,0.3);border-left:2px solid rgba(255,149,0,0.3);z-index:2;"></div>
+
+      <div style="position:relative;z-index:5;padding:52px 48px;height:100%;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:110px;line-height:0.8;color:#FF9500;opacity:0.18;margin-bottom:-10px;">"</div>
+
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:42px;line-height:1.05;letter-spacing:-1.5px;color:#fff;margin-bottom:18px;">Design isn't<br>decoration,<br>it's direction.</div>
+        <div style="height:3px;width:48px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin-bottom:18px;"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.28);letter-spacing:1px;">Ridwan · @koolestpro</div>
+      </div>
+
+      <!-- Bottom tags -->
+      <div style="position:absolute;bottom:20px;left:24px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.16);">CONVERSION STRATEGY</div>
+    </div>
+    <div class="gcard-btns">
+      <button class="btn-g" onclick="dlCard('gcard-a','koolestpro_tip_vara')">↓ PNG</button>
+      <button class="btn-grad" onclick="dlCardPDF('gcard-a','koolestpro_tip_vara')">↓ PDF</button>
+    </div>
+  </div>
+
+  <!-- VARIATION B — Stat / Data Card -->
+  <div class="gcard-wrap">
+    <div class="gcard-label">Variation B — Stat</div>
+    <div class="gcard" id="gcard-b" style="background:#080808;">
+      <div class="glow" style="position:absolute;top:-40px;left:20px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.15),rgba(224,64,160,0.06),transparent 70%);filter:blur(50px);pointer-events:none;"></div>
+      <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.022) 1px,transparent 1px);background-size:26px 26px;"></div>
+
+      <!-- Pill label -->
+      <div style="position:absolute;top:22px;left:22px;display:inline-block;background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;z-index:5;">CONVERSION STAT</div>
+
+      <div style="position:relative;z-index:5;padding:52px 44px 52px;height:100%;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:154px;line-height:1;letter-spacing:-6px;color:#FF9500;margin-bottom:4px;margin-top:20px;">73%</div>
+
+        <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:6px 0;">OF REDESIGNS DON'T LIFT CONVERSIONS</div>
+        <div style="height:2px;width:32px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin:10px 0;"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);line-height:1.6;max-width:320px;">Because they start with Figma, not the buyer's journey.</div>
+      </div>
+
+      <div style="position:absolute;bottom:20px;right:22px;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);">Ridwan · @koolestpro</div>
+    </div>
+    <div class="gcard-btns">
+      <button class="btn-g" onclick="dlCard('gcard-b','koolestpro_tip_varb')">↓ PNG</button>
+      <button class="btn-grad" onclick="dlCardPDF('gcard-b','koolestpro_tip_varb')">↓ PDF</button>
+    </div>
+  </div>
+
+  <!-- VARIATION C — Atmospheric / Cinematic -->
+  <div class="gcard-wrap">
+    <div class="gcard-label">Variation C — Atmospheric</div>
+    <div class="gcard" id="gcard-c" style="background:#050505;">
+      <!-- Glow blobs -->
+      <div style="position:absolute;top:-80px;right:-60px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,0.16),rgba(224,64,160,0.07),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:-80px;left:-60px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.14),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+      <!-- Rings -->
+      <div class="ring" style="position:absolute;width:450px;height:450px;top:50%;left:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,0.03);border-radius:50%;"></div>
+      <div class="ring" style="position:absolute;width:340px;height:340px;top:50%;left:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,0.04);border-radius:50%;"></div>
+      <div class="ring" style="position:absolute;width:230px;height:230px;top:50%;left:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,0.04);border-radius:50%;"></div>
+
+      <div style="position:relative;z-index:5;padding:52px 48px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:96px;line-height:0.8;color:#FF9500;opacity:0.22;margin-bottom:-8px;">"</div>
+
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:36px;line-height:1.1;letter-spacing:-1px;color:#fff;margin-bottom:20px;">Attention is earned.<br>Action is designed.</div>
+        <div style="height:2px;width:40px;border-radius:2px;background:linear-gradient(to right,#FF9500,#7B2FBE);margin:0 auto 18px;"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1px;">Ridwan · @koolestpro</div>
+      </div>
+    </div>
+    <div class="gcard-btns">
+      <button class="btn-g" onclick="dlCard('gcard-c','koolestpro_tip_varc')">↓ PNG</button>
+      <button class="btn-grad" onclick="dlCardPDF('gcard-c','koolestpro_tip_varc')">↓ PDF</button>
+    </div>
+  </div>
+
+</div><!-- /padding wrap -->
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3 — POST COPY
+═══════════════════════════════════════════════════════════ -->
+<div class="page-section">
+  <div class="section-label">03 &nbsp;Post Copy</div>
+</div>
+
+<div style="max-width:600px;margin:0 auto;padding:0 20px;">
+<div class="posts-shell">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('li-long',this)">LI Long-form</button>
+    <button class="tab-btn" onclick="switchTab('li-hook',this)">LI Hook</button>
+    <button class="tab-btn" onclick="switchTab('x-thread',this)">X Thread</button>
+    <button class="tab-btn" onclick="switchTab('x-singles',this)">X Singles</button>
+    <button class="tab-btn" onclick="switchTab('ig',this)">Instagram</button>
+  </div>
+
+  <div id="tab-li-long" class="tab-panel active">
+    <div class="post-label">LINKEDIN · LONG-FORM</div>
+    <button class="copy-btn" onclick="copyPost('copy-li-long')">Copy</button>
+    <div class="post-content" id="copy-li-long">73% of Shopify redesigns don't lift conversions.
+
+Not because the design was bad.
+Because the wrong problem was solved.
+
+Most store owners jump straight to Figma. New hero image. Bigger fonts. Trending layout. It looks cleaner. But conversion barely moves.
+
+Here's what's actually missing — The Conversion Layer.
+
+It's the strategic audit you run before a single pixel moves. Three questions answer everything:
+
+→ Clarify: What does this page need to communicate? What's the buyer's one burning question?
+→ Construct: Does the layout follow the buyer's journey — or your designer's preference?
+→ Convert: What's the single action this page must drive? Is every element pointing there?
+
+That's the 3C Framework.
+
+Before I open Figma on any CRO project, I run this. 15 minutes of diagnosis saves 3 weeks of redesign that doesn't move the needle.
+
+The Conversion Layer isn't a style choice. It's a strategic brief. And it's the difference between a page that looks better and a page that sells more.
+
+Save this. Share it with your designer before the next brief.
+
+Follow @koolestpro for Shopify CRO & UX tips every week.</div>
+  </div>
+
+  <div id="tab-li-hook" class="tab-panel">
+    <div class="post-label">LINKEDIN · HOOK POST</div>
+    <button class="copy-btn" onclick="copyPost('copy-li-hook')">Copy</button>
+    <div class="post-content" id="copy-li-hook">Most Shopify redesigns make the store look better.
+
+Most don't move conversions.
+
+The missing piece: a strategy layer before Figma opens.
+
+What's the one thing your product page's job actually is?
+
+Answer that first. Design second.
+
+What do you do before you start a redesign — strategy or straight to Figma?</div>
+  </div>
+
+  <div id="tab-x-thread" class="tab-panel">
+    <div class="post-label">X / TWITTER · THREAD</div>
+    <button class="copy-btn" onclick="copyPost('copy-x-thread')">Copy</button>
+    <div class="post-content" id="copy-x-thread">73% of redesigns don't lift conversions.
+
+Not because the design was bad. Because the strategy layer was skipped.
+
+Here's The Conversion Layer — the 15-minute audit I run before opening Figma 🧵
+
+2/
+Most store owners go straight to "make it look better."
+
+New hero. New fonts. New layout.
+
+It looks cleaner. Conversions don't move.
+
+Because aesthetics ≠ conversion strategy.
+
+3/
+The real issue: design started before diagnosis ended.
+
+You can't fix a conversion problem with a visual solution.
+
+You need The Conversion Layer first.
+
+4/
+The 3C Framework — run this before any redesign:
+
+→ Clarify: What's the buyer's #1 question on this page?
+→ Construct: Does the layout follow the buyer journey or your preference?
+→ Convert: What single action must this page drive?
+
+5/
+Clarify first.
+
+If you can't answer "what does this page need to communicate in one sentence" — you're not ready to design.
+
+Most briefs skip this entirely.
+
+6/
+Construct second.
+
+Map the buyer's decision journey. Then check if the page layout follows that map.
+
+Most pages don't. They follow designer preference or template defaults.
+
+7/
+Convert last.
+
+Give the page one job. One CTA that everything else points toward.
+
+Remove anything that doesn't serve that job.
+
+Then open Figma.
+
+Follow @koolestpro for Shopify CRO & UX breakdowns every week.</div>
+  </div>
+
+  <div id="tab-x-singles" class="tab-panel">
+    <div class="post-label">X · SINGLES ×3</div>
+    <button class="copy-btn" onclick="copyPost('copy-x-singles')">Copy</button>
+    <div class="tw-var">Variation 1 — The Rule</div>
+    <div class="tw-block"><div class="tw-text" id="copy-x-singles">Design is not the conversion strategy. Design is how the conversion strategy gets built. Run the diagnosis before you touch Figma.</div></div>
+    <div class="tw-var">Variation 2 — The Contrast</div>
+    <div class="tw-block"><div class="tw-text">Most redesigns: Open Figma → make it look better → wonder why conversions didn't move.
+
+Better redesigns: Run the 3C audit → define the page's job → open Figma with a brief.
+
+One approach guesses. One answers.</div></div>
+    <div class="tw-var">Variation 3 — The Hot Take</div>
+    <div class="tw-block"><div class="tw-text">Unpopular opinion: most Shopify CRO advice is just "make it pretty."
+
+Real CRO starts with: what is this page's one job? And is every element serving that job?
+
+Aesthetics is the output. Strategy is the input. Most skip the input entirely.</div></div>
+  </div>
+
+  <div id="tab-ig" class="tab-panel">
+    <div class="post-label">INSTAGRAM · CAPTION</div>
+    <button class="copy-btn" onclick="copyPost('copy-ig')">Copy</button>
+    <div class="post-content" id="copy-ig">73% of redesigns don't lift conversions — because strategy was skipped.
+
+Before you open Figma, run The Conversion Layer:
+→ Clarify what the page needs to communicate
+→ Construct the buyer journey
+→ Convert with one clear job
+
+That's the 3C Framework. 15 minutes. Saves weeks.
+
+Save this. Follow @koolestpro for Shopify CRO tips that actually move the needle.
+
+#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign #DigitalMarketing #ShopifyLiquid #ConversionRateOptimization #ShopifyCRO #EcommerceMarketing #ProductPageDesign #ShopifyTips #DesignStrategy #UXStrategy #EcommerceDesign #ShopifyStore #OnlineStore #WebConversion #DigitalCommerce #FreelanceDesigner #ShopifyExpert #DesignThinking #ProductDesign #EcommerceTips #MarketingStrategy #UserExperience #BuildingInPublic</div>
+  </div>
+
+</div><!-- /posts-shell -->
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 4 — EXPORT TO COWORK
+═══════════════════════════════════════════════════════════ -->
+<div class="page-section">
+  <div class="section-label">04 &nbsp;Export to Cowork</div>
+</div>
+
+<div style="max-width:600px;margin:0 auto;padding:0 20px 60px;">
+<div style="width:540px;background:#0d0d0d;border-radius:14px;border:1px solid rgba(255,255,255,0.055);padding:22px 24px;">
+  <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF9500;margin-bottom:8px;">SYNC TO CONTENT SYSTEM</div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:18px;">Exports this post's metadata as JSON for ingestion into the central content system. No Notion. Local pipeline only.</div>
+  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:14px 16px;margin-bottom:16px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.45);line-height:1.9;">
+    <span style="color:#FF9500;">type</span> → Tip<br>
+    <span style="color:#FF9500;">day</span> → Monday<br>
+    <span style="color:#FF9500;">slug</span> → the-conversion-layer-before-you-touch-design<br>
+    <span style="color:#FF9500;">status</span> → Created<br>
+    <span style="color:#FF9500;">folder</span> → outputs/tips/the-conversion-layer-before-you-touch-design_2026-04-28.html
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button class="btn-export" onclick="exportPostData()">↗ Export to Cowork</button>
+    <span id="export-status" style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);"></span>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script>
+// ─── CAROUSEL ─────────────────────────────────────────────────────────────────
+const track = document.getElementById('track');
+const vp = document.getElementById('viewport');
+const dotsEl = document.getElementById('dots');
+const pager = document.getElementById('pager');
+const TOTAL = 8, W = 540;
+let cur = 0, startX = 0, dragging = false;
+
+for (let i = 0; i < TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsEl.appendChild(d);
+}
+
+function goTo(i) {
+  cur = Math.max(0, Math.min(TOTAL - 1, i));
+  track.style.transform = `translateX(${-cur * W}px)`;
+  document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === cur));
+  pager.textContent = `Slide ${cur + 1} of ${TOTAL}`;
+}
+
+vp.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; track.style.transition = 'none'; });
+vp.addEventListener('touchstart', e => { dragging = true; startX = e.touches[0].clientX; track.style.transition = 'none'; }, { passive: true });
+vp.addEventListener('mousemove', e => { if (!dragging) return; track.style.transform = `translateX(${-cur * W + e.clientX - startX}px)`; });
+vp.addEventListener('touchmove', e => { if (!dragging) return; track.style.transform = `translateX(${-cur * W + e.touches[0].clientX - startX}px)`; }, { passive: true });
+const endDrag = ex => {
+  if (!dragging) return;
+  dragging = false;
+  track.style.transition = 'transform .32s cubic-bezier(.4,0,.2,1)';
+  const dx = ex - startX;
+  if (dx < -50) goTo(cur + 1);
+  else if (dx > 50) goTo(cur - 1);
+  else goTo(cur);
+};
+vp.addEventListener('mouseup', e => endDrag(e.clientX));
+vp.addEventListener('mouseleave', e => endDrag(e.clientX));
+vp.addEventListener('touchend', e => endDrag(e.changedTouches[0].clientX));
+
+// ─── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function copyPost(id) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+    const btn = el.previousElementSibling;
+    if (btn && btn.classList.contains('copy-btn')) {
+      const o = btn.textContent; btn.textContent = '✓ Copied';
+      setTimeout(() => btn.textContent = o, 2000);
+    }
+  });
+}
+
+// ─── SLIDE CAPTURE — direct element capture (no viewport tricks needed) ────────
+async function captureSlide(i) {
+  const slides = document.querySelectorAll('.slide');
+  const target = slides[i];
+
+  // Pre-inline local images as data URLs so html2canvas never re-fetches them
+  // with CORS headers (local file:// assets have no CORS headers → blank image)
+  const imgs = [...target.querySelectorAll('img[src]')];
+  const restores = [];
+  for (const img of imgs) {
+    if (img.src.startsWith('data:') || img.src.startsWith('blob:')) continue;
+    try {
+      const resp = await fetch(img.src);
+      const blob = await resp.blob();
+      const dataURL = await new Promise(res => {
+        const fr = new FileReader(); fr.onload = () => res(fr.result); fr.readAsDataURL(blob);
+      });
+      restores.push({ img, orig: img.src });
+      img.src = dataURL;
+      await new Promise(r => img.complete ? r() : img.addEventListener('load', r, {once:true}));
+    } catch(e) {
+      // fetch blocked (e.g. strict file:// policy) — hide during capture, restore after
+      restores.push({ img, orig: img.src, hidden: true });
+      img.style.opacity = '0';
+    }
+  }
+
+  await document.fonts.ready;
+  await new Promise(r => setTimeout(r, 300));
+  const canvas = await html2canvas(target, {
+    scale: 4,
+    useCORS: false,
+    backgroundColor: '#080808'
+  });
+
+  // Restore all images
+  for (const r of restores) {
+    r.img.src = r.orig;
+    if (r.hidden) r.img.style.opacity = '';
+  }
+
+  const out = document.createElement('canvas');
+  out.width = 1080; out.height = 1080;
+  out.getContext('2d').drawImage(canvas, 0, 0, 1080, 1080);
+  return out;
+}
+
+// ─── CAROUSEL DOWNLOAD BUTTONS (auto-built) ────────────────────────────────────
+(function () {
+  const p = document.getElementById('dl-buttons');
+
+  for (let i = 0; i < TOTAL; i++) {
+    const b = document.createElement('button');
+    b.textContent = `↓ ${i + 1}`; b.className = 'btn-g';
+    b.style.cssText = 'padding:6px 10px;font-size:10px;';
+    b.onclick = async () => {
+      const o = b.textContent; b.textContent = '…';
+      const c = await captureSlide(i);
+      const a = document.createElement('a');
+      a.download = `koolestpro_tip_slide_${String(i + 1).padStart(2, '0')}.png`;
+      a.href = c.toDataURL('image/png'); a.click();
+      b.textContent = o;
+    };
+    p.appendChild(b);
+  }
+
+  const sep = document.createElement('div');
+  sep.style.cssText = 'width:100%;height:1px;background:rgba(255,255,255,0.05);margin:8px 0;';
+  p.appendChild(sep);
+
+  const allB = document.createElement('button');
+  allB.textContent = '↓ All Slides'; allB.className = 'btn-g'; allB.style.fontWeight = '700';
+  allB.onclick = async () => {
+    const o = allB.textContent; allB.textContent = 'Downloading…'; allB.disabled = true;
+    for (let i = 0; i < TOTAL; i++) {
+      const c = await captureSlide(i);
+      const a = document.createElement('a');
+      a.download = `koolestpro_tip_slide_${String(i + 1).padStart(2, '0')}.png`;
+      a.href = c.toDataURL('image/png'); a.click();
+      await new Promise(r => setTimeout(r, 700));
+    }
+    allB.textContent = '✓ Done'; allB.disabled = false;
+    setTimeout(() => allB.textContent = o, 2500);
+  };
+  p.appendChild(allB);
+
+  const pdfB = document.createElement('button');
+  pdfB.textContent = '↓ PDF'; pdfB.className = 'btn-grad';
+  pdfB.onclick = async () => {
+    const o = pdfB.textContent; pdfB.textContent = 'Building…'; pdfB.disabled = true;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [1080, 1080] });
+    for (let i = 0; i < TOTAL; i++) {
+      if (i > 0) doc.addPage([1080, 1080], 'portrait');
+      const c = await captureSlide(i);
+      doc.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, 1080, 1080);
+      pdfB.textContent = `PDF ${i + 1}/${TOTAL}`;
+      await new Promise(r => setTimeout(r, 200));
+    }
+    doc.save('koolestpro_tip_the-conversion-layer.pdf');
+    pdfB.textContent = '✓ Ready'; pdfB.disabled = false;
+    setTimeout(() => pdfB.textContent = o, 3000);
+  };
+  p.appendChild(pdfB);
+})();
+
+// ─── GRAPHIC CARD DOWNLOADS ────────────────────────────────────────────────────
+async function dlCard(id, filename) {
+  const card = document.getElementById(id);
+  await document.fonts.ready;
+
+  // 4× oversample then downsample to 1080px — same sharpness as carousel
+  const raw = await html2canvas(card, {
+    scale: 4,
+    useCORS: true,
+    allowTaint: true,
+    width: 540,
+    height: 540,
+    backgroundColor: '#080808',
+    logging: false,
+    imageTimeout: 8000
+  });
+
+  const out = document.createElement('canvas');
+  out.width = 1080; out.height = 1080;
+  const ctx = out.getContext('2d');
+  ctx.drawImage(canvas, 0, 0, 1080, 1080);
+
+  const a = document.createElement('a');
+  a.href = out.toDataURL('image/png');
+  a.download = filename + '.png'; a.click();
+}
+
+async function dlCardPDF(id, filename) {
+  const card = document.getElementById(id);
+  await document.fonts.ready;
+
+  const raw = await html2canvas(card, {
+    scale: 4,
+    useCORS: true,
+    allowTaint: true,
+    width: 540,
+    height: 540,
+    backgroundColor: '#080808',
+    logging: false,
+    imageTimeout: 8000
+  });
+
+  const out = document.createElement('canvas');
+  out.width = 1080; out.height = 1080;
+  const ctx = out.getContext('2d');
+  ctx.drawImage(canvas, 0, 0, 1080, 1080);
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [1080, 1080] });
+  doc.addImage(out.toDataURL('image/png'), 'PNG', 0, 0, 1080, 1080);
+  doc.save(filename + '.pdf');
+}
+
+// ─── POST METADATA + EXPORT ────────────────────────────────────────────────────
+// ❌ NO NOTION — local pipeline only
+const POST_META = {
+  id:        "tip-the-conversion-layer-" + Date.now(),
+  type:      "Tip",
+  title:     "The Conversion Layer: Before You Touch Design",
+  slug:      "the-conversion-layer-before-you-touch-design",
+  status:    "Created",
+  day:       "Monday",
+  created:   new Date().toISOString(),
+  folder:    "outputs/tips/the-conversion-layer-before-you-touch-design_2026-04-28.html",
+  week:      "Week of Apr 27",
+  month:     "April 2026",
+  monthSlug: "2026-04"
+};
+
+function exportPostData() {
+  const statusEl = document.getElementById('export-status');
+  console.log("EXPORT_POST_JSON", JSON.stringify(POST_META, null, 2));
+  const blob = new Blob([JSON.stringify(POST_META, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = POST_META.slug + '.json'; a.click();
+  if (statusEl) {
+    statusEl.textContent = '✓ Exported';
+    setTimeout(() => statusEl.textContent = '', 3000);
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Koolestpro — Brand Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       KOOLESTPRO DESIGN TOKENS — SOURCE OF TRUTH
+       Upload this file to Claude Design as brand system reference
+    ═══════════════════════════════════════════════════════════ */
+
+    :root {
+      /* ── Brand Gradient ── */
+      --gradient-brand:      linear-gradient(90deg,  #FF9500 0%, #E040A0 50%, #7B2FBE 100%);
+      --gradient-brand-135:  linear-gradient(135deg, #FF9500 0%, #E040A0 50%, #7B2FBE 100%);
+      --gradient-brand-45:   linear-gradient(45deg,  #FF9500 0%, #E040A0 50%, #7B2FBE 100%);
+
+      /* ── Brand Colors ── */
+      --color-orange:   #FF9500;
+      --color-magenta:  #E040A0;
+      --color-purple:   #7B2FBE;
+
+      /* ── Backgrounds ── */
+      --bg-primary:         #0a0a0a;
+      --bg-secondary:       #111111;
+      --bg-tertiary:        #161616;
+      --bg-surface:         rgba(255,255,255,0.04);
+      --bg-surface-hover:   rgba(255,255,255,0.07);
+      --bg-border:          rgba(255,255,255,0.08);
+      --bg-border-accent:   rgba(255,149,0,0.20);
+      --bg-border-strong:   rgba(255,255,255,0.12);
+
+      /* ── Text ── */
+      --text-primary:    #ffffff;
+      --text-secondary:  rgba(255,255,255,0.60);
+      --text-muted:      rgba(255,255,255,0.35);
+      --text-label:      rgba(255,255,255,0.45);
+
+      /* ── Spacing Scale (8px base) ── */
+      --sp-1:   4px;
+      --sp-2:   8px;
+      --sp-3:   12px;
+      --sp-4:   16px;
+      --sp-5:   20px;
+      --sp-6:   24px;
+      --sp-8:   32px;
+      --sp-10:  40px;
+      --sp-12:  48px;
+      --sp-16:  64px;
+      --sp-20:  80px;
+
+      /* ── Border Radius ── */
+      --r-sm:   4px;
+      --r-md:   8px;
+      --r-lg:   12px;
+      --r-xl:   16px;
+      --r-2xl:  24px;
+      --r-full: 9999px;
+
+      /* ── Fonts ── */
+      --font-display: 'Syne', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+
+      /* ── Type Scale ── */
+      --text-stat:   104px;
+      --text-h1:      58px;
+      --text-h2:      40px;
+      --text-h3:      28px;
+      --text-h4:      22px;
+      --text-body:    15px;
+      --text-sm:      13px;
+      --text-xs:      11px;
+      --text-label:    9px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-mono);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 var(--sp-8); }
+
+    section { padding: var(--sp-20) 0; border-bottom: 1px solid var(--bg-border); }
+    section:last-child { border-bottom: none; }
+
+    /* ── Section Labels ── */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--color-orange);
+      margin-bottom: var(--sp-4);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: var(--sp-4);
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: var(--sp-10);
+    }
+
+    /* ── Gradient Utilities ── */
+    .grad-text {
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .grad-bar {
+      height: 3px;
+      background: var(--gradient-brand);
+      border-radius: var(--r-full);
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--bg-border);
+      border-radius: var(--r-lg);
+      padding: var(--sp-6);
+    }
+
+    .card-accent {
+      background: var(--bg-surface);
+      border: 1px solid var(--bg-border-accent);
+      border-radius: var(--r-lg);
+      padding: var(--sp-6);
+    }
+
+    /* ── Grid ── */
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-4); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-4); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--sp-4); }
+
+    @media (max-width: 700px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--bg-border);
+      padding: var(--sp-4) var(--sp-8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 800;
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--sp-6);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--color-orange); }
+
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAV
+══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-brand">KOOLESTPRO</div>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#type">Type</a></li>
+    <li><a href="#gradients">Gradients</a></li>
+    <li><a href="#components">Components</a></li>
+    <li><a href="#patterns">Patterns</a></li>
+    <li><a href="#carousel">Carousel</a></li>
+    <li><a href="#voice">Voice</a></li>
+    <li><a href="#workflow">Workflow</a></li>
+  </ul>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     COVER
+══════════════════════════════════════════ -->
+<section id="cover" style="padding: 120px 0 80px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+  <div class="page">
+    <div style="display:flex;align-items:flex-start;gap:80px;flex-wrap:wrap;">
+
+      <!-- Left: Identity -->
+      <div style="flex:1;min-width:300px;">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--color-orange);margin-bottom:var(--sp-5);">Brand Design System · v1.0</div>
+
+        <h1 style="font-family:var(--font-display);font-size:80px;font-weight:800;letter-spacing:-4px;line-height:0.95;margin-bottom:var(--sp-6);">
+          <span style="background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">KOOLEST</span><br>
+          <span style="color:var(--text-primary);">PRO</span>
+        </h1>
+
+        <div style="font-family:var(--font-mono);font-size:13px;color:var(--text-secondary);line-height:1.7;max-width:400px;margin-bottom:var(--sp-8);">
+          CRO specialist for eCommerce brands. This document is the single source of truth for the Koolestpro visual identity — colors, typography, gradients, components, and carousel templates.
+        </div>
+
+        <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;">
+          <span style="background:rgba(255,149,0,0.12);border:1px solid rgba(255,149,0,0.25);color:var(--color-orange);font-family:var(--font-mono);font-size:10px;letter-spacing:1px;padding:6px 14px;border-radius:var(--r-full);">@koolestpro</span>
+          <span style="background:var(--bg-surface);border:1px solid var(--bg-border);color:var(--text-secondary);font-family:var(--font-mono);font-size:10px;letter-spacing:1px;padding:6px 14px;border-radius:var(--r-full);">Ridwan Adekunle</span>
+          <span style="background:var(--bg-surface);border:1px solid var(--bg-border);color:var(--text-secondary);font-family:var(--font-mono);font-size:10px;letter-spacing:1px;padding:6px 14px;border-radius:var(--r-full);">CRO · LinkedIn · Instagram</span>
+        </div>
+      </div>
+
+      <!-- Right: Brand Values -->
+      <div style="flex:0 0 280px;">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Brand Pillars</div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-2);">
+          <div class="card-accent" style="padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-display);font-size:16px;font-weight:800;">Bold</div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:2px;">Make the claim. Show the evidence.</div>
+          </div>
+          <div class="card-accent" style="padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-display);font-size:16px;font-weight:800;">Direct</div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:2px;">Say what changed and why it matters.</div>
+          </div>
+          <div class="card-accent" style="padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-display);font-size:16px;font-weight:800;">Data-Driven</div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:2px;">Use numbers when evidence exists. Avoid empty adjectives.</div>
+          </div>
+          <div class="card-accent" style="padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-display);font-size:16px;font-weight:800;">Human</div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:2px;">Show the work. Speak plainly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gradient Rule -->
+    <div class="grad-bar" style="margin-top:var(--sp-12);"></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     01 — COLOR SYSTEM
+══════════════════════════════════════════ -->
+<section id="colors">
+  <div class="page">
+    <div class="section-label">01 — Color System</div>
+    <h2 class="section-title">The Palette</h2>
+    <p class="section-desc">Three brand colors form one gradient. Used consistently across every surface — from slide accents to CTA buttons to stat numbers.</p>
+
+    <!-- Brand Gradient -->
+    <div style="margin-bottom:var(--sp-8);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Primary Brand Gradient</div>
+      <div style="height:80px;background:var(--gradient-brand);border-radius:var(--r-lg);display:flex;align-items:center;padding:0 var(--sp-6);justify-content:space-between;">
+        <span style="font-family:var(--font-mono);font-size:10px;color:rgba(0,0,0,0.7);font-weight:500;">#FF9500 → #E040A0 → #7B2FBE</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:rgba(0,0,0,0.7);">linear-gradient(90deg)</span>
+      </div>
+    </div>
+
+    <!-- Brand Colors -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Brand Colors</div>
+      <div class="grid-3">
+        <div style="border-radius:var(--r-lg);overflow:hidden;">
+          <div style="height:100px;background:#FF9500;"></div>
+          <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-top:none;padding:var(--sp-4);">
+            <div style="font-family:var(--font-display);font-weight:800;font-size:14px;color:#FF9500;">Orange</div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:2px;">#FF9500</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:4px;">Energy · CTAs · Highlights</div>
+          </div>
+        </div>
+        <div style="border-radius:var(--r-lg);overflow:hidden;">
+          <div style="height:100px;background:#E040A0;"></div>
+          <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-top:none;padding:var(--sp-4);">
+            <div style="font-family:var(--font-display);font-weight:800;font-size:14px;color:#E040A0;">Magenta</div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:2px;">#E040A0</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:4px;">Mid-tone · Depth · Warmth</div>
+          </div>
+        </div>
+        <div style="border-radius:var(--r-lg);overflow:hidden;">
+          <div style="height:100px;background:#7B2FBE;"></div>
+          <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-top:none;padding:var(--sp-4);">
+            <div style="font-family:var(--font-display);font-weight:800;font-size:14px;color:#7B2FBE;">Purple</div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:2px;">#7B2FBE</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:4px;">Premium · Authority · Depth</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Colors -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Backgrounds</div>
+      <div class="grid-4">
+        <div style="border-radius:var(--r-lg);overflow:hidden;">
+          <div style="height:60px;background:#0a0a0a;border:1px solid rgba(255,255,255,0.08);border-bottom:none;border-radius:var(--r-lg) var(--r-lg) 0 0;"></div>
+          <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-top:none;padding:var(--sp-3) var(--sp-4);">
+            <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;">Primary</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">#0a0a0a</div>
+          </div>
+        </div>
+        <div style="border-radius:var(--r-lg);overflow:hidden;">
+          <div style="height:60px;background:#111111;border:1px solid rgba(255,255,255,0.08);border-bottom:none;border-radius:var(--r-lg) var(--r-lg) 0 0;"></div>
+          <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-top:none;padding:var(--sp-3) var(--sp-4);">
+            <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;">Secondary</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">#111111</div>
+          </div>
+        </div>
+        <div style="border-radius:var(--r-lg);overflow:hidden;">
+          <div style="height:60px;background:#161616;border:1px solid rgba(255,255,255,0.08);border-bottom:none;border-radius:var(--r-lg) var(--r-lg) 0 0;"></div>
+          <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-top:none;padding:var(--sp-3) var(--sp-4);">
+            <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;">Tertiary</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">#161616</div>
+          </div>
+        </div>
+        <div style="border-radius:var(--r-lg);overflow:hidden;">
+          <div style="height:60px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-bottom:none;border-radius:var(--r-lg) var(--r-lg) 0 0;"></div>
+          <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-top:none;padding:var(--sp-3) var(--sp-4);">
+            <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;">Surface</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">rgba(255,255,255,0.04)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text Colors -->
+    <div>
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Text Hierarchy</div>
+      <div style="display:flex;flex-direction:column;gap:var(--sp-2);">
+        <div class="card" style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#ffffff;">Primary — #ffffff</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Headlines · Key data</span>
+        </div>
+        <div class="card" style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:var(--font-mono);font-size:15px;color:rgba(255,255,255,0.60);">Secondary — rgba(255,255,255,0.60)</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Body copy · Descriptions</span>
+        </div>
+        <div class="card" style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:var(--font-mono);font-size:15px;color:rgba(255,255,255,0.45);">Label — rgba(255,255,255,0.45)</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Captions · Metadata</span>
+        </div>
+        <div class="card" style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:var(--font-mono);font-size:15px;color:rgba(255,255,255,0.35);">Muted — rgba(255,255,255,0.35)</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Disabled · Decorative</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     02 — TYPOGRAPHY
+══════════════════════════════════════════ -->
+<section id="type">
+  <div class="page">
+    <div class="section-label">02 — Typography</div>
+    <h2 class="section-title">Type System</h2>
+    <p class="section-desc">Syne is for headlines. DM Mono is for labels and supporting copy. The contrast keeps the hierarchy clear.</p>
+
+    <!-- Syne Specimens -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-6);">Syne — Display & Headlines</div>
+
+      <div class="card" style="padding:var(--sp-10);margin-bottom:var(--sp-4);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Stat / Hero — 104px · weight 800 · tracking -4px</div>
+        <div style="font-family:'Syne',sans-serif;font-size:clamp(48px,8vw,104px);font-weight:800;letter-spacing:-4px;line-height:1;color:#ffffff;">[x%]</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:var(--sp-3);">Use for source-backed stats and verified conversion numbers on carousel slides.</div>
+      </div>
+
+      <div class="card" style="padding:var(--sp-8);margin-bottom:var(--sp-4);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Slide H1 / Cover Hook — 38–42px · weight 800 · tracking -2px · line-height 1.1</div>
+              <div style="font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-2px;line-height:1.1;color:#ffffff;">Your ad traffic<br>has <span style="color:#FF9500;">four audience groups.</span></div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:var(--sp-3);">Used for: Carousel cover headlines. 3–5 lines ideal. Key phrase in solid accent color or gradient.</div>
+      </div>
+
+      <div class="card" style="padding:var(--sp-8);margin-bottom:var(--sp-4);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Slide H2 / Content Headline — 30–36px · weight 800 · tracking -1.5px</div>
+        <div style="font-family:'Syne',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:800;letter-spacing:-1.5px;line-height:1.14;color:#ffffff;">One funnel.<br>Four different<br>people.</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:var(--sp-3);">Used for: Content/problem/insight slides. Slightly smaller than cover — still dominant on the slide.</div>
+      </div>
+
+      <div class="card" style="padding:var(--sp-6);margin-bottom:var(--sp-4);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Slide H3 / Key Statement — 26–30px · weight 800</div>
+        <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.2;color:#ffffff;">Sending cold traffic<br>straight to your product page.</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:var(--sp-3);">Used for: Rule slides, quote punchlines, mistake callouts. Often paired with a large decorative accent.</div>
+      </div>
+
+      <div class="card" style="padding:var(--sp-5);margin-bottom:var(--sp-4);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Slide Body — 15–16px · DM Mono · line-height 1.65–1.7 · color 45–55% white</div>
+            <div style="font-family:'DM Mono',monospace;font-size:15px;color:rgba(255,255,255,0.5);line-height:1.7;">Cold visitors need context. Returning visitors need a reason to come back. One product page will not persuade both groups in the same way.</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:var(--sp-3);">⚠️ Keep slide body text at 15–16px or larger so it remains readable at a glance.</div>
+      </div>
+
+      <div class="card" style="padding:var(--sp-5);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">CTA Label / Handle — 22px · weight 700 (Syne) or 18px weight 700 (supporting)</div>
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;line-height:1.3;color:#ffffff;">Which funnel are you running right now?</div>
+      </div>
+    </div>
+
+    <!-- DM Mono Specimens -->
+    <div>
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-6);">DM Mono — Labels, Body & UI</div>
+      <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+        <div class="card" style="padding:var(--sp-5);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Body — 15px · weight 400</div>
+          <div style="font-family:'DM Mono',monospace;font-size:15px;color:rgba(255,255,255,0.60);line-height:1.7;">A common mistake is redesigning before testing. Another is adding features when the real problem is friction. Diagnose the page before changing it.</div>
+        </div>
+        <div class="card" style="padding:var(--sp-5);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Label / Caption — 9–11px · weight 500 · ALL CAPS · tracking 2–3px</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--color-orange);">CRO Breakdown · Week 12</div>
+        </div>
+        <div class="card" style="padding:var(--sp-5);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Code / Data — 11–13px · italic for callouts</div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-style:italic;color:rgba(255,255,255,0.45);">// Before: [verified CVR] → After: [verified CVR]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     03 — GRADIENT SYSTEM
+══════════════════════════════════════════ -->
+<section id="gradients">
+  <div class="page">
+    <div class="section-label">03 — Gradient System</div>
+    <h2 class="section-title">Gradients</h2>
+    <p class="section-desc">The orange, magenta, and purple gradient is a core brand element. Use the same three stops on text, backgrounds, borders, and UI accents.</p>
+
+    <!-- Gradient on Text (Claude Design supports this natively) -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Gradient Text — Hero Numbers & Highlighted Words</div>
+
+      <div class="card" style="padding:var(--sp-10);text-align:center;margin-bottom:var(--sp-4);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-6);">Stat Number with Gradient</div>
+        <div style="font-family:'Syne',sans-serif;font-size:clamp(60px,10vw,120px);font-weight:800;letter-spacing:-4px;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">[x%]</div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.45);margin-top:var(--sp-4);">Verified conversion-rate change</div>
+      </div>
+
+      <div class="card" style="padding:var(--sp-8);margin-bottom:var(--sp-4);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Gradient Word Highlight in Headline</div>
+        <div style="font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;">
+          Diagnose the page before you <span style="background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">redesign it.</span>
+        </div>
+      </div>
+
+      <div class="card" style="padding:var(--sp-8);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Quote Mark Gradient</div>
+        <div style="font-family:'Syne',sans-serif;font-size:80px;font-weight:800;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:0.8;margin-bottom:var(--sp-4);">"</div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#ffffff;line-height:1.4;">Start with the product page.<br>Then test the checkout.</div>
+      </div>
+    </div>
+
+    <!-- Gradient on Backgrounds -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Gradient Backgrounds & Borders</div>
+      <div class="grid-3" style="gap:var(--sp-4);">
+
+        <!-- Gradient button -->
+        <div class="card" style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-4);padding:var(--sp-8);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);">CTA Button</div>
+          <button style="background:var(--gradient-brand);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;padding:14px 28px;border:none;border-radius:var(--r-md);cursor:pointer;letter-spacing:0.5px;">Get the CRO Fix →</button>
+        </div>
+
+        <!-- Gradient border card -->
+        <div class="card" style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-4);padding:var(--sp-8);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);">Gradient Border Card</div>
+          <div style="padding:2px;background:var(--gradient-brand);border-radius:var(--r-lg);">
+            <div style="background:#111;border-radius:calc(var(--r-lg) - 2px);padding:var(--sp-4) var(--sp-5);">
+              <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;">CRO Fix</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:4px;">Product Detail Page</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gradient rule bar -->
+        <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sp-4);padding:var(--sp-8);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);">Accent Bar</div>
+          <div style="width:100%;">
+            <div style="height:4px;background:var(--gradient-brand);border-radius:var(--r-full);margin-bottom:var(--sp-3);"></div>
+            <div style="height:2px;background:var(--gradient-brand);border-radius:var(--r-full);opacity:0.4;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glow Effects -->
+    <div>
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Glow Blobs (Background Ambiance)</div>
+      <div style="position:relative;height:200px;border-radius:var(--r-xl);background:var(--bg-secondary);overflow:hidden;border:1px solid var(--bg-border);">
+        <div style="position:absolute;top:-40px;left:-40px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,149,0,0.15),transparent 70%);filter:blur(40px);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-40px;right:-40px;width:300px;height:300px;background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);filter:blur(40px);pointer-events:none;"></div>
+        <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:var(--sp-2);">
+          <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;">Ambient glow effect</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">radial-gradient + filter:blur — used on slide backgrounds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     04 — COMPONENT LIBRARY
+══════════════════════════════════════════ -->
+<section id="components">
+  <div class="page">
+    <div class="section-label">04 — Component Library</div>
+    <h2 class="section-title">UI Components</h2>
+    <p class="section-desc">This section defines the repeating UI elements, from post-type badges to stat cards. Reuse them instead of redrawing them each time.</p>
+
+    <!-- Post Type Badges -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Post Type Badges</div>
+      <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;">
+        <div style="background:rgba(255,149,0,0.12);border:1px solid rgba(255,149,0,0.3);border-radius:var(--r-full);padding:6px 16px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#FF9500;">💡 Tip</div>
+        <div style="background:rgba(224,64,160,0.12);border:1px solid rgba(224,64,160,0.3);border-radius:var(--r-full);padding:6px 16px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#E040A0;">⚡ CRO Fix</div>
+        <div style="background:rgba(123,47,190,0.12);border:1px solid rgba(123,47,190,0.3);border-radius:var(--r-full);padding:6px 16px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#7B2FBE;">📈 Case Study</div>
+        <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-radius:var(--r-full);padding:6px 16px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);">🙋 Personal</div>
+      </div>
+    </div>
+
+    <!-- Stat Card -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Stat Display Cards</div>
+      <div class="grid-3">
+        <div class="card-accent" style="padding:var(--sp-8);text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:60px;font-weight:800;letter-spacing:-3px;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">[x%]</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.45);margin-top:var(--sp-3);letter-spacing:1px;text-transform:uppercase;">Verified CVR change</div>
+        </div>
+        <div class="card-accent" style="padding:var(--sp-8);text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:60px;font-weight:800;letter-spacing:-3px;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">[x×]</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.45);margin-top:var(--sp-3);letter-spacing:1px;text-transform:uppercase;">Verified revenue change</div>
+        </div>
+        <div class="card-accent" style="padding:var(--sp-8);text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:60px;font-weight:800;letter-spacing:-3px;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">[x days]</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.45);margin-top:var(--sp-3);letter-spacing:1px;text-transform:uppercase;">Measured time period</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avatar/Profile Header -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">LinkedIn Profile Header</div>
+      <div class="card" style="padding:var(--sp-5);display:flex;align-items:center;gap:var(--sp-4);">
+        <!-- Avatar with gradient ring -->
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--gradient-brand);padding:2px;flex-shrink:0;">
+          <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;background:#222;">
+            <img src="assets/ridwan/avatar-circle.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentNode.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:800;font-size:16px;color:#fff;\'>R</div>'">
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:800;">Ridwan Adekunle</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.45);margin-top:2px;">@koolestpro · CRO Specialist</div>
+        </div>
+        <div style="margin-left:auto;">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-orange);">Follow</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Before / After -->
+    <div style="margin-bottom:var(--sp-10);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Before / After Comparison</div>
+      <div class="grid-2">
+        <div style="background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:var(--sp-6);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,80,80,0.8);margin-bottom:var(--sp-4);">✕ Before</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:var(--sp-3);">Generic product title</div>
+          <div style="height:60px;background:rgba(255,255,255,0.04);border-radius:var(--r-md);"></div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,80,80,0.6);margin-top:var(--sp-4);">CVR: 0.9%</div>
+        </div>
+        <div style="background:#0d1a0d;border:1px solid rgba(80,200,80,0.15);border-radius:var(--r-lg);padding:var(--sp-6);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(80,200,80,0.8);margin-bottom:var(--sp-4);">✓ After</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:var(--sp-3);">Outcome-led product title</div>
+          <div style="height:60px;background:rgba(80,200,80,0.06);border-radius:var(--r-md);border:1px solid rgba(80,200,80,0.15);"></div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:rgba(80,200,80,0.8);margin-top:var(--sp-4);">CVR: 2.7% · +200%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Numbered List Item -->
+    <div>
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Numbered List Item (Carousel Tips)</div>
+      <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+        <div class="card" style="display:flex;align-items:flex-start;gap:var(--sp-4);padding:var(--sp-5);">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#fff;">01</span>
+          </div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:4px;">Add trust signals above the fold</div>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);">Reviews, badges, UGC — within first scroll. Not buried below the fold.</div>
+          </div>
+        </div>
+        <div class="card" style="display:flex;align-items:flex-start;gap:var(--sp-4);padding:var(--sp-5);">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,149,0,0.12);border:1px solid rgba(255,149,0,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#FF9500;">02</span>
+          </div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:4px;">Lead with outcome, not ingredient</div>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);">Make the outcome clear in the headline.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     04b — SLIDE DESIGN PATTERNS
+══════════════════════════════════════════ -->
+<section id="patterns">
+  <div class="page">
+    <div class="section-label">04b — Slide Design Patterns</div>
+    <h2 class="section-title">Visual Patterns</h2>
+    <p class="section-desc">These patterns repeat across slides. Each one is a deliberate choice — not decoration. Use them to add depth, hierarchy, and visual interest without breaking the brand system.</p>
+
+    <div style="display:flex;flex-direction:column;gap:var(--sp-6);">
+
+      <!-- Dot Grid -->
+      <div class="card" style="overflow:hidden;padding:0;">
+        <div style="padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);">Pattern A — Dot Grid Background</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);padding:var(--sp-6);align-items:center;">
+          <div style="height:160px;border-radius:var(--r-lg);background:#080808;background-image:radial-gradient(rgba(255,255,255,0.025) 1px,transparent 1px);background-size:24px 24px;position:relative;">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;text-align:center;">Content sits here<br><span style="color:#FF9500;">on top of the grid</span></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.8;margin-bottom:var(--sp-4);">Adds quiet depth to dark backgrounds without competing with content. Use on cover, problem, and quote slides.</div>
+            <code style="font-family:var(--font-mono);font-size:10px;color:var(--color-orange);display:block;line-height:1.8;">background-image: radial-gradient(<br>&nbsp;&nbsp;rgba(255,255,255,0.02) 1px,<br>&nbsp;&nbsp;transparent 1px);<br>background-size: 24px 24px;</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Watermark Number -->
+      <div class="card" style="overflow:hidden;padding:0;">
+        <div style="padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);">Pattern B — Watermark Accent Number</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);padding:var(--sp-6);align-items:center;">
+          <div style="height:160px;border-radius:var(--r-lg);background:#060606;position:relative;overflow:hidden;">
+            <div style="position:absolute;right:16px;top:12px;font-family:'Syne',sans-serif;font-weight:800;font-size:100px;line-height:1;color:rgba(255,149,0,0.07);user-select:none;pointer-events:none;">03</div>
+            <div style="position:relative;z-index:1;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;">
+              <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;">Slide content here</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.8;margin-bottom:var(--sp-4);">Top-right corner. 80–100px Syne 800. 4–8% opacity of the slide's accent color. Signals sequence without being a navigation element. Appears on concept/content slides (3–6 in a series).</div>
+            <code style="font-family:var(--font-mono);font-size:10px;color:var(--color-orange);display:block;line-height:1.8;">position: absolute;<br>right: 28px; top: 28px;<br>font-size: 80px; font-weight: 800;<br>color: rgba(accentColor, 0.08);</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decorative Large Symbol -->
+      <div class="card" style="overflow:hidden;padding:0;">
+        <div style="padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);">Pattern C — Decorative Background Symbol</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);padding:var(--sp-6);align-items:center;">
+          <div style="height:160px;border-radius:var(--r-lg);background:#070404;position:relative;overflow:hidden;">
+            <div style="position:absolute;right:-20px;bottom:-10px;font-family:'Syne',sans-serif;font-size:200px;font-weight:800;color:rgba(239,68,68,0.05);line-height:1;user-select:none;pointer-events:none;">✕</div>
+            <div style="position:relative;z-index:1;padding:24px;">
+              <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;line-height:1.3;">Sending cold traffic<br>straight to PDP.</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.8;margin-bottom:var(--sp-4);">Full-bleed background symbol — ✕ for mistakes, " for quotes, numbers for frameworks. 200–320px, 4–6% opacity. Anchored to a corner. Reinforces the slide's message without cluttering it.</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Common symbols: ✕ · " · 01 · → · ↑</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Color-Coded Accent Slides -->
+      <div class="card" style="overflow:hidden;padding:0;">
+        <div style="padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);">Pattern D — Contextual Color Accent Slides</div>
+        </div>
+        <div style="padding:var(--sp-6);">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.8;margin-bottom:var(--sp-5);">When a carousel walks through a multi-part framework, each concept slide can have its own accent color. The slide's top bar, glow, watermark number, funnel chips, and label all use that accent. This signals to the reader that each slide is a distinct step — not a repetition.</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-3);">
+            <div style="border-radius:var(--r-lg);overflow:hidden;">
+              <div style="height:6px;background:linear-gradient(to right,#1d4ed8,#3b82f6);"></div>
+              <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-top:none;padding:var(--sp-3);">
+                <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:#3b82f6;font-weight:700;text-transform:uppercase;margin-bottom:4px;">Blue</div>
+                <div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.45);">Cold · Unaware · Problem</div>
+              </div>
+            </div>
+            <div style="border-radius:var(--r-lg);overflow:hidden;">
+              <div style="height:6px;background:linear-gradient(to right,#15803d,#22c55e);"></div>
+              <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-top:none;padding:var(--sp-3);">
+                <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:#22c55e;font-weight:700;text-transform:uppercase;margin-bottom:4px;">Green</div>
+                <div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.45);">Warm · Growth · Positive</div>
+              </div>
+            </div>
+            <div style="border-radius:var(--r-lg);overflow:hidden;">
+              <div style="height:6px;background:linear-gradient(to right,#c2410c,#FF9500);"></div>
+              <div style="background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.2);border-top:none;padding:var(--sp-3);">
+                <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:#FF9500;font-weight:700;text-transform:uppercase;margin-bottom:4px;">Orange</div>
+                <div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.45);">Brand · CTA · Energy</div>
+              </div>
+            </div>
+            <div style="border-radius:var(--r-lg);overflow:hidden;">
+              <div style="height:6px;background:linear-gradient(to right,#7B2FBE,#E040A0);"></div>
+              <div style="background:rgba(224,64,160,0.08);border:1px solid rgba(224,64,160,0.2);border-top:none;padding:var(--sp-3);">
+                <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:#E040A0;font-weight:700;text-transform:uppercase;margin-bottom:4px;">Magenta</div>
+                <div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.45);">Hot · Most Aware · CTA</div>
+              </div>
+            </div>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:var(--sp-3);">Rule: Cover + CTA slides ALWAYS use the brand gradient. Only middle content slides use contextual accent colors.</div>
+        </div>
+      </div>
+
+      <!-- Funnel Path Chips -->
+      <div class="card" style="overflow:hidden;padding:0;">
+        <div style="padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);">Pattern E — Funnel Path Chip Row</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);padding:var(--sp-6);align-items:center;">
+          <div style="display:flex;flex-direction:column;gap:var(--sp-5);">
+            <div>
+              <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:var(--sp-2);">FUNNEL PATH</div>
+              <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;">
+                <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;padding:6px 10px;border-radius:6px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;">META AD</div>
+                <div style="font-size:13px;padding:0 5px;opacity:0.5;color:#3b82f6;">→</div>
+                <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;padding:6px 10px;border-radius:6px;background:rgba(59,130,246,0.22);border:1px solid rgba(59,130,246,0.4);color:#bfdbfe;">ADVERTORIAL</div>
+                <div style="font-size:13px;padding:0 5px;opacity:0.5;color:#3b82f6;">→</div>
+                <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;padding:6px 10px;border-radius:6px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;">PDP</div>
+                <div style="font-size:13px;padding:0 5px;opacity:0.5;color:#3b82f6;">→</div>
+                <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;padding:6px 10px;border-radius:6px;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.25);color:#7ab8ff;">CHECKOUT</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:var(--sp-2);">FUNNEL PATH</div>
+              <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;">
+                <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;padding:6px 10px;border-radius:6px;background:rgba(255,149,0,0.12);border:1px solid rgba(255,149,0,0.28);color:#fdba74;">META AD</div>
+                <div style="font-size:13px;padding:0 5px;opacity:0.5;color:#FF9500;">→</div>
+                <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;padding:6px 10px;border-radius:6px;background:rgba(255,149,0,0.22);border:1px solid rgba(255,149,0,0.42);color:#fed7aa;">LANDING PAGE</div>
+                <div style="font-size:13px;padding:0 5px;opacity:0.5;color:#FF9500;">→</div>
+                <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;padding:6px 10px;border-radius:6px;background:rgba(255,149,0,0.12);border:1px solid rgba(255,149,0,0.28);color:#fdba74;">CHECKOUT</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.8;">Use to show process sequences, funnel paths, or step flows. Chips use the slide's accent color at 12–22% fill. The "key" step in the path gets a slightly higher opacity. Always labeled in DM Mono 10px all-caps.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     05 — CAROUSEL TEMPLATES
+══════════════════════════════════════════ -->
+<section id="carousel">
+  <div class="page">
+    <div class="section-label">05 — Carousel Templates</div>
+    <h2 class="section-title">Slide System</h2>
+    <p class="section-desc">Each slide type has a base structure. Keep the hierarchy consistent, then adapt the layout when the content requires it.</p>
+
+    <!-- Canvas specs -->
+    <div class="card-accent" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-4);margin-bottom:var(--sp-6);padding:var(--sp-6);">
+      <div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-2);">Canvas Specs</div>
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;">540 × 680 px</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);margin-top:4px;">Portrait · Exported at 2× = 1080×1360px · LinkedIn Document, Instagram Portrait</div>
+      </div>
+      <div style="display:flex;gap:var(--sp-6);">
+        <div style="text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--color-orange);">40px</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:2px;">Slide padding</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--color-orange);">8px</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:2px;">Base grid unit</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--color-orange);">7–10</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:2px;">Slides per post</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flexible Layout Philosophy -->
+    <div style="background:rgba(255,149,0,0.05);border:1px solid rgba(255,149,0,0.15);border-radius:var(--r-lg);padding:var(--sp-5);margin-bottom:var(--sp-8);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);margin-bottom:var(--sp-3);">⚡ Flexible Layout Philosophy</div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);line-height:1.8;">
+        Slides are <strong style="color:#fff;">not locked to a single template.</strong> Each slide's layout is determined by its content type. The brand stays consistent through typography, spacing, and the gradient system — not through rigid structure. A "tips" post may have 4 completely different slide layouts and that is intentional.<br><br>
+        <strong style="color:#fff;">Cover slides</strong> → Big watermark number, headline, gradient rule, swipe indicator<br>
+        <strong style="color:#fff;">Problem slides</strong> → Large decorative symbol, multi-weight headline, divider, body text<br>
+        <strong style="color:#fff;">Concept slides</strong> → Color-coded accent, funnel path chips, explanation card<br>
+        <strong style="color:#fff;">Rule/Quote slides</strong> → Large quote mark, bold claim, accent key phrase<br>
+        <strong style="color:#fff;">CTA slides</strong> → Centered avatar, one question, gradient button<br><br>
+        Content slides may use <strong style="color:#fff;">contextual accent colors</strong> (e.g., blue for cold audience, green for warm) while cover/CTA slides always use the brand gradient.
+      </div>
+    </div>
+
+    <!-- Slide Types Grid -->
+    <div style="display:flex;flex-direction:column;gap:var(--sp-6);">
+
+      <!-- Slide 1: Hook -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="background:rgba(255,149,0,0.06);padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);">Slide 01 — Hook</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Always first · Bold claim · No intro</div>
+        </div>
+        <div style="padding:var(--sp-6);display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center;">
+          <!-- Mock slide -->
+          <div style="aspect-ratio:1;background:#0d0d0d;border-radius:var(--r-lg);padding:32px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;min-height:220px;">
+            <div style="position:absolute;top:-30px;right:-30px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,149,0,0.12),transparent 70%);filter:blur(30px);"></div>
+            <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);">⚡ CRO Fix</div>
+            <div>
+              <div style="height:2px;background:var(--gradient-brand);border-radius:var(--r-full);width:40px;margin-bottom:12px;"></div>
+              <div style="font-family:'Syne',sans-serif;font-size:clamp(18px,2.5vw,26px);font-weight:800;line-height:1.1;color:#fff;">Your PDP is<br>losing you<br><span style="background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">₦3M/month.</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--gradient-brand);padding:1.5px;">
+                <div style="width:100%;height:100%;border-radius:50%;background:#222;"><img src="assets/ridwan/avatar-circle-smile.jpg" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"></div>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.4);">@koolestpro</div>
+            </div>
+          </div>
+          <!-- Structure -->
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Structure</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-2);">
+              <div style="display:flex;gap:var(--sp-3);align-items:center;"><div style="width:28px;height:28px;background:rgba(255,149,0,0.12);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;color:var(--color-orange);flex-shrink:0;">T</div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">Post-type badge (top-left)</div></div>
+              <div style="display:flex;gap:var(--sp-3);align-items:center;"><div style="width:28px;height:28px;background:rgba(255,149,0,0.12);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;color:var(--color-orange);flex-shrink:0;">H</div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">H1 headline with gradient highlight (center)</div></div>
+              <div style="display:flex;gap:var(--sp-3);align-items:center;"><div style="width:28px;height:28px;background:rgba(255,149,0,0.12);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;color:var(--color-orange);flex-shrink:0;">A</div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">Avatar + handle (bottom-left)</div></div>
+              <div style="display:flex;gap:var(--sp-3);align-items:center;"><div style="width:28px;height:28px;background:rgba(255,149,0,0.12);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;color:var(--color-orange);flex-shrink:0;">G</div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">Ambient glow (top-right corner)</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Stat -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="background:rgba(224,64,160,0.06);padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-magenta);">Slide 02 — Big Stat</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">One number · One line of context · Nothing else</div>
+        </div>
+        <div style="padding:var(--sp-6);display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center;">
+          <div style="aspect-ratio:1;background:#0d0d0d;border-radius:var(--r-lg);padding:32px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;min-height:220px;">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(224,64,160,0.1),transparent 70%);"></div>
+            <div style="font-family:'Syne',sans-serif;font-size:clamp(48px,7vw,80px);font-weight:800;letter-spacing:-3px;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;position:relative;">[x%]</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);margin-top:12px;letter-spacing:1px;text-transform:uppercase;position:relative;">[what the verified metric measures]</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Rules</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Number MUST be gradient-filled</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Context line: 1 sentence max, muted color</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Centered layout always</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Radial glow behind the number</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Add only the measure and one line of context</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Content/Tips -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="background:rgba(123,47,190,0.06);padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-purple);">Slide 03 — Tips / List</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Max 3 points · Numbered · Brief bullets</div>
+        </div>
+        <div style="padding:var(--sp-6);display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center;">
+          <div style="aspect-ratio:1;background:#0d0d0d;border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;min-height:220px;">
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:800;margin-bottom:16px;">3 PDP issues to check first</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="display:flex;gap:10px;align-items:flex-start;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;font-weight:500;color:#fff;flex-shrink:0;">1</div>
+                  <div style="font-family:var(--font-mono);font-size:16px;color:rgba(255,255,255,0.6);line-height:1.5;">No trust signal above the fold</div>
+                </div>
+                <div style="display:flex;gap:10px;align-items:flex-start;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;font-weight:500;color:#fff;flex-shrink:0;">2</div>
+                  <div style="font-family:var(--font-mono);font-size:16px;color:rgba(255,255,255,0.6);line-height:1.5;">Headline leads with features, not the outcome</div>
+                </div>
+                <div style="display:flex;gap:10px;align-items:flex-start;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;font-weight:500;color:#fff;flex-shrink:0;">3</div>
+                  <div style="font-family:var(--font-mono);font-size:16px;color:rgba(255,255,255,0.6);line-height:1.5;">CTA buried below the scroll line</div>
+                </div>
+              </div>
+            </div>
+            <div style="height:2px;background:var(--gradient-brand);border-radius:var(--r-full);width:40%;opacity:0.4;"></div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Rules</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Max 3 numbered points per slide</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Gradient-filled number circles</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Bold title (Syne 800) at top</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Body text in DM Mono, muted white, 16px</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Decorative gradient bar at bottom</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: CTA -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="background:rgba(255,149,0,0.06);padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--bg-border);display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);">Slide (Last) — CTA</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Always last · Avatar centered · One action</div>
+        </div>
+        <div style="padding:var(--sp-6);display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center;">
+          <div style="aspect-ratio:1;background:#0d0d0d;border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;min-height:220px;">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(255,149,0,0.08),transparent 65%);"></div>
+            <div style="width:180px;height:180px;border-radius:50%;background:var(--gradient-brand);padding:2px;margin-bottom:14px;position:relative;">
+              <div style="width:100%;height:100%;border-radius:50%;background:#222;overflow:hidden;">
+                <img src="assets/ridwan/avatar-circle-smile.jpg" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+              </div>
+            </div>
+            <div style="font-family:'Syne',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:800;margin-bottom:6px;position:relative;">Ridwan Adekunle</div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.4);margin-bottom:14px;letter-spacing:1px;position:relative;">CRO Specialist · @koolestpro</div>
+            <div style="position:relative;font-family:'Syne',sans-serif;font-size:clamp(12px,1.8vw,16px);font-weight:800;margin-bottom:14px;">Follow for weekly<br>CRO breakdowns</div>
+            <button style="background:var(--gradient-brand);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;padding:8px 20px;border:none;border-radius:var(--r-full);cursor:pointer;position:relative;">Follow →</button>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Rules</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Smiling avatar (avatar-circle-smile.jpg)</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Gradient ring around avatar (2px)</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Name + handle always shown</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• One CTA only — "Follow" or "DM me"</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Gradient button, rounded-full</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">• Warm radial glow behind avatar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     06 — VOICE & TONE
+══════════════════════════════════════════ -->
+<section id="voice">
+  <div class="page">
+    <div class="section-label">06 — Voice & Tone</div>
+    <h2 class="section-title">How We Write</h2>
+    <p class="section-desc">Write in plain Nigerian English: direct, practical, confident, and clear. Use lived context when it is relevant. Do not force slang or Pidgin.</p>
+
+    <div class="grid-2" style="margin-bottom:var(--sp-10);">
+      <!-- Do -->
+      <div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(80,200,80,0.8);margin-bottom:var(--sp-4);">✓ Do</div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+          <div style="background:#0d1a0d;border:1px solid rgba(80,200,80,0.12);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.75);line-height:1.6;">"This product page gives shoppers too many reasons to leave. Start here."</div>
+          </div>
+          <div style="background:#0d1a0d;border:1px solid rgba(80,200,80,0.12);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.75);line-height:1.6;">"State the change, then the verified result: we moved the CTA above the fold and conversion rate changed from [x] to [y]."</div>
+          </div>
+          <div style="background:#0d1a0d;border:1px solid rgba(80,200,80,0.12);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.75);line-height:1.6;">"Diagnose before you redesign."</div>
+          </div>
+          <div style="background:#0d1a0d;border:1px solid rgba(80,200,80,0.12);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.75);line-height:1.6;">"Lead with a specific metric only when you can name its source."</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Don't -->
+      <div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,80,80,0.8);margin-bottom:var(--sp-4);">✕ Don't</div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+          <div style="background:#1a0d0d;border:1px solid rgba(255,80,80,0.12);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;">Vague promise with no proof.</div>
+          </div>
+          <div style="background:#1a0d0d;border:1px solid rgba(255,80,80,0.12);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;">Generic introduction that delays the point.</div>
+          </div>
+          <div style="background:#1a0d0d;border:1px solid rgba(255,80,80,0.12);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;">Buzzword stack with no concrete action.</div>
+          </div>
+          <div style="background:#1a0d0d;border:1px solid rgba(255,80,80,0.12);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;">Throat-clearing instead of a clear point.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Pillars -->
+    <div>
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">Content Pillars</div>
+      <div class="grid-2">
+        <div class="card-accent" style="padding:var(--sp-5);">
+          <div style="display:flex;align-items:center;gap:var(--sp-3);margin-bottom:var(--sp-3);">
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-orange);background:rgba(255,149,0,0.12);border:1px solid rgba(255,149,0,0.25);padding:4px 10px;border-radius:var(--r-full);">💡 Tip</div>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;">CRO Tips</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">Quick, tactical. "Do this one thing." Applicable immediately. Monday posts.</div>
+        </div>
+        <div class="card-accent" style="padding:var(--sp-5);">
+          <div style="display:flex;align-items:center;gap:var(--sp-3);margin-bottom:var(--sp-3);">
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-magenta);background:rgba(224,64,160,0.12);border:1px solid rgba(224,64,160,0.25);padding:4px 10px;border-radius:var(--r-full);">⚡ CRO Fix</div>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;">Store Breakdowns</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">Before/after audits. Real stores, real fixes, real numbers. Wednesday posts.</div>
+        </div>
+        <div class="card-accent" style="padding:var(--sp-5);">
+          <div style="display:flex;align-items:center;gap:var(--sp-3);margin-bottom:var(--sp-3);">
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-purple);background:rgba(123,47,190,0.12);border:1px solid rgba(123,47,190,0.25);padding:4px 10px;border-radius:var(--r-full);">📈 Case Study</div>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;">Results Deep-Dives</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">Client transformations. Metrics-led storytelling. Before → process → result.</div>
+        </div>
+        <div class="card-accent" style="padding:var(--sp-5);">
+          <div style="display:flex;align-items:center;gap:var(--sp-3);margin-bottom:var(--sp-3);">
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);background:var(--bg-surface);border:1px solid var(--bg-border);padding:4px 10px;border-radius:var(--r-full);">🙋 Personal</div>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;">Opinions & Story</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">Ridwan's perspective. Honest, direct, sometimes contrarian. Friday posts.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     07 — PHOTOGRAPHY
+══════════════════════════════════════════ -->
+<section id="photos">
+  <div class="page">
+    <div class="section-label">07 — Photography & Avatar</div>
+    <h2 class="section-title">Photo Usage</h2>
+    <p class="section-desc">Use a real photo when one is available. The serious portrait belongs on professional posts; the smiling portrait belongs on CTA slides and personal posts.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">LK Header / Post Badge</div>
+        <div style="display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-4);">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--gradient-brand);padding:2.5px;flex-shrink:0;">
+            <div style="width:100%;height:100%;border-radius:50%;background:#222;overflow:hidden;">
+              <img src="assets/ridwan/avatar-circle.jpg" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-family:Syne;font-weight:800;font-size:20px;color:#fff;\'>R</div>'">
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;">Ridwan Adekunle</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">@koolestpro</div>
+          </div>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-secondary);line-height:1.7;">File: <code style="color:var(--color-orange);">assets/ridwan/avatar-circle.jpg</code><br>Serious expression. Gradient border ring (2.5px). Use for all LK frame headers, content slides, professional posts.</div>
+      </div>
+
+      <div class="card">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">CTA Slide / Warm Close</div>
+        <div style="display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-4);">
+          <div style="width:60px;height:60px;border-radius:50%;background:var(--gradient-brand);padding:2.5px;flex-shrink:0;">
+            <div style="width:100%;height:100%;border-radius:50%;background:#222;overflow:hidden;">
+              <img src="assets/ridwan/avatar-circle-smile.jpg" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-family:Syne;font-weight:800;font-size:20px;color:#fff;\'>R</div>'">
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;">Ridwan Adekunle</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Follow for CRO breakdowns</div>
+          </div>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-secondary);line-height:1.7;">File: <code style="color:var(--color-orange);">assets/ridwan/avatar-circle-smile.jpg</code><br>Smiling, hand on chin. Warmer feel. Use exclusively on CTA slides (last slide of carousel) and personal posts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     08 — WORKFLOW
+══════════════════════════════════════════ -->
+<section id="workflow">
+  <div class="page">
+    <div class="section-label">08 — Workflow</div>
+    <h2 class="section-title">Content Pipeline</h2>
+    <p class="section-desc">Start with the topic. Cowork turns it into a brief and draft copy. Claude Design turns the approved brief into slides using this system.</p>
+
+    <!-- Step flow -->
+    <div style="display:flex;flex-direction:column;gap:var(--sp-2);margin-bottom:var(--sp-10);">
+
+      <div style="display:flex;gap:var(--sp-5);align-items:flex-start;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;">1</div>
+          <div style="width:2px;flex:1;background:var(--bg-border);margin:var(--sp-2) 0;min-height:40px;"></div>
+        </div>
+        <div class="card-accent" style="flex:1;padding:var(--sp-5);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);margin-bottom:var(--sp-2);">You → Cowork</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:var(--sp-2);">Give me the topic</div>
+          <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);line-height:1.6;">Example: "Make a carousel about the trust signals a Shopify PDP needs above the fold."</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:var(--sp-5);align-items:flex-start;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;">2</div>
+          <div style="width:2px;flex:1;background:var(--bg-border);margin:var(--sp-2) 0;min-height:40px;"></div>
+        </div>
+        <div class="card-accent" style="flex:1;padding:var(--sp-5);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);margin-bottom:var(--sp-2);">Cowork generates</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:var(--sp-3);">Brief + draft copy</div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-2);">
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);">• Slide-by-slide carousel script (every slide's headline, body, layout type)</div>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);">• LinkedIn caption (hooks + CTA)</div>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);">• Instagram caption (hashtags + CTA)</div>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);">• Twitter/X thread version</div>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);">• Logged to content system</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:var(--sp-5);align-items:flex-start;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;">3</div>
+          <div style="width:2px;flex:1;background:var(--bg-border);margin:var(--sp-2) 0;min-height:40px;"></div>
+        </div>
+        <div class="card-accent" style="flex:1;padding:var(--sp-5);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);margin-bottom:var(--sp-2);">You → Claude Design</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:var(--sp-2);">Paste the brief, get the visuals</div>
+          <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);line-height:1.6;">Open claude.ai/design and paste the approved carousel brief. Use this brand system to build the slides, then review the copy, facts, and visuals before export.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:var(--sp-5);align-items:flex-start;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;">4</div>
+        </div>
+        <div class="card-accent" style="flex:1;padding:var(--sp-5);">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--color-orange);margin-bottom:var(--sp-2);">Post</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:var(--sp-2);">Slides + copy, ready to publish</div>
+          <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);line-height:1.6;">Upload carousel slides. Paste the platform-specific caption. Done. The content system already has the entry logged.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brief Template -->
+    <div>
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-4);">What a Carousel Brief Looks Like (Cowork Output)</div>
+      <div style="background:#0d0d0d;border:1px solid var(--bg-border-accent);border-radius:var(--r-lg);padding:var(--sp-6);font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);line-height:1.9;">
+        <div style="color:var(--color-orange);margin-bottom:var(--sp-3);"># CAROUSEL BRIEF — [Topic]</div>
+        <div><span style="color:rgba(255,255,255,0.4);">Type:</span> CRO Fix | Slide count: 7 | Post day: Wednesday</div>
+        <br>
+        <div style="color:rgba(255,255,255,0.6);">SLIDE 01 — Hook</div>
+        <div>Layout: H1 headline, post-type badge, avatar</div>
+        <div>Headline: "Your PDP may be making the buying decision harder."</div>
+        <div>Gradient highlight: "buying decision"</div>
+        <br>
+        <div style="color:rgba(255,255,255,0.6);">SLIDE 02 — Stat</div>
+        <div>Layout: Big number, centered</div>
+        <div>Number: [verified metric] | Context: [source-backed explanation]</div>
+        <br>
+        <div style="color:rgba(255,255,255,0.6);">SLIDE 03–05 — Tips</div>
+        <div>Layout: Numbered list, 3 points each</div>
+        <div>...</div>
+        <br>
+        <div style="color:rgba(255,255,255,0.6);">SLIDE 07 — CTA</div>
+        <div>Layout: Centered avatar (smiling), name, handle, follow button</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer style="padding:var(--sp-16) 0;border-top:1px solid var(--bg-border);">
+  <div class="page">
+    <div class="grad-bar" style="margin-bottom:var(--sp-8);"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-4);">
+      <div>
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:800;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">KOOLESTPRO</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:4px;">Brand Design System · Upload to Claude Design</div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Ridwan Adekunle · @koolestpro · sirridwan721@gmail.com</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

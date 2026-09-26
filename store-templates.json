@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "purpose": "Library of reusable multi-page store templates. Each entry is a self-contained static site that reskins from one config file, used for free sample sites, paid client builds, and Template Showcase content.",
+    "created": "2026-08-23",
+    "notes": [
+      "This is NOT outputs/templates/ — that folder holds Template Showcase mockup packages (mockups + captions for a page that already exists). This library holds the buildable site templates themselves.",
+      "One template per vertical. Before building a new one, check whether an existing template covers the category; a reskin is faster and better tested than a new build.",
+      "Every template ships with a builtBy credit block that must be set to null before handing a build to a paying client."
+    ],
+    "recordSchema": {
+      "id": "NN-slug, matching the folder name under store-templates/",
+      "name": "Human-readable template name",
+      "vertical": "Product category this template's art direction is tuned for",
+      "alsoFits": "Adjacent categories the same look would carry",
+      "demoBrand": "Name of the fictitious brand used in the shipped demo",
+      "isConceptBrand": "true when the demo brand is invented; must always be labelled as such on the page",
+      "pages": "Page types included",
+      "stack": "What it is built with",
+      "configFile": "The single file that drives a reskin",
+      "reskinMinutes": "Rough time to reskin for a new prospect",
+      "market": "nigeria | international | both",
+      "status": "Ready | Draft | Retired",
+      "usedFor": "Array of what this template has actually been shipped into (client names, content posts)",
+      "built": "ISO date"
+    }
+  },
+
+  "templates": [
+    {
+      "id": "01-watches-luxury",
+      "name": "Template 01 — Watches and luxury accessories",
+      "vertical": "Watches",
+      "alsoFits": ["Jewellery", "Eyewear", "Leather goods", "Fragrance", "Premium menswear accessories"],
+      "demoBrand": "MERIDIAN",
+      "isConceptBrand": true,
+      "pages": ["Home", "Collection", "Product"],
+      "stack": "Static HTML/CSS/JS, no build step. GSAP 3.12 + ScrollTrigger (cdnjs), Lenis 1.1 (jsDelivr) with native-scroll fallback.",
+      "artDirection": "Dark editorial. Near-black base, champagne gold accent, Bodoni Moda display over Jost UI.",
+      "motion": [
+        "Parallax hero with word-level headline reveal",
+        "Scroll reveals on every section",
+        "Animated stat counters",
+        "Pinned horizontal story section (desktop; scroll-snap rail below 860px)",
+        "Magnetic buttons, fill-sweep hovers, card image zoom",
+        "Preloader and page-transition curtain",
+        "Full prefers-reduced-motion support"
+      ],
+      "commerce": [
+        "Category filter chips and sort on collection",
+        "Sticky PDP gallery with click-to-zoom",
+        "Variant and quantity pickers",
+        "Spec table and related-product rail",
+        "In-memory cart drawer, checkout handoff to WhatsApp"
+      ],
+      "configFile": "store-templates/01-watches-luxury/assets/js/site.config.js",
+      "reskinMinutes": 25,
+      "reskinTouchpoints": ["brand", "builtBy", "theme", "currency", "copy blocks", "products array", "assets/img/*"],
+      "market": "both",
+      "currencyDefault": "NGN",
+      "whatsapp": "2348117500831",
+      "imagery": {
+        "source": "gpt-image-2, 14 renders, quality low, converted to WebP",
+        "totalSize": "925KB",
+        "note": "All product shots share one background and lighting prompt so the grid reads as a single shoot. Prompt pattern is in the template README."
+      },
+      "totalSize": "1.1MB",
+      "verified": {
+        "date": "2026-08-23",
+        "widths": ["1440x900", "390x844"],
+        "checks": [
+          "Zero console and page errors on all three pages",
+          "No broken or unloaded images",
+          "Cart, quantity, variants, drawer totals",
+          "Collection filter and sort",
+          "FAQ accordion, mobile menu, pinned section",
+          "Sticky offsets in both header states (scrolled up and scrolled down)"
+        ]
+      },
+      "knownLimits": [
+        "Content renders from JS, so there is no server-rendered HTML for crawlers. Fine for a demo or sample site; port the config into a static site generator if a client build needs SEO.",
+        "Cart is in-memory and resets on reload. Deliberate for a demo.",
+        "Pinned horizontal section is desktop only.",
+        "OPEN, cosmetic: 39px of horizontal overflow on the PDP at 390px wide (documentElement.scrollWidth 429 vs clientWidth 390). Invisible to users because body sets overflow-x:hidden, so nobody can scroll to it, but the QA harness flags it. Found 2026-08-28. Ruled out by isolation testing: #topbar and its ribbon/ticker, .drawer and its backdrop, .mnav, #curtain, #toast, and .ftr-word were each hidden or constrained in turn and the 429 did not move. Template 02 has the same markup structure at 390 exactly, so it is something specific to this config or its copy lengths. Not worth more time until it becomes visible."
+      ],
+      "engineNote": "Received two CSS fixes from Template 02 on 2026-08-28: the #toast hidden state now clears the viewport by a fixed 60px instead of 140% of its own height (it was showing as a stray dark pill in full-page marketing captures), and .built-mark is hidden below 640px (the fixed badge was landing on the PDP product title). Template 02's app.js is a backwards-compatible superset of this one and can replace it wholesale when that is wanted.",
+      "status": "Ready",
+      "usedFor": [],
+      "built": "2026-08-23",
+      "reference": "Rebuild of afamzyfashion.vercel.app, commissioned because the earlier build lacked premium polish, commerce depth and mobile performance."
+    },
+    {
+      "id": "02-skincare-beauty",
+      "name": "Template 02 — Skincare and beauty",
+      "vertical": "Skincare",
+      "alsoFits": ["Cosmetics", "Haircare", "Wellness and supplements", "Candles and home fragrance", "Natural food and drink"],
+      "demoBrand": "Lumora Skin",
+      "isConceptBrand": true,
+      "pages": ["Home", "Range", "Product"],
+      "stack": "Static HTML/CSS/JS, no build step. GSAP 3.12 + ScrollTrigger (cdnjs), Lenis 1.1 (jsDelivr) with native-scroll fallback.",
+      "artDirection": "Light warm editorial. Cream and sand base, terracotta clay accent, Fraunces display over Inter UI. Deliberately the opposite end of the range from Template 01's dark luxury.",
+      "motion": [
+        "Parallax hero with word-level headline reveal",
+        "Scroll reveals on every section",
+        "Animated stat counters",
+        "Pinned horizontal routine section (desktop; scroll-snap rail below 860px)",
+        "Magnetic buttons, fill-sweep hovers, card image zoom",
+        "Preloader and page-transition curtain",
+        "Full prefers-reduced-motion support"
+      ],
+      "commerce": [
+        "Category filter chips and sort on the range page",
+        "Sticky PDP gallery with click-to-zoom",
+        "Size/shade and quantity pickers",
+        "Ingredient and detail table, related-product rail",
+        "In-memory bag drawer, checkout handoff to WhatsApp"
+      ],
+      "configFile": "store-templates/02-skincare-beauty/assets/js/site.config.js",
+      "reskinMinutes": 30,
+      "reskinTouchpoints": ["brand", "builtBy", "theme", "labels", "currency", "copy blocks", "section anchors", "products array", "assets/img/*"],
+      "market": "both",
+      "currencyDefault": "NGN",
+      "whatsapp": "2348117500831",
+      "imagery": {
+        "source": "gpt-image-2, 16 renders, quality low, output direct to WebP",
+        "totalSize": "1.5MB",
+        "note": "All product shots share one background and lighting prompt so the grid reads as a single shoot. Labels left deliberately blank so the set survives a reskin. hero.webp keeps its subject in the right 40% and promo-sets.webp in the left half, because those two scrims are weighted in opposite directions. Prompt pattern is in the template README."
+      },
+      "totalSize": "1.6MB",
+      "engineNote": "assets/js/app.js is a backwards-compatible superset of Template 01's engine: config-driven labels and section anchors, plus light-mode-safe theme tokens (onAccent, line, ink2, scrim, shadow, radiusLg). Template 01's config runs on it unchanged. Two CSS fixes found here were back-ported to Template 01 on 2026-08-28: a toast hidden state that actually clears the viewport, and hiding the corner watermark below 640px where it collided with the PDP title.",
+      "verified": {
+        "date": "2026-08-28",
+        "method": "store-templates/02-skincare-beauty/qa.py, headless Chromium",
+        "result": "117 passed, 0 failed",
+        "widths": ["1440x900", "390x844"],
+        "checks": [
+          "Zero console errors, page errors and failed first-party requests",
+          "Every image decoded after a full-page scroll",
+          "No horizontal overflow at either width, before or after scrolling",
+          "Every data-reveal actually revealed",
+          "Bag add, quantity, variants, drawer subtotal, decrement and close",
+          "Range filter counts and price sort order",
+          "FAQ accordion, mobile menu, stat counters",
+          "Sticky filter offset in both header states",
+          "Screenshots reviewed by eye at both widths, not assertions alone"
+        ]
+      },
+      "knownLimits": [
+        "Content renders from JS, so there is no server-rendered HTML for crawlers. Fine for a demo or sample site; port the config into a static site generator if a client build needs SEO.",
+        "Bag is in-memory and resets on reload. Deliberate for a demo.",
+        "Pinned horizontal routine is desktop only.",
+        "The corner watermark is hidden below 640px, where it collided with page content. The ribbon and footer credit still carry attribution there."
+      ],
+      "status": "Ready",
+      "usedFor": ["Live demo at site/public/live/lumora, linked from the koolestpro.com Nigeria sample-site page"],
+      "built": "2026-08-28",
+      "reference": "Upgrade of the earlier hand-written Lumora demo (three static pages, no config file, no motion, no bag) to the Template 01 standard, at Ridwan's request."
+    }
+  ]
+}

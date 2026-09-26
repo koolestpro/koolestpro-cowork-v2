@@ -1,0 +1,27 @@
+---
+name: koolestpro-trend-radar-weekly
+description: Weekly trend/format-radar pull (X + Reddit + Instagram) — FRIDAY ~08:50, ahead of koolestpro-tips-weekly (~09:20). Writes the week's Tips topic pick to trend-radar-log.json and any Format Radar finding into content_pipeline.html.
+---
+
+You are running the weekly "Trend & Format Radar" pull for Ridwan Adekunle's (@koolestpro) local content pipeline. The project lives in the connected workspace folder "koolestpro-cowork-v2" (source of truth: ridwan_content_system_updated.html; local-first, no external posting tools). Read that project's CLAUDE.md first — it's auto-loaded — especially the "Trend & Format Radar — Export Routing" section (added 2026-07-30). Also check your available skills list for "koolestpro-trend-radar" and read its SKILL.md for the full portable spec this task implements.
+
+Read trend-radar-config.json at the project root for niche keywords/pillars, per-source settings, and output paths. Read docs/koolestpro-content-operating-plan.md's Step 11 for the full background/reasoning if anything here is ambiguous.
+
+Step 1 — Determine the current ISO week (format "YYYY-Www", e.g. "2026-W31").
+
+Step 2 — Pull from each enabled source, respecting its weekly read cap and budget:
+- X: run `.ai-workflow/skills/koolestpro-trend-radar/scripts/x_search.py` with a query built from trend-radar-config.json's nicheQueryTerms/pillar keywords (e.g. OR-joined Shopify/CRO/DTC/web-design terms), `--max-results` from config (default 50), `--monthly-cap` from config (default 5.0), `--ledger trend-radar-spend-ledger.json`. If it errors because X_BEARER_TOKEN isn't set, note that plainly in your summary and continue with the other sources — do not treat it as fatal to the whole run.
+- Reddit: run `.ai-workflow/skills/koolestpro-trend-radar/scripts/reddit_search.py` the same way (`--max-results` from config, default 100, `--monthly-cap` from config, default 1.0). If it reports `"blocked": true` (no provider configured yet), that is expected, not an error — note it and move on.
+- Instagram: only if Claude-in-Chrome browser tools are actually reachable in this run (test this — don't assume). If reachable, browse a small number of relevant hashtags/accounts in the niche (per config) for recent high-engagement posts. If browser tools are not connected/reachable in this unattended context, skip Instagram entirely and say so in your summary rather than failing the run or guessing.
+
+Step 3 — Run every candidate from whichever sources succeeded through `.ai-workflow/skills/koolestpro-trend-radar/scripts/relevance_filter.py` (or replicate its keyword+blocklist logic directly) using trend-radar-config.json's pillar keywords and brandSafetyAvoidTerms.
+
+Step 4 — Rank the surviving candidates by engagement. For Layer 1, turn the top 3-5 into concrete Tip-carousel topic/angle proposals (specific enough that koolestpro-tips-weekly's Step 2 content-engine process could run with them directly — not vague themes). Pick the top-ranked one as pickedTopic per trend-radar-config.json's layer1.autoPickTopRanked setting. If nothing survived Step 3 with a real engagement signal, pickedTopic should be null — do not force a pick from weak/irrelevant material.
+
+Step 5 — Write the week's entry via `.ai-workflow/skills/koolestpro-trend-radar/scripts/write_topic_log.py --log trend-radar-log.json --entry -` (piping a JSON object matching the schema in that script's docstring: week, sourcesUsed, sourcesSkipped with reasons, candidateTopics, pickedTopic).
+
+Step 6 — Separately evaluate Layer 2: does anything pulled this run represent a genuinely new-to-Ridwan content FORMAT (not topic) — a carousel structure, infographic style, image treatment, or video/Reel format — with real engagement behind it, that Ridwan isn't currently doing? Check what's already been used by skimming recent items in ridwan_content_system_updated.html and outputs/ so you don't re-flag something he's already tried. If something genuinely clears this bar, write ONE new finding via `.ai-workflow/skills/koolestpro-trend-radar/scripts/inject_format_radar.py --html content_pipeline.html --findings -` (piping a JSON array with one object: id like "fr-2026-W31-001", week, sourcePlatform, description, whyItWorks, suggestedMedium, exampleUrl, and if suggestedMedium is video, a feasibilityNote referencing whether it's buildable with the existing outputs/tiktok_mockup/ tooling). If nothing clears the bar, write nothing for Layer 2 this week — this is the expected, correct outcome most weeks, do not manufacture a finding to fill a quota.
+
+Step 7 — Never post, publish, or set any pipeline item's status yourself. This task only produces the topic log and (rarely) a Format Radar flag for Ridwan to review — it does not touch SYNC_DATA.items or trigger any content generation itself.
+
+Step 8 — Finish with a short, honest summary: which sources ran vs. were skipped and why (including if X_BEARER_TOKEN is still missing, if Reddit is still unconfigured, or if Instagram browsing wasn't reachable), what topic (if any) was picked for Layer 1, whether a Format Radar finding was added, and current month-to-date spend per source from trend-radar-spend-ledger.json against its cap.

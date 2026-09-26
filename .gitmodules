@@ -1,0 +1,9 @@
+[submodule "site"]
+	path = site
+	url = https://github.com/koolestpro/koolestpro.git
+[submodule "cold-email-app"]
+	path = cold-email-app
+	url = https://github.com/koolestpro/cold-dm-app.git
+[submodule "replo-rebuilds"]
+	path = replo-rebuilds
+	url = https://github.com/koolestpro/koolestpro-portfolio.git

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "source": "2026-W36_lekki-fashion-boutique.json",
+    "note": "Contact-only patch. apply mode fills empty fields on matching prospects in local KoolestFlow; it never overwrites existing values."
+  },
+  "patches": [
+    {
+      "brand_name": "Brumsluxe Fashion",
+      "city": "Lagos",
+      "instagram_url": "https://www.instagram.com/brumsluxefashion/?hl=en"
+    },
+    {
+      "brand_name": "DEBRA'S GRACE LEKKI",
+      "city": "Lagos",
+      "website_url": "https://debrasgrace.com/",
+      "instagram_url": "https://instagram.com/debrasgrace",
+      "email": "customercare@debrasgrace.com",
+      "whatsapp": "wa.me/2349074620693?text=Hello"
+    }
+  ]
+}

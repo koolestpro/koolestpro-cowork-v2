@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.koolestpro.leadgen-import</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/mac/koolestpro-cowork-v2/.ai-workflow/tools/import_pending_push.sh</string>
+    </array>
+
+    <!-- Every 30 minutes. The script exits immediately when the queue is empty
+         or the KoolestFlow backend is down, so this is cheap to run often. -->
+    <key>StartInterval</key>
+    <integer>1800</integer>
+
+    <!-- Also drain the queue right after login, so leads that arrived while the
+         Mac was asleep land as soon as it is back. -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/mac/koolestpro-cowork-v2</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/mac/koolestpro-cowork-v2/.ai-workflow/leadgen-import.launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/mac/koolestpro-cowork-v2/.ai-workflow/leadgen-import.launchd.log</string>
+</dict>
+</plist>

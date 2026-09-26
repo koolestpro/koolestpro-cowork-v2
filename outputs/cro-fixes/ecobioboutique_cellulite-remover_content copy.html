@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eco Bio Boutique — CRO Content Pack · @koolestpro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#030303;font-family:'DM Mono',monospace;color:#fff;padding:24px 16px 48px;}
+
+/* ── LAYOUT ── */
+.center{display:flex;flex-direction:column;align-items:center;gap:0;}
+.section-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  color:rgba(255,255,255,0.28);letter-spacing:3px;text-transform:uppercase;
+  padding:28px 0 10px;text-align:center;}
+.dl-row{display:flex;gap:8px;padding:10px 0 4px;justify-content:center;flex-wrap:wrap;}
+.dl-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.7);font-family:'DM Mono',monospace;font-size:11px;
+  padding:7px 14px;border-radius:6px;cursor:pointer;transition:all .15s;}
+.dl-btn:hover{background:rgba(255,149,0,0.15);border-color:#FF9500;color:#FF9500;}
+.section-divider{width:540px;height:1px;background:rgba(255,255,255,0.06);margin:24px 0;}
+
+/* ── GRAPHIC BASE ── */
+.graphic{width:540px;height:540px;position:relative;background:#080808;overflow:hidden;
+  border-radius:4px;}
+
+/* ── GRADIENT BAR ── */
+.gbar{height:4px;background:linear-gradient(90deg,#FF9500 0%,#E040A0 50%,#7B2FBE 100%);
+  position:absolute;top:0;left:0;right:0;z-index:5;}
+
+/* ── GLOW BLOBS ── */
+.glow-tr{position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,149,0,0.12),transparent 70%);pointer-events:none;}
+.glow-bl{position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(123,47,190,0.10),transparent 70%);pointer-events:none;}
+
+/* ── GRAPHIC HEADER ── */
+.g-hdr{position:absolute;top:4px;left:0;right:0;padding:10px 16px 8px;z-index:3;}
+.g-title{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:#fff;
+  line-height:1.2;letter-spacing:-0.2px;text-align:center;}
+.g-sub{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.28);
+  text-align:center;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;}
+
+/* ── UPLOAD SLOTS ── */
+.img-slot{position:relative;overflow:hidden;background:#111;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.img-slot img{width:100%;height:100%;object-fit:cover;object-position:top;display:none;}
+.img-slot img.loaded{display:block;}
+.slot-ph{display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:rgba(255,255,255,0.2);}
+.slot-ph svg{opacity:.4;}
+.slot-ph span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;color:rgba(255,255,255,0.25);}
+.slot-label{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.55);
+  color:rgba(255,255,255,0.55);font-size:9px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;padding:3px 7px;border-radius:3px;z-index:4;}
+.upload-btn{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  background:rgba(255,149,0,0.85);color:#000;font-family:'DM Mono',monospace;
+  font-size:10px;font-weight:700;padding:5px 12px;border-radius:4px;cursor:pointer;
+  letter-spacing:.5px;white-space:nowrap;z-index:5;}
+.upload-btn:hover{background:#FF9500;}
+
+/* ── ANN DOTS ── */
+.ann-dot{position:absolute;width:24px;height:24px;border-radius:50%;
+  background:#F59E0B;color:#000;font-family:'Syne',sans-serif;font-size:11px;
+  font-weight:800;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);z-index:10;pointer-events:none;}
+
+/* ── BOTTOM CHIPS ── */
+.chip-row{position:absolute;bottom:0;left:0;right:0;height:44px;background:#0E0E0E;
+  display:flex;align-items:center;justify-content:center;gap:8px;z-index:3;}
+.chip{background:rgba(255,149,0,0.12);border:1px solid rgba(255,149,0,0.3);
+  color:#FF9500;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;
+  padding:4px 10px;border-radius:20px;letter-spacing:.3px;white-space:nowrap;}
+
+/* ── WATERMARK ── */
+.wm{position:absolute;bottom:10px;right:14px;font-family:'DM Mono',monospace;
+  font-size:8px;color:rgba(255,255,255,0.15);letter-spacing:1px;z-index:3;}
+
+/* ── ARROWS GRAPHIC (Angles 2+3) ── */
+.a2-page{position:absolute;top:50px;left:50%;transform:translateX(-50%);
+  width:210px;border-radius:6px;overflow:hidden;background:#111;
+  box-shadow:0 4px 24px rgba(0,0,0,0.6);}
+.a2-page img{width:100%;display:block;object-fit:cover;object-position:top;}
+.a2-lbl{position:absolute;font-family:'DM Mono',monospace;font-size:10px;
+  color:rgba(255,255,255,0.85);line-height:1.4;z-index:4;max-width:130px;}
+.a2-lbl.right{text-align:left;}
+.a2-lbl.left{text-align:right;}
+.a2-lbl em{font-style:normal;color:#F59E0B;font-size:9px;display:block;
+  margin-bottom:2px;letter-spacing:.5px;}
+
+/* ── CAROUSEL / LK FRAME ── */
+.lk-frame-wrap{width:540px;}
+.lk-chrome{background:#fff;border-radius:10px;overflow:hidden;
+  box-shadow:0 4px 32px rgba(0,0,0,0.5);}
+.lk-hdr{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f0f0f0;}
+.lk-av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;
+  background:linear-gradient(135deg,#FF9500,#7B2FBE);}
+.lk-av img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.lk-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:#111;line-height:1.2;}
+.lk-meta{font-family:'DM Mono',monospace;font-size:10px;color:#888;}
+.lk-dots{margin-left:auto;display:flex;gap:3px;}
+.lk-dot-sm{width:4px;height:4px;border-radius:50%;background:#ccc;}
+
+.lk-vp{position:relative;overflow:hidden;height:540px;}
+.lk-track{display:flex;height:100%;transition:transform .32s cubic-bezier(.4,0,.2,1);}
+.slide{width:540px;height:540px;flex-shrink:0;position:relative;background:#080808;overflow:hidden;}
+
+.swb{position:absolute;right:0;top:50%;transform:translateY(-50%);
+  width:32px;height:64px;background:rgba(0,0,0,0.35);display:flex;
+  align-items:center;justify-content:center;border-radius:4px 0 0 4px;
+  cursor:pointer;z-index:20;color:#fff;font-size:18px;user-select:none;}
+.swb:hover{background:rgba(255,149,0,0.4);}
+.slide-ctr{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  display:flex;gap:5px;z-index:10;}
+.sdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.3);transition:all .2s;}
+.sdot.on{background:#fff;width:14px;border-radius:3px;}
+
+.lk-ftr{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid #f0f0f0;}
+.lk-reactions{font-family:'DM Mono',monospace;font-size:11px;color:#888;}
+.lk-cta-btn{background:linear-gradient(90deg,#FF9500,#7B2FBE);color:#fff;border:none;
+  border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;
+  padding:5px 12px;cursor:pointer;letter-spacing:.5px;}
+
+.slide-dl-row{display:flex;gap:6px;padding:6px 0;justify-content:center;flex-wrap:wrap;}
+
+/* ── CAPTION TABS ── */
+.cap-tabs{width:540px;background:#0C0C0C;border-radius:8px;border:1px solid rgba(255,255,255,0.07);}
+.tab-bar{display:flex;border-bottom:1px solid rgba(255,255,255,0.07);overflow-x:auto;scrollbar-width:none;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab{font-family:'DM Mono',monospace;font-size:10px;padding:10px 14px;cursor:pointer;
+  color:rgba(255,255,255,0.35);white-space:nowrap;border-bottom:2px solid transparent;
+  transition:all .15s;letter-spacing:.5px;}
+.tab.on{color:#FF9500;border-bottom-color:#FF9500;}
+.cap-body{padding:16px;display:none;}
+.cap-body.on{display:block;}
+.cap-platform{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1.5px;
+  text-transform:uppercase;margin-bottom:8px;}
+.cap-text{font-family:'DM Mono',monospace;font-size:11.5px;color:rgba(255,255,255,0.8);
+  line-height:1.75;white-space:pre-wrap;}
+.copy-btn{margin-top:12px;background:rgba(255,149,0,0.1);border:1px solid rgba(255,149,0,0.3);
+  color:#FF9500;font-family:'DM Mono',monospace;font-size:10px;padding:7px 14px;
+  border-radius:5px;cursor:pointer;letter-spacing:.5px;transition:all .15s;}
+.copy-btn:hover{background:rgba(255,149,0,0.2);}
+
+/* ── MASTER DOWNLOAD ── */
+.master-dl{width:540px;background:#0C0C0C;border:1px solid rgba(255,149,0,0.2);
+  border-radius:8px;padding:16px;margin-top:8px;}
+.master-ttl{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.master-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.master-btn{flex:1;min-width:140px;background:linear-gradient(90deg,rgba(255,149,0,.15),rgba(123,47,190,.15));
+  border:1px solid rgba(255,149,0,0.35);color:#FF9500;font-family:'DM Mono',monospace;
+  font-size:11px;font-weight:700;padding:10px 16px;border-radius:6px;cursor:pointer;
+  letter-spacing:.5px;transition:all .15s;text-align:center;}
+.master-btn:hover{background:linear-gradient(90deg,rgba(255,149,0,.25),rgba(123,47,190,.25));}
+
+/* ── SLIDE INTERNAL STYLES ── */
+.s-gbar{height:4px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);position:absolute;top:0;left:0;right:0;z-index:5;}
+.s-pill{display:inline-block;background:rgba(255,149,0,0.15);border:1px solid rgba(255,149,0,0.35);
+  color:#FF9500;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;
+  padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;}
+.s-tag{display:inline-block;background:rgba(255,255,255,0.06);
+  color:rgba(255,255,255,0.45);font-family:'DM Mono',monospace;font-size:8px;
+  padding:2px 8px;border-radius:3px;letter-spacing:1.5px;text-transform:uppercase;}
+.s-bad{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.s-bad-x{color:#FF4444;font-size:13px;flex-shrink:0;margin-top:1px;}
+.s-bad-ck{color:#4ADE80;font-size:13px;flex-shrink:0;margin-top:1px;}
+.s-bad-txt{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.75);line-height:1.45;}
+.s-num-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.s-num{width:22px;height:22px;border-radius:50%;background:rgba(255,149,0,0.15);
+  border:1px solid rgba(255,149,0,0.4);color:#FF9500;font-family:'Syne',sans-serif;
+  font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.s-num-txt{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.75);line-height:1.45;}
+.av-badge{display:flex;align-items:center;gap:10px;}
+.av-img{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;
+  border:2px solid rgba(255,149,0,0.4);}
+.av-img img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.av-name{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;}
+.av-handle{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;}
+</style>
+</head>
+<body>
+<div class="center">
+
+<!-- ═══════════════════════════════════════════════
+  01  ANGLE 1 — NUMBERED BEFORE / AFTER
+════════════════════════════════════════════════ -->
+<div class="section-label">01 · Numbered Before / After</div>
+
+<div class="graphic" id="angle1">
+  <div class="gbar"></div>
+  <div class="glow-tr"></div>
+  <div class="glow-bl"></div>
+
+  <!-- Header -->
+  <div class="g-hdr">
+    <div class="g-title">8 Changes. Same Page. <span style="color:#FF9500;">Better Proof.</span></div>
+    <div class="g-sub">@koolestpro &nbsp;·&nbsp; Shopify CRO &amp; UX</div>
+  </div>
+
+  <!-- Before / After panels -->
+  <div style="position:absolute;top:54px;left:0;right:0;bottom:44px;display:flex;gap:2px;">
+
+    <!-- BEFORE -->
+    <div class="img-slot" id="before-slot"
+         style="flex:1;height:100%;position:relative;"
+         onclick="document.getElementById('before-upload').click()">
+      <img id="before-img" src="" alt="Before">
+      <div class="slot-ph" id="before-ph">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Upload Before</span>
+      </div>
+      <div class="slot-label">BEFORE</div>
+      <label for="before-upload" class="upload-btn" onclick="event.stopPropagation()">↑ Upload</label>
+      <input type="file" id="before-upload" accept="image/*" style="display:none;" onchange="loadImg(this,'before-img','before-ph')">
+    </div>
+
+    <!-- AFTER -->
+    <div class="img-slot" id="after-slot"
+         style="flex:1;height:100%;position:relative;"
+         onclick="document.getElementById('after-upload').click()">
+      <img id="after-img" src="" alt="After">
+      <div class="slot-ph" id="after-ph">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Upload After</span>
+      </div>
+      <div class="slot-label">AFTER</div>
+      <label for="after-upload" class="upload-btn" onclick="event.stopPropagation()">↑ Upload</label>
+      <input type="file" id="after-upload" accept="image/*" style="display:none;" onchange="loadImg(this,'after-img','after-ph')">
+
+      <!-- Annotation dots (positioned on after screenshot) -->
+      <div class="ann-dot" style="top:14%;left:6%;">1</div>
+      <div class="ann-dot" style="top:30%;right:6%;">8</div>
+      <div class="ann-dot" style="top:38%;right:6%;">3</div>
+      <div class="ann-dot" style="top:46%;right:6%;">2</div>
+      <div class="ann-dot" style="top:54%;right:6%;">4</div>
+      <div class="ann-dot" style="top:63%;right:6%;">5</div>
+      <div class="ann-dot" style="top:72%;right:6%;">6</div>
+      <div class="ann-dot" style="top:81%;right:6%;">7</div>
+    </div>
+
+  </div>
+
+  <!-- Bottom chips -->
+  <div class="chip-row">
+    <span class="chip">Currency £ → €</span>
+    <span class="chip">Proof above fold</span>
+    <span class="chip">CTA rewritten</span>
+    <span class="chip">Trust strip added</span>
+  </div>
+
+  <div class="wm">@koolestpro</div>
+</div>
+
+<div class="dl-row">
+  <button class="dl-btn" onclick="dlGraphic('angle1','koolestpro_angle1_before_after')">↓ PNG</button>
+  <button class="dl-btn" onclick="dlGraphicPDF('angle1','koolestpro_angle1_before_after')">↓ PDF</button>
+</div>
+<div class="section-divider"></div>
+
+
+<!-- ═══════════════════════════════════════════════
+  02  ANGLE 2 — CUSTOMER PSYCHOLOGY MAP
+════════════════════════════════════════════════ -->
+<div class="section-label">02 · Customer Psychology Map</div>
+
+<div class="graphic" id="angle2">
+  <div class="gbar"></div>
+  <div class="glow-tr"></div>
+  <div class="glow-bl"></div>
+
+  <div class="g-hdr">
+    <div class="g-title">What Your Buyers <span style="color:#FF9500;">Think</span> But Never Say</div>
+    <div class="g-sub">@koolestpro &nbsp;·&nbsp; Shopify CRO &amp; UX</div>
+  </div>
+
+  <!-- Page screenshot (after rebuild) — centered -->
+  <div class="a2-page" style="top:52px;height:430px;">
+    <img id="a2-page-img" src="" alt="" style="height:430px;object-position:top;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 70%,#080808 100%);pointer-events:none;"></div>
+    <div style="display:none;" id="a2-ph"
+         style="height:430px;display:flex;align-items:center;justify-content:center;">
+      <span style="font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:1px;">Upload After screenshot</span>
+    </div>
+    <!-- Upload trigger (hidden — shares after-img source) -->
+  </div>
+
+  <!-- LEFT LABELS -->
+  <div class="a2-lbl left" style="left:8px;top:68px;width:115px;">
+    <em>Q1</em>"Will this work on my body?"
+  </div>
+  <div class="a2-lbl left" style="left:8px;top:148px;width:115px;">
+    <em>Q2</em>"Is this site even legit?"
+  </div>
+  <div class="a2-lbl left" style="left:8px;top:248px;width:115px;">
+    <em>Q3</em>"What makes this different?"
+  </div>
+
+  <!-- RIGHT LABELS -->
+  <div class="a2-lbl right" style="right:8px;top:110px;width:115px;">
+    <em>Q4</em>"Does it actually work?"
+  </div>
+  <div class="a2-lbl right" style="right:8px;top:220px;width:115px;">
+    <em>Q5</em>"What if it doesn't work for me?"
+  </div>
+  <div class="a2-lbl right" style="right:8px;top:340px;width:115px;">
+    <em>Q6</em>"Should I buy now or wait?"
+  </div>
+
+  <!-- SVG curved arrows -->
+  <svg style="position:absolute;inset:0;width:540px;height:540px;pointer-events:none;" viewBox="0 0 540 540">
+    <defs>
+      <marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#F59E0B" opacity=".8"/>
+      </marker>
+    </defs>
+    <!-- Q1 → hero area (left label → page left edge ~165, y=90) -->
+    <path d="M 123,82 C 140,82 148,88 163,90" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah)"/>
+    <!-- Q2 → trust/header area (left label → page left edge ~165, y=165) -->
+    <path d="M 123,162 C 140,162 150,165 163,165" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah)"/>
+    <!-- Q3 → badges area (left label → page left edge ~165, y=265) -->
+    <path d="M 123,260 C 140,260 150,263 163,263" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah)"/>
+    <!-- Q4 → subtitle/proof (right label → page right edge ~375, y=135) -->
+    <path d="M 417,128 C 400,128 390,133 377,135" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah)"/>
+    <!-- Q5 → CTA area (right label → page right edge ~375, y=240) -->
+    <path d="M 417,238 C 400,238 390,240 377,240" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah)"/>
+    <!-- Q6 → urgency/bottom area (right label → page right edge ~375, y=350) -->
+    <path d="M 417,355 C 400,355 390,354 377,352" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah)"/>
+  </svg>
+
+  <!-- Sync after-slot image to Angle 2 page display -->
+  <div class="wm">@koolestpro</div>
+</div>
+
+<!-- Upload for angle 2 page image (shared with after-slot) -->
+<div style="text-align:center;padding:6px 0 2px;">
+  <button class="dl-btn" onclick="document.getElementById('after-upload').click()" style="font-size:10px;">
+    ↑ Upload After screenshot (syncs to Angles 2 &amp; 3)
+  </button>
+</div>
+<div class="dl-row">
+  <button class="dl-btn" onclick="dlGraphic('angle2','koolestpro_angle2_psychology_map')">↓ PNG</button>
+  <button class="dl-btn" onclick="dlGraphicPDF('angle2','koolestpro_angle2_psychology_map')">↓ PDF</button>
+</div>
+<div class="section-divider"></div>
+
+
+<!-- ═══════════════════════════════════════════════
+  03  ANGLE 3 — DECISION GUIDE
+════════════════════════════════════════════════ -->
+<div class="section-label">03 · Decision Guide</div>
+
+<div class="graphic" id="angle3">
+  <div class="gbar"></div>
+  <div class="glow-tr" style="background:radial-gradient(circle,rgba(123,47,190,0.14),transparent 70%);"></div>
+  <div class="glow-bl" style="background:radial-gradient(circle,rgba(255,149,0,0.10),transparent 70%);"></div>
+
+  <div class="g-hdr">
+    <div class="g-title">Great Pages <span style="color:#FF9500;">Remove</span> Reasons Not To Buy</div>
+    <div class="g-sub">@koolestpro &nbsp;·&nbsp; Shopify CRO &amp; UX</div>
+  </div>
+
+  <!-- Page screenshot — same slot as angle 2 -->
+  <div class="a2-page" style="top:52px;height:430px;">
+    <img id="a3-page-img" src="" alt="" style="height:430px;object-position:top;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 70%,#080808 100%);pointer-events:none;"></div>
+  </div>
+
+  <!-- LEFT LABELS -->
+  <div class="a2-lbl left" style="left:8px;top:68px;width:120px;">
+    <em>01</em>Shows outcome, not product
+  </div>
+  <div class="a2-lbl left" style="left:8px;top:150px;width:120px;">
+    <em>02</em>Eliminates currency trust gap
+  </div>
+  <div class="a2-lbl left" style="left:8px;top:248px;width:120px;">
+    <em>03</em>Surfaces hidden differentiators
+  </div>
+
+  <!-- RIGHT LABELS -->
+  <div class="a2-lbl right" style="right:8px;top:110px;width:120px;">
+    <em>04</em>Anchors claim to real clinical data
+  </div>
+  <div class="a2-lbl right" style="right:8px;top:220px;width:120px;">
+    <em>05</em>Frames action as commitment
+  </div>
+  <div class="a2-lbl right" style="right:8px;top:340px;width:120px;">
+    <em>06</em>Removes risk at decision moment
+  </div>
+
+  <!-- SVG curved arrows (same structure, different IDs) -->
+  <svg style="position:absolute;inset:0;width:540px;height:540px;pointer-events:none;" viewBox="0 0 540 540">
+    <defs>
+      <marker id="ah3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#F59E0B" opacity=".8"/>
+      </marker>
+    </defs>
+    <path d="M 130,82 C 145,82 152,88 163,90" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah3)"/>
+    <path d="M 130,164 C 145,164 152,166 163,166" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah3)"/>
+    <path d="M 130,260 C 145,260 152,263 163,263" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah3)"/>
+    <path d="M 410,128 C 396,128 388,133 377,135" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah3)"/>
+    <path d="M 410,238 C 396,238 388,240 377,240" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah3)"/>
+    <path d="M 410,356 C 396,356 388,354 377,352" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity=".65" stroke-linecap="round" marker-end="url(#ah3)"/>
+  </svg>
+
+  <div class="wm">@koolestpro</div>
+</div>
+
+<div class="dl-row">
+  <button class="dl-btn" onclick="dlGraphic('angle3','koolestpro_angle3_decision_guide')">↓ PNG</button>
+  <button class="dl-btn" onclick="dlGraphicPDF('angle3','koolestpro_angle3_decision_guide')">↓ PDF</button>
+</div>
+<div class="section-divider"></div>
+
+
+<!-- ═══════════════════════════════════════════════
+  04  ANGLE 4 — CRO CAROUSEL (6 slides)
+════════════════════════════════════════════════ -->
+<div class="section-label">04 · CRO Carousel — 6 Slides</div>
+
+<div class="lk-frame-wrap">
+  <div class="lk-chrome">
+
+    <!-- LK Header -->
+    <div class="lk-hdr">
+      <div class="lk-av">
+        <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle_mvcdss"
+             alt="Ridwan Adekunle"
+             onerror="this.style.display='none'">
+      </div>
+      <div>
+        <div class="lk-name">Ridwan Adekunle</div>
+        <div class="lk-meta">@koolestpro · Shopify CRO &amp; UX · Now</div>
+      </div>
+      <div class="lk-dots" style="margin-left:auto;">
+        <div class="lk-dot-sm"></div>
+        <div class="lk-dot-sm"></div>
+        <div class="lk-dot-sm"></div>
+      </div>
+    </div>
+
+    <!-- Viewport -->
+    <div class="lk-vp" id="lk-vp">
+      <div class="lk-track" id="lk-track">
+
+        <!-- SLIDE 1 — COVER -->
+        <div class="slide" id="slide-1">
+          <div class="s-gbar"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0C0500 0%,#120818 100%);"></div>
+          <!-- Glow -->
+          <div style="position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;
+            background:radial-gradient(circle,rgba(255,149,0,0.18),transparent 70%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;border-radius:50%;
+            background:radial-gradient(circle,rgba(123,47,190,0.14),transparent 70%);pointer-events:none;"></div>
+
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;
+            justify-content:center;padding:44px 40px 40px;">
+
+            <div style="margin-bottom:16px;">
+              <span class="s-tag">Conversion Strategy</span>
+            </div>
+
+            <!-- Big stat -->
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:82px;
+              line-height:1;letter-spacing:-4px;color:#FF9500;margin-bottom:4px;">168</div>
+            <div style="font-family:'DM Mono',monospace;font-size:13px;
+              color:rgba(255,255,255,0.45);margin-bottom:24px;">reviews at 4.8★. Still losing sales.</div>
+
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px;
+              line-height:1.2;letter-spacing:-0.5px;color:#fff;margin-bottom:8px;">
+              £26 on an Italian website.
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:13px;
+              color:rgba(255,255,255,0.55);line-height:1.6;">
+              One currency symbol.<br>One reason a customer leaves.<br>
+              Here's the CRO audit that found it.
+            </div>
+
+            <div style="margin-top:28px;display:flex;align-items:center;gap:8px;">
+              <span class="s-pill">Swipe to see the full audit →</span>
+            </div>
+          </div>
+
+          <div style="position:absolute;bottom:14px;left:40px;font-family:'DM Mono',monospace;
+            font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;">@koolestpro · 1/6</div>
+          <div class="slide-ctr" id="sdots">
+            <div class="sdot on"></div><div class="sdot"></div><div class="sdot"></div>
+            <div class="sdot"></div><div class="sdot"></div><div class="sdot"></div>
+          </div>
+          <div class="swb" onclick="swipe(1)">›</div>
+        </div>
+
+        <!-- SLIDE 2 — THE PROBLEM -->
+        <div class="slide" id="slide-2">
+          <div class="s-gbar"></div>
+          <div style="position:absolute;inset:0;background:#090909;"></div>
+          <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;
+            background:radial-gradient(circle,rgba(255,68,68,0.08),transparent 70%);pointer-events:none;"></div>
+
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;
+            justify-content:center;padding:44px 36px 40px;gap:6px;">
+
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:#FF4444;
+              letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">The Problem</div>
+
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:30px;
+              line-height:1.15;letter-spacing:-0.5px;color:#fff;margin-bottom:20px;">
+              What was<br>killing the page?
+            </div>
+
+            <div class="s-bad">
+              <span class="s-bad-x">✕</span>
+              <span class="s-bad-txt">Price showed <strong style="color:#fff;">£26</strong> — on an Italian .it site with a €49 shipping banner</span>
+            </div>
+            <div class="s-bad">
+              <span class="s-bad-x">✕</span>
+              <span class="s-bad-txt">Hero image showed <strong style="color:#fff;">a tube</strong> — buyers need to see a body being treated</span>
+            </div>
+            <div class="s-bad">
+              <span class="s-bad-x">✕</span>
+              <span class="s-bad-txt">Clinical proof buried <strong style="color:#fff;">4 scrolls deep</strong> — invisible above the fold</span>
+            </div>
+            <div class="s-bad">
+              <span class="s-bad-x">✕</span>
+              <span class="s-bad-txt">CTA read <strong style="color:#fff;">"Aggiungi al carrello"</strong> — zero commitment framing</span>
+            </div>
+            <div class="s-bad">
+              <span class="s-bad-x">✕</span>
+              <span class="s-bad-txt">No returns policy near the buy button — risk fully on the buyer</span>
+            </div>
+          </div>
+
+          <div style="position:absolute;bottom:14px;left:36px;font-family:'DM Mono',monospace;
+            font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;">@koolestpro · 2/6</div>
+          <div class="swb" onclick="swipe(2)">›</div>
+        </div>
+
+        <!-- SLIDE 3 — THE DIAGNOSIS -->
+        <div class="slide" id="slide-3">
+          <div class="s-gbar"></div>
+          <div style="position:absolute;inset:0;background:#080808;"></div>
+          <div style="position:absolute;top:-40px;left:-40px;width:240px;height:240px;border-radius:50%;
+            background:radial-gradient(circle,rgba(255,149,0,0.12),transparent 70%);pointer-events:none;"></div>
+
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;
+            justify-content:center;padding:44px 36px 40px;">
+
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:#F59E0B;
+              letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">The Diagnosis</div>
+
+            <div style="font-family:'DM Mono',monospace;font-size:13px;
+              color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:20px;">
+              The brand had everything needed to convert.
+            </div>
+
+            <!-- Stat -->
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:100px;
+              line-height:1;letter-spacing:-5px;color:#FF9500;margin-bottom:4px;">78%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;
+              color:rgba(255,255,255,0.4);margin-bottom:20px;">
+              cellulite reduction — confirmed on 100 women.<br>
+              Living in paragraph 6 of the description.
+            </div>
+
+            <div style="font-family:'DM Mono',monospace;font-size:13px;
+              color:rgba(255,255,255,0.7);line-height:1.65;border-left:2px solid rgba(255,149,0,0.4);
+              padding-left:12px;">
+              168 reviews. 4.8★. A unique 5-ball massager.<br>
+              A cooling effect no competitor had.<br>
+              <strong style="color:#fff;">None of it visible in the first viewport.</strong>
+            </div>
+          </div>
+
+          <div style="position:absolute;bottom:14px;left:36px;font-family:'DM Mono',monospace;
+            font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;">@koolestpro · 3/6</div>
+          <div class="swb" onclick="swipe(3)">›</div>
+        </div>
+
+        <!-- SLIDE 4 — THE FIX -->
+        <div class="slide" id="slide-4">
+          <div class="s-gbar"></div>
+          <div style="position:absolute;inset:0;background:#090909;"></div>
+          <div style="position:absolute;bottom:-40px;right:-40px;width:220px;height:220px;border-radius:50%;
+            background:radial-gradient(circle,rgba(123,47,190,0.12),transparent 70%);pointer-events:none;"></div>
+
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;
+            justify-content:center;padding:44px 36px 40px;">
+
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:#4ADE80;
+              letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">The Fix — 8 changes above the fold</div>
+
+            <div class="s-num-row">
+              <div class="s-num">1</div>
+              <div class="s-num-txt">Hero → lifestyle shot showing the treatment area</div>
+            </div>
+            <div class="s-num-row">
+              <div class="s-num">2</div>
+              <div class="s-num-txt">Currency fixed: <strong style="color:#FF9500;">£ → €</strong></div>
+            </div>
+            <div class="s-num-row">
+              <div class="s-num">3</div>
+              <div class="s-num-txt">Subtitle → "Riduce la cellulite al <strong style="color:#FF9500;">78%</strong>"</div>
+            </div>
+            <div class="s-num-row">
+              <div class="s-num">4</div>
+              <div class="s-num-txt">Differentiator badges surfaced above fold</div>
+            </div>
+            <div class="s-num-row">
+              <div class="s-num">5</div>
+              <div class="s-num-txt">CTA: <strong style="color:#FF9500;">"Inizia il Trattamento — €26"</strong></div>
+            </div>
+            <div class="s-num-row">
+              <div class="s-num">6</div>
+              <div class="s-num-txt">Trust strip: returns, secure checkout, Made in Italy</div>
+            </div>
+            <div class="s-num-row">
+              <div class="s-num">7</div>
+              <div class="s-num-txt">Stats strip: 78% · 81% · 75% — above the fold</div>
+            </div>
+            <div class="s-num-row">
+              <div class="s-num">8</div>
+              <div class="s-num-txt">Review pull-quote — Emanuela's real testimonial</div>
+            </div>
+          </div>
+
+          <div style="position:absolute;bottom:14px;left:36px;font-family:'DM Mono',monospace;
+            font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;">@koolestpro · 4/6</div>
+          <div class="swb" onclick="swipe(4)">›</div>
+        </div>
+
+        <!-- SLIDE 5 — THE RESULT -->
+        <div class="slide" id="slide-5">
+          <div class="s-gbar"></div>
+          <div style="position:absolute;inset:0;background:#080808;"></div>
+          <div style="position:absolute;top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;
+            background:radial-gradient(circle,rgba(74,222,128,0.08),transparent 70%);pointer-events:none;"></div>
+
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;
+            justify-content:center;padding:44px 36px 40px;">
+
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:#4ADE80;
+              letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">The Result</div>
+
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;
+              line-height:1.2;letter-spacing:-0.5px;color:#fff;margin-bottom:20px;">
+              Same page.<br>Same product.<br><span style="color:#FF9500;">All proof visible.</span>
+            </div>
+
+            <div class="s-bad" style="margin-bottom:10px;">
+              <span class="s-bad-ck">✓</span>
+              <span class="s-bad-txt">78% clinical stat — now in the first viewport</span>
+            </div>
+            <div class="s-bad" style="margin-bottom:10px;">
+              <span class="s-bad-ck">✓</span>
+              <span class="s-bad-txt">Currency trust collapse — resolved</span>
+            </div>
+            <div class="s-bad" style="margin-bottom:10px;">
+              <span class="s-bad-ck">✓</span>
+              <span class="s-bad-txt">CTA frames commitment, not a transaction</span>
+            </div>
+            <div class="s-bad" style="margin-bottom:20px;">
+              <span class="s-bad-ck">✓</span>
+              <span class="s-bad-txt">Risk removed at the decision moment</span>
+            </div>
+
+            <div style="font-family:'DM Mono',monospace;font-size:13px;
+              color:rgba(255,255,255,0.45);line-height:1.6;border-left:2px solid rgba(74,222,128,0.35);
+              padding-left:12px;">
+              No new content created.<br>
+              No rebrand. No new photography.<br>
+              <strong style="color:rgba(255,255,255,0.75);">Just the right things in the right order.</strong>
+            </div>
+          </div>
+
+          <div style="position:absolute;bottom:14px;left:36px;font-family:'DM Mono',monospace;
+            font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;">@koolestpro · 5/6</div>
+          <div class="swb" onclick="swipe(5)">›</div>
+        </div>
+
+        <!-- SLIDE 6 — CTA -->
+        <div class="slide" id="slide-6">
+          <div class="s-gbar"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0A0600 0%,#0E0514 100%);"></div>
+          <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;
+            background:radial-gradient(circle,rgba(255,149,0,0.15),transparent 70%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:-60px;left:-60px;width:260px;height:260px;border-radius:50%;
+            background:radial-gradient(circle,rgba(123,47,190,0.15),transparent 70%);pointer-events:none;"></div>
+
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;
+            align-items:center;justify-content:center;padding:44px 40px 40px;text-align:center;">
+
+            <div class="av-badge" style="margin-bottom:24px;">
+              <div class="av-img">
+                <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle_mvcdss"
+                     alt="Ridwan" onerror="this.style.display='none'">
+              </div>
+              <div style="text-align:left;">
+                <div class="av-name">Ridwan Adekunle</div>
+                <div class="av-handle">@koolestpro · Shopify CRO &amp; UX</div>
+              </div>
+            </div>
+
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;
+              line-height:1.2;letter-spacing:-0.5px;color:#fff;margin-bottom:10px;">
+              Your page might have<br>the same problem.
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:13px;
+              color:rgba(255,255,255,0.45);margin-bottom:28px;line-height:1.6;">
+              The proof that converts is already there.<br>
+              It just needs to move up.
+            </div>
+
+            <div style="background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);
+              color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;
+              padding:14px 32px;border-radius:8px;letter-spacing:0.3px;">
+              DM me "AUDIT" →
+            </div>
+
+            <div style="margin-top:16px;font-family:'DM Mono',monospace;font-size:10px;
+              color:rgba(255,255,255,0.2);letter-spacing:.5px;">Free store audit · No commitment</div>
+          </div>
+
+          <div style="position:absolute;bottom:14px;left:40px;font-family:'DM Mono',monospace;
+            font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;">@koolestpro · 6/6</div>
+        </div>
+
+      </div><!-- /lk-track -->
+    </div><!-- /lk-vp -->
+
+    <!-- LK Footer -->
+    <div class="lk-ftr">
+      <span class="lk-reactions">👍 ❤️ 💡 &nbsp;<span style="color:#888;">· 247 reactions</span></span>
+      <button class="lk-cta-btn">DM "AUDIT"</button>
+    </div>
+
+  </div><!-- /lk-chrome -->
+</div><!-- /lk-frame-wrap -->
+
+<div class="slide-dl-row">
+  <button class="dl-btn" onclick="dlSlide(0,'koolestpro_carousel_s1_cover')">S1 ↓</button>
+  <button class="dl-btn" onclick="dlSlide(1,'koolestpro_carousel_s2_problem')">S2 ↓</button>
+  <button class="dl-btn" onclick="dlSlide(2,'koolestpro_carousel_s3_diagnosis')">S3 ↓</button>
+  <button class="dl-btn" onclick="dlSlide(3,'koolestpro_carousel_s4_fix')">S4 ↓</button>
+  <button class="dl-btn" onclick="dlSlide(4,'koolestpro_carousel_s5_result')">S5 ↓</button>
+  <button class="dl-btn" onclick="dlSlide(5,'koolestpro_carousel_s6_cta')">S6 ↓</button>
+  <button class="dl-btn" onclick="dlCarouselZip()">↓ All Slides ZIP</button>
+  <button class="dl-btn" onclick="dlCarouselPDF()">↓ All Slides PDF</button>
+</div>
+<div class="section-divider"></div>
+
+
+<!-- ═══════════════════════════════════════════════
+  05  CAPTION TABS
+════════════════════════════════════════════════ -->
+<div class="section-label">05 · Captions</div>
+
+<div class="cap-tabs">
+  <div class="tab-bar">
+    <div class="tab on" onclick="showTab(0)">Caption 1</div>
+    <div class="tab" onclick="showTab(1)">Caption 2</div>
+    <div class="tab" onclick="showTab(2)">Caption 3</div>
+    <div class="tab" onclick="showTab(3)">Caption 4</div>
+    <div class="tab" onclick="showTab(4)">Tweets ×3</div>
+  </div>
+
+  <div class="cap-body on" id="cap-0">
+    <div class="cap-platform">LinkedIn (primary) + Instagram · ~187 words</div>
+    <div class="cap-text" id="ct0">Why did I make 8 changes above the fold on this Italian skincare page?
+
+Here's what I changed and why:
+
+1️⃣ Hero image → lifestyle shot. The original showed a tube. Buyers of a body treatment need to see a body being treated — not a bottle.
+
+2️⃣ Currency £ → €. The store is Italian. The price said £26. The shipping banner said €49. Two currencies. Same page. That's not a design issue — it's a trust collapse.
+
+3️⃣ Subtitle → proof statement. "Ultra rapida" is a claim. "Riduce la cellulite al 78%" is evidence. One of these stops the scroll.
+
+4️⃣ Differentiator badges surfaced. A cooling effect that activates on contact. A 5-ball steel massager built into the cap. Neither was visible before the CTA.
+
+5️⃣ CTA rewritten. "AGGIUNGI AL CARRELLO" → "INIZIA IL TRATTAMENTO — €26." Starting a treatment is a decision. Adding to cart is a reflex. One builds commitment.
+
+6️⃣ Trust strip added. Returns, secure checkout, Made in Italy — placed at the exact moment the buyer hesitates.
+
+7️⃣ Stats pulled up. 78% cellulite reduction. 81% orange-peel improvement. 75% localized slimming. Confirmed by a clinical test on 100 women. Buried 4 scrolls deep. Moved to just below the CTA.
+
+8️⃣ Review pull-quote. 168 reviews at 4.8★ rendered as a number in brackets feels like a statistic. One named quote from Emanuela makes it human.
+
+The proof was already there. The page just wasn't using it.
+
+DM me "AUDIT" if you want me to do this for your store.
+
+#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #ProductPage #Shopify #UXDesign</div>
+    <button class="copy-btn" onclick="copyText('ct0')">Copy caption</button>
+  </div>
+
+  <div class="cap-body" id="cap-1">
+    <div class="cap-platform">LinkedIn + Instagram · ~155 words</div>
+    <div class="cap-text" id="ct1">Your customer doesn't tell you why they left.
+
+But their hesitation is completely predictable.
+
+When a new visitor lands on an anti-cellulite product page, they're running an invisible checklist. In order:
+
+→ "Will this actually work on my body?" — The hero image showed a tube on a graphic background. Not a single patch of skin.
+
+→ "Is this site legitimate?" — The price said £26. The shipping banner said €49. Two different currencies on the same page.
+
+→ "What makes this different from the €8 cream at the supermarket?" — A cooling effect on contact and a 5-ball massager were both below the fold.
+
+→ "Does it actually work?" — A clinical study on 100 women showing 78% cellulite reduction was sitting in paragraph 6 of the description.
+
+→ "What if it doesn't work for me?" — No returns policy anywhere near the buy button.
+
+→ "Should I buy now or later?" — No urgency. No scarcity. No reason to act today.
+
+168 reviews at 4.8★. A brand with real proof. A page that answered none of these questions above the fold.
+
+Every question your buyer has is a reason to leave. A good page answers them before they have to ask.
+
+Follow @koolestpro for weekly CRO breakdowns.
+
+#ShopifyDesign #CRO #eCommerce #CustomerPsychology #ConversionRate #Shopify #UXDesign #ProductPage</div>
+    <button class="copy-btn" onclick="copyText('ct1')">Copy caption</button>
+  </div>
+
+  <div class="cap-body" id="cap-2">
+    <div class="cap-platform">LinkedIn + Instagram · ~196 words</div>
+    <div class="cap-text" id="ct2">High-converting pages don't ask for trust. They remove every reason not to give it.
+
+Here's how the rebuilt Eco Bio Boutique page does that:
+
+The hero image shows outcome, not product. Before the buyer reads a single word, they see the body area being treated. That answers "is this for me?" before they even notice the product name.
+
+The currency is correct. £26 on an Italian .it domain with a €49 shipping banner is not a rounding error — it's a signal that something is wrong. One symbol. Every first-time buyer catches it.
+
+The clinical stats sit above the fold. 78% cellulite reduction. 81% orange-peel improvement. The numbers already existed on the page. They were just living four scrolls below where decisions get made.
+
+The CTA frames the action. "Add to Cart" makes you feel like you're stocking up on shampoo. "Start your treatment" makes you feel like you're committing to a result. Same product. Different close rate.
+
+The trust strip lands at the decision moment. Not in the footer. Not on a policy page. Right below the buy button — where the hesitation actually lives.
+
+None of this required new photography, new copy, or a rebrand. It required putting the right things in the right order.
+
+DM me "AUDIT" and I'll tell you what your page is getting wrong.
+
+#ShopifyDesign #CRO #eCommerce #ConversionOptimization #Shopify #ProductPage #WebDesign #DigitalMarketing</div>
+    <button class="copy-btn" onclick="copyText('ct2')">Copy caption</button>
+  </div>
+
+  <div class="cap-body" id="cap-3">
+    <div class="cap-platform">LinkedIn + Instagram (carousel) · ~128 words</div>
+    <div class="cap-text" id="ct3">£26 on an Italian website.
+
+One wrong currency symbol. Sitting next to a banner that said "free shipping over €49."
+
+That's the kind of detail that doesn't show up in a bounce rate report. It just quietly kills trust for every first-time visitor who notices it — and first-time visitors always notice it.
+
+This brand had 168 reviews at 4.8★. A clinical study showing 78% cellulite reduction. A unique physical differentiator — a 5-ball steel massager built into the product. None of it visible above the fold.
+
+The proof existed. The page just didn't use it.
+
+8 changes. All above the fold. No new content created.
+
+→ Swipe to see the full transformation.
+
+DM me "AUDIT" for a free store audit.
+
+#ShopifyDesign #CRO #eCommerce #BeforeAndAfter #ShopifyDeveloper #ConversionRate #Shopify #WebDesign #DigitalMarketing #ShopifySeller</div>
+    <button class="copy-btn" onclick="copyText('ct3')">Copy caption</button>
+  </div>
+
+  <div class="cap-body" id="cap-4">
+    <div class="cap-platform">Twitter / X — 3 standalone tweets</div>
+    <div class="cap-text" id="ct4">TWEET A — The Rule:
+The proof that converts is usually already on your page.
+It's just 4 scrolls too deep.
+Stop writing better copy. Start moving existing proof up.
+
+────────────────────
+
+TWEET B — The Contrast:
+168 reviews. 4.8★. Clinical stats from 100 women.
+All invisible above the fold.
+Your store might have the exact same problem.
+
+────────────────────
+
+TWEET C — The Hot Take:
+"Add to Cart" is the laziest CTA in eCommerce.
+"Start your treatment — €26" closes differently.
+The action frame matters more than the button colour.</div>
+    <button class="copy-btn" onclick="copyText('ct4')">Copy all tweets</button>
+  </div>
+</div>
+<div class="section-divider"></div>
+
+
+<!-- ═══════════════════════════════════════════════
+  MASTER DOWNLOAD PANEL
+════════════════════════════════════════════════ -->
+<div class="master-dl" id="master-download">
+  <div class="master-ttl">Export all graphics</div>
+  <div class="master-btns">
+    <button class="master-btn" onclick="downloadAllZip()">↓ Download All — ZIP</button>
+    <button class="master-btn" onclick="downloadAllPDF()">↓ Download All — PDF</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+  SCRIPTS
+════════════════════════════════════════════════ -->
+<script>
+/* ── IMAGE UPLOAD ─────────────────────────────── */
+function loadImg(input, imgId, phId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(imgId);
+    img.src = e.target.result;
+    img.classList.add('loaded');
+    const ph = document.getElementById(phId);
+    if (ph) ph.style.display = 'none';
+    /* Sync after image to Angles 2 & 3 */
+    if (imgId === 'after-img') {
+      ['a2-page-img','a3-page-img'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.src = e.target.result; el.style.display = 'block'; }
+      });
+      const ph2 = document.getElementById('a2-ph');
+      if (ph2) ph2.style.display = 'none';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ── CAROUSEL SWIPE ───────────────────────────── */
+let currentSlide = 0;
+const SLIDES = 6;
+function swipe(next) {
+  if (next >= SLIDES) return;
+  currentSlide = next;
+  document.getElementById('lk-track').style.transform = `translateX(${-540 * next}px)`;
+  document.querySelectorAll('.sdot').forEach((d,i) => d.classList.toggle('on', i === next));
+}
+
+/* ── CAPTION TABS ─────────────────────────────── */
+function showTab(idx) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('on', i === idx));
+  document.querySelectorAll('.cap-body').forEach((b,i) => b.classList.toggle('on', i === idx));
+}
+function copyText(id) {
+  const txt = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(txt).then(() => {
+    event.target.textContent = '✓ Copied!';
+    setTimeout(() => event.target.textContent = 'Copy caption', 1800);
+  });
+}
+
+/* ── HIGH-QUALITY CAPTURE ─────────────────────── */
+async function captureHQ(id) {
+  await document.fonts.ready;
+  const el = document.getElementById(id);
+  const raw = await html2canvas(el, {
+    scale: 4, useCORS: true, allowTaint: true,
+    width: 540, height: 540,
+    backgroundColor: '#080808', logging: false, imageTimeout: 8000
+  });
+  const out = document.createElement('canvas');
+  out.width = 1080; out.height = 1080;
+  const ctx = out.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(raw, 0, 0, 1080, 1080);
+  return out;
+}
+
+function triggerDownload(href, filename) {
+  const a = document.createElement('a');
+  a.href = href; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+async function dlGraphic(id, filename) {
+  const out = await captureHQ(id);
+  triggerDownload(out.toDataURL('image/png'), filename + '.png');
+}
+
+async function dlGraphicPDF(id, filename) {
+  const out = await captureHQ(id);
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [1080,1080] });
+  doc.addImage(out.toDataURL('image/png'), 'PNG', 0, 0, 1080, 1080);
+  doc.save(filename + '.pdf');
+}
+
+/* ── CAROUSEL SLIDE CAPTURE ───────────────────── */
+async function captureSlide(i) {
+  await document.fonts.ready;
+  const slide = document.getElementById(`slide-${i+1}`);
+  await new Promise(r => setTimeout(r, 200));
+  const raw = await html2canvas(slide, {
+    scale: 4, useCORS: true, allowTaint: true,
+    width: 540, height: 540,
+    backgroundColor: '#080808', logging: false, imageTimeout: 8000
+  });
+  const out = document.createElement('canvas');
+  out.width = 1080; out.height = 1080;
+  const ctx = out.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(raw, 0, 0, 1080, 1080);
+  return out;
+}
+
+async function dlSlide(i, filename) {
+  const out = await captureSlide(i);
+  triggerDownload(out.toDataURL('image/png'), filename + '.png');
+}
+
+async function dlCarouselZip() {
+  const zip = new JSZip();
+  const names = ['s1_cover','s2_problem','s3_diagnosis','s4_fix','s5_result','s6_cta'];
+  for (let i = 0; i < 6; i++) {
+    const out = await captureSlide(i);
+    const blob = await new Promise(r => out.toBlob(r,'image/png'));
+    zip.file(`koolestpro_carousel_${names[i]}.png`, blob);
+  }
+  const content = await zip.generateAsync({ type:'blob' });
+  triggerDownload(URL.createObjectURL(content), 'koolestpro_carousel_all_slides.zip');
+}
+
+async function dlCarouselPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'portrait', unit:'pt', format:[1080,1080] });
+  for (let i = 0; i < 6; i++) {
+    if (i > 0) doc.addPage([1080,1080]);
+    const out = await captureSlide(i);
+    doc.addImage(out.toDataURL('image/png'),'PNG',0,0,1080,1080);
+  }
+  doc.save('koolestpro_carousel_all_slides.pdf');
+}
+
+/* ── MASTER DOWNLOAD ──────────────────────────── */
+async function downloadAllZip() {
+  const zip = new JSZip();
+  const graphics = [
+    { id:'angle1', name:'koolestpro_angle1_before_after.png' },
+    { id:'angle2', name:'koolestpro_angle2_psychology_map.png' },
+    { id:'angle3', name:'koolestpro_angle3_decision_guide.png' },
+  ];
+  for (const g of graphics) {
+    const out = await captureHQ(g.id);
+    const blob = await new Promise(r => out.toBlob(r,'image/png'));
+    zip.file(g.name, blob);
+  }
+  const names = ['s1_cover','s2_problem','s3_diagnosis','s4_fix','s5_result','s6_cta'];
+  for (let i = 0; i < 6; i++) {
+    const out = await captureSlide(i);
+    const blob = await new Promise(r => out.toBlob(r,'image/png'));
+    zip.file(`koolestpro_carousel_${names[i]}.png`, blob);
+  }
+  const content = await zip.generateAsync({ type:'blob' });
+  triggerDownload(URL.createObjectURL(content), 'koolestpro_ecobioboutique_content_pack.zip');
+}
+
+async function downloadAllPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'portrait', unit:'pt', format:[1080,1080] });
+  const ids = ['angle1','angle2','angle3'];
+  for (let i = 0; i < ids.length; i++) {
+    if (i > 0) doc.addPage([1080,1080]);
+    const out = await captureHQ(ids[i]);
+    doc.addImage(out.toDataURL('image/png'),'PNG',0,0,1080,1080);
+  }
+  for (let i = 0; i < 6; i++) {
+    doc.addPage([1080,1080]);
+    const out = await captureSlide(i);
+    doc.addImage(out.toDataURL('image/png'),'PNG',0,0,1080,1080);
+  }
+  doc.save('koolestpro_ecobioboutique_content_pack.pdf');
+}
+</script>
+</body>
+</html>

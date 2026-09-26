@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V1CE Tap Review Card — CRO Breakdown | @koolestpro</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0e0e0e;color:#fff;font-family:'DM Mono',monospace;padding:40px 20px 80px;}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:48px 0 16px;padding-left:4px;}
+.section-divider{height:1px;background:rgba(255,255,255,0.05);margin:48px 0;}
+.lk-frame{max-width:588px;margin:0 auto;background:#1a1a1a;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);}
+.lk-header{display:flex;align-items:flex-start;gap:10px;padding:14px 16px 10px;}
+.lk-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.lk-meta{flex:1;}
+.lk-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#e0e0e0;display:flex;align-items:center;gap:6px;}
+.lk-badge{background:#FF9500;color:#000;font-family:'DM Mono',monospace;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;}
+.lk-sub{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.lk-doc-tag{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);margin-top:4px;}
+#viewport{width:540px;height:680px;overflow:hidden;position:relative;cursor:grab;margin:0 auto;background:#080808;}
+#viewport:active{cursor:grabbing;}
+#track{display:flex;transition:transform 0.32s cubic-bezier(0.4,0,0.2,1);will-change:transform;}
+.slide{width:540px;height:680px;flex-shrink:0;position:relative;overflow:hidden;}
+.swb{position:absolute;right:0;top:50%;transform:translateY(-50%);width:32px;height:80px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:22px;cursor:pointer;z-index:20;background:linear-gradient(to right,transparent,rgba(0,0,0,0.25));user-select:none;}
+#dots{display:flex;justify-content:center;gap:6px;padding:12px 0;}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.18);cursor:pointer;transition:all 0.2s;}
+.dot.active{background:#FF9500;width:20px;border-radius:3px;}
+#pager{text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.28);padding-bottom:8px;}
+.lk-actions{display:flex;gap:20px;padding:10px 16px;border-top:1px solid rgba(255,255,255,0.06);}
+.lk-action{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:5px;cursor:pointer;}
+.lk-action:last-child{margin-left:auto;}
+.lk-caption{padding:10px 16px 16px;font-family:'DM Mono',monospace;font-size:12px;line-height:1.65;color:rgba(255,255,255,0.45);}
+.lk-caption strong{color:#e0e0e0;}
+#download-panel{max-width:588px;margin:20px auto 0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;}
+#download-panel h3{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,0.45);margin-bottom:14px;letter-spacing:1.5px;text-transform:uppercase;}
+#dl-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+.dl-btn{font-family:'DM Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.55);cursor:pointer;transition:all 0.2s;}
+.dl-btn:hover{border-color:#FF9500;color:#FF9500;}
+.dl-all{background:rgba(255,149,0,0.08);border-color:rgba(255,149,0,0.28)!important;color:#FF9500!important;}
+.dl-pdf{background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);border:none!important;color:#fff!important;font-weight:700;}
+#download-panel p{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.18);}
+#download-status{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.32);margin-top:10px;min-height:14px;}
+.tabs-wrap{max-width:588px;margin:0 auto;}
+.tab-buttons{display:flex;gap:4px;flex-wrap:wrap;}
+.tab-btn{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:6px 6px 0 0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-bottom:none;color:rgba(255,255,255,0.38);cursor:pointer;transition:all 0.2s;}
+.tab-btn.active{background:rgba(255,149,0,0.08);border-color:rgba(255,149,0,0.28);color:#FF9500;}
+.tab-panel{display:none;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:0 8px 8px 8px;padding:24px;}
+.tab-panel.active{display:block;}
+.tab-panel pre{font-family:'DM Mono',monospace;font-size:12px;line-height:1.9;color:rgba(255,255,255,0.65);white-space:pre-wrap;word-break:break-word;}
+.copy-btn{margin-top:16px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:8px 20px;border-radius:6px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.28);color:#FF9500;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all 0.2s;}
+.copy-btn:hover{background:rgba(255,149,0,0.16);}
+#pipeline-panel{max-width:588px;margin:20px auto 0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;}
+#pipeline-panel h3{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,0.45);margin-bottom:14px;letter-spacing:1.5px;text-transform:uppercase;}
+#pipeline-status{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.32);margin-top:10px;min-height:14px;}
+.pipe-btn{font-family:'DM Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.55);cursor:pointer;transition:all 0.2s;}
+.pipe-btn:hover{border-color:#FF9500;color:#FF9500;}
+.pipe-export{background:rgba(255,149,0,0.08);border-color:rgba(255,149,0,0.28)!important;color:#FF9500!important;}
+/* Annotation table */
+.anno-wrap{max-width:588px;margin:0 auto;overflow-x:auto;}
+.anno-table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:11px;line-height:1.6;}
+.anno-table th{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;}
+.anno-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.65);vertical-align:top;}
+.anno-table tr:last-child td{border-bottom:none;}
+.anno-num{color:rgba(255,255,255,0.2);font-size:10px;width:24px;}
+.anno-pt{color:#FF9500;font-weight:500;width:30%;}
+.anno-q{color:rgba(255,255,255,0.5);width:35%;}
+.anno-d{color:rgba(255,255,255,0.6);}
+/* Visual evidence — standalone before/after + annotation graphics */
+.evidence-btn-row{max-width:588px;margin:14px auto 0;display:flex;gap:8px;flex-wrap:wrap;}
+
+/* ── BEFORE/AFTER TEMPLATE (dark, 1:1 square, top-center labels + numbered pins, v3) ── */
+#ba-graphic{width:1060px;max-width:100%;box-sizing:border-box;margin:0 auto;background:#0a0a0a;border-radius:20px;padding:60px 50px 84px;position:relative;overflow:hidden;}
+#ba-graphic .glow-tl{position:absolute;top:-160px;left:-160px;width:420px;height:420px;background:radial-gradient(circle,rgba(255,149,0,0.35),transparent 70%);filter:blur(50px);pointer-events:none;}
+#ba-graphic .glow-tr{position:absolute;top:-160px;right:-160px;width:420px;height:420px;background:radial-gradient(circle,rgba(123,47,190,0.35),transparent 70%);filter:blur(50px);pointer-events:none;}
+.ba-head2{position:relative;text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.3px;color:#fff;margin:0 0 8px;text-transform:uppercase;}
+.ba-sub2{position:relative;text-align:center;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:34px;}
+.ba-stage{position:relative;display:flex;justify-content:center;align-items:flex-start;gap:60px;}
+.ba-col{position:relative;width:390px;flex-shrink:0;}
+.ba-col-after{width:530px;}
+.ba-img-wrap{width:390px;margin-left:70px;position:relative;}
+.ba-img-wrap img,.ba-col>img{width:100%;display:block;border-radius:14px;}
+.ba-lbl{text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:3px;margin-bottom:10px;}
+.ba-leader{position:absolute;height:2px;background:#FF9500;}
+.ba-pin{position:absolute;width:30px;height:30px;border-radius:50%;background:#FF9500;color:#0a0a0a;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #0a0a0a;}
+
+/* ── ANNOTATION TEMPLATE (light bg, curved hand-drawn arrows + captions, v2 — 8 points) ── */
+#anno-graphic{width:1090px;max-width:100%;margin:0 auto;background:#f1efe9;border-radius:20px;padding:115px 40px 120px;}
+.an-inner{position:relative;width:1010px;margin:0 auto;}
+.an-headline{text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:32px;letter-spacing:-0.5px;color:#151312;text-transform:uppercase;max-width:820px;margin:0 auto 6px;}
+.an-sub{text-align:center;font-family:'DM Mono',monospace;font-size:12px;color:rgba(21,19,18,0.45);margin-bottom:36px;}
+.an-stage{position:relative;width:390px;margin:0 auto;}
+.an-stage img{width:100%;display:block;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,0.12);}
+.an-svg{position:absolute;top:0;left:-310px;width:1010px;height:760px;pointer-events:none;}
+.an-cap{position:absolute;font-family:'Caveat',cursive;font-weight:600;font-size:22px;line-height:1.2;color:#151312;width:230px;}
+.an-cap.left{text-align:right;}
+.an-cap.right{text-align:left;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — LINKEDIN CAROUSEL PREVIEW
+══════════════════════════════════════════ -->
+<div class="section-label">① LinkedIn Carousel Preview</div>
+
+<div class="lk-frame">
+  <div class="lk-header" data-chrome>
+    <div class="lk-av">
+      <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle-smile_esjvt2" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentNode.innerHTML='<span style=font-family:Syne,sans-serif;font-weight:800;font-size:16px;color:#fff;>R</span>'">
+    </div>
+    <div class="lk-meta">
+      <div class="lk-name">Ridwan Adekunle <span class="lk-badge">1st</span></div>
+      <div class="lk-sub">Shopify CRO &amp; UX Designer · Helping DTC brands convert 15–30% more</div>
+      <div class="lk-doc-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        Document
+      </div>
+    </div>
+  </div>
+
+  <div id="viewport">
+    <div id="track">
+
+<!-- ══════════════════════════════════════
+     SLIDE 1 — COVER (GPT-image)
+══════════════════════════════════════ -->
+<div class="slide" style="background:#080808;">
+  <img src="BASE64_STRIPPED" alt="This Store Asks You To Choose Before It Tells You Why" style="width:100%;height:100%;object-fit:cover;display:block;">
+  <div class="swb" onclick="goTo(current+1)">›</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 2 — PROBLEM (GPT-image)
+══════════════════════════════════════ -->
+<div class="slide" style="background:#070707;">
+  <img src="BASE64_STRIPPED" alt="Two pop-ups block every visit" style="width:100%;height:100%;object-fit:cover;display:block;">
+  <div class="swb" onclick="goTo(current+1)">›</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 3 — DIAGNOSIS (GPT-image)
+══════════════════════════════════════ -->
+<div class="slide" style="background:#080808;">
+  <img src="BASE64_STRIPPED" alt="The buyer is asked to decide before they understand" style="width:100%;height:100%;object-fit:cover;display:block;">
+  <div class="swb" onclick="goTo(current+1)">›</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 4 — THE FIX (GPT-image)
+══════════════════════════════════════ -->
+<div class="slide" style="background:#070707;">
+  <img src="BASE64_STRIPPED" alt="4 targeted changes, same brand" style="width:100%;height:100%;object-fit:cover;display:block;">
+  <div class="swb" onclick="goTo(current+1)">›</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 5 — BEFORE / AFTER (real Playwright screenshots — visual evidence)
+══════════════════════════════════════ -->
+<div class="slide" style="background:#0c0c0c;">
+  <div style="padding:28px 24px 0;text-align:center;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#FF9500;">Same Page · Reordered</div>
+  </div>
+  <div style="display:flex;gap:14px;padding:16px 20px 0;justify-content:center;">
+    <!-- BEFORE: real screenshot, top-cropped -->
+    <div style="width:224px;">
+      <div style="text-align:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);margin-bottom:8px;">BEFORE</div>
+      <div style="border-radius:12px;overflow:hidden;height:440px;">
+        <img src="BASE64_STRIPPED" style="width:100%;object-fit:cover;object-position:top;display:block;">
+      </div>
+    </div>
+    <!-- AFTER: real screenshot, top-cropped -->
+    <div style="width:224px;">
+      <div style="text-align:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:#FF9500;margin-bottom:8px;">AFTER</div>
+      <div style="border-radius:12px;overflow:hidden;height:440px;box-shadow:0 0 0 2px #FF9500;">
+        <img src="BASE64_STRIPPED" style="width:100%;object-fit:cover;object-position:top;display:block;">
+      </div>
+    </div>
+  </div>
+  <div style="padding:18px 30px 0;text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6;">Real screenshots, both at 390px mobile width. Same product, same price, same brand. Price + top benefit just moved above the config step.</div>
+  <div class="swb" onclick="goTo(current+1)">›</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 6 — RESULT (GPT-image)
+══════════════════════════════════════ -->
+<div class="slide" style="background:#080808;">
+  <img src="BASE64_STRIPPED" alt="0 popups blocking the page now" style="width:100%;height:100%;object-fit:cover;display:block;">
+  <div class="swb" onclick="goTo(current+1)">›</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 7 — CLOSE / CTA (GPT-image)
+══════════════════════════════════════ -->
+<div class="slide" style="background:#080808;">
+  <img src="BASE64_STRIPPED" alt="Want this done for your store? DM me AUDIT" style="width:100%;height:100%;object-fit:cover;display:block;">
+  <div style="position:absolute;top:116px;left:144px;width:252px;height:252px;border-radius:50%;overflow:hidden;">
+    <img src="https://res.cloudinary.com/drl0rscuf/image/upload/f_png,q_auto/avatar-circle-smile_esjvt2"
+         style="width:100%;height:100%;object-fit:cover;object-position:center top;"
+         onerror="this.style.display='none'">
+  </div>
+</div>
+
+    </div>
+  </div>
+
+  <div id="dots">
+    <div class="dot active" onclick="goTo(0)"></div>
+    <div class="dot" onclick="goTo(1)"></div>
+    <div class="dot" onclick="goTo(2)"></div>
+    <div class="dot" onclick="goTo(3)"></div>
+    <div class="dot" onclick="goTo(4)"></div>
+    <div class="dot" onclick="goTo(5)"></div>
+    <div class="dot" onclick="goTo(6)"></div>
+  </div>
+  <div id="pager">1 / 7</div>
+
+  <div class="lk-actions" data-chrome>
+    <div class="lk-action">👍 Like</div>
+    <div class="lk-action">💬 Comment</div>
+    <div class="lk-action">↗ Share</div>
+  </div>
+  <div class="lk-caption" data-chrome>
+    <strong>Ridwan Adekunle</strong> — This store asks you to choose before it tells you why. Full breakdown in the caption tabs below.
+  </div>
+</div>
+
+<div id="download-panel">
+  <h3>Download Slides</h3>
+  <div id="dl-buttons">
+    <button class="dl-btn" onclick="dlSlide(0)">Slide 1</button>
+    <button class="dl-btn" onclick="dlSlide(1)">Slide 2</button>
+    <button class="dl-btn" onclick="dlSlide(2)">Slide 3</button>
+    <button class="dl-btn" onclick="dlSlide(3)">Slide 4</button>
+    <button class="dl-btn" onclick="dlSlide(4)">Slide 5 (Before/After)</button>
+    <button class="dl-btn" onclick="dlSlide(5)">Slide 6</button>
+    <button class="dl-btn" onclick="dlSlide(6)">Slide 7</button>
+    <button class="dl-btn dl-all" onclick="dlAll()">Download All (PNG)</button>
+    <button class="dl-btn dl-pdf" onclick="dlPDF()">Download PDF</button>
+  </div>
+  <p>PNG exports are 2x scale (1080×1360). PDF bundles all 7 slides as pages.</p>
+  <div id="download-status" aria-live="polite"></div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — FIGMA ANNOTATION REFERENCE
+══════════════════════════════════════════ -->
+<div class="section-label">② Figma Annotation Reference</div>
+<div class="anno-wrap">
+  <table class="anno-table">
+    <thead>
+      <tr><th>#</th><th>Points to (page element)</th><th>Psychology question</th><th>Decision guide</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="anno-num">1</td><td class="anno-pt">Popup sequence removed</td><td class="anno-q">"What am I even looking at — why did I get a cookie popup immediately followed by an email quiz?"</td><td class="anno-d">Non-blocking cookie banner removes friction between arrival and product discovery</td></tr>
+      <tr><td class="anno-num">2</td><td class="anno-pt">Price + top benefit surfaced above Style/Qty</td><td class="anno-q">"Why am I being asked to pick a style and quantity before I even know what this costs or why I'd want it?"</td><td class="anno-d">Lets the buyer understand value before configuring anything</td></tr>
+      <tr><td class="anno-num">3</td><td class="anno-pt">Full benefit list + bulk table kept together lower down</td><td class="anno-q">"What does this actually do for my business, specifically?"</td><td class="anno-d">Lets the buyer compare 1 vs 3+ vs 5+ vs 10+ once they're ready to decide</td></tr>
+      <tr><td class="anno-num">4</td><td class="anno-pt">Chat bubble repositioned off the CTA zone</td><td class="anno-q">"Is this button going to work, or is that chat bubble in the way?"</td><td class="anno-d">Removes mis-tap risk right at the purchase decision moment</td></tr>
+      <tr><td class="anno-num">5</td><td class="anno-pt">Clean, non-branded hero image</td><td class="anno-q">"Is that a competitor's card reader in the photo — do I need one of those too?"</td><td class="anno-d">Keeps full visual attention on the product being sold</td></tr>
+      <tr><td class="anno-num">6</td><td class="anno-pt">Return/guarantee line added near CTA</td><td class="anno-q">"When will this arrive, and what happens if I need to send it back?"</td><td class="anno-d">Removes last-second doubt at the moment of decision</td></tr>
+      <tr><td class="anno-num">7</td><td class="anno-pt">Trust badge paired with the rating</td><td class="anno-q">"Is this actually good? Only 2 reviews behind that 5-star rating..."</td><td class="anno-d">Reinforces credibility while the review count is still building</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — BEFORE / AFTER (standalone graphic, visual evidence)
+     Real Playwright screenshots — live site (before) + local rebuild render (after).
+══════════════════════════════════════════ -->
+<div class="section-label">③ Before / After — Visual Evidence</div>
+<div id="ba-graphic">
+  <div class="glow-tl"></div>
+  <div class="glow-tr"></div>
+  <div class="ba-head2">Same Page, Reordered For Trust</div>
+  <div class="ba-sub2">@koolestpro &middot; Shopify CRO &amp; UX</div>
+  <div class="ba-stage">
+    <!-- BEFORE: real screenshot of the live site -->
+    <div class="ba-col">
+      <div class="ba-lbl" style="color:rgba(255,255,255,0.5);">BEFORE</div>
+      <img src="BASE64_STRIPPED">
+    </div>
+    <!-- AFTER: real screenshot of the local rebuild, numbered pins on real fixes -->
+    <div class="ba-col ba-col-after">
+      <div class="ba-lbl" style="width:390px;margin-left:70px;color:#FF9500;">AFTER</div>
+      <div class="ba-img-wrap">
+        <img src="BASE64_STRIPPED" style="box-shadow:0 0 0 2px #FF9500;">
+        <div class="ba-leader" style="top:29px;left:-20px;width:40px;"></div>
+        <div class="ba-pin" style="top:15px;left:-50px;">1</div>
+        <div class="ba-leader" style="top:249px;left:370px;width:40px;"></div>
+        <div class="ba-pin" style="top:235px;left:410px;">2</div>
+        <div class="ba-leader" style="top:462px;left:-20px;width:40px;"></div>
+        <div class="ba-pin" style="top:448px;left:-50px;">3</div>
+        <div class="ba-leader" style="top:491px;left:370px;width:40px;"></div>
+        <div class="ba-pin" style="top:477px;left:410px;">4</div>
+        <div class="ba-leader" style="top:528px;left:-20px;width:40px;"></div>
+        <div class="ba-pin" style="top:514px;left:-50px;">5</div>
+        <div class="ba-leader" style="top:587px;left:370px;width:40px;"></div>
+        <div class="ba-pin" style="top:573px;left:410px;">6</div>
+        <div class="ba-leader" style="top:648px;left:-20px;width:40px;"></div>
+        <div class="ba-pin" style="top:634px;left:-50px;">7</div>
+        <div class="ba-leader" style="top:703px;left:-20px;width:40px;"></div>
+        <div class="ba-pin" style="top:689px;left:-50px;">8</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="evidence-btn-row">
+  <button class="pipe-btn pipe-export" onclick="dlFixed('ba-graphic','koolestpro_v1ce_before-after.png','Before/After graphic','ba-status')">Download Before/After PNG</button>
+</div>
+<div id="ba-status" style="max-width:588px;margin:8px auto 0;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.32);min-height:14px;"></div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — ANNOTATED CHANGES (standalone graphic, points to what changed)
+══════════════════════════════════════════ -->
+<div class="section-label">④ Annotated Changes — Visual Evidence</div>
+<div id="anno-graphic">
+  <div class="an-inner">
+    <div class="an-headline">What The First Screen Was Missing</div>
+    <div class="an-sub">3 real fixes · 5 things already working — @koolestpro</div>
+    <div class="an-stage">
+      <img src="BASE64_STRIPPED">
+      <img class="an-svg" src="BASE64_STRIPPED" style="position:absolute;top:0;left:-310px;width:1010px;height:760px;pointer-events:none;">
+      <div class="an-cap left" style="left:-310px;top:15px;">Clean header — logo + cart only</div>
+      <div class="an-cap right" style="left:470px;top:235px;">Real product photo, no competitor logo</div>
+      <div class="an-cap left" style="left:-310px;top:448px;">Product name up front</div>
+      <div class="an-cap right" style="left:470px;top:477px;">Rating + trust badge added</div>
+      <div class="an-cap left" style="left:-310px;top:514px;">Price + benefit before the config step</div>
+      <div class="an-cap right" style="left:470px;top:573px;">Real delivery date, not vague copy</div>
+      <div class="an-cap left" style="left:-310px;top:634px;">Style shown as clear pills</div>
+      <div class="an-cap right" style="left:470px;top:689px;">Simple quantity stepper</div>
+    </div>
+  </div>
+</div>
+<div class="evidence-btn-row">
+  <button class="pipe-btn pipe-export" onclick="dlFixed('anno-graphic','koolestpro_v1ce_annotated-changes.png','Annotated changes graphic','anno-status')">Download Annotated PNG</button>
+</div>
+<div id="anno-status" style="max-width:588px;margin:8px auto 0;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.32);min-height:14px;"></div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — POST COPY
+══════════════════════════════════════════ -->
+<div class="section-label">⑤ Post Copy</div>
+<div class="tabs-wrap">
+  <div class="tab-buttons">
+    <button class="tab-btn active" onclick="openTab(this,'tab-linkedin')">LinkedIn</button>
+    <button class="tab-btn" onclick="openTab(this,'tab-ig')">Instagram</button>
+    <button class="tab-btn" onclick="openTab(this,'tab-hook')">Hook Variations</button>
+    <button class="tab-btn" onclick="openTab(this,'tab-twitter-angles')">Twitter Angles</button>
+    <button class="tab-btn" onclick="openTab(this,'tab-twitter-thread')">Twitter Thread</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-linkedin">
+    <pre>Ever land on a page, fight through two pop-ups, and then get asked to pick a style and a quantity before anyone's told you why the product matters?
+
+That's what happens on this NFC review-card store. Cookie modal first. Dismiss it, an email quiz pops up asking which "card is actually you." Dismiss that, and the cookie modal comes back. Once you're finally through, you're picking Google vs TripAdvisor vs Facebook before you've read a single benefit.
+
+Here's what I changed and why:
+
+1. Removed the blocking popup sequence, so the page loads straight to the product
+2. Moved the price and top benefit line above the style picker (both were real and correct, just sequenced too late)
+3. Kept the full benefit list and bulk-pricing table together lower down, for a buyer who's ready to compare quantities
+4. Repositioned the chat bubble off the sticky CTA zone
+5. Swapped the hero image for a clean shot with no competing brand in frame
+6. Added a return/guarantee line near the CTA
+7. Paired the 5-star rating with a supporting trust badge, since it's currently backed by 2 reviews
+
+Same product, same brand, same price. Just put the reasons to buy before the decisions to make.
+
+DM me "AUDIT" if you want me to do this for your store.
+
+#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #ProductPage #Shopify #UXDesign</pre>
+    <button class="copy-btn" onclick="copyText('tab-linkedin')">Copy</button>
+  </div>
+
+  <div class="tab-panel" id="tab-ig">
+    <pre>This store's price is fine — £29.99, right next to the title. What your customer actually notices is everything that happens before they reach it: two stacked pop-ups, then a style and quantity decision before a single benefit shows up.
+
+A high-converting page answers "why" before it asks "which one." This one asks first.
+
+Follow @koolestpro for weekly CRO breakdowns.
+
+#ShopifyDesign #CRO #eCommerce #CustomerPsychology #ConversionRate #Shopify #UXDesign #ProductPage</pre>
+    <button class="copy-btn" onclick="copyText('tab-ig')">Copy</button>
+  </div>
+
+  <div class="tab-panel" id="tab-hook">
+    <pre>1. Ever land on a page, fight through two pop-ups, and then get asked to pick a style and a quantity before anyone's told you why the product matters?
+2. This store's price is fine. What's missing is the reason to buy it — buried under two configuration choices the page asks you to make first.
+3. High-converting PDPs answer "why" before they ask "which one." This one asks backwards, even though everything it needs is already on the page.
+4. A Shopify store selling NFC review cards — here's the exact sequencing problem I'd fix first, not a redesign from scratch.</pre>
+    <button class="copy-btn" onclick="copyText('tab-hook')">Copy</button>
+  </div>
+
+  <div class="tab-panel" id="tab-twitter-angles">
+    <pre>Tweet A (The Rule):
+If your buyer has to dismiss 2 pop-ups and pick a style before they see why your product matters, the price was never the problem. The order was.
+
+Tweet B (The Contrast):
+Before: cookie modal → email quiz → cookie modal again → pick a style → pick a quantity → finally, the price and the reasons.
+After: product, price, benefits, then configure. Nothing else changed.
+
+Tweet C (The Hot Take):
+A 5-star rating next to "2 reviews" doesn't build trust. It invites questions you're not ready to answer yet.</pre>
+    <button class="copy-btn" onclick="copyText('tab-twitter-angles')">Copy</button>
+  </div>
+
+  <div class="tab-panel" id="tab-twitter-thread">
+    <pre>1/ A Shopify store selling NFC review cards asks you to pick a style and a quantity before it tells you why the product matters. Here's what I'd fix first.
+2/ Landed on the page. Cookie modal. Dismissed it. Email quiz. Dismissed that. Cookie modal again. Finally through — and the very next thing asked of me was Style: Google/TripAdvisor/Facebook, then quantity.
+3/ The price (£29.99) and the full benefit list are both real and both fine. They just sit inside a buy-box card you only reach after configuring.
+4/ The fix: kill the popup loop, surface price + the strongest benefit line above the Style/Qty pickers, add a return/guarantee note near the CTA. Same brand, same product, same price.
+5/ Having the right price and the right benefits on the page isn't enough if the buyer has to decide before they see either one. DM "AUDIT" if you want this done for your store.</pre>
+    <button class="copy-btn" onclick="copyText('tab-twitter-thread')">Copy</button>
+  </div>
+</div>
+
+<div id="pipeline-panel">
+  <h3>Content Pipeline</h3>
+  <button class="pipe-btn pipe-export" onclick="sendToPipeline()">Send to Content Pipeline →</button>
+  <div id="pipeline-status" aria-live="polite"></div>
+</div>
+
+<script>
+const POST_BRAND = 'V1CE';
+const POST_SLUG = 'v1ce_tap-review-card';
+const POST_TYPE = 'CRO Fix';
+const POST_FOLDER = 'outputs/cro-fixes/' + POST_SLUG + '_content.html';
+const TOTAL = 7;
+
+let current = 0;
+const track = document.getElementById('track');
+const slides = Array.from(document.querySelectorAll('.slide'));
+
+function goTo(n) {
+  if (n < 0) n = 0;
+  if (n >= TOTAL) n = TOTAL - 1;
+  current = n;
+  track.style.transition = 'transform 0.32s cubic-bezier(0.4,0,0.2,1)';
+  track.style.transform = `translateX(-${current * 540}px)`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  const pager = document.getElementById('pager');
+  if (pager) pager.textContent = `${current + 1} / ${TOTAL}`;
+}
+
+// drag/swipe
+(function initDrag() {
+  const vp = document.getElementById('viewport');
+  if (!vp) return;
+  let startX = 0, dragging = false, startTranslate = 0;
+  const getTranslate = () => -current * 540;
+  vp.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; startTranslate = getTranslate(); track.style.transition = 'none'; });
+  vp.addEventListener('touchstart', e => { dragging = true; startX = e.touches[0].clientX; startTranslate = getTranslate(); track.style.transition = 'none'; }, { passive: true });
+  vp.addEventListener('mousemove', e => { if (!dragging) return; track.style.transform = `translateX(${startTranslate + (e.clientX - startX)}px)`; });
+  vp.addEventListener('touchmove', e => { if (!dragging) return; track.style.transform = `translateX(${startTranslate + (e.touches[0].clientX - startX)}px)`; }, { passive: true });
+  const end = clientX => {
+    if (!dragging) return;
+    dragging = false;
+    const diff = clientX - startX;
+    if (Math.abs(diff) > 60) goTo(diff < 0 ? current + 1 : current - 1);
+    else goTo(current);
+  };
+  vp.addEventListener('mouseup', e => end(e.clientX));
+  vp.addEventListener('mouseleave', e => end(e.clientX));
+  vp.addEventListener('touchend', e => end(e.changedTouches[0].clientX));
+})();
+
+goTo(0);
+
+// ── EXPORT ──
+async function waitForSlideAssets(slide) {
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+  const images = Array.from(slide.querySelectorAll('img'));
+  await Promise.all(images.map(img => {
+    if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+    if (img.decode) return img.decode().catch(() => {});
+    return new Promise(resolve => { img.onload = resolve; img.onerror = resolve; });
+  }));
+}
+
+async function captureSlide(idx) {
+  const slide = slides[idx];
+  if (!slide) throw new Error(`Slide ${idx + 1} was not found.`);
+  const toHide = document.querySelectorAll('[data-chrome], #download-panel, .posts-shell, .swb, .section-label, .section-divider, .gcard-wrap');
+  toHide.forEach(el => el.style.visibility = 'hidden');
+  const prevTransform = track.style.transform;
+  const prevTransition = track.style.transition;
+  track.style.transform = `translateX(-${idx * 540}px)`;
+  track.style.transition = 'none';
+  try {
+    await waitForSlideAssets(slide);
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    return await html2canvas(slide, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#080808', logging: false });
+  } finally {
+    track.style.transform = prevTransform;
+    track.style.transition = prevTransition;
+    toHide.forEach(el => el.style.visibility = '');
+  }
+}
+
+function setDownloadStatus(message) {
+  const status = document.getElementById('download-status');
+  if (status) status.textContent = message || '';
+}
+
+async function dlSlide(idx) {
+  try {
+    setDownloadStatus(`Preparing slide ${idx + 1}...`);
+    const canvas = await captureSlide(idx);
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = `koolestpro_v1ce_tap-review-card_slide${idx + 1}.png`;
+    a.click();
+    setDownloadStatus(`Slide ${idx + 1} downloaded.`);
+  } catch (err) {
+    console.error(err);
+    setDownloadStatus(`Slide ${idx + 1} failed: ${err.message}`);
+  }
+}
+
+// ── FIXED-ELEMENT EXPORT (standalone Before/After + Annotated graphics) ──
+async function captureFixed(id) {
+  const el = document.getElementById(id);
+  if (!el) throw new Error(`${id} was not found.`);
+  await waitForSlideAssets(el);
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  return await html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: null, logging: false });
+}
+
+function setEvidenceStatus(statusId, message) {
+  const el = document.getElementById(statusId);
+  if (el) el.textContent = message || '';
+}
+
+async function dlFixed(id, filename, label, statusId) {
+  try {
+    setEvidenceStatus(statusId, `Preparing ${label}...`);
+    const canvas = await captureFixed(id);
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = filename;
+    a.click();
+    setEvidenceStatus(statusId, `${label} downloaded.`);
+  } catch (err) {
+    console.error(err);
+    setEvidenceStatus(statusId, `${label} failed: ${err.message}`);
+  }
+}
+
+async function dlAll() {
+  for (let i = 0; i < TOTAL; i++) {
+    await dlSlide(i);
+    await new Promise(r => setTimeout(r, 300));
+  }
+}
+
+async function dlPDF() {
+  try {
+    if (!window.jspdf || !window.jspdf.jsPDF) throw new Error('PDF library did not load.');
+    if (!window.html2canvas) throw new Error('Canvas library did not load.');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [540, 680], compress: true });
+    for (let i = 0; i < TOTAL; i++) {
+      setDownloadStatus(`Adding slide ${i + 1} of ${TOTAL} to PDF...`);
+      const canvas = await captureSlide(i);
+      if (i > 0) pdf.addPage([540, 680], 'portrait');
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, 540, 680);
+    }
+    setDownloadStatus('Saving PDF...');
+    pdf.save(`koolestpro_v1ce_tap-review-card.pdf`);
+    setDownloadStatus('PDF downloaded.');
+  } catch (err) {
+    console.error(err);
+    setDownloadStatus(`PDF failed: ${err.message}`);
+  }
+}
+
+// ── TABS ──
+function openTab(el, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function copyText(id) {
+  const text = document.getElementById(id).querySelector('pre').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector(`[onclick="copyText('${id}')"]`);
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1800); }
+  }).catch(() => {
+    const pre = document.getElementById(id).querySelector('pre');
+    const r = document.createRange(); r.selectNode(pre);
+    window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
+    document.execCommand('copy'); window.getSelection().removeAllRanges();
+  });
+}
+
+// ── PIPELINE EXPORT ──
+function sendToPipeline() {
+  const now = new Date();
+  const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+  const data = {
+    id: POST_TYPE.toLowerCase().replace(/\s+/g, '-') + '-' + POST_SLUG + '-' + dateStr,
+    type: POST_TYPE,
+    title: 'V1CE Tap Review Card — CRO Breakdown',
+    slug: POST_SLUG,
+    status: 'Created',
+    day: '',
+    created: now.toISOString(),
+    folder: POST_FOLDER,
+    week: 'Week of ' + now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }),
+    month: now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+    monthSlug: now.toISOString().slice(0, 7)
+  };
+  console.log('EXPORT_POST_JSON', JSON.stringify(data));
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = POST_SLUG + '_pipeline.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  const s = document.getElementById('pipeline-status');
+  if (s) s.textContent = '✓ Exported — open ridwan_content_system_updated.html and sync.';
+}
+</script>
+
+</body>
+</html>

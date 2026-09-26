@@ -1,0 +1,118 @@
+{
+  "brand": "Lumora Skin",
+  "brandSlug": "lumora",
+  "isConceptBrand": true,
+  "conceptNotice": "Lumora Skin is a fictitious brand invented to demo Template 02. It is never a client and no caption may imply otherwise.",
+  "templateId": "02-skincare-beauty",
+  "assetDir": "outputs/templates/lumora_store-template_2026-08-28",
+  "relatedPipelineItemIds": [
+    "template showcase-lumora_store-template-20260828"
+  ],
+  "created": "2026-08-28",
+  "knownGaps": [],
+  "notes": [
+    "No caption cites Lumora's on-page stats (94% reorder, 3,600 orders) as real numbers. They are demo copy on an invented brand.",
+    "X entries never point at lumora_store-template-full-page.png (4.72MB). They use the compressed -x variant at 2.15MB, per the ~4MB ceiling that broke the Bebemoss X post on 2026-08-01.",
+    "CTA framing follows the Template Showcase rule: every caption closes toward 'need a store built', never toward a CRO audit.",
+    "2026-09-01: the four X captions were rewritten shorter to fit X's 280-char cap. They were originally written between 282 and 475 chars, which X rejects for non-Premium accounts, and would have failed on post. Meaning and voice kept; only length changed. LinkedIn and Instagram captions untouched (no cap there)."
+  ],
+  "assets": {
+    "TS-LUMORA-COVER-IMG": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/lumora_store-template_2026-08-28/lumora_store-template cover.png",
+      "dimensions": "1440x1080",
+      "fileSizeMB": 0.62,
+      "angle": "Template showcase",
+      "caption": "Most skincare brands I look at in Nigeria are selling out of their DMs.\n\nNot by choice. The alternative was a website that costs more than a month of sales and still ends up looking like a template from 2016.\n\nSo I built what the alternative should look like.\n\nLumora Skin is a demo brand I made up. Twelve products, prices in Naira, pay on delivery in Lagos. You browse, you add to bag, and the order lands in WhatsApp already typed out. No card form, no account, no app to download.\n\nThe part I care about is underneath. It took about thirty minutes to dress, because the engine is a template I can reskin for any beauty brand with one config file and their own product photos. A website stops being a six-month project and starts being something you can have this week.\n\nEvery build gets checked before it leaves. 117 automated checks, desktop and mobile, all three pages. Two real problems still got past all of them and I only caught them by actually looking at the screenshots, which is a lesson I apparently need to keep learning.\n\nLumora is not a client. Nothing on it is for sale. It exists so a brand owner can see the thing instead of trying to imagine it.\n\nReal skincare business, still taking orders in the DMs? Yours can look like this. Send me a message.",
+      "hashtags": [
+        "#ecommerce",
+        "#shopify",
+        "#skincare",
+        "#nigeriabusiness",
+        "#webdesign"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-LUMORA-PREVIEW": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/lumora_store-template_2026-08-28/lumora_store-template-preview.png",
+      "dimensions": "2880x1800",
+      "fileSizeMB": 1.83,
+      "angle": "Template showcase, visual first",
+      "caption": "Skincare brand. Twelve products. Order lands in WhatsApp already typed out.\n\nLumora Skin is a demo store I built to show what a proper Nigerian skincare site looks like when it is made for how people actually buy here. Prices in Naira. Pay on delivery in Lagos. No card form, no account, no app.\n\nIt is a made-up brand, not a client, and nothing on it is for sale. I built it so brand owners can see the thing instead of imagining it.\n\nSelling skincare from your DMs right now? Yours can look like this. DM me.",
+      "hashtags": [
+        "#skincarenigeria",
+        "#lagosbusiness",
+        "#ecommerce",
+        "#smallbusinessnigeria",
+        "#webdesign",
+        "#beautybrand"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-LUMORA-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/lumora_store-template_2026-08-28/lumora_store-template-preview.png",
+      "dimensions": "2880x1800",
+      "fileSizeMB": 1.83,
+      "angle": "Template showcase",
+      "caption": "Built a skincare store this week.\n\nTwelve products, prices in Naira, pay on delivery in Lagos. You add to bag and the order lands in WhatsApp already typed out. No card form, no account, no app.\n\nLumora is a demo brand I made up, not a client.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-LUMORA-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/lumora_store-template_2026-08-28/lumora_store-template-cover-16x9.png",
+      "dimensions": "1440x810",
+      "fileSizeMB": 0.62,
+      "angle": "Free offer / Nigeria package",
+      "caption": "Real business in Nigeria, no website yet?\n\nI will build you a sample site. Free. Your actual products, your actual photos, live enough to send to a customer.\n\nNot a mockup. A working store like this one.\n\nThree a week is all I can do properly. Reply and tell me what you sell.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-LUMORA-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/lumora_store-template_2026-08-28/lumora_store-template-preview.png",
+      "dimensions": "2880x1800",
+      "fileSizeMB": 1.83,
+      "angle": "Niche-targeted, skincare and beauty owners",
+      "caption": "If you sell skincare in Nigeria, you know the problem.\n\nSame four questions in your DMs every day. Is it good for oily skin. Do you deliver to PH. How much. Is it still available.\n\nA store answers all four before anyone types. Built this one as a demo. Yours can look like it.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-LUMORA-X4": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/lumora_store-template_2026-08-28/lumora_store-template-full-page-x.png",
+      "dimensions": "1731x2252",
+      "fileSizeMB": 2.15,
+      "angle": "Build in public",
+      "caption": "This whole store reskins from one config file. Brand, colours, fonts, copy, products. Change it, swap the images, different brand in thirty minutes.\n\n117 checks run before anything ships. Two bugs still got past all 117. Tests tell you nothing broke, not that it looks right.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    }
+  }
+}

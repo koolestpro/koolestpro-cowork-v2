@@ -1,0 +1,1562 @@
+<!--
+  BRAND:    KURA
+  PRODUCT:  The KURA Board
+  PAGE:     Listicle — li-03-problem-solution
+  BUILT:    2026-05-06
+  EDIT:     See CLAUDE.md → Editing Guide for how to modify this file
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- EDIT: Page title -->
+  <title>5 Problems Your Cutting Board Is Causing — The KURA Board</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <!-- IMAGE: Hero — preloaded for performance -->
+  <link rel="preload" as="image" href="./images/hero.jpg">
+
+  <style>
+
+/* ═══════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — KURA Brand
+   ═══════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── BRAND COLORS — KURA palette ── */
+  --color-primary:      #2B3445;   /* Deep Slate */
+  --color-accent:       #C47A3A;   /* Burnished Copper */
+  --color-accent-hover: #A85F25;
+  --color-bg:           #F6EFE2;   /* Warm Cream */
+  --color-surface:      #FFFFFF;
+  --color-surface-2:    #EDE6D8;   /* Deeper cream for alternating sections */
+  --color-text:         #181820;   /* Off-Black */
+  --color-muted:        #8B919E;   /* Cool Silver muted */
+  --color-border:       #CDD3DC;   /* Cool Silver */
+  --color-pro:          #16A34A;   /* Fix badge, now-state */
+  --color-con:          #DC2626;   /* Problem badge, then-state */
+
+  /* ── BRAND FONTS ── */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'Cormorant Garamond', serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  /* ── LAYOUT ── */
+  --max-width:        1100px;
+  --max-width-narrow: 720px;
+  --radius-sm:        4px;
+  --radius-md:        8px;
+  --radius-lg:        14px;
+  --section-v:        80px;
+  --section-v-mob:    48px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+button, input { font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════ */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.container--narrow {
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-decoration: none;
+}
+.btn:active { transform: scale(0.98); }
+.btn--primary { background-color: var(--color-accent); color: #fff; }
+.btn--primary:hover { background-color: var(--color-accent-hover); }
+.btn--light { background-color: #fff; color: var(--color-primary); }
+.btn--light:hover { background-color: var(--color-surface-2); }
+.btn--large { padding: 18px 40px; font-size: 15px; }
+
+/* Stars */
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  vertical-align: middle;
+}
+.star {
+  width: 16px;
+  height: 16px;
+  fill: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* Problem / Fix badges */
+.ps-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.ps-badge svg { flex-shrink: 0; width: 12px; height: 12px; }
+.ps-badge--problem {
+  background-color: rgba(220, 38, 38, 0.08);
+  color: var(--color-con);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+.ps-badge--fix {
+  background-color: rgba(22, 163, 74, 0.08);
+  color: var(--color-pro);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+/* Scroll fade-in */
+.fade-in {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   S1 HERO
+   ═══════════════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 460px;
+  overflow: hidden;
+  background-color: var(--color-primary);
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+}
+.hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.32;
+}
+.hero__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: var(--section-v-mob) 20px;
+  text-align: center;
+  color: #fff;
+}
+.hero__eyebrow-row { margin-bottom: 18px; }
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: italic;
+  background-color: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.88);
+  border: 1px solid rgba(255,255,255,0.22);
+  font-family: var(--font-serif);
+}
+.hero__headline {
+  font-family: var(--font-display);
+  font-size: 38px;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: #fff;
+  margin-bottom: 18px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero__headline span { color: var(--color-accent); }
+.hero__stars-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.78);
+}
+.hero__stars-row strong { color: #fff; }
+.hero__sub {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.72);
+  max-width: 520px;
+  margin: 0 auto 28px;
+}
+/* Staggered hero entrance */
+.hero__content > * { animation: hero-rise 0.7s ease both; }
+.hero__eyebrow-row { animation-delay: 0.05s; }
+.hero__headline    { animation-delay: 0.18s; }
+.hero__stars-row   { animation-delay: 0.28s; }
+.hero__sub         { animation-delay: 0.36s; }
+.hero__cta-row     { animation-delay: 0.44s; }
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   S2 TRUST BAR
+   ═══════════════════════════════════════════════════════════════════ */
+.trust-bar {
+  overflow: hidden;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 13px 0;
+  background-color: var(--color-surface);
+}
+.trust-bar__track {
+  display: flex;
+  gap: 48px;
+  width: max-content;
+  animation: trust-scroll 30s linear infinite;
+}
+.trust-bar:hover .trust-bar__track { animation-play-state: paused; }
+@keyframes trust-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.trust-signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+.trust-signal svg { flex-shrink: 0; stroke: var(--color-accent); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   S3 PROBLEM-SOLUTION BLOCKS
+   ═══════════════════════════════════════════════════════════════════ */
+.ps-block {
+  padding: var(--section-v-mob) 0;
+  background-color: var(--color-surface);
+}
+.ps-block--alt { background-color: var(--color-surface-2); }
+
+.ps-block__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  align-items: center;
+}
+.ps-block__image { order: 0; }
+.ps-block__text  { order: 1; }
+
+.ps-block__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 88px;
+  line-height: 0.88;
+  color: var(--color-accent);
+  opacity: 0.18;
+  margin-bottom: -6px;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+.ps-block__problem { margin-bottom: 0; }
+.ps-block__problem-headline {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+.ps-block__problem-body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--color-muted);
+}
+
+/* Divider */
+.ps-block__divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+}
+.ps-block__divider::before,
+.ps-block__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+.ps-block__divider-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+.ps-block__divider-icon svg { stroke: var(--color-accent); }
+
+.ps-block__fix-headline {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+.ps-block__fix-body {
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--color-text);
+  margin-bottom: 18px;
+}
+.ps-block__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-accent);
+  letter-spacing: 0.02em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: gap 0.2s ease;
+}
+.ps-block__cta:hover { gap: 10px; }
+.ps-block__cta svg { flex-shrink: 0; transition: transform 0.2s ease; }
+.ps-block__cta:hover svg { transform: translateX(3px); }
+
+.ps-block__img-wrap {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-border);
+}
+.ps-block__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+.ps-block__img-wrap:hover img { transform: scale(1.04); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   S4 INLINE CTA STRIP
+   ═══════════════════════════════════════════════════════════════════ */
+.cta-strip {
+  background-color: var(--color-primary);
+  padding: 44px 20px;
+  text-align: center;
+}
+.cta-strip__headline {
+  font-family: var(--font-display);
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.cta-strip__sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.68);
+  margin-bottom: 22px;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-strip__note {
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.44);
+  letter-spacing: 0.04em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   S5 TRANSFORMATION STRIP
+   ═══════════════════════════════════════════════════════════════════ */
+.transform-strip {
+  background-color: var(--color-primary);
+  padding: var(--section-v-mob) 20px;
+}
+.transform-strip__heading {
+  font-family: var(--font-display);
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 36px;
+}
+.transform-strip__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.transform-col__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.transform-col--then .transform-col__label { color: rgba(220,38,38,0.75); }
+.transform-col--now  .transform-col__label { color: var(--color-pro); }
+.transform-col__list { list-style: none; }
+.transform-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 14px;
+  margin-bottom: 8px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.transform-item svg { flex-shrink: 0; margin-top: 1px; }
+.transform-item--then {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: rgba(255,255,255,0.72);
+}
+.transform-item--then svg { stroke: rgba(220,38,38,0.7); }
+.transform-item--now {
+  background-color: rgba(22, 163, 74, 0.1);
+  color: rgba(255,255,255,0.88);
+}
+.transform-item--now svg { stroke: var(--color-pro); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   S6 REVIEW CARDS
+   ═══════════════════════════════════════════════════════════════════ */
+.reviews {
+  padding: var(--section-v-mob) 0;
+  background-color: var(--color-bg);
+}
+.reviews__headline {
+  font-family: var(--font-display);
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 32px;
+}
+.reviews__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+.review-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+.review-card__problem-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-pro);
+  margin-bottom: 12px;
+}
+.review-card__problem-tag svg { flex-shrink: 0; stroke: var(--color-pro); }
+.review-card__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.review-card__avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--color-border);
+  flex-shrink: 0;
+}
+.review-card__meta { flex: 1; min-width: 0; }
+.review-card__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+.review-card__verified {
+  font-size: 11px;
+  color: var(--color-pro);
+  font-weight: 500;
+}
+.review-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+.review-card__body {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   S7 GUARANTEE
+   ═══════════════════════════════════════════════════════════════════ */
+.guarantee {
+  padding: var(--section-v-mob) 20px;
+  background-color: var(--color-surface-2);
+  text-align: center;
+}
+.guarantee__inner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.guarantee__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(22, 163, 74, 0.1);
+  border: 1.5px solid rgba(22, 163, 74, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+}
+.guarantee__icon svg { stroke: var(--color-pro); }
+.guarantee__headline {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.02em;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+.guarantee__body {
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--color-muted);
+  margin-bottom: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   S8 FINAL CTA
+   ═══════════════════════════════════════════════════════════════════ */
+.final-cta {
+  padding: var(--section-v-mob) 20px;
+  background-color: var(--color-surface);
+  text-align: center;
+}
+.final-cta__headline {
+  font-family: var(--font-display);
+  font-size: 34px;
+  letter-spacing: 0.02em;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+.final-cta__sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--color-muted);
+  max-width: 480px;
+  margin: 0 auto 28px;
+}
+.final-cta__guarantee {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--color-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.final-cta__guarantee svg { flex-shrink: 0; stroke: var(--color-pro); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   S9 FAQ
+   ═══════════════════════════════════════════════════════════════════ */
+.faq {
+  padding: var(--section-v-mob) 0;
+  background-color: var(--color-surface-2);
+}
+.faq__headline {
+  font-family: var(--font-display);
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 28px;
+}
+.faq__list {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.faq__item { border-bottom: 1px solid var(--color-border); }
+.faq__trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+}
+.faq__trigger svg {
+  flex-shrink: 0;
+  margin-left: 12px;
+  stroke: var(--color-muted);
+  transition: transform 0.25s ease;
+}
+.faq__trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+.faq__panel {
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--color-muted);
+  padding-bottom: 18px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════════ */
+.site-footer {
+  padding: 36px 20px;
+  background-color: var(--color-primary);
+  text-align: center;
+}
+.site-footer__brand {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 0.14em;
+  color: var(--color-bg);
+  margin-bottom: 4px;
+}
+.site-footer__tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--color-border);
+  margin-bottom: 16px;
+}
+.site-footer__links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 16px;
+}
+.site-footer__links a {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  transition: color 0.2s;
+  letter-spacing: 0.04em;
+}
+.site-footer__links a:hover { color: rgba(255,255,255,0.8); }
+.site-footer__copy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET 768px+
+   ═══════════════════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+  .hero { min-height: 520px; }
+  .hero__headline { font-size: 54px; }
+
+  .reviews__grid { grid-template-columns: repeat(3, 1fr); }
+
+  .transform-strip__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE — DESKTOP 1024px+
+   ═══════════════════════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  .hero { min-height: 580px; }
+  .hero__headline { font-size: 66px; }
+
+  /* Alternating problem-solution layout */
+  .ps-block__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+  }
+  /* Odd: text left, image right */
+  .ps-block--odd .ps-block__text  { order: 0; }
+  .ps-block--odd .ps-block__image { order: 1; }
+  /* Even: image left, text right */
+  .ps-block--even .ps-block__text  { order: 1; }
+  .ps-block--even .ps-block__image { order: 0; }
+
+  .ps-block { padding: var(--section-v) 0; }
+  .ps-block__num { font-size: 112px; }
+  .ps-block__problem-headline { font-size: 30px; }
+  .ps-block__fix-headline { font-size: 30px; }
+
+  .cta-strip__headline { font-size: 36px; }
+
+  .transform-strip { padding: var(--section-v) 20px; }
+  .transform-strip__grid { gap: 48px; }
+
+  .reviews { padding: var(--section-v) 0; }
+  .guarantee { padding: var(--section-v) 20px; }
+  .final-cta { padding: var(--section-v) 20px; }
+  .final-cta__headline { font-size: 44px; }
+  .faq { padding: var(--section-v) 0; }
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+  </style>
+</head>
+<body>
+
+<!-- ═══ SECTION 1: HERO ══════════════════════════════════════════════════ -->
+<section class="hero">
+
+  <!-- IMAGE: Hero background — stainless board lifestyle -->
+  <div class="hero__bg">
+    <img
+      src="images/hero.jpg"
+      alt="The KURA Board — stainless steel cutting board"
+      class="hero__bg-img"
+      loading="eager">
+  </div>
+
+  <div class="hero__content container">
+
+    <!-- EDIT: Hero eyebrow -->
+    <div class="hero__eyebrow-row">
+      <span class="hero__eyebrow">For home cooks who take hygiene seriously</span>
+    </div>
+
+    <!-- EDIT: Headline -->
+    <h1 class="hero__headline"><span>5 PROBLEMS</span> YOUR CUTTING BOARD IS CAUSING RIGHT NOW</h1>
+
+    <!-- EDIT: Star aggregate + review count -->
+    <div class="hero__stars-row">
+      <span role="img" aria-label="4.8 out of 5 stars" class="stars">
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </span>
+      <!-- EDIT: Rating line -->
+      <span><strong>4.8</strong> &bull; 9,200+ home cooks who never looked back</span>
+    </div>
+
+    <!-- EDIT: Subheadline -->
+    <p class="hero__sub">Most people have at least three of these. The KURA Board fixes all five.</p>
+
+    <!-- EDIT: Hero CTA -->
+    <div class="hero__cta-row">
+      <a href="#" class="btn btn--primary btn--large">Shop The KURA Board</a>
+    </div>
+
+  </div>
+</section>
+<!-- END S1: HERO -->
+
+
+<!-- ═══ SECTION 2: TRUST BAR ═════════════════════════════════════════════ -->
+<section class="trust-bar" aria-label="Trust signals">
+  <div class="trust-bar__track" aria-hidden="true">
+
+    <!-- First set -->
+    <span class="trust-signal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+      4.8 Star Average Rating
+    </span>
+    <span class="trust-signal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      30-Day Risk-Free Trial
+    </span>
+    <span class="trust-signal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Free Shipping on Orders Over $50
+    </span>
+    <span class="trust-signal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+      Food-Grade 304 Stainless Steel
+    </span>
+    <span class="trust-signal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+      Dishwasher Safe
+    </span>
+
+    <!-- Duplicate set for seamless loop -->
+    <span class="trust-signal" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+      4.8 Star Average Rating
+    </span>
+    <span class="trust-signal" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      30-Day Risk-Free Trial
+    </span>
+    <span class="trust-signal" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Free Shipping on Orders Over $50
+    </span>
+    <span class="trust-signal" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+      Food-Grade 304 Stainless Steel
+    </span>
+    <span class="trust-signal" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+      Dishwasher Safe
+    </span>
+
+  </div>
+</section>
+<!-- END S2: TRUST BAR -->
+
+
+<!-- ═══ SECTION 3.1: PROBLEM-SOLUTION 01 ════════════════════════════════ -->
+<section class="ps-block ps-block--odd">
+  <div class="container">
+    <div class="ps-block__grid fade-in">
+
+      <div class="ps-block__text">
+        <span class="ps-block__num" aria-hidden="true">01</span>
+
+        <!-- PROBLEM phase -->
+        <div class="ps-block__problem">
+          <span class="ps-badge ps-badge--problem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <!-- EDIT: Problem 01 badge label -->
+            Hygiene Risk
+          </span>
+          <!-- EDIT: Problem 01 headline -->
+          <h2 class="ps-block__problem-headline">YOUR BOARD IS HARBORING BACTERIA YOU CAN'T SEE</h2>
+          <!-- EDIT: Problem 01 body -->
+          <p class="ps-block__problem-body">Every knife cut in a wooden or plastic board creates micro-grooves. These grooves trap raw meat juices, onion residue, and mold spores that soap and hot water can't reach. You rinse it — it looks clean. Bacteria stay. That's not a cleaning problem. That's a material problem.</p>
+        </div>
+
+        <div class="ps-block__divider" aria-hidden="true">
+          <div class="ps-block__divider-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+
+        <!-- FIX phase -->
+        <div class="ps-block__fix">
+          <span class="ps-badge ps-badge--fix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            The Fix
+          </span>
+          <!-- EDIT: Fix 01 headline -->
+          <h3 class="ps-block__fix-headline">NON-POROUS STEEL LEAVES BACTERIA NOWHERE TO HIDE</h3>
+          <!-- EDIT: Fix 01 body -->
+          <p class="ps-block__fix-body">The KURA Board is made from food-grade 304 stainless steel — the same material used in surgical equipment and professional kitchens. Its non-porous surface has no grooves to trap bacteria. A quick rinse genuinely cleans it. Dishwasher safe for a full sanitize cycle whenever you need it.</p>
+          <!-- EDIT: Fix 01 CTA -->
+          <a href="#" class="ps-block__cta">
+            See how it works
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="ps-block__image">
+        <!-- IMAGE: Solution 1 — hands rinsing stainless board -->
+        <div class="ps-block__img-wrap">
+          <img
+            src="images/solution-1.jpg"
+            alt="Rinsing the KURA Board under a kitchen faucet — water beads off the non-porous steel"
+            loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- END S3.1: PROBLEM-SOLUTION 01 -->
+
+
+<!-- ═══ SECTION 3.2: PROBLEM-SOLUTION 02 ════════════════════════════════ -->
+<section class="ps-block ps-block--even ps-block--alt">
+  <div class="container">
+    <div class="ps-block__grid fade-in">
+
+      <div class="ps-block__text">
+        <span class="ps-block__num" aria-hidden="true">02</span>
+
+        <div class="ps-block__problem">
+          <span class="ps-badge ps-badge--problem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <!-- EDIT: Problem 02 badge label -->
+            Warping &amp; Staining
+          </span>
+          <!-- EDIT: Problem 02 headline -->
+          <h2 class="ps-block__problem-headline">MOST BOARDS WARP, CRACK, OR STAIN WITHIN MONTHS</h2>
+          <!-- EDIT: Problem 02 body -->
+          <p class="ps-block__problem-body">Wooden boards swell and warp when they get wet. Plastic boards crack under heat and stain brown after the first raw chicken. Either way, you're back on Amazon inside a year. The "cheap" board becomes the expensive one the moment you factor in how often you replace it.</p>
+        </div>
+
+        <div class="ps-block__divider" aria-hidden="true">
+          <div class="ps-block__divider-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+
+        <div class="ps-block__fix">
+          <span class="ps-badge ps-badge--fix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            The Fix
+          </span>
+          <!-- EDIT: Fix 02 headline -->
+          <h3 class="ps-block__fix-headline">THE KURA BOARD IS BUILT TO LAST A LIFETIME</h3>
+          <!-- EDIT: Fix 02 body -->
+          <p class="ps-block__fix-body">Stainless steel doesn't warp. It doesn't crack. It doesn't absorb stains. The KURA Board handles boiling water, daily dishwasher cycles, and heavy use without changing shape, surface quality, or performance — year after year. Buy it once. Done.</p>
+          <!-- EDIT: Fix 02 CTA -->
+          <a href="#" class="ps-block__cta">
+            Shop The KURA Board
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="ps-block__image">
+        <!-- IMAGE: Solution 2 — clean product shot showing durability -->
+        <div class="ps-block__img-wrap">
+          <img
+            src="images/solution-2.jpg"
+            alt="The KURA Board — brushed stainless steel cutting board on a dark kitchen countertop"
+            loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- END S3.2: PROBLEM-SOLUTION 02 -->
+
+
+<!-- ═══ SECTION 4: INLINE CTA STRIP ═════════════════════════════════════ -->
+<section class="cta-strip fade-in">
+  <div class="container">
+    <!-- EDIT: CTA strip headline -->
+    <p class="cta-strip__headline">READY TO STOP DEALING WITH THIS?</p>
+    <!-- EDIT: CTA strip subheadline -->
+    <p class="cta-strip__sub">There are three more problems below. The KURA Board solves every one.</p>
+    <a href="#" class="btn btn--light btn--large">Shop The KURA Board — $48.00</a>
+    <!-- EDIT: Risk reversal note -->
+    <p class="cta-strip__note">30-day risk-free return &nbsp;&bull;&nbsp; Free shipping over $50</p>
+  </div>
+</section>
+<!-- END INLINE CTA STRIP -->
+
+
+<!-- ═══ SECTION 3.3: PROBLEM-SOLUTION 03 ════════════════════════════════ -->
+<section class="ps-block ps-block--odd">
+  <div class="container">
+    <div class="ps-block__grid fade-in">
+
+      <div class="ps-block__text">
+        <span class="ps-block__num" aria-hidden="true">03</span>
+
+        <div class="ps-block__problem">
+          <span class="ps-badge ps-badge--problem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <!-- EDIT: Problem 03 badge label -->
+            Cross-Contamination
+          </span>
+          <!-- EDIT: Problem 03 headline -->
+          <h2 class="ps-block__problem-headline">ONE BOARD FOR EVERYTHING IS A FOOD SAFETY MISTAKE</h2>
+          <!-- EDIT: Problem 03 body -->
+          <p class="ps-block__problem-body">Most kitchens use one board for raw chicken, vegetables, and bread — washing between uses and hoping for the best. The problem is wooden boards retain raw meat odors and juices in their grain even after a thorough scrub. You're cross-contaminating your food without knowing it.</p>
+        </div>
+
+        <div class="ps-block__divider" aria-hidden="true">
+          <div class="ps-block__divider-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+
+        <div class="ps-block__fix">
+          <span class="ps-badge ps-badge--fix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            The Fix
+          </span>
+          <!-- EDIT: Fix 03 headline -->
+          <h3 class="ps-block__fix-headline">KURA CLEANS CLEAN BETWEEN EVERY INGREDIENT</h3>
+          <!-- EDIT: Fix 03 body -->
+          <p class="ps-block__fix-body">Because the KURA Board is non-porous, a quick hot rinse between ingredients is genuinely enough. No lingering odors. No invisible residue. No waiting. The surface you see is the surface you get — clean every time you put a knife on it.</p>
+          <!-- EDIT: Fix 03 CTA -->
+          <a href="#" class="ps-block__cta">
+            See the full hygiene story
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="ps-block__image">
+        <!-- IMAGE: Solution 3 — lifestyle chopping vegetables on KURA board -->
+        <div class="ps-block__img-wrap">
+          <img
+            src="images/solution-3.jpg"
+            alt="Hands chopping fresh vegetables on the KURA Board — safe, clean, and residue-free"
+            loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- END S3.3: PROBLEM-SOLUTION 03 -->
+
+
+<!-- ═══ SECTION 3.4: PROBLEM-SOLUTION 04 ════════════════════════════════ -->
+<section class="ps-block ps-block--even ps-block--alt">
+  <div class="container">
+    <div class="ps-block__grid fade-in">
+
+      <div class="ps-block__text">
+        <span class="ps-block__num" aria-hidden="true">04</span>
+
+        <div class="ps-block__problem">
+          <span class="ps-badge ps-badge--problem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <!-- EDIT: Problem 04 badge label -->
+            Knife Damage
+          </span>
+          <!-- EDIT: Problem 04 headline -->
+          <h2 class="ps-block__problem-headline">YOUR BOARD IS DULLING YOUR KNIVES WITHOUT YOU REALIZING IT</h2>
+          <!-- EDIT: Problem 04 body -->
+          <p class="ps-block__problem-body">Rough wood grain and hard plastic both drag against your blade with every single cut. You sharpen your knives. Then you set them on a surface that immediately starts undoing the work. It's a cycle most cooks never think to break — because they don't know what's causing it.</p>
+        </div>
+
+        <div class="ps-block__divider" aria-hidden="true">
+          <div class="ps-block__divider-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+
+        <div class="ps-block__fix">
+          <span class="ps-badge ps-badge--fix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            The Fix
+          </span>
+          <!-- EDIT: Fix 04 headline -->
+          <h3 class="ps-block__fix-headline">A SMOOTH SURFACE THAT KEEPS YOUR KNIVES SHARPER, LONGER</h3>
+          <!-- EDIT: Fix 04 body -->
+          <p class="ps-block__fix-body">The KURA Board's brushed steel surface has a consistent, low-drag grain that reduces wear on your blade edge. Your cuts are cleaner. Your knives stay sharper between sessions. It's a benefit most people only notice the first time they go back to their old board.</p>
+          <!-- EDIT: Fix 04 CTA -->
+          <a href="#" class="ps-block__cta">
+            Learn more about the surface
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="ps-block__image">
+        <!-- IMAGE: Solution 4 — KURA board with chef's knife showing clean surface -->
+        <div class="ps-block__img-wrap">
+          <img
+            src="images/solution-4.jpg"
+            alt="Chef's knife resting on the KURA Board — a smooth, low-drag surface that preserves your blade"
+            loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- END S3.4: PROBLEM-SOLUTION 04 -->
+
+
+<!-- ═══ SECTION 3.5: PROBLEM-SOLUTION 05 ════════════════════════════════ -->
+<section class="ps-block ps-block--odd">
+  <div class="container">
+    <div class="ps-block__grid fade-in">
+
+      <div class="ps-block__text">
+        <span class="ps-block__num" aria-hidden="true">05</span>
+
+        <div class="ps-block__problem">
+          <span class="ps-badge ps-badge--problem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <!-- EDIT: Problem 05 badge label -->
+            Hidden Cost
+          </span>
+          <!-- EDIT: Problem 05 headline -->
+          <h2 class="ps-block__problem-headline">YOU'VE ALREADY SPENT MORE ON CHEAP BOARDS THAN ONE GOOD ONE COSTS</h2>
+          <!-- EDIT: Problem 05 body -->
+          <p class="ps-block__problem-body">A $15 plastic board that gets replaced every eight months costs you over $100 across five years — and delivers an inferior experience every day it's in your kitchen. The math only works in favor of cheap if you never replace it. You always replace it.</p>
+        </div>
+
+        <div class="ps-block__divider" aria-hidden="true">
+          <div class="ps-block__divider-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+        </div>
+
+        <div class="ps-block__fix">
+          <span class="ps-badge ps-badge--fix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            The Fix
+          </span>
+          <!-- EDIT: Fix 05 headline -->
+          <h3 class="ps-block__fix-headline">ONE KURA BOARD. PAID FOR ITSELF WITHIN THE FIRST YEAR.</h3>
+          <!-- EDIT: Fix 05 body -->
+          <p class="ps-block__fix-body">At $48, the KURA Board costs less than three cheap replacements — and delivers a better cooking experience from day one. No annual replacements. No degrading plastic. No swollen wood. This isn't an upgrade. It's the last cutting board decision you make.</p>
+          <!-- EDIT: Fix 05 CTA -->
+          <a href="#" class="ps-block__cta">
+            Get The KURA Board
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="ps-block__image">
+        <!-- IMAGE: Solution 5 — KURA board size lineup showing the product range -->
+        <div class="ps-block__img-wrap">
+          <img
+            src="images/solution-5.jpg"
+            alt="The KURA Board available in three sizes — the last cutting board you will ever buy"
+            loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- END S3.5: PROBLEM-SOLUTION 05 -->
+
+
+<!-- ═══ SECTION 5: TRANSFORMATION STRIP ═════════════════════════════════ -->
+<section class="transform-strip fade-in">
+  <div class="container">
+
+    <!-- EDIT: Transformation section heading -->
+    <h2 class="transform-strip__heading">YOUR KITCHEN. BEFORE AND AFTER KURA.</h2>
+
+    <div class="transform-strip__grid">
+
+      <!-- THEN column -->
+      <div class="transform-col transform-col--then">
+        <p class="transform-col__label">Before</p>
+        <ul class="transform-col__list">
+          <li class="transform-item transform-item--then">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            Invisible bacteria in knife grooves
+          </li>
+          <li class="transform-item transform-item--then">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            Board warped and stained within 6 months
+          </li>
+          <li class="transform-item transform-item--then">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            Raw meat odor still on board after washing
+          </li>
+          <li class="transform-item transform-item--then">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            Knives losing their edge faster than expected
+          </li>
+          <li class="transform-item transform-item--then">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            Replacing cheap boards every 8–12 months
+          </li>
+        </ul>
+      </div>
+
+      <!-- NOW column -->
+      <div class="transform-col transform-col--now">
+        <p class="transform-col__label">After KURA</p>
+        <ul class="transform-col__list">
+          <li class="transform-item transform-item--now">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Non-porous surface — clean with a rinse
+          </li>
+          <li class="transform-item transform-item--now">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Same board, same shape, year after year
+          </li>
+          <li class="transform-item transform-item--now">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Genuinely clean between every ingredient
+          </li>
+          <li class="transform-item transform-item--now">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Smooth surface keeps blades sharper, longer
+          </li>
+          <li class="transform-item transform-item--now">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            One board. Never replaced. Problem solved.
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- END S5: TRANSFORMATION STRIP -->
+
+
+<!-- ═══ SECTION 6: REVIEW CARDS ══════════════════════════════════════════ -->
+<section class="reviews fade-in">
+  <div class="container">
+
+    <!-- EDIT: Reviews section headline -->
+    <h2 class="reviews__headline">FROM PEOPLE WHO HAD THE SAME PROBLEMS</h2>
+
+    <div class="reviews__grid">
+
+      <!-- Review 1 — hygiene fix -->
+      <article class="review-card">
+        <p class="review-card__problem-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <!-- EDIT: Problem solved label for review 1 -->
+          Hygiene Fixed
+        </p>
+        <div class="review-card__top">
+          <!-- IMAGE: Reviewer 1 avatar -->
+          <img
+            src="images/review-1.jpg"
+            alt="Rachel O."
+            class="review-card__avatar"
+            loading="lazy">
+          <div class="review-card__meta">
+            <!-- EDIT: Reviewer 1 name -->
+            <p class="review-card__name">Rachel O. &mdash; Austin, TX</p>
+            <p class="review-card__verified">Verified Buyer</p>
+          </div>
+          <span role="img" aria-label="5 out of 5 stars" class="stars">
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+        </div>
+        <!-- EDIT: Review 1 title -->
+        <p class="review-card__title">"I didn't realize how dirty my old board was until I switched."</p>
+        <!-- EDIT: Review 1 body -->
+        <p class="review-card__body">I was washing my wooden board twice after every raw chicken session. It still smelled like onion a week later. First week with KURA — no smell, no residue. It just cleans. Completely changed how I feel about my kitchen.</p>
+      </article>
+
+      <!-- Review 2 — durability fix -->
+      <article class="review-card">
+        <p class="review-card__problem-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <!-- EDIT: Problem solved label for review 2 -->
+          Durability Fixed
+        </p>
+        <div class="review-card__top">
+          <!-- IMAGE: Reviewer 2 avatar -->
+          <img
+            src="images/review-2.jpg"
+            alt="Michael T."
+            class="review-card__avatar"
+            loading="lazy">
+          <div class="review-card__meta">
+            <!-- EDIT: Reviewer 2 name -->
+            <p class="review-card__name">Michael T. &mdash; Chicago, IL</p>
+            <p class="review-card__verified">Verified Buyer</p>
+          </div>
+          <span role="img" aria-label="5 out of 5 stars" class="stars">
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+        </div>
+        <!-- EDIT: Review 2 title -->
+        <p class="review-card__title">"Four years in and it still looks brand new."</p>
+        <!-- EDIT: Review 2 body -->
+        <p class="review-card__body">Bought this when we renovated the kitchen. Thousands of meals and daily dishwasher cycles later — not a warp, not a stain, not a crack. My old boards never survived a year. This one is permanent.</p>
+      </article>
+
+      <!-- Review 3 — value fix -->
+      <article class="review-card">
+        <p class="review-card__problem-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <!-- EDIT: Problem solved label for review 3 -->
+          Value Fixed
+        </p>
+        <div class="review-card__top">
+          <!-- IMAGE: Reviewer 3 avatar -->
+          <img
+            src="images/review-3.jpg"
+            alt="Jasmine K."
+            class="review-card__avatar"
+            loading="lazy">
+          <div class="review-card__meta">
+            <!-- EDIT: Reviewer 3 name -->
+            <p class="review-card__name">Jasmine K. &mdash; Portland, OR</p>
+            <p class="review-card__verified">Verified Buyer</p>
+          </div>
+          <span role="img" aria-label="5 out of 5 stars" class="stars">
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+        </div>
+        <!-- EDIT: Review 3 title -->
+        <p class="review-card__title">"Thought $48 was a lot. Laughing at myself now."</p>
+        <!-- EDIT: Review 3 body -->
+        <p class="review-card__body">I replaced two plastic boards in the year before I bought the KURA Board. Did the math — I'd already spent more. This is cleaner, sharper, and easier to use than anything I've owned. Should have done this years ago.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+<!-- END S6: REVIEW CARDS -->
+
+
+<!-- ═══ SECTION 7: GUARANTEE ═════════════════════════════════════════════ -->
+<section class="guarantee fade-in">
+  <div class="guarantee__inner">
+    <div class="guarantee__icon" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <!-- EDIT: Guarantee headline -->
+    <h2 class="guarantee__headline">30-DAY RISK-FREE GUARANTEE</h2>
+    <!-- EDIT: Guarantee body -->
+    <p class="guarantee__body">Try the KURA Board in your kitchen for 30 days. If it's not the best cutting board you've ever used — cleaner, more durable, better in every way — return it for a full refund. No forms. No fuss.</p>
+    <!-- EDIT: Guarantee CTA -->
+    <a href="#" class="btn btn--primary">Shop The KURA Board</a>
+  </div>
+</section>
+<!-- END S7: GUARANTEE -->
+
+
+<!-- ═══ SECTION 8: FINAL CTA ═════════════════════════════════════════════ -->
+<section class="final-cta fade-in">
+  <!-- EDIT: Final CTA headline -->
+  <h2 class="final-cta__headline">ONE BOARD. FIVE PROBLEMS SOLVED.</h2>
+  <!-- EDIT: Final CTA subheadline -->
+  <p class="final-cta__sub">The KURA Board is $48 and built to last a lifetime. The decision is easy.</p>
+  <!-- EDIT: Final CTA button -->
+  <a href="#" class="btn btn--primary btn--large">Shop The KURA Board &mdash; $48.00</a>
+  <!-- EDIT: Guarantee line below button -->
+  <p class="final-cta__guarantee">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    30-day risk-free return &nbsp;&bull;&nbsp; Free shipping over $50
+  </p>
+</section>
+<!-- END S8: FINAL CTA -->
+
+
+<!-- ═══ SECTION 9: FAQ ════════════════════════════════════════════════════ -->
+<section class="faq fade-in">
+  <div class="container">
+
+    <!-- EDIT: FAQ headline -->
+    <h2 class="faq__headline">STILL HAVE QUESTIONS?</h2>
+
+    <div class="faq__list">
+
+      <!-- FAQ 1 -->
+      <div class="faq__item">
+        <button class="faq__trigger" aria-expanded="false" aria-controls="faq-panel-1">
+          <!-- EDIT: FAQ Q1 -->
+          Will the KURA Board scratch my knives or damage the blade edge?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__panel" id="faq-panel-1" hidden>
+          <!-- EDIT: FAQ A1 -->
+          No. The brushed steel surface is smooth enough to preserve your blade edge. Many customers report their knives staying sharper longer between sessions — because there's less drag per cut compared to rough wood grain or hard plastic.
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="faq__item">
+        <button class="faq__trigger" aria-expanded="false" aria-controls="faq-panel-2">
+          <!-- EDIT: FAQ Q2 -->
+          Does stainless steel rust? Is it actually safe in a kitchen?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__panel" id="faq-panel-2" hidden>
+          <!-- EDIT: FAQ A2 -->
+          The KURA Board is made from food-grade 304 stainless steel — the same grade used in surgical instruments and commercial kitchen equipment. It is fully rust-resistant and will not corrode with regular use and washing, including dishwasher cycles.
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="faq__item">
+        <button class="faq__trigger" aria-expanded="false" aria-controls="faq-panel-3">
+          <!-- EDIT: FAQ Q3 -->
+          Will it slide around when I'm chopping?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__panel" id="faq-panel-3" hidden>
+          <!-- EDIT: FAQ A3 -->
+          We recommend using it with a damp kitchen towel or non-slip mat underneath — the board itself has good weight and stability. On smooth countertops, any board without rubber feet can shift slightly under pressure, so a grip pad takes care of that completely.
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="faq__item">
+        <button class="faq__trigger" aria-expanded="false" aria-controls="faq-panel-4">
+          <!-- EDIT: FAQ Q4 -->
+          Is the KURA Board really dishwasher safe?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__panel" id="faq-panel-4" hidden>
+          <!-- EDIT: FAQ A4 -->
+          Yes. The KURA Board goes into the dishwasher on any standard cycle. Dishwasher heat actually provides an extra sanitization step that wooden boards can never handle — wood warps and splits at dishwasher temperatures. Stainless steel does not.
+        </div>
+      </div>
+
+      <!-- FAQ 5 -->
+      <div class="faq__item">
+        <button class="faq__trigger" aria-expanded="false" aria-controls="faq-panel-5">
+          <!-- EDIT: FAQ Q5 -->
+          What if I don't love it?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__panel" id="faq-panel-5" hidden>
+          <!-- EDIT: FAQ A5 -->
+          Return it within 30 days for a full refund — no questions, no forms. We stand behind the product because the product stands up. We have had very few returns.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- END S9: FAQ -->
+
+
+<!-- ═══ SECTION 10: FOOTER ════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <!-- EDIT: Brand name -->
+  <p class="site-footer__brand">KURA</p>
+  <p class="site-footer__tagline">Clean Surface. Clear Mind.</p>
+  <nav class="site-footer__links" aria-label="Footer navigation">
+    <!-- EDIT: Footer links -->
+    <a href="#">Shop</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Contact</a>
+  </nav>
+  <!-- EDIT: Copyright year and brand -->
+  <p class="site-footer__copy">&copy; 2026 KURA. All rights reserved.</p>
+</footer>
+<!-- END S10: FOOTER -->
+
+
+<script>
+/* ─────────────────────────────────────────────────────────
+   IntersectionObserver — scroll fade-in
+   ───────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.10 });
+
+  document.querySelectorAll('.fade-in').forEach(function (el) {
+    observer.observe(el);
+  });
+
+  /* ─────────────────────────────────────────────────────────
+     FAQ Accordion — one open at a time
+     ───────────────────────────────────────────────────────── */
+  var faqTriggers = document.querySelectorAll('.faq__trigger');
+
+  faqTriggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      var isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+      faqTriggers.forEach(function (t) {
+        t.setAttribute('aria-expanded', 'false');
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = true;
+      });
+
+      if (!isExpanded) {
+        trigger.setAttribute('aria-expanded', 'true');
+        var panel = document.getElementById(trigger.getAttribute('aria-controls'));
+        if (panel) panel.hidden = false;
+      }
+    });
+  });
+
+}());
+</script>
+
+</body>
+</html>

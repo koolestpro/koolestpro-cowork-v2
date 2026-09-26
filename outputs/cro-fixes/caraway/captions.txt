@@ -1,0 +1,58 @@
+===== tab-linkedin =====
+Product Page (PDP) audit: Caraway's Fry Pan, on mobile.
+
+You think 18,886 reviews means the trust is already there.
+
+It doesn't, if the page can't render them in time.
+
+Real findings, nothing invented:
+
+The price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word "Reviews" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.
+
+The rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.
+
+Same product. Same price. The only thing that changed is the order the page tells its own story in.
+
+Full before/after and annotated breakdown in the carousel.
+
+Repost if this is useful to someone building a product page right now.
+
+===== tab-ig =====
+Product Page (PDP) audit: Caraway's $125 fry pan has 18,886 reviews.
+
+On a live load, that trust signal can render as just the word "Reviews," with no stars and no count, right next to the price.
+
+Price also sits disconnected from the title, and the real product photo can miss the first screen entirely.
+
+Swipe for the real before/after. Rebuild puts price under the title, stars + count inline always, and the photo front and center.
+
+Save this if you're auditing your own PDP this week.
+
+===== tab-hook =====
+1. You think 18,886 reviews means the trust is already there. It doesn't.
+2. A $125 pan with 5 stars can still show up looking unsure of itself.
+3. Same fry pan, same product page. The only thing that changed is the order it tells its story in.
+4. Price, stars, and photo have to land in ONE glance, not a scroll.
+
+===== tab-twitter-angles =====
+[1/3] Product Page (PDP) audit: Caraway's Fry Pan. Price sits top-right, disconnected from the title. Moved it directly underneath at display size. Small change, but now the eye doesn't have to jump.
+
+[2/3] On a live load, the review line can paint as literal text "Reviews," no stars, no count. 18,886 real reviews exist. The fix: never let the number that matters most render empty.
+
+[3/3] Real product photo, background removed, composited dark. Now fills the whole first screen instead of competing with a sweepstakes banner for space.
+
+===== tab-twitter-thread =====
+Audited a $125 product page (PDP). The trust signal wasn't the problem. The timing of it was.
+
+Here's what a live load actually showed, and what I changed:
+
+1/ Price sat top-right, aligned with the review count line. Title sat top-left, two lines up. Your eye has to jump sideways to connect "what is this" to "what does it cost."
+
+2/ The review line (18,886 real reviews) rendered as the bare word "Reviews" on a fresh load. No stars. No count. Right where a shopper decides if $125 is worth it.
+
+3/ The product photo itself can end up past the fold, competing with a sweepstakes banner for the same vertical space.
+
+None of this is a "redesign." It's sequencing: title, price, proof, photo, in that order, touching each other, every time the page loads.
+
+Real screenshots, real before/after in the graphic below.
+

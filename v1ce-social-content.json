@@ -1,0 +1,93 @@
+{
+  "brand": "V1CE",
+  "brandSlug": "v1ce",
+  "isRealBrand": true,
+  "isClient": false,
+  "created": "2026-08-14T22:58:00.000Z",
+  "updated": "2026-08-14T22:58:00.000Z",
+  "howToUse": "Each key under 'assets' maps one generated image (or, for text-only posts, null) to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' — the exact relative path from the koolestpro-cowork-v2 project root — or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md).",
+  "relatedPipelineItemIds": [
+    "static-ad-v1ce_nfc-review-card-20260814"
+  ],
+  "assets": {
+    "SA-V1CE-PROBLEM": {
+      "platform": ["linkedin", "instagram"],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-1-problem-solution.png",
+      "caption": "Happy customers rarely leave a review. Angry ones always do. This is the problem/solution angle for V1CE's NFC review card — unofficial concept work, not commissioned by the brand.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-V1CE-BENEFIT": {
+      "platform": ["linkedin", "instagram"],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-2-benefit-result.png",
+      "caption": "No app, works on both iPhone and Android, and you can change where it points anytime without reprinting the card. The benefit/result angle for V1CE's NFC review card — unofficial concept, not commissioned by V1CE.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-V1CE-PROOF": {
+      "platform": ["linkedin", "instagram"],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-3-social-proof.png",
+      "caption": "4.8 stars from 2,375+ reviews, V1CE's real aggregate rating, not a made-up number. Social proof angle for the NFC review card — unofficial concept, not commissioned by V1CE.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-V1CE-OFFER": {
+      "platform": ["linkedin", "instagram"],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-4-offer-urgency.png",
+      "caption": "Free shipping over $70, ships in 48 hours, cards priced from $38. Offer/urgency angle for V1CE's NFC review card — unofficial concept, not commissioned by the brand.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-V1CE-COMBO": {
+      "platform": ["linkedin"],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/combined-showcase.png",
+      "caption": "Four static ad directions for V1CE's NFC review card: the problem it actually solves, a benefit breakdown, a social proof card, and an offer banner. Same card, four different reasons someone stops scrolling. Built off V1CE's real numbers, not commissioned by the brand.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-V1CE-X1": {
+      "platform": ["x"],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/combined-showcase.png",
+      "caption": "Four static ad directions from one product. Same card, four different hooks.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-V1CE-X2": {
+      "platform": ["x"],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-3-social-proof.png",
+      "caption": "V1CE sits at 4.8 stars across 2,375+ reviews. Built the proof angle straight off that instead of guessing at a number.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-V1CE-X3": {
+      "platform": ["x"],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-2-benefit-result.png",
+      "caption": "No app, no reprint, tap and the review page opens. That's the whole pitch for this one.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    }
+  },
+  "knownGaps": "combined-showcase.png is 1.24MB, under the ~4MB X size ceiling, so no compressed -x variant was needed this run.",
+  "exportLog": [
+    {
+      "date": "2026-08-14",
+      "note": "First static-ad run for V1CE. Prior static-ad attempt earlier the same day was blocked entirely by a sandbox network issue (gpt-image API calls could not complete within the 45s per-command ceiling, confirmed via repeated diagnostics) and produced nothing. On retry, network conditions had recovered (verified with a fast test call before resuming) and all four ads generated successfully. Ad 4 (offer/urgency) needed one regeneration: the first pass mangled the dollar amounts in the offer banner ('FREE SHIPPING ON ORDERS 0+' and 'From 8' instead of $70+ and $38). Fixed by spelling out amounts as words ('70 DOLLARS', '38 DOLLARS') in the regenerated prompt, which rendered correctly. All 4 final ads were read back and visually confirmed correct before the combined showcase was assembled."
+    }
+  ]
+}

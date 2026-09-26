@@ -1,0 +1,135 @@
+{
+  "brand": "Caraway",
+  "brandSlug": "caraway",
+  "isRealBrand": true,
+  "isClient": false,
+  "created": "2026-09-09T14:10:00.000Z",
+  "updated": "2026-09-09T14:10:00.000Z",
+  "howToUse": "Each key under 'assets' maps one generated image to its ready-to-post caption. Automation should join on 'assetPath' (the exact relative path from the koolestpro-cowork-v2 project root) or on the key itself. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Created', never 'Published', per CLAUDE.md).",
+  "relatedPipelineItemIds": [
+    "static-ad-caraway_fry-pan-20260909"
+  ],
+  "brandSafety": "Caraway is not a Koolestpro client. Every caption in this file already carries an explicit unofficial-concept disclaimer. Do not remove it when posting.",
+  "sourcedFacts": {
+    "productPage": "https://www.carawayhome.com/products/fry-pan",
+    "product": "10.5\" Non-Stick Ceramic Fry Pan, Cream",
+    "price": "$125, or 4 payments of $32",
+    "rating": "4.7 out of 5",
+    "reviewCount": 18878,
+    "claimsUsed": [
+      "made without PTFE, PFOA, PFAS, lead and cadmium",
+      "third-party tested for 200+ forever chemicals and 20+ heavy metals",
+      "oven safe up to 550°F",
+      "works on gas, electric and induction",
+      "wipes clean without soaking or scrubbing",
+      "free shipping on orders $90+",
+      "free 30-day returns"
+    ],
+    "reviewQuotes": [
+      "Cooks evenly and quickly. Really doesn't need to be above Med to get a nice browning. (Curtis M., Verified Buyer)",
+      "As described, fantastic, non stick for sure. (Megan L., Verified Buyer)"
+    ],
+    "notUsed": "AllModern lists the pan at 4.8 stars (different platform, not used to avoid rating conflicts with Caraway's own 4.7). LeafScore downgraded Caraway from 5 leaves to 4 over long-term durability, so no \"lasts forever\" framing was used anywhere in the set."
+  },
+  "knownGaps": "None as of 2026-09-09. All 5 core-set images (ad-1 through ad-4, plus combined-showcase) exist on disk and were visually reviewed before being recorded here. combined-showcase.png is 2084x3108 / 7.4MB, over the ~4MB X ceiling, so combined-showcase-x.png (1300x1938, ~0.55MB) was generated for X use. Note: due to a sandbox file-write quirk, combined-showcase-x.png is actually JPEG-encoded bytes despite the .png extension; it opens and displays fine, just flagging for anyone who inspects the file format directly. Two bonus unused benefit/result variants (ad-2-benefit-result-alt-a.png, ad-2-benefit-result-alt-b.png) also sit in the output folder but are not referenced by any caption here.",
+  "assets": {
+    "SA-CARAWAY-PROBLEM": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png",
+      "caption": "Forever chemicals, struck through. Just breakfast, underneath. Name the thing people are quietly worried about, then let the pan answer it. The problem/solution angle for Caraway's 10.5\" ceramic fry pan. Unofficial concept work built from Caraway's own live product page, not something the brand commissioned.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-CARAWAY-BENEFIT": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-2-benefit-result.png",
+      "caption": "Non-toxic ceramic coating, oven safe to 550, works on gas, electric and induction, wipes clean. Four facts, one hero shot. The benefit/result angle for Caraway's fry pan. Unofficial concept work built from Caraway's own live product page, not something the brand commissioned.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-CARAWAY-PROOF": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-3-social-proof.png",
+      "caption": "4.7 stars from 18,878 reviews, and a real buyer saying it cooks evenly and quickly. Let the customer's line carry the claim instead of the brand's. The social proof angle for Caraway's fry pan. Unofficial concept work built from Caraway's own live product page, not something the brand commissioned.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-CARAWAY-OFFER": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-4-offer-urgency.png",
+      "caption": "Still thinking about it? Free shipping over $90, free 30-day returns, $125 or 4 payments of $32. The offer/urgency angle for Caraway's fry pan, styled like a retargeting ad. Unofficial concept work built from Caraway's own live product page, not something the brand commissioned.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-CARAWAY-COMBO": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/combined-showcase.png",
+      "caption": "Four static ad directions for the same frying pan.\n\nCaraway sells a $125 ceramic fry pan on one idea: no PTFE, no PFOA, no PFAS. That single fact can be sold four different ways, and which one you lead with changes who stops scrolling.\n\nProblem first. Name the thing people are quietly worried about, then show the pan.\nBenefit first. Hero shot, feature callouts, oven safe to 550, works on induction, wipes clean.\nProof first. 4.7 stars from 18,878 reviews and two real lines from verified buyers.\nOffer first. Free shipping over $90, free returns, one button.\n\nSame product, same price, same photo brief. Only the opening move changes.\n\nMost brands pick one of these and run it into the ground. The cheap win is running all four at once and letting the cost per click tell you which problem your buyer actually has.\n\nConcept work, not a Caraway commission. Every claim comes off their live product page.\n\n#CRO #DTC #EcommerceMarketing #AdCreative",
+      "hashtags": [
+        "#CRO",
+        "#DTC",
+        "#EcommerceMarketing",
+        "#AdCreative"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-CARAWAY-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/combined-showcase-x.png",
+      "caption": "Four ad directions from one $125 frying pan.\n\nProblem. Benefit. Proof. Offer.\n\nSame product, same photo brief. Only the first line changes.\n\nConcept work off Caraway's live PDP.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-CARAWAY-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-3-social-proof.png",
+      "caption": "The strongest line in this ad was not written by a marketer.\n\n\"Cooks evenly and quickly.\"\n\nCurtis M., verified buyer, sitting under 18,878 reviews.\n\nReal beats clever most days.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-CARAWAY-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png",
+      "caption": "Caraway's whole pitch is three letters they left out.\n\nNo PTFE. No PFOA. No PFAS.\n\nSo the ad leads with the worry, not the pan. The pan is the answer to a question you already had.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    }
+  }
+}

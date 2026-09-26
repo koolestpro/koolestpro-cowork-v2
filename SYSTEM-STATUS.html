@@ -1,0 +1,100 @@
+<title>Koolestpro System Status</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808; --panel:#0e0e0e; --line:rgba(255,255,255,.09);
+  --ink:#f2f2f2; --dim:rgba(255,255,255,.48); --faint:rgba(255,255,255,.3);
+  --orange:#FF9500; --pink:#E040A0; --purple:#7B2FBE;
+  --warn:#FFB020; --alert:#FF5C5C; --ok:#3ECF8E;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'DM Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:13px;line-height:1.7;padding:40px 24px 80px}
+.wrap{max-width:1080px;margin:0 auto}
+h1{font-family:'Syne',system-ui,sans-serif;font-weight:800;font-size:34px;
+  letter-spacing:-1px;margin:0 0 6px;color:var(--ink)}
+h2{font-family:'Syne',system-ui,sans-serif;font-weight:800;font-size:15px;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);
+  margin:44px 0 14px}
+.sub{color:var(--dim);font-size:12px;margin-bottom:28px}
+.rule{height:3px;border-radius:2px;margin-bottom:32px;
+  background:linear-gradient(90deg,var(--orange),var(--pink),var(--purple))}
+.panel{background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.stat .n{font-family:'Syne',system-ui,sans-serif;font-weight:800;font-size:28px;
+  letter-spacing:-1px;color:var(--orange);display:block;line-height:1.2}
+.stat .l{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.src{color:var(--faint);font-size:10.5px;margin-top:10px;word-break:break-all}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;color:var(--faint);font-weight:400;font-size:10.5px;
+  text-transform:uppercase;letter-spacing:1px;padding:6px 10px 6px 0;
+  border-bottom:1px solid var(--line)}
+td{padding:7px 10px 7px 0;border-bottom:1px solid rgba(255,255,255,.045);
+  vertical-align:top}
+.scroll{overflow-x:auto}
+.flag{border-radius:8px;padding:12px 16px;margin-bottom:9px;font-size:12.5px;
+  border:1px solid}
+.flag.warn{border-color:rgba(255,176,32,.4);background:rgba(255,176,32,.07);color:var(--warn)}
+.flag.alert{border-color:rgba(255,92,92,.4);background:rgba(255,92,92,.07);color:var(--alert)}
+.flag.ok{border-color:rgba(62,207,142,.35);background:rgba(62,207,142,.06);color:var(--ok)}
+.err{color:var(--alert)}
+.on{color:var(--ok)} .off{color:var(--faint)}
+.foot{color:var(--faint);font-size:11px;margin-top:48px;
+  border-top:1px solid var(--line);padding-top:18px}
+</style>
+<div class="wrap">
+<h1>Koolestpro System Status</h1>
+<div class="sub">Generated 2026-09-18 08:07 UTC by <code>.ai-workflow/tools/build_system_status.py</code>. Every number below traces to a file. Structure and rules live in <code>SYSTEM-MAP.md</code>.</div>
+<div class="rule"></div>
+<h2>Needs attention</h2>
+<div class="flag alert">Lead importer is BLOCKED, not idle. macOS is denying the launchd agent access to the project folder (TCC). The job fires on schedule but /bin/bash cannot execute the script, so nothing is ever imported. Grant Full Disk Access to /bin/bash, or move the project out of ~/Downloads. Until then every queued file stays put.</div>
+<div class="flag alert">2026-W36_adlib-ng-home-decor.json has sat in pending-push for 376h. Blocked by the importer failure above.</div>
+<div class="flag alert">2026-W37_adlib-ng-gadgets.json has sat in pending-push for 213h. Blocked by the importer failure above.</div>
+<div class="flag alert">2026-W37_victoria-island-lagos-skincare-shop.json has sat in pending-push for 237h. Blocked by the importer failure above.</div>
+<div class="flag warn">Clean posting pace is 0.57/day over the next 7 days, under the 1.5 floor (target is a 3/day average).</div>
+<h2>Scheduled tasks</h2>
+<div class="grid">
+<div class="stat"><span class="n">12</span><span class="l">enabled</span></div>
+<div class="stat"><span class="n">5</span><span class="l">disabled</span></div>
+<div class="stat"><span class="n">0</span><span class="l">stale &gt;14d</span></div>
+</div>
+<div class="panel scroll"><table><tr><th>task</th><th>state</th><th>schedule</th><th>days since run</th></tr><tr><td>shopify-cro-job-alerts</td><td class="off">disabled</td><td>At 09:02 AM, Monday through Friday</td><td>104</td></tr><tr><td>abuzaid-weekly-post-drafts</td><td class="off">disabled</td><td>At 09:08 AM, only on Saturday</td><td>89</td></tr><tr><td>abuzaid-saturday-batch</td><td class="off">disabled</td><td>At 08:09 AM, only on Saturday</td><td>66</td></tr><tr><td>koolestpro-static-ad-weekly</td><td class="on">enabled</td><td>At 09:04 AM, only on Friday</td><td>6</td></tr><tr><td>koolestpro-template-showcase-weekly</td><td class="on">enabled</td><td>At 09:09 AM, only on Saturday</td><td>5</td></tr><tr><td>koolestpro-weekly-cro-fix</td><td class="on">enabled</td><td>At 09:12 AM, only on Sunday</td><td>4</td></tr><tr><td>koolestpro-target-pool-refresh</td><td class="on">enabled</td><td>At 08:18 AM, only on Monday</td><td>1</td></tr><tr><td>koolestpro-tips-weekly</td><td class="on">enabled</td><td>At 09:28 AM, only on Friday</td><td>6</td></tr><tr><td>koolestpro-replo-cache-staleness-check</td><td class="on">enabled</td><td>At 08:49 AM, only on Monday</td><td>1</td></tr><tr><td>koolestpro-weekly-distribution-assembly</td><td class="on">enabled</td><td>At 07:51 AM, only on Monday</td><td>1</td></tr><tr><td>koolestpro-trend-radar-weekly</td><td class="off">disabled</td><td>At 08:51 AM, only on Friday</td><td>34</td></tr><tr><td>koolestpro-browseract-weekly</td><td class="on">enabled</td><td>At 09:05 AM, only on Tuesday</td><td>1</td></tr><tr><td>koolestpro-adlibrary-weekly</td><td class="on">enabled</td><td>At 09:00 AM, only on Wednesday</td><td>1</td></tr><tr><td>koolestpro-weekly-template-build</td><td class="on">enabled</td><td>At 09:21 AM, only on Wednesday</td><td>1</td></tr><tr><td>koolestpro-distribution-health-check</td><td class="on">enabled</td><td>At 09:35 AM, every 2 days</td><td>1</td></tr><tr><td>koolestpro-system-status-weekly</td><td class="on">enabled</td><td>At 09:40 AM, only on Monday</td><td>1</td></tr><tr><td>koolestpro-tiktok-weekly</td><td class="off">disabled</td><td>At 09:11 AM, only on Thursday</td><td>never</td></tr></table><div class="src">.ai-workflow/scheduled-tasks-snapshot.json · snapshot written 2026-09-16T18:41:06Z</div></div>
+<h2>Content pipeline</h2>
+<div class="grid">
+<div class="stat"><span class="n">68</span><span class="l">items</span></div>
+<div class="stat"><span class="n">36</span><span class="l">idea backlog left</span></div>
+<div class="stat"><span class="n">5</span><span class="l">months</span></div>
+</div>
+<div class="panel"><b>By status</b><table><tr><td>Idea</td><td>36</td></tr><tr><td>Created</td><td>30</td></tr><tr><td>Ready</td><td>2</td></tr></table><div class="src">ridwan_content_system_updated.html → SYNC_DATA</div></div>
+<div class="panel"><b>By type</b><table><tr><td>CRO Fix</td><td>18</td></tr><tr><td>Tip</td><td>20</td></tr><tr><td>Case Study</td><td>8</td></tr><tr><td>Personal</td><td>8</td></tr><tr><td>Static Ad</td><td>5</td></tr><tr><td>Template Showcase</td><td>9</td></tr></table></div>
+<h2>Distribution queue</h2>
+<div class="grid">
+<div class="stat"><span class="n">180</span><span class="l">rows</span></div>
+<div class="stat"><span class="n">0.57</span><span class="l">clean posts/day</span></div>
+<div class="stat"><span class="n">13</span><span class="l">overdue, QA-blocked</span></div>
+</div>
+<div class="panel"><b>By platform</b><table><tr><td>Twitter</td><td>94</td></tr><tr><td>LinkedIn</td><td>30</td></tr><tr><td>Instagram</td><td>56</td></tr></table><b>By status</b><table><tr><td>Posted</td><td>91</td></tr><tr><td>Ready</td><td>88</td></tr><tr><td>Draft</td><td>1</td></tr></table><div class="src">outputs/distribution-queue/queue.json · Twitter + LinkedIn only. Instagram is excluded because it cannot post at all (Meta Page-IG link blocker).</div></div>
+<h2>Prospect pools</h2>
+<div class="grid">
+<div class="stat"><span class="n">12</span><span class="l">targets</span></div>
+<div class="stat"><span class="n">4</span><span class="l">untouched</span></div>
+<div class="stat"><span class="n">0</span><span class="l">unrated (unusable)</span></div>
+</div>
+<div class="panel"><b>By category</b><table><tr><td>beauty-skincare</td><td>2</td></tr><tr><td>nfc-local-business-growth</td><td>2</td></tr><tr><td>fitness-wellness</td><td>2</td></tr><tr><td>home-kitchen</td><td>2</td></tr><tr><td>fashion-apparel</td><td>1</td></tr><tr><td>baby-pet-lifestyle</td><td>2</td></tr><tr><td>food-beverage-supplements</td><td>1</td></tr></table><div class="src">targets_pool.json</div></div>
+<div class="panel"><b>Taken-brands ledger</b> — 14 brands already pushed<div class="src">.ai-workflow/taken-brands-ledger.json</div></div>
+<div class="panel"><b>Pending push to KoolestFlow</b> — 5 queued: 2026-W36_adlib-ng-home-decor.json, 2026-W37_adlib-ng-gadgets.json, 2026-W37_victoria-island-lagos-skincare-shop.json, 2026-W38_adlib-ng-food.json, 2026-W38_ikeja-lagos-baby-and-kids-store.json<div class="src">.ai-workflow/pending-push/</div></div>
+<div class="panel"><b>Lead importer</b> — BLOCKED. macOS is denying the launchd agent access to the project folder (TCC). The job fires on schedule but /bin/bash cannot execute the script, so nothing is ever imported. Last log write 0.2h ago.<div class="src">.ai-workflow/leadgen-import.launchd.log</div></div>
+<h2>Build assets</h2>
+<div class="panel"><b>Showcase-eligible pages</b> — 2 unused of 12 catalogued. Next: kura_pdp-02, halos_li-02<div class="src">replo-rebuilds-pages.json</div></div>
+<div class="panel"><b>Store templates</b> — 2 built<br>Watches (MERIDIAN) — Ready<br>Skincare (Lumora Skin) — Ready<div class="src">store-templates.json</div></div>
+<h2>Spend</h2>
+<div class="panel"><b>2026-08</b><table><tr><td>x</td><td>0.75</td></tr><tr><td>reddit</td><td>0.5</td></tr></table><div class="src">trend-radar-spend-ledger.json · checked before every paid call, never after</div></div>
+<h2>Context budget</h2>
+<div class="panel scroll"><table><tr><th>file</th><th>state</th><th>size / budget</th><th>est tokens</th></tr><tr><td>AGENTS.md</td><td class="on">within</td><td>3.1 / 6 KiB</td><td>~792</td></tr><tr><td>CLAUDE.md</td><td class="on">within</td><td>32.6 / 39 KiB</td><td>~8357</td></tr><tr><td>SYSTEM-MAP.md</td><td class="on">within</td><td>11.3 / 16 KiB</td><td>~2895</td></tr></table><div class="src">AGENTS.md / CLAUDE.md / SYSTEM-MAP.md — deliberately slim: these are read by agents, so a task pays for them on every run. Flagged the moment one regrows.</div></div>
+<div class="foot">Generated file. Do not hand-edit — rerun <code>build_system_status.py</code> instead. A source this script cannot read is reported as SOURCE MISSING and never as zero.</div>
+</div>

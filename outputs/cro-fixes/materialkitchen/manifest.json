@@ -1,0 +1,46 @@
+{
+  "sourceFile": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen_homepage-above-the-fold_content.html",
+  "exportedAt": "2026-07-19T09:31:10.598869+00:00",
+  "postBrand": "Material Kitchen",
+  "postSlug": "materialkitchen_homepage-above-the-fold",
+  "postType": "CRO Fix",
+  "files": {
+    "ba-graphic": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_before-after.png",
+      "bytes": 2350921
+    },
+    "anno-graphic": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_annotated-changes.png",
+      "bytes": 1075271
+    },
+    "slide-1": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide1.png",
+      "bytes": 245895
+    },
+    "slide-2": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide2.png",
+      "bytes": 248883
+    },
+    "slide-3": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide3.png",
+      "bytes": 223871
+    },
+    "slide-4": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide4.png",
+      "bytes": 231621
+    },
+    "slide-5": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide5.png",
+      "bytes": 240497
+    },
+    "slide-6": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide6.png",
+      "bytes": 419325
+    },
+    "captions": {
+      "path": "/sessions/nice-zen-galileo/mnt/koolestpro-cowork-v2/outputs/cro-fixes/materialkitchen/captions.txt"
+    }
+  },
+  "renamedToConvention": true,
+  "pipelineItemId": "cro-fix-materialkitchen_homepage-above-the-fold-20260719"
+}

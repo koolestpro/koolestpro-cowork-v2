@@ -1,0 +1,53 @@
+{
+  "sourceFile": "outputs/cro-fixes/bebemoss_toys-collection_content.html",
+  "exportedAt": "2026-08-18T13:51:00.283285+00:00",
+  "postBrand": "Bebemoss",
+  "postSlug": "bebemoss_toys-collection",
+  "postType": "CRO Fix",
+  "files": {
+    "ba-graphic": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_before-after.png",
+      "bytes": 1573104
+    },
+    "anno-graphic": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_annotated-changes.png",
+      "bytes": 750778
+    },
+    "slide-1": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide1.png",
+      "bytes": 211306
+    },
+    "slide-2": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide2.png",
+      "bytes": 253951
+    },
+    "slide-3": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide3.png",
+      "bytes": 199347
+    },
+    "slide-4": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide4.png",
+      "bytes": 219887
+    },
+    "slide-5": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide5.png",
+      "bytes": 209431
+    },
+    "slide-6": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide6.png",
+      "bytes": 245879
+    },
+    "slide-7": {
+      "path": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide7.png",
+      "bytes": 249045
+    },
+    "captions": {
+      "path": "outputs/cro-fixes/bebemoss/captions.txt",
+      "bytes": 4629
+    }
+  },
+  "auditBrief": "outputs/audits/bebemoss_toys-collection_audit.md",
+  "rebuildFile": "outputs/cro-fixes/bebemoss_rebuild.html",
+  "beforeUrl": "https://bebemoss.com/collections/toys",
+  "renamedTo": "established koolestpro_{brand}_{asset} convention (see outputs/cro-fixes/v1ce/)"
+}

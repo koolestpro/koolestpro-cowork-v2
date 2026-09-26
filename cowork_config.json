@@ -1,0 +1,72 @@
+{
+  "system": {
+    "version": "3.0.0",
+    "owner": "Ridwan Adekunle (@koolestpro)",
+    "base_path": "."
+  },
+  "anthropic_api": {
+    "endpoint": "https://api.anthropic.com/v1/messages",
+    "model": "claude-opus-4-6",
+    "max_tokens": 16000
+  },
+  "deepseek_api": {
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "heavy_model_env": "DEEPSEEK_HEAVY_MODEL",
+    "light_model_env": "DEEPSEEK_LIGHT_MODEL",
+    "max_tokens": 8000,
+    "note": "Replaces manual OpenCode Desktop hand-off. Keys/models are read from .env at runtime, never hardcoded here. Driven by run_deepseek_task.js."
+  },
+  "paths": {
+    "pipeline_data": "pipeline_data.json",
+    "content_pipeline_html": "content_pipeline.html",
+    "content_system_html": "ridwan_content_system_updated.html",
+    "targets_pool_data": "targets_pool.json",
+    "outreach_tracker_data": "outreach_tracker.json"
+  },
+  "outputs": {
+    "ideas_dir": "outputs/ideas",
+    "tips_dir": "outputs/tips",
+    "cro_dir": "outputs/cro-fixes"
+  },
+  "skills": {
+    "idea_generator": {
+      "file": "skills/koolestpro_idea_generator_skill.md",
+      "output_mode": "json"
+    },
+    "content_engine": {
+      "file": "skills/koolestpro_content_engine_final.md",
+      "template": "templates/tips.html"
+    },
+    "cro_stack": {
+      "audit": "skills/cro-skill-stack/skill_A_store_auditor.md",
+      "rebuild": "skills/cro-skill-stack/skill_B_store_rebuilder_v2.md",
+      "captions": "skills/cro-skill-stack/skill_D_caption_writer.md",
+      "content_pack": "skills/cro-skill-stack/skill_E_cro_content_maker.md"
+    },
+    "target_pool_manager": {
+      "file": "skills/koolestpro_target_pool_manager.md",
+      "data": "targets_pool.json"
+    }
+  },
+  "posting_rhythm": {
+    "Monday": "Tip",
+    "Wednesday": "CRO Fix",
+    "Friday": "Case Study"
+  },
+  "brand_system": {
+    "fonts": {
+      "headlines": "Syne 800",
+      "body": "DM Mono"
+    },
+    "gradient": [
+      "#FF9500",
+      "#E040A0",
+      "#7B2FBE"
+    ],
+    "pillars": [
+      "Digital Craftsmanship",
+      "Conversion Strategy",
+      "Builder's Journey"
+    ]
+  }
+}
