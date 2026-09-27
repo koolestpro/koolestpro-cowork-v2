@@ -991,7 +991,7 @@
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
       "caption_json": "\"Bebemoss sells a $44 crocheted bunny. No discount codes, no countdown timers, no \\\"10,000 reviews\\\" banner slapped across the page.\\n\\nSo I set myself a rule: build 4 ad directions for one of their toys and don't invent a single claim.\\n\\nWhere each one came from:\\n\\nProblem: most \\\"first toys\\\" are plastic and in a landfill before the kid starts school. This one gets kept.\\n\\nBenefit: GOTS organic cotton, crocheted by hand, made to EU toy-safety standards. Real specs, no filler.\\n\\nSocial proof: one actual review, \\\"she's actually a work of art.\\\" Plus their 4.9 from wholesale buyers on Faire.\\n\\nOffer: they have no sale to run, so I told the truth instead. It's made to order, by hand. That's the reason to act, not a fake timer.\\n\\nSame bunny. Same photo. Four different reasons to care, depending on where the buyer's head is when they see it.\\n\\nThat's most of the job with ad creative. Not \\\"make it pop.\\\" Figure out what the person needs to hear first.\\n\\nConcept work. I'm not affiliated with Bebemoss, I just liked the product enough to think about how I'd sell it.\"",
-      "asset_urls": "H32"
+      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-bebemoss_ginger-sleepy-bunny-20260717/ad-1-problem-solution.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-bebemoss_ginger-sleepy-bunny-20260717/ad-2-benefit-result.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-bebemoss_ginger-sleepy-bunny-20260717/ad-3-social-proof.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-bebemoss_ginger-sleepy-bunny-20260717/ad-4-offer-urgency.png"
     },
     {
       "post_id": "static-ad-bebemoss_ginger-sleepy-bunny-20260717-20260802-ig-1200",
@@ -2971,7 +2971,7 @@
       "posted_at": "",
       "content_system_folder": "outputs/cro-fixes/",
       "caption_json": "\"This brand has 15,500+ real business customers and a 4.9 star rating from 1,125 reviews. You wouldn't know it from their homepage.\\n\\nThe first screen is a promo banner and a hero photo. No price, no rating, no product, until you scroll past a full video demo and into a product grid.\\n\\nA strong first screen shows what's true about your brand immediately. This one buries it.\\n\\nFollow @koolestpro for weekly CRO breakdowns.\\n\\n#ShopifyDesign #CRO #eCommerce #ConversionRate #Shopify #UXDesign #SmallBusiness\"",
-      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1789584107/dist/cro-fix-tapro_google-review-cards-20260831/anno-graphic-slide.png"
+      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/anno-graphic-slide.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/ba-graphic-slide.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/koolestpro_tapro_google-review-cards_slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/koolestpro_tapro_google-review-cards_slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/koolestpro_tapro_google-review-cards_slide3.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/koolestpro_tapro_google-review-cards_slide4.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/koolestpro_tapro_google-review-cards_slide5.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/koolestpro_tapro_google-review-cards_slide6.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/koolestpro_tapro_google-review-cards_slide7.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-tapro_google-review-cards-20260831/koolestpro_tapro_google-review-cards_slide8.png"
     },
     {
       "post_id": "cro-fix-tapro_google-review-cards-20260831-20260916-x-1300",
@@ -3043,7 +3043,7 @@
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
       "caption_json": "\"\"",
-      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1789584238/dist/static-ad-caraway_fry-pan-20260909/ad-1-problem-solution.png"
+      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-caraway_fry-pan-20260909/ad-1-problem-solution.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-caraway_fry-pan-20260909/ad-2-benefit-result.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-caraway_fry-pan-20260909/ad-3-social-proof.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-caraway_fry-pan-20260909/ad-4-offer-urgency.png"
     },
     {
       "post_id": "static-ad-caraway_fry-pan-20260909-20260920-ig-1200",
@@ -3187,7 +3187,7 @@
       "posted_at": "",
       "content_system_folder": "outputs/tips/typography-hierarchy-six-levels_2026-09-18.html",
       "caption_json": "\"Your headline got bigger. The page still feels flat.\\n\\nHierarchy is a ranking, not a size. Six things set at 32px is not six levels. It's one level, printed six times.\\n\\nNielsen Norman Group found people read at most about 28% of the words on a page. They're scanning for the one thing that wins. Give them one.\\n\\nSix levels, six jobs:\\nPage promise, the outcome\\nSection signpost, where am I\\nBlock claim, why this part\\nBody, the proof\\nAction, the button\\nFine print, the risk\\n\\nTwo of those can be pure space. Nothing has to get bigger. Things just have to stop touching.\\n\\nSave this for your next build. Follow @koolestpro for more Shopify CRO.\\n\\n#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign #Typography #ProductPage\"",
-      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1789975268/dist/idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a/slide1.png"
+      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/dist/idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a/slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a/slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a/slide3.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a/slide4.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a/slide5.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a/slide6.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a/slide7.png"
     },
     {
       "post_id": "cro-fix-caraway_fry-pan-pdp-20260907-20260923-li-0900",
@@ -3223,7 +3223,7 @@
       "posted_at": "",
       "content_system_folder": "outputs/cro-fixes/",
       "caption_json": "\"Product Page (PDP) audit: Caraway's $125 fry pan has 18,886 reviews.\\n\\nOn a live load, that trust signal can render as just the word \\\"Reviews,\\\" with no stars and no count, right next to the price.\\n\\nPrice also sits disconnected from the title, and the real product photo can miss the first screen entirely.\\n\\nSwipe for the real before/after. Rebuild puts price under the title, stars + count inline always, and the photo front and center.\\n\\nSave this if you're auditing your own PDP this week.\"",
-      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1789584180/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_fry-pan-pdp_carousel_slide1.png"
+      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_fry-pan-pdp_carousel_slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_fry-pan-pdp_carousel_slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_fry-pan-pdp_carousel_slide3.png"
     },
     {
       "post_id": "cro-fix-caraway_fry-pan-pdp-20260907-20260923-x-1300",
@@ -3457,7 +3457,7 @@
       "posted_at": "",
       "content_system_folder": "outputs/cro-fixes/kytebaby_sleep-bag-oat-1-0-pdp_carousel.html",
       "caption_json": "\"PRODUCT PAGE (PDP): Kyte Baby's Sleep Bag in Oat 1.0 already had 29,067 five-star reviews and real safety certifications above the fold. Then the buy button rendered flat gray, no size selected, reading as disabled at the exact moment a shopper was ready to act.\\n\\nThe fix wasn't more proof. The proof was already there. It was the button.\\n\\nThree changes:\\n1. Recolored the CTA to high-contrast red. Never gray, never looks disabled.\\n2. Moved shipping, returns, and Afterpay right under the button instead of a full scroll away, buried below a temperature slider.\\n3. Called out the AAP-compliant and OEKO-TEX certifications as benefit chips, not buried copy.\\n\\nSame product. Same reviews. A button that finally matches the trust the page already earned.\\n\\nThis is unofficial portfolio work, not a Kyte Baby engagement. Repost if you've ever shipped a page that proved itself right up until the button.\"",
-      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1789975345/dist/cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920/koolestpro_kytebaby_sleep-bag-oat-1-0-pdp_carousel_slide1.png"
+      "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920/koolestpro_kytebaby_sleep-bag-oat-1-0-pdp_carousel_slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920/koolestpro_kytebaby_sleep-bag-oat-1-0-pdp_carousel_slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920/koolestpro_kytebaby_sleep-bag-oat-1-0-pdp_carousel_slide3.png"
     },
     {
       "post_id": "cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920-20260923-x-1300",

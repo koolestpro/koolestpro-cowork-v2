@@ -20,11 +20,10 @@ Per-row logic (Instagram / Twitter rows only):
   - video asset (.mp4/.mov/.webm)   -> upload to Cloudinary, use its URL directly
   - 1+ image assets (Twitter)       -> upload EACH individually, join URLs
                                         with "; " in the same order as asset_paths
-  - 2+ image assets (Instagram)     -> upload EACH individually, but asset_urls
-                                        only ever gets the FIRST (cover) URL —
-                                        see the 2026-09-08 bug note in main()
-                                        below. Twitter is unaffected; it has no
-                                        equivalent single-image Make branch.
+  - 2+ image assets (Instagram)     -> upload EACH individually, join all URLs
+                                        (max 10) — Make builds a native IG
+                                        carousel from them (2026-09-27).
+  - any image over 4.5MB             -> shrunk to a JPEG copy before upload.
   - no on-disk assets                -> leave asset_urls empty (text-only —
                                         the distribution plan says this
                                         shouldn't happen for Twitter, so an
@@ -67,6 +66,35 @@ def sig(path):
     except OSError:
         pass
     return h.hexdigest()[:16]
+
+
+MAX_IMAGE_BYTES = int(4.5 * 1024 * 1024)  # X hard limit is 5MB; keep headroom
+
+
+def shrink_if_needed(path):
+    """Belt and braces for the 5MB image limit (added 2026-09-27).
+
+    The Make scenario already serves every Cloudinary image through
+    c_limit,w_2160,h_2700,q_auto:good,f_jpg, which lands far under 5MB. This
+    guard also keeps the ORIGINAL upload small, so a raw URL used anywhere
+    else never trips X/Instagram. Writes a JPEG copy next to the source
+    (never overwrites the source) and returns its path.
+    """
+    try:
+        if os.path.getsize(path) <= MAX_IMAGE_BYTES:
+            return path
+        from PIL import Image
+    except Exception:
+        return path
+    out = os.path.splitext(path)[0] + "__under5mb.jpg"
+    im = Image.open(path).convert("RGB")
+    im.thumbnail((2160, 2700))
+    for q in (90, 85, 80, 72, 65):
+        im.save(out, "JPEG", quality=q, optimize=True, progressive=True)
+        if os.path.getsize(out) <= MAX_IMAGE_BYTES:
+            break
+    print(f"[feed-media] shrank {os.path.basename(path)} {os.path.getsize(path)//1024}KB -> {os.path.getsize(out)//1024}KB")
+    return out
 
 
 def cloudinary_upload(local_path, cloud_name, preset, resource_type, public_id):
@@ -144,36 +172,21 @@ def main():
             if args.dry_run:
                 urls.append("")
                 continue
+            if rtype == "image":
+                f = shrink_if_needed(f)
             url = cloudinary_upload(f, args.cloud_name, args.preset, rtype, pid)
             cache[key] = url
             urls.append(url)
             changed += 1
 
         real_urls = [u for u in urls if u]
-        # BUG FIXED 2026-09-08: Instagram's Make branch (modules 301/302) only
-        # implements the single-image /media + /media_publish flow — it has no
-        # carousel route (child containers + is_carousel_item + parent
-        # container). A multi-image Instagram row (any "carousel"/"carousel-N"
-        # format slot) used to get every image URL joined with "; " into one
-        # asset_urls string, which module 301's endswith(".png") filter still
-        # matched (the *last* URL in the string ends .png), so Make POSTed the
-        # whole semicolon-joined garbage string as a single `image_url` param —
-        # Instagram's Graph API correctly rejected it with 400 Bad Request.
-        # Confirmed live on post_id idea-mobile-thumb-zone-7-tap-target-fails-
-        # ...-20260908-ig-1200 (execution ddef648826f34f9f9c81fdb26c91a31c).
-        # Stopgap until real IG carousel support is built in Make: Instagram
-        # rows with more than one non-video image only ever get the FIRST
-        # (cover) image URL, so they post as a single image instead of
-        # erroring. This does not change what gets generated/reviewed — only
-        # what actually gets sent to graph.instagram.com. Every other platform
-        # keeps the full list.
-        is_video_only = len(real_urls) == 1 and any(
-            os.path.splitext(f)[1].lower() in VIDEO_EXTS for f in files
-        )
-        if r.get("platform") == "Instagram" and len(real_urls) > 1 and not is_video_only:
-            joined = real_urls[0]
-        else:
-            joined = "; ".join(real_urls)
+        # 2026-09-27: the Make scenario (6565331) now has real carousel routes.
+        # X: 2-4 images in one tweet (route 220-225). Instagram: native
+        # CAROUSEL container, 2-10 images (route 310-317). So every platform
+        # gets the full "; "-joined list again; the 2026-09-08 IG cover-only
+        # stopgap is retired. Caps below mirror the platform limits.
+        cap = {"Twitter": 4, "X": 4, "Instagram": 10}.get(r.get("platform"), len(real_urls))
+        joined = "; ".join(real_urls[:cap])
         r["asset_urls"] = joined
         results.append((r["post_id"], len(files), joined))
 
