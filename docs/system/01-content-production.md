@@ -31,7 +31,7 @@ This is the oldest part of the project and the only channel with proven client a
 
 **Reference outputs** that new builds are matched against, not invented from:
 
-- Tips: **old-style format, `docs/system/tips-old-style-format.md` (2026-09-18)**; `outputs/tips/animation-budget-motion-conversion-v2_2026-07-28.html` is now the export-mechanics reference only
+- Tips: **V4 format, `docs/system/tips-v4-format.md` (2026-09-27)**, built on the old-style format `docs/system/tips-old-style-format.md` (2026-09-18); `outputs/tips/animation-budget-motion-conversion-v2_2026-07-28.html` is now the export-mechanics reference only
 - Static Ad: `outputs/static-ads/obvi_super-collagen-protein_20260711/`
 - The older `outputs/tips/funnel-awareness-framework_2026-05-10.html` still governs the underlying geometry and JS
 

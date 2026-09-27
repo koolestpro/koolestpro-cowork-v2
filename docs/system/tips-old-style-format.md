@@ -1,5 +1,7 @@
 # Tips carousel: the old-style format (approved 2026-09-18)
 
+> **Superseded in part (2026-09-27): `docs/system/tips-v4-format.md` is now the Tips spec.** V4 keeps this file's pill, footer, proof-element and CTA-frame ideas but moves to 1080×1350 with larger size floors. Read V4 first; this file stays as the description of the 2025 references.
+
 Ridwan's call: Tips go back to his own 2025 post style. Reference sets (look at them, don't guess):
 
 - `references-for-posts/5 homepage fix that lifts sales/` (8 slides)
