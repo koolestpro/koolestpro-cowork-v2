@@ -102,7 +102,13 @@ so there's always a buffer to swap something out if needed.
    carousel as the bar to beat. **Write every headline per `docs/system/cro-headline-system.md`**
    (derive from the single #1 finding, a different angle per surface, max 2 lines, never
    reuse last week's line). Caption *text* is written directly, never delegated. Run
-   every caption through the `humanizer` skill before finalizing. The cover must carry a
+   every caption through the `humanizer` skill before finalizing.
+   **Posting rule (2026-09-27):** the 3-slide carousel posts to LinkedIn, Instagram AND X,
+   and each of the four graphics (slides 1, 2, 3 and the clear-bg annotated graphic) also
+   posts alone on X. So write the LinkedIn/IG caption plus **five** X captions, one per X
+   post, each under 280 and counted, in the review pack's `tab-x-carousel`, `tab-x-cover`,
+   `tab-x-ba`, `tab-x-anno`, `tab-x-anno-graphic` panels (table in
+   `docs/system/cro-3-slide-carousel-format.md`). The cover must carry a
    real dominant visual (phone hero + brand logo), and slides 2 and 3 must each read as a
    standalone post (top-left handle + full title + page type), not just as a slide.
 
@@ -156,7 +162,8 @@ so there's always a buffer to swap something out if needed.
     a pointer back to `outputs/cro-fixes/{slug}_content.html`) without hunting.
     Also update/create `{brand-slug}-social-content.md` / `.json` at the project
     root (see "Per-Brand Social Content Library" in `CLAUDE.md`) with the new
-    `CRO-{BRAND}-BA` / `-ANNO` / `-CAROUSEL` / `-X1..3` asset keys pointing at the
+    `CRO-{BRAND}-COVER` / `-BA` / `-ANNO` / `-ANNO-GRAPHIC` / `-CAROUSEL` plus
+    `-X-CAROUSEL` / `-X-COVER` / `-X-BA` / `-X-ANNO` / `-X-ANNO-GRAPHIC` asset keys pointing at the
     real exported file paths — that file, not this folder, is the durable
     cross-post source of truth for captions once there are multiple weeks of
     output for the same brand.

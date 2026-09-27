@@ -14,12 +14,28 @@ a different angle per surface, max 2 lines).
 clear-background annotated graphic. Together these feed Twitter's 3-posts-a-day floor and
 give Instagram/LinkedIn variants:
 
-| Post | Source | Platforms |
-|---|---|---|
-| Carousel | all 3 slides | LinkedIn, Instagram, X |
-| Before / After | **slide 2 alone** | X (standalone), LinkedIn, Instagram |
-| Annotation (dark) | **slide 3 alone** | X (standalone), LinkedIn, Instagram |
-| Annotation (clear bg) | **standalone graphic** from `.ai-workflow/build_caraway_annotation.py` | X, LinkedIn, Instagram |
+**Posting rule (2026-09-27, Ridwan's instruction, every CRO Fix from now on):**
+1. The **3-slide carousel** is always posted as one multi-image post on **LinkedIn, Instagram AND X**.
+2. **Each of the four graphics** (cover = slide 1, before/after = slide 2, dark annotation = slide 3,
+   clear-background annotated graphic) is **also posted on its own on X**.
+
+That is 3 carousel posts + 4 X singles = 7 posts per audit, so every run writes **5 X captions**,
+one per X post, each under 280 characters, never recycled between posts. In the review pack
+(`{slug}_content.html`) they live in `div.tab-panel` blocks with these ids, which is what
+`harvest_content.py` reads and `populate_sheet.py` schedules:
+
+| Post | Image(s) | Tab id -> caption key | Slot (ET) |
+|---|---|---|---|
+| Carousel, LinkedIn | slides 1-3 | `tab-linkedin` -> `linkedin` | Wed 09:00 |
+| Carousel, Instagram | slides 1-3 | `tab-ig` -> `instagram` | Wed 12:00 |
+| Carousel, X | slides 1-3 | `tab-x-carousel` -> `x_carousel` | Wed 13:00 |
+| Cover, X single | slide 1 | `tab-x-cover` -> `x_cover` | Thu 09:00 |
+| Before/after, X single | slide 2 | `tab-x-ba` -> `x_ba` | Fri 09:00 |
+| Dark annotation, X single | slide 3 | `tab-x-anno` -> `x_anno` | Sat 13:00 |
+| Clear-bg annotation, X single | `*_annotated.png` | `tab-x-anno-graphic` -> `x_anno_graphic` | Sun 18:00 |
+
+Social-content keys: `CRO-{BRAND}-X-CAROUSEL`, `-X-COVER`, `-X-BA`, `-X-ANNO`, `-X-ANNO-GRAPHIC`.
+Reference run: Minimalist Niacinamide 10% PDP (2026-09-27), `outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_content.html`.
 
 **Retired:** the standalone `ba-graphic.png` (slide 2 replaces it). **Back by request
 (2026-09-12):** a standalone annotated graphic in the old "clear light background" style

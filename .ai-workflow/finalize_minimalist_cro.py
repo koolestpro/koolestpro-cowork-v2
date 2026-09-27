@@ -33,8 +33,24 @@ I kept the photo. It just shouldn't have to sell the serum on its own.
 
 This is unofficial concept work. Minimalist isn't a client."""
 
-X = [
-"""Minimalist's serum PDP: great photo, then nothing.
+# One caption per X post (2026-09-27 rule): the 3-image carousel + each of the 4 graphics.
+XC = {
+ "x_carousel": """PDP teardown: Minimalist's Niacinamide 10% serum.
+
+1 The price sat two scrolls down
+2 Same serum, new first screen
+3 The questions it now answers up front
+
+Swipe through. Every fact came from their own page.""",
+ "x_cover": """Minimalist's serum PDP, measured on a phone:
+
+Screen 1 ends at 844px. Only the photo.
+Price: 1,576px down.
+Add to Cart: 1,870px down.
+
+Great photo.
+It shouldn't have to sell the serum alone.""",
+ "x_ba": """Minimalist's serum PDP: great photo, then nothing.
 
 Before:
 X Screen one is only the photo
@@ -46,7 +62,15 @@ OK Headline, rating, price and button on screen one
 
 Same serum.
 Nothing invented. Just moved up.""",
-"""Redesigned this PDP (Minimalist Niacinamide 10%) around one thing:
+ "x_anno": """PDP fix: Minimalist's serum page already answered "safe in pregnancy?"
+
+The answer sat in a closed accordion. Meanwhile a chat bubble asked the same question on screen one.
+
+Moved it next to the price.
+
+Same serum.
+Better answers = better conversion.""",
+ "x_anno_graphic": """Redesigned this PDP (Minimalist Niacinamide 10%) around one thing:
 
 What a buyer asks before scrolling.
 
@@ -56,22 +80,17 @@ What a buyer asks before scrolling.
 
 All 3 answers were already on the page.
 Now they're on screen one.""",
-"""PDP fix: Minimalist's serum page already answered "safe in pregnancy?"
-
-The answer sat in a closed accordion. Meanwhile a chat bubble asked the same question on screen one.
-
-Moved it next to the price.
-
-Same serum.
-Better answers = better conversion.""",
-]
+}
+X = list(XC.values())
+XKEY = {"x_carousel": ("X-CAROUSEL", "CAROUSEL3"), "x_cover": ("X-COVER", "COVER"), "x_ba": ("X-BA", "BA"),
+        "x_anno": ("X-ANNO", "ANNO"), "x_anno_graphic": ("X-ANNO-GRAPHIC", "ANNO-GRAPHIC")}
 
 def check(t, name, limit=None):
     assert "—" not in t and "&mdash;" not in t, f"em dash in {name}"
     assert "\\n" not in t
     if limit: assert len(t) < limit, f"{name} is {len(t)} chars"
 check(LINKEDIN, "linkedin")
-for i, t in enumerate(X): check(t, f"x{i+1}", 280); print(f"X{i+1}: {len(t)} chars")
+for k, t in XC.items(): check(t, k, 280); print(f"{k}: {len(t)} chars")
 for p in list(IMG.values()) + [CAROUSEL, REBUILD]:
     assert (ROOT / p).exists(), f"missing {p}"
 
@@ -84,9 +103,8 @@ items = {
  f"{K}-ANNO-GRAPHIC": {"assetPath": IMG["ANNO-GRAPHIC"], "usedIn": "standalone clear-background annotation graphic (1080x1080)"},
  f"{K}-CAROUSEL": {"assetPath": CAROUSEL, "usedIn": "the review/export HTML (all 3 slides + download panel)",
                    "captionOptions": [{"id": "linkedin", "caption": LINKEDIN, "hashtags": ["#CRO", "#Shopify", "#EcommerceUX", "#ProductPage"]}]},
- f"{K}-X1": {"assetPath": IMG["BA"], "caption": X[0], "platform": "X", "chars": len(X[0])},
- f"{K}-X2": {"assetPath": IMG["ANNO-GRAPHIC"], "caption": X[1], "platform": "X", "chars": len(X[1])},
- f"{K}-X3": {"assetPath": IMG["ANNO"], "caption": X[2], "platform": "X", "chars": len(X[2])},
+ **{f"{K}-{XKEY[k][0]}": {"assetPath": ([IMG["COVER"], IMG["BA"], IMG["ANNO"]] if k == "x_carousel" else IMG[XKEY[k][1]]),
+                              "caption": t, "platform": "X", "captionKey": k, "chars": len(t)} for k, t in XC.items()},
 }
 lib = {"brand": BRAND, "brandSlug": BR, "isConceptBrand": False,
        "note": "Real brand, unofficial portfolio/concept CRO work. Not a Minimalist client engagement.",
@@ -95,12 +113,14 @@ lib = {"brand": BRAND, "brandSlug": BR, "isConceptBrand": False,
 md = [f"# {BRAND} - Social Content Library", "", "Real brand. Unofficial portfolio/concept CRO work, not a Minimalist client engagement.", "",
       f"Pipeline item: `{ITEM_ID}`", "", "| Key | Asset | Use |", "|---|---|---|"]
 for k, v in items.items(): md.append(f"| `{k}` | `{v['assetPath']}` | {v.get('usedIn', 'X caption, ' + str(v.get('chars')) + ' chars')} |")
-md += ["", f"## LinkedIn / Instagram caption ({K}-BA, {K}-CAROUSEL)", "", "```", LINKEDIN, "```", "", "## X captions (no hashtags, each under 280)", ""]
-for i, t in enumerate(X): md += [f"### {K}-X{i+1} ({len(t)} chars) -> `{items[f'{K}-X{i+1}']['assetPath']}`", "", "```", t, "```", ""]
+md += ["", "Posting plan (2026-09-27 rule): the 3-slide carousel goes to LinkedIn, Instagram AND X; each of the 4 graphics also posts alone on X.", "",
+       f"## LinkedIn / Instagram caption ({K}-BA, {K}-CAROUSEL)", "", "```", LINKEDIN, "```", "", "## X captions (no hashtags, each under 280)", ""]
+for k, t in XC.items():
+    key = f"{K}-{XKEY[k][0]}"; md += [f"### {key} ({len(t)} chars) -> `{items[key]['assetPath']}`", "", "```", t, "```", ""]
 (ROOT / f"{BR}-social-content.md").write_text("\n".join(md), encoding="utf-8")
 
 # ---- captions.txt + manifest
-(ROOT / OUTD / "captions.txt").write_text("LINKEDIN / INSTAGRAM\n\n" + LINKEDIN + "\n\n" + "\n\n".join(f"X{i+1} ({len(t)} chars)\n\n{t}" for i, t in enumerate(X)) + "\n", encoding="utf-8")
+(ROOT / OUTD / "captions.txt").write_text("LINKEDIN / INSTAGRAM\n\n" + LINKEDIN + "\n\n" + "\n\n".join(f"{XKEY[k][0]} ({len(t)} chars)\n\n{t}" for k, t in XC.items()) + "\n", encoding="utf-8")
 (ROOT / OUTD / "manifest.json").write_text(json.dumps({
   "brand": BRAND, "slug": SLUG, "date": DATE, "pipelineItemId": ITEM_ID, "pageType": "Product Page (PDP)",
   "url": "https://beminimalist.co/products/niacinamide-10-with-matmarine",
@@ -110,7 +130,9 @@ for i, t in enumerate(X): md += [f"### {K}-X{i+1} ({len(t)} chars) -> `{items[f'
   "captions": f"{OUTD}/captions.txt", "builders": [".ai-workflow/build_minimalist_rebuild.py", ".ai-workflow/build_minimalist_carousel.py", ".ai-workflow/build_minimalist_annotation.py"],
   "exportedVia": "each page's own captureSlide()/captureSheet() (html2canvas, scale 2) driven by headless Playwright"}, indent=2, ensure_ascii=False), encoding="utf-8")
 
-# ---- review pack HTML
+# ---- review pack HTML (tab ids are what harvest_content.py reads)
+TABS = [("tab-linkedin", "LinkedIn", LINKEDIN), ("tab-ig", "Instagram", LINKEDIN)] + \
+       [(f"tab-{k.replace('_', '-')}", f"{XKEY[k][0]} ({len(t)})", t) for k, t in XC.items()]
 def pre(t): return "<pre>" + H.escape(t) + "</pre>"
 rel = lambda p: p.replace("outputs/cro-fixes/", "")
 content = f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -127,13 +149,14 @@ iframe{{width:390px;height:844px;border:1px solid #333;border-radius:18px;backgr
 <h2>CAROUSEL (EXPORTED PNGs)</h2><div class="g">{''.join(f'<img src="{rel(IMG[k])}">' for k in ("COVER","BA","ANNO"))}</div>
 <h2>STANDALONE ANNOTATED GRAPHIC</h2><div class="g"><img src="{rel(IMG['ANNO-GRAPHIC'])}" style="width:540px"></div>
 <h2>THE REBUILD (LIVE HTML, 390x844)</h2><iframe src="{rel(REBUILD)}"></iframe>
-<h2>CAPTIONS</h2><div class="tabs"><button onclick="sh(0)">LinkedIn / IG</button>{''.join(f'<button onclick="sh({i+1})">X{i+1} ({len(t)})</button>' for i,t in enumerate(X))}</div>
-<div id="caps">{pre(LINKEDIN)}{''.join(pre(t) for t in X)}</div>
+<h2>CAPTIONS</h2><div class="m">Carousel -> LinkedIn, Instagram and X. Each graphic -> its own X single.</div><br>
+<div class="tabs">{''.join(f'<button onclick="sh({i})">{H.escape(lab)}</button>' for i,(tid,lab,_) in enumerate(TABS))}</div>
+<div id="caps">{''.join(f'<div class="tab-panel" id="{tid}">{pre(t)}</div>' for tid,lab,t in TABS)}</div>
 <h2>PIPELINE</h2><div class="tabs"><button class="dl-pipe" onclick="sendToPipeline()">Send to Content Pipeline</button></div><div id="pipeline-status" class="m"></div>
 <p class="m">Files: {H.escape(CAROUSEL)} · outputs/audits/{SLUG}_audit.md · {OUTD}/manifest.json</p></div>
 <script>
-function sh(n){{document.querySelectorAll('#caps pre').forEach((p,i)=>p.style.display=i===n?'':'none')}}sh(0);
-const POST_BRAND='Koolestpro',POST_SLUG='{SLUG}',POST_TYPE='CRO Fix',POST_FOLDER='{CAROUSEL}';
+function sh(n){{document.querySelectorAll('#caps .tab-panel').forEach((p,i)=>p.style.display=i===n?'':'none')}}sh(0);
+const POST_BRAND='Minimalist',POST_SLUG='{SLUG}',POST_TYPE='CRO Fix',POST_FOLDER='{CAROUSEL}';
 function sendToPipeline(){{const now=new Date();const data={{id:'{ITEM_ID}',type:POST_TYPE,title:{json.dumps(TITLE)},slug:POST_SLUG,status:'Created',day:'',created:now.toISOString(),folder:POST_FOLDER,week:'Week of September 27',month:'September 2026',monthSlug:'2026-09',assets:{{images:{json.dumps(list(IMG.values()))}}}}};
 console.log('EXPORT_POST_JSON',JSON.stringify(data));const b=new Blob([JSON.stringify(data,null,2)],{{type:'application/json'}});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=POST_SLUG+'_pipeline.json';document.body.appendChild(a);a.click();a.remove();document.getElementById('pipeline-status').textContent='Exported. Open ridwan_content_system_updated.html and sync.';}}
 </script></body></html>"""
@@ -146,7 +169,12 @@ m = rx.search(src); data = json.loads(m.group(2))
 item = {"id": ITEM_ID, "type": "CRO Fix", "title": TITLE, "slug": SLUG, "status": "Created", "day": "",
         "created": NOW, "folder": CAROUSEL, "week": "Week of September 27", "month": "September 2026", "monthSlug": "2026-09",
         "captions": {"linkedin": LINKEDIN, "x": X}, "assets": {"images": list(IMG.values())}}
-if any(i.get("id") == ITEM_ID for i in data["items"]): print("SYNC: duplicate id, skipped")
+ex = next((i for i in data["items"] if i.get("id") == ITEM_ID), None)
+if ex is not None:
+    ex["captions"] = item["captions"]; ex["assets"] = item["assets"]; data["meta"]["updatedAt"] = NOW
+    shutil.copy(cs, str(cs) + ".bak")
+    cs.write_text(src[:m.start(2)] + json.dumps(data, ensure_ascii=False, indent=2) + src[m.end(2):], encoding="utf-8")
+    print("SYNC: existing item captions refreshed (no duplicate added)")
 else:
     shutil.copy(cs, str(cs) + ".bak")
     data["items"].append(item)

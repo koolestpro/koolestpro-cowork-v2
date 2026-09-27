@@ -64,6 +64,12 @@ UNIFIED_TAB_MAP = {
     "tab-x-singles": "x_singles",
     "tab-twitter-thread": "x_thread",
     "tab-x-thread": "x_thread",
+    # CRO Fix per-asset X captions (2026-09-27): carousel + 4 singles
+    "tab-x-carousel": "x_carousel",
+    "tab-x-cover": "x_cover",
+    "tab-x-ba": "x_ba",
+    "tab-x-anno": "x_anno",
+    "tab-x-anno-graphic": "x_anno_graphic",
 }
 
 # Infer skill flavour from the output folder when the POST_TYPE const is absent

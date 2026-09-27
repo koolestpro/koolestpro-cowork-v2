@@ -38,23 +38,44 @@
         }
       ]
     },
-    "CRO-MINIMALIST-X1": {
+    "CRO-MINIMALIST-X-CAROUSEL": {
+      "assetPath": [
+        "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png",
+        "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png",
+        "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png"
+      ],
+      "caption": "PDP teardown: Minimalist's Niacinamide 10% serum.\n\n1 The price sat two scrolls down\n2 Same serum, new first screen\n3 The questions it now answers up front\n\nSwipe through. Every fact came from their own page.",
+      "platform": "X",
+      "captionKey": "x_carousel",
+      "chars": 207
+    },
+    "CRO-MINIMALIST-X-COVER": {
+      "assetPath": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png",
+      "caption": "Minimalist's serum PDP, measured on a phone:\n\nScreen 1 ends at 844px. Only the photo.\nPrice: 1,576px down.\nAdd to Cart: 1,870px down.\n\nGreat photo.\nIt shouldn't have to sell the serum alone.",
+      "platform": "X",
+      "captionKey": "x_cover",
+      "chars": 190
+    },
+    "CRO-MINIMALIST-X-BA": {
       "assetPath": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png",
       "caption": "Minimalist's serum PDP: great photo, then nothing.\n\nBefore:\nX Screen one is only the photo\nX Price 1,576px down\nX Add to Cart at 1,870px\n\nAfter:\nOK Headline, rating, price and button on screen one\n\nSame serum.\nNothing invented. Just moved up.",
       "platform": "X",
+      "captionKey": "x_ba",
       "chars": 242
     },
-    "CRO-MINIMALIST-X2": {
-      "assetPath": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_annotated.png",
-      "caption": "Redesigned this PDP (Minimalist Niacinamide 10%) around one thing:\n\nWhat a buyer asks before scrolling.\n\n1 What will it do for my skin?\n2 Is it safe while I'm pregnant?\n3 What does it cost?\n\nAll 3 answers were already on the page.\nNow they're on screen one.",
-      "platform": "X",
-      "chars": 257
-    },
-    "CRO-MINIMALIST-X3": {
+    "CRO-MINIMALIST-X-ANNO": {
       "assetPath": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png",
       "caption": "PDP fix: Minimalist's serum page already answered \"safe in pregnancy?\"\n\nThe answer sat in a closed accordion. Meanwhile a chat bubble asked the same question on screen one.\n\nMoved it next to the price.\n\nSame serum.\nBetter answers = better conversion.",
       "platform": "X",
+      "captionKey": "x_anno",
       "chars": 250
+    },
+    "CRO-MINIMALIST-X-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_annotated.png",
+      "caption": "Redesigned this PDP (Minimalist Niacinamide 10%) around one thing:\n\nWhat a buyer asks before scrolling.\n\n1 What will it do for my skin?\n2 Is it safe while I'm pregnant?\n3 What does it cost?\n\nAll 3 answers were already on the page.\nNow they're on screen one.",
+      "platform": "X",
+      "captionKey": "x_anno_graphic",
+      "chars": 257
     }
   },
   "knownGaps": []

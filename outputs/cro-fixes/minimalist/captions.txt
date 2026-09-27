@@ -17,7 +17,28 @@ I kept the photo. It just shouldn't have to sell the serum on its own.
 
 This is unofficial concept work. Minimalist isn't a client.
 
-X1 (242 chars)
+X-CAROUSEL (207 chars)
+
+PDP teardown: Minimalist's Niacinamide 10% serum.
+
+1 The price sat two scrolls down
+2 Same serum, new first screen
+3 The questions it now answers up front
+
+Swipe through. Every fact came from their own page.
+
+X-COVER (190 chars)
+
+Minimalist's serum PDP, measured on a phone:
+
+Screen 1 ends at 844px. Only the photo.
+Price: 1,576px down.
+Add to Cart: 1,870px down.
+
+Great photo.
+It shouldn't have to sell the serum alone.
+
+X-BA (242 chars)
 
 Minimalist's serum PDP: great photo, then nothing.
 
@@ -32,7 +53,18 @@ OK Headline, rating, price and button on screen one
 Same serum.
 Nothing invented. Just moved up.
 
-X2 (257 chars)
+X-ANNO (250 chars)
+
+PDP fix: Minimalist's serum page already answered "safe in pregnancy?"
+
+The answer sat in a closed accordion. Meanwhile a chat bubble asked the same question on screen one.
+
+Moved it next to the price.
+
+Same serum.
+Better answers = better conversion.
+
+X-ANNO-GRAPHIC (257 chars)
 
 Redesigned this PDP (Minimalist Niacinamide 10%) around one thing:
 
@@ -44,14 +76,3 @@ What a buyer asks before scrolling.
 
 All 3 answers were already on the page.
 Now they're on screen one.
-
-X3 (250 chars)
-
-PDP fix: Minimalist's serum page already answered "safe in pregnancy?"
-
-The answer sat in a closed accordion. Meanwhile a chat bubble asked the same question on screen one.
-
-Moved it next to the price.
-
-Same serum.
-Better answers = better conversion.

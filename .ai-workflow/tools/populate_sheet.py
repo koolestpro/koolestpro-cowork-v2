@@ -185,26 +185,35 @@ CALENDAR = {
          "assets": ["CAROUSEL_HTML"], "caption_key": "instagram", "angle": "cross-post"},
         # carousels never go to Twitter (plan) — no X rows for Tips
     ],
+    # ── CRO Fix (rewritten 2026-09-27, Ridwan's instruction) ──────────────
+    # One audit = the 3-slide carousel + 4 single graphics:
+    #   carousel_slide1 = cover, carousel_slide2 = before/after,
+    #   carousel_slide3 = dark annotation, *_annotated.png = clear-bg annotation.
+    # The 3-image carousel ALWAYS posts to LinkedIn, Instagram AND X. Then each
+    # of the four graphics posts on its own as an X single, each with its own
+    # caption_key so no slot recycles another's tweet. Times picked to avoid
+    # every other stream's Twitter slot (TS: Tue09/Thu13/Sat09/Sun11,
+    # SA: Mon09/Tue13/Wed18/Fri13/Sat18, Store: Tue13/Wed09/Fri13/Sat09/Sun11).
+    # NOTE: the X carousel row carries 3 asset_urls; the Make X scenario must
+    # upload every URL and attach all media_ids (X allows up to 4 images).
     "CRO Fix": [
-        {"platform": "LinkedIn",  "dow": 2, "time": "09:00", "fmt": "carousel-2",
-         "assets": ["before-after", "annotated"], "caption_key": "linkedin", "angle": "2-slide"},
-        {"platform": "Instagram", "dow": 2, "time": "12:00", "fmt": "carousel-7",
-         "assets": ["ALL_SLIDES"], "caption_key": "instagram", "angle": "narrative"},
-        # Wed slot was "fmt: thread" pulling x_thread and gluing the whole
-        # 5-tweet script into ONE post — Make has no real reply-chained
-        # threading yet (docs/x-twitter-distribution-setup.md flags this as
-        # unbuilt), so that always shipped one massively over-280-char tweet.
-        # Downgraded 2026-07-29 (Ridwan's call) to a normal single tweet
-        # drawing from the same pre-written x_angles pool as the Fri/Sun
-        # slots below — all three now rotate through the 3 distinct angles
-        # (Tue=idx0, Fri=idx1, Sun=idx2) instead of one slot being broken.
-        # Revisit real multi-tweet threading as a fast-follow.
-        {"platform": "Twitter",   "dow": 2, "time": "13:00", "fmt": "single",
-         "assets": ["before-after"], "caption_key": "x_angles", "angle": "single #0 (was thread, downgraded 2026-07-29)"},
+        {"platform": "LinkedIn",  "dow": 2, "time": "09:00", "fmt": "carousel-3",
+         "assets": ["carousel_slide1", "carousel_slide2", "carousel_slide3"],
+         "caption_key": "linkedin", "angle": "3-slide carousel"},
+        {"platform": "Instagram", "dow": 2, "time": "12:00", "fmt": "carousel-3",
+         "assets": ["carousel_slide1", "carousel_slide2", "carousel_slide3"],
+         "caption_key": "instagram", "angle": "3-slide carousel"},
+        {"platform": "Twitter",   "dow": 2, "time": "13:00", "fmt": "carousel-3",
+         "assets": ["carousel_slide1", "carousel_slide2", "carousel_slide3"],
+         "caption_key": "x_carousel", "angle": "X 3-image carousel"},
+        {"platform": "Twitter",   "dow": 3, "time": "09:00", "fmt": "single",
+         "assets": ["carousel_slide1"], "caption_key": "x_cover", "angle": "X single: cover"},
         {"platform": "Twitter",   "dow": 4, "time": "09:00", "fmt": "single",
-         "assets": ["before-after"], "caption_key": "x_angles", "angle": "single #1"},
+         "assets": ["carousel_slide2"], "caption_key": "x_ba", "angle": "X single: before/after"},
+        {"platform": "Twitter",   "dow": 5, "time": "13:00", "fmt": "single",
+         "assets": ["carousel_slide3"], "caption_key": "x_anno", "angle": "X single: dark annotation"},
         {"platform": "Twitter",   "dow": 6, "time": "18:00", "fmt": "single",
-         "assets": ["annotated"], "caption_key": "x_angles", "angle": "single #2"},
+         "assets": ["_annotated.png"], "caption_key": "x_anno_graphic", "angle": "X single: clear-bg annotation"},
     ],
     "Template Showcase": [
         {"platform": "LinkedIn",  "dow": 4, "time": "09:00", "fmt": "video",
@@ -414,7 +423,8 @@ def caption_text(record, key, variant_index=0):
     # future non-X key that merely starts with "x", so keep it explicit.
     X_KEYS = ("x", "x_singles", "x_angles", "x_thread",
               "x_showcase", "x_freeoffer", "x_niche", "x_buildpublic", "x_results",
-              "x_glance")
+              "x_glance",
+              "x_carousel", "x_cover", "x_ba", "x_anno", "x_anno_graphic")
 
     def check_len(text):
         nonlocal warn
@@ -470,6 +480,14 @@ def caption_text(record, key, variant_index=0):
         # paid client build must never inherit "I'll build you one free", and
         # a free-offer build must never inherit paid-client results framing.
         # Better an empty row that gets flagged than the wrong offer shipped.
+        # CRO Fix keys (2026-09-27). Each prefers its own caption, then the
+        # older x_angles pool, then plain x, so pre-2026-09-27 records still
+        # produce a real tweet.
+        "x_carousel": ["x_carousel", "x_angles", "x"],
+        "x_cover": ["x_cover", "x_angles", "x"],
+        "x_ba": ["x_ba", "x_angles", "x"],
+        "x_anno": ["x_anno", "x_angles", "x"],
+        "x_anno_graphic": ["x_anno_graphic", "x_anno", "x_angles", "x"],
         "x_freeoffer": ["x_freeoffer"],
         "x_results": ["x_results"],
     }

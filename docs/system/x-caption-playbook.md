@@ -112,6 +112,11 @@ Now they can edit anything, anytime.
 - **List:** 3 to 7 findings, or before/after pairs.
 - **Close:** the reframe ("Same product. Better answers = better conversion.").
 - **Always state the page type** in the opening line (PDP, homepage, landing page). Hard rule 6.
+- **Five X captions per audit (2026-09-27):** one for the 3-image carousel post and one for each
+  graphic posted alone (cover, before/after, dark annotation, clear-bg annotated graphic). Give each
+  a different angle that matches its image: the carousel teases the whole story, the cover uses the
+  measured #1 finding, the before/after uses the contrast pattern, the annotations use the question
+  pattern. Never reuse one tweet across two posts.
 
 ### Template / page showcase
 - **Hook:** the objection the page removes, or plainly what the page is.
