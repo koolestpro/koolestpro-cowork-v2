@@ -4,6 +4,32 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 
 ---
 
+## 2026-09-27 13:50 WAT — check run (scheduled)
+
+**⚠️ NEW FINDING 1: Make's posting scenario (6565331) is trying to post "Needs Review" rows, and oversized images are failing it.** Every execution on 2026-09-26 (8 runs, 13:00 to 22:25 UTC) ended status 2 with `MaxFileSizeExceededError` on the http `ActionGetFile` module. Same pattern on 2026-09-21 (6 runs, 16:30 to 22:30 UTC). Cause: the rows due those days carry images over Make's fetch limit. 09-26's Twitter row `template-showcase-kura_pdp-02-20260919-20260926-x-0900` points at `kura_pdp-02-full-page.png` (5.3 MB); 09-21's `static-ad-caraway_fry-pan-20260909-20260921-x-0900` points at `combined-showcase.png` (7.7 MB). Both rows are `status: Ready` but `qa_status: Needs Review`, which means the Make filter is keying on `status` only and ignores `qa_status`. So "blocked" in this log does NOT mean Make skips the row. Neither post went out. Fix is on the content side: point those rows (and any future full-page/showcase rows) at the compressed `-x` sibling under ~4 MB, and either flip Needs Review rows off `Ready` or add a qa_status condition to the Make filter. Upcoming rows at risk: `kura_pdp-01-full-page.png` on 2026-10-06 (3.1 MB, borderline). Not rescheduled: the rows are QA-blocked, and a new date would hit the same size error.
+
+**⚠️ NEW FINDING 2: the reschedule webhook's likely root cause.** Scenario 7111659 reports `isActive: true`, `isPaused: false`, but `scheduling.type` is `on-demand` (last edited by Ridwan 2026-09-18 07:30 UTC) and `hooks_ping` on hook 3613242 still shows `attached: false`. A webhook-triggered scenario needs scheduling set to "Immediately as data arrives". Set that in Make (scenario 7111659 → schedule settings) and the hook should reattach. Not changed here (no reschedule was needed this run, and the task does not edit that scenario's settings unattended).
+
+**Sheet:** 195 data rows read via the Sheets API. Posted 108 (Twitter 82, LinkedIn 22, Instagram 4). Missed 61 (Twitter 9, LinkedIn 7, Instagram 45). Upcoming 26 (Twitter 10, LinkedIn 4, Instagram 12). Most recent posted date: 2026-09-25.
+
+**Missed rows fixed:** none. All 16 missed Twitter/LinkedIn rows are `Needs Review`. The only 2 QA-clean missed rows are Instagram (`template-showcase-kura_pp-01-...-ig-1200`, 09-21 12:00; `template-showcase-kura_li-03-...-ig-1200`, 09-23 12:00). Left in place on purpose: CLAUDE.md has Instagram PAUSED since 2026-09-18 (scraping_warning), so moving them to new dates would only create new misses. Note for Ridwan: this SKILL.md still says Instagram is in scope (2026-09-08). CLAUDE.md's pause is newer, so it was followed.
+
+**Collisions / LinkedIn same-day violations:** no new ones. Existing: Instagram 17:00 pileups 09-12 to 09-20 and LinkedIn 2026-09-16 (2 rows). Every row in those groups is blocked and in the past, so nothing can be moved. No violations in the upcoming queue.
+
+**Step 1b (Twitter length):** checked 19 unposted Twitter captions. 1 over 280 (row 2, 319 chars, already flagged). All 10 upcoming captions are 147 to 275 chars. No new findings. (Rows 78/82/86 are flagged for a 316-char `x_thread[3]` variant; the caption actually in the sheet is under 280.)
+
+**Step 1c (Instagram multi-image):** checked 57 unposted Instagram rows. 0 multi-URL image rows. Nothing trimmed.
+
+**Reschedule scenario (7111659):** active by its status fields but hook not attached (see finding 2). Not called this run.
+
+**Main scenario (6565331) health:** running on schedule (auto executions through 2026-09-26 22:25 UTC). Not paused. **Degraded:** every 09-26 run ended with the file-size warning above. 09-22 to 09-25 runs all succeeded.
+
+**7-day pacing (09-27 to 10-03):** 15 rows queued (10 Twitter/LinkedIn), raw 2.1/day. **0 are QA-clean.** You'd need about 6 more rows to reach 3/day raw, and every one of them needs to clear QA. Full upcoming backlog: 26 rows, 25 blocked (96%). The only clean one is an Instagram row, which is paused. Blockers: claims-to-verify 15, over-280 X variants 6, manual-visual-pending 4. Clearing QA is still the main bottleneck.
+
+**Verdict:** No schedule fixes needed or possible. Three things need Ridwan: (1) Make is attempting "Needs Review" rows, and oversized full-page PNGs made 09-26 (and 09-21) fail. Swap in the `-x` images and gate on qa_status. (2) Set the reschedule scenario 7111659 to run immediately, not on-demand. (3) 96% of the upcoming queue is QA-blocked, and there's nothing clean to post this week.
+
+---
+
 ## 2026-09-19 09:43 WAT — check run
 
 **⚠️ NEW FINDING: the "Distribution Queue Reschedule" webhook (scenario 7111659) accepted calls but did not execute them.** `scenarios_get`/`scenarios_list` reported `isActive: true`, `isPaused: false` (looked healthy), but `hooks_ping` on its webhook (hookId 3613242) returned `"attached": false` with a request sitting in `queueCount`. Two live webhook POSTs both returned HTTP 200 `Accepted`, and a deactivate→reactivate cycle on the scenario did not fix it — `attached` stayed `false` and no new execution ever appeared in `executions_list` for either call. This is a different failure mode than the previously-documented "scenario inactive" case (item 7 in the runbook): the scenario *looks* active by every field the API exposes, but the hook isn't actually wired to fire it. **Ridwan should open scenario 7111659 in Make.com directly and check/re-save the webhook trigger module** — something below what this task can see or fix (blueprint edits are out of scope for this recurring check) is broken. Worked around by writing the one affected row directly via the Sheets API (see below) so nothing was left un-rescheduled, but the webhook itself needs Ridwan's attention or every future run will hit the same wall.

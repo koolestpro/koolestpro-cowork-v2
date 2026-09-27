@@ -1,0 +1,28 @@
+{
+  "brand": "Minimalist",
+  "slug": "minimalist_niacinamide-10-serum-pdp",
+  "date": "2026-09-27",
+  "pipelineItemId": "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927",
+  "pageType": "Product Page (PDP)",
+  "url": "https://beminimalist.co/products/niacinamide-10-with-matmarine",
+  "images": {
+    "COVER": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png",
+    "BA": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png",
+    "ANNO": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png",
+    "ANNO-GRAPHIC": "outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_annotated.png"
+  },
+  "carouselHtml": "outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_carousel.html",
+  "annotationHtml": "outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_annotation.html",
+  "rebuildHtml": "outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_rebuild.html",
+  "reviewPack": "outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_content.html",
+  "audit": "outputs/audits/minimalist_niacinamide-10-serum-pdp_audit.md",
+  "facts": "outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_facts.json",
+  "brief": "outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_build-brief.md",
+  "captions": "outputs/cro-fixes/minimalist/captions.txt",
+  "builders": [
+    ".ai-workflow/build_minimalist_rebuild.py",
+    ".ai-workflow/build_minimalist_carousel.py",
+    ".ai-workflow/build_minimalist_annotation.py"
+  ],
+  "exportedVia": "each page's own captureSlide()/captureSheet() (html2canvas, scale 2) driven by headless Playwright"
+}

@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.0.0",
     "description": "Ranked pool of Shopify/DTC and DTC/B2B ecommerce targets for weekly CRO/static-ad/template content production. See docs/koolestpro-content-operating-plan.md Steps 1-2.",
-    "updatedAt": "2026-08-23T11:20:00.000Z",
+    "updatedAt": "2026-09-27T13:07:10+00:00",
     "recordSchema": {
       "id": "string, unique, e.g. target-<brand-slug>-<timestamp>",
       "brand": "string",
@@ -14,8 +14,8 @@
       "mobileIssueSummary": "string, 1-2 sentences on the visible mobile problem",
       "isRealBrand": "boolean",
       "isClient": "boolean",
-      "status": "Available | Selected | Used | Backlog | Rejected \u2014 status alone should almost never become 'Used' going forward (see 2026-07-12 V1CE correction below); per-stream eligibility is tracked in usedFor instead, since one target can legitimately serve multiple streams and even the same stream more than once over time.",
-      "usedFor": "array of {stream, date, pipelineItemId} - drives rotation logic in Step 2. A target having an entry for stream X does NOT permanently exclude it from stream X again later (established 2026-07-12) \u2014 selection logic should prefer targets with ZERO entries for the stream it's picking for, and only reuse a target that already has one when nothing else qualifies, using a different page/section/angle than the prior entry and noting that explicitly. It DOES mean the target won't be picked for that same stream on back-to-back or near-term runs while fresher options exist.",
+      "status": "Available | Selected | Used | Backlog | Rejected — status alone should almost never become 'Used' going forward (see 2026-07-12 V1CE correction below); per-stream eligibility is tracked in usedFor instead, since one target can legitimately serve multiple streams and even the same stream more than once over time.",
+      "usedFor": "array of {stream, date, pipelineItemId} - drives rotation logic in Step 2. A target having an entry for stream X does NOT permanently exclude it from stream X again later (established 2026-07-12) — selection logic should prefer targets with ZERO entries for the stream it's picking for, and only reuse a target that already has one when nothing else qualifies, using a different page/section/angle than the prior entry and noting that explicitly. It DOES mean the target won't be picked for that same stream on back-to-back or near-term runs while fresher options exist.",
       "notes": "string",
       "addedAt": "ISO timestamp",
       "lastUsedAt": "ISO timestamp or null"
@@ -58,10 +58,17 @@
       "isRealBrand": true,
       "isClient": false,
       "status": "Available",
-      "usedFor": [],
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-09-27",
+          "pipelineItemId": "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927",
+          "note": "Zero prior cro-fix entries. Niacinamide 10% Face Serum PDP. Beauty/skincare chosen to rotate away from baby (Kyte Baby, 09-20) and home-kitchen (Caraway, 09-07/09). #1 finding: photo-only first screen, price at 1,576px, Add to Cart at 1,870px. Concept work only, Minimalist is not a client."
+        }
+      ],
       "notes": "India-based science-backed skincare brand, already retail-distributed (Nykaa, Amazon.in) - likely has some CRO support already, so Medium not High. Reviewed 2026-07-05: homepage only, looked solid.",
       "addedAt": "2026-07-05T00:00:00.000Z",
-      "lastUsedAt": null
+      "lastUsedAt": "2026-09-27T13:07:10+00:00"
     },
     {
       "id": "target-versed-1751673600002",
@@ -132,7 +139,7 @@
           "stream": "template-showcase",
           "date": "2026-07-12",
           "pipelineItemId": "template-showcase-v1ce_tap-review-card-pdp-20260712",
-          "note": "1B local fallback \u2014 replo-rebuilds wasn't connected this run, so this showcased the already-finished CRO Fix rebuild HTML (outputs/cro-fixes/v1ce/v1ce_tap-review-card_rebuild_v2.html) rather than a fresh replo-rebuilds page or a new build against this target's brief."
+          "note": "1B local fallback — replo-rebuilds wasn't connected this run, so this showcased the already-finished CRO Fix rebuild HTML (outputs/cro-fixes/v1ce/v1ce_tap-review-card_rebuild_v2.html) rather than a fresh replo-rebuilds page or a new build against this target's brief."
         },
         {
           "stream": "static-ad",
@@ -140,7 +147,7 @@
           "pipelineItemId": "static-ad-v1ce_nfc-review-card-20260814"
         }
       ],
-      "notes": "NFC review/digital business card company, same niche/reasoning as TAPro - valid DTC/B2B ecommerce target per plan Step 2. Reviewed 2026-07-05: /product/nfc-review-cards. Selected 2026-07-05 for the first weekly CRO Fix - audit brief at outputs/audits/v1ce_tap-review-card_audit.md, rebuild delegated to DeepSeek via .ai-workflow/deepseek-task.md. Normalized 2026-07-12: status was stuck at 'Used' (pre-dates the per-stream usedFor rotation pattern introduced for Obvi 2026-07-11), which incorrectly locked this High/High target out of every future stream. Flipped back to 'Available' with object-format usedFor so it's eligible for template-showcase or a future static-ad run \u2014 only excluded from repeating 'cro-fix' until a rotation reason applies. Used again 2026-07-12 for the first koolestpro-template-showcase-weekly run (1B local fallback, replo-rebuilds not connected) \u2014 still eligible for a future template-showcase run against a different page/section if replo-rebuilds connects later. Used 2026-08-14 for the weekly static-ad stream \u2014 first static-ad use for this target, NFC review card angle (4 concepts: problem/solution, benefit/result, social proof, offer/urgency).",
+      "notes": "NFC review/digital business card company, same niche/reasoning as TAPro - valid DTC/B2B ecommerce target per plan Step 2. Reviewed 2026-07-05: /product/nfc-review-cards. Selected 2026-07-05 for the first weekly CRO Fix - audit brief at outputs/audits/v1ce_tap-review-card_audit.md, rebuild delegated to DeepSeek via .ai-workflow/deepseek-task.md. Normalized 2026-07-12: status was stuck at 'Used' (pre-dates the per-stream usedFor rotation pattern introduced for Obvi 2026-07-11), which incorrectly locked this High/High target out of every future stream. Flipped back to 'Available' with object-format usedFor so it's eligible for template-showcase or a future static-ad run — only excluded from repeating 'cro-fix' until a rotation reason applies. Used again 2026-07-12 for the first koolestpro-template-showcase-weekly run (1B local fallback, replo-rebuilds not connected) — still eligible for a future template-showcase run against a different page/section if replo-rebuilds connects later. Used 2026-08-14 for the weekly static-ad stream — first static-ad use for this target, NFC review card angle (4 concepts: problem/solution, benefit/result, social proof, offer/urgency).",
       "addedAt": "2026-07-05T00:00:00.000Z",
       "lastUsedAt": "2026-08-14T22:58:00.000Z"
     },
@@ -232,7 +239,7 @@
           "stream": "cro-fix",
           "date": "2026-07-19",
           "pipelineItemId": "cro-fix-materialkitchen_homepage-above-the-fold-20260719",
-          "note": "First cro-fix use. Homepage above-the-fold (mobile). Note: the stale mobileIssueSummary ('~400px empty whitespace between header and first headline') no longer matches the live site \u2014 the current hero is strong; the real, verified issues audited were a full-screen email popup over the hero on first visit, zero social proof / price / trust above the fold, and heavy inter-section whitespace. Rebuild surfaced a 5-star proof quote, trust chips, a real bestseller (Trio of Knives $195/$225), and an offer CTA."
+          "note": "First cro-fix use. Homepage above-the-fold (mobile). Note: the stale mobileIssueSummary ('~400px empty whitespace between header and first headline') no longer matches the live site — the current hero is strong; the real, verified issues audited were a full-screen email popup over the hero on first visit, zero social proof / price / trust above the fold, and heavy inter-section whitespace. Rebuild surfaced a 5-star proof quote, trust chips, a real bestseller (Trio of Knives $195/$225), and an offer CTA."
         },
         {
           "stream": "static-ad",
