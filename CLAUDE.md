@@ -1,5 +1,8 @@
 # Koolestpro Cowork System — Rulebook & Task Router
 
+> **STOP — before anything else:** identify the task, open the `TASK ROUTER` table below, read ONLY that row's linked docs, then start work. Do not read this whole file, other router rows, `SYSTEM-MAP.md`, or the archive unless the row you're on says to. A greeting or a question with no task attached needs none of this — just answer it.
+
+
 **Start here: `SYSTEM-MAP.md` is the inventory (what exists, what state, where a new thing goes).** This file is the rulebook (live rules + how to route a task) and `SYSTEM-STATUS.html` is the live generated counts. Do not restate the inventory, the strategy plans, or the history here.
 
 **Three docs, don't confuse them:**
@@ -38,12 +41,12 @@ Every task reads its own scoped doc instead of this whole file. When a task is d
 
 | Task | Sub-project | Read |
 |---|---|---|
-| Tips carousel (`koolestpro-tips-weekly`, content engine) | 1 | **`docs/system/tips-v4-format.md`** (the format, 2026-09-27; bar = `references-for-posts/tips-v4-prototype-2026-09-27/`), `docs/system/tips-old-style-format.md` (the 2025 references it builds on), `.ai-workflow/tools/README.md`, `docs/system/01-content-production.md` |
-| CRO Fix weekly (`koolestpro-weekly-cro-fix`) | 1 | `docs/system/cro-3-slide-carousel-format.md` (the post format), `docs/system/cro-headline-system.md` (the headline), `docs/system/cro-redesign-standard.md` (the rebuild quality bar), `docs/system/rebuild-tooling-and-quality.md` (where the rebuild gets made), `docs/system/page-build-brief.md` (the Lovable/Figma input brief), `docs/system/redesign-tool-api-integration.md` (which tool, and how to connect it), `docs/system/x-caption-playbook.md` (the X caption), `.ai-workflow/weekly-pipeline.md`, `docs/system/01-content-production.md` |
-| Static Ad weekly (`koolestpro-static-ad-weekly`) | 1 | `.ai-workflow/skills/static-ad-image/`, `docs/system/01-content-production.md` |
-| Template Showcase weekly (`koolestpro-template-showcase-weekly`) | 1 + 5 | `docs/system/template-showcase-ig-carousel.md` (Instagram = always a carousel), `.ai-workflow/skills/page-presentation-kit/`, `replo-rebuilds/CLAUDE.md`, `docs/system/01-content-production.md` |
+| Tips carousel (`koolestpro-tips-weekly`, content engine) | 1 | `docs/system/quality-ratchet.md` (the bar to beat, Tips row), `docs/system/social-content-library.md` (caption registration), **`docs/system/tips-v4-format.md`** (the format, 2026-09-27; bar = `references-for-posts/tips-v4-prototype-2026-09-27/`), `docs/system/tips-old-style-format.md` (the 2025 references it builds on), `.ai-workflow/tools/README.md`, `docs/system/01-content-production.md` |
+| CRO Fix weekly (`koolestpro-weekly-cro-fix`) | 1 | `docs/system/quality-ratchet.md` (CRO rows), `docs/system/export-render-rules.md`, `docs/system/social-content-library.md`, `docs/system/cro-3-slide-carousel-format.md` (the post format), `docs/system/cro-headline-system.md` (the headline), `docs/system/cro-redesign-standard.md` (the rebuild quality bar), `docs/system/rebuild-tooling-and-quality.md` (where the rebuild gets made), `docs/system/page-build-brief.md` (the Lovable/Figma input brief), `docs/system/redesign-tool-api-integration.md` (which tool, and how to connect it), `docs/system/x-caption-playbook.md` (the X caption), `.ai-workflow/weekly-pipeline.md`, `docs/system/01-content-production.md` |
+| Static Ad weekly (`koolestpro-static-ad-weekly`) | 1 | `docs/system/image-sourcing-fallback.md` (prompt-pack default), `docs/system/quality-ratchet.md` (Static Ad row), `docs/system/social-content-library.md`, `.ai-workflow/skills/static-ad-image/`, `docs/system/01-content-production.md` |
+| Template Showcase weekly (`koolestpro-template-showcase-weekly`) | 1 + 5 | `docs/system/store-template-launch-content.md`, `docs/system/social-content-library.md`, `docs/system/quality-ratchet.md` (Template Showcase row), `docs/system/template-showcase-ig-carousel.md` (Instagram = always a carousel), `.ai-workflow/skills/page-presentation-kit/`, `replo-rebuilds/CLAUDE.md`, `docs/system/01-content-production.md` |
 | Weekly template build (`koolestpro-weekly-template-build`) | 5 | `replo-rebuilds/CLAUDE.md` |
-| Distribution assembly + health check (`koolestpro-weekly-distribution-assembly`, `koolestpro-distribution-health-check`) | 2 | `.ai-workflow/tools/DISTRIBUTION.md`, `docs/system/02-distribution.md` |
+| Distribution assembly + health check (`koolestpro-weekly-distribution-assembly`, `koolestpro-distribution-health-check`) | 2 | `docs/system/distribution-queue-constraints.md`, `.ai-workflow/tools/DISTRIBUTION.md`, `docs/system/02-distribution.md` |
 | Target pool refresh (`koolestpro-target-pool-refresh`) | 1/3 | `docs/system/03-prospect-intelligence.md`, `targets_pool.json` |
 | Staleness check (`koolestpro-replo-cache-staleness-check`) | 5 | `docs/system/05-build-assets.md` |
 | BrowserAct/Maps + Ad Library lead gen (Tue/Wed) | 3 + 4 | `.ai-workflow/tools/README.md`, `docs/system/03-prospect-intelligence.md` |
@@ -81,33 +84,7 @@ Every task reads its own scoped doc instead of this whole file. When a task is d
 
 ## 🚀 QUALITY RATCHET — every output must be BETTER than the last, never the same or worse
 
-This is the standing bar. It overrides "produce an acceptable output." The user is not satisfied with "good"; the deliverable must improve run over run. Rule: **before you call a build done, name the specific way this version is better than the previous one for that stream/brand, and make that improvement real — not stated.**
-
-**For each stream, there is a known reference file that is the current best. You must beat it:**
-
-| Stream | Current best reference (the bar to beat) | Original seed (never regress below this intent) |
-|---|---|---|
-| Tips carousel | **V4 (2026-09-27): `references-for-posts/tips-v4-prototype-2026-09-27/`, spec `docs/system/tips-v4-format.md`** (1080×1350, headline ≥88px, body ≥40px sans, one dominant visual per slide). Built on the old-style format (2026-09-18, `docs/system/tips-old-style-format.md`): the three `references-for-posts/5 … fix …` sets (1080×1080 dark + glow, heavy headline, gradient `FIX #n` pill, 1-2 line body, real store screenshot as proof, `@koolestpro \| Shopify CRO & UX` on every slide). Cover per standing rule 1. | `outputs/tips/animation-budget-motion-conversion-v2_2026-07-28.html` (export/JS mechanics only) |
-| CRO Fix rebuild | `outputs/cro-fixes/caraway_fry-pan-pdp_rebuild.html` + `caraway_fry-pan-pdp_content.html` (the latest corrected run; graphics in `outputs/cro-fixes/caraway/`). Quality bar: `docs/system/cro-redesign-standard.md`. | `templates/eddie_bauer_cro_content_v2 (1).html` (the external CRO-content seed this stream was built from) + `outputs/cro-fixes/ecobioboutique_cellulite-remover_content.html` (your first own CRO file, Apr 28) |
-| CRO Fix carousel + standalone posts (3-slide format) | `.ai-workflow/build_caraway_carousel.py` → `outputs/cro-fixes/caraway_fry-pan-pdp_carousel.html` → exported `outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide{1,2,3}.png` — cover (real brand logo, cover only) → **slide 2 = the before/after post** → **slide 3 = the annotation post** (Q→FIX legend, phone centered, standalone). Headlines per `docs/system/cro-headline-system.md`. One audit = 3 posts. THE bar to beat for CRO posts from here. | the old 6-7 slide narrative carousel |
-| CRO standalone annotated graphic (clear bg, Q/A, circle heads) | `.ai-workflow/build_caraway_annotation.py` → `outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_annotated.png` (1080×1080) — headline top, brand+handle in a bottom lockup, every Q/A from the rebuild's top improvements | the old clear-background `anno-graphic` (ecobioboutique reference) |
-| CRO standalone before/after graphic | **RETIRED 2026-09-10** — slide 2 IS the before/after; only the shared **gradient glow background** carried over. | (was `build_caraway_graphics.py`; do not regenerate) |
-| Static Ad | `outputs/static-ads/obvi_super-collagen-protein_20260711/` | same |
-| Template Showcase companion page | `outputs/templates/kura_pdp-01_2026-08-31/index.html` | same |
-| Store template post set | latest Lumora/Meridian package | same |
-| Monthly Build Recap | `outputs/cro-fixes/_recap9/koolestpro_monthly-build-recap.png` via `.ai-workflow/build_monthly_recap.py` — ONE continuous background (single sheet glow, strip exported `--bg-mode transparent` and autocropped), condensed-italic single-line headline, last four builds overlapping (`fanned_stack_4`, retuned taller). Caraway excluded until its product image is fixed. | Ridwan's "HIGH CONVERTING PAGES" reference (fanned overlapping phones) |
-
-**The quality-ratchet checklist, every build, before it is done (not after):**
-
-1. **Open the current best for that stream** — read the reference file, not just its name. (But do not load every stream's reference — only the one for the task you're on. That keeps context lean.)
-2. **Build to beat it, not to match it.** Pick at least one concrete dimension to raise every run — clearer visual hierarchy, stronger cover, tighter copy, better spacing rhythm, more persuasive CTA, more readable slide density, a better export. Then actually do it, not just say it.
-3. **Verify by exporting, not by reading markup.** Drive the page's own capture function (see `.ai-workflow/tools/README.md`) and look at the result. A build that is correct in source but flat on screen is not better.
-4. **State the delta out loud** in the run summary: "this version is better because X". If you cannot name a genuine X, keep iterating — do not ship "acceptable."
-
-**Never ship a regression.** "It is the same or worse" is a fail by definition. If the current run would come out at or below the reference bar, iterate before shipping.
-
-**The temptation to copy the reference verbatim is the trap.** Copying the reference CSS/JS mechanics is good; copying its *concept* is how you get a stream that plateaus. What must keep moving: the visual idea, the copy strength, and the freshness of the treatment — not the structural backbone, which should be stable and proven.
-
+Moved out of CLAUDE.md on 2026-09-27 to keep the always-loaded rulebook small. Full rules: **`docs/system/quality-ratchet.md`** — read it only when a task actually needs this (quality ratchet); do not read it for unrelated tasks.
 ---
 
 ## ⚠ PROJECT-WIDE GENERATED-COPY RULES (apply to EVERY skill/task, not just one)
@@ -191,17 +168,7 @@ For any rebuild of a real business (CRO Fix, Static Ad, client audit): **use the
 
 ## 🎨 EXPORT / GRADIENT / RENDER RULES
 
-* **CSS gradients allowed on backgrounds only.** `background: linear-gradient(...)` / `radial-gradient(...)`, glow blobs, bars, buttons are fine.
-* **Gradient text forbidden — CSS or SVG.** No `background-clip:text`/`text-fill-color:transparent`, no `<text fill="url(#grad)">`. Text is solid colours only (`#FF9500`, `#fff`, theme accents).
-* **html2canvas compatible:** `html2canvas({ scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#080808', logging: false })`. Chrome-hiding uses `visibility:'hidden'` (NOT `display:'none'`). Always hide `[data-chrome], #download-panel, .posts-shell, .swb, .section-label, .section-divider, .gcard-wrap`. Always save/restore `track.style.transform`/`transition` in a `try/finally`, and `waitForSlideAssets(slide)` + double `requestAnimationFrame` before capture. `captureSlide()` must use the exact pattern from the project-constitution.md.
-
-### Export bugs — do not re-introduce
-1. Swipe arrow / chrome bleeding into the download → `visibility:'hidden'` + finally-restore.
-2. Slide position lost after capture → save/restore transform+transition in try/finally.
-3. Fonts/images not ready → `waitForSlideAssets` + double `requestAnimationFrame`.
-
-**Verify by exporting, not by reading markup.** Review HTML is not the deliverable; the output is. Drive the file's own capture function via headless Playwright (see `.ai-workflow/tools/README.md`) and look at the result.
-
+Moved out of CLAUDE.md on 2026-09-27 to keep the always-loaded rulebook small. Full rules: **`docs/system/export-render-rules.md`** — read it only when a task actually needs this (export / gradient / render rules); do not read it for unrelated tasks.
 ---
 
 ## 👤 RIDWAN'S BRAND PHOTOS (CLOUDINARY — never local relative paths)
@@ -218,7 +185,7 @@ Local relative paths break html2canvas. Always Cloudinary.
 ## Cowork Responsibilities (local pipeline manager)
 
 * **JSON ingestion:** detect exports, validate structure, merge into `SYNC_DATA.items`. Never overwrite; use `id` to dedupe; skip duplicates.
-* **Update central system:** open `ridwan_content_system_updated.html`, replace ONLY the JSON inside `#cowork-sync-data`, preserve all UI code.
+* **Update central system:** never `Read`/open the 276KB `ridwan_content_system_updated.html` directly to make this edit. Use `.ai-workflow/tools/sync_content_system.py` (or a similarly targeted regex patch against the `#cowork-sync-data` script block) so the file's contents never have to pass through the model. Preserve all UI code; `.bak` is written automatically.
 * **Month management:** if a new `monthSlug` is missing, add it to `SYNC_DATA.months`.
 * **File linking (critical):** every post MUST link to its HTML file; verify `folder` exists, flag if missing, never create entries without a valid file.
 * **Status handling:** Idea / Created / Ready / Published. Can set to "Created" after generation; NEVER auto-set "Published".
@@ -232,61 +199,22 @@ Local relative paths break html2canvas. Always Cloudinary.
 
 ## 📸 NO IMAGE CREDITS — PROMPT-PACK HANDOFF (project-wide)
 
-Applies to every stream that generates images (static ads, store-template product shots, rebuild hero images, carousel cover visuals).
-
-**Static Ads: the prompt pack IS the default (2026-09-18).** Static Ad runs never call a paid image API unless Ridwan asks for generated images in that request ("generate the images", "use the API"). The default run researches, writes the copy, and exports the prompt pack below; Ridwan runs it in ChatGPT and sends the images back. Static ads were the main OpenAI spend.
-
-**Every other stream: fallback order (2026-09-18).**
-1. `gpt-image` (OpenAI) if it has credits.
-2. **Cloudinary `generate-image`** (MCP, free plan: 50 generations per month, models include nano-banana, FLUX, Ideogram, Recraft, gpt-image). Check `get-usage-details` → `image_generation.usage < limit` first. It was 50/50 on 2026-09-18.
-3. For rebuild hero images only: the page builder's own image generation (Lovable/Figma Make), which spends builder credits, not OpenAI.
-4. Otherwise a **prompt pack**. Never silently spend on another paid service (inference.sh only if Ridwan names it). Stock (Pexels/Pixabay/Unsplash) is fine for backgrounds and scenes, never as a stand-in for a real product.
-
-**Write `.ai-workflow/pending-{stream}-{slug}.md`** containing: the block detail/error + keys tried; target/product selection and why; the research table (every real, traceable claim + source); the prompts verbatim/copy-paste ready (self-contained fenced block per image, size + intended filename above each, "reading exactly:" quoting); the captions (humanizer-checked); a "still to do on return" checklist with pipeline constants. Then present the file in chat.
-
-**Register nothing until real files exist.** On a blocked run: no pipeline record, no `usedFor`, no social-content pair, delete the empty `outputs/` folder. Say plainly nothing shipped. Do not improvise a renderer or let PIL draw ad copy.
-
-**Ingesting when Ridwan returns the exports:** save images to the real output folder under the exact filenames; look at every image before accepting; assemble derived assets (2x2 showcase + size-checked `-x` for X); build `index.html`; register what was skipped (status `Created`, `usedFor`, social-content pair); present `index.html`; delete the pending file. Note in the record that images were produced manually via ChatGPT.
-
+Moved out of CLAUDE.md on 2026-09-27 to keep the always-loaded rulebook small. Full rules: **`docs/system/image-sourcing-fallback.md`** — read it only when a task actually needs this (no image credits — prompt-pack handoff); do not read it for unrelated tasks.
 ---
 
 ## 🏪 STORE TEMPLATE LAUNCH CONTENT — MANDATORY (every template)
 
-A template is not finished when it passes QA; it is finished when the content that sells it exists and reaches the distribution queue.
-
-1. **Brand the packaging in generated product imagery** — put the brand wordmark on the product in the prompt (`a cream label reading exactly "LUMORA" in small spaced capitals`), `--quality low`, verify spelling. Lumora's 16 existing unbranded images are the documented exception; re-shoot when budget allows.
-2. **Every finished template ships a post set** — LinkedIn (showcase angle), Instagram (**always a 6-slide carousel**, `docs/system/template-showcase-ig-carousel.md`, 2026-09-27), X / five angles: showcase, free-offer/Nigeria package, niche-targeted, build-in-public, full-page-at-a-glance (`mobile-strip`).
-3. **The mockup images are the post assets.** Pair deliberately: `preview.png` → showcase + niche; `cover.png` → LinkedIn + free-offer; `full-page.png` → build-in-public; `mobile-strip.png` → full-page-at-a-glance.
-4. **Register like any other content** — `{brand-slug}-social-content.md`/`.json` keyed `TS-{BRAND}-*`, pipeline record type `"Template Showcase"`, status `"Created"`.
-5. **A finished template MUST reach the distribution queue** (2026-09-01). Route via `.ai-workflow/tools/harvest_store_template.py` (NOT `harvest_content.py`), never leave it with zero distribution rows. Stream picked from `isConceptBrand`: `Store Template` (concept, free-offer) vs `Store Template (Paid)` (paid CTA). X #4 matches `full-page-x` (never oversized `full-page`); X #5 matches `mobile-strip`. Back-to-back builds stagger themselves via `find_open_week()`.
-
-Against every generated caption: no em dashes, run through `humanizer`, real line breaks, no hashtags on X, and never imply a concept brand was a real client. This is the stream where X caption length is a hard gate — X captions ran 282-475 chars on Lumora/Meridian and failed the 280 cap.
-
+Moved out of CLAUDE.md on 2026-09-27 to keep the always-loaded rulebook small. Full rules: **`docs/system/store-template-launch-content.md`** — read it only when a task actually needs this (store template launch content); do not read it for unrelated tasks.
 ---
 
 ## 📚 PER-BRAND SOCIAL CONTENT LIBRARY — `{brand-slug}-social-content.md` / `.json`
 
-The canonical answer to "how do I get the caption for a given generated image when it's time to automate posting." One growing file pair per brand at the project root.
-
-* `{brand-slug}-social-content.md` — human-readable, key table + fenced caption blocks.
-* `{brand-slug}-social-content.json` — machine-readable sibling, same keys; the durable source of truth for any autopost step. Update both together, never drift.
-
-**Key scheme:** Static Ad `SA-{BRAND}-*`, CRO Fix `CRO-{BRAND}-*` (`-BA`/`-ANNO`/`-CAROUSEL`/`-X1..3`), Template Showcase `TS-{BRAND}-*` (`-COVER-VID`/`-LAPTOP-VID`/`-MOBILE-VID`/`-COVER-IMG`/`-PREVIEW`/`-FULLPAGE`/`-MOBILESTRIP`), Tip `TIP-{BRAND}-COVER`/`-CAROUSEL`/`-X1..3`. The `-GRAPHIC-A/B/C` standalone graphics are retired (2026-07-18) — never create them.
-
-When one visual has multiple caption angles, use `captionOptions: [{id, caption, hashtags}]` — pick one at post time. The `.json` file wins if it and the pipeline item's `captions`/`assets` fields disagree.
-
-**Known gap:** a caption is only useful once its image exists on disk. Some graphics are generated only client-side via html2canvas download buttons nobody may have clicked. Check `knownGaps` before assuming an `assetPath` is real. To resolve, drive the page's own capture function via headless Playwright (call `captureSlide(idx)`, `page.expect_download()`, `save_as()` to the correct path) — never a generic browser screenshot, never route image data through the conversation. Then actually LOOK at the export; `v1ce-social-content.json` documents a trust-badge claim that looked fabricated but was real.
-
+Moved out of CLAUDE.md on 2026-09-27 to keep the always-loaded rulebook small. Full rules: **`docs/system/social-content-library.md`** — read it only when a task actually needs this (per-brand social content library); do not read it for unrelated tasks.
 ---
 
 ## 📅 LINKEDIN + DISTRIBUTION QUEUE CONSTRAINTS
 
-* **LinkedIn: max 1 post/day, hard cap.** Never more than one row on the same `scheduled_date` on LinkedIn, even at different times. Check every other LinkedIn row on a date before scheduling. Twitter is exempt from a daily cap.
-* **No two rows on the same platform** may share the same exact `(scheduled_date, scheduled_time_local)`. A LinkedIn and a Twitter post at the same time are fine. Use standard slots `09:00/13:00/18:00/23:00`; if a day is full, space additional times ≥60-90 min apart. Before calling the reschedule webhook, pull the live sheet and confirm the target slot is free (the webhook blind-overwrites and does not check).
-* **A 200 from the reschedule webhook is not proof it landed** — re-read the affected rows after calling it.
-* `koolestpro-populate_sheet.py` handles fresh batches correctly via `find_open_week()`; known caveat — `taken_keys` is seeded only from local `queue.json`, not a live sheet read, so it can drift.
-* **Never auto-publish.** Every generator stops at status `Created`; `Published` is only set by the real posting step.
-
+Moved out of CLAUDE.md on 2026-09-27 to keep the always-loaded rulebook small. Full rules: **`docs/system/distribution-queue-constraints.md`** — read it only when a task actually needs this (linkedin + distribution queue constraints); do not read it for unrelated tasks.
 ---
 
 ## ⚠ STANDING CONSTRAINTS (sandbox / workflow — bite regardless of sub-project)
@@ -301,6 +229,7 @@ When one visual has multiple caption angles, use `captionOptions: [{id, caption,
 * **Verify by looking at the output**, not the markup.
 * **Verify by exporting, not by reading source** — export via the page's own capture function, then inspect.
 * **Keep the instruction surface slim** — `AGENTS.md` (injected every request), this file and `SYSTEM-MAP.md` have a context budget (see `docs/system/07-infrastructure.md`). Trim, or move detail to a scoped doc. Never let the rulebook regrow toward the old 116KB.
+* **Rotate growing logs, don't let them become full-file reads.** `distribution-health-log.md` keeps only its most recent 5 entries (older ones move to `docs/system/distribution-health-log-archive.md`, added 2026-09-27) — apply the same pattern to any other log/journal file in this repo once it passes a handful of entries: append-only files are for writing, not for re-reading in full on every run.
 
 ---
 
