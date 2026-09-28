@@ -4,32 +4,54 @@
   "isRealBrand": true,
   "isClient": false,
   "created": "2026-08-31T09:26:04.513860Z",
-  "updated": "2026-09-01T10:15:00.000000Z",
+  "updated": "2026-09-28T10:30:00Z",
   "relatedPipelineItemIds": [
     "cro-fix-tapro_google-review-cards-20260831"
   ],
   "knownGaps": [],
   "assets": {
     "CRO-TAPRO-BA": {
-      "platform": ["linkedin", "instagram"],
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
       "assetType": "image",
       "assetPath": "outputs/cro-fixes/tapro/koolestpro_tapro_before-after.png",
-      "caption": "This brand has 15,500+ real business customers and a 4.9 star rating from 1,125 reviews. You wouldn't know it from their homepage.\n\nThe first screen is a promo banner and a hero photo. No price, no rating, no product, until you scroll past a full video demo and into a product grid.\n\nA strong first screen shows what's true about your brand immediately. This one buries it.\n\nFollow @koolestpro for weekly CRO breakdowns.",
-      "hashtags": ["#ShopifyDesign", "#CRO", "#eCommerce", "#ConversionRate", "#Shopify", "#UXDesign", "#SmallBusiness"],
+      "caption": "TAPro Cards has 15,500+ business customers and a 4.9 star rating from over 1,100 reviews. You wouldn't know it from their homepage.\n\nThe first screen is a promo banner and a hero photo. You don't see a price, a rating or a product until you've scrolled past a full video demo and into the product grid.\n\nYour first screen should say what's true about you straight away. TAPro's hides it.\n\nFollow @koolestpro for weekly CRO breakdowns.",
+      "hashtags": [
+        "#ShopifyDesign",
+        "#CRO",
+        "#eCommerce",
+        "#ConversionRate",
+        "#Shopify",
+        "#UXDesign",
+        "#SmallBusiness"
+      ],
       "status": "Not Posted",
       "postedAt": null
     },
     "CRO-TAPRO-ANNO": {
-      "platform": ["linkedin", "instagram"],
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
       "assetType": "image",
       "assetPath": "outputs/cro-fixes/tapro/koolestpro_tapro_annotated-changes.png",
       "caption": "TAPro sells NFC and QR review cards to local businesses. Their flagship card is $34.95, rated 4.9 stars from 1,125 reviews, trusted by 15,500+ businesses. All real, all verified. None of it shows up on the first screen of their homepage.\n\nHere's every change and why it moved: real price and rating under the headline, the real product photo instead of a placeholder, the trust strip pulled up from deep in the page, one thin promo line instead of two rows, no duplicate search icon, and a CTA pointed at one product instead of a generic banner link.\n\nSame brand, same product, same price. Just put the proof where a first-time visitor can actually see it.",
-      "hashtags": ["#CRO", "#ConversionRateOptimization", "#Shopify", "#eCommerce"],
+      "hashtags": [
+        "#CRO",
+        "#ConversionRateOptimization",
+        "#Shopify",
+        "#eCommerce"
+      ],
       "status": "Not Posted",
       "postedAt": null
     },
     "CRO-TAPRO-CAROUSEL": {
-      "platform": ["linkedin", "instagram"],
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
       "assetType": "carousel",
       "assetPath": [
         "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide1.png",
@@ -42,12 +64,22 @@
         "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide8.png"
       ],
       "caption": "TAPro's homepage never shows a price, a star rating, or a single product. Not on the first screen.\n\nTAPro sells NFC and QR review cards to local businesses. Land on their homepage and you get a promo banner and a big hero photo. Scroll past that, past a full video demo, and you still won't see a product or a price.\n\nKeep scrolling into a product grid and you'll hit their flagship card, the G-Series Onyx: $34.95, a real 4.9 star rating from 1,125 reviews, and over 15,500 businesses using their cards, including names like Sheraton and McDonald's. All of it real. None of it near the top.\n\nHere's what I changed and why:\n\n1. Pulled the real price and 4.9 star rating up, directly under the headline\n2. Put the actual product front and center, a real photo instead of a placeholder\n3. Pulled the \"15,500+ businesses\" trust strip up from deep in the page\n4. Collapsed the two-row promo banner into one thin line\n5. Removed a duplicate search icon overlapping the headline\n6. Pointed the CTA at that one flagship product instead of a generic banner link\n\nSame brand, same product, same price. Just put the proof where a first-time visitor can actually see it.\n\nDM me \"AUDIT\" if you want this done for your store.",
-      "hashtags": ["#ShopifyDesign", "#CRO", "#eCommerce", "#ConversionOptimization", "#Ecommerce", "#UXDesign", "#SmallBusiness"],
+      "hashtags": [
+        "#ShopifyDesign",
+        "#CRO",
+        "#eCommerce",
+        "#ConversionOptimization",
+        "#Ecommerce",
+        "#UXDesign",
+        "#SmallBusiness"
+      ],
       "status": "Not Posted",
       "postedAt": null
     },
     "CRO-TAPRO-X1": {
-      "platform": ["x"],
+      "platform": [
+        "x"
+      ],
       "assetType": "text",
       "assetPath": null,
       "caption": "If your best proof (price, rating, real customers) only shows up after a scroll, it's not doing its job. Move it up, not the design around it.",
@@ -55,7 +87,9 @@
       "postedAt": null
     },
     "CRO-TAPRO-X2": {
-      "platform": ["x"],
+      "platform": [
+        "x"
+      ],
       "assetType": "text",
       "assetPath": null,
       "caption": "Before: banner, big photo, video demo, no price, no rating, no product, scroll for proof.\nAfter: thin banner, real price, real rating, real product, real trust strip, one CTA. Same brand.",
@@ -63,7 +97,9 @@
       "postedAt": null
     },
     "CRO-TAPRO-X3": {
-      "platform": ["x"],
+      "platform": [
+        "x"
+      ],
       "assetType": "text",
       "assetPath": null,
       "caption": "A homepage that never shows a price or a product isn't minimalist, it's just missing the sale.",

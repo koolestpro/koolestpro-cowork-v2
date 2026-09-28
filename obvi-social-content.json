@@ -4,8 +4,8 @@
   "isRealBrand": true,
   "isClient": false,
   "created": "2026-07-11T17:10:00.000Z",
-  "updated": "2026-08-02T09:45:00.000Z",
-  "howToUse": "Each key under 'assets' maps one generated image (or, for text-only posts, null) to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' \u2014 the exact relative path from the koolestpro-cowork-v2 project root \u2014 or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md).",
+  "updated": "2026-09-28T10:30:00Z",
+  "howToUse": "Each key under 'assets' maps one generated image (or, for text-only posts, null) to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' — the exact relative path from the koolestpro-cowork-v2 project root — or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md).",
   "relatedPipelineItemIds": [
     "static-ad-obvi_super-collagen-protein-20260711",
     "cro-fix-obvi_homepage-hero-20260802"
@@ -18,7 +18,7 @@
       ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-1-problem-solution.png",
-      "caption": "The gap between what your skin/hair/joints need and what a normal protein shake gives you. This is the problem-solution angle for Obvi's Super Collagen Protein \u2014 unofficial concept work, not commissioned by the brand.",
+      "caption": "The gap between what your skin/hair/joints need and what a normal protein shake gives you. This is the problem-solution angle for Obvi's Super Collagen Protein — unofficial concept work, not commissioned by the brand.",
       "hashtags": [],
       "status": "Not Posted",
       "postedAt": null
@@ -30,7 +30,7 @@
       ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-2-benefit-result.png",
-      "caption": "19g protein, hydrolyzed grass-fed collagen peptides, and the benefits reviewers actually report: brighter skin, stronger hair, joints that feel better. The benefit/result angle for Super Collagen Protein \u2014 unofficial concept, not commissioned by Obvi.",
+      "caption": "19g protein, hydrolyzed grass-fed collagen peptides, and the benefits reviewers actually report: brighter skin, stronger hair, joints that feel better. The benefit/result angle for Super Collagen Protein — unofficial concept, not commissioned by Obvi.",
       "hashtags": [],
       "status": "Not Posted",
       "postedAt": null
@@ -42,7 +42,7 @@
       ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-3-social-proof.png",
-      "caption": "Built around the pattern that keeps showing up in Obvi's own reviews: skin, hair, joints. Real pattern, not a made-up stat. Social proof angle for Super Collagen Protein \u2014 unofficial concept, not commissioned by Obvi.",
+      "caption": "Built around the pattern that keeps showing up in Obvi's own reviews: skin, hair, joints. Real pattern, not a made-up stat. Social proof angle for Super Collagen Protein — unofficial concept, not commissioned by Obvi.",
       "hashtags": [],
       "status": "Not Posted",
       "postedAt": null
@@ -54,7 +54,7 @@
       ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-4-offer-urgency.png",
-      "caption": "Subscribe & Save might be the most underused angle in supplement ads. Offer/urgency angle for Obvi's Super Collagen Protein \u2014 unofficial concept, not commissioned by the brand.",
+      "caption": "Subscribe & Save might be the most underused angle in supplement ads. Offer/urgency angle for Obvi's Super Collagen Protein — unofficial concept, not commissioned by the brand.",
       "hashtags": [],
       "status": "Not Posted",
       "postedAt": null
@@ -65,7 +65,7 @@
       ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/combined-showcase.png",
-      "caption": "Four static ad directions for Obvi's Super Collagen Protein: problem/solution, a benefit breakdown, social proof, and a subscribe & save offer. Same tub, four different reasons someone stops scrolling. Unofficial concept work built off Obvi's own public product info \u2014 not something the brand commissioned.",
+      "caption": "Four static ad directions for Obvi's Super Collagen Protein: problem/solution, a benefit breakdown, social proof, and a subscribe & save offer. Same tub, four different reasons someone stops scrolling. Unofficial concept work built off Obvi's own public product info — not something the brand commissioned.",
       "hashtags": [],
       "status": "Not Posted",
       "postedAt": null
@@ -212,6 +212,19 @@
       "status": "Not Posted",
       "postedAt": null,
       "note": "7-tweet thread, split on the leading N/ markers. Attach the before/after graphic to tweet 1."
+    },
+    "SA-OBVI-IG-SINGLE": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-1-problem-solution.png",
+      "captionKey": "ig_single",
+      "caption": "Your skin, hair and joints are the first to notice when you skip protein.\n\nThat's the whole ad. Name the gap between what your body needs and what a normal protein shake gives you, then put the tub in frame as the fix.\n\nProblem/solution angle for Obvi's Super Collagen Protein. Unofficial concept work, not commissioned by the brand.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#ecommerce #dtc #adcreative #cro",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Added 2026-09-28: caption written for the single ad-1 image. The single-image Instagram post used to borrow the 4-ad LinkedIn caption."
     }
   },
   "knownGaps": "None. All 8 image assets were exported 2026-08-02 through the page's own captureFixed()/captureSlide() functions via .ai-workflow/tools/export_static_images.py and visually reviewed before being recorded here."

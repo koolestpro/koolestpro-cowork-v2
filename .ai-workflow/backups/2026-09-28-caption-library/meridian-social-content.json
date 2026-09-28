@@ -1,0 +1,121 @@
+{
+  "brand": "Meridian",
+  "brandSlug": "meridian",
+  "isConceptBrand": true,
+  "conceptNotice": "MERIDIAN is a fictitious brand invented to demo Template 01. It is never a client and no caption may imply otherwise.",
+  "templateId": "01-watches-luxury",
+  "assetDir": "outputs/templates/meridian_store-template_2026-08-28",
+  "relatedPipelineItemIds": [
+    "template showcase-meridian_store-template-20260828"
+  ],
+  "created": "2026-08-28",
+  "knownGaps": [
+    "Template 01 (01-watches-luxury) product.html OVERFLOWS HORIZONTALLY at 390px mobile width. Confirmed 2026-09-01 from work/raw-mobile-3.png: all three raws were captured at the same 390x844 viewport, and only the product page's content ran past the right edge (disclaimer clipped to 'for sa', header hamburger cut, gallery thumbnail strip running off-canvas). Lumora's equivalent product page at the same viewport is clean, which is consistent with Template 02 carrying app.js fixes not yet back-ported to Template 01. The preview.png was rebuilt as a 2-phone flat_packed_2 (home + collection, both clean) rather than ship the cropped 3-phone version. Re-shoot a 3-phone preview once the overflow is fixed."
+  ],
+  "notes": [
+    "No caption cites Meridian's on-page specs (216 parts, 72-hour power reserve, five-year warranty) as real. They are demo copy on an invented brand.",
+    "X entries never point at meridian_store-template-full-page.png (3.67MB). They use the compressed -x variant at 1.73MB, per the ~4MB ceiling that broke the Bebemoss X post on 2026-08-01.",
+    "The preview was rebuilt after the corner watermark was found colliding with the PDP product title on the phone frames. Template 01's CSS now hides .built-mark below 640px.",
+    "CTA framing follows the Template Showcase rule: every caption closes toward 'need a store built', never toward a CRO audit.",
+    "2026-09-01: the four X captions were rewritten shorter to fit X's 280-char cap. They were originally written between 282 and 475 chars, which X rejects for non-Premium accounts, and would have failed on post. Meaning and voice kept; only length changed. LinkedIn and Instagram captions untouched (no cap there)."
+  ],
+  "assets": {
+    "TS-MERIDIAN-COVER-IMG": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/meridian_store-template_2026-08-28/meridian_store-template cover.png",
+      "dimensions": "1440x1080",
+      "fileSizeMB": 0.49,
+      "angle": "Template showcase",
+      "caption": "A watch seller does not have a traffic problem. He has a trust problem.\n\nSomeone is about to send you two hundred thousand Naira for something they have only seen in a carousel. Every doubt they have has to be answered before they will do that, and a WhatsApp thread is a bad place to answer them.\n\nSo I built what answering them properly looks like.\n\nMeridian is a demo brand I made up. Eight watches, prices in Naira, pay on delivery in Lagos. Every reference has its own page with a zoomable gallery, a full specification table, the warranty terms written down, and the actual return window. Filter by type, sort by price, add to a bag, and the order still lands in WhatsApp so nothing about how you sell has to change.\n\nThe part that makes this repeatable is underneath. It is a template. One config file holds the brand, the colours, the fonts, the copy and the products, so the same engine dresses as a watch house or a skincare line in about half an hour.\n\nMeridian is not a client. Nothing on it is for sale. It exists so a seller can look at the thing instead of imagining it.\n\nSelling watches, jewellery or anything else people hesitate over? Yours can look like this. Send me a message.",
+      "hashtags": [
+        "#ecommerce",
+        "#watches",
+        "#luxuryretail",
+        "#nigeriabusiness",
+        "#webdesign"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MERIDIAN-PREVIEW": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/meridian_store-template_2026-08-28/meridian_store-template-preview.png",
+      "dimensions": "2100x1800",
+      "fileSizeMB": 0.96,
+      "angle": "Template showcase, visual first",
+      "caption": "Eight watches. Prices in Naira. Order lands in WhatsApp already typed out.\n\nMeridian is a demo store I built for the kind of product people think about before they buy. Zoomable photos, full specs, warranty and returns written down where anyone can find them. All the answers you are currently typing out by hand, sitting on the page instead.\n\nMade-up brand, not a client, nothing on it is for sale. Built so sellers can see it rather than imagine it.\n\nSelling watches or jewellery from your page? Yours can look like this. DM me.",
+      "hashtags": [
+        "#watchesnigeria",
+        "#jewellerybusiness",
+        "#lagosbusiness",
+        "#ecommerce",
+        "#webdesign",
+        "#luxury"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MERIDIAN-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/meridian_store-template_2026-08-28/meridian_store-template-preview.png",
+      "dimensions": "2100x1800",
+      "fileSizeMB": 0.96,
+      "angle": "Template showcase",
+      "caption": "Built a watch store this week.\n\nEight references, prices in Naira, pay on delivery in Lagos. Zoomable gallery, full spec table, filter and sort, and the order lands in WhatsApp already typed out.\n\nMeridian is a demo brand I made up, not a client.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MERIDIAN-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/meridian_store-template_2026-08-28/meridian_store-template-cover-16x9.png",
+      "dimensions": "1440x810",
+      "fileSizeMB": 0.49,
+      "angle": "Free offer / Nigeria package",
+      "caption": "Real business in Nigeria, no website yet?\n\nI will build you a sample site. Free. Your actual products, your actual photos, live enough to send to a customer.\n\nNot a mockup. A working store like this one.\n\nThree a week is all I can do properly. Reply and tell me what you sell.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MERIDIAN-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/meridian_store-template_2026-08-28/meridian_store-template-preview.png",
+      "dimensions": "2100x1800",
+      "fileSizeMB": 0.96,
+      "angle": "Niche-targeted, watch and jewellery sellers",
+      "caption": "If you sell watches, your problem is not reach. It is hesitation.\n\nNobody sends 200k for something they only saw in a carousel. They want the clasp up close. They want the warranty in writing.\n\nYou answer that by hand, one DM at a time. A page answers it once, for everybody.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MERIDIAN-X4": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/meridian_store-template_2026-08-28/meridian_store-template-full-page-x.png",
+      "dimensions": "1731x2078",
+      "fileSizeMB": 1.73,
+      "angle": "Build in public",
+      "caption": "Same engine as the skincare store I posted. Different brand entirely.\n\nOne config file holds the brand, colours, fonts, copy and products. Swap it and you get a different store in thirty minutes. Dark luxury or light editorial, same code underneath.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    }
+  }
+}

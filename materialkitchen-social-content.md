@@ -156,3 +156,19 @@ Material Kitchen actually has a real discount running right now, $225 down to $1
 
 So the urgency ad used the real price instead of a fake countdown.
 ```
+
+## SA-MATERIALKITCHEN-IG-SINGLE (added 2026-09-28)
+
+Instagram single-image post, `outputs/static-ads/materialkitchen_trio-of-knives_20260731/ad-1-problem-solution.png` only. Written for this one image; the single post used to borrow the 4-ad LinkedIn caption.
+
+```
+Your 12-piece knife set is mostly junk.
+
+Half the block never leaves the block. The Trio replaces it with 3 full-tang, Japanese-steel blades, and the ad just shows the swap.
+
+Concept ad for Material Kitchen, not affiliated.
+
+Follow @koolestpro for more ad and CRO breakdowns.
+
+#ecommerce #dtc #advertising #adcreative #cro #brandstrategy
+```

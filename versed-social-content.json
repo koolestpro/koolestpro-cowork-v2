@@ -4,7 +4,7 @@
   "isRealBrand": true,
   "isClient": false,
   "created": "2026-08-21T09:02:00.000Z",
-  "updated": "2026-08-21T09:02:00.000Z",
+  "updated": "2026-09-28T10:30:00Z",
   "howToUse": "Each key under 'assets' maps one generated image to its ready-to-post caption. Automation should join on 'assetPath' (the exact relative path from the koolestpro-cowork-v2 project root) or on the key itself. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md).",
   "relatedPipelineItemIds": [
     "static-ad-versed_dew-point-gel-cream-20260821"
@@ -132,6 +132,19 @@
       "hashtags": [],
       "status": "Not Posted",
       "postedAt": null
+    },
+    "SA-VERSED-IG-SINGLE": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-1-problem-solution.png",
+      "captionKey": "ig_single",
+      "caption": "My moisturizer was making me greasy by noon.\n\nName the annoyance before the product shows up, then put the jar in the corner as the fix. Versed's Dew Point gel-cream, built for oily skin.\n\nProblem/solution angle. Unofficial concept work built from Versed's public product info, not commissioned by the brand. The product shot is AI generated.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#ecommerce #cro #shopify #adcreative #dtc",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Added 2026-09-28: caption written for the single ad-1 image. The single-image Instagram post used to borrow the 4-ad LinkedIn caption."
     }
   }
 }

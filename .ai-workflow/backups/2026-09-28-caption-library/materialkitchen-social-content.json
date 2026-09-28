@@ -1,0 +1,196 @@
+{
+  "brand": "Material Kitchen",
+  "brandSlug": "materialkitchen",
+  "relatedPipelineItemIds": [
+    "cro-fix-materialkitchen_homepage-above-the-fold-20260719",
+    "static-ad-materialkitchen_trio-of-knives-20260731"
+  ],
+  "knownGaps": [],
+  "assets": {
+    "CRO-MATERIALKITCHEN-BA": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_before-after.png",
+      "captionOptions": [
+        {
+          "id": "ba-story",
+          "caption": "Material Kitchen makes some of the best-looking kitchen gear I've come across. And their homepage still leaves sales on the table. Above the fold: a gorgeous hero, a headline, one vague button. No price, no rating, no proof. I rebuilt it — same brand, same photo — and moved the selling to where the eye already is: a real 5-star quote, trust chips, a real bestseller with its real price ($195, was $225), and a button that carries the offer. Beautiful design isn't conversion. — Ridwan",
+          "hashtags": [
+            "#ecommerce",
+            "#cro",
+            "#shopify",
+            "#dtc"
+          ]
+        }
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-MATERIALKITCHEN-ANNO": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_annotated-changes.png",
+      "caption": "What Material Kitchen's homepage does right — and what it was missing above the fold. The trust line, the hero photo and the headline all work. What was missing: proof, trust chips, and a real product with a real price before the first scroll. Here's every change, annotated. — @koolestpro",
+      "hashtags": [
+        "#cro",
+        "#conversionrateoptimization",
+        "#shopify",
+        "#ecommerce"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-MATERIALKITCHEN-CAROUSEL": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide1.png",
+        "outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide2.png",
+        "outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide3.png",
+        "outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide4.png",
+        "outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide5.png",
+        "outputs/cro-fixes/materialkitchen/koolestpro_materialkitchen_homepage-above-the-fold_slide6.png"
+      ],
+      "caption": "Material Kitchen makes some of the best-looking kitchen gear I've come across. And their homepage still leaves sales on the table. Here's what you get on mobile: a beautiful hero photo, a headline, and one button that says \"Shop The MK Free Collection.\" That's the whole above-the-fold. No price. No rating. No proof. The \"free shipping, 30-day trial, guaranteed for life\" part is real, but it's stuck in a tiny top bar nobody reads. And on a fresh visit, a full-screen email popup can drop over all of it. I rebuilt the above-the-fold. Same brand, same photo, same fonts. I just moved the selling to where the eye already is: killed the popup, put a real 5-star quote under the headline, pulled the guarantee/trial/shipping into visible trust chips, surfaced a real bestseller with its real price ($195, down from $225), and made the button carry the offer. None of this is a redesign. If your store looks great but the sales don't match, this is usually why. — Ridwan",
+      "hashtags": [
+        "#ecommerce",
+        "#cro",
+        "#shopify",
+        "#dtc",
+        "#conversionrateoptimization"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-MATERIALKITCHEN-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Material Kitchen's homepage is beautiful and still leaks sales. Above the fold: a hero, a headline, one vague button. No price, no proof, no trust. Pretty != converting.",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-MATERIALKITCHEN-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "The fix for most 'looks great, converts bad' stores: don't redesign. Move the proof, price and trust above the fold, where the eye already is. Did it on Material Kitchen — same brand, tighter above-the-fold.",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-MATERIALKITCHEN-COMBO": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/materialkitchen_trio-of-knives_20260731/combined-showcase.png",
+      "caption": "Material Kitchen's Trio of Knives sits at a 5.0 rating from 472 reviews. I wanted to see how many honest angles I could pull out of that one product page.\n\nFour ad directions, same three knives, nothing invented.\n\nProblem: most people own a bulky 12-piece knife set and only ever reach for two blades in it. The Trio replaces the whole block with three full-tang, Japanese-steel knives.\n\nBenefit: full-tang balance, a 13-degree edge, cryogenic tempering, and that 472-review rating. All of it is on their own product page, I didn't add anything.\n\nSocial proof: I could have written a testimonial that sounded better. Instead I used a real one, from a verified buyer named Mara T.: \"Sleek design, perfect weight, and very sharp. I love them.\"\n\nOffer: the set is actually $30 off right now, $225 down to $195, so the urgency ad leans on a real discount instead of a countdown timer that resets every week.\n\nFour ads, one product, four different reasons to buy it depending on what the person scrolling past already believes.\n\nThe job here was picking which true fact to lead with for each kind of shopper.\n\nThis is concept work. I have no relationship with Material Kitchen, I just liked the knives enough to think through how I'd sell them.\n\nRidwan",
+      "hashtags": [
+        "#ecommerce",
+        "#dtc",
+        "#advertising",
+        "#adcreative",
+        "#cro",
+        "#brandstrategy"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-MATERIALKITCHEN-PROBLEM": {
+      "platform": [
+        "linkedin",
+        "instagram",
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/materialkitchen_trio-of-knives_20260731/ad-1-problem-solution.png",
+      "caption": "Most 12-piece knife blocks are half junk you never touch. The Trio replaces the whole block with 3 full-tang, Japanese-steel blades. (Concept ad for Material Kitchen, not affiliated.)",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-MATERIALKITCHEN-BENEFIT": {
+      "platform": [
+        "linkedin",
+        "instagram",
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/materialkitchen_trio-of-knives_20260731/ad-2-benefit-result.png",
+      "caption": "Full-tang balance, Japanese steel at a 13-degree edge, cryogenic tempering, and a 5.0 rating from 472 reviews. Real specs, straight off the product page. (Concept ad, not affiliated.)",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-MATERIALKITCHEN-PROOF": {
+      "platform": [
+        "linkedin",
+        "instagram",
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/materialkitchen_trio-of-knives_20260731/ad-3-social-proof.png",
+      "caption": "\"Sleek design, perfect weight, and very sharp. I love them.\" A real verified-buyer review, not a written-to-order testimonial. (Concept ad for Material Kitchen, not affiliated.)",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-MATERIALKITCHEN-OFFER": {
+      "platform": [
+        "linkedin",
+        "instagram",
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/materialkitchen_trio-of-knives_20260731/ad-4-offer-urgency.png",
+      "caption": "The Trio is actually $30 off right now, $225 down to $195. Real discount, no fake countdown. (Concept ad, not affiliated.)",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-MATERIALKITCHEN-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Material Kitchen's Trio of Knives has a 5.0 rating from 472 reviews.\n\nBuilt 4 ad directions off that one real product page.\n\nSame three knives, four honest reasons to buy them.\n\n(concept work, not affiliated with Material Kitchen)",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-MATERIALKITCHEN-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "A verified buyer's actual sentence beats any review count.\n\n\"Sleek design, perfect weight, and very sharp. I love them.\"\n\nBuilt the whole proof ad around that one real quote from Material Kitchen's own reviews.",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-MATERIALKITCHEN-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Material Kitchen actually has a real discount running right now, $225 down to $195.\n\nSo the urgency ad used the real price instead of a fake countdown.",
+      "status": "Not Posted",
+      "postedAt": null
+    }
+  }
+}

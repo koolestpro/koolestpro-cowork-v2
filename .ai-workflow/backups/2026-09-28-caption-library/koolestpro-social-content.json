@@ -1,0 +1,719 @@
+{
+  "brand": "Koolestpro",
+  "brandSlug": "koolestpro",
+  "relatedPipelineItemIds": [
+    "idea-animation-budget-when-motion-helps-conversion-1776763992475-jjrc6",
+    "tip-advertorial-what-it-actually-is-20260510",
+    "idea-trust-signals-that-kill-sales-the-over-credibility-1777030231175-glacc",
+    "idea-mobile-thumb-zone-7-tap-target-fails-1776763992475-780pp",
+    "idea-checkout-abandonment-fix-the-payment-method-order-1777030231175-ebzqg",
+    "tip-listiku-copy-presell-5-elements-20260510",
+    "idea-typography-hierarchy-that-converts-the-6-level-sys-1777030231175-j3p4a"
+  ],
+  "notes": "Per-post keys namespaced with a short slug token (ANIMBUDGET) so future Koolestpro tips can be appended without collision. Videos: none for this post.",
+  "assets": {
+    "TIP-KOOLESTPRO-ANIMBUDGET-CAROUSEL": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/animation-budget-assets/slide1.png",
+        "outputs/tips/animation-budget-assets/slide2.png",
+        "outputs/tips/animation-budget-assets/slide3.png",
+        "outputs/tips/animation-budget-assets/slide4.png",
+        "outputs/tips/animation-budget-assets/slide5.png",
+        "outputs/tips/animation-budget-assets/slide6.png",
+        "outputs/tips/animation-budget-assets/slide7.png"
+      ],
+      "caption": "Your store's animations aren't making it look premium. They're making it convert worse.\n\nI know that's not what you want to hear after a weekend of adding scroll effects.\n\nHere's the trap most Shopify brands fall into: more motion feels more high-end, and high-end feels like it should sell more. So they animate everything.\n\nBut motion isn't free. Amazon found that every 100ms of extra delay cost them about 1% in sales. Animations are the easiest way to add that delay without realising it.\n\nThe fix is to treat motion as a budget, not decoration. You get a small amount of attention and speed to spend on a page. Every animation spends some of it, so it has to buy something back.\n\nWhere it actually earns its place:\n\nSelection feedback, so a shopper trusts their variant or bundle registered.\nAdd-to-cart confirmation, right when money is on the line.\nProof reveal, so reviews and guarantees land as they scroll to decide.\n\nEverything else is spending budget for nothing: hero parallax, section-by-section fades, floating shapes.\n\nRun every animation through one question: does it fire on a decision the shopper is making? If not, cut it.\n\nSave this before your next build. And if you want to know which animations are quietly costing you sales, my DMs are open.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ANIMBUDGET-COVER": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/tips/animation-budget-assets/slide1.png",
+      "caption": "Your store's animations aren't making it look premium. They're making it convert worse.\n\nMotion isn't free. Every effect adds delay, and delay costs sales.\n\nSpend it on decisions. Cut it everywhere else.\n\nWhat's the first animation you'd defend to the death, and are you sure it's earning its place?",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ANIMBUDGET-X-THREAD": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "1/ Your store's animations aren't making it look premium. They're making it convert worse. A thread on the motion myth quietly killing your Shopify sales:\n\n2/ The myth: more motion = more premium = more sales. So brands animate every section. Fade-ins everywhere. Parallax heroes. It looks high-end in the Figma preview.\n\n3/ The problem: motion isn't free. Amazon found every 100ms of extra delay cost about 1% in sales. Animations are the easiest way to add that delay without noticing.\n\n4/ The reframe: motion is a budget, not decoration. You get a little attention and speed to spend per page. Every animation spends some of it. It has to buy something back.\n\n5/ Where it earns its place: selection feedback (variant registered), add-to-cart confirmation (money's on the line), proof reveal (reviews land as they decide).\n\n6/ Everything else is spending budget for nothing: hero parallax, section-by-section fades, floating shapes. Cut them.\n\n7/ One question for every animation: does it fire on a decision the shopper is making? If not, kill it. Follow @koolestpro for more Shopify CRO.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ANIMBUDGET-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Motion is a budget, not decoration. You get a little attention and speed per page. Every animation spends some of it, so it had better buy something back.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ANIMBUDGET-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "A scroll reveal on your reviews: earns its place. A parallax hero: spends the same budget and hands you nothing back.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ANIMBUDGET-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Most of the animations you added to look premium are quietly lowering your add-to-cart rate. Fancy and converting are not the same thing.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ADVERTORIAL-CAROUSEL": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/advertorial-page-6-elements-assets/slide1.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide2.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide3.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide4.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide5.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide6.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide7.png"
+      ],
+      "caption": "You think an advertorial is a longer landing page. That's why cold traffic keeps bouncing.\n\nMost Shopify brands treat it like homework. Copy from the ad, stretch it out, ship it, move on.\n\nCold traffic converts around 1.5%. Warmed-up traffic can hit 60%+. That gap is one page most brands never build properly.\n\nAn advertorial isn't a landing page. It isn't a blog post either. Its only job is making a stranger believe you before anything else.\n\nIt runs on 3 beats that actually carry the weight:\n\nThe hook that stops the scroll.\n\nThe proof that kills the doubt.\n\nThe reveal that earns the click.\n\nEverything else on the page just clears the path between those three.\n\nBefore you write your next one, ask yourself this: does this page make a stranger believe you before it asks them to buy? If not, it's just copy.\n\nSave this for your next funnel build.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ADVERTORIAL-COVER": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/tips/advertorial-page-6-elements-assets/slide1.png",
+      "caption": "You think an advertorial is a longer landing page. That's why cold traffic keeps bouncing.\n\nIts only job is making a stranger believe you before anything else.\n\nHook, proof, reveal. Those 3 beats carry the whole page.\n\nWhich page in your funnel is doing homework instead of doing its job?",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ADVERTORIAL-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/advertorial-page-6-elements-assets/slide1.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide2.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide3.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide4.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide5.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide6.png",
+        "outputs/tips/advertorial-page-6-elements-assets/slide7.png"
+      ],
+      "caption": "You think an advertorial is a longer landing page. That's why cold traffic keeps bouncing.\n\nIt isn't a landing page. It isn't a blog post either.\n\nIts only job is making a stranger believe you before anything else.\n\nThe hook stops the scroll. The proof kills the doubt. The reveal earns the click. That's the whole page.\n\nSave this. Follow @koolestpro for more Shopify CRO tips.\n\n#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign #DigitalMarketing #ShopifyLiquid",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ADVERTORIAL-X-THREAD": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "1/ You think an advertorial is a longer landing page. That's why cold traffic keeps bouncing. A short thread on what it actually is:\n\n2/ The myth: a landing page with more words, or a blog post you hope ranks one day. Both miss the job entirely.\n\n3/ Cold traffic converts around 1.5%. Warmed-up traffic can hit 60%+. That gap is one page most Shopify brands skip.\n\n4/ The reality: its only job is making a stranger believe you before anything else. Trust moves first. The product comes after.\n\n5/ It runs on 3 beats: the hook that stops the scroll, the proof that kills the doubt, the reveal that earns the click.\n\n6/ Everything else on the page just clears the path between those three.\n\n7/ One question before you ship the next one: does it make a stranger believe you before it asks them to buy? Follow @koolestpro for more.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ADVERTORIAL-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "An advertorial has one job: make a stranger believe you. Not inform them, not rank on Google, not fill space before the PDP.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ADVERTORIAL-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "A landing page repeats your ad. An advertorial builds trust before the ad's claim gets tested.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-ADVERTORIAL-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Most \"advertorials\" are blog posts in a costume. That's why cold traffic reads them and still doesn't buy.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TRUSTSIGNALS-CAROUSEL": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/trust-signals-over-credibility-assets/slide1.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide2.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide3.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide4.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide5.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide6.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide7.png"
+      ],
+      "caption": "You think more trust badges build more trust. That's exactly what's making shoppers bounce.\n\nYou spent an afternoon adding every trust signal you could find. Secure checkout badge. Money-back guarantee. As seen in. Free shipping banner. Verified reviews widget. All stacked above the fold.\n\nConversion didn't move. If anything it got worse.\n\nHere's the part nobody tells you: past a certain number, trust badges stop reading as proof and start reading as defense. A wall of logos doesn't say \"you can trust us.\" It says \"something here needs explaining.\"\n\nI see this on Shopify product pages constantly. Founders keep adding badges because each one feels safe on its own. Stacked together they read as anxious.\n\nThe fix isn't zero trust signals. It's one real one, said clearly.\n\nOne specific review with a name and a photo beats five generic star ratings.\nYour actual return policy in plain words beats a \"guarantee\" badge.\nA real founder photo beats a \"featured in\" logo strip.\nCut until only the signals answering a real objection are left.\n\nEvery page is a product. Every click is a choice. Stop performing trust. Start earning it.\n\nSave this before your next PDP audit.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TRUSTSIGNALS-COVER": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/tips/trust-signals-over-credibility-assets/slide1.png",
+      "caption": "You think more trust badges build more trust.\n\nThat's exactly what's making shoppers bounce.\n\nPast three badges, people stop reading proof and start reading defense.\n\nWhat's the one trust signal on your page actually doing any work?",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TRUSTSIGNALS-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/trust-signals-over-credibility-assets/slide1.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide2.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide3.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide4.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide5.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide6.png",
+        "outputs/tips/trust-signals-over-credibility-assets/slide7.png"
+      ],
+      "caption": "You think more trust badges build more trust. That's exactly what's making shoppers bounce.\n\nPast three badges, shoppers stop reading proof. They start reading defense.\n\nOne real review with a name beats five generic stars.\n\nYour actual return policy beats a guarantee icon.\n\nSave this. Follow @koolestpro for more Shopify CRO tips.\n\n#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign #DigitalMarketing #ShopifyLiquid",
+      "hashtags": [
+        "#ShopifyDesign",
+        "#CRO",
+        "#eCommerce",
+        "#ShopifyDeveloper",
+        "#ConversionOptimization",
+        "#WebDesign",
+        "#Shopify",
+        "#UXDesign",
+        "#DigitalMarketing",
+        "#ShopifyLiquid"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TRUSTSIGNALS-X-THREAD": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "1/ You think more trust badges build more trust. Past three, they read as defense, not proof.\n\n2/ Secure checkout. Money-back guarantee. As seen in. Free shipping. Verified reviews. Six badges in one row above the fold.\n\n3/ Each one feels safe alone. Stacked together they read as anxious, not credible.\n\n4/ Shoppers don't count your badges. They notice the wall of them.\n\n5/ One specific review with a name and a face beats five generic star icons.\n\n6/ Your real return policy in plain words beats a \"guarantee\" badge every time.\n\n7/ Cut the badges until only the ones answering a real objection are left. Follow @koolestpro for more Shopify CRO.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TRUSTSIGNALS-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "A trust badge only works if it answers a question the shopper already has. Everything else is decoration wearing a costume of proof.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TRUSTSIGNALS-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Six generic badges: ignored. One specific review with a name and a photo: read every time.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TRUSTSIGNALS-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Most \"trust signal\" sections are founders trying to convince themselves, not the shopper. If your page needs seven badges to feel safe, the product page has a bigger problem.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-THUMBZONE-CAROUSEL": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide1.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide2.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide3.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide4.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide5.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide6.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide7.png"
+      ],
+      "caption": "Your store isn't mobile optimised. It just fits the screen.\n\nThose are two different things, and only one of them sells.\n\nResponsive means your layout reflows at 390px wide.\n\nIt says nothing about whether a thumb can reach the button.\n\nHere is the test most owners run. Phone in both hands, at a desk, good light. Everything looks fine.\n\nHere is the real one. One hand, standing on a bus, thumb anchored bottom right.\n\nNow pick a size, set a quantity, and buy.\n\nApple has published a 44pt minimum tap target for years. Google says 48dp.\n\nMeasure your swatches against that before you argue with me.\n\nWhat I keep finding on Shopify product pages:\n\nAdd to cart that only exists above the fold.\nVariant swatches sized for a mouse cursor.\nFilters parked in the top left, the hardest corner for a right thumb.\nQuantity steppers you have to aim at.\n\nNone of that needs a redesign to fix.\n\nMove the decisions into the bottom third. Make them big enough to hit without looking.\n\nEvery page is a product. Every click is a choice. Make the choice easy to hit.\n\nSave this and test your own PDP tonight.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-THUMBZONE-COVER": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/tips/thumb-zone-mobile-reach-assets/slide1.png",
+      "caption": "Your store isn't mobile optimised. It just fits the screen.\n\nResponsive means the layout reflows. It says nothing about whether a thumb can reach the button.\n\nYour customer is one handed, on the move, aiming at a 28px swatch.\n\nWhat's the last thing on your product page you actually tried to tap one handed?",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-THUMBZONE-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide1.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide2.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide3.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide4.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide5.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide6.png",
+        "outputs/tips/thumb-zone-mobile-reach-assets/slide7.png"
+      ],
+      "caption": "Your store isn't mobile optimised. It just fits the screen.\n\nResponsive means the layout reflows. It says nothing about whether a thumb can reach the button.\n\nApple's minimum tap target is 44pt. Google says 48dp. Most swatches ship smaller.\n\nMove the decisions into the bottom third of the screen.\n\nCan you buy it with one thumb, standing up?\n\nSave this. Follow @koolestpro for more Shopify CRO tips.\n\n#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign #DigitalMarketing #ShopifyLiquid",
+      "hashtags": [
+        "#ShopifyDesign",
+        "#CRO",
+        "#eCommerce",
+        "#ShopifyDeveloper",
+        "#ConversionOptimization",
+        "#WebDesign",
+        "#Shopify",
+        "#UXDesign",
+        "#DigitalMarketing",
+        "#ShopifyLiquid"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-THUMBZONE-X-THREAD": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "1/ Your store isn't mobile optimised. It just fits the screen. Those are two different things and only one of them sells.\n\n2/ Responsive means the layout reflows at 390px. It says nothing about whether a thumb can reach the button that takes the money.\n\n3/ The test most owners run: phone in both hands, at a desk. The test that matters: one hand, standing up, thumb anchored bottom right.\n\n4/ Apple has published a 44pt minimum tap target for years. Google says 48dp. Go measure the swatches on your own product page.\n\n5/ What I keep finding: add to cart only above the fold, swatches sized for a mouse, filters in the top left corner, steppers you have to aim at.\n\n6/ None of it needs a redesign. Move the decisions into the bottom third of the screen and size them to be hit without looking.\n\n7/ One filter for every mobile layout: can you buy it with one thumb, standing up? Follow @koolestpro for more Shopify CRO.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-THUMBZONE-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Responsive is about the screen. Buying happens in the thumb's reach. Your layout can pass one and fail the other on the same page.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-THUMBZONE-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Add to cart above the fold only: a stretch every time. A sticky buy bar in the bottom third: one thumb, no aiming, no thought.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-THUMBZONE-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Most mobile testing is a founder holding their phone in two hands at a desk. That is not a test. That is a screenshot with extra steps.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-CHECKOUTMYTH-CAROUSEL": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/checkout-payment-method-myth-assets/slide1.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide2.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide3.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide4.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide5.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide6.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide7.png"
+      ],
+      "caption": "You added Apple Pay. They still left.\n\nSo you turned on Shop Pay too. Then Google Pay.\n\nThe wallet row is four buttons wide now and nothing moved.\n\nBaymard asked shoppers with real intent why they abandoned.\n\n9% said there weren't enough payment methods.\n\nThat reason sits second from the bottom of the whole list.\n\n40% said the extra costs were too high. Shipping and tax landing after they had already decided to buy.\n\nAnother 12% couldn't work out the total order cost up front at all.\n\nYou have been optimising the smallest reason on the page.\n\nThe same research puts the average US checkout at 23.48 form elements. An ideal one runs 12 to 14.\n\nYour checkout isn't short a button. It's carrying ten fields it doesn't need.\n\nWhat I'd fix first:\n\nShow the full total on the cart page, shipping included\n\nLet people pay as a guest before asking them to register\n\nCut the fields nobody reads\n\nThen add the wallets, after all of that\n\nNone of it needs a new theme.\n\nConvert first. Then get clever.\n\nSave this and open your own cart page.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-CHECKOUTMYTH-COVER": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/tips/checkout-payment-method-myth-assets/slide1.png",
+      "caption": "You added Apple Pay. They still left.\n\nBaymard puts \"there weren't enough payment methods\" at 9% of abandonments. Second from the bottom.\n\nExtra costs sit at 40%, and another 12% can't work out the total before checkout.\n\nThe wallet row was never the problem. The number you're hiding is.\n\nWhen does a first time buyer on your store actually see the real total?",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-CHECKOUTMYTH-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/checkout-payment-method-myth-assets/slide1.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide2.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide3.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide4.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide5.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide6.png",
+        "outputs/tips/checkout-payment-method-myth-assets/slide7.png"
+      ],
+      "caption": "You added Apple Pay. They still left.\n\nBaymard's abandonment research puts \"not enough payment methods\" at 9%. Second from the bottom.\n\nExtra costs sit at 40%. Another 12% can't work out the total before checkout.\n\nThe average US checkout shows 23.48 form elements. An ideal one needs 12 to 14.\n\nYour checkout isn't short a button. It's hiding the number people care about.\n\nSave this. Follow @koolestpro for more Shopify CRO tips.",
+      "hashtags": [
+        "#ShopifyDesign",
+        "#CRO",
+        "#eCommerce",
+        "#ShopifyDeveloper",
+        "#ConversionOptimization",
+        "#WebDesign",
+        "#Shopify",
+        "#UXDesign",
+        "#DigitalMarketing",
+        "#ShopifyLiquid"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-CHECKOUTMYTH-X-THREAD": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "1/ You added Apple Pay. They still left. The wallet row was never the thing costing you the sale.\n\n2/ Baymard asked shoppers with real purchase intent why they abandoned. 9% said there weren't enough payment methods. Second from the bottom of the list.\n\n3/ 40% said extra costs were too high. Shipping and tax showing up after they'd already decided to buy.\n\n4/ Another 12% said they couldn't work out the total order cost up front at all.\n\n5/ Same research: the average US checkout shows 23.48 form elements. An ideal one needs 12 to 14.\n\n6/ So your checkout isn't short a payment button. It's carrying ten fields it doesn't need and hiding the total until step three.\n\n7/ Fix the order instead. Full total on the cart page, guest checkout, fewer fields, wallets last. Follow @koolestpro for more Shopify CRO.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-CHECKOUTMYTH-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Adding a payment button is the cheapest fix on your checkout and the smallest one. 9% abandon over payment choice. 40% abandon over the total.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-CHECKOUTMYTH-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Four wallet buttons, total revealed at step three. Or: total on the cart page, guest checkout, wallets last. Only one of those gets paid.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-CHECKOUTMYTH-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Most checkout optimisation is just turning on more payment providers. That isn't optimisation. That's adding options to a screen people already left.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-PRESELL5-CAROUSEL": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide1.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide2.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide3.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide4.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide5.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide6.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide7.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide8.png"
+      ],
+      "caption": "Cold traffic doesn't bounce because your page is ugly. It's missing one of 5 parts.\n\nYou wrote a pre-sell page. It reads like an ad.\n\nCold traffic can smell an ad in one line. They leave before they ever see your product.\n\nHere's the part most Shopify brands skip. A pre-sell page is not one big pitch. It's a sequence. Five parts, each doing one job.\n\nThe Hook, which earns permission to keep reading.\n\nThe Mirror, which says their frustration back to them.\n\nThe Discovery, which introduces your mechanism like it was found.\n\nThe Proof Layer, real numbers, not adjectives.\n\nThe Soft Bridge, which hands them to the product without pitching.\n\nSkip one part and the whole thing collapses.\n\nStraight to a PDP, cold traffic converts near 1 to 2%. Run it through this sequence first and that number moves.\n\nThis is the conversion layer between your ad and your product page.\n\nSave this before you write your next pre-sell page. Want it audited? My DMs are open.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-PRESELL5-COVER": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/tips/pre-sell-page-5-part-structure-assets/slide1.png",
+      "caption": "Cold traffic doesn't bounce because your page is ugly. It's missing one of 5 parts.\n\nMost pre-sell pages are just longer ads. Cold traffic can tell in one line.\n\nA real pre-sell page is a sequence: hook, mirror, discovery, proof, bridge.\n\nWhich one is missing from yours?",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-PRESELL5-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide1.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide2.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide3.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide4.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide5.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide6.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide7.png",
+        "outputs/tips/pre-sell-page-5-part-structure-assets/slide8.png"
+      ],
+      "caption": "Cold traffic doesn't bounce because your page is ugly. It's missing one of 5 parts.\n\nA pre-sell page is not one pitch. It's a sequence: hook, mirror, discovery, proof, bridge.\n\nSkip one part and cold traffic never gets warm enough to buy.\n\nStraight to a PDP, cold traffic converts near 1 to 2 percent. Run it through this sequence first and that number moves.\n\nSave this before you write your next pre-sell page. Follow @koolestpro for more Shopify CRO tips.\n\n#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign #DigitalMarketing #ShopifyLiquid",
+      "hashtags": [
+        "ShopifyDesign",
+        "CRO",
+        "eCommerce",
+        "ShopifyDeveloper",
+        "ConversionOptimization",
+        "WebDesign",
+        "Shopify",
+        "UXDesign",
+        "DigitalMarketing",
+        "ShopifyLiquid"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-PRESELL5-X-THREAD": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "1/ Cold traffic doesn't bounce because your page is ugly. It's missing one of 5 parts. A thread on the pre-sell structure most Shopify brands skip:\n\n2/ The Hook. The first line has one job: earn permission to keep reading. Not your headline. A pattern interrupt.\n\n3/ The Mirror. Say their exact frustration back before you offer anything. If they don't feel seen in 3 lines, nothing after this converts.\n\n4/ The Discovery. Introduce your mechanism like it was found, not sold. People trust what they think they figured out.\n\n5/ The Proof Layer. Real numbers and quotes. Skeptical traffic doesn't believe claims, it believes evidence it can check.\n\n6/ The Soft Bridge. One line, no hard sell. Hand them to the product like it's the obvious next step.\n\n7/ Straight to a PDP, cold traffic converts near 1 to 2%. Run it through these 5 parts first and that number moves. Follow @koolestpro for more Shopify CRO.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-PRESELL5-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "A pre-sell page is not one pitch. It's 5 parts, each doing one job: hook, mirror, discovery, proof, bridge. Skip one and the page collapses.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-PRESELL5-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "A pre-sell page that reads like an ad: cold traffic leaves in one line. A pre-sell page built as a sequence: cold traffic reads to the end.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-PRESELL5-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Most pre-sell pages fail for the same reason most ads fail. They pitch before they've earned the right to.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TYPE6-COVER": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/tips/typography-hierarchy-six-levels-assets/slide1.png",
+      "caption": "Your headline got bigger. The page still feels flat.\n\nHierarchy is a ranking, not a size. Six things set at 32px is not six levels. It's one level, printed six times.\n\nSix levels, six jobs: page promise, section signpost, block claim, body, action, fine print. If a level has no job, it isn't a level.\n\nAnd two of those six can be pure space. Nothing has to get bigger.\n\nRepost if your last redesign ended with everything one step bigger.",
+      "hashtags": [
+        "ShopifyCRO",
+        "Typography",
+        "WebDesign"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TYPE6-CAROUSEL": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide1.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide2.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide3.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide4.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide5.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide6.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide7.png"
+      ],
+      "caption": "Your headline got bigger. The page still feels flat.\n\nHierarchy is a ranking, not a size. Six things set at 32px is not six levels. It's one level, printed six times.\n\nSix levels, six jobs: page promise, section signpost, block claim, body, action, fine print. If a level has no job, it isn't a level.\n\nAnd two of those six can be pure space. Nothing has to get bigger.\n\nRepost if your last redesign ended with everything one step bigger.",
+      "hashtags": [
+        "ShopifyCRO",
+        "Typography",
+        "WebDesign"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TYPE6-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide1.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide2.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide3.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide4.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide5.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide6.png",
+        "outputs/tips/typography-hierarchy-six-levels-assets/slide7.png"
+      ],
+      "caption": "Your headline got bigger. The page still feels flat.\n\nHierarchy is a ranking, not a size. Six things set at 32px is not six levels. It's one level, printed six times.\n\nSix levels, six jobs. Two of them can be pure space. Nothing has to get bigger.\n\nSave this for your next build. Follow @koolestpro for more Shopify CRO.",
+      "hashtags": [
+        "ShopifyDesign",
+        "CRO",
+        "eCommerce",
+        "ShopifyDeveloper",
+        "ConversionOptimization",
+        "WebDesign",
+        "Shopify",
+        "UXDesign",
+        "Typography",
+        "ProductPage"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TYPE6-X-THREAD": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "1/ Your headline got bigger. The page still feels flat. Here's the typography thing almost every Shopify store gets backwards:\n\n2/ The myth: if it matters, make it bigger. So the H1 grows. Then the subhead grows to keep up. Then the price. Now everything is loud and nothing leads.\n\n3/ The reality: hierarchy is a ranking, not a size. Six things set at 32px is not six levels. It's one level, printed six times.\n\n4/ Nielsen Norman Group: on an average visit people read at most about 28% of the words on a page. They aren't reading. They're hunting for the one thing that wins.\n\n5/ Stop counting sizes. Assign jobs. Page promise (the outcome), section signpost (where am I), block claim (why this part), body (the proof), action (the button), fine print (the risk).\n\n6/ Two of those six levels can be pure space. Same sizes, bigger gaps, and the page finally reads. Nothing got bigger. Things stopped touching.\n\n7/ Test it: squint at your PDP. Name what you see first. Can't do it in two seconds? Font size won't save you. More Shopify CRO: @koolestpro",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TYPE6-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Hierarchy is a ranking, not a size.\n\nSix things set at 32px is not six levels. It's one level, printed six times.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TYPE6-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Bumping the H1 to 48px: everything else grows to keep up, nothing leads.\n\nAdding 40px of space above it: nothing got bigger, and it finally wins.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TIP-KOOLESTPRO-TYPE6-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Most \"the page feels flat\" feedback gets fixed with spacing, not font size. You keep reaching for the size picker because it's the only lever you've been taught.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    }
+  }
+}

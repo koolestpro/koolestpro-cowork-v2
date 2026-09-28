@@ -4,7 +4,7 @@
   "isRealBrand": true,
   "isClient": false,
   "created": "2026-09-09T14:10:00.000Z",
-  "updated": "2026-09-09T14:10:00.000Z",
+  "updated": "2026-09-28T10:30:00Z",
   "howToUse": "Each key under 'assets' maps one generated image to its ready-to-post caption. Automation should join on 'assetPath' (the exact relative path from the koolestpro-cowork-v2 project root) or on the key itself. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Created', never 'Published', per CLAUDE.md).",
   "relatedPipelineItemIds": [
     "static-ad-caraway_fry-pan-20260909"
@@ -39,11 +39,12 @@
         "instagram"
       ],
       "assetType": "image",
-      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-4-offer-urgency.png",
       "caption": "Forever chemicals, struck through. Just breakfast, underneath. Name the thing people are quietly worried about, then let the pan answer it. The problem/solution angle for Caraway's 10.5\" ceramic fry pan. Unofficial concept work built from Caraway's own live product page, not something the brand commissioned.",
       "hashtags": [],
       "status": "Not Posted",
-      "postedAt": null
+      "postedAt": null,
+      "note": "2026-09-28: assetPath corrected. The 'forever chemicals' problem ad was saved as ad-4-offer-urgency.png."
     },
     "SA-CARAWAY-BENEFIT": {
       "platform": [
@@ -75,11 +76,12 @@
         "instagram"
       ],
       "assetType": "image",
-      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-4-offer-urgency.png",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png",
       "caption": "Still thinking about it? Free shipping over $90, free 30-day returns, $125 or 4 payments of $32. The offer/urgency angle for Caraway's fry pan, styled like a retargeting ad. Unofficial concept work built from Caraway's own live product page, not something the brand commissioned.",
       "hashtags": [],
       "status": "Not Posted",
-      "postedAt": null
+      "postedAt": null,
+      "note": "2026-09-28: assetPath corrected. The 'Still thinking about it?' offer ad was saved as ad-1-problem-solution.png."
     },
     "SA-CARAWAY-COMBO": {
       "platform": [
@@ -107,7 +109,8 @@
       "caption": "Four ad directions from one $125 frying pan.\n\nProblem. Benefit. Proof. Offer.\n\nSame product, same photo brief. Only the first line changes.\n\nConcept work off Caraway's live PDP.",
       "hashtags": [],
       "status": "Not Posted",
-      "postedAt": null
+      "postedAt": null,
+      "retired": "2026-09-28: replaced by the per-image SA-CARAWAY-X-* keys below."
     },
     "SA-CARAWAY-X2": {
       "platform": [
@@ -118,18 +121,103 @@
       "caption": "The strongest line in this ad was not written by a marketer.\n\n\"Cooks evenly and quickly.\"\n\nCurtis M., verified buyer, sitting under 18,878 reviews.\n\nReal beats clever most days.",
       "hashtags": [],
       "status": "Not Posted",
-      "postedAt": null
+      "postedAt": null,
+      "retired": "2026-09-28: replaced by the per-image SA-CARAWAY-X-* keys below."
     },
     "SA-CARAWAY-X3": {
       "platform": [
         "x"
       ],
       "assetType": "image",
-      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-4-offer-urgency.png",
       "caption": "Caraway's whole pitch is three letters they left out.\n\nNo PTFE. No PFOA. No PFAS.\n\nSo the ad leads with the worry, not the pan. The pan is the answer to a question you already had.",
       "hashtags": [],
       "status": "Not Posted",
-      "postedAt": null
+      "postedAt": null,
+      "retired": "2026-09-28: replaced by the per-image SA-CARAWAY-X-* keys below."
+    },
+    "SA-CARAWAY-IG-SINGLE": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png",
+      "captionKey": "ig_single",
+      "caption": "Still thinking about it?\n\nA retargeting-style ad for Caraway's $125 fry pan. Free shipping over $90, free 30-day returns, or 4 payments of $32, all answered before the shopper has to ask.\n\nUnofficial concept work built from Caraway's own live product page, not something the brand commissioned.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#CRO #DTC #EcommerceMarketing #AdCreative",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Added 2026-09-28: caption written for the single ad-1 image. The single-image Instagram post used to borrow the 4-ad LinkedIn caption."
+    },
+    "SA-CARAWAY-X-PROBLEM": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png",
+      "captionKey": "x_problem",
+      "caption": "Retargeting ad for someone who looked at a $125 pan and left.\n\nIt opens with \"Still thinking about it?\" and then clears what usually stops the purchase: free shipping over $90, 30-day returns, 4 payments of $32.\n\nThe price objection gets answered before anyone raises it.",
+      "hashtags": [],
+      "chars": 271,
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Image is the 'Still thinking about it?' offer/retargeting ad (file named ad-1)."
+    },
+    "SA-CARAWAY-X-BENEFIT": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-2-benefit-result.png",
+      "captionKey": "x_benefit",
+      "caption": "Benefit ad for Caraway's fry pan. One promise up top: a healthier way to cook every day.\n\nThen the reasons it holds up. Non-toxic ceramic coating, oven safe to 550°F, works on gas, electric and induction, wipes clean.\n\nNo discount in this one. The pan does the selling.",
+      "hashtags": [],
+      "chars": 269,
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Image: 'A healthier way to cook everyday'."
+    },
+    "SA-CARAWAY-X-PROOF": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-3-social-proof.png",
+      "captionKey": "x_proof",
+      "caption": "The strongest line in this ad was not written by a marketer.\n\n\"Cooks evenly and quickly.\"\n\nCurtis M., verified buyer.\n\nReal beats clever most days.",
+      "hashtags": [],
+      "chars": 147,
+      "status": "Posted (with wrong caption)",
+      "postedAt": null,
+      "note": "Image prints 4.7 / 18,878 reviews and the Curtis M. quote. Posted 2026-09-25 with the wrong (No PTFE) caption."
+    },
+    "SA-CARAWAY-X-OFFER": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/ad-4-offer-urgency.png",
+      "captionKey": "x_offer",
+      "caption": "Caraway's whole pitch is three letters they left out.\n\nNo PTFE. No PFOA. No PFAS.\n\nSo the ad leads with the worry, not the pan. The pan is the answer to a question you already had.",
+      "hashtags": [],
+      "chars": 180,
+      "status": "Posted (with wrong caption)",
+      "postedAt": null,
+      "note": "Image is the 'FOREVER CHEMICALS / Just breakfast' problem ad (file named ad-4). Posted 2026-09-19 with the wrong (Four ad directions) caption."
+    },
+    "SA-CARAWAY-X-COMBO": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/caraway_fry-pan_20260909/combined-showcase.png",
+      "captionKey": "x_combo",
+      "caption": "Four ad directions from one $125 frying pan.\n\nProblem. Benefit. Proof. Offer.\n\nSame product, same photo brief. Only the first line changes.\n\nConcept work off Caraway's live PDP.",
+      "hashtags": [],
+      "chars": 177,
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "All four ads in one image."
     }
   }
 }

@@ -11,7 +11,7 @@ Unofficial concept work. Caraway is not a Koolestpro client. Every caption below
 | `SA-CARAWAY-PROOF` | `ad-3-social-proof.png` | linkedin, instagram |
 | `SA-CARAWAY-OFFER` | `ad-4-offer-urgency.png` | linkedin, instagram |
 | `SA-CARAWAY-COMBO` | `combined-showcase.png` | linkedin, instagram |
-| `SA-CARAWAY-X1` | `combined-showcase-x.png` | x |
+| `SA-CARAWAY-X1 (retired 2026-09-28)` | `combined-showcase-x.png` | x |
 | `SA-CARAWAY-X2` | `ad-3-social-proof.png` | x |
 | `SA-CARAWAY-X3` | `ad-1-problem-solution.png` | x |
 
@@ -130,3 +130,84 @@ So the ad leads with the worry, not the pan. The pan is the answer to a question
 `combined-showcase-x.png` is JPEG-encoded despite the `.png` extension (a sandbox file-write quirk during this run). It opens and displays correctly; flagging only in case a future automation step inspects the file signature directly instead of just loading it.
 
 Two bonus unused benefit/result image variants also sit in the output folder (`ad-2-benefit-result-alt-a.png`, `ad-2-benefit-result-alt-b.png`, headlines "Non-Stick for Real Life" and "Good food starts here") but are not referenced by any caption above.
+
+## SA-CARAWAY-IG-SINGLE (added 2026-09-28)
+
+Instagram single-image post, `outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png` only. Written for this one image; the single post used to borrow the 4-ad LinkedIn caption.
+
+```
+Still thinking about it?
+
+A retargeting-style ad for Caraway's $125 fry pan. Free shipping over $90, free 30-day returns, or 4 payments of $32, all answered before the shopper has to ask.
+
+Unofficial concept work built from Caraway's own live product page, not something the brand commissioned.
+
+Follow @koolestpro for more ad and CRO breakdowns.
+
+#CRO #DTC #EcommerceMarketing #AdCreative
+```
+
+
+## 2026-09-28 correction: caption = image
+
+The image files are mislabeled: `ad-1-problem-solution.png` is actually the **offer/retargeting** ad ("Still thinking about it?") and `ad-4-offer-urgency.png` is the **problem** ad ("FOREVER CHEMICALS / Just breakfast"). SA-CARAWAY-PROBLEM and SA-CARAWAY-OFFER now point at the right files. The old X1..X3 captions were dealt across images by position and 2 went out on the wrong ad (19 Sep, 25 Sep). They are retired in favour of one caption per image:
+
+### SA-CARAWAY-X-PROBLEM: `ad-1-problem-solution.png` (x_problem)
+Image is the 'Still thinking about it?' offer/retargeting ad (file named ad-1).
+
+```
+Retargeting ad for someone who looked at a $125 pan and left.
+
+It opens with "Still thinking about it?" and then clears what usually stops the purchase: free shipping over $90, 30-day returns, 4 payments of $32.
+
+The price objection gets answered before anyone raises it.
+```
+
+### SA-CARAWAY-X-BENEFIT: `ad-2-benefit-result.png` (x_benefit)
+Image: 'A healthier way to cook everyday'.
+
+```
+Benefit ad for Caraway's fry pan. One promise up top: a healthier way to cook every day.
+
+Then the reasons it holds up. Non-toxic ceramic coating, oven safe to 550°F, works on gas, electric and induction, wipes clean.
+
+No discount in this one. The pan does the selling.
+```
+
+### SA-CARAWAY-X-PROOF: `ad-3-social-proof.png` (x_proof)
+Image prints 4.7 / 18,878 reviews and the Curtis M. quote. Posted 2026-09-25 with the wrong (No PTFE) caption.
+
+```
+The strongest line in this ad was not written by a marketer.
+
+"Cooks evenly and quickly."
+
+Curtis M., verified buyer.
+
+Real beats clever most days.
+```
+
+### SA-CARAWAY-X-OFFER: `ad-4-offer-urgency.png` (x_offer)
+Image is the 'FOREVER CHEMICALS / Just breakfast' problem ad (file named ad-4). Posted 2026-09-19 with the wrong (Four ad directions) caption.
+
+```
+Caraway's whole pitch is three letters they left out.
+
+No PTFE. No PFOA. No PFAS.
+
+So the ad leads with the worry, not the pan. The pan is the answer to a question you already had.
+```
+
+### SA-CARAWAY-X-COMBO: `combined-showcase.png` (x_combo)
+All four ads in one image.
+
+```
+Four ad directions from one $125 frying pan.
+
+Problem. Benefit. Proof. Offer.
+
+Same product, same photo brief. Only the first line changes.
+
+Concept work off Caraway's live PDP.
+```
+

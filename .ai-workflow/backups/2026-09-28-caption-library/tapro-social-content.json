@@ -1,0 +1,101 @@
+{
+  "brand": "TAPro Cards",
+  "brandSlug": "tapro",
+  "isRealBrand": true,
+  "isClient": false,
+  "created": "2026-08-31T09:26:04.513860Z",
+  "updated": "2026-09-01T10:15:00.000000Z",
+  "relatedPipelineItemIds": [
+    "cro-fix-tapro_google-review-cards-20260831"
+  ],
+  "knownGaps": [],
+  "assets": {
+    "CRO-TAPRO-BA": {
+      "platform": ["linkedin", "instagram"],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/tapro/koolestpro_tapro_before-after.png",
+      "caption": "This brand has 15,500+ real business customers and a 4.9 star rating from 1,125 reviews. You wouldn't know it from their homepage.\n\nThe first screen is a promo banner and a hero photo. No price, no rating, no product, until you scroll past a full video demo and into a product grid.\n\nA strong first screen shows what's true about your brand immediately. This one buries it.\n\nFollow @koolestpro for weekly CRO breakdowns.",
+      "hashtags": ["#ShopifyDesign", "#CRO", "#eCommerce", "#ConversionRate", "#Shopify", "#UXDesign", "#SmallBusiness"],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-TAPRO-ANNO": {
+      "platform": ["linkedin", "instagram"],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/tapro/koolestpro_tapro_annotated-changes.png",
+      "caption": "TAPro sells NFC and QR review cards to local businesses. Their flagship card is $34.95, rated 4.9 stars from 1,125 reviews, trusted by 15,500+ businesses. All real, all verified. None of it shows up on the first screen of their homepage.\n\nHere's every change and why it moved: real price and rating under the headline, the real product photo instead of a placeholder, the trust strip pulled up from deep in the page, one thin promo line instead of two rows, no duplicate search icon, and a CTA pointed at one product instead of a generic banner link.\n\nSame brand, same product, same price. Just put the proof where a first-time visitor can actually see it.",
+      "hashtags": ["#CRO", "#ConversionRateOptimization", "#Shopify", "#eCommerce"],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-TAPRO-CAROUSEL": {
+      "platform": ["linkedin", "instagram"],
+      "assetType": "carousel",
+      "assetPath": [
+        "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide1.png",
+        "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide2.png",
+        "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide3.png",
+        "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide4.png",
+        "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide5.png",
+        "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide6.png",
+        "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide7.png",
+        "outputs/cro-fixes/tapro/koolestpro_tapro_google-review-cards_slide8.png"
+      ],
+      "caption": "TAPro's homepage never shows a price, a star rating, or a single product. Not on the first screen.\n\nTAPro sells NFC and QR review cards to local businesses. Land on their homepage and you get a promo banner and a big hero photo. Scroll past that, past a full video demo, and you still won't see a product or a price.\n\nKeep scrolling into a product grid and you'll hit their flagship card, the G-Series Onyx: $34.95, a real 4.9 star rating from 1,125 reviews, and over 15,500 businesses using their cards, including names like Sheraton and McDonald's. All of it real. None of it near the top.\n\nHere's what I changed and why:\n\n1. Pulled the real price and 4.9 star rating up, directly under the headline\n2. Put the actual product front and center, a real photo instead of a placeholder\n3. Pulled the \"15,500+ businesses\" trust strip up from deep in the page\n4. Collapsed the two-row promo banner into one thin line\n5. Removed a duplicate search icon overlapping the headline\n6. Pointed the CTA at that one flagship product instead of a generic banner link\n\nSame brand, same product, same price. Just put the proof where a first-time visitor can actually see it.\n\nDM me \"AUDIT\" if you want this done for your store.",
+      "hashtags": ["#ShopifyDesign", "#CRO", "#eCommerce", "#ConversionOptimization", "#Ecommerce", "#UXDesign", "#SmallBusiness"],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-TAPRO-X1": {
+      "platform": ["x"],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "If your best proof (price, rating, real customers) only shows up after a scroll, it's not doing its job. Move it up, not the design around it.",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-TAPRO-X2": {
+      "platform": ["x"],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "Before: banner, big photo, video demo, no price, no rating, no product, scroll for proof.\nAfter: thin banner, real price, real rating, real product, real trust strip, one CTA. Same brand.",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-TAPRO-X3": {
+      "platform": ["x"],
+      "assetType": "text",
+      "assetPath": null,
+      "caption": "A homepage that never shows a price or a product isn't minimalist, it's just missing the sale.",
+      "status": "Not Posted",
+      "postedAt": null
+    }
+  },
+  "hookVariations": [
+    "TAPro's homepage never shows a price, a rating, or a product. Not on the first screen.",
+    "This brand has 15,500+ real business customers. Their homepage buries it behind a video demo and a product grid.",
+    "Real price. Real 4.9 star rating. Real flagship product. None of it visible on the first screen of this homepage.",
+    "A small NFC card brand with genuinely strong numbers, hidden behind a banner, a video, and a scroll."
+  ],
+  "twitterThread": [
+    "1/ A small NFC review card brand has 15,500+ real business customers and a 4.9 star rating from 1,125 reviews. None of it shows up on the first screen of their homepage. Here's what I'd fix first.",
+    "2/ Landed on the homepage. First thing visible: a two-row black promo banner and a big hero photo. No price. No rating. No named product.",
+    "3/ Scroll past that and there's a full video demo, still no product, no price. Keep scrolling into a product grid and you finally hit their flagship card: $34.95, 4.9 stars, 1,125 reviews, over 15,500 businesses.",
+    "4/ The fix: pull the real price, rating, and flagship product up to the first screen, collapse the promo banner to one line, remove a duplicate search icon, and point the CTA at that one product instead of a generic banner link.",
+    "5/ The brand didn't need new proof. It needed the proof it already has moved to where a first-time visitor can actually see it. DM \"AUDIT\" if you want this done for your store."
+  ],
+  "exportLog": [
+    {
+      "date": "2026-08-31",
+      "note": "First CRO Fix run for TAPro Cards, produced by the koolestpro-weekly-cro-fix scheduled task (unsupervised run). Target selected from targets_pool.json: target-tapro-1751673600003 (leadPotential High, visualPotential Medium). Audit and rebuild copy verified live against https://taprocard.com/ (real price $34.95/$39.00, real 4.9-star/1,124-review rating, real '90 Days Guarantee' + 'FREE Shipping' badges, real 15,500+ businesses trust claim). The pool's stale note about a floating chat bubble overlapping the bottom nav could not be reproduced live and was deliberately left out of the audit rather than reused unverified. content.html (Section E) was hand-built directly rather than DeepSeek-delegated, after DeepSeek dropped required JS (captureFixed/captureSlide/waitForSlideAssets/sendToPipeline) on the first attempt; it was rebuilt by cloning the proven v1ce reference file's CSS/JS byte-for-byte. The two visual-evidence graphics (before/after, annotated) were built with a new PIL-based script (build_tapro_graphics.py) instead of the traditional live CSS/SVG DOM approach, pre-rendering flat PNGs and embedding them as base64 <img> tags to sidestep html2canvas/SVG fragility. A late em-dash sweep found 7 violations baked into tapro_rebuild.html (including the visible h1), which had already been screenshotted into both graphics; fixed by re-screenshotting, re-running the graphics script, re-injecting fresh base64 into content.html, and re-exporting via export_static_images.py before final verification."
+    },
+    {
+      "date": "2026-09-01",
+      "note": "Revision pass after Ridwan's review flagged 3 problems: (1) the fake CSS 'Google + two squares' product placeholder read as a broken icon; (2) the after-panel in the before/after graphic had no visual contrast against the black canvas, blending in; (3) the lead CRO hook ('a search icon is sitting on the headline') wasn't tangible or verifiable enough to be compelling. Fixes: replaced the placeholder with TAPro's own real product photo, downloaded directly from their live product page (g-series-onyx-google-review-card) and embedded as base64, matching Ridwan's standing instruction to always prefer a business's real product image over a fabricated one, and to check the crop doesn't cut off important content. Re-verified the real homepage layout live with Playwright (full scroll-to-bottom methodology, since lazy-loaded sections were shifting measurements between runs) and found the homepage hero genuinely shows no price, rating, or named product; the specific flagship product and its $34.95 price only appear deep in a product grid, well past a full video demo section. Also caught and corrected a factual error: the review count was previously stated as 1,124, the real Judge.me widget total is 1,125. Rewrote the BA-graphic and ANNO-graphic headlines, all 5 caption tabs, and every carousel slide around this corrected, more tangible, verifiable finding ('no price, no rating, no product on screen one') while demoting the search-icon overlap to a minor secondary annotation point. Added a fourth pin to the BA graphic and reworked the ANNO graphic's arrow-target y-coordinates to match the real rebuild.html layout (the product card grew ~80px taller to fit the real photo, shifting everything below it). Fixed the before/after graphic's contrast problem by adding a lighter backing card, border, and soft drop shadow behind each phone panel so the after-panel reads as a distinct panel instead of disappearing into the black canvas. Re-exported all assets via the real captureFixed()/captureSlide() pipeline (not a native screenshot) and visually re-verified every slide plus both graphics before finalizing."
+    },
+    {
+      "date": "2026-09-01",
+      "note": "Second same-day revision pass, four new standing instructions applied project-wide (see CLAUDE.md's 'CAROUSEL COVERS, EVIDENCE SLIDES, PRODUCT PHOTOS & ABOVE-THE-FOLD' section). (1) Background removed from the product photo via rembg (u2net model) so the NFC card floats as a clean cutout instead of sitting in a light box, composited against a radial dark glow that contrasts with the page's near-black background for a more premium look. (2) tapro_rebuild.html's above-the-fold layout fixed: the product image box grew from 170px to 280px tall with object-fit:contain (was cover, which was clipping the card), and the CTA/guarantee line shifted down to close the ~138px dead-space gap that used to sit below the guarantee text and above the phone frame's bottom edge. (3) Re-captured a fresh raw screenshot of the corrected rebuild and rebuilt both build_tapro_graphics.py pin/arrow y-coordinates (product pin moved from raw_y 950 to 1064.3, CTA pin from 1321.3 to 1557.3, CROP_H raised from 1612 to 1716) so the before/after and annotated-changes graphics reflect the new layout instead of the stale cropped-box version. (4) The 6-slide carousel grew to 8 slides: the cover slide (slide 1) now carries the background-removed product photo as a dominant visual instead of being text-only, and two new 'THE EVIDENCE' slides (5 and 6) were inserted before the result slide, embedding resized crops of the real before/after and annotated-changes graphics directly in the carousel rather than only as standalone LinkedIn/Instagram posts. First attempt at the evidence slides had the '05'/'06' decorative page-number ghost numerals overlapping the slide headlines and the annotated-changes image running past the 680px slide height into the counter/handle zone; fixed by shrinking the ghost-number font, constraining headline width, and re-sizing both embedded images (440px and 390px wide respectively) before re-exporting and re-verifying every slide visually. Live nav click-through confirmed all 8 slides page correctly, the swipe chevron disappears on slide 8, and zero console errors. All assets re-exported via the real captureFixed()/captureSlide() pipeline, and the CAROUSEL asset entry's file list and slide-count description below updated from 6 to 8 slides to match."
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "brand": "KURA",
+  "brandSlug": "kura",
+  "relatedPipelineItemIds": [
+    "template-showcase-kura_hp-01-20260713",
+    "template-showcase-kura_pdp-01-2026-08-31",
+    "template-showcase-kura_pdp-02-20260919"
+  ],
+  "createdAt": "2026-07-13T06:30:00.000Z",
+  "note": "First koolestpro-cowork-v2-native social-content record for KURA. A separate cached reference copy of the brand's original replo-rebuilds caption library lives at replo-pages-cache/kura-social-content.md for read-only reference — this file is this project's own durable, growing record per CLAUDE.md's Per-Brand Social Content Library convention, and is the one future autopost tooling should read. | 2026-09-19 CORRECTION: an earlier pass this session wrongly marked every KURA asset here 'Posted' — reverted. 'Posted' in this project means sent to the live Google Sheet / actually gone out, which is tracked in the Sheet itself (or via sync_content_system.py), not guessed locally. Real distribution status for KURA content lives in the 'Koolestpro Distribution Queue' Sheet.",
+  "assets": {
+    "TS-KURA-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_hp-01_2026-07-13/kura_hp-01 cover.mp4",
+      "caption": "Built an entire brand from nothing.\n\nNo brief. No identity. No product name. Just a dropship stainless steel cutting board sourced off a supplier page.\n\nI named it KURA. Positioned it for home cooks who take kitchen hygiene seriously. Wrote the tagline (\"Clean Surface. Clear Mind.\"), picked the palette (deep slate, warm cream, burnished copper), and built a three-font type system, display, serif, body, before writing a single line of HTML.\n\nThen I built the homepage. It opens with a preloader that types the brand name in, then reveals: GSAP horizontal scroll on the use-case section, clip-path reveals on the brand imagery, a parallax hero, a marquee trust bar running on pure CSS, scroll-triggered fades on every section via IntersectionObserver. No external JS libraries.\n\nThe goal was never \"nice website.\" It was making a product that costs $48 to source feel like it belongs next to brands spending millions on brand equity. That gap is design. It's copy. It's page speed. It's whether the above-the-fold gives someone a reason to keep reading.\n\nNeed a store like this built for your brand? That's what I do, DM me.\n\n#ecommerce #webdesign #brandstrategy #shopify #replo #CRO #uidesign",
+      "hashtags": [
+        "ecommerce",
+        "webdesign",
+        "brandstrategy",
+        "shopify",
+        "replo",
+        "CRO",
+        "uidesign"
+      ],
+      "status": "Not Posted",
+      "postedAt": null,
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1784640601/koolestpro/kura-showcase/kura-hp01-cover-fixed.mp4",
+      "note": "FIXED 2026-07-21: re-composited, old version had phone overlapping laptop screen content."
+    },
+    "TS-KURA-LAPTOP-VID": {
+      "platform": [
+        "twitter"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_hp-01_2026-07-13/kura_hp-01 laptop.mp4",
+      "caption": "Mobile and desktop, one codebase.\n\nKURA was built like a real DTC brand, not a dropship product page. Any product can feel premium. It starts with how you build the page.\n\nNeed a store like this? DMs open.\n\n#ecommerce #shopify #replo #CRO",
+      "hashtags": [
+        "ecommerce",
+        "shopify",
+        "replo",
+        "CRO"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-MOBILE-VID": {
+      "platform": [
+        "twitter"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_hp-01_2026-07-13/kura_hp-01 mobile.mp4",
+      "caption": "KURA homepage, mobile view.\n\nPreloader, hero, trust bar, brand story, product, reviews. All hand-coded, all responsive. Nav collapses clean, scroll animations trigger right, zero layout shift.\n\nWant this built for your store? DM me.\n\n#mobiledesign #ecommerce #webdesign",
+      "hashtags": [
+        "mobiledesign",
+        "ecommerce",
+        "webdesign"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-COVER-IMG": {
+      "platform": [
+        "twitter"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_hp-01_2026-07-13/kura_hp-01 cover.png",
+      "caption": "Built a full brand from scratch for a stainless steel cutting board: name, identity, copy, code.\n\nThis is KURA: \"Clean Surface. Clear Mind.\"\n\nPreloader. GSAP scroll. Clip-path reveals. Zero frameworks.\n\nNeed one for your brand? DM me.\n\n#ecommerce #webdesign #shopify",
+      "hashtags": [
+        "ecommerce",
+        "webdesign",
+        "shopify"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PREVIEW": {
+      "platform": [
+        "instagram",
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_hp-01_2026-07-13/kura_hp-01-preview.png",
+      "caption": "Three scroll depths, one homepage: hero, product story, footer.\n\nSame build, same codebase, no shortcuts between sections.\n\nNeed a store like this? DM me.\n\n#ecommerce #webdesign #shopify",
+      "hashtags": [
+        "ecommerce",
+        "webdesign",
+        "shopify"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-MOSAIC": {
+      "platform": [
+        "instagram",
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_hp-01_2026-07-13/kura_hp-01-full-mosaic.png",
+      "caption": "Every section of the KURA homepage, laid out in one grid.\n\nFull build, zero templates.\n\nNeed a store like this? DM me.\n\n#ecommerce #webdesign #shopify",
+      "hashtags": [
+        "ecommerce",
+        "webdesign",
+        "shopify"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795747/portfolio/videos/kura-pdp-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "Before there was a homepage, a listicle, or an advertorial, there was one product page.\n\nI started this portfolio with the hardest page to build well: the product page. It's the page that carries the most weight. It has to introduce the brand, agitate the problem, present the solution, prove it works, kill every objection, and ask for the sale, all without losing the reader halfway down.\n\nKURA's PDP follows a villain/hero structure. The \"villain\" section names the problem most people never think about: plastic boards that harbor bacteria, wood boards that crack and stain. Then the \"hero\" section introduces KURA as the upgrade, using 304 stainless steel that's non-porous and dishwasher safe.\n\nFrom there, a before/after comparison, a 3-step how-it-works block, review cards, three circular trust-stat indicators, a head-to-head comparison table against generic boards, an 8-question FAQ accordion, three trust pillars, and an email capture. Thirteen sections in total, each one a deliberate handoff to the next.\n\nThe buy box is sticky on desktop. Star rating sits above the product title. Price is impossible to miss. None of that is decoration. It's conversion architecture.\n\nBuilt in HTML/CSS/vanilla JS. No page builder. No theme.\n\nNeed a store like this built for your brand? DM me.\n\n#ecommerce #productpage #CRO #shopify #replo #webdesign #brandstrategy #uidesign",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Product Page (PDP) cover video."
+    },
+    "TS-KURA-PDP-COVER-VID-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795747/portfolio/videos/kura-pdp-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "The page that started it all.\n\nVillain section. Hero section. Before/after. Reviews. Trust stats. Comparison table. 8-question FAQ. Sticky buy box.\n\nEverything a real DTC product page needs, built from a $12 AliExpress listing into something that looks like it belongs on a million-dollar brand's storefront.\n\n→ KURA PDP. The flagship build in the portfolio.\n\nNeed a store like this? DM me.\n\n#ecommerce #shopify #productpage #CRO #replo #webdesign #uidesign #ecommercedesign",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Product Page (PDP) cover video (IG caption variant)."
+    },
+    "TS-KURA-PDP-COVER-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795747/portfolio/videos/kura-pdp-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "The PDP is the page that has to do the most work.\n\nIt has to sell the product, kill every objection, and never feel long even though it's long.\n\nKURA's, desktop and mobile, side by side. The template this whole portfolio started from.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Product Page (PDP) cover video."
+    },
+    "TS-KURA-PDP-LAPTOP-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794790/portfolio/videos/kura-desktop-mp4.mp4",
+      "assetPath": null,
+      "caption": "KURA PDP on desktop.\n\n13 sections: hero, why-KURA, villain, upgrade, before/after, how it works, reviews, trust stats, comparison table, FAQs, trust pillars, email signup.\n\nBuilt to Replo-template quality. Zero page builders.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Product Page (PDP) laptop video."
+    },
+    "TS-KURA-PDP-MOBILE-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795259/portfolio/videos/kura-mobile-mp4.mp4",
+      "assetPath": null,
+      "caption": "KURA product page, mobile.\n\nSticky buy box, variant selector, mini FAQ above the fold. Villain section, upgrade section, before/after, reviews, all stacked clean with zero layout shift.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Product Page (PDP) mobile video."
+    },
+    "TS-KURA-AD-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778793959/portfolio/videos/kura-advertorial-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "Cold traffic lands differently.\n\nSomeone who finds your product page from an ad already has their guard up. They know they're being sold to. The headline is a pitch. The bullet points are claims.\n\nAn advertorial changes the dynamic entirely. Instead of saying \"buy this,\" it says \"let me show you something you didn't know about your kitchen.\" Instead of a product headline, there's a publication masthead. Instead of benefit bullets, there are paragraphs written in editorial voice, with expert citations, reader case studies, and a sticky product rail that travels alongside the article quietly.\n\nBy the time the reader reaches the CTA, they think they've reached their own conclusion.\n\nFor KURA, I built the full editorial treatment, published under a fictional site called The Kitchen Standard. Article: \"The One Item In Your Kitchen That's Making You Sick.\"\n\nOpening hook, problem deep dive, discovery moment, product introduction, mechanism explanation, expert authority quote, two customer transformation stories, mid-article CTA, objection handling, final close with urgency, five reader comments for social proof. Every section earns the next.\n\nBuilt in pure HTML/CSS/JS. Two-column editorial layout. Sticky rail on desktop. Full mobile collapse.\n\nNeed a store like this built for your brand? DM me.\n\n#ecommerce #advertorial #CRO #paidtraffic #contentmarketing #replo #shopify",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Advertorial cover video."
+    },
+    "TS-KURA-AD-COVER-VID-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778793959/portfolio/videos/kura-advertorial-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "What if your ad didn't look like an ad?\n\nThe KURA advertorial reads like a kitchen health article. It sells like a product page.\n\nEditorial masthead. Pullquotes. Expert citations. A sticky product card that follows the reader down the page. In-article CTAs placed where the persuasion peaks. Fake reader comments at the bottom to seal the close.\n\nThe reader thinks they're reading content. They're moving through a conversion funnel.\n\n→ Full build in the portfolio. Need a store like this? DM me.\n\n#ecommerce #advertorial #CRO #paidtraffic #replo #shopify #contentmarketing",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Advertorial cover video (IG caption variant)."
+    },
+    "TS-KURA-AD-COVER-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778793959/portfolio/videos/kura-advertorial-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "Cold traffic doesn't know they have a problem yet.\n\nThis page tells them. Then solves it. Then asks for the sale.\n\nKURA advertorial, desktop + mobile side by side. This is the page type that makes paid traffic actually work.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Advertorial cover video."
+    },
+    "TS-KURA-AD-LAPTOP-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794002/portfolio/videos/kura-advertorial-laptop-mp4.mp4",
+      "assetPath": null,
+      "caption": "KURA advertorial on desktop.\n\nTwo-column editorial layout. Sticky product card in the rail. Scroll-triggered fade-ins. Five fake-but-believable reader comments at the bottom for social proof.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Advertorial laptop video."
+    },
+    "TS-KURA-AD-MOBILE-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794045/portfolio/videos/kura-advertorial-mobile-mp4.mp4",
+      "assetPath": null,
+      "caption": "KURA advertorial on mobile.\n\nEditorial masthead → hook → problem deep dive → product intro → expert quote → user stories → CTA → reader comments.\n\nReads like content. Works like a funnel.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Advertorial mobile video."
+    },
+    "TS-KURA-LI-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794527/portfolio/videos/kura-listicle-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "The listicle is one of the most underused pages in eCommerce funnels.\n\nMost brands don't build them. The ones that do usually hand them off to a content writer who treats it like a blog post, no CTA flow, no before/after, no conversion architecture.\n\nA listicle done properly does two things at once. First: it earns organic search traffic on problem-aware queries. Second: it moves those people from awareness to purchase without feeling like a sales pitch.\n\nThis is the KURA listicle, built on my li-03 template. The headline: \"5 Problems Your Cutting Board Is Causing Right Now.\" Each problem block follows the same structure: agitate the pain, show what changes, introduce the mechanism. Then the page pivots: transformation strip, social proof, final CTA.\n\nTwo-column alternating layout on desktop. Full single-column collapse on mobile. Inline CTAs at the highest-friction moments.\n\nIf your store is running paid traffic to a product page and wondering why it doesn't convert, this is the page you're missing.\n\nNeed one built for your brand? DM me.\n\n#ecommerce #contentmarketing #CRO #shopify #replo #webdesign #conversionoptimization",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Listicle cover video."
+    },
+    "TS-KURA-LI-COVER-VID-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794527/portfolio/videos/kura-listicle-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "Most ecom brands don't have a listicle page.\n\nThe ones that do convert cold traffic at a different rate entirely.\n\nA listicle earns the click from search. Then it earns the sale through the read. Problem → solution → transformation → proof → CTA. In that order. Every time.\n\nThis is the KURA listicle, \"5 Problems Your Cutting Board Is Causing Right Now.\" Looks editorial. Works like a funnel.\n\n→ Full build in the portfolio. Both views in this clip. Need one? DM me.\n\n#ecommerce #CRO #contentmarketing #replo #shopify #webdesign #conversionoptimization",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Listicle cover video (IG caption variant)."
+    },
+    "TS-KURA-LI-COVER-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778794527/portfolio/videos/kura-listicle-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "The listicle is one of the most slept-on pages in ecom funnels.\n\nDone right, it earns organic traffic AND converts that traffic. Two jobs. One page.\n\nKURA li-03, both views. Zero libraries. All hand-coded.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Listicle cover video."
+    },
+    "TS-KURA-LI-LAPTOP-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795178/portfolio/videos/kura-listicle-laptop-mp4.mp4",
+      "assetPath": null,
+      "caption": "Listicle on desktop.\n\nTwo-column problem/solution alternating layout. Inline CTAs at the exact moment the reader is most persuaded. Review cards pulling social proof.\n\nEditorial at the top. Funnel at the bottom.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Listicle laptop video."
+    },
+    "TS-KURA-LI-MOBILE-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778795217/portfolio/videos/kura-listicle-mobile-mp4.mp4",
+      "assetPath": null,
+      "caption": "KURA listicle on mobile.\n\nProblem block → transformation strip → review cards → CTA. Alternating layouts, before/after states, full responsive collapse.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Listicle mobile video."
+    },
+    "TS-KURA-PP-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778848326/portfolio/videos/kura-post-purchase-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "Everyone optimizes the page before checkout. Almost nobody optimizes the page after it.\n\nOnce a customer pays, most stores hand them a default confirmation screen and move on. That's a mistake. The five seconds right after checkout are the highest-trust moment in the entire funnel.\n\nFor KURA, the post-purchase page does three jobs at once. First, it confirms the order like a brand moment, not a receipt. Second, it makes a one-time offer, 30% off a second board size, with a live countdown and a genuine one-click add, no new checkout flow. Third, it prevents buyer's remorse before it starts: a 3-step \"what happens next\" block, social proof, a care guide, and a community email capture.\n\nPost-purchase pages are the most overlooked page type in eCommerce. They're also some of the cheapest revenue on the table, since the traffic is already paid for.\n\nBuilt in HTML/CSS/vanilla JS. Countdown timer, click feedback, and scroll animations all hand-coded.\n\nNeed a store like this built for your brand? DM me.\n\n#ecommerce #postpurchase #CRO #shopify #replo #upsell",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Post-Purchase / Thank You cover video."
+    },
+    "TS-KURA-PP-COVER-VID-IG": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778848326/portfolio/videos/kura-post-purchase-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "The page nobody builds. The page that pays for itself.\n\nKURA's post-purchase screen: order confirmed, a 30%-off upsell with a live countdown, a 3-step reassurance block, reviews, a care guide, and a community signup.\n\nThe customer already bought. This page makes sure they don't regret it, and gives them one easy reason to buy again.\n\n→ Full build in the portfolio. Need one for your store? DM me.\n\n#ecommerce #postpurchase #CRO #shopify #replo #upsell #ecommercedesign",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Post-Purchase / Thank You cover video (IG caption variant)."
+    },
+    "TS-KURA-PP-COVER-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778848326/portfolio/videos/kura-post-purchase-cover-mp4.mp4",
+      "assetPath": null,
+      "caption": "The highest-intent moment in any funnel is the 5 seconds right after checkout.\n\nMost brands waste it on a blank confirmation screen. KURA's turns it into an upsell, a trust builder, and a community invite.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Post-Purchase / Thank You cover video."
+    },
+    "TS-KURA-PP-LAPTOP-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778848338/portfolio/videos/kura-post-purchase-laptop-mp4.mp4",
+      "assetPath": null,
+      "caption": "Post-purchase on desktop.\n\nLive countdown JS. One-click upsell. 3-step reassurance block. Review cards. Care guide. Email capture with share buttons.\n\nMost stores skip this page. It's free revenue sitting right after checkout.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Post-Purchase / Thank You laptop video."
+    },
+    "TS-KURA-PP-MOBILE-VID-X": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "video",
+      "assetUrl": "https://res.cloudinary.com/drl0rscuf/video/upload/v1778848352/portfolio/videos/kura-post-purchase-mobile-mp4.mp4",
+      "assetPath": null,
+      "caption": "KURA post-purchase page, mobile.\n\nOrder confirmed → one-click upsell (countdown, no new checkout) → what to expect → reviews → care guide → email signup.\n\nBuyer's remorse prevention, built into the page.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Cloudinary-hosted only, no local file. Post-Purchase / Thank You mobile video."
+    },
+    "TS-KURA-PDP01-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01 cover.mp4",
+      "caption": "Built a full product page for KURA, a stainless steel cutting board brand, from scratch.\n\nIt follows a villain and hero structure instead of just stacking sections: a hero shot, then the problem (wood boards that crack and stain, plastic boards that warp and shed particles), the upgrade (food-grade 304 stainless steel, non-porous, dishwasher safe), proof from 9,200-plus reviews, a before-and-after, and a comparison table against generic boards.\n\nNothing on the page is filler. Every fold is doing something.\n\nThis is portfolio work built to show what a from-scratch store build looks like, not a live client site.\n\nNeed a product page like this for your brand? DM me and I will walk you through what a build would look like.\n\n#ecommerce #webdesign #shopify #replo #CRO #uidesign",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Fallback pick 2026-08-31: all 3 active HALOS pages already showcased, so this run used the retired KURA PDP page per manifest rules."
+    },
+    "TS-KURA-PDP01-LAPTOP-VID": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01 laptop.mp4",
+      "caption": "Full scroll-through of the KURA product page on desktop: hero, the problem with wood and plastic boards, the upgrade, proof, a comparison table, then FAQs. Every section has a job. Portfolio build, not a live client site.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP01-MOBILE-VID": {
+      "platform": [
+        "instagram",
+        "x"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01 mobile.mp4",
+      "caption": "KURA product page, mobile view. Same structure as desktop, nothing cut for space. Building stores like this. DM if you want one.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP01-COVER-IMG": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01 cover.png",
+      "caption": "A stainless steel cutting board. $48. 4.8 stars, 9,200+ reviews. The page around it does the actual selling: the problem with your old board, the upgrade, proof it works, then the close. Need a page like this built? DM me.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP01-PREVIEW": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01-preview.png",
+      "caption": "Three scroll depths of the same KURA product page: the hero shot, a before and after comparison, then the footer close. Every fold earns its place. Portfolio build, not a live client site.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP01-FULLPAGE": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01-full-page.png",
+      "caption": "The whole KURA product page, top to bottom, split into two columns so you can actually read the flow: hero, why choose KURA, the problem with your old board, the upgrade, testimonials, how it works, trust stats, a comparison table, FAQs, then the close. Most product pages are a photo and a price. This one walks the visitor through why their old board is a problem, why this fixes it, and proof it worked for 9,200 other people, before ever asking for the sale.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP01-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01 cover.png",
+      "caption": "Built KURA's product page from scratch: hero shot, the problem, the upgrade, proof, before and after, a comparison table.\n\nEvery section has a job. Portfolio build, not a live client site.\n\nWant one for your brand? DM me.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP01-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01-preview.png",
+      "caption": "A stainless steel cutting board. $48. 4.8 stars, 9,200+ reviews.\n\nThe page around it does the actual selling: the problem, the upgrade, proof, then the close. That's what a story-arc product page looks like.\n\nNeed a page like this built? DM me.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP01-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-01_2026-08-31/kura_pdp-01-full-page.png",
+      "caption": "Most product pages are a photo and a price.\n\nThis KURA build walks the visitor through why their old board is a problem, why this fixes it, and proof it worked for 9,200 other people, before ever asking for the sale.\n\nBuilding stores like this. DM if you want one.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-PDP02-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02 cover.mp4",
+      "caption": "Built KURA a second product page, this time leading with proof instead of a before-and-after story.\n\nThe Complete Board System bundles four pieces into one order. The page stacks its case in order: hero and bundle pricing first, then reasons to trust it (non-porous steel, dishwasher-safe, no warping), an independent lab comparison against wood and plastic, a feature-by-feature table against \"the board you're using now,\" a named testimonial from a culinary instructor, a wall of 6,200-plus five-star reviews, real customer photos, then FAQs before the email capture.\n\nDifferent structure than the villain/hero PDP I built for KURA a few weeks back. Same brand, different way of making the sale.\n\nPortfolio build, not a live client site.\n\nNeed a product page like this for your store? DM me and I'll walk you through what a build would look like.\n\n#ecommerce #webdesign #shopify #replo #CRO #uidesign",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-LAPTOP-VID": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02 laptop.mp4",
+      "caption": "Full scroll-through of the KURA Complete Board System page on desktop: bundle hero and pricing, trust reasons, the lab comparison, the feature table, testimonial, review wall, FAQs, then the email capture. Portfolio build, not a live client site.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-MOBILE-VID": {
+      "platform": [
+        "instagram",
+        "x"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02 mobile.mp4",
+      "caption": "KURA Complete Board System page, mobile view. Same proof-stacking structure as desktop, nothing cut for space. Building pages like this. DM if you want one.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-COVER-IMG": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02 cover.png",
+      "caption": "KURA's second product page. This one leads with proof, not a story.\n\nBundle price up front, then a lab comparison vs wood and plastic, a feature table, 6,200+ reviews, real customer photos, FAQs, then the close.\n\nPortfolio build, not a client site.\n\nWant one built? DM me.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-PREVIEW": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02-preview.png",
+      "caption": "Three scroll depths of the same KURA product page: the bundle hero, a wall of reviewer photos and quotes, then the full footer nav.\n\nEvery fold has a different job: hero sells, mid-page proves it, footer closes it.\n\nPortfolio build. DM if you want one for your store.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-FULLPAGE": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02-full-page.png",
+      "caption": "KURA's \"Complete Board System\" page, split into two columns to read the flow top to bottom.\n\nBundle pricing, why steel beats wood and plastic, a lab test callout, a comparison table, 6,200+ reviews, FAQs, then the email capture.\n\nBuilding pages like this. DM if you want one.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-MOBILESTRIP": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02-mobile-strip.png",
+      "caption": "Every section of KURA's product page, sliced into columns so the whole responsive build fits in one image.\n\nThis is what \"no dead space, every fold works\" actually looks like on a real phone screen, not just in theory.\n\nNeed your store built this way? DM me.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02 cover.png",
+      "caption": "KURA's second product page. This one leads with proof, not a story.\n\nBundle price up front, then a lab comparison vs wood and plastic, a feature table, 6,200+ reviews, real customer photos, FAQs, then the close.\n\nPortfolio build, not a client site.\n\nWant one built? DM me.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02-preview.png",
+      "caption": "Three scroll depths of the same KURA product page: the bundle hero, a wall of reviewer photos and quotes, then the full footer nav.\n\nEvery fold has a different job: hero sells, mid-page proves it, footer closes it.\n\nPortfolio build. DM if you want one for your store.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02-full-page.png",
+      "caption": "KURA's \"Complete Board System\" page, split into two columns to read the flow top to bottom.\n\nBundle pricing, why steel beats wood and plastic, a lab test callout, a comparison table, 6,200+ reviews, FAQs, then the email capture.\n\nBuilding pages like this. DM if you want one.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-PDP02-X4": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_pdp-02_2026-09-19/kura_pdp-02-mobile-strip.png",
+      "caption": "Every section of KURA's product page, sliced into columns so the whole responsive build fits in one image.\n\nThis is what \"no dead space, every fold works\" actually looks like on a real phone screen, not just in theory.\n\nNeed your store built this way? DM me.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    }
+  },
+  "knownGaps": "kura_hp-01-full-mosaic.png has 2 of its 8 sliced bands under-rendered (plain dark panels, scroll-triggered sections that needed a longer capture dwell time). Flagged on the review page (outputs/templates/kura_hp-01_2026-07-13/index.html); worth a longer-dwell recapture before this specific image gets used in a real post. | 2026-07-21: pdp/advertorial/listicle/post-purchase have video assets only (Cloudinary-hosted, confirmed by Ridwan). No local stills exist for these 4 pages; Ridwan says stills live in the replo-rebuilds folder, not connected in this session -- revisit once that folder is connected to add TS-KURA-{PAGE}-PREVIEW/-MOSAIC image entries."
+}

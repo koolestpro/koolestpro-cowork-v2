@@ -218,3 +218,19 @@ Tap low, get a settings panel instead of the store.
 
 Ridwan, @koolestpro
 ```
+
+## SA-OBVI-IG-SINGLE (added 2026-09-28)
+
+Instagram single-image post, `outputs/static-ads/obvi_super-collagen-protein_20260711/ad-1-problem-solution.png` only. Written for this one image; the single post used to borrow the 4-ad LinkedIn caption.
+
+```
+Your skin, hair and joints are the first to notice when you skip protein.
+
+That's the whole ad. Name the gap between what your body needs and what a normal protein shake gives you, then put the tub in frame as the fix.
+
+Problem/solution angle for Obvi's Super Collagen Protein. Unofficial concept work, not commissioned by the brand.
+
+Follow @koolestpro for more ad and CRO breakdowns.
+
+#ecommerce #dtc #adcreative #cro
+```

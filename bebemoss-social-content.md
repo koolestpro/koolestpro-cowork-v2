@@ -232,3 +232,18 @@ Mission to one line with a story link. Five ranges as filter chips. Price sort. 
 If your collection page opens with a paragraph, open it on your phone.
 ```
 
+## SA-BEBEMOSS-IG-SINGLE (added 2026-09-28)
+
+Instagram single-image post, `outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/ad-1-problem-solution.png` only. Written for this one image; the single post used to borrow the 4-ad LinkedIn caption.
+
+```
+Most first toys are landfill before kindergarten.
+
+A hand-crocheted organic cotton bunny is the one they actually keep. The ad says the problem out loud and lets the toy sit there as the answer.
+
+Concept ad for Bebemoss, not affiliated.
+
+Follow @koolestpro for more ad and CRO breakdowns.
+
+#ecommerce #dtc #advertising #adcreative #cro #brandstrategy
+```

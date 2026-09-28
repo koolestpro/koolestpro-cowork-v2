@@ -20,11 +20,11 @@ Each key below maps one generated asset to its ready-to-post caption. The machin
 ## CRO-TAPRO-BA
 
 ```
-This brand has 15,500+ real business customers and a 4.9 star rating from 1,125 reviews. You wouldn't know it from their homepage.
+TAPro Cards has 15,500+ business customers and a 4.9 star rating from over 1,100 reviews. You wouldn't know it from their homepage.
 
-The first screen is a promo banner and a hero photo. No price, no rating, no product, until you scroll past a full video demo and into a product grid.
+The first screen is a promo banner and a hero photo. You don't see a price, a rating or a product until you've scrolled past a full video demo and into the product grid.
 
-A strong first screen shows what's true about your brand immediately. This one buries it.
+Your first screen should say what's true about you straight away. TAPro's hides it.
 
 Follow @koolestpro for weekly CRO breakdowns.
 

@@ -1,0 +1,218 @@
+{
+  "brand": "Obvi",
+  "brandSlug": "obvi",
+  "isRealBrand": true,
+  "isClient": false,
+  "created": "2026-07-11T17:10:00.000Z",
+  "updated": "2026-08-02T09:45:00.000Z",
+  "howToUse": "Each key under 'assets' maps one generated image (or, for text-only posts, null) to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' \u2014 the exact relative path from the koolestpro-cowork-v2 project root \u2014 or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md).",
+  "relatedPipelineItemIds": [
+    "static-ad-obvi_super-collagen-protein-20260711",
+    "cro-fix-obvi_homepage-hero-20260802"
+  ],
+  "assets": {
+    "SA-OBVI-PROBLEM": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-1-problem-solution.png",
+      "caption": "The gap between what your skin/hair/joints need and what a normal protein shake gives you. This is the problem-solution angle for Obvi's Super Collagen Protein \u2014 unofficial concept work, not commissioned by the brand.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-OBVI-BENEFIT": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-2-benefit-result.png",
+      "caption": "19g protein, hydrolyzed grass-fed collagen peptides, and the benefits reviewers actually report: brighter skin, stronger hair, joints that feel better. The benefit/result angle for Super Collagen Protein \u2014 unofficial concept, not commissioned by Obvi.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-OBVI-PROOF": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-3-social-proof.png",
+      "caption": "Built around the pattern that keeps showing up in Obvi's own reviews: skin, hair, joints. Real pattern, not a made-up stat. Social proof angle for Super Collagen Protein \u2014 unofficial concept, not commissioned by Obvi.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-OBVI-OFFER": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-4-offer-urgency.png",
+      "caption": "Subscribe & Save might be the most underused angle in supplement ads. Offer/urgency angle for Obvi's Super Collagen Protein \u2014 unofficial concept, not commissioned by the brand.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-OBVI-COMBO": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/combined-showcase.png",
+      "caption": "Four static ad directions for Obvi's Super Collagen Protein: problem/solution, a benefit breakdown, social proof, and a subscribe & save offer. Same tub, four different reasons someone stops scrolling. Unofficial concept work built off Obvi's own public product info \u2014 not something the brand commissioned.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-OBVI-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/combined-showcase.png",
+      "caption": "Four static ad directions from one product. Same tub, four different hooks.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-OBVI-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-3-social-proof.png",
+      "caption": "Built these around what Obvi's own reviews keep repeating: skin, hair, joints. A real pattern, not a made-up stat.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "SA-OBVI-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-4-offer-urgency.png",
+      "caption": "Subscribe & Save might be the most underused angle in supplement ads. Testing it here.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-OBVI-BA": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/obvi/koolestpro_obvi_before-after.png",
+      "captionOptions": [
+        {
+          "id": "long-linkedin",
+          "caption": "Obvi has over 800,000 customers and a best seller sitting at 1,489 reviews.\n\nThe biggest words on their mobile homepage say \"BACK IN STOCK.\"\n\nThat is a warehouse update. It only lands for someone who already tried to buy and got told no. Everyone else, which on a homepage fed by paid social is nearly everyone, reads the largest text on the screen and learns nothing about what the product does.\n\nThe part that would actually sell is right underneath at 13px, welded into one 40 word sentence. Metabolism, cravings, weight loss, hair, skin and nails, all in a single breath. Four real reasons to buy and not one of them scannable.\n\nThen there is the bit I had to zoom in on to believe. The accessibility widget renders on top of the bottom left corner of the SHOP NOW button. Tap a little low and you get a settings panel instead of the store.\n\nSo I rebuilt the top of the page. Same pink, same purple, same wordmark, same product photo.\n\nHeadline states the outcome, using Obvi's own line from further down their page.\n\"Back in stock\" moved to a small pill where it still works for returning buyers.\nThe paragraph became four benefit lines you can read in a second.\nThe 800,000 customer proof got weight instead of grey 11px type.\nOne primary button carrying the real offer, quiz demoted to a link under it.\nThe real best seller pulled up with its real price of $29.74 and its real 1,489 reviews.\nWidget moved clear of every tap target.\n\nNothing was redesigned. The brand was already doing its job. The hero was just spending its biggest slot announcing inventory.\n\nQuick test for your own homepage. If the headline would still make sense written on a warehouse whiteboard, it is not selling.\n\nRidwan\n\nPrices, review counts and certifications shown are Obvi's own, read off the live site. Statements about supplements have not been evaluated by the FDA.",
+          "hashtags": []
+        },
+        {
+          "id": "short-ig",
+          "caption": "800,000 customers. And the biggest words on the homepage say BACK IN STOCK.\n\nThat is a warehouse update, not a reason to buy. If you have never heard of Obvi, the largest text on the screen tells you nothing about what the product does.\n\nThe real value prop sits under it at 13px, four benefits welded into one 40 word sentence. And the accessibility widget renders on top of the corner of the SHOP NOW button.\n\nI rebuilt the hero. Same pink, same purple, same product photo:\n\nHeadline that names the outcome\nStock news demoted to a small pill\nFour scannable benefit lines instead of a paragraph\nThe 800,000 proof given real weight\nOne button carrying the real offer\nReal best seller at its real price with its real review count\nWidget moved clear of every button\n\nYour headline is your most expensive real estate. Do not spend it on inventory news.\n\nSave this if your homepage looks fine and still is not selling.\n\n@koolestpro\n\nPrices and review counts shown are Obvi's own. Statements about supplements have not been evaluated by the FDA.",
+          "hashtags": [
+            "#ecommerce",
+            "#cro",
+            "#shopify",
+            "#dtc",
+            "#conversionrateoptimization"
+          ]
+        }
+      ],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Before/after of myobvi.com mobile homepage hero. Before = real live screenshot 2026-08-02. After = koolestpro rebuild (outputs/cro-fixes/obvi_rebuild.html). Every price/review count/certification shown is Obvi's own, read off the live site. No conversion-lift claim is made anywhere and none should be added."
+    },
+    "CRO-OBVI-ANNO": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/obvi/koolestpro_obvi_annotated-changes.png",
+      "caption": "Eight fixes on one screen, and none of them touch the brand. Same pink, same purple, same product photo. Obvi's hero just stopped announcing inventory and started answering \"why should I buy this.\"\n\nPrices and review counts shown are Obvi's own. Statements about supplements have not been evaluated by the FDA.",
+      "hashtags": [
+        "#cro",
+        "#shopify",
+        "#ecommerce"
+      ],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-OBVI-CAROUSEL": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image-set",
+      "assetPath": [
+        "outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide1.png",
+        "outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide2.png",
+        "outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide3.png",
+        "outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide4.png",
+        "outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide5.png",
+        "outputs/cro-fixes/obvi/koolestpro_obvi_homepage-hero_slide6.png"
+      ],
+      "caption": "Obvi has over 800,000 customers and a best seller sitting at 1,489 reviews.\n\nThe biggest words on their mobile homepage say \"BACK IN STOCK.\"\n\nThat is a warehouse update. It only lands for someone who already tried to buy and got told no. Everyone else, which on a homepage fed by paid social is nearly everyone, reads the largest text on the screen and learns nothing about what the product does.\n\nThe part that would actually sell is right underneath at 13px, welded into one 40 word sentence. Metabolism, cravings, weight loss, hair, skin and nails, all in a single breath. Four real reasons to buy and not one of them scannable.\n\nThen there is the bit I had to zoom in on to believe. The accessibility widget renders on top of the bottom left corner of the SHOP NOW button. Tap a little low and you get a settings panel instead of the store.\n\nSo I rebuilt the top of the page. Same pink, same purple, same wordmark, same product photo.\n\nHeadline states the outcome, using Obvi's own line from further down their page.\n\"Back in stock\" moved to a small pill where it still works for returning buyers.\nThe paragraph became four benefit lines you can read in a second.\nThe 800,000 customer proof got weight instead of grey 11px type.\nOne primary button carrying the real offer, quiz demoted to a link under it.\nThe real best seller pulled up with its real price of $29.74 and its real 1,489 reviews.\nWidget moved clear of every tap target.\n\nNothing was redesigned. The brand was already doing its job. The hero was just spending its biggest slot announcing inventory.\n\nQuick test for your own homepage. If the headline would still make sense written on a warehouse whiteboard, it is not selling.\n\nRidwan\n\nPrices, review counts and certifications shown are Obvi's own, read off the live site. Statements about supplements have not been evaluated by the FDA.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "6-slide 540x680 portrait carousel. Slide 1 is also usable standalone as a cover."
+    },
+    "CRO-OBVI-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/obvi/koolestpro_obvi_before-after.png",
+      "caption": "Obvi's mobile homepage headline is \"BACK IN STOCK.\"\n\nThat is a warehouse update, not a reason to buy.\n\nThe actual value prop sits under it at 13px, four benefits welded into one sentence.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-OBVI-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/obvi/koolestpro_obvi_annotated-changes.png",
+      "caption": "Found this on a supplement brand with 800,000+ customers.\n\nTheir accessibility widget renders on top of the bottom corner of the primary SHOP NOW button.\n\nTap a little low and you get a settings panel instead of the store.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-OBVI-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/obvi/koolestpro_obvi_annotated-changes.png",
+      "caption": "Quick test for your homepage.\n\nIf the headline would still make sense written on a warehouse whiteboard, it is not selling.\n\n\"Back in stock\" is a warehouse sentence.",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "CRO-OBVI-X-THREAD": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/cro-fixes/obvi/koolestpro_obvi_before-after.png",
+      "caption": "1/ Obvi has 800,000+ customers and a best seller with 1,489 reviews.\n\nThe biggest text on their mobile homepage says \"BACK IN STOCK.\" Quick teardown.\n\n2/ \"Back in stock\" only lands for someone who already tried to buy and got told no.\n\nEveryone else learns nothing about what the product actually does.\n\n3/ The real value prop is right under it at 13px. Metabolism, cravings, weight loss, hair, skin and nails, all in one 40 word sentence.\n\nFour reasons to buy. None of them scannable.\n\n4/ Then the accessibility widget renders on top of the bottom left corner of the SHOP NOW button.\n\nTap low, get a settings panel instead of the store.\n\n5/ Two CTAs sit side by side at the same weight, and the secondary one is physically bigger than the primary. Neither wins.\n\n6/ Rebuild, same brand. Outcome headline, four scannable benefit lines, proof given weight, one primary button with the real offer, real best seller at $29.74 with 1,489 reviews, widget moved clear.\n\n7/ Nothing was redesigned. The brand was fine. The hero was just spending its biggest slot announcing inventory.\n\nRidwan, @koolestpro",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "7-tweet thread, split on the leading N/ markers. Attach the before/after graphic to tweet 1."
+    }
+  },
+  "knownGaps": "None. All 8 image assets were exported 2026-08-02 through the page's own captureFixed()/captureSlide() functions via .ai-workflow/tools/export_static_images.py and visually reviewed before being recorded here."
+}

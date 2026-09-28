@@ -103,3 +103,19 @@ Every number on this one came off Versed's own product page.
 
 Making up a review count is the fastest way to get a client in trouble.
 ```
+
+## SA-VERSED-IG-SINGLE (added 2026-09-28)
+
+Instagram single-image post, `outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-1-problem-solution.png` only. Written for this one image; the single post used to borrow the 4-ad LinkedIn caption.
+
+```
+My moisturizer was making me greasy by noon.
+
+Name the annoyance before the product shows up, then put the jar in the corner as the fix. Versed's Dew Point gel-cream, built for oily skin.
+
+Problem/solution angle. Unofficial concept work built from Versed's public product info, not commissioned by the brand. The product shot is AI generated.
+
+Follow @koolestpro for more ad and CRO breakdowns.
+
+#ecommerce #cro #shopify #adcreative #dtc
+```

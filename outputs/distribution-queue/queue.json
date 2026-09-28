@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-09-28T09:52:26.189562+00:00"
+    "updated": "2026-09-28T11:11:23.884443+00:00"
   },
   "rows": [
     {
@@ -858,13 +858,13 @@
       "scheduled_time_local": "17:00",
       "intended_et": "12:00 ET",
       "asset_paths": "outputs/static-ads/obvi_super-collagen-protein_20260711/ad-1-problem-solution.png",
-      "caption": "Four static ad directions for Obvi's Super Collagen Protein: problem/solution, a benefit breakdown, social proof, and a subscribe & save offer. Same tub, four different reasons someone stops scrolling. Unofficial concept work built off Obvi's own public product info — not something the brand commissioned.",
+      "caption": "Your skin, hair and joints are the first to notice when you skip protein.\n\nThat's the whole ad. Name the gap between what your body needs and what a normal protein shake gives you, then put the tub in frame as the fix.\n\nProblem/solution angle for Obvi's Super Collagen Protein. Unofficial concept work, not commissioned by the brand.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#ecommerce #dtc #adcreative #cro",
       "caption_source_tab": "copy-block:LinkedIn Caption",
       "status": "Ready",
       "qa_status": "Needs Review: manual-visual-pending: open 6 image(s) to eyeball brand/legibility/framing | rescheduled 2026-08-18: overdue 2026-07-26 -> 2026-08-26",
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
-      "caption_json": "\"Four static ad directions for Obvi's Super Collagen Protein: problem/solution, a benefit breakdown, social proof, and a subscribe & save offer. Same tub, four different reasons someone stops scrolling. Unofficial concept work built off Obvi's own public product info — not something the brand commissioned.\"",
+      "caption_json": "\"Your skin, hair and joints are the first to notice when you skip protein.\\n\\nThat's the whole ad. Name the gap between what your body needs and what a normal protein shake gives you, then put the tub in frame as the fix.\\n\\nProblem/solution angle for Obvi's Super Collagen Protein. Unofficial concept work, not commissioned by the brand.\\n\\nFollow @koolestpro for more ad and CRO breakdowns.\\n\\n#ecommerce #dtc #adcreative #cro\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1784634047/koolestpro/obvi/obvi-ad-1-problem-solution.png"
     },
     {
@@ -1002,13 +1002,13 @@
       "scheduled_time_local": "17:00",
       "intended_et": "12:00 ET",
       "asset_paths": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/ad-1-problem-solution.png",
-      "caption": "Bebemoss sells a $44 crocheted bunny. No discount codes, no countdown timers, no \"10,000 reviews\" banner slapped across the page.\n\nSo I set myself a rule: build 4 ad directions for one of their toys and don't invent a single claim.\n\nWhere each one came from:\n\nProblem: most \"first toys\" are plastic and in a landfill before the kid starts school. This one gets kept.\n\nBenefit: GOTS organic cotton, crocheted by hand, made to EU toy-safety standards. Real specs, no filler.\n\nSocial proof: one actual review, \"she's actually a work of art.\" Plus their 4.9 from wholesale buyers on Faire.\n\nOffer: they have no sale to run, so I told the truth instead. It's made to order, by hand. That's the reason to act, not a fake timer.\n\nSame bunny. Same photo. Four different reasons to care, depending on where the buyer's head is when they see it.\n\nThat's most of the job with ad creative. Not \"make it pop.\" Figure out what the person needs to hear first.\n\nConcept work. I'm not affiliated with Bebemoss, I just liked the product enough to think about how I'd sell it.",
+      "caption": "Most first toys are landfill before kindergarten.\n\nA hand-crocheted organic cotton bunny is the one they actually keep. The ad says the problem out loud and lets the toy sit there as the answer.\n\nConcept ad for Bebemoss, not affiliated.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#ecommerce #dtc #advertising #adcreative #cro #brandstrategy",
       "caption_source_tab": "social-content-library",
       "status": "Ready",
       "qa_status": "Needs Review: claims to verify (2): linkedin: \"...untdown timers, no \"10,000 reviews\" banner slapped acr...\" | x[1]: \"...social proof isn't \"10,000 reviews.\"  It's one specifi...\"; manual-visual-pending: open 5 image(s) to eyeball brand/legibility/framing | rescheduled 2026-08-18: overdue 2026-08-02 -> 2026-08-30",
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
-      "caption_json": "\"Bebemoss sells a $44 crocheted bunny. No discount codes, no countdown timers, no \\\"10,000 reviews\\\" banner slapped across the page.\\n\\nSo I set myself a rule: build 4 ad directions for one of their toys and don't invent a single claim.\\n\\nWhere each one came from:\\n\\nProblem: most \\\"first toys\\\" are plastic and in a landfill before the kid starts school. This one gets kept.\\n\\nBenefit: GOTS organic cotton, crocheted by hand, made to EU toy-safety standards. Real specs, no filler.\\n\\nSocial proof: one actual review, \\\"she's actually a work of art.\\\" Plus their 4.9 from wholesale buyers on Faire.\\n\\nOffer: they have no sale to run, so I told the truth instead. It's made to order, by hand. That's the reason to act, not a fake timer.\\n\\nSame bunny. Same photo. Four different reasons to care, depending on where the buyer's head is when they see it.\\n\\nThat's most of the job with ad creative. Not \\\"make it pop.\\\" Figure out what the person needs to hear first.\\n\\nConcept work. I'm not affiliated with Bebemoss, I just liked the product enough to think about how I'd sell it.\"",
+      "caption_json": "\"Most first toys are landfill before kindergarten.\\n\\nA hand-crocheted organic cotton bunny is the one they actually keep. The ad says the problem out loud and lets the toy sit there as the answer.\\n\\nConcept ad for Bebemoss, not affiliated.\\n\\nFollow @koolestpro for more ad and CRO breakdowns.\\n\\n#ecommerce #dtc #advertising #adcreative #cro #brandstrategy\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1784631339/koolestpro/bebemoss/bebemoss-ad-1-problem-solution.png"
     },
     {
@@ -1236,13 +1236,13 @@
       "scheduled_time_local": "17:00",
       "intended_et": "12:00 ET",
       "asset_paths": "outputs/static-ads/materialkitchen_trio-of-knives_20260731/ad-1-problem-solution.png",
-      "caption": "Material Kitchen's Trio of Knives sits at a 5.0 rating from 472 reviews. I wanted to see how many honest angles I could pull out of that one product page.\n\nFour ad directions, same three knives, nothing invented.\n\nProblem: most people own a bulky 12-piece knife set and only ever reach for two blades in it. The Trio replaces the whole block with three full-tang, Japanese-steel knives.\n\nBenefit: full-tang balance, a 13-degree edge, cryogenic tempering, and that 472-review rating. All of it is on their own product page, I didn't add anything.\n\nSocial proof: I could have written a testimonial that sounded better. Instead I used a real one, from a verified buyer named Mara T.: \"Sleek design, perfect weight, and very sharp. I love them.\"\n\nOffer: the set is actually $30 off right now, $225 down to $195, so the urgency ad leans on a real discount instead of a countdown timer that resets every week.\n\nFour ads, one product, four different reasons to buy it depending on what the person scrolling past already believes.\n\nThe job here was picking which true fact to lead with for each kind of shopper.\n\nThis is concept work. I have no relationship with Material Kitchen, I just liked the knives enough to think through how I'd sell them.\n\nRidwan",
+      "caption": "Your 12-piece knife set is mostly junk.\n\nHalf the block never leaves the block. The Trio replaces it with 3 full-tang, Japanese-steel blades, and the ad just shows the swap.\n\nConcept ad for Material Kitchen, not affiliated.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#ecommerce #dtc #advertising #adcreative #cro #brandstrategy",
       "caption_source_tab": "materialkitchen-social-content.json:SA-MATERIALKITCHEN-COMBO",
       "status": "Ready",
       "qa_status": "Needs Review: claims to verify (2): linkedin: \"...t a 5.0 rating from 472 reviews. I wanted to see ho...\" | x[0]: \"...s a 5.0 rating from 472 reviews.  Built 4 ad direct...\"; manual-visual-pending: open 5 image(s) to eyeball brand/legibility/framing",
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
-      "caption_json": "\"Material Kitchen's Trio of Knives sits at a 5.0 rating from 472 reviews. I wanted to see how many honest angles I could pull out of that one product page.\\n\\nFour ad directions, same three knives, nothing invented.\\n\\nProblem: most people own a bulky 12-piece knife set and only ever reach for two blades in it. The Trio replaces the whole block with three full-tang, Japanese-steel knives.\\n\\nBenefit: full-tang balance, a 13-degree edge, cryogenic tempering, and that 472-review rating. All of it is on their own product page, I didn't add anything.\\n\\nSocial proof: I could have written a testimonial that sounded better. Instead I used a real one, from a verified buyer named Mara T.: \\\"Sleek design, perfect weight, and very sharp. I love them.\\\"\\n\\nOffer: the set is actually $30 off right now, $225 down to $195, so the urgency ad leans on a real discount instead of a countdown timer that resets every week.\\n\\nFour ads, one product, four different reasons to buy it depending on what the person scrolling past already believes.\\n\\nThe job here was picking which true fact to lead with for each kind of shopper.\\n\\nThis is concept work. I have no relationship with Material Kitchen, I just liked the knives enough to think through how I'd sell them.\\n\\nRidwan\"",
+      "caption_json": "\"Your 12-piece knife set is mostly junk.\\n\\nHalf the block never leaves the block. The Trio replaces it with 3 full-tang, Japanese-steel blades, and the ad just shows the swap.\\n\\nConcept ad for Material Kitchen, not affiliated.\\n\\nFollow @koolestpro for more ad and CRO breakdowns.\\n\\n#ecommerce #dtc #advertising #adcreative #cro #brandstrategy\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1787137554/dist/static-ad-materialkitchen_trio-of-knives-20260731/ad-1-problem-solution.png"
     },
     {
@@ -1794,13 +1794,13 @@
       "scheduled_time_local": "17:00",
       "intended_et": "12:00 ET",
       "asset_paths": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-1-problem-solution.png",
-      "caption": "Four static ad directions for V1CE's NFC review card: the problem it actually solves, a benefit breakdown, a social proof card, and an offer banner. Same card, four different reasons someone stops scrolling. Built off V1CE's real numbers (4.8 stars, 2,375+ reviews) rather than made-up ones. Unofficial concept work, not commissioned by the brand.",
+      "caption": "Happy customers rarely leave a review. Angry ones always do.\n\nThis ad opens on that, then shows the fix: one tap on V1CE's NFC card and the review page opens.\n\nProblem/solution angle for V1CE's NFC review card. Unofficial concept work, not commissioned by the brand.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#ecommerce #dtc #adcreative #cro",
       "caption_source_tab": "copy-block:LinkedIn Caption",
       "status": "Ready",
       "qa_status": "Needs Review: manual-visual-pending: open 5 image(s) to eyeball brand/legibility/framing",
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
-      "caption_json": "\"Four static ad directions for V1CE's NFC review card: the problem it actually solves, a benefit breakdown, a social proof card, and an offer banner. Same card, four different reasons someone stops scrolling. Built off V1CE's real numbers (4.8 stars, 2,375+ reviews) rather than made-up ones. Unofficial concept work, not commissioned by the brand.\"",
+      "caption_json": "\"Happy customers rarely leave a review. Angry ones always do.\\n\\nThis ad opens on that, then shows the fix: one tap on V1CE's NFC card and the review page opens.\\n\\nProblem/solution angle for V1CE's NFC review card. Unofficial concept work, not commissioned by the brand.\\n\\nFollow @koolestpro for more ad and CRO breakdowns.\\n\\n#ecommerce #dtc #adcreative #cro\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1787137597/dist/static-ad-v1ce_nfc-review-card-20260814/ad-1-problem-solution.png"
     },
     {
@@ -2028,13 +2028,13 @@
       "scheduled_time_local": "17:00",
       "intended_et": "12:00 ET",
       "asset_paths": "outputs/static-ads/versed_dew-point-gel-cream_20260821/ad-1-problem-solution.png",
-      "caption": "Four static ad directions for Versed's Dew Point gel-cream moisturizer: problem/solution, a benefit breakdown, social proof, and a cart-urgency frame. Same jar, four different reasons someone stops scrolling. Unofficial concept work built from Versed's own public product info, not something the brand commissioned. The product shot is AI generated.",
+      "caption": "My moisturizer was making me greasy by noon.\n\nName the annoyance before the product shows up, then put the jar in the corner as the fix. Versed's Dew Point gel-cream, built for oily skin.\n\nProblem/solution angle. Unofficial concept work built from Versed's public product info, not commissioned by the brand. The product shot is AI generated.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#ecommerce #cro #shopify #adcreative #dtc",
       "caption_source_tab": "versed-social-content.json:SA-VERSED-COMBO",
       "status": "Ready",
       "qa_status": "Needs Review: claims to verify (2): x[2]: \"...t page.  4.7 stars. 456 reviews. A real buyer calli...\" | x[2]: \"...astest way to get a client in trouble....\"; manual-visual-pending: open 5 image(s) to eyeball brand/legibility/framing",
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
-      "caption_json": "\"Four static ad directions for Versed's Dew Point gel-cream moisturizer: problem/solution, a benefit breakdown, social proof, and a cart-urgency frame. Same jar, four different reasons someone stops scrolling. Unofficial concept work built from Versed's own public product info, not something the brand commissioned. The product shot is AI generated.\"",
+      "caption_json": "\"My moisturizer was making me greasy by noon.\\n\\nName the annoyance before the product shows up, then put the jar in the corner as the fix. Versed's Dew Point gel-cream, built for oily skin.\\n\\nProblem/solution angle. Unofficial concept work built from Versed's public product info, not commissioned by the brand. The product shot is AI generated.\\n\\nFollow @koolestpro for more ad and CRO breakdowns.\\n\\n#ecommerce #cro #shopify #adcreative #dtc\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1787608770/dist/static-ad-versed_dew-point-gel-cream-20260821/ad-1-problem-solution.png"
     },
     {
@@ -3036,13 +3036,13 @@
       "scheduled_time_local": "17:00",
       "intended_et": "12:00 ET",
       "asset_paths": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png; outputs/static-ads/caraway_fry-pan_20260909/ad-2-benefit-result.png; outputs/static-ads/caraway_fry-pan_20260909/ad-3-social-proof.png; outputs/static-ads/caraway_fry-pan_20260909/ad-4-offer-urgency.png",
-      "caption": "",
+      "caption": "Four static ad directions for the same frying pan.\n\nCaraway sells a $125 ceramic fry pan on one idea: no PTFE, no PFOA, no PFAS. That single fact can be sold four different ways, and which one you lead with changes who stops scrolling.\n\nProblem first. Name the thing people are quietly worried about, then show the pan.\nBenefit first. Hero shot, feature callouts, oven safe to 550, works on induction, wipes clean.\nProof first. 4.7 stars from 18,878 reviews and two real lines from verified buyers.\nOffer first. Free shipping over $90, free returns, one button.\n\nSame product, same price, same photo brief. Only the opening move changes.\n\nMost brands pick one of these and run it into the ground. The cheap win is running all four at once and letting the cost per click tell you which problem your buyer actually has.\n\nConcept work, not a Caraway commission. Every claim comes off their live product page.\n\n#CRO #DTC #EcommerceMarketing #AdCreative",
       "caption_source_tab": "linkedin",
       "status": "Ready",
       "qa_status": "Needs Review: claims to verify (1): x[1]: \"...uyer, sitting under 18,878 reviews.  Real beats clever...\"; manual-visual-pending: open 5 image(s) to eyeball brand/legibility/framing",
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
-      "caption_json": "\"\"",
+      "caption_json": "\"Four static ad directions for the same frying pan.\\n\\nCaraway sells a $125 ceramic fry pan on one idea: no PTFE, no PFOA, no PFAS. That single fact can be sold four different ways, and which one you lead with changes who stops scrolling.\\n\\nProblem first. Name the thing people are quietly worried about, then show the pan.\\nBenefit first. Hero shot, feature callouts, oven safe to 550, works on induction, wipes clean.\\nProof first. 4.7 stars from 18,878 reviews and two real lines from verified buyers.\\nOffer first. Free shipping over $90, free returns, one button.\\n\\nSame product, same price, same photo brief. Only the opening move changes.\\n\\nMost brands pick one of these and run it into the ground. The cheap win is running all four at once and letting the cost per click tell you which problem your buyer actually has.\\n\\nConcept work, not a Caraway commission. Every claim comes off their live product page.\\n\\n#CRO #DTC #EcommerceMarketing #AdCreative\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-caraway_fry-pan-20260909/ad-1-problem-solution.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-caraway_fry-pan-20260909/ad-2-benefit-result.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-caraway_fry-pan-20260909/ad-3-social-proof.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/static-ad-caraway_fry-pan-20260909/ad-4-offer-urgency.png"
     },
     {
@@ -3054,13 +3054,13 @@
       "scheduled_time_local": "17:00",
       "intended_et": "12:00 ET",
       "asset_paths": "outputs/static-ads/caraway_fry-pan_20260909/ad-1-problem-solution.png",
-      "caption": "",
+      "caption": "Still thinking about it?\n\nA retargeting-style ad for Caraway's $125 fry pan. Free shipping over $90, free 30-day returns, or 4 payments of $32, all answered before the shopper has to ask.\n\nUnofficial concept work built from Caraway's own live product page, not something the brand commissioned.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#CRO #DTC #EcommerceMarketing #AdCreative",
       "caption_source_tab": "linkedin",
       "status": "Ready",
       "qa_status": "Needs Review: claims to verify (1): x[1]: \"...uyer, sitting under 18,878 reviews.  Real beats clever...\"; manual-visual-pending: open 5 image(s) to eyeball brand/legibility/framing",
       "posted_at": "",
       "content_system_folder": "outputs/static-ads/",
-      "caption_json": "\"\"",
+      "caption_json": "\"Still thinking about it?\\n\\nA retargeting-style ad for Caraway's $125 fry pan. Free shipping over $90, free 30-day returns, or 4 payments of $32, all answered before the shopper has to ask.\\n\\nUnofficial concept work built from Caraway's own live product page, not something the brand commissioned.\\n\\nFollow @koolestpro for more ad and CRO breakdowns.\\n\\n#CRO #DTC #EcommerceMarketing #AdCreative\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1789584238/dist/static-ad-caraway_fry-pan-20260909/ad-1-problem-solution.png"
     },
     {
@@ -3198,13 +3198,13 @@
       "scheduled_time_local": "14:00",
       "intended_et": "09:00 ET",
       "asset_paths": "outputs/cro-fixes/caraway/koolestpro_caraway_before-after-final.png; outputs/cro-fixes/caraway/koolestpro_caraway_annotated-final.png",
-      "caption": "Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\n\nYou think almost 20,000 reviews means the trust is already there.\n\nIt doesn't, if the page can't render them in time.\n\nReal findings, nothing invented:\n\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \"Reviews\" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\n\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\n\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\n\nFull before/after and annotated breakdown in the carousel.\n\nRepost if this is useful to someone building a product page right now.",
+      "caption": "Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\n\nYou think 18,886 reviews means the trust is already there.\n\nIt doesn't, if the page can't render them in time.\n\nReal findings, nothing invented:\n\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \"Reviews\" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\n\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\n\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\n\nFull before/after and annotated breakdown in the carousel.\n\nRepost if this is useful to someone building a product page right now.",
       "caption_source_tab": "tab-linkedin",
       "status": "Ready",
       "qa_status": "Needs Review: X caption variant(s) over 280-char limit: x_thread[3]=316 chars — will be rejected by X for non-Premium accounts; verify populate_sheet.py isn't joining multiple variants into one post body; claims to verify (2): linkedin: \"...mobile.  You think 18,886 reviews means the trust is...\" | linkedin: \"...pper is deciding if $125 is worth it. And de...\"; manual-visual-pending: open 22 image(s) to eyeball brand/legibility/framing",
       "posted_at": "",
       "content_system_folder": "outputs/cro-fixes/",
-      "caption_json": "\"Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\\n\\nYou think almost 20,000 reviews means the trust is already there.\\n\\nIt doesn't, if the page can't render them in time.\\n\\nReal findings, nothing invented:\\n\\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \\\"Reviews\\\" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\\n\\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\\n\\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\\n\\nFull before/after and annotated breakdown in the carousel.\\n\\nRepost if this is useful to someone building a product page right now.\"",
+      "caption_json": "\"Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\\n\\nYou think 18,886 reviews means the trust is already there.\\n\\nIt doesn't, if the page can't render them in time.\\n\\nReal findings, nothing invented:\\n\\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \\\"Reviews\\\" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\\n\\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\\n\\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\\n\\nFull before/after and annotated breakdown in the carousel.\\n\\nRepost if this is useful to someone building a product page right now.\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/raw/upload/v1789584048/li/cro-fix-caraway_fry-pan-pdp-20260907-20260923-li-0900.pdf"
     },
     {
@@ -3252,13 +3252,13 @@
       "scheduled_time_local": "14:00",
       "intended_et": "09:00 ET",
       "asset_paths": "outputs/cro-fixes/caraway/koolestpro_caraway_before-after-final.png",
-      "caption": "On a live load, the review line can paint as literal text \"Reviews,\" no stars, no count. Almost 20,000 real reviews exist. The fix: never let the number that matters most render empty.",
+      "caption": "On a live load, the review line can paint as literal text \"Reviews,\" no stars, no count. 18,886 real reviews exist. The fix: never let the number that matters most render empty.",
       "caption_source_tab": "tab-twitter-angles (manually split — source authored all 3 angles as one <pre> block with [1/3]/[2/3]/[3/3] markers instead of separate DOM nodes; harvester has no structural split point here, unlike the already-fixed multi-div case)",
       "status": "Ready",
       "qa_status": "Needs Review: X caption variant(s) over 280-char limit: x_thread[3]=316 chars — will be rejected by X for non-Premium accounts; verify populate_sheet.py isn't joining multiple variants into one post body; claims to verify (2): linkedin: \"...mobile.  You think 18,886 reviews means the trust is...\" | linkedin: \"...pper is deciding if $125 is worth it. And de...\"; manual-visual-pending: open 22 image(s) to eyeball brand/legibility/framing",
       "posted_at": "",
       "content_system_folder": "outputs/cro-fixes/",
-      "caption_json": "\"On a live load, the review line can paint as literal text \\\"Reviews,\\\" no stars, no count. Almost 20,000 real reviews exist. The fix: never let the number that matters most render empty.\"",
+      "caption_json": "\"On a live load, the review line can paint as literal text \\\"Reviews,\\\" no stars, no count. 18,886 real reviews exist. The fix: never let the number that matters most render empty.\"",
       "asset_urls": "https://res.cloudinary.com/drl0rscuf/image/upload/v1789975318/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_before-after-final.png"
     },
     {

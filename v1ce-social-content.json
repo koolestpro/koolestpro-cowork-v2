@@ -4,14 +4,17 @@
   "isRealBrand": true,
   "isClient": false,
   "created": "2026-08-14T22:58:00.000Z",
-  "updated": "2026-08-14T22:58:00.000Z",
+  "updated": "2026-09-28T10:30:00Z",
   "howToUse": "Each key under 'assets' maps one generated image (or, for text-only posts, null) to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' — the exact relative path from the koolestpro-cowork-v2 project root — or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md).",
   "relatedPipelineItemIds": [
     "static-ad-v1ce_nfc-review-card-20260814"
   ],
   "assets": {
     "SA-V1CE-PROBLEM": {
-      "platform": ["linkedin", "instagram"],
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-1-problem-solution.png",
       "caption": "Happy customers rarely leave a review. Angry ones always do. This is the problem/solution angle for V1CE's NFC review card — unofficial concept work, not commissioned by the brand.",
@@ -20,7 +23,10 @@
       "postedAt": null
     },
     "SA-V1CE-BENEFIT": {
-      "platform": ["linkedin", "instagram"],
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-2-benefit-result.png",
       "caption": "No app, works on both iPhone and Android, and you can change where it points anytime without reprinting the card. The benefit/result angle for V1CE's NFC review card — unofficial concept, not commissioned by V1CE.",
@@ -29,7 +35,10 @@
       "postedAt": null
     },
     "SA-V1CE-PROOF": {
-      "platform": ["linkedin", "instagram"],
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-3-social-proof.png",
       "caption": "4.8 stars from 2,375+ reviews, V1CE's real aggregate rating, not a made-up number. Social proof angle for the NFC review card — unofficial concept, not commissioned by V1CE.",
@@ -38,7 +47,10 @@
       "postedAt": null
     },
     "SA-V1CE-OFFER": {
-      "platform": ["linkedin", "instagram"],
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-4-offer-urgency.png",
       "caption": "Free shipping over $70, ships in 48 hours, cards priced from $38. Offer/urgency angle for V1CE's NFC review card — unofficial concept, not commissioned by the brand.",
@@ -47,7 +59,9 @@
       "postedAt": null
     },
     "SA-V1CE-COMBO": {
-      "platform": ["linkedin"],
+      "platform": [
+        "linkedin"
+      ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/combined-showcase.png",
       "caption": "Four static ad directions for V1CE's NFC review card: the problem it actually solves, a benefit breakdown, a social proof card, and an offer banner. Same card, four different reasons someone stops scrolling. Built off V1CE's real numbers, not commissioned by the brand.",
@@ -56,7 +70,9 @@
       "postedAt": null
     },
     "SA-V1CE-X1": {
-      "platform": ["x"],
+      "platform": [
+        "x"
+      ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/combined-showcase.png",
       "caption": "Four static ad directions from one product. Same card, four different hooks.",
@@ -65,7 +81,9 @@
       "postedAt": null
     },
     "SA-V1CE-X2": {
-      "platform": ["x"],
+      "platform": [
+        "x"
+      ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-3-social-proof.png",
       "caption": "V1CE sits at 4.8 stars across 2,375+ reviews. Built the proof angle straight off that instead of guessing at a number.",
@@ -74,13 +92,28 @@
       "postedAt": null
     },
     "SA-V1CE-X3": {
-      "platform": ["x"],
+      "platform": [
+        "x"
+      ],
       "assetType": "image",
       "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-2-benefit-result.png",
       "caption": "No app, no reprint, tap and the review page opens. That's the whole pitch for this one.",
       "hashtags": [],
       "status": "Not Posted",
       "postedAt": null
+    },
+    "SA-V1CE-IG-SINGLE": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/static-ads/v1ce_nfc-review-card_20260814/ad-1-problem-solution.png",
+      "captionKey": "ig_single",
+      "caption": "Happy customers rarely leave a review. Angry ones always do.\n\nThis ad opens on that, then shows the fix: one tap on V1CE's NFC card and the review page opens.\n\nProblem/solution angle for V1CE's NFC review card. Unofficial concept work, not commissioned by the brand.\n\nFollow @koolestpro for more ad and CRO breakdowns.\n\n#ecommerce #dtc #adcreative #cro",
+      "hashtags": [],
+      "status": "Not Posted",
+      "postedAt": null,
+      "note": "Added 2026-09-28: caption written for the single ad-1 image. The single-image Instagram post used to borrow the 4-ad LinkedIn caption."
     }
   },
   "knownGaps": "combined-showcase.png is 1.24MB, under the ~4MB X size ceiling, so no compressed -x variant was needed this run.",

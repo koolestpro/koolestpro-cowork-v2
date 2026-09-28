@@ -1,5 +1,7 @@
 # Queue QA cleanup: 28 Sep 2026
 
+> **Follow-up 2026-09-28:** the Caraway CRO review count was put BACK to 18,886. The carousel slides print that number ("18,886 reviews means the trust is already there"), so the caption has to match the image. It was true on the audit date (7 Sep).
+>
 > **APPLIED 2026-09-28 ~10:00 UTC.** The live Sheet showed 19 of the 35 "overdue" rows had already posted (local queue.json was behind). So only the 16 truly unposted rows were rescheduled (see `reschedule-2026-09-28-applied.json`, which replaces the table in section 3), and 7 caption fixes were applied. The other 7 targeted posts that were already live. Verified by reading the Sheet back. queue.json was synced to the Sheet (19 Posted statuses, 16 dates, 7 captions); backup at `queue.json.bak-2026-09-28-pre-qa-apply`.
 
 

@@ -69,3 +69,19 @@ No app, no reprint, tap and the review page opens. That's the whole pitch for th
 Product images are AI-generated (gpt-image), not real V1CE photography — the card design, "V1CE" wordmark, and QR placement are a reconstruction, not the actual product. All copy claims trace back to real research (v1ce.co, Amazon UK, Trustpilot, Loox): 4.8★/2,375+ reviews across V1CE's product range, no app required, QR fallback, editable destination, 48-hour shipping, ~$38 with free shipping over $70. No brand-specific review count exists for this exact SKU, so the aggregate brand rating was used and framed as such.
 
 Ad 4 needed one regeneration mid-run — the first attempt mangled the dollar figures in the offer banner. Full incident detail is in `v1ce-social-content.json`'s `exportLog`.
+
+## SA-V1CE-IG-SINGLE (added 2026-09-28)
+
+Instagram single-image post, `outputs/static-ads/v1ce_nfc-review-card_20260814/ad-1-problem-solution.png` only. Written for this one image; the single post used to borrow the 4-ad LinkedIn caption.
+
+```
+Happy customers rarely leave a review. Angry ones always do.
+
+This ad opens on that, then shows the fix: one tap on V1CE's NFC card and the review page opens.
+
+Problem/solution angle for V1CE's NFC review card. Unofficial concept work, not commissioned by the brand.
+
+Follow @koolestpro for more ad and CRO breakdowns.
+
+#ecommerce #dtc #adcreative #cro
+```

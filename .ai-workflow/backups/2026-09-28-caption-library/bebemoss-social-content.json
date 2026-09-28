@@ -1,0 +1,244 @@
+{
+ "brand": "Bebemoss",
+ "brandSlug": "bebemoss",
+ "relatedPipelineItemIds": [
+  "static-ad-bebemoss_ginger-sleepy-bunny-20260717",
+  "cro-fix-bebemoss_toys-collection-20260818"
+ ],
+ "disclaimer": "Unofficial concept work. Not affiliated with or commissioned by Bebemoss.",
+ "notes": "Product photography AI-generated (gpt-image-2), flagged. All claims sourced from bebemoss.com and Faire; nothing invented.",
+ "assets": {
+  "SA-BEBEMOSS-COMBO": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/combined-showcase.png",
+   "caption": "Bebemoss sells a $44 crocheted bunny. No discount codes, no countdown timers, no \"10,000 reviews\" banner slapped across the page.\n\nSo I set myself a rule: build 4 ad directions for one of their toys and don't invent a single claim.\n\nWhere each one came from:\n\nProblem: most \"first toys\" are plastic and in a landfill before the kid starts school. This one gets kept.\n\nBenefit: GOTS organic cotton, crocheted by hand, made to EU toy-safety standards. Real specs, no filler.\n\nSocial proof: one actual review, \"she's actually a work of art.\" Plus their 4.9 from wholesale buyers on Faire.\n\nOffer: they have no sale to run, so I told the truth instead. It's made to order, by hand. That's the reason to act, not a fake timer.\n\nSame bunny. Same photo. Four different reasons to care, depending on where the buyer's head is when they see it.\n\nThat's most of the job with ad creative. Not \"make it pop.\" Figure out what the person needs to hear first.\n\nConcept work. I'm not affiliated with Bebemoss, I just liked the product enough to think about how I'd sell it.",
+   "hashtags": [
+    "#ecommerce",
+    "#dtc",
+    "#advertising",
+    "#adcreative",
+    "#cro",
+    "#brandstrategy"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "SA-BEBEMOSS-PROBLEM": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/ad-1-problem-solution.png",
+   "caption": "Most \"first toys\" are plastic, and in a landfill before the kid starts school. A hand-crocheted organic cotton one is the toy they actually keep. (Concept ad for Bebemoss, not affiliated.)",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "SA-BEBEMOSS-BENEFIT": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/ad-2-benefit-result.png",
+   "caption": "Made by hand, made to keep. GOTS organic cotton, every stitch crocheted by an artisan mom, built to EU toy-safety standards. (Concept ad for Bebemoss, not affiliated.)",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "SA-BEBEMOSS-PROOF": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/ad-3-social-proof.png",
+   "caption": "\"When she peeked out of the bag, I was amazed, she's actually a work of art.\" 4.9 from wholesale buyers, made by 120+ artisan moms. (Concept ad for Bebemoss, not affiliated.)",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "SA-BEBEMOSS-OFFER": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/ad-4-offer-urgency.png",
+   "caption": "Not mass-stocked. Each Bebemoss bunny gets crocheted when you order it. Real scarcity, no fake timer. Meet Ginger the Sleepy Bunny, $44. (Concept ad, not affiliated.)",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "SA-BEBEMOSS-X1": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/combined-showcase-x.png",
+   "caption": "4 ad directions from one $44 crocheted bunny.\n\nNo fake discounts. No made-up review counts. Every line traces back to something real about the brand.\n\nSame product, 4 different reasons to buy it. That's the whole game.\n\n(concept work, not affiliated with Bebemoss)",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "SA-BEBEMOSS-X2": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "text",
+   "assetPath": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/ad-3-social-proof.png",
+   "caption": "Best social proof isn't \"10,000 reviews.\"\n\nIt's one specific line: \"when she peeked out of the bag, I was amazed, she's actually a work of art.\"\n\nBuilt a whole ad around that one real review. Specific beats big every time.\n\n(concept, not affiliated)",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "SA-BEBEMOSS-X3": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "text",
+   "assetPath": "outputs/static-ads/bebemoss_ginger-sleepy-bunny_20260717/ad-4-offer-urgency.png",
+   "caption": "Bebemoss has no discount to run. So how do you write an \"act now\" ad without lying?\n\nYou don't fake a countdown. You tell the truth: it's crocheted by hand, made to order, not sitting in a warehouse.\n\nReal scarcity does the work a fake timer can't.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "CRO-BEBEMOSS-BA": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_before-after.png",
+   "caption": "Bebemoss makes handmade toys. Every one crocheted by a woman artisan, a lot of them refugees. I like the brand, which is exactly why the collection page bothered me.\n\nIt opens with five sentences about the mission. On a phone that block is 519px tall and the screen is 844, so the whole first screen is copy. The first toy creeps in at the bottom edge with its name and price still cut off.\n\nNobody taps \"Soft Toys\" to read a mission statement. They tap it to see toys.\n\nTwo other things while I was in there.\n\nA pink \"Save 10%\" tab is docked to the bottom left. The page runs 8,200px and that tab rides the whole way down. On my screen it sat right on top of a toy's name and price.\n\nAnd there are 48 products with no filter and no sort. Bebemoss already names its ranges in its own copy, Safari, Ocean, Woodland, Garden Life, Dreams. None of that is something a shopper can tap.\n\nSo I rebuilt the top of the page. Same photos, same prices, same brand.\n\n- Mission down to one line, with a \"Read our story\" link for anyone who wants the rest\n- Those five ranges as filter chips, price sort sitting next to them\n- Grid starts at the fold, four toys with names and prices before you scroll\n- Save pill shrunk and moved bottom right, clear of the card text\n\nThe story still sells. It just sells better standing next to the toys instead of in front of them.\n\nIf your collection page opens with a paragraph, go look at it on your phone right now.\n\nRidwan\n\n#ecommerce #cro #shopify #dtc #conversionrateoptimization",
+   "hashtags": [
+    "#ecommerce",
+    "#cro",
+    "#shopify",
+    "#dtc",
+    "#conversionrateoptimization"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "CRO-BEBEMOSS-ANNO": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_annotated-changes.png",
+   "caption": "This toy brand's story is beautiful. It's also the entire first screen.\n\nBebemoss sells handmade crochet toys. Their collection page opens with five sentences about the mission. On a phone that paragraph is 519px tall, the screen is 844, so you scroll past all of it before you see a single toy.\n\nTwo more things I found:\nA pink \"Save 10%\" tab docked bottom left, riding the full 8,200px scroll, sitting on top of a toy's name and price.\n48 products with no filter and no sort, even though the brand names its own ranges in its own copy.\n\nI rebuilt the top. Same photos, same prices:\nMission to one line, story link kept\nFive ranges as filter chips\nPrice sort added\nGrid starts at the fold\nSave pill moved clear of the text\n\nSave this if your collection page opens with a paragraph.\n\n@koolestpro\n#ecommerce #cro #shopify #dtc #collectionpage",
+   "hashtags": [
+    "#ecommerce",
+    "#cro",
+    "#shopify",
+    "#dtc",
+    "#collectionpage"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "CRO-BEBEMOSS-CAROUSEL": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image-set",
+   "assetPath": [
+    "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide1.png",
+    "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide2.png",
+    "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide3.png",
+    "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide4.png",
+    "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide5.png",
+    "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide6.png",
+    "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide7.png"
+   ],
+   "caption": "Bebemoss makes handmade toys. Every one crocheted by a woman artisan, a lot of them refugees. I like the brand, which is exactly why the collection page bothered me.\n\nIt opens with five sentences about the mission. On a phone that block is 519px tall and the screen is 844, so the whole first screen is copy. The first toy creeps in at the bottom edge with its name and price still cut off.\n\nNobody taps \"Soft Toys\" to read a mission statement. They tap it to see toys.\n\nTwo other things while I was in there.\n\nA pink \"Save 10%\" tab is docked to the bottom left. The page runs 8,200px and that tab rides the whole way down. On my screen it sat right on top of a toy's name and price.\n\nAnd there are 48 products with no filter and no sort. Bebemoss already names its ranges in its own copy, Safari, Ocean, Woodland, Garden Life, Dreams. None of that is something a shopper can tap.\n\nSo I rebuilt the top of the page. Same photos, same prices, same brand.\n\n- Mission down to one line, with a \"Read our story\" link for anyone who wants the rest\n- Those five ranges as filter chips, price sort sitting next to them\n- Grid starts at the fold, four toys with names and prices before you scroll\n- Save pill shrunk and moved bottom right, clear of the card text\n\nThe story still sells. It just sells better standing next to the toys instead of in front of them.\n\nIf your collection page opens with a paragraph, go look at it on your phone right now.\n\nRidwan\n\n#ecommerce #cro #shopify #dtc #conversionrateoptimization",
+   "hashtags": [
+    "#ecommerce",
+    "#cro",
+    "#shopify",
+    "#dtc",
+    "#conversionrateoptimization"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "CRO-BEBEMOSS-X1": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_before-after.png",
+   "caption": "Bebemoss sells handmade crochet toys. Lovely brand.\n\nTheir collection page opens with a 519px mission paragraph on an 844px screen.\n\nYou scroll past the whole first screen before you see a toy.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "CRO-BEBEMOSS-X2": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_annotated-changes.png",
+   "caption": "Found a \"Save 10%\" tab docked to the bottom left of a collection page.\n\nThe page is 8,200px long. The tab rides the whole way down.\n\nIt was sitting on top of a product's name and price.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "CRO-BEBEMOSS-X3": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_toys-collection_slide5.png",
+   "caption": "48 products. No filter. No sort.\n\nThe brand names its own ranges in its own copy: Safari, Ocean, Woodland, Garden Life, Dreams.\n\nNone of it is tappable. The taxonomy exists, it just never made it onto the page.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "CRO-BEBEMOSS-XTHREAD": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "thread",
+   "assetPath": "outputs/cro-fixes/bebemoss/koolestpro_bebemoss_before-after.png",
+   "caption": "1/ Bebemoss makes handmade crochet toys, each one made by a woman artisan.\n\nGood brand. Their collection page still buries the toys. Quick teardown.\n\n2/ The page opens with five sentences about the mission.\n\nThat block is 519px tall. A phone screen is 844.\n\nSo the entire first screen is copy.\n\n3/ The first toy only reaches the bottom edge, with its name and price still cut off.\n\nSomeone who tapped \"Soft Toys\" already decided they want toys. The first screen answers a question they did not ask.\n\n4/ Second thing: a pink \"Save 10%\" tab docked bottom left.\n\nThe page runs 8,200px and the tab rides all of it. On my screen it covered a toy's name and its price.\n\n5/ Third: 48 products, no filter, no sort.\n\nBebemoss names its ranges in its own copy. Safari, Ocean, Woodland, Garden Life, Dreams. None of it is tappable.\n\n6/ Rebuild, same photos and same prices:\n\nMission to one line with a story link. Five ranges as filter chips. Price sort. Grid starts at the fold. Save pill moved clear of the card text.\n\n7/ The story still sells. It sells better standing next to the toys than in front of them.\n\nIf your collection page opens with a paragraph, open it on your phone.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  }
+ },
+ "exportLog": [
+  {
+   "date": "2026-08-01",
+   "action": "Corrected understanding of the X1/combo bug across two rounds — see both entries below, second one is the final state.",
+   "round1_wrong": "First diagnosed this as 'X should never use the combo image' and banned combined-showcase.png from X entirely in the static-ad-image skill, repointing SA-BEBEMOSS-X1 to ad-1-problem-solution.png (an individual angle image) instead. Also fixed the live Google Sheet row (post_id static-ad-bebemoss_ginger-sleepy-bunny-20260717-20260727-x-1800) the same way. This round shipped and the post went out with the individual image at 2026-08-01 23:13 before Ridwan weighed in.",
+   "round2_correction": "Ridwan clarified: he wants the combo on X, it looks great there — the actual bug was never 'combo is wrong for X,' it was that this specific combo file had drifted to 2132x3156 / 8.33MB (skill spec says 1024x1024), well past Make's HTTP fetch limit. Fix: generated a dedicated compressed X-safe variant (combined-showcase-x.png, resized to 1279x1893 / ~3.04MB via PNG downscale + optimize, visually identical at feed resolution) and uploaded it to Cloudinary as a NEW asset (koolestpro/bebemoss/bebemoss-combined-showcase-x, v1785666915) rather than overwriting the original. SA-BEBEMOSS-X1.assetPath now points at this compressed variant. The static-ad-image skill was revised accordingly: combo is the default/preferred image for the X1 'summary of all 4 angles' post, but a size check now runs before treating any combo file as usable for X, with automatic compression to a dedicated -x.png variant if it exceeds ~4MB (X's own image cap is 5MB, so this leaves safety margin and matches what worked for Obvi's combo, which never needed compression at 3.47MB).",
+   "alreadyPostedNote": "The 2026-08-01 23:13 post used the individual image (ad-1-problem-solution.png), not the combo — that tweet is already live and wasn't changed retroactively. This fix governs future recurrences of the X1 post template.",
+   "otherBrandsChecked": "Swept every *-social-content.json in the project for the same 'X asset = combined-showcase.png' pattern. obvi-social-content.json's SA-OBVI-X1 was reverted back to its original combo path (its file was always under the safe size threshold at 3.47MB, so it never actually needed the individual-image workaround). materialkitchen-social-content.json references combined-showcase.png too but only for its legitimate LinkedIn/Instagram combo entry, not for X — no bug there."
+  },
+  {
+   "date": "2026-07-18",
+   "action": "All 4 ads regenerated from scratch.",
+   "why": "The 2026-07-17 originals were PIL-composited caption cards (cream text panel above a photo), not ads. Ridwan rejected them.",
+   "rootCause": "The run hit the sandbox's ~45s per-command ceiling on gpt-image --quality medium calls and fell back to drawing text with PIL, on the untested (and false) assumption that --quality low misspells headlines.",
+   "method": "One gpt-image generate.py call per bash command, --quality low --size 1024x1536, headline/badge/button text specified in-prompt with 'reading exactly:'. 21-30s per ad, 4/4 headlines spelled correctly.",
+   "verified": "All 4 PNGs plus the combined showcase read back and visually checked.",
+   "removed": "build_ads.py, base-product.png, scene-lifestyle.png (PIL-era intermediates) deleted from the output folder.",
+   "captionsUnchanged": true
+  },
+  {
+   "date": "2026-08-18",
+   "run": "koolestpro-weekly-cro-fix (scheduled, unsupervised)",
+   "what": "Added CRO Fix asset keys for the /collections/toys teardown. All 9 images exported through the content pack's own captureFixed()/captureSlide() html2canvas functions via .ai-workflow/tools/export_static_images.py, not native screenshots, then renamed to the koolestpro_{brand}_{asset} convention. Every assetPath verified to exist on disk at write time.",
+   "notes": "Both graphic headlines wrapped past the 2-line cap on the first build and collided with the credit line and the phone image. Shortened and re-exported. X image sizes checked against the ~4MB ceiling that broke the 2026-08-01 Make.com fetch."
+  }
+ ]
+}
