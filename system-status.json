@@ -1,187 +1,155 @@
 {
-  "generated_at": "2026-09-18 08:07 UTC",
-  "project_root": "/sessions/brave-affectionate-volta/mnt/koolestpro-cowork-v2",
+  "generated_at": "2026-09-28 08:42 UTC",
+  "project_root": "/sessions/rcw-015m6ntb8zhfrew1nhp5vwsa/mnt/koolestpro-cowork-v2",
   "scheduled_tasks": {
     "source": ".ai-workflow/scheduled-tasks-snapshot.json",
-    "snapshot_written_at": "2026-09-16T18:41:06Z",
-    "total": 17,
-    "enabled": 12,
-    "disabled": 5,
+    "snapshot_written_at": "2026-09-28T08:41:25Z",
+    "total": 13,
+    "enabled": 10,
+    "disabled": 3,
     "tasks": [
       {
-        "id": "shopify-cro-job-alerts",
-        "enabled": false,
-        "schedule": "At 09:02 AM, Monday through Friday",
-        "last_run": "2026-06-05T09:45:40.471Z",
-        "days_since": 104,
-        "next_run": null
-      },
-      {
-        "id": "abuzaid-weekly-post-drafts",
-        "enabled": false,
-        "schedule": "At 09:08 AM, only on Saturday",
-        "last_run": "2026-06-20T08:08:16.668Z",
-        "days_since": 89,
-        "next_run": null
-      },
-      {
-        "id": "abuzaid-saturday-batch",
-        "enabled": false,
-        "schedule": "At 08:09 AM, only on Saturday",
-        "last_run": "2026-07-13T11:01:06.745Z",
-        "days_since": 66,
-        "next_run": null
-      },
-      {
-        "id": "koolestpro-static-ad-weekly",
+        "id": "Koolestpro weekly cro fix",
         "enabled": true,
-        "schedule": "At 09:04 AM, only on Friday",
-        "last_run": "2026-09-11T11:29:03.694Z",
-        "days_since": 6,
-        "next_run": "2026-09-18T08:03:43.000Z"
-      },
-      {
-        "id": "koolestpro-template-showcase-weekly",
-        "enabled": true,
-        "schedule": "At 09:09 AM, only on Saturday",
-        "last_run": "2026-09-12T08:09:31.699Z",
-        "days_since": 5,
-        "next_run": "2026-09-19T08:09:15.000Z"
-      },
-      {
-        "id": "koolestpro-weekly-cro-fix",
-        "enabled": true,
-        "schedule": "At 09:12 AM, only on Sunday",
-        "last_run": "2026-09-13T09:15:49.961Z",
-        "days_since": 4,
-        "next_run": "2026-09-20T08:12:11.000Z"
-      },
-      {
-        "id": "koolestpro-target-pool-refresh",
-        "enabled": true,
-        "schedule": "At 08:18 AM, only on Monday",
-        "last_run": "2026-09-16T18:28:17.188Z",
-        "days_since": 1,
-        "next_run": "2026-09-21T07:18:13.000Z"
-      },
-      {
-        "id": "koolestpro-tips-weekly",
-        "enabled": true,
-        "schedule": "At 09:28 AM, only on Friday",
-        "last_run": "2026-09-11T11:29:04.348Z",
-        "days_since": 6,
-        "next_run": "2026-09-18T08:27:39.000Z"
-      },
-      {
-        "id": "koolestpro-replo-cache-staleness-check",
-        "enabled": true,
-        "schedule": "At 08:49 AM, only on Monday",
-        "last_run": "2026-09-16T18:28:17.820Z",
-        "days_since": 1,
-        "next_run": "2026-09-21T07:48:32.000Z"
-      },
-      {
-        "id": "koolestpro-weekly-distribution-assembly",
-        "enabled": true,
-        "schedule": "At 07:51 AM, only on Monday",
-        "last_run": "2026-09-16T18:28:18.475Z",
-        "days_since": 1,
-        "next_run": "2026-09-21T06:51:24.000Z"
-      },
-      {
-        "id": "koolestpro-trend-radar-weekly",
-        "enabled": false,
-        "schedule": "At 08:51 AM, only on Friday",
-        "last_run": "2026-08-14T21:43:08.226Z",
-        "days_since": 34,
-        "next_run": null
-      },
-      {
-        "id": "koolestpro-browseract-weekly",
-        "enabled": true,
-        "schedule": "At 09:05 AM, only on Tuesday",
-        "last_run": "2026-09-16T18:29:16.741Z",
-        "days_since": 1,
-        "next_run": "2026-09-22T08:04:31.000Z"
-      },
-      {
-        "id": "koolestpro-adlibrary-weekly",
-        "enabled": true,
-        "schedule": "At 09:00 AM, only on Wednesday",
-        "last_run": "2026-09-16T18:30:16.797Z",
-        "days_since": 1,
-        "next_run": "2026-09-23T08:00:06.000Z"
-      },
-      {
-        "id": "koolestpro-weekly-template-build",
-        "enabled": true,
-        "schedule": "At 09:21 AM, only on Wednesday",
-        "last_run": "2026-09-16T18:32:16.789Z",
-        "days_since": 1,
-        "next_run": "2026-09-23T08:20:39.000Z"
+        "schedule": "At 09:06 (Africa/Lagos), only on Sunday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-10-04T08:06:00Z"
       },
       {
         "id": "koolestpro-distribution-health-check",
         "enabled": true,
-        "schedule": "At 09:35 AM, every 2 days",
-        "last_run": "2026-09-16T18:33:18.128Z",
-        "days_since": 1,
-        "next_run": "2026-09-17T08:40:25.000Z"
+        "schedule": "At 09:35 (Africa/Lagos), every 2 days",
+        "last_run": "2026-09-27T12:45:17.391801562Z",
+        "days_since": null,
+        "next_run": "2026-09-29T08:35:00Z"
+      },
+      {
+        "id": "koolestpro-weekly-template-build",
+        "enabled": true,
+        "schedule": "At 09:15 (Africa/Lagos), only on Wednesday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-09-30T08:15:00Z"
+      },
+      {
+        "id": "koolestpro-adlibrary-weekly",
+        "enabled": true,
+        "schedule": "At 08:47 (Africa/Lagos), only on Wednesday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-09-30T07:47:00Z"
+      },
+      {
+        "id": "koolestpro-browseract-weekly",
+        "enabled": true,
+        "schedule": "At 08:46 (Africa/Lagos), only on Tuesday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-09-29T07:46:00Z"
+      },
+      {
+        "id": "koolestpro-replo-cache-staleness-check",
+        "enabled": false,
+        "schedule": "At 08:40 (Africa/Lagos), only on Monday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-10-05T07:40:00Z"
+      },
+      {
+        "id": "koolestpro-weekly-cro-fix",
+        "enabled": true,
+        "schedule": "At 09:06 (Africa/Lagos), only on Sunday",
+        "last_run": "2026-09-27T09:04:20.351454967Z",
+        "days_since": null,
+        "next_run": "2026-10-04T08:06:00Z"
+      },
+      {
+        "id": "koolestpro-tips-weekly",
+        "enabled": true,
+        "schedule": "At 09:20 (Africa/Lagos), only on Friday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-10-02T08:20:00Z"
+      },
+      {
+        "id": "koolestpro-static-ad-weekly",
+        "enabled": true,
+        "schedule": "At 09:02 (Africa/Lagos), only on Friday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-10-02T08:02:00Z"
       },
       {
         "id": "koolestpro-system-status-weekly",
         "enabled": true,
-        "schedule": "At 09:40 AM, only on Monday",
-        "last_run": "2026-09-16T18:40:19.166Z",
-        "days_since": 1,
-        "next_run": "2026-09-21T08:40:23.000Z"
+        "schedule": "At 09:40 (Africa/Lagos), only on Monday",
+        "last_run": "2026-09-28T08:41:01.888866238Z",
+        "days_since": null,
+        "next_run": "2026-10-05T08:40:00Z"
       },
       {
-        "id": "koolestpro-tiktok-weekly",
-        "enabled": false,
-        "schedule": "At 09:11 AM, only on Thursday",
+        "id": "koolestpro-template-showcase-weekly",
+        "enabled": true,
+        "schedule": "At 09:07 (Africa/Lagos), only on Saturday",
         "last_run": null,
         "days_since": null,
-        "next_run": null
+        "next_run": "2026-10-03T08:07:00Z"
+      },
+      {
+        "id": "koolestpro-target-pool-refresh",
+        "enabled": false,
+        "schedule": "At 08:09 (Africa/Lagos), only on Monday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-10-05T07:09:00Z"
+      },
+      {
+        "id": "koolestpro-weekly-distribution-assembly",
+        "enabled": false,
+        "schedule": "At 07:45 (Africa/Lagos), only on Monday",
+        "last_run": null,
+        "days_since": null,
+        "next_run": "2026-10-05T06:45:00Z"
       }
     ],
     "stale": []
   },
   "content": {
     "source": "ridwan_content_system_updated.html \u2192 SYNC_DATA",
-    "total": 68,
+    "total": 71,
     "months": 5,
     "by_status": {
-      "Idea": 36,
-      "Created": 30,
+      "Idea": 35,
+      "Created": 34,
       "Ready": 2
     },
     "by_type": {
-      "CRO Fix": 18,
+      "CRO Fix": 20,
       "Tip": 20,
       "Case Study": 8,
       "Personal": 8,
       "Static Ad": 5,
-      "Template Showcase": 9
+      "Template Showcase": 10
     },
-    "idea_backlog": 36
+    "idea_backlog": 35
   },
   "distribution_queue": {
     "source": "outputs/distribution-queue/queue.json",
-    "total_rows": 180,
+    "total_rows": 195,
     "by_platform": {
-      "Twitter": 94,
-      "LinkedIn": 30,
-      "Instagram": 56
+      "Twitter": 101,
+      "LinkedIn": 33,
+      "Instagram": 61
     },
     "by_status": {
       "Posted": 91,
-      "Ready": 88,
+      "Ready": 103,
       "Draft": 1
     },
-    "clean_next_7d": 4,
-    "clean_pace_per_day": 0.57,
-    "overdue_qa_blocked": 13,
+    "clean_next_7d": 0,
+    "clean_pace_per_day": 0.0,
+    "overdue_qa_blocked": 31,
     "note": "Twitter + LinkedIn only. Instagram is excluded because it cannot post at all (Meta Page-IG link blocker)."
   },
   "targets_pool": {
@@ -199,7 +167,7 @@
       "baby-pet-lifestyle": 2,
       "food-beverage-supplements": 1
     },
-    "untouched": 4,
+    "untouched": 2,
     "unrated_visual": 0
   },
   "lead_gen": {
@@ -220,34 +188,42 @@
       "stale": [
         {
           "file": "2026-W36_adlib-ng-home-decor.json",
-          "age_hours": 376
+          "age_hours": 616
         },
         {
           "file": "2026-W37_adlib-ng-gadgets.json",
-          "age_hours": 213
+          "age_hours": 453
         },
         {
           "file": "2026-W37_victoria-island-lagos-skincare-shop.json",
-          "age_hours": 237
+          "age_hours": 478
+        },
+        {
+          "file": "2026-W38_adlib-ng-food.json",
+          "age_hours": 278
+        },
+        {
+          "file": "2026-W38_ikeja-lagos-baby-and-kids-store.json",
+          "age_hours": 241
         }
       ]
     },
     "importer": {
       "source": ".ai-workflow/leadgen-import.launchd.log",
-      "last_write_age_hours": 0.2,
-      "recent_error_lines": 40,
+      "last_write_age_hours": 11.6,
+      "recent_error_lines": 22,
       "state": "blocked",
       "diagnosis": "macOS is denying the launchd agent access to the project folder (TCC). The job fires on schedule but /bin/bash cannot execute the script, so nothing is ever imported."
     }
   },
   "showcase_pages": {
     "source": "replo-rebuilds-pages.json",
-    "total": 12,
-    "retired": 6,
+    "total": 13,
+    "retired": 7,
     "eligible_unused": 2,
     "next_up": [
-      "kura_pdp-02",
-      "halos_li-02"
+      "halos_li-02",
+      "halos_pp-01"
     ]
   },
   "store_templates": {
@@ -272,18 +248,18 @@
     "files": [
       {
         "file": "AGENTS.md",
-        "bytes": 3170,
-        "kib": 3.1,
-        "tokens_est": 792,
+        "bytes": 3845,
+        "kib": 3.8,
+        "tokens_est": 961,
         "budget_bytes": 6000,
         "budget_kib": 6,
         "over_budget": false
       },
       {
         "file": "CLAUDE.md",
-        "bytes": 33427,
-        "kib": 32.6,
-        "tokens_est": 8357,
+        "bytes": 28536,
+        "kib": 27.9,
+        "tokens_est": 7134,
         "budget_bytes": 40000,
         "budget_kib": 39,
         "over_budget": false
@@ -301,24 +277,36 @@
   },
   "flags": [
     {
+      "level": "warn",
+      "text": "targets_pool has only 2 untouched candidates left (threshold 4)."
+    },
+    {
       "level": "alert",
       "text": "Lead importer is BLOCKED, not idle. macOS is denying the launchd agent access to the project folder (TCC). The job fires on schedule but /bin/bash cannot execute the script, so nothing is ever imported. Grant Full Disk Access to /bin/bash, or move the project out of ~/Downloads. Until then every queued file stays put."
     },
     {
       "level": "alert",
-      "text": "2026-W36_adlib-ng-home-decor.json has sat in pending-push for 376h. Blocked by the importer failure above."
+      "text": "2026-W36_adlib-ng-home-decor.json has sat in pending-push for 616h. Blocked by the importer failure above."
     },
     {
       "level": "alert",
-      "text": "2026-W37_adlib-ng-gadgets.json has sat in pending-push for 213h. Blocked by the importer failure above."
+      "text": "2026-W37_adlib-ng-gadgets.json has sat in pending-push for 453h. Blocked by the importer failure above."
     },
     {
       "level": "alert",
-      "text": "2026-W37_victoria-island-lagos-skincare-shop.json has sat in pending-push for 237h. Blocked by the importer failure above."
+      "text": "2026-W37_victoria-island-lagos-skincare-shop.json has sat in pending-push for 478h. Blocked by the importer failure above."
+    },
+    {
+      "level": "alert",
+      "text": "2026-W38_adlib-ng-food.json has sat in pending-push for 278h. Blocked by the importer failure above."
+    },
+    {
+      "level": "alert",
+      "text": "2026-W38_ikeja-lagos-baby-and-kids-store.json has sat in pending-push for 241h. Blocked by the importer failure above."
     },
     {
       "level": "warn",
-      "text": "Clean posting pace is 0.57/day over the next 7 days, under the 1.5 floor (target is a 3/day average)."
+      "text": "Clean posting pace is 0.0/day over the next 7 days, under the 1.5 floor (target is a 3/day average)."
     }
   ]
 }

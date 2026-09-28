@@ -1,143 +1,151 @@
 {
   "_readme": "Snapshot of the live scheduled-task list, written by koolestpro-system-status-weekly immediately before it runs build_system_status.py. Do not hand-edit.",
-  "writtenAt": "2026-09-16T18:41:06Z",
+  "writtenAt": "2026-09-28T08:41:25Z",
   "writtenBy": "koolestpro-system-status-weekly",
+  "source": "list_triggers (cloud scheduled tasks). Tasks stored locally by the desktop app are not visible to this tool.",
   "tasks": [
     {
-      "taskId": "shopify-cro-job-alerts",
-      "enabled": false,
-      "schedule": "At 09:02 AM, Monday through Friday",
-      "cronExpression": "0 9 * * 1-5",
-      "lastRunAt": "2026-06-05T09:45:40.471Z",
-      "nextRunAt": null
-    },
-    {
-      "taskId": "abuzaid-weekly-post-drafts",
-      "enabled": false,
-      "schedule": "At 09:08 AM, only on Saturday",
-      "cronExpression": "0 9 * * 6",
-      "lastRunAt": "2026-06-20T08:08:16.668Z",
-      "nextRunAt": null
-    },
-    {
-      "taskId": "abuzaid-saturday-batch",
-      "enabled": false,
-      "schedule": "At 08:09 AM, only on Saturday",
-      "cronExpression": "0 8 * * 6",
-      "lastRunAt": "2026-07-13T11:01:06.745Z",
-      "nextRunAt": null
-    },
-    {
-      "taskId": "koolestpro-static-ad-weekly",
+      "taskId": "Koolestpro weekly cro fix",
+      "triggerId": "trig_01AyTBV8bvqpuAjoJNiNzmHB",
       "enabled": true,
-      "schedule": "At 09:04 AM, only on Friday",
-      "cronExpression": "2 9 * * 5",
-      "lastRunAt": "2026-09-11T11:29:03.694Z",
-      "nextRunAt": "2026-09-18T08:03:43.000Z"
-    },
-    {
-      "taskId": "koolestpro-template-showcase-weekly",
-      "enabled": true,
-      "schedule": "At 09:09 AM, only on Saturday",
-      "cronExpression": "7 9 * * 6",
-      "lastRunAt": "2026-09-12T08:09:31.699Z",
-      "nextRunAt": "2026-09-19T08:09:15.000Z"
-    },
-    {
-      "taskId": "koolestpro-weekly-cro-fix",
-      "enabled": true,
-      "schedule": "At 09:12 AM, only on Sunday",
-      "cronExpression": "6 9 * * 0",
-      "lastRunAt": "2026-09-13T09:15:49.961Z",
-      "nextRunAt": "2026-09-20T08:12:11.000Z"
-    },
-    {
-      "taskId": "koolestpro-target-pool-refresh",
-      "enabled": true,
-      "schedule": "At 08:18 AM, only on Monday",
-      "cronExpression": "9 8 * * 1",
-      "lastRunAt": "2026-09-16T18:28:17.188Z",
-      "nextRunAt": "2026-09-21T07:18:13.000Z"
-    },
-    {
-      "taskId": "koolestpro-tips-weekly",
-      "enabled": true,
-      "schedule": "At 09:28 AM, only on Friday",
-      "cronExpression": "20 9 * * 5",
-      "lastRunAt": "2026-09-11T11:29:04.348Z",
-      "nextRunAt": "2026-09-18T08:27:39.000Z"
-    },
-    {
-      "taskId": "koolestpro-replo-cache-staleness-check",
-      "enabled": true,
-      "schedule": "At 08:49 AM, only on Monday",
-      "cronExpression": "40 8 * * 1",
-      "lastRunAt": "2026-09-16T18:28:17.820Z",
-      "nextRunAt": "2026-09-21T07:48:32.000Z"
-    },
-    {
-      "taskId": "koolestpro-weekly-distribution-assembly",
-      "enabled": true,
-      "schedule": "At 07:51 AM, only on Monday",
-      "cronExpression": "45 7 * * 1",
-      "lastRunAt": "2026-09-16T18:28:18.475Z",
-      "nextRunAt": "2026-09-21T06:51:24.000Z"
-    },
-    {
-      "taskId": "koolestpro-trend-radar-weekly",
-      "enabled": false,
-      "schedule": "At 08:51 AM, only on Friday",
-      "cronExpression": "50 8 * * 5",
-      "lastRunAt": "2026-08-14T21:43:08.226Z",
-      "nextRunAt": null
-    },
-    {
-      "taskId": "koolestpro-browseract-weekly",
-      "enabled": true,
-      "schedule": "At 09:05 AM, only on Tuesday",
-      "cronExpression": "0 9 * * 2",
-      "lastRunAt": "2026-09-16T18:29:16.741Z",
-      "nextRunAt": "2026-09-22T08:04:31.000Z"
-    },
-    {
-      "taskId": "koolestpro-adlibrary-weekly",
-      "enabled": true,
-      "schedule": "At 09:00 AM, only on Wednesday",
-      "cronExpression": "0 9 * * 3",
-      "lastRunAt": "2026-09-16T18:30:16.797Z",
-      "nextRunAt": "2026-09-23T08:00:06.000Z"
-    },
-    {
-      "taskId": "koolestpro-weekly-template-build",
-      "enabled": true,
-      "schedule": "At 09:21 AM, only on Wednesday",
-      "cronExpression": "15 9 * * 3",
-      "lastRunAt": "2026-09-16T18:32:16.789Z",
-      "nextRunAt": "2026-09-23T08:20:39.000Z"
+      "suspensionReason": null,
+      "schedule": "At 09:06 (Africa/Lagos), only on Sunday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 6 9 * * 0",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-10-04T08:06:00Z"
     },
     {
       "taskId": "koolestpro-distribution-health-check",
+      "triggerId": "trig_01KShG9gQ36wJUn6nippoCXy",
       "enabled": true,
-      "schedule": "At 09:35 AM, every 2 days",
-      "cronExpression": "35 9 */2 * *",
-      "lastRunAt": "2026-09-16T18:33:18.128Z",
-      "nextRunAt": "2026-09-17T08:40:25.000Z"
+      "suspensionReason": null,
+      "schedule": "At 09:35 (Africa/Lagos), every 2 days",
+      "cronExpression": "CRON_TZ=Africa/Lagos 35 9 */2 * *",
+      "lastRunAt": "2026-09-27T12:45:17.391801562Z",
+      "lastRunStatus": "ROUTINE_RUN_STATUS_SUCCEEDED",
+      "nextRunAt": "2026-09-29T08:35:00Z"
+    },
+    {
+      "taskId": "koolestpro-weekly-template-build",
+      "triggerId": "trig_01NrgwFvqhoxrvf2Q8rw7Ztg",
+      "enabled": true,
+      "suspensionReason": null,
+      "schedule": "At 09:15 (Africa/Lagos), only on Wednesday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 15 9 * * 3",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-09-30T08:15:00Z"
+    },
+    {
+      "taskId": "koolestpro-adlibrary-weekly",
+      "triggerId": "trig_01EWaiYhhRMyoHgzSRbyeCFT",
+      "enabled": true,
+      "suspensionReason": null,
+      "schedule": "At 08:47 (Africa/Lagos), only on Wednesday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 47 8 * * 3",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-09-30T07:47:00Z"
+    },
+    {
+      "taskId": "koolestpro-browseract-weekly",
+      "triggerId": "trig_01PJ9FVvitHnZPq6i8g6pVmd",
+      "enabled": true,
+      "suspensionReason": null,
+      "schedule": "At 08:46 (Africa/Lagos), only on Tuesday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 46 8 * * 2",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-09-29T07:46:00Z"
+    },
+    {
+      "taskId": "koolestpro-replo-cache-staleness-check",
+      "triggerId": "trig_01Ku1PMDkwftYsniHhxBWeZA",
+      "enabled": false,
+      "suspensionReason": "device_absent",
+      "schedule": "At 08:40 (Africa/Lagos), only on Monday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 40 8 * * 1",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-10-05T07:40:00Z"
+    },
+    {
+      "taskId": "koolestpro-weekly-cro-fix",
+      "triggerId": "trig_01Pb5R5aoB3678TJQS5pG7po",
+      "enabled": true,
+      "suspensionReason": null,
+      "schedule": "At 09:06 (Africa/Lagos), only on Sunday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 6 9 * * 0",
+      "lastRunAt": "2026-09-27T09:04:20.351454967Z",
+      "lastRunStatus": "ROUTINE_RUN_STATUS_SUCCEEDED",
+      "nextRunAt": "2026-10-04T08:06:00Z"
+    },
+    {
+      "taskId": "koolestpro-tips-weekly",
+      "triggerId": "trig_01S5BWAx1hVzinwcuSeWT7wZ",
+      "enabled": true,
+      "suspensionReason": null,
+      "schedule": "At 09:20 (Africa/Lagos), only on Friday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 20 9 * * 5",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-10-02T08:20:00Z"
+    },
+    {
+      "taskId": "koolestpro-static-ad-weekly",
+      "triggerId": "trig_01VoqLt3uDRiUFi778Hbay5H",
+      "enabled": true,
+      "suspensionReason": null,
+      "schedule": "At 09:02 (Africa/Lagos), only on Friday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 2 9 * * 5",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-10-02T08:02:00Z"
     },
     {
       "taskId": "koolestpro-system-status-weekly",
+      "triggerId": "trig_01Q94y1HB7VYP1LXqj2x4F8E",
       "enabled": true,
-      "schedule": "At 09:40 AM, only on Monday",
-      "cronExpression": "40 9 * * 1",
-      "lastRunAt": "2026-09-16T18:40:19.166Z",
-      "nextRunAt": "2026-09-21T08:40:23.000Z"
+      "suspensionReason": null,
+      "schedule": "At 09:40 (Africa/Lagos), only on Monday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 40 9 * * 1",
+      "lastRunAt": "2026-09-28T08:41:01.888866238Z",
+      "lastRunStatus": "ROUTINE_RUN_STATUS_SUCCEEDED",
+      "nextRunAt": "2026-10-05T08:40:00Z"
     },
     {
-      "taskId": "koolestpro-tiktok-weekly",
-      "enabled": false,
-      "schedule": "At 09:11 AM, only on Thursday",
-      "cronExpression": "10 9 * * 4",
+      "taskId": "koolestpro-template-showcase-weekly",
+      "triggerId": "trig_017edKYFUeGxfphxoG33xd2v",
+      "enabled": true,
+      "suspensionReason": null,
+      "schedule": "At 09:07 (Africa/Lagos), only on Saturday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 7 9 * * 6",
       "lastRunAt": null,
-      "nextRunAt": null
+      "lastRunStatus": null,
+      "nextRunAt": "2026-10-03T08:07:00Z"
+    },
+    {
+      "taskId": "koolestpro-target-pool-refresh",
+      "triggerId": "trig_01AGP9CDCcd5SfaARPk2TcgW",
+      "enabled": false,
+      "suspensionReason": "device_absent",
+      "schedule": "At 08:09 (Africa/Lagos), only on Monday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 9 8 * * 1",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-10-05T07:09:00Z"
+    },
+    {
+      "taskId": "koolestpro-weekly-distribution-assembly",
+      "triggerId": "trig_01XJgxGKmi2y83uc6KeprhvN",
+      "enabled": false,
+      "suspensionReason": "device_absent",
+      "schedule": "At 07:45 (Africa/Lagos), only on Monday",
+      "cronExpression": "CRON_TZ=Africa/Lagos 45 7 * * 1",
+      "lastRunAt": null,
+      "lastRunStatus": null,
+      "nextRunAt": "2026-10-05T06:45:00Z"
     }
   ]
 }
