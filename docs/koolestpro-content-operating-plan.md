@@ -398,6 +398,20 @@ Google Sheets and Make.com should act as the publishing and automation layer, no
 
 Tracks what has actually been built against this plan, so a future v2 pass knows exactly what exists and doesn't re-litigate settled decisions.
 
+### 2026-09-28: Target pool refresh (ISO week 40), 5 candidates added
+
+`koolestpro-target-pool-refresh` ran on an even ISO week. Trigger: **cro-fix** had only 3 fresh targets (Versed, Transparent Labs, Cuts Clothing), under the threshold of 4. static-ad had 6. Template Showcase still sources from replo-rebuilds, so it was not treated as an active stream for this pool. Fresh counts after: cro-fix 3 → 8, static-ad 6 → 11.
+
+Each candidate was loaded live at 390x844 and the screenshot viewed before the issue was written:
+
+- **Fly By Jing** (food-beverage-supplements, Collection Page): two competing prices per card (regular plus a members band), only two products above the fold, chat pill over the second row.
+- **Fishwife** (food-beverage-supplements, Collection Page): the first screen is a translucent promo banner, zero products above the fold. Domain is eatfishwife.com, not fishwife.com (an unrelated restaurant).
+- **Topicals** (beauty-skincare, Homepage Section): a "Scratch to win" floating pill covers the hero's only Shop now button.
+- **Bala** (fitness-wellness, Homepage Section): hairline headline over busy video that never says what is sold, ghost CTA, clipped promo marquee.
+- **Brightland** (food-beverage-supplements, Homepage Section): seasonal "Hello, Cozy Season" hero with no value prop, "Mystery Discount" pill over the first product card.
+
+Screened and not added: Western Rise (store closed), Pact (collection page clean on mobile, better as a reference than a before/after), Wild One (clean, weak issue), Kotn, Graza and Olivers Apparel (pages did not render through the sandbox proxy, so nothing could be verified). The fashion-apparel gap (1 target) is still unfilled; worth prioritising next refresh. Nothing was selected, used or published.
+
 ### 2026-09-18 — Builders approved for rebuilds, Static Ads default to prompt packs, Tips back to the old style, Instagram paused
 
 - **Rebuilds move to external builders.** CRO Fix rebuilds and redesigns of real businesses (not store templates) are now built in Lovable / Figma Make / Claude Design / v0, driven by Claude over MCP from the page-build brief, then captured and turned into the post. `CLAUDE.md` "AI Workflow Architecture" rewritten to allow it. **Rebuilds stay private**: no public deploy or share link for a real brand's page.
