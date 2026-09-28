@@ -147,6 +147,126 @@
       "sourceQuery": "Area=Lekki, Lagos; Keyword=fashion boutique",
       "koolestflowId": "koolestflow-browseract-cart2closet-fashion-store-luxury-store-quality-aff",
       "takenAt": "2026-09-01T17:14:38.000Z"
+    },
+    "guhomesng|lagos": {
+      "brandName": "Gu-homes.ng",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=home decor; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-gu-homes-ng",
+      "takenAt": "2026-09-28T09:23:27.000Z"
+    },
+    "vceegadgets|lagos": {
+      "brandName": "Vcee Gadgets",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "https://vvicsgadgets.com.ng/unbreakable/",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=gadgets; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-vcee-gadgets",
+      "takenAt": "2026-09-28T09:23:30.000Z"
+    },
+    "beauthirstcosmetics|lagos": {
+      "brandName": "Beauthirst cosmetics",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Victoria Island, Lagos; Keyword=skincare shop",
+      "koolestflowId": "koolestflow-browseract-beauthirst-cosmetics",
+      "takenAt": "2026-09-28T09:23:33.000Z"
+    },
+    "oriflameskincarewellosophywellnessfoodsupplementsweightlossmealreplacementplanbyglowwellwithme|lagos": {
+      "brandName": "Oriflame Skin Care, Wellosophy Wellness Food Supplements, Weight Loss Meal Replacement Plan by Glow Well With Me",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Victoria Island, Lagos; Keyword=skincare shop",
+      "koolestflowId": "koolestflow-browseract-oriflame-skin-care-wellosophy-wellness-food-supple",
+      "takenAt": "2026-09-28T09:23:33.000Z"
+    },
+    "beautyexpertscosmetics|lagos": {
+      "brandName": "Beauty experts Cosmetics",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "https://beautyexpertproducts.com/",
+      "source": "browseract",
+      "sourceQuery": "Area=Victoria Island, Lagos; Keyword=skincare shop",
+      "koolestflowId": "koolestflow-browseract-beauty-experts-cosmetics",
+      "takenAt": "2026-09-28T09:23:33.000Z"
+    },
+    "dazbeautycosmetics|lagos": {
+      "brandName": "Dazbeauty Cosmetics",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Victoria Island, Lagos; Keyword=skincare shop",
+      "koolestflowId": "koolestflow-browseract-dazbeauty-cosmetics",
+      "takenAt": "2026-09-28T09:23:33.000Z"
+    },
+    "desybeautysalonspa|lagos": {
+      "brandName": "Desy Beauty Salon & Spa",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Victoria Island, Lagos; Keyword=skincare shop",
+      "koolestflowId": "koolestflow-browseract-desy-beauty-salon-spa",
+      "takenAt": "2026-09-28T09:23:33.000Z"
+    },
+    "astankidsclothingstore|lagos": {
+      "brandName": "ASTAN Kids Clothing Store",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "https://astankids.com/",
+      "source": "browseract",
+      "sourceQuery": "Area=Ikeja, Lagos; Keyword=baby and kids store",
+      "koolestflowId": "koolestflow-browseract-astan-kids-clothing-store",
+      "takenAt": "2026-09-28T09:23:36.000Z"
+    },
+    "omackids|lagos": {
+      "brandName": "Omackids",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Ikeja, Lagos; Keyword=baby and kids store",
+      "koolestflowId": "koolestflow-browseract-omackids",
+      "takenAt": "2026-09-28T09:23:36.000Z"
+    },
+    "geraldbabieskids|lagos": {
+      "brandName": "Gerald babies & kids",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "https://geraldbabies.com/",
+      "source": "browseract",
+      "sourceQuery": "Area=Ikeja, Lagos; Keyword=baby and kids store",
+      "koolestflowId": "koolestflow-browseract-gerald-babies-kids",
+      "takenAt": "2026-09-28T09:23:36.000Z"
+    },
+    "childmate|lagos": {
+      "brandName": "Childmate",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Ikeja, Lagos; Keyword=baby and kids store",
+      "koolestflowId": "koolestflow-browseract-childmate",
+      "takenAt": "2026-09-28T09:23:36.000Z"
+    },
+    "kidsmarketplace|lagos": {
+      "brandName": "Kids Market Place",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Ikeja, Lagos; Keyword=baby and kids store",
+      "koolestflowId": "koolestflow-browseract-kids-market-place",
+      "takenAt": "2026-09-28T09:23:36.000Z"
     }
   }
 }

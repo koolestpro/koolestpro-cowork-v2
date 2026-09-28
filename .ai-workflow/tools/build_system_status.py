@@ -310,6 +310,16 @@ def collect_importer(root: Path, now: datetime) -> dict:
         out["error"] = f"could not read log: {exc}"
         return out
 
+    # Only judge what happened AFTER the importer last worked (fixed
+    # 2026-09-28): the old 'Operation not permitted' lines from before the
+    # project left ~/Downloads stayed in the tail and kept reporting BLOCKED
+    # even after imports were succeeding again.
+    SUCCESS_MARKERS = ("Import run finished", "imported and archived", "Backend up at", "Queue empty")
+    last_ok = max((i for i, ln in enumerate(tail) if any(m in ln for m in SUCCESS_MARKERS)), default=-1)
+    if last_ok >= 0:
+        out["last_success_line"] = tail[last_ok].strip()[:200]
+        tail = tail[last_ok + 1:]
+
     # Classify rather than echo. The same line repeats hundreds of times, so
     # the useful signal is which failure, not how the last line reads.
     errs = [ln.strip() for ln in tail if "Operation not permitted" in ln

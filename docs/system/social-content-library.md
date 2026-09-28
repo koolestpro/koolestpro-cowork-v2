@@ -5,7 +5,9 @@ The canonical answer to "how do I get the caption for a given generated image wh
 * `{brand-slug}-social-content.md` — human-readable, key table + fenced caption blocks.
 * `{brand-slug}-social-content.json` — machine-readable sibling, same keys; the durable source of truth for any autopost step. Update both together, never drift.
 
-**Key scheme:** Static Ad `SA-{BRAND}-*`, CRO Fix `CRO-{BRAND}-*` (`-BA`/`-ANNO`/`-CAROUSEL`/`-X1..3`), Template Showcase `TS-{BRAND}-*` (`-COVER-VID`/`-LAPTOP-VID`/`-MOBILE-VID`/`-COVER-IMG`/`-PREVIEW`/`-FULLPAGE`/`-MOBILESTRIP`), Tip `TIP-{BRAND}-COVER`/`-CAROUSEL`/`-X1..3`. The `-GRAPHIC-A/B/C` standalone graphics are retired (2026-07-18) — never create them.
+**Caption = image rule (2026-09-28):** every caption that posts with a single image names that image in `assetPath` (one path, not a list) and carries its `captionKey`. A caption written for "the post in general" can only go on a multi-image post (carousel, combined showcase). This is what lets `populate_sheet.py` pair the right words with the right picture. The old habit of dealing generic `-X1..3` captions across images by position is what put "Four ad directions" on a single ad.
+
+**Key scheme:** Static Ad `SA-{BRAND}-*` (per-image X keys `-X-PROBLEM/-X-BENEFIT/-X-PROOF/-X-OFFER/-X-COMBO` + `-IG-SINGLE` since 2026-09-28; `-X1..3` retired), CRO Fix `CRO-{BRAND}-*` (`-BA`/`-ANNO`/`-CAROUSEL`/`-X-CAROUSEL`/`-X-COVER`/`-X-BA`/`-X-ANNO`/`-X-ANNO-GRAPHIC`; `-X1..3` retired 2026-09-27), Template Showcase `TS-{BRAND}-*` (`-COVER-VID`/`-LAPTOP-VID`/`-MOBILE-VID`/`-COVER-IMG`/`-PREVIEW`/`-FULLPAGE`/`-MOBILESTRIP`), Tip `TIP-{BRAND}-COVER`/`-CAROUSEL`/`-X1..3`. The `-GRAPHIC-A/B/C` standalone graphics are retired (2026-07-18) — never create them.
 
 When one visual has multiple caption angles, use `captionOptions: [{id, caption, hashtags}]` — pick one at post time. The `.json` file wins if it and the pipeline item's `captions`/`assets` fields disagree.
 

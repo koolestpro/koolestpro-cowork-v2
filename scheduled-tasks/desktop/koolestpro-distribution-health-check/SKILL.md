@@ -60,6 +60,16 @@ For every Instagram row classified **Upcoming/queued and NOT already Blocked** (
 
 Real carousel support (child media containers + `is_carousel_item` + a parent container + `/media_publish`) does not exist in the Make scenario yet — this is a known, deliberate stopgap, not something this task should attempt to build. Building it requires editing scenario 6565331's Instagram branch, which this task must not do (see Step 3's blueprint-editing note).
 
+## Step 1d — Caption matches its image (added 2026-09-28, Ridwan's instruction, permanent, every run)
+
+Run `python3 .ai-workflow/tools/caption_fit.py` from the project root. It checks every unposted row in the local `queue.json` for a caption that doesn't fit its image:
+- a single image posted with "four ads", "carousel" or "swipe" wording;
+- an empty caption;
+- a stray "158 chars" counter pasted into the tweet;
+- a before/after image whose X caption never contrasts before and after.
+
+For each flagged row due in the next 7 days, report it in Step 5 and in the final summary: the post_id, the image filename and the reason. Do NOT rewrite the caption or reschedule the row yourself. The right caption depends on what the image shows, and Ridwan decides that. Also add one rollup line: "caption/image check: N rows checked, M flagged (K due within 7 days)".
+
 ## Step 2 — Actually fix genuinely missed rows via the reschedule webhook
 **First, verify the reschedule webhook's own scenario is active** (added 2026-09-08 — see item 7 above). Check scenario id 7111659 ("Distribution Queue Reschedule") via the Make MCP tools; if `isActive`/`scenarioIsActive` is false, activate it before calling the webhook at all, otherwise every call below will silently no-op.
 

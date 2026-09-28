@@ -86,7 +86,36 @@ BLOCK_TITLE_MAP = {
     "linkedin caption": "linkedin",
     "x posts": "x",
     "twitter posts": "x",
+    # 2026-09-28: the single-image Instagram post gets its OWN caption, written
+    # for ad-1 alone. It used to borrow the LinkedIn caption, which describes
+    # all four ads ("Four static ad directions for...") on a one-image post.
+    "instagram single": "ig_single",
 }
+
+# 2026-09-28: per-image X captions for Static Ads. Each .x-post carries
+# data-asset="ad-1|ad-2|ad-3|ad-4|combined-showcase" naming the ONE image it
+# was written for. populate_sheet.py then posts it with exactly that image.
+# Without data-asset the post falls into the generic "x" pool, which the
+# per-image slots no longer draw from (see populate_sheet.py PER_IMAGE_KEYS).
+STATIC_AD_ASSET_KEYS = {
+    "ad-1": "x_problem",
+    "ad-2": "x_benefit",
+    "ad-3": "x_proof",
+    "ad-4": "x_offer",
+    "combined-showcase": "x_combo",
+}
+
+
+def _block_key(title):
+    """Map a copy-block title to a caption key. Prefix match, because titles
+    carry suffixes like 'LinkedIn Caption: SA-CARAWAY-COMBO' (bug found
+    2026-09-28: the exact-match lookup skipped that block, so Caraway's
+    Instagram rows shipped with an empty caption)."""
+    t = title.lower().strip()
+    for prefix, key in BLOCK_TITLE_MAP.items():
+        if t == prefix or t.startswith(prefix + ":") or t.startswith(prefix + " "):
+            return key
+    return None
 
 
 def read_html(path):
@@ -268,7 +297,7 @@ def parse_block_captions(soup):
         if not title_el:
             continue
         title = title_el.get_text(strip=True).lower()
-        canonical = BLOCK_TITLE_MAP.get(title)
+        canonical = _block_key(title)
         if canonical is None:
             continue  # skip Research Notes and any non-caption blocks
         if canonical == "x":
@@ -277,10 +306,25 @@ def parse_block_captions(soup):
             # adjacent lines together with zero whitespace (e.g. "code.This
             # is KURA" instead of a line break between them). This shipped
             # in the first live KURA X post before anyone caught it.
-            posts = [clean(x.get_text(separator="\n")) for x in block.select(".x-post")]
-            posts = [re.sub(r"^\d+\.\s*", "", p) for p in posts if p]
-            posts = [strip_trailing_hashtags(p) for p in posts]
-            caps["x"] = {"text": posts, "source_tab": "copy-block:X Posts"}
+            posts = []
+            for x in block.select(".x-post"):
+                # Bug fixed 2026-09-28: the on-page "158 chars" counter span was
+                # read as part of the tweet and shipped in the caption.
+                for cc in x.select(".charcount, .char-count, .chars"):
+                    cc.decompose()
+                text = clean(x.get_text(separator="\n"))
+                text = re.sub(r"\n\s*\d{2,4}\s*chars?\s*$", "", text, flags=re.I)
+                text = strip_trailing_hashtags(re.sub(r"^\d+\.\s*", "", text))
+                if not text:
+                    continue
+                asset = (x.get("data-asset") or "").strip().lower()
+                per_image = STATIC_AD_ASSET_KEYS.get(asset)
+                if per_image:
+                    caps[per_image] = {"text": text, "source_tab": f"copy-block:X Posts[data-asset={asset}]"}
+                else:
+                    posts.append(text)
+            if posts:
+                caps["x"] = {"text": posts, "source_tab": "copy-block:X Posts"}
         else:
             p = block.find("p")
             text = clean(p.get_text(separator="\n") if p else block.get_text(separator="\n").replace(title_el.get_text(), ""))

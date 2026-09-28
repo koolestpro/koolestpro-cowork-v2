@@ -1,0 +1,100 @@
+{
+ "cro-fix-tapro_google-review-cards-20260831-20260916-ig-1200": {
+  "why": "Caption never named TAPro Cards (QA flag). Review count updated: live store now shows 1,155, so 'over 1,100' stays true as it grows.",
+  "old": "This brand has 15,500+ real business customers and a 4.9 star rating from 1,125 reviews. You wouldn't know it from their homepage.\n\nThe first screen is a promo banner and a hero photo. No price, no rating, no product, until you scroll past a full video demo and into a product grid.\n\nA strong first screen shows what's true about your brand immediately. This one buries it.\n\nFollow @koolestpro for weekly CRO breakdowns.\n\n#ShopifyDesign #CRO #eCommerce #ConversionRate #Shopify #UXDesign #SmallBusiness",
+  "new": "TAPro Cards has 15,500+ business customers and a 4.9 star rating from over 1,100 reviews. You wouldn't know it from their homepage.\n\nThe first screen is a promo banner and a hero photo. You don't see a price, a rating or a product until you've scrolled past a full video demo and into the product grid.\n\nYour first screen should say what's true about you straight away. TAPro's hides it.\n\nFollow @koolestpro for weekly CRO breakdowns.\n\n#ShopifyDesign #CRO #eCommerce #ConversionRate #Shopify #UXDesign #SmallBusiness",
+  "platform": "Instagram",
+  "chars": 516
+ },
+ "cro-fix-tapro_google-review-cards-20260831-20260918-x-0900": {
+  "why": "Named the brand and page type; the old version said only 'Same brand.'",
+  "old": "Before: banner, big photo, video demo, no price, no rating, no product, scroll for proof.\nAfter: thin banner, real price, real rating, real product, real trust strip, one CTA. Same brand.",
+  "new": "TAPro Cards homepage.\n\nBefore: banner, big photo, video demo, then a long scroll before any proof.\nAfter: thin banner, the real price, the real rating, the product, a trust strip, one CTA.\n\nSame brand. Same products.",
+  "platform": "Twitter",
+  "chars": 216
+ },
+ "cro-fix-caraway_fry-pan-pdp-20260907-20260923-li-0900": {
+  "why": "Live PDP now shows 19,981 reviews (4.8 stars). $125 price still correct.",
+  "old": "Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\n\nYou think 18,886 reviews means the trust is already there.\n\nIt doesn't, if the page can't render them in time.\n\nReal findings, nothing invented:\n\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \"Reviews\" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\n\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\n\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\n\nFull before/after and annotated breakdown in the carousel.\n\nRepost if this is useful to someone building a product page right now.",
+  "new": "Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\n\nYou think almost 20,000 reviews means the trust is already there.\n\nIt doesn't, if the page can't render them in time.\n\nReal findings, nothing invented:\n\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \"Reviews\" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\n\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\n\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\n\nFull before/after and annotated breakdown in the carousel.\n\nRepost if this is useful to someone building a product page right now.",
+  "platform": "LinkedIn",
+  "chars": 1008
+ },
+ "cro-fix-caraway_fry-pan-pdp-20260907-20260925-x-0900": {
+  "why": "Live PDP now shows 19,981 reviews.",
+  "old": "On a live load, the review line can paint as literal text \"Reviews,\" no stars, no count. 18,886 real reviews exist. The fix: never let the number that matters most render empty.",
+  "new": "On a live load, the review line can paint as literal text \"Reviews,\" no stars, no count. Almost 20,000 real reviews exist. The fix: never let the number that matters most render empty.",
+  "platform": "Twitter",
+  "chars": 184
+ },
+ "static-ad-caraway_fry-pan-20260909-20260916-x-1800": {
+  "why": "Caption now matches the image it posts with: ad-2 (benefit), `ad-2-benefit-result.png`. Before, this row carried a caption written for a different ad in the set. The ad-3 caption no longer restates a review count, because the image itself prints '4.7 · 18,878 Reviews' (live PDP today: 4.8 · 19,981).",
+  "old": "The strongest line in this ad was not written by a marketer.\n\n\"Cooks evenly and quickly.\"\n\nCurtis M., verified buyer, sitting under 18,878 reviews.\n\nReal beats clever most days.\n175 chars",
+  "new": "Benefit ad for Caraway's fry pan. One promise up top: a healthier way to cook every day.\n\nThen the reasons it holds up. Non-toxic ceramic coating, oven safe to 550°F, works on gas, electric and induction, wipes clean.\n\nNo discount in this one. The pan does the selling.",
+  "platform": "Twitter",
+  "chars": 269
+ },
+ "static-ad-caraway_fry-pan-20260909-20260921-x-0900": {
+  "why": "Caption now matches the image it posts with: combined showcase (all four), `combined-showcase.png`. Before, this row carried a caption written for a different ad in the set. The ad-3 caption no longer restates a review count, because the image itself prints '4.7 · 18,878 Reviews' (live PDP today: 4.8 · 19,981).",
+  "old": "The strongest line in this ad was not written by a marketer.\n\n\"Cooks evenly and quickly.\"\n\nCurtis M., verified buyer, sitting under 18,878 reviews.\n\nReal beats clever most days.\n175 chars",
+  "new": "Four ad directions from one $125 frying pan.\n\nProblem. Benefit. Proof. Offer.\n\nSame product, same photo brief. Only the first line changes.\n\nConcept work off Caraway's live PDP.",
+  "platform": "Twitter",
+  "chars": 177
+ },
+ "static-ad-caraway_fry-pan-20260909-20260919-x-1800": {
+  "why": "Caption now matches the image it posts with: ad-4 (no forever chemicals), `ad-4-offer-urgency.png`. Before, this row carried a caption written for a different ad in the set. The ad-3 caption no longer restates a review count, because the image itself prints '4.7 · 18,878 Reviews' (live PDP today: 4.8 · 19,981).",
+  "old": "Four ad directions from one $125 frying pan.\n\nProblem. Benefit. Proof. Offer.\n\nSame product, same photo brief. Only the first line changes.\n\nConcept work off Caraway's live PDP.\n158 chars",
+  "new": "Caraway's whole pitch is three letters they left out.\n\nNo PTFE. No PFOA. No PFAS.\n\nSo the ad leads with the worry, not the pan. The pan is the answer to a question you already had.",
+  "platform": "Twitter",
+  "chars": 180
+ },
+ "static-ad-caraway_fry-pan-20260909-20260929-x-1300": {
+  "why": "Caption now matches the image it posts with: ad-1 (retargeting/offer), `ad-1-problem-solution.png`. Before, this row carried a caption written for a different ad in the set. The ad-3 caption no longer restates a review count, because the image itself prints '4.7 · 18,878 Reviews' (live PDP today: 4.8 · 19,981).",
+  "old": "Four ad directions from one $125 frying pan.\n\nProblem. Benefit. Proof. Offer.\n\nSame product, same photo brief. Only the first line changes.\n\nConcept work off Caraway's live PDP.\n158 chars",
+  "new": "Retargeting ad for someone who looked at a $125 pan and left.\n\nIt opens with \"Still thinking about it?\" and then clears what usually stops the purchase: free shipping over $90, 30-day returns, 4 payments of $32.\n\nThe price objection gets answered before anyone raises it.",
+  "platform": "Twitter",
+  "chars": 271
+ },
+ "static-ad-caraway_fry-pan-20260909-20260925-x-1300": {
+  "why": "Caption now matches the image it posts with: ad-3 (social proof), `ad-3-social-proof.png`. Before, this row carried a caption written for a different ad in the set. The ad-3 caption no longer restates a review count, because the image itself prints '4.7 · 18,878 Reviews' (live PDP today: 4.8 · 19,981).",
+  "old": "Caraway's whole pitch is three letters they left out.\n\nNo PTFE. No PFOA. No PFAS.\n\nSo the ad leads with the worry, not the pan. The pan is the answer to a question you already had.\n190 chars",
+  "new": "The strongest line in this ad was not written by a marketer.\n\n\"Cooks evenly and quickly.\"\n\nCurtis M., verified buyer.\n\nReal beats clever most days.",
+  "platform": "Twitter",
+  "chars": 147
+ },
+ "cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920-20260923-x-1300": {
+  "why": "Review count updated: the live PDP shows 29,095 reviews at 4.9 stars. The X/OK contrast markers stay, since they're your playbook pattern.",
+  "old": "Kyte Baby's PDP: same button, different signal.\n\nBefore:\nX Gray CTA, looks disabled\nX Trust buried below a TOG slider\n\nAfter:\nOK Red CTA, reads as active\nOK Trust sits right under the button\n\n29,067 reviews already agreed.\nNow the button does too.",
+  "new": "Kyte Baby's PDP: same button, different signal.\n\nBefore:\nX Gray CTA, looks disabled\nX Trust buried below a TOG slider\n\nAfter:\nOK Red CTA, reads as active\nOK Trust sits right under the button\n\n29,000+ reviews already agreed.\nNow the button does too.",
+  "platform": "Twitter",
+  "chars": 248
+ },
+ "cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920-20260927-x-1800": {
+  "why": "They are not all five-star: the live page shows 29,095 reviews averaging 4.9.",
+  "old": "Kyte Baby's PDP already had 29,067 five star reviews.\n\nThen the buy button rendered flat gray, like it was disabled.\n\nFixed the button. Not the proof.\n\nSame product.\nBetter signal = better conversion.",
+  "new": "Kyte Baby's PDP already had 29,000+ reviews at 4.9 stars.\n\nThen the buy button rendered flat gray, like it was disabled.\n\nFixed the button. Not the proof.\n\nSame product.\nBetter signal = better conversion.",
+  "platform": "Twitter",
+  "chars": 204
+ },
+ "cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920-20260923-li-0900": {
+  "why": "They are not all five-star: the live page shows 29,095 reviews averaging 4.9.",
+  "old": "PRODUCT PAGE (PDP): Kyte Baby's Sleep Bag in Oat 1.0 already had 29,067 five-star reviews and real safety certifications above the fold. Then the buy button rendered flat gray, no size selected, reading as disabled at the exact moment a shopper was ready to act.\n\nThe fix wasn't more proof. The proof was already there. It was the button.\n\nThree changes:\n1. Recolored the CTA to high-contrast red. Never gray, never looks disabled.\n2. Moved shipping, returns, and Afterpay right under the button instead of a full scroll away, buried below a temperature slider.\n3. Called out the AAP-compliant and OEKO-TEX certifications as benefit chips, not buried copy.\n\nSame product. Same reviews. A button that finally matches the trust the page already earned.\n\nThis is unofficial portfolio work, not a Kyte Baby engagement. Repost if you've ever shipped a page that proved itself right up until the button.",
+  "new": "PRODUCT PAGE (PDP): Kyte Baby's Sleep Bag in Oat 1.0 already had over 29,000 reviews at 4.9 stars and real safety certifications above the fold. Then the buy button rendered flat gray, no size selected, reading as disabled at the exact moment a shopper was ready to act.\n\nThe fix wasn't more proof. The proof was already there. It was the button.\n\nThree changes:\n1. Recolored the CTA to high-contrast red. Never gray, never looks disabled.\n2. Moved shipping, returns, and Afterpay right under the button instead of a full scroll away, buried below a temperature slider.\n3. Called out the AAP-compliant and OEKO-TEX certifications as benefit chips, not buried copy.\n\nSame product. Same reviews. A button that finally matches the trust the page already earned.\n\nThis is unofficial portfolio work, not a Kyte Baby engagement. Repost if you've ever shipped a page that proved itself right up until the button.",
+  "platform": "LinkedIn",
+  "chars": 905
+ },
+ "tip-advertorial-what-it-actually-is-20260510-20260817-li-0900": {
+  "why": "'Warmed-up traffic can hit 60%+' has no source and isn't believable as a conversion rate. Dropped it.",
+  "old": "You think an advertorial is a longer landing page. That's why cold traffic keeps bouncing.\n\nMost Shopify brands treat it like homework. Copy from the ad, stretch it out, ship it, move on.\n\nCold traffic converts around 1.5%. Warmed-up traffic can hit 60%+. That gap is one page most brands never build properly.\n\nAn advertorial isn't a landing page. It isn't a blog post either. Its only job is making a stranger believe you before anything else.\n\nIt runs on 3 beats that actually carry the weight:\n\nThe hook that stops the scroll.\n\nThe proof that kills the doubt.\n\nThe reveal that earns the click.\n\nEverything else on the page just clears the path between those three.\n\nBefore you write your next one, ask yourself this: does this page make a stranger believe you before it asks them to buy? If not, it's just copy.\n\nSave this for your next funnel build.",
+  "new": "You think an advertorial is a longer landing page. That's why cold traffic keeps bouncing.\n\nMost Shopify brands treat it like homework. Copy from the ad, stretch it out, ship it, move on.\n\nCold traffic sent straight to a product page usually converts somewhere around 1 to 2%. The page that's meant to warm it up first is the one most brands never build properly.\n\nAn advertorial isn't a landing page. It isn't a blog post either. Its only job is making a stranger believe you before anything else.\n\nIt runs on 3 beats that actually carry the weight:\n\nThe hook that stops the scroll.\n\nThe proof that kills the doubt.\n\nThe reveal that earns the click.\n\nEverything else on the page just clears the path between those three.\n\nBefore you write your next one, ask yourself this: does this page make a stranger believe you before it asks them to buy? If not, it's just copy.\n\nSave this for your next funnel build.",
+  "platform": "LinkedIn",
+  "chars": 907
+ },
+ "tip-the-conversion-layer-1777028149144-20260824-li-0900": {
+  "why": "No source exists for '73% of Shopify redesigns'. Opened on the point itself instead, and removed the em dashes (project style rule).",
+  "old": "73% of Shopify redesigns don't lift conversions.\n\nNot because the design was bad.\nBecause the wrong problem was solved.\n\nMost store owners jump straight to Figma. New hero image. Bigger fonts. Trending layout. It looks cleaner. But conversion barely moves.\n\nHere's what's actually missing — The Conversion Layer.\n\nIt's the strategic audit you run before a single pixel moves. Three questions answer everything:\n\n→ Clarify: What does this page need to communicate? What's the buyer's one burning question?\n→ Construct: Does the layout follow the buyer's journey — or your designer's preference?\n→ Convert: What's the single action this page must drive? Is every element pointing there?\n\nThat's the 3C Framework.\n\nBefore I open Figma on any CRO project, I run this. 15 minutes of diagnosis saves 3 weeks of redesign that doesn't move the needle.\n\nThe Conversion Layer isn't a style choice. It's a strategic brief. And it's the difference between a page that looks better and a page that sells more.\n\nSave this. Share it with your designer before the next brief.\n\nFollow @koolestpro for Shopify CRO & UX tips every week.",
+  "new": "A redesign can make your store look better and sell exactly the same.\n\nNot because the design was bad.\nBecause the wrong problem was solved.\n\nMost store owners jump straight to Figma. New hero image. Bigger fonts. Trending layout. It looks cleaner. But conversion barely moves.\n\nWhat's missing is the Conversion Layer.\n\nIt's the strategic audit you run before a single pixel moves. Three questions answer everything:\n\n→ Clarify: What does this page need to communicate? What's the buyer's one burning question?\n→ Construct: Does the layout follow the buyer's journey, or your designer's preference?\n→ Convert: What's the single action this page must drive? Is every element pointing there?\n\nThat's the 3C Framework.\n\nBefore I open Figma on any CRO project, I run this. 15 minutes of diagnosis saves 3 weeks of redesign that doesn't move the needle.\n\nThe Conversion Layer isn't a style choice. It's a strategic brief. And it's the difference between a page that looks better and a page that sells more.\n\nSave this. Share it with your designer before the next brief.\n\nFollow @koolestpro for Shopify CRO & UX tips every week.",
+  "platform": "LinkedIn",
+  "chars": 1122
+ }
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28 08:42 UTC",
+  "generated_at": "2026-09-28 09:52 UTC",
   "project_root": "/sessions/rcw-015m6ntb8zhfrew1nhp5vwsa/mnt/koolestpro-cowork-v2",
   "scheduled_tasks": {
     "source": ".ai-workflow/scheduled-tasks-snapshot.json",
@@ -143,13 +143,13 @@
       "Instagram": 61
     },
     "by_status": {
-      "Posted": 91,
-      "Ready": 103,
+      "Posted": 110,
+      "Ready": 84,
       "Draft": 1
     },
     "clean_next_7d": 0,
     "clean_pace_per_day": 0.0,
-    "overdue_qa_blocked": 31,
+    "overdue_qa_blocked": 0,
     "note": "Twitter + LinkedIn only. Instagram is excluded because it cannot post at all (Meta Page-IG link blocker)."
   },
   "targets_pool": {
@@ -173,47 +173,20 @@
   "lead_gen": {
     "ledger": {
       "source": ".ai-workflow/taken-brands-ledger.json",
-      "brands_taken": 14
+      "brands_taken": 26
     },
     "pending_push": {
       "source": ".ai-workflow/pending-push/",
-      "queued": 5,
-      "files": [
-        "2026-W36_adlib-ng-home-decor.json",
-        "2026-W37_adlib-ng-gadgets.json",
-        "2026-W37_victoria-island-lagos-skincare-shop.json",
-        "2026-W38_adlib-ng-food.json",
-        "2026-W38_ikeja-lagos-baby-and-kids-store.json"
-      ],
-      "stale": [
-        {
-          "file": "2026-W36_adlib-ng-home-decor.json",
-          "age_hours": 616
-        },
-        {
-          "file": "2026-W37_adlib-ng-gadgets.json",
-          "age_hours": 453
-        },
-        {
-          "file": "2026-W37_victoria-island-lagos-skincare-shop.json",
-          "age_hours": 478
-        },
-        {
-          "file": "2026-W38_adlib-ng-food.json",
-          "age_hours": 278
-        },
-        {
-          "file": "2026-W38_ikeja-lagos-baby-and-kids-store.json",
-          "age_hours": 241
-        }
-      ]
+      "queued": 0,
+      "files": [],
+      "stale": []
     },
     "importer": {
       "source": ".ai-workflow/leadgen-import.launchd.log",
-      "last_write_age_hours": 11.6,
-      "recent_error_lines": 22,
-      "state": "blocked",
-      "diagnosis": "macOS is denying the launchd agent access to the project folder (TCC). The job fires on schedule but /bin/bash cannot execute the script, so nothing is ever imported."
+      "last_write_age_hours": 0.5,
+      "last_success_line": "[2026-09-28T09:23:40Z] Import run finished.",
+      "recent_error_lines": 0,
+      "state": "ok"
     }
   },
   "showcase_pages": {
@@ -257,9 +230,9 @@
       },
       {
         "file": "CLAUDE.md",
-        "bytes": 28536,
-        "kib": 27.9,
-        "tokens_est": 7134,
+        "bytes": 29106,
+        "kib": 28.4,
+        "tokens_est": 7276,
         "budget_bytes": 40000,
         "budget_kib": 39,
         "over_budget": false
@@ -279,30 +252,6 @@
     {
       "level": "warn",
       "text": "targets_pool has only 2 untouched candidates left (threshold 4)."
-    },
-    {
-      "level": "alert",
-      "text": "Lead importer is BLOCKED, not idle. macOS is denying the launchd agent access to the project folder (TCC). The job fires on schedule but /bin/bash cannot execute the script, so nothing is ever imported. Grant Full Disk Access to /bin/bash, or move the project out of ~/Downloads. Until then every queued file stays put."
-    },
-    {
-      "level": "alert",
-      "text": "2026-W36_adlib-ng-home-decor.json has sat in pending-push for 616h. Blocked by the importer failure above."
-    },
-    {
-      "level": "alert",
-      "text": "2026-W37_adlib-ng-gadgets.json has sat in pending-push for 453h. Blocked by the importer failure above."
-    },
-    {
-      "level": "alert",
-      "text": "2026-W37_victoria-island-lagos-skincare-shop.json has sat in pending-push for 478h. Blocked by the importer failure above."
-    },
-    {
-      "level": "alert",
-      "text": "2026-W38_adlib-ng-food.json has sat in pending-push for 278h. Blocked by the importer failure above."
-    },
-    {
-      "level": "alert",
-      "text": "2026-W38_ikeja-lagos-baby-and-kids-store.json has sat in pending-push for 241h. Blocked by the importer failure above."
     },
     {
       "level": "warn",

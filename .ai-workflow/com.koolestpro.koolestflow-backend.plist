@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.koolestpro.koolestflow-backend</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/mac/koolestpro-cowork-v2/.ai-workflow/tools/run_koolestflow_backend.sh</string>
+    </array>
+
+    <!-- Start at login. -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Restart it whenever it exits (crash, killed, Mac woke up and it died). -->
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Wait at least 30s between restarts so a crash loop can't spin the CPU. -->
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/mac/koolestpro-cowork-v2/cold-email-app</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/mac/koolestpro-cowork-v2/.ai-workflow/koolestflow-backend.launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/mac/koolestpro-cowork-v2/.ai-workflow/koolestflow-backend.launchd.log</string>
+</dict>
+</plist>

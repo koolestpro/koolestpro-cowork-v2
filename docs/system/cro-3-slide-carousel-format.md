@@ -34,7 +34,15 @@ one per X post, each under 280 characters, never recycled between posts. In the 
 | Dark annotation, X single | slide 3 | `tab-x-anno` -> `x_anno` | Sat 13:00 |
 | Clear-bg annotation, X single | `*_annotated.png` | `tab-x-anno-graphic` -> `x_anno_graphic` | Sun 18:00 |
 
-Social-content keys: `CRO-{BRAND}-X-CAROUSEL`, `-X-COVER`, `-X-BA`, `-X-ANNO`, `-X-ANNO-GRAPHIC`.
+Social-content keys: `CRO-{BRAND}-X-CAROUSEL`, `-X-COVER`, `-X-BA`, `-X-ANNO`, `-X-ANNO-GRAPHIC`, each with `assetPath` (the image it posts with) and `captionKey`.
+
+**Caption = image (Ridwan, 2026-09-28).** Write each X single while looking at the exact PNG it posts with. What each one says:
+- **Cover:** the hook shown on slide 1.
+- **Before/after:** the contrast, before vs after.
+- **Annotations:** the numbered changes the image points at.
+- **Single images:** never mention "carousel", "swipe" or "slides".
+
+Since 2026-09-28 the four single keys have **no fallback**. If `tab-x-ba` (etc.) is missing, `populate_sheet.py` writes that row empty and holds it as Draft instead of borrowing another image's tweet. Run `python3 .ai-workflow/tools/caption_fit.py` before finishing and fix anything flagged for this item.
 Reference run: Minimalist Niacinamide 10% PDP (2026-09-27), `outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_content.html`.
 
 **Retired:** the standalone `ba-graphic.png` (slide 2 replaces it). **Back by request

@@ -125,7 +125,14 @@ uv run <SKILL_DIR>/scripts/generate.py \
 - **Combined LinkedIn showcase:** composite the 4 individual images into a single 2x2 grid image (`combined-showcase.png`) sized `1024x1024`. Use `gpt-image`'s `edit.py` with all 4 images as input references and a compositing prompt, or assemble programmatically if a simple grid is all that's needed — pick whichever gets a clean result faster. For a simple grid, `Pillow` (Python PIL) is usually faster and more reliable than an AI compositing call.
 - **X assets:** the 4 portrait images work fine posted directly on X as-is; don't over-engineer a second render unless the user specifically wants a landscape crop. If they do, generate that separately rather than blocking the rest of the run on it.
 - **LinkedIn caption:** one caption that walks through the concept — what product, what 4 angles, and a line of positioning (Ridwan's/Koolestpro's or the client's expertise). Should read like someone showing their work, not like ad copy about ad copy.
-- **X posts:** 2-3 short proof-of-work style posts per this project's existing voice guidance (e.g. "4 static ad directions from one product...", "Built these off [real detail from the research]...").
+- **X posts: one per image, five in total, each written for the image it posts with (rule since 2026-09-28).** Every X post goes out as a single image, so its caption must describe only what is in that one image. Open each PNG and look at it before writing its caption.
+  - `ad-1` problem/solution: the worry or problem the ad leads with.
+  - `ad-2` benefit/result: the outcome the ad promises.
+  - `ad-3` social proof: the real review, rating or quote shown in that ad.
+  - `ad-4` offer/urgency: the offer the ad makes.
+  - `combined-showcase`: the only post that may talk about all four ("4 ad directions from one product...").
+  Never write "four ads", "swipe", "carousel" or "these ads" in the caption for a single ad. In `index.html`, mark each post with the image it belongs to: `<div class="x-post" data-asset="ad-1">...</div>` (and `ad-2`, `ad-3`, `ad-4`, `combined-showcase`). `harvest_content.py` reads `data-asset`; a post without it is not scheduled on any single-image slot. Put no character count inside the `.x-post` div (it used to be read as part of the tweet).
+- **Instagram single caption:** one more caption for the single-image Instagram post, which shows `ad-1` alone. It sits in its own copy-block titled `Instagram Single`, not the LinkedIn caption, because the LinkedIn one walks through all four ads.
 - **Run every piece of caption/copy text through the humanizer skill before treating it as final.** This isn't optional — it's a standing project rule, and AI-flavored copy is exactly the kind of thing that undermines an ad's credibility.
 
 ## Step 6 — Write the output, following Step 0's routing decision
@@ -133,7 +140,7 @@ uv run <SKILL_DIR>/scripts/generate.py \
 Everything lands in whatever folder Step 0 resolved (a project's own "Static Ad Image — Export Routing" section, or the `./static-ad-output/{slug}_{date}/` default):
 - `ad-1-problem-solution.png`, `ad-2-benefit-result.png`, `ad-3-social-proof.png`, `ad-4-offer-urgency.png`
 - `combined-showcase.png`
-- `index.html` — a plain review page (not an html2canvas capture target, just clean HTML) showing all 4 images + the combined showcase + the LinkedIn caption + the X posts, laid out for a quick eyeball review.
+- `index.html` — a plain review page (not an html2canvas capture target, just clean HTML) showing all 4 images + the combined showcase + the LinkedIn caption + the Instagram Single caption + the five X posts (each tagged with `data-asset` and shown next to its image), laid out for a quick eyeball review.
 
 **If Step 0 found a routing section with a pipeline-registration step described** (as it currently does in `koolestpro-cowork-v2`: reuse the exact "PIPELINE EXPORT BUTTON" pattern from that project's `CLAUDE.md`, export a JSON matching its JSON Standard with `type` set to whatever value that project's routing section specifies, and if a rotation-tracking file like `targets_pool.json` is part of that project's convention, update it the same way) — follow it exactly, using the constants and schema *that project* defines, not a hardcoded assumption.
 

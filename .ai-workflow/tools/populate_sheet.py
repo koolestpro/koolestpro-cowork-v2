@@ -251,25 +251,28 @@ CALENDAR = {
     # distinct static-ad asset (4 individual angles + the combo showcase),
     # scattered across the week instead of clustered on Fri/Sat/Sun so a
     # single Static Ad doesn't dump most of its posts in one 48h window.
-    # caption_key stays "x" for all 5 — caption_text()'s variant_index cycles
-    # through however many X variants were actually harvested (usually 3), so
-    # slots 4-5 reuse an earlier variant rather than erroring; that's an
-    # expected, flagged (not blocking) warning, not a bug.
+    # CHANGED 2026-09-28 (Ridwan: "the caption does not correlate with the
+    # image"): every slot now has its own per-image caption_key. The old shared
+    # "x" pool dealt 3 generic variants across 5 images by index, so a single ad
+    # went out as "Four ad directions from one pan" and a review-quote tweet
+    # landed on the benefit ad. The static-ad generator now writes one caption
+    # per image (<div class="x-post" data-asset="ad-1">...), and the Instagram
+    # single gets its own ig_single caption instead of the 4-ad LinkedIn one.
     "Static Ad": [
         {"platform": "Instagram", "dow": 5, "time": "12:00", "fmt": "carousel-4",
          "assets": ["ad-1", "ad-2", "ad-3", "ad-4"], "caption_key": "linkedin", "angle": "4-image carousel"},
         {"platform": "Instagram", "dow": 6, "time": "12:00", "fmt": "single",
-         "assets": ["ad-1"], "caption_key": "linkedin", "angle": "filler single"},
+         "assets": ["ad-1"], "caption_key": "ig_single", "angle": "filler single"},
         {"platform": "Twitter",   "dow": 1, "time": "13:00", "fmt": "single",
-         "assets": ["ad-1"], "caption_key": "x", "angle": "single #1 (problem/solution)"},
+         "assets": ["ad-1"], "caption_key": "x_problem", "angle": "single #1 (problem/solution)"},
         {"platform": "Twitter",   "dow": 2, "time": "18:00", "fmt": "single",
-         "assets": ["ad-2"], "caption_key": "x", "angle": "single #2 (benefit/result)"},
+         "assets": ["ad-2"], "caption_key": "x_benefit", "angle": "single #2 (benefit/result)"},
         {"platform": "Twitter",   "dow": 4, "time": "13:00", "fmt": "single",
-         "assets": ["ad-3"], "caption_key": "x", "angle": "single #3 (social proof)"},
+         "assets": ["ad-3"], "caption_key": "x_proof", "angle": "single #3 (social proof)"},
         {"platform": "Twitter",   "dow": 5, "time": "18:00", "fmt": "single",
-         "assets": ["ad-4"], "caption_key": "x", "angle": "single #4 (offer/urgency)"},
+         "assets": ["ad-4"], "caption_key": "x_offer", "angle": "single #4 (offer/urgency)"},
         {"platform": "Twitter",   "dow": 0, "time": "09:00", "fmt": "single",
-         "assets": ["combined-showcase"], "caption_key": "x", "angle": "single #5 (combo)"},
+         "assets": ["combined-showcase"], "caption_key": "x_combo", "angle": "single #5 (combo)"},
     ],
     # ── Store Template launches (added 2026-09-01, Ridwan's instruction) ──
     # A finished store template (Lumora, Meridian, every future one) is
@@ -396,6 +399,23 @@ X_CHAR_LIMIT = 280  # non-Premium X accounts hard-cap at this length
 # rejected. Each variant is meant to be its OWN post on its OWN slot.
 THREAD_KEYS = {"x_thread"}
 
+# Caption keys written for ONE specific image (2026-09-28). They never borrow
+# from a shared pool, and a row whose caption fails caption_fit.check() is
+# written as status "Draft" so Make.com does not post it. This is a deliberate
+# exception to the 2026-08-27 "always Ready" rule: a caption that describes the
+# wrong image is never something Ridwan wants posted. Set to False to go back
+# to flag-only.
+PER_IMAGE_KEYS = {"x_cover", "x_ba", "x_anno", "x_anno_graphic",
+                  "x_problem", "x_benefit", "x_proof", "x_offer", "x_combo",
+                  "ig_single", "x_glance"}
+HOLD_MISMATCHED_CAPTIONS = True
+
+try:
+    from caption_fit import check as caption_fit_check
+except ImportError:  # run from another cwd
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from caption_fit import check as caption_fit_check
+
 
 def caption_text(record, key, variant_index=0):
     """Resolve a slot's caption_key against the harvested captions_full, falling
@@ -424,7 +444,8 @@ def caption_text(record, key, variant_index=0):
     X_KEYS = ("x", "x_singles", "x_angles", "x_thread",
               "x_showcase", "x_freeoffer", "x_niche", "x_buildpublic", "x_results",
               "x_glance",
-              "x_carousel", "x_cover", "x_ba", "x_anno", "x_anno_graphic")
+              "x_carousel", "x_cover", "x_ba", "x_anno", "x_anno_graphic",
+              "x_problem", "x_benefit", "x_proof", "x_offer", "x_combo")
 
     def check_len(text):
         nonlocal warn
@@ -483,11 +504,24 @@ def caption_text(record, key, variant_index=0):
         # CRO Fix keys (2026-09-27). Each prefers its own caption, then the
         # older x_angles pool, then plain x, so pre-2026-09-27 records still
         # produce a real tweet.
+        # CHANGED 2026-09-28: per-image keys NO LONGER fall back to the shared
+        # x_angles / x pool. That fallback is exactly how an annotated graphic
+        # ended up with a before/after tweet. If nobody wrote a caption for
+        # this image, the row comes out empty and held as Draft (see
+        # PER_IMAGE_KEYS below). An empty flagged row is fixable; a wrong
+        # caption that posts is not. The carousel caption may still fall back,
+        # since a 3-image post can carry a general angle.
         "x_carousel": ["x_carousel", "x_angles", "x"],
-        "x_cover": ["x_cover", "x_angles", "x"],
-        "x_ba": ["x_ba", "x_angles", "x"],
-        "x_anno": ["x_anno", "x_angles", "x"],
-        "x_anno_graphic": ["x_anno_graphic", "x_anno", "x_angles", "x"],
+        "x_cover": ["x_cover"],
+        "x_ba": ["x_ba"],
+        "x_anno": ["x_anno"],
+        "x_anno_graphic": ["x_anno_graphic"],
+        "x_problem": ["x_problem"],
+        "x_benefit": ["x_benefit"],
+        "x_proof": ["x_proof"],
+        "x_offer": ["x_offer"],
+        "x_combo": ["x_combo"],
+        "ig_single": ["ig_single"],
         "x_freeoffer": ["x_freeoffer"],
         "x_results": ["x_results"],
     }
@@ -714,6 +748,17 @@ def build_rows(record, week_monday, local_tz=DEFAULT_LOCAL_TZ, taken_keys=None, 
             warnings.append(f"{slot['platform']} {slot['angle']}: no caption for key '{ckey}'")
         if cap_warn:
             warnings.append(f"{slot['platform']} {slot['angle']}: {cap_warn}")
+        fit_reasons = caption_fit_check(cap, "; ".join(assets), slot["platform"])
+        if not cap and ckey in PER_IMAGE_KEYS:
+            fit_reasons.append(f"caption-fit: no caption was written for this image (key '{ckey}')")
+        row_status = "Ready"
+        row_qa = qa_status
+        if fit_reasons:
+            warnings.append(f"{slot['platform']} {slot['angle']}: " + "; ".join(fit_reasons))
+            row_qa = ("Needs Review: " + "; ".join(fit_reasons)
+                      + (("; " + qa_status.replace("Needs Review: ", "", 1)) if qa_status and qa_status != "Pass" else ""))
+            if HOLD_MISMATCHED_CAPTIONS:
+                row_status = "Draft"
         rows.append({
             "post_id": post_id,
             "pipeline_item_id": item_id,
@@ -725,8 +770,8 @@ def build_rows(record, week_monday, local_tz=DEFAULT_LOCAL_TZ, taken_keys=None, 
             "asset_paths": "; ".join(assets),
             "caption": cap,
             "caption_source_tab": src,
-            "status": "Ready",
-            "qa_status": qa_status,
+            "status": row_status,
+            "qa_status": row_qa,
             "posted_at": "",
             "content_system_folder": folder,
             # Pre-escaped JSON string literal (INCLUDING its surrounding quotes).
