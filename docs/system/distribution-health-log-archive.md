@@ -296,3 +296,24 @@ Several of these are the same underlying piece scheduled twice (Bebemoss ×2, HA
 
 ---
 
+## 2026-08-31 15:2x WAT — manual check + root-cause fix (Ridwan-requested, ad hoc)
+
+Ridwan asked directly to check Make for recent errors and fix them, and to push all outdated posts to the future — not scoped to QA-clean-only like the recurring scheduled task above. Both done.
+
+**🚨 Real root cause found and fixed: the X-token-refresh step was silently wiping `linkedin_token` (and other unused credential fields) on every single X/Twitter post.** Scenario 6565331's datastore:UpdateRecord module (id 201, runs right after every X OAuth2 refresh) had `linkedin_token`, `x_api_key`, `x_client_id`, `x_api_secret`, `x_access_token`, `x_access_secret`, `x_client_secret` all hardcoded to `""` in its mapper — instead of referencing `{{2.<field>}}` to preserve the existing value, the way `facebook_page_id`/`meta_page_access_token`/`instagram_business_account_id` correctly already did in the same mapper. Since the X branch's OAuth2 token refresh runs unconditionally on every X/Twitter post (not gated on expiry), this meant `linkedin_token` got overwritten to blank on every single X post — confirmed live: `data-store-records_list` on datastore 149236 showed `linkedin_token: ""` right now. This explains both historical errors in this log (401 on 2026-08-21, 403 on 2026-08-28) — LinkedIn posting has been silently broken since whenever the first X post fired after the token was last set, and it would keep re-breaking every time someone re-pastes it, because the very next X post wipes it again.
+
+**Fix applied:** pushed a corrected blueprint via `scenarios_update` — all 7 fields now read `{{2.<field>}}` (preserve-on-refresh), matching the pattern already used for the 3 fields that were never affected. Scenario confirmed still `isActive: true`, `isinvalid: false` after the push, next exec unchanged. This stops the bug from recurring, but does **not** restore the value that's already gone.
+
+**⚠️ Action still needed from Ridwan, not something I can do myself:** `linkedin_token` is empty in datastore 149236 (record key `main`) right now — any LinkedIn post attempted before this is refilled will fail with 401. Paste a fresh LinkedIn bearer token into that field directly in Make.com (Datastores → koolestpro-config → main record). I don't handle API tokens/credentials on your behalf, per standing policy — this has to be pasted by you directly into Make's UI.
+
+**Outdated posts pushed to the future — all platforms, all 38 overdue rows, not just QA-clean ones (per this session's direct instruction, a deliberate one-off deviation from the recurring task's stricter "only reschedule QA-clean" policy):**
+
+- Classified via a fresh CSV pull: 132 data rows, 36 Posted, 38 missed/overdue, rest upcoming.
+- **Every one of the 38 missed rows carries a `qa_status` of "Needs Review: ..."** (29 Instagram, 7 Twitter, 2 LinkedIn) — same recurring flag types as prior entries in this log (manual-visual-pending, unverified claims, X caption length, banned SVG gradient text, missing chrome-hide selectors). Pushing the date does not clear these flags — Make doesn't gate on `qa_status`, only on `status`/date/time, so these will still attempt to post on their new date exactly as unreviewed as before. This is the same structural risk flagged in the 2026-08-27 memory update when the Draft→Ready approval gate was removed.
+- Instagram rows (29 of the 38) are lower-urgency in practice since Instagram posting isn't wired into this scenario yet (confirmed separately, informational-only elsewhere in this log) — rescheduling them is bookkeeping, not a live-post risk today.
+- All 38 rescheduled via the webhook, each kept its own existing time-of-day slot, packed up to 5/day starting from the first day with spare capacity (2026-09-10) through 2026-09-18, filling gaps in the already-existing 09-10→09-18 backlog rather than stacking arbitrarily far out. Re-verified after: **0 overdue rows remain in the sheet.**
+- All 38 webhook calls returned `updatedRows: "1"`.
+
+**Still open, unchanged from prior entries:** the 38 rows' QA flags themselves were not reviewed or cleared in this pass (out of scope for "check Make + push dates" — Ridwan asked for those two things specifically, not a QA remediation pass like 2026-08-27's). `tip-the-conversion-layer` (unsourced "73%" stat) remains the standout — still needs a real source or a rewritten hook, same as flagged twice already.
+
+---

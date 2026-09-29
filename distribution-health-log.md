@@ -8,28 +8,6 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 
 ---
 
-## 2026-08-31 15:2x WAT — manual check + root-cause fix (Ridwan-requested, ad hoc)
-
-Ridwan asked directly to check Make for recent errors and fix them, and to push all outdated posts to the future — not scoped to QA-clean-only like the recurring scheduled task above. Both done.
-
-**🚨 Real root cause found and fixed: the X-token-refresh step was silently wiping `linkedin_token` (and other unused credential fields) on every single X/Twitter post.** Scenario 6565331's datastore:UpdateRecord module (id 201, runs right after every X OAuth2 refresh) had `linkedin_token`, `x_api_key`, `x_client_id`, `x_api_secret`, `x_access_token`, `x_access_secret`, `x_client_secret` all hardcoded to `""` in its mapper — instead of referencing `{{2.<field>}}` to preserve the existing value, the way `facebook_page_id`/`meta_page_access_token`/`instagram_business_account_id` correctly already did in the same mapper. Since the X branch's OAuth2 token refresh runs unconditionally on every X/Twitter post (not gated on expiry), this meant `linkedin_token` got overwritten to blank on every single X post — confirmed live: `data-store-records_list` on datastore 149236 showed `linkedin_token: ""` right now. This explains both historical errors in this log (401 on 2026-08-21, 403 on 2026-08-28) — LinkedIn posting has been silently broken since whenever the first X post fired after the token was last set, and it would keep re-breaking every time someone re-pastes it, because the very next X post wipes it again.
-
-**Fix applied:** pushed a corrected blueprint via `scenarios_update` — all 7 fields now read `{{2.<field>}}` (preserve-on-refresh), matching the pattern already used for the 3 fields that were never affected. Scenario confirmed still `isActive: true`, `isinvalid: false` after the push, next exec unchanged. This stops the bug from recurring, but does **not** restore the value that's already gone.
-
-**⚠️ Action still needed from Ridwan, not something I can do myself:** `linkedin_token` is empty in datastore 149236 (record key `main`) right now — any LinkedIn post attempted before this is refilled will fail with 401. Paste a fresh LinkedIn bearer token into that field directly in Make.com (Datastores → koolestpro-config → main record). I don't handle API tokens/credentials on your behalf, per standing policy — this has to be pasted by you directly into Make's UI.
-
-**Outdated posts pushed to the future — all platforms, all 38 overdue rows, not just QA-clean ones (per this session's direct instruction, a deliberate one-off deviation from the recurring task's stricter "only reschedule QA-clean" policy):**
-
-- Classified via a fresh CSV pull: 132 data rows, 36 Posted, 38 missed/overdue, rest upcoming.
-- **Every one of the 38 missed rows carries a `qa_status` of "Needs Review: ..."** (29 Instagram, 7 Twitter, 2 LinkedIn) — same recurring flag types as prior entries in this log (manual-visual-pending, unverified claims, X caption length, banned SVG gradient text, missing chrome-hide selectors). Pushing the date does not clear these flags — Make doesn't gate on `qa_status`, only on `status`/date/time, so these will still attempt to post on their new date exactly as unreviewed as before. This is the same structural risk flagged in the 2026-08-27 memory update when the Draft→Ready approval gate was removed.
-- Instagram rows (29 of the 38) are lower-urgency in practice since Instagram posting isn't wired into this scenario yet (confirmed separately, informational-only elsewhere in this log) — rescheduling them is bookkeeping, not a live-post risk today.
-- All 38 rescheduled via the webhook, each kept its own existing time-of-day slot, packed up to 5/day starting from the first day with spare capacity (2026-09-10) through 2026-09-18, filling gaps in the already-existing 09-10→09-18 backlog rather than stacking arbitrarily far out. Re-verified after: **0 overdue rows remain in the sheet.**
-- All 38 webhook calls returned `updatedRows: "1"`.
-
-**Still open, unchanged from prior entries:** the 38 rows' QA flags themselves were not reviewed or cleared in this pass (out of scope for "check Make + push dates" — Ridwan asked for those two things specifically, not a QA remediation pass like 2026-08-27's). `tip-the-conversion-layer` (unsourced "73%" stat) remains the standout — still needs a real source or a rewritten hook, same as flagged twice already.
-
----
-
 ## 2026-09-01 19:42 WAT — health check
 
 **Sheet:** "Koolestpro Distribution Queue" — 151 rows total (79 Twitter, 25 LinkedIn, 47 Instagram). Read via a Google Visualization API query (`gviz/tq`) against the sheet through the browser instead of the Drive CSV export — the full CSV round-trip (~376K base64 chars) blew past this session's tool-output limits, same problem noted in the 2026-08-27 QA-pass entry above. The gviz endpoint lets column selection and `WHERE`/`GROUP BY` happen server-side, which kept every query small enough to read directly and let the classification itself run as SQL-style filters rather than manual row-by-row scanning.
@@ -118,3 +96,27 @@ Ridwan reported a Make.com error on today's Instagram post (a 7-slide Tips carou
 **Not done (flagged, not attempted):** real Instagram carousel support (child media containers + parent container + publish) does not exist in Make yet. Building it would mean hand-editing scenario 6565331's Instagram branch via a full-blueprint `scenarios_update`, which this project's own established doctrine treats as too risky to do blind on a production scenario — and there's no logged-in Make session available to do it via the UI either (no credentials entered on Ridwan's behalf). Until that's built, all Instagram carousel-format posts will go out as a single cover image rather than a swipeable multi-slide carousel. Flagged to Ridwan directly in chat.
 
 **TikTok:** confirmed no send/publish provision exists or is planned to exist through Make.com — `tiktok_push_draft.py` only pushes to Ridwan's TikTok draft inbox (`/inbox/video/init/`), he posts by hand. This is unchanged and was not touched this session.
+
+## 2026-09-29 15:40 UTC (16:40 WAT) — health check (scheduled task run)
+
+**Sheet read:** live Sheets API, 195 rows (113 Posted, 73 Ready, 9 Draft). Note: Make posts any `Ready` row whatever its `qa_status` (54 posted Twitter rows carry a Needs Review flag), so "Blocked" below means QA-flagged, not "won't fire". `Draft` rows never fire.
+
+**Twitter/LinkedIn missed rows:** 1. `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LinkedIn, 09-28 14:00) is Draft + Needs Review (claims to verify), so not rescheduled. LinkedIn already posted `tip-cold-warm-hot-which-page` that day, so moving it anywhere would need an open LinkedIn day anyway. No Twitter row missed.
+
+**Instagram missed rows:** 46 past-dated unposted rows (09-10 to 09-28), 44 QA-flagged. NOT rescheduled: Instagram is paused in Make (the `Instagrams` filter, per `.ai-workflow/tools/DISTRIBUTION.md`, 2026-09-27), so a new date would pass silently the same way. The 2 unflagged ones are `template-showcase-kura_pp-01-20260721-20260918-ig-1200` and `template-showcase-kura_li-03-20260721-20260904-ig-1200` ("not run through automated QA"). Same-time pile-ups at 17:00 on 09-12 to 09-20 (2-6 rows each) all sit in this past, paused set. Reschedule these as a batch when Instagram is switched back on.
+
+**Collisions / LinkedIn same-day violations (upcoming):** none. Upcoming Twitter slots are all distinct, and the 8 upcoming LinkedIn rows each have their own day (09-30, 10-01, 10-02, 10-03, 10-04, 10-06, 10-07, 10-08). Nothing rescheduled, so no webhook calls this run.
+
+**Step 1b, X char count:** 16 unposted Twitter captions checked. 1 over 280: `cro-fix-gainful_customize-your-protein-20260823-20260906-x-1800`, **319 chars, Ready, due 2026-09-30 14:00**. Already flagged in qa_status, so not a new finding, but it is Ready and will fire tomorrow and get rejected by X unless it's cut or set to Draft. No new over-limit captions.
+
+**Step 1c, Instagram multi-image:** 6 unposted IG rows have multi-URL `asset_urls` (1 upcoming: `cro-fix-caraway_fry-pan-pdp-20260907-20260923-ig-1200`, 3 URLs, 10-07). NOT trimmed. The trim rule in this task's SKILL.md is out of date: the 2026-09-27 Make change added a native IG carousel route (310-317), and `feed_media.py` now deliberately keeps the full list. Trimming would undo that. The SKILL.md Step 1c needs updating.
+
+**Step 1d, caption/image fit:** `caption_fit.py` reported 0 rows with problems (it reads local `queue.json`, which can lag the live Sheet).
+
+**Reschedule scenario 7111659:** active (isActive true, not paused). No reactivation needed.
+
+**Make health (6565331):** healthy. Every execution since 2026-09-27 13:00 UTC succeeded (latest 2026-09-29 13:25 UTC). The 10 runs on 09-26 ended "with warnings" on `MaxFileSizeExceededError` (http:ActionGetFile). That's the >5MB image issue fixed by the 09-27 Cloudinary transform, and it hasn't come back since.
+
+**Pacing (09-29 to 10-05):** 23 unposted rows (13 Twitter, 5 LinkedIn, 5 Instagram), 3.3/day raw. Realistically posting: 14 Ready Twitter+LinkedIn rows = **2.0/day** (Draft rows never fire, and Instagram is paused). About 7 more Ready Twitter/LinkedIn rows would get this week to 3/day. QA-clean: **0 of 23** in the window, and 1 of 35 across the whole upcoming backlog (97% flagged). Most flags are the recurring "claims to verify" and "manual-visual-pending" on Template Showcase rows. Clearing flags is still the biggest lever.
+
+**Verdict:** Make healthy, nothing overdue on X/LinkedIn that could be fixed, no collisions. Two things need Ridwan: the 319-char Gainful X post due tomorrow 14:00, and pacing at about 2 real posts/day with a backlog that's almost entirely QA-flagged. Separately, 46 Instagram rows are waiting to be rescheduled when IG is un-paused.
