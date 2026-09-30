@@ -19,6 +19,10 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 - **Reply handling:** the AI drafts, Ridwan edits and approves, the system sends in-thread. The AI never replies to a lead on its own.
 - **Lead types, all in parallel:** intent leads (hiring, launching, running ads, funded), agencies (white-label dev partner), general Shopify stores by niche, plus the existing Build/Fix/Scale tracks from `.ai-workflow/tools/lead_playbook.py`. Stored as `track` + `play` columns. Do NOT add a `segment` field (CLAUDE.md rule 4).
 
+## Voice and messaging (2026-09-30)
+
+`outreach/BRIEF.md` is the master brief (who Ridwan is, real proof, offers, limits, regional voice, email and reply structure, humanizer rules, and section 12 of open decisions). `brief-ai.md` is the compact version the AI reads; `build_brief.js` compiles it to `gmail-sender/Brief.gs`. Regional voice is chosen from the lead's `country`: Nigeria/Africa (time-based greeting, warm), UK, US/Canada, Europe, other. Drafts get a `CHECK:` note in the `model` column if they contain a blocklist phrase, a number or price, or a link. The script emails a daily report at 6pm.
+
 ## Architecture
 
 | Step | How | Status |
@@ -29,7 +33,8 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 | Approve | `approved` checkbox in Leads tab | built |
 | Send, follow up, log, stop on reply, alert, bounces | `outreach/gmail-sender/Code.gs` (Apps Script, one copy per Gmail, shared Sheet) | built, simulated only |
 | Reply drafts + relationship memory | Decided 2026-09-30: Apps Script calls AI in order Gemini free, Claude Haiku, DeepSeek fallback (keys in Script Properties, order in Settings `AI_ORDER`). Reads Profile + Messages thread + Memory, writes the draft (Ready for review) and updates Memory. Never sends; Ridwan approves. | built, mocked-tested; needs keys + real test (SETUP.md 3b) |
-| Dashboard | KoolestFlow lead page: profile, timeline, stage, editable suggested reply, Send (sets draft to Approved) | not built |
+| Daily report | `dailyReport` at 6pm emails ALERT_EMAIL: sent, replies, drafts to review, queue, pipeline | built |
+| Dashboard | KoolestFlow as front end over the Sheet via an Apps Script web API (Sheet stays source of truth). `cold-email-app` is the submodule `koolestpro/cold-dm-app`; attach it to a session to build this side. | not built |
 
 ## What exists now
 

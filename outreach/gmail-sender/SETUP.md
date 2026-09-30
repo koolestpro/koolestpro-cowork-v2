@@ -19,6 +19,9 @@ Do this signed in as **koolestpro@gmail.com**.
 3. Reply to that test email from your main Gmail. The alert email is sent only when a reply arrives, not on approval or send. Then Outreach > **Check replies now**. The lead moves to **Replied**, the follow-up is stopped, a row appears in **Drafts**, and you get an alert.
 4. In **Drafts**, type something in `draft_body`, set status to **Approved**, then **Check replies now** again. It sends in the same thread.
 
+## 3a. Two files now
+The script is `Code.gs` plus `Brief.gs` (the master brief, compiled from `outreach/brief-ai.md`). In Apps Script click **+** > Script, name it `Brief`, and paste `Brief.gs`. After editing `brief-ai.md`, run `node outreach/build_brief.js` and paste the new `Brief.gs` again. Also run Outreach > **2. Turn on automation** again once, to add the 6pm daily report trigger. Try it with Outreach > **Send daily report now**.
+
 ## 3b. AI reply drafts (Gemini, then Claude Haiku, then DeepSeek)
 When a lead replies, the script now writes a draft into **Drafts** (status **Ready for review**) and updates that lead's **Memory** summary. It never sends on its own: you edit `draft_body`, set status **Approved**, and the next check sends it.
 1. Paste the new `Code.gs`, save, reload the Sheet, then run Outreach > **1. Set up tabs** once (adds the new Settings rows and a `model` column in Drafts).

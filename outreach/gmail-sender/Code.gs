@@ -65,6 +65,7 @@ function onOpen() {
     .addItem('Send due emails now', 'sendDueNow')
     .addItem('Check replies now', 'tick')
     .addItem('Draft replies now', 'draftRepliesNow')
+    .addItem('Send daily report now', 'dailyReport')
     .addItem('Create / reset test lead', 'addTestLead')
     .addSeparator()
     .addItem('Turn off automation', 'removeTriggers')
@@ -157,6 +158,7 @@ function installTriggers() {
   removeTriggers();
   ScriptApp.newTrigger('sendDue').timeBased().everyHours(1).create();
   ScriptApp.newTrigger('tick').timeBased().everyMinutes(30).create();
+  ScriptApp.newTrigger('dailyReport').timeBased().everyDays(1).atHour(18).create();
   toast_('Automation on: sends hourly, checks replies every 30 minutes.');
 }
 
@@ -259,6 +261,51 @@ function sendDue(ignoreHours) {
   }
 }
 
+// ---------- Daily report ----------
+
+/** Runs daily at 6pm: one email to ALERT_EMAIL with what happened today and what needs Ridwan. */
+function dailyReport() {
+  const S = settings_();
+  if (!S.ALERT_EMAIL) return;
+  const me = me_();
+  const leads = read_('Leads'), msgs = read_('Messages'), drafts = read_('Drafts');
+  const sentToday = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && isToday_(m.sent_at));
+  const repliesToday = msgs.rows.filter(m => m.direction === 'in' && isToday_(m.sent_at));
+  const now = new Date();
+  const waiting = leads.rows.filter(l => isTrue_(l.approved) && ['New', 'Contacted', ''].indexOf(String(l.stage)) !== -1 &&
+    lc_(l.email_status) === 'valid' && (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now))).length;
+  const notApproved = leads.rows.filter(l => !isTrue_(l.approved) && ['New', ''].indexOf(String(l.stage)) !== -1).length;
+  const toReview = drafts.rows.filter(d => d.status === 'Ready for review');
+  const needsDraft = drafts.rows.filter(d => d.status === 'Needs draft');
+  const stages = {};
+  leads.rows.forEach(l => { const st = String(l.stage || 'New'); stages[st] = (stages[st] || 0) + 1; });
+  const cap = dailyCap_(S);
+  const lines = [
+    'Outreach report for ' + Utilities.formatDate(now, tz_(), 'EEE d MMM') + (isTrue_(S.TEST_MODE) ? '  [TEST MODE: nothing went to real leads]' : ''),
+    '',
+    'Sent today from ' + me + ': ' + sentToday.length + ' of ' + cap + ' allowed',
+    'Replies received today: ' + repliesToday.length,
+    '',
+    'NEEDS YOU',
+    '- Reply drafts to review: ' + toReview.length + (needsDraft.length ? ' (plus ' + needsDraft.length + ' still waiting for the AI)' : ''),
+    '- Leads waiting for your approval tick: ' + notApproved,
+    '',
+    'QUEUE',
+    '- Approved and ready to send next: ' + waiting,
+    '',
+    'PIPELINE: ' + Object.keys(stages).map(k => k + ' ' + stages[k]).join(', '),
+  ];
+  if (repliesToday.length) {
+    lines.push('', 'TODAY\'S REPLIES');
+    repliesToday.slice(0, 10).forEach(m => lines.push('- ' + m.lead_id + ': ' + String(m.body).replace(/\s+/g, ' ').slice(0, 140)));
+  }
+  const bad = drafts.rows.filter(d => String(d.model).indexOf('failed') === 0);
+  if (bad.length) lines.push('', 'PROBLEM: ' + bad.length + ' draft(s) failed to generate. Check the model column in Drafts.');
+  lines.push('', 'Sheet: ' + ss_().getUrl());
+  GmailApp.sendEmail(S.ALERT_EMAIL, 'Outreach report: ' + sentToday.length + ' sent, ' + repliesToday.length + ' replies, ' + toReview.length + ' to review',
+    lines.join('\n'), { name: 'Koolestpro Outreach' });
+}
+
 // ---------- Replies, manual replies, bounces, approved drafts ----------
 
 /** Runs every 30 minutes: logs replies, stops sequences, alerts, sends approved drafts, marks bounces. */
@@ -329,35 +376,54 @@ function checkReplies_() {
 // GEMINI_API_KEY, ANTHROPIC_API_KEY, DEEPSEEK_API_KEY (any subset works). The AI only drafts;
 // nothing is sent until you set the draft to "Approved".
 
-const AI_SYSTEM_ = [
-  'You draft email replies for Ridwan (Koolestpro), a Shopify developer who fixes and builds e-commerce stores. A prospect replied to his cold email. Write the reply Ridwan would send.',
-  '',
-  'Rules:',
-  '- Plain text, first person, friendly and direct, like a real person typing. Usually 40 to 90 words. Match the lead\'s language and tone.',
-  '- Answer what they actually asked. If they ask for a call, offer one simple next step. If they ask about price, say it depends on scope and suggest a short call or a quick look at their store first. Never quote prices, timelines, discounts or guarantees.',
-  '- Never invent results, numbers, clients, case studies or claims about their store that are not in the context. Concept builds (KURA, HALOS, MERIDIAN, Lumora) are never clients.',
-  '- If they say no, not interested or ask to stop: reply in one or two polite lines, no pitch, and say you will not email again.',
-  '',
-  'Ridwan\'s voice (from his own profile):',
-  '- Conversational, never corporate. Short sentences, active voice. A confident specialist talking to a peer, not someone begging for work.',
-  '- Direct and warm, Nigerian-natural, no excessive hedging. Outcome first: lead with what the lead gets or what you will do next, not who Ridwan is.',
-  '- Concrete nouns and verbs. Plain words. One idea per sentence. Line breaks for pacing, no paragraphs longer than three lines.',
-  '- Never say: "I hope this finds you well", "excited to", "passionate", "leverage", "I would be delighted", "Thank you for your time and consideration", "reach out", "circle back".',
-  '- No false contrast ("it\'s not just X, it\'s Y"), no grand statements, no lists of three adjectives, no empty openers like "Great question".',
-  '',
-  'Other rules:',
-  '- No em dashes. No hashtags, no emojis, no exclamation-heavy hype. Avoid: unlock, digital journey, synergy, holistic, valuable insights, "I hope this email finds you well".',
-  '- Do not add a signature or sign-off name; the system adds it. End on the question or next step.',
+const AI_TASK_ = [
+  'TASK: a prospect replied to Ridwan\'s cold email. Write the reply Ridwan would send. Use only facts in the lead data and conversation below, plus the brief. If a fact is not there, do not state it.',
   '',
   'Output exactly two blocks and nothing else:',
   '<reply>the email body</reply>',
   '<memory>An updated running summary of this lead in under 120 words: who they are, what they sell, what was said both ways, what is offered so far, current stage, and the best next step.</memory>',
+  'Do not add a signature or sign-off name; the system adds it. End on the question or next step.',
 ].join('\n');
 
-/** System prompt plus any of Ridwan's own example replies pasted into the Settings tab (VOICE_EXAMPLES). */
-function aiSystem_(S) {
+const BLOCKLIST_ = ['hope this email finds you', 'i came across', 'reach out', 'circle back', 'touch base', 'excited to', 'passionate',
+  'leverage', 'synergy', 'synergize', 'unlock', 'holistic', 'game-changer', 'cutting-edge', 'seamless', 'robust', 'delve', 'delighted',
+  'time and consideration', 'valuable insights', 'digital journey', 'conversion excellence', "it's important to note", 'great question'];
+
+/** Which regional voice block to use for a lead. */
+function regionKey_(country) {
+  const c = lc_(country);
+  const has = list => list.some(x => c === x || c.indexOf(x) !== -1);
+  if (has(['nigeria', 'ghana', 'kenya', 'uganda', 'tanzania', 'south africa', 'senegal', 'cameroon', 'rwanda', 'ethiopia', 'egypt', 'morocco', 'africa']) || c === 'ng') return 'ng';
+  if (has(['united kingdom', 'england', 'scotland', 'wales', 'ireland', 'northern ireland']) || c === 'uk' || c === 'gb') return 'uk';
+  if (has(['united states', 'canada', 'usa']) || c === 'us') return 'us';
+  if (has(['germany', 'france', 'netherlands', 'spain', 'italy', 'sweden', 'norway', 'denmark', 'finland', 'belgium', 'austria', 'switzerland', 'portugal', 'poland', 'europe'])) return 'eu';
+  return 'other';
+}
+
+/** The full system prompt: the brief, the lead's regional voice, the task, and any real replies Ridwan pasted. */
+function aiSystem_(S, lead) {
+  const key = regionKey_(lead && lead.country);
   const ex = String(S.VOICE_EXAMPLES || '').trim();
-  return AI_SYSTEM_ + (ex ? '\n\nReal replies written by Ridwan. Match their voice, length and rhythm closely:\n' + ex : '');
+  return BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[key] + '\n\n' + AI_TASK_ +
+    (ex ? '\n\nReal replies written by Ridwan. Match their voice, length and rhythm closely:\n' + ex : '');
+}
+
+/** "Good morning/afternoon/evening" for the lead's own clock (used for Nigerian and West African leads). */
+function localGreeting_(lead) {
+  let tz = String(lead.time_zone || '').trim() || 'Africa/Lagos';
+  let h;
+  try { h = Number(Utilities.formatDate(new Date(), tz, 'H')); } catch (e) { h = Number(Utilities.formatDate(new Date(), 'Africa/Lagos', 'H')); }
+  return h < 12 ? 'Good morning' : (h < 17 ? 'Good afternoon' : 'Good evening');
+}
+
+/** Things a human should look at before approving. Empty string means nothing flagged. */
+function draftFlags_(text) {
+  const t = lc_(text), f = [];
+  BLOCKLIST_.forEach(w => { if (t.indexOf(w) !== -1) f.push('blocklist:' + w); });
+  if (/\d\s?%|[$£€₦]\s?\d|\bN\d+\s?[km]\b/i.test(text)) f.push('has a number or price: check it is allowed');
+  if (/https?:\/\/|www\./i.test(text)) f.push('has a link');
+  if (String(text).split(/\s+/).length > 140) f.push('long');
+  return f.join('; ');
 }
 
 function draftRepliesNow() { draftReplies_(true); }
@@ -388,6 +454,7 @@ function draftReplies_(interactive) {
       'Niche: ' + (lead.niche || '') + ' | Country: ' + (lead.country || '') + ' | Track/play: ' + (lead.track || '') + '/' + (lead.play || ''),
       'Profile: ' + [profile.what_they_sell, profile.audience, profile.signal, profile.site_notes].filter(String).join(' / '),
       'Notes: ' + (lead.notes || ''),
+      regionKey_(lead.country) === 'ng' ? 'If you greet, use exactly: ' + localGreeting_(lead) + ' (their local time). Only greet if this is the first message of a new exchange, not mid-thread.' : 'No greeting phrase like Good morning.',
       'Memory so far: ' + (mem ? mem.summary : '(none)'),
       '',
       'CONVERSATION (oldest first):',
@@ -397,14 +464,15 @@ function draftReplies_(interactive) {
     ].join('\n');
 
     let out;
-    try { out = callAi_(S, aiSystem_(S), user); } catch (e) { failed = String(e.message || e); set_(drafts, d, 'model', 'failed: ' + failed.slice(0, 200)); continue; }
+    try { out = callAi_(S, aiSystem_(S, lead), user); } catch (e) { failed = String(e.message || e); set_(drafts, d, 'model', 'failed: ' + failed.slice(0, 200)); continue; }
     const reply = clean_((out.text.match(/<reply>([\s\S]*?)<\/reply>/i) || [])[1] || '');
     const summary = clean_((out.text.match(/<memory>([\s\S]*?)<\/memory>/i) || [])[1] || '');
     if (!reply) { failed = 'AI returned no <reply> block'; set_(drafts, d, 'model', 'failed: no reply block'); continue; }
 
     set_(drafts, d, 'draft_body', reply);
     set_(drafts, d, 'status', 'Ready for review');
-    set_(drafts, d, 'model', out.provider);
+    const flags = draftFlags_(reply);
+    set_(drafts, d, 'model', out.provider + (flags ? ' | CHECK: ' + flags : ''));
     if (summary) {
       if (mem) { set_(memory, mem, 'summary', summary); set_(memory, mem, 'updated_at', new Date()); }
       else appendObj_('Memory', { lead_id: d.lead_id, summary: summary, updated_at: new Date() });

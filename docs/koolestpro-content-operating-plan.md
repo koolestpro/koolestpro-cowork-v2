@@ -398,6 +398,10 @@ Google Sheets and Make.com should act as the publishing and automation layer, no
 
 Tracks what has actually been built against this plan, so a future v2 pass knows exactly what exists and doesn't re-litigate settled decisions.
 
+### 2026-09-30: Cold email sender confirmed live; AI reply drafts, master brief, daily report
+
+Outreach Gmail sender confirmed working end to end in Ridwan's real account (TEST_MODE): send, follow-up, reply detection, alert. Fixed test-row seeding and row appends. Added AI reply drafting (Gemini free, then Claude Haiku, then DeepSeek; keys in Script Properties), lead memory summaries, a daily 6pm report email, and region-aware voice (Nigeria/Africa, UK, US/Canada, Europe). Master brief in `outreach/BRIEF.md`, compact AI version `outreach/brief-ai.md`, compiled to `outreach/gmail-sender/Brief.gs` by `outreach/build_brief.js`. Open decisions for Ridwan are in BRIEF.md section 12. Details: `outreach/README.md`.
+
 ### 2026-09-28: Target pool refresh (ISO week 40), 5 candidates added
 
 `koolestpro-target-pool-refresh` ran on an even ISO week. Trigger: **cro-fix** had only 3 fresh targets (Versed, Transparent Labs, Cuts Clothing), under the threshold of 4. static-ad had 6. Template Showcase still sources from replo-rebuilds, so it was not treated as an active stream for this pool. Fresh counts after: cro-fix 3 → 8, static-ad 6 → 11.
