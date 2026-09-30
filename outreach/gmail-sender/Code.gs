@@ -47,6 +47,7 @@ function defaultSettings_() {
     ['SEND_START_HOUR', '9', 'Earliest hour to send, in the LEAD\'s local time.'],
     ['SEND_END_HOUR', '17', 'Stop sending at this hour (lead\'s local time).'],
     ['FOLLOWUP_GAPS', '3,4,5,6', 'Days between steps 1>2, 2>3, 3>4, 4>5.'],
+    ['SEND_TO_CATCH_ALL', 'FALSE', 'TRUE = also email addresses the verifier marks catch-all (domain accepts everything, so the mailbox is unproven). Unknown or risky are never sent.'],
     ['AUTO_APPROVE', 'FALSE', 'TRUE = a lead whose sequence passes all checks (valid email, no flags) is approved automatically. FALSE = you tick approved yourself.'],
     ['SEND_WEEKENDS', 'FALSE', 'FALSE = never send on Saturday or Sunday in the lead\'s own time zone.'],
     ['AI_ORDER', 'gemini,claude,deepseek', 'Which AI writes reply drafts, tried in this order. Keys go in Script Properties (see SETUP.md).'],
@@ -226,7 +227,7 @@ function sendDue(ignoreHours) {
     const due = leads.rows.filter(l =>
       isTrue_(l.approved) &&
       ['New', 'Contacted', ''].indexOf(String(l.stage)) !== -1 &&
-      lc_(l.email_status) === 'valid' && l.email &&
+      sendableStatus_(l.email_status, S) && l.email &&
       (!l.sender || lc_(l.sender) === me) &&
       (ignoreHours === true || inLeadWindow_(l, S)) &&
       (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now)));
@@ -285,7 +286,7 @@ function sendDue(ignoreHours) {
       else {
         const appr = leads.rows.filter(l => isTrue_(l.approved));
         toast_('0 sent. Approved leads: ' + appr.length +
-          '. Of those, email_status = valid: ' + appr.filter(l => lc_(l.email_status) === 'valid' && l.email).length +
+          '. Of those, sendable email_status (valid): ' + appr.filter(l => sendableStatus_(l.email_status, S) && l.email).length +
           ', with a step 1 row in Sequence: ' + appr.filter(l => seq.rows.some(r => String(r.lead_id) === String(l.lead_id) && Number(r.step) === 1)).length +
           '. Each of those three numbers must be at least 1.');
       }
@@ -307,7 +308,7 @@ function dailyReport() {
   const repliesToday = msgs.rows.filter(m => m.direction === 'in' && isToday_(m.sent_at));
   const now = new Date();
   const waiting = leads.rows.filter(l => isTrue_(l.approved) && ['New', 'Contacted', ''].indexOf(String(l.stage)) !== -1 &&
-    lc_(l.email_status) === 'valid' && (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now))).length;
+    sendableStatus_(l.email_status, S) && (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now))).length;
   const notApproved = leads.rows.filter(l => !isTrue_(l.approved) && ['New', ''].indexOf(String(l.stage)) !== -1).length;
   const toReview = drafts.rows.filter(d => d.status === 'Ready for review');
   const needsDraft = drafts.rows.filter(d => d.status === 'Needs draft');
@@ -648,6 +649,11 @@ function ss_() {
 function tz_() { return Session.getScriptTimeZone() || 'Africa/Lagos'; }
 function me_() { return lc_(Session.getEffectiveUser().getEmail()); }
 function lc_(v) { return String(v || '').trim().toLowerCase(); }
+/** Which verifier results may be emailed: valid always, catch-all only if SEND_TO_CATCH_ALL is TRUE. */
+function sendableStatus_(status, S) {
+  const st = lc_(status);
+  return st === 'valid' || (st === 'catch-all' && isTrue_(S.SEND_TO_CATCH_ALL));
+}
 function isTrue_(v) { return v === true || lc_(v) === 'true'; }
 function toast_(msg) { try { ss_().toast(msg, 'Outreach', 8); } catch (e) { Logger.log(msg); } }
 function header_(sh) { return sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String); }

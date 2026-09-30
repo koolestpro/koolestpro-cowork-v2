@@ -130,7 +130,8 @@ function verifyEmails_(S, stats, timeLeft) {
       if (res.getResponseCode() !== 200) throw new Error('HTTP ' + res.getResponseCode());
       const j = JSON.parse(res.getContentText());
       const st = lc_(j.Status || j.status || '');
-      const verdict = st === 'valid' ? 'valid' : (st === 'invalid' ? 'invalid' : 'risky');
+      // valid and invalid are certain. Catch-all domains accept every address, so the mailbox can't be proven. Anything else (unknown, grey-listed, timeout) is risky.
+      const verdict = st === 'valid' ? 'valid' : (st === 'invalid' ? 'invalid' : (/catch/.test(st) ? 'catch-all' : 'risky'));
       set_(leads, lead, 'email_status', verdict);
       note_(leads, lead, 'verifier said: ' + (j.Status || j.status || '?'), false);
       stats.verified++;
@@ -240,7 +241,7 @@ function writeSequences_(S, stats, timeLeft) {
       });
       set_(leads, lead, 'notes', ('Observation basis: ' + (j.basis || '?') + ' [' + out.provider + ']' + (flags.length ? ' | CHECK: ' + flags.join('; ') : '') +
         (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
-      if (isTrue_(S.AUTO_APPROVE) && !flags.length && lc_(lead.email_status) === 'valid') set_(leads, lead, 'approved', true);
+      if (isTrue_(S.AUTO_APPROVE) && !flags.length && sendableStatus_(lead.email_status, S)) set_(leads, lead, 'approved', true);
       has1[String(lead.lead_id)] = true;
       stats.sequences++;
     } catch (e) { note_(leads, lead, 'sequence failed: ' + String(e.message || e).slice(0, 120), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
