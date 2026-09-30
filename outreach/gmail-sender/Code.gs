@@ -67,6 +67,7 @@ function onOpen() {
     .addItem('Send due emails now', 'sendDueNow')
     .addItem('Check replies now', 'tick')
     .addItem('Prepare new leads now', 'prepareLeadsNow')
+    .addItem('Test email verifier key', 'testVerifier')
     .addItem('Draft replies now', 'draftRepliesNow')
     .addItem('Send daily report now', 'dailyReport')
     .addItem('Create / reset test lead', 'addTestLead')

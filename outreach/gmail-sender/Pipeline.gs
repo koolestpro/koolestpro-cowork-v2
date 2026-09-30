@@ -123,7 +123,7 @@ function verifyEmails_(S, stats, timeLeft) {
     if (!timeLeft()) return;
     const email = String(lead.email).trim();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { set_(leads, lead, 'email_status', 'invalid'); return; }
-    if (!key) { set_(leads, lead, 'email_status', 'unverified'); note_(leads, lead, 'no MYEMAILVERIFIER_API_KEY set: cannot verify', false); return; }
+    if (!key) { set_(leads, lead, 'email_status', 'unverified'); note_(leads, lead, 'Script property MYEMAILVERIFIER_API_KEY not found (Apps Script > Project Settings > Script properties: name = MYEMAILVERIFIER_API_KEY, value = your key). Cannot verify.', false); return; }
     try {
       const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key),
         { muteHttpExceptions: true });
@@ -136,6 +136,17 @@ function verifyEmails_(S, stats, timeLeft) {
       stats.verified++;
     } catch (e) { note_(leads, lead, 'verify failed: ' + String(e.message || e).slice(0, 100), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
   });
+}
+
+/** Menu: tests the verifier key on your own alert email and shows the raw answer, so we can see the real response format. */
+function testVerifier() {
+  const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
+  if (!key) { toast_('No Script property named MYEMAILVERIFIER_API_KEY. Add it in Project Settings > Script properties (value = your key).'); return; }
+  const email = String(settings_().ALERT_EMAIL || '').trim();
+  const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key), { muteHttpExceptions: true });
+  const body = res.getContentText().slice(0, 300);
+  Logger.log(body);
+  toast_('HTTP ' + res.getResponseCode() + ': ' + body);
 }
 
 // ---------- 3. Profile the store ----------
