@@ -19,6 +19,18 @@ Do this signed in as **koolestpro@gmail.com**.
 3. Reply to that test email from your main Gmail. The alert email is sent only when a reply arrives, not on approval or send. Then Outreach > **Check replies now**. The lead moves to **Replied**, the follow-up is stopped, a row appears in **Drafts**, and you get an alert.
 4. In **Drafts**, type something in `draft_body`, set status to **Approved**, then **Check replies now** again. It sends in the same thread.
 
+## 3b. AI reply drafts (Gemini, then Claude Haiku, then DeepSeek)
+When a lead replies, the script now writes a draft into **Drafts** (status **Ready for review**) and updates that lead's **Memory** summary. It never sends on its own: you edit `draft_body`, set status **Approved**, and the next check sends it.
+1. Paste the new `Code.gs`, save, reload the Sheet, then run Outreach > **1. Set up tabs** once (adds the new Settings rows and a `model` column in Drafts).
+2. Get keys (any one is enough; all three gives the fallback chain):
+   - Gemini (free): aistudio.google.com/apikey
+   - Claude: console.anthropic.com > API keys (add a few dollars of credit; Haiku costs cents)
+   - DeepSeek: platform.deepseek.com > API keys
+3. Apps Script > Project Settings (gear) > **Script properties** > Add: `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, `DEEPSEEK_API_KEY`. Never put keys in the Sheet or in `Code.gs`.
+4. Google asks for one more permission (external requests) the first time. Approve it.
+5. Test: on your test lead, reply to the test email, then Outreach > **Check replies now**, then Outreach > **Draft replies now**. The Drafts row fills in and the `model` column shows which AI wrote it. If it says `failed: ...`, that text is the reason.
+Order and model names are in Settings (`AI_ORDER`, `GEMINI_MODEL`, `CLAUDE_MODEL`, `DEEPSEEK_MODEL`).
+
 ## 4. Go live (only after the first batch is approved)
 1. Delete the `test-001` rows from Leads, Sequence, Messages and Drafts.
 2. Outreach > **2. Turn on automation** (sends hourly 9am–5pm, checks replies every 30 min).

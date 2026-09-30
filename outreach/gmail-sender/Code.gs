@@ -26,7 +26,7 @@ const TABS = {
   Messages: ['logged_at', 'lead_id', 'direction', 'from', 'to', 'subject', 'body', 'sent_at', 'thread_id',
     'message_id', 'sender_account'],
   Memory: ['lead_id', 'summary', 'updated_at'],
-  Drafts: ['lead_id', 'created_at', 'reply_to_message_id', 'draft_body', 'status', 'sent_at'],
+  Drafts: ['lead_id', 'created_at', 'reply_to_message_id', 'draft_body', 'status', 'sent_at', 'model'],
 };
 
 const STAGES = ['New', 'Contacted', 'Finished', 'Replied', 'Talking', 'Call booked', 'Won', 'Lost', 'Bounced'];
@@ -47,6 +47,10 @@ function defaultSettings_() {
     ['SEND_START_HOUR', '9', 'Earliest hour to send (Lagos time).'],
     ['SEND_END_HOUR', '17', 'Stop sending at this hour.'],
     ['FOLLOWUP_GAPS', '3,4,5,6', 'Days between steps 1>2, 2>3, 3>4, 4>5.'],
+    ['AI_ORDER', 'gemini,claude,deepseek', 'Which AI writes reply drafts, tried in this order. Keys go in Script Properties (see SETUP.md).'],
+    ['GEMINI_MODEL', 'gemini-2.5-flash', 'Gemini model name.'],
+    ['CLAUDE_MODEL', 'claude-haiku-4-5-20251001', 'Claude model name.'],
+    ['DEEPSEEK_MODEL', 'deepseek-chat', 'DeepSeek model name.'],
   ];
 }
 
@@ -59,6 +63,7 @@ function onOpen() {
     .addSeparator()
     .addItem('Send due emails now', 'sendDueNow')
     .addItem('Check replies now', 'tick')
+    .addItem('Draft replies now', 'draftRepliesNow')
     .addItem('Create / reset test lead', 'addTestLead')
     .addSeparator()
     .addItem('Turn off automation', 'removeTriggers')
@@ -91,6 +96,11 @@ function setup() {
     settings.getRange(2, 1, rows.length, 3).setValues(rows);
     settings.autoResizeColumns(1, 3);
   }
+
+  const have = settings.getRange(2, 1, Math.max(1, settings.getLastRow() - 1), 1).getValues().map(r => String(r[0]).trim());
+  defaultSettings_().filter(r => have.indexOf(r[0]) === -1).forEach(r => {
+    if (settings.getLastRow() >= 2 || have.length) settings.appendRow(r);
+  });
 
   const leads = ss.getSheetByName('Leads');
   const lh = header_(leads);
@@ -256,6 +266,7 @@ function tick() {
   if (!lock.tryLock(30000)) return;
   try {
     checkReplies_();
+    try { draftReplies_(); } catch (e) { Logger.log('draftReplies_: ' + e); }
     sendApprovedDrafts_();
     checkBounces_();
   } finally {
@@ -310,6 +321,136 @@ function checkReplies_() {
       }
     }
   }
+}
+
+// ---------- AI reply drafts + relationship memory ----------
+// Gemini free first, then Claude Haiku, then DeepSeek. Keys live in Script Properties:
+// GEMINI_API_KEY, ANTHROPIC_API_KEY, DEEPSEEK_API_KEY (any subset works). The AI only drafts;
+// nothing is sent until you set the draft to "Approved".
+
+const AI_SYSTEM_ = [
+  'You draft email replies for Ridwan (Koolestpro), a Shopify developer who fixes and builds e-commerce stores. A prospect replied to his cold email. Write the reply Ridwan would send.',
+  '',
+  'Rules:',
+  '- Plain text, first person, friendly and direct, like a real person typing. Usually 40 to 90 words. Match the lead\'s language and tone.',
+  '- Answer what they actually asked. If they ask for a call, offer one simple next step. If they ask about price, say it depends on scope and suggest a short call or a quick look at their store first. Never quote prices, timelines, discounts or guarantees.',
+  '- Never invent results, numbers, clients, case studies or claims about their store that are not in the context. Concept builds (KURA, HALOS, MERIDIAN, Lumora) are never clients.',
+  '- If they say no, not interested or ask to stop: reply in one or two polite lines, no pitch, and say you will not email again.',
+  '- No em dashes. No hashtags, no emojis, no exclamation-heavy hype. Avoid: unlock, digital journey, synergy, holistic, valuable insights, "I hope this email finds you well".',
+  '- Do not add a signature or sign-off name; the system adds it. End on the question or next step.',
+  '',
+  'Output exactly two blocks and nothing else:',
+  '<reply>the email body</reply>',
+  '<memory>An updated running summary of this lead in under 120 words: who they are, what they sell, what was said both ways, what is offered so far, current stage, and the best next step.</memory>',
+].join('\n');
+
+function draftRepliesNow() { draftReplies_(true); }
+
+function draftReplies_(interactive) {
+  const S = settings_();
+  const drafts = read_('Drafts');
+  const todo = drafts.rows.filter(d => d.status === 'Needs draft' && !String(d.draft_body).trim()).slice(0, 5);
+  if (!todo.length) { if (interactive) toast_('No replies waiting for a draft.'); return; }
+
+  const leads = read_('Leads');
+  const profiles = read_('Profiles');
+  const msgs = read_('Messages');
+  const memory = read_('Memory');
+  let done = 0, failed = '';
+
+  for (const d of todo) {
+    const lead = leads.rows.find(l => String(l.lead_id) === String(d.lead_id));
+    if (!lead) continue;
+    const profile = profiles.rows.find(p => String(p.lead_id) === String(d.lead_id)) || {};
+    const mem = memory.rows.find(m => String(m.lead_id) === String(d.lead_id));
+    const thread = msgs.rows.filter(m => String(m.lead_id) === String(d.lead_id))
+      .sort((a, b) => new Date(a.sent_at) - new Date(b.sent_at)).slice(-10)
+      .map(m => (m.direction === 'in' ? 'LEAD' : 'RIDWAN') + ' (' + Utilities.formatDate(new Date(m.sent_at), tz_(), 'yyyy-MM-dd') + '):\n' + String(m.body).slice(0, 1500))
+      .join('\n\n');
+    const user = [
+      'LEAD: ' + [lead.brand, lead.contact_name, lead.website].filter(String).join(' | '),
+      'Niche: ' + (lead.niche || '') + ' | Country: ' + (lead.country || '') + ' | Track/play: ' + (lead.track || '') + '/' + (lead.play || ''),
+      'Profile: ' + [profile.what_they_sell, profile.audience, profile.signal, profile.site_notes].filter(String).join(' / '),
+      'Notes: ' + (lead.notes || ''),
+      'Memory so far: ' + (mem ? mem.summary : '(none)'),
+      '',
+      'CONVERSATION (oldest first):',
+      thread,
+      '',
+      'Write the reply to the lead\'s latest message.',
+    ].join('\n');
+
+    let out;
+    try { out = callAi_(S, AI_SYSTEM_, user); } catch (e) { failed = String(e.message || e); set_(drafts, d, 'model', 'failed: ' + failed.slice(0, 200)); continue; }
+    const reply = clean_((out.text.match(/<reply>([\s\S]*?)<\/reply>/i) || [])[1] || '');
+    const summary = clean_((out.text.match(/<memory>([\s\S]*?)<\/memory>/i) || [])[1] || '');
+    if (!reply) { failed = 'AI returned no <reply> block'; set_(drafts, d, 'model', 'failed: no reply block'); continue; }
+
+    set_(drafts, d, 'draft_body', reply);
+    set_(drafts, d, 'status', 'Ready for review');
+    set_(drafts, d, 'model', out.provider);
+    if (summary) {
+      if (mem) { set_(memory, mem, 'summary', summary); set_(memory, mem, 'updated_at', new Date()); }
+      else appendObj_('Memory', { lead_id: d.lead_id, summary: summary, updated_at: new Date() });
+    }
+    done++;
+  }
+  if (interactive) toast_(done + ' draft(s) written.' + (failed ? ' Problem: ' + failed : ''));
+}
+
+/** Tries each provider in AI_ORDER until one answers. Returns { text, provider }. */
+function callAi_(S, system, user) {
+  const props = PropertiesService.getScriptProperties();
+  const order = String(S.AI_ORDER || 'gemini,claude,deepseek').split(',').map(lc_).filter(String);
+  const errors = [];
+  for (const p of order) {
+    try {
+      if (p === 'gemini') {
+        const key = props.getProperty('GEMINI_API_KEY'); if (!key) { errors.push('gemini: no key'); continue; }
+        const model = S.GEMINI_MODEL || 'gemini-2.5-flash';
+        const j = postJson_('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(key), {}, {
+          systemInstruction: { parts: [{ text: system }] },
+          contents: [{ role: 'user', parts: [{ text: user }] }],
+          generationConfig: { temperature: 0.6, maxOutputTokens: 2048 },
+        });
+        return { text: j.candidates[0].content.parts.map(x => x.text || '').join(''), provider: 'gemini:' + model };
+      }
+      if (p === 'claude') {
+        const key = props.getProperty('ANTHROPIC_API_KEY'); if (!key) { errors.push('claude: no key'); continue; }
+        const model = S.CLAUDE_MODEL || 'claude-haiku-4-5-20251001';
+        const j = postJson_('https://api.anthropic.com/v1/messages', { 'x-api-key': key, 'anthropic-version': '2023-06-01' }, {
+          model: model, max_tokens: 900, temperature: 0.6, system: system, messages: [{ role: 'user', content: user }],
+        });
+        return { text: j.content.map(x => x.text || '').join(''), provider: 'claude:' + model };
+      }
+      if (p === 'deepseek') {
+        const key = props.getProperty('DEEPSEEK_API_KEY'); if (!key) { errors.push('deepseek: no key'); continue; }
+        const model = S.DEEPSEEK_MODEL || 'deepseek-chat';
+        const j = postJson_('https://api.deepseek.com/chat/completions', { Authorization: 'Bearer ' + key }, {
+          model: model, temperature: 0.6, max_tokens: 900,
+          messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
+        });
+        return { text: j.choices[0].message.content, provider: 'deepseek:' + model };
+      }
+      errors.push(p + ': unknown provider');
+    } catch (e) {
+      errors.push(p + ': ' + String(e.message || e).slice(0, 150));
+    }
+  }
+  throw new Error('No AI answered. ' + errors.join(' | '));
+}
+
+function postJson_(url, headers, payload) {
+  const res = UrlFetchApp.fetch(url, { method: 'post', contentType: 'application/json', headers: headers,
+    payload: JSON.stringify(payload), muteHttpExceptions: true });
+  const code = res.getResponseCode();
+  if (code < 200 || code >= 300) throw new Error('HTTP ' + code + ' ' + res.getContentText().slice(0, 120));
+  return JSON.parse(res.getContentText());
+}
+
+/** House rules that must hold even if the model slips: no em dashes, tidy whitespace. */
+function clean_(t) {
+  return String(t).replace(/\s*[—–]\s*/g, ', ').replace(/&mdash;/g, ', ').replace(/[ \t]+\n/g, '\n').trim();
 }
 
 /** Drafts you set to "Approved" are sent in the lead's thread. */

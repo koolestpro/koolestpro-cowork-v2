@@ -28,7 +28,7 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 | Pick pitch + write 5 emails | Claude, from REAL proof only (`project_client_history` / CLAUDE.md rule 2), humanizer rules, no em dashes, under ~100 words, plain text, no links in email 1 | not built |
 | Approve | `approved` checkbox in Leads tab | built |
 | Send, follow up, log, stop on reply, alert, bounces | `outreach/gmail-sender/Code.gs` (Apps Script, one copy per Gmail, shared Sheet) | built, simulated only |
-| Reply drafts + relationship memory | On a new reply: AI reads Profile + full Messages thread + Memory, writes a Drafts row and updates the Memory summary. Preferred: fast (Apps Script calling a cheap AI API within minutes); fallback: Claude scheduled task twice a day | not built (Drafts/Memory tabs exist) |
+| Reply drafts + relationship memory | Decided 2026-09-30: Apps Script calls AI in order Gemini free, Claude Haiku, DeepSeek fallback (keys in Script Properties, order in Settings `AI_ORDER`). Reads Profile + Messages thread + Memory, writes the draft (Ready for review) and updates Memory. Never sends; Ridwan approves. | built, mocked-tested; needs keys + real test (SETUP.md 3b) |
 | Dashboard | KoolestFlow lead page: profile, timeline, stage, editable suggested reply, Send (sets draft to Approved) | not built |
 
 ## What exists now
@@ -43,7 +43,7 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 ## Next, in order
 
 1. ~~Confirm the real-account test worked~~ done. Remaining: test sending an approved draft, then go live (SETUP.md section 4).
-2. Reply drafts + Memory summaries (decide: AI API from Apps Script vs Claude scheduled task).
+2. Reply drafts + Memory summaries: built, needs API keys and a real-account test (SETUP.md 3b).
 3. Email finding + MyEmailVerifier.
 4. Sequence writer (5 emails per lead from Profile + track/play + real proof). First batch goes to Ridwan for approval.
 5. Lead finders write to the Sheet (dedupe against the Sheet and `.ai-workflow/taken-brands-ledger.json`).
