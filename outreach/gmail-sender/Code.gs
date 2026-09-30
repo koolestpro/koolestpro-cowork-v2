@@ -66,6 +66,7 @@ function onOpen() {
     .addItem('2. Turn on automation', 'installTriggers')
     .addSeparator()
     .addItem('Send due emails now', 'sendDueNow')
+    .addItem('Why isn\'t it sending?', 'whyNotSending')
     .addItem('Check replies now', 'tick')
     .addItem('Prepare new leads now', 'prepareLeadsNow')
     .addItem('Test email verifier key', 'testVerifier')
@@ -205,6 +206,46 @@ function inLeadWindow_(lead, S) {
 // ---------- Sending the sequence ----------
 
 function sendDueNow() { sendDue(true); }
+
+/** Menu: explains, lead by lead, why an email is or is not going out right now. */
+function whyNotSending() {
+  const S = settings_(), me = me_(), now = new Date();
+  const leads = read_('Leads'), seq = read_('Sequence'), msgs = read_('Messages');
+  const sentToday = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && isToday_(m.sent_at)).length;
+  const cap = dailyCap_(S);
+  const out = [];
+  out.push('SETTINGS');
+  out.push('PAUSED = ' + S.PAUSED + (isTrue_(S.PAUSED) ? '   <-- PROBLEM: set FALSE' : ''));
+  out.push('TEST_MODE = ' + S.TEST_MODE + (isTrue_(S.TEST_MODE) ? '   (emails go to ALERT_EMAIL: ' + S.ALERT_EMAIL + ')' : '   (LIVE: emails go to real leads)'));
+  out.push('ALERT_EMAIL = ' + (S.ALERT_EMAIL || '(empty)   <-- PROBLEM in test mode'));
+  out.push('Sending as: ' + me);
+  out.push('Sent today by this Gmail: ' + sentToday + ' of ' + cap + ' allowed' + (sentToday >= cap ? '   <-- DAILY CAP REACHED. Nothing more goes out until tomorrow, or raise DAILY_CAP_START.' : ''));
+  out.push('Gmail quota left today: ' + MailApp.getRemainingDailyQuota());
+  out.push('');
+  const rows = leads.rows.filter(l => l.lead_id);
+  if (!rows.length) out.push('No leads in the Leads tab.');
+  rows.slice(0, 15).forEach(l => {
+    const why = [];
+    if (!isTrue_(l.approved)) why.push('approved is not ticked');
+    if (['New', 'Contacted', ''].indexOf(String(l.stage)) === -1) why.push('stage is "' + l.stage + '" (needs New or Contacted)');
+    if (!l.email) why.push('email is empty');
+    if (!sendableStatus_(l.email_status, S)) why.push('email_status is "' + l.email_status + '" (needs valid' + (isTrue_(S.SEND_TO_CATCH_ALL) ? ' or catch-all' : '') + ')');
+    if (l.sender && lc_(l.sender) !== me) why.push('lead is claimed by another Gmail: ' + l.sender);
+    const touched = Number(l.touch_count || 0);
+    if (touched > 0 && !(l.next_touch_at && new Date(l.next_touch_at) <= now)) why.push('already sent ' + touched + ' email(s); next one is not due until ' + (l.next_touch_at || '(no date)'));
+    const steps = seq.rows.filter(r => String(r.lead_id) === String(l.lead_id));
+    const nextRow = steps.find(r => Number(r.step) === touched + 1 && r.status !== 'Sent' && r.status !== 'Stopped');
+    if (!steps.length) why.push('NO EMAILS in the Sequence tab for this lead (run Prepare new leads now; see prep_note)');
+    else if (!nextRow) why.push('no unsent step ' + (touched + 1) + ' in Sequence');
+    const tz = leadTz_(l), hr = Utilities.formatDate(now, tz, 'H:mm EEE');
+    const inWin = inLeadWindow_(l, S);
+    out.push((why.length ? 'X ' : 'OK ') + l.lead_id + ' (' + (l.brand || '') + ', ' + (l.country || 'no country') + '): ' +
+      (why.length ? why.join('; ') : 'ready to send. Click "Send due emails now" (ignores hours). The hourly automation only sends inside working hours: it is ' + hr + ' at the lead (' + tz + '), ' + (inWin ? 'inside the window' : 'OUTSIDE the window, so it waits')));
+  });
+  const text = out.join('\n');
+  Logger.log(text);
+  try { SpreadsheetApp.getUi().alert('Why isn\'t it sending?', text.slice(0, 1800), SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) { toast_(text.slice(0, 300)); }
+}
 
 /** Sends follow-ups that are due first, then new first emails, within today's cap. */
 function sendDue(ignoreHours) {
