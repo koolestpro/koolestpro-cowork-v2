@@ -51,7 +51,7 @@ function defaultSettings_() {
     ['AUTO_APPROVE', 'FALSE', 'TRUE = a lead whose sequence passes all checks (valid email, no flags) is approved automatically. FALSE = you tick approved yourself.'],
     ['SEND_WEEKENDS', 'FALSE', 'FALSE = never send on Saturday or Sunday in the lead\'s own time zone.'],
     ['AI_ORDER', 'gemini,claude,deepseek', 'Which AI writes reply drafts, tried in this order. Keys go in Script Properties (see SETUP.md).'],
-    ['GEMINI_MODEL', 'gemini-2.5-flash', 'Gemini model name.'],
+    ['GEMINI_MODEL', 'auto', 'Gemini model name, or auto to pick one your key can use.'],
     ['CLAUDE_MODEL', 'claude-haiku-4-5-20251001', 'Claude model name.'],
     ['DEEPSEEK_MODEL', 'deepseek-chat', 'DeepSeek model name.'],
     ['VOICE_EXAMPLES', '', 'Paste 3 to 5 real replies you have written to leads or clients, separated by a blank line. The AI copies their voice.'],
@@ -68,6 +68,7 @@ function onOpen() {
     .addItem('Send due emails now', 'sendDueNow')
     .addItem('Why isn\'t it sending?', 'whyNotSending')
     .addItem('Check replies now', 'tick')
+    .addItem('Test AI', 'testAi')
     .addItem('Prepare new leads now', 'prepareLeadsNow')
     .addItem('Test email verifier key', 'testVerifier')
     .addItem('Draft replies now', 'draftRepliesNow')
@@ -570,12 +571,20 @@ function callAi_(S, system, user, maxTokens) {
     try {
       if (p === 'gemini') {
         const key = props.getProperty('GEMINI_API_KEY'); if (!key) { errors.push('gemini: no key'); continue; }
-        const model = S.GEMINI_MODEL || 'gemini-2.5-flash';
-        const j = postJson_('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(key), {}, {
+        const call = model => postJson_('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(key), {}, {
           systemInstruction: { parts: [{ text: system }] },
           contents: [{ role: 'user', parts: [{ text: user }] }],
           generationConfig: { temperature: 0.6, maxOutputTokens: Math.max(2048, (maxTokens || 900) * 2) },
         });
+        const cached = props.getProperty('GEMINI_MODEL_AUTO');
+        const wanted = lc_(S.GEMINI_MODEL) === 'auto' ? '' : String(S.GEMINI_MODEL || '').trim();
+        let model = wanted || cached || geminiModel_(key, props), j;
+        try { j = call(model); }
+        catch (e) {
+          if (!/HTTP (404|400)/.test(String(e.message))) throw e;
+          model = geminiModel_(key, props, true);          // the name is gone or not open to this key: find one that works
+          j = call(model);
+        }
         return { text: j.candidates[0].content.parts.map(x => x.text || '').join(''), provider: 'gemini:' + model };
       }
       if (p === 'claude') {
@@ -601,6 +610,30 @@ function callAi_(S, system, user, maxTokens) {
     }
   }
   throw new Error('No AI answered. ' + errors.join(' | '));
+}
+
+/** Asks Google which Gemini models this key can use and picks the newest plain "flash" one. Cached in Script properties. */
+function geminiModel_(key, props, refresh) {
+  if (!refresh) { const c = props.getProperty('GEMINI_MODEL_AUTO'); if (c) return c; }
+  let pick = 'gemini-flash-latest';
+  try {
+    const j = JSON.parse(UrlFetchApp.fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key=' + encodeURIComponent(key), { muteHttpExceptions: true }).getContentText());
+    const ok = (j.models || []).filter(m => (m.supportedGenerationMethods || []).indexOf('generateContent') !== -1)
+      .map(m => String(m.name).replace(/^models\//, ''))
+      .filter(n => /^gemini-\d+(\.\d+)?-flash(-\d+)?$/.test(n));
+    ok.sort((a, b) => parseFloat(b.match(/gemini-([\d.]+)/)[1]) - parseFloat(a.match(/gemini-([\d.]+)/)[1]));
+    if (ok.length) pick = ok[0];
+  } catch (e) { Logger.log('geminiModel_: ' + e); }
+  props.setProperty('GEMINI_MODEL_AUTO', pick);
+  return pick;
+}
+
+/** Menu: sends one tiny request through the AI chain and shows which provider answered, or why each failed. */
+function testAi() {
+  try {
+    const r = callAi_(settings_(), 'Reply with the single word OK.', 'Say OK.', 50);
+    toast_('AI works. Answered by ' + r.provider + ': ' + String(r.text).slice(0, 40));
+  } catch (e) { toast_(String(e.message || e).slice(0, 400)); }
 }
 
 function postJson_(url, headers, payload) {
