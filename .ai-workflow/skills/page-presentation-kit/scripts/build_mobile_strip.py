@@ -178,11 +178,27 @@ def capture(target, width, is_file, clean=False):
     try:
         png = capture_full_page(target, width, is_file, clean=clean)
         print("Captured via full_page screenshot.")
-        return png
     except Exception as exc:
         print(f"full_page capture failed ({type(exc).__name__}); "
               f"falling back to tile stitching.")
-        return capture_tiled(target, width, is_file)
+        png = capture_tiled(target, width, is_file)
+    return _crop_to_width(png, width)
+
+
+def _crop_to_width(png, width):
+    """2026-09-30: Playwright's full_page mode can capture wider than the real
+    viewport on pages with will-change carousels even when the page is not
+    actually scrolling sideways (moult-pdp-01: 1170px+ wide, content in the left
+    390px). plan_post_columns derives scale from the image width, so a wide
+    capture shrank the columns to ~40% and left the canvas mostly blank. Crop to
+    the true mobile width before anything downstream measures it."""
+    img = Image.open(io.BytesIO(png))
+    if img.width <= width:
+        return png
+    print(f"Capture was {img.width}px wide; cropping to {width}px.")
+    buf = io.BytesIO()
+    img.convert("RGB").crop((0, 0, width, img.height)).save(buf, format="PNG")
+    return buf.getvalue()
 
 
 def choose_split_points(profile, n_cols, search_frac=0.10, gap_ratio=0.40, min_gap_run=30):
