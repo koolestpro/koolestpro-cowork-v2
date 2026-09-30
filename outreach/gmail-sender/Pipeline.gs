@@ -22,13 +22,14 @@ function prepareLeads() { prepareLeads_(false); }
 function prepareLeads_(interactive) {
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) return;
-  const stats = { emails: 0, verified: 0, profiles: 0, sequences: 0, problems: [] };
+  const stats = { discovered: 0, emails: 0, verified: 0, profiles: 0, sequences: 0, problems: [], limited: false };
   try {
     const S = settings_();
     if (isTrue_(S.PAUSED)) { if (interactive) toast_('PAUSED is TRUE in Settings.'); return; }
     const started = Date.now();
     const timeLeft = () => Date.now() - started < 4.5 * 60 * 1000;
 
+    try { qualifyDiscovery_(S, stats, timeLeft); } catch (e) { stats.problems.push('discovery: ' + e.message); }
     findEmails_(S, stats, timeLeft);
     verifyEmails_(S, stats, timeLeft);
     profileLeads_(S, stats, timeLeft);
@@ -37,7 +38,7 @@ function prepareLeads_(interactive) {
     lock.releaseLock();
   }
   if (interactive) {
-    toast_('Emails found: ' + stats.emails + ', verified: ' + stats.verified + ', profiles: ' + stats.profiles +
+    toast_('Stores promoted: ' + stats.discovered + ', emails found: ' + stats.emails + ', verified: ' + stats.verified + ', profiles: ' + stats.profiles +
       ', sequences written: ' + stats.sequences + (stats.problems.length ? '. Problems: ' + stats.problems.slice(0, 3).join(' | ') : ''));
   }
 }
@@ -48,10 +49,12 @@ function candidates_(leads, filter, n) {
 }
 
 function note_(leads, lead, msg, failed) {
-  // A missing API key is a setup problem, not the lead's fault: say so and do not use up the retries.
+  // Setup problems (no key) and busy or rate-limited AI are not the lead's fault: say so and do not use up its retries.
   const setup = /no key/i.test(msg);
-  set_(leads, lead, 'prep_note', setup ? 'SETUP NEEDED: add an AI key in Apps Script > Project Settings > Script properties (GEMINI_API_KEY, ANTHROPIC_API_KEY or DEEPSEEK_API_KEY). ' + msg : msg);
-  if (failed && !setup) set_(leads, lead, 'prep_tries', Number(lead.prep_tries || 0) + 1);
+  const busy = /HTTP 429|HTTP 503|RESOURCE_EXHAUSTED|rate.?limit|overloaded|high demand/i.test(msg);
+  set_(leads, lead, 'prep_note', setup ? 'SETUP NEEDED: add an AI key in Apps Script > Project Settings > Script properties (GEMINI_API_KEY, ANTHROPIC_API_KEY or DEEPSEEK_API_KEY). ' + msg
+    : (busy ? 'AI busy or rate-limited, will retry on the next run. ' + msg : msg));
+  if (failed && !setup && !busy) set_(leads, lead, 'prep_tries', Number(lead.prep_tries || 0) + 1);
 }
 
 // ---------- 1. Find a contact email ----------
@@ -180,13 +183,13 @@ function profileLeads_(S, stats, timeLeft) {
   const have = {};
   profiles.rows.forEach(p => { have[String(p.lead_id)] = true; });
   candidates_(leads, l => String(l.website).trim() && !have[String(l.lead_id)], PREP_BATCH_.profile).forEach(lead => {
-    if (!timeLeft()) return;
+    if (!timeLeft() || stats.limited) return;
     try {
       const page = fetchPage_(lead.website);
       if (!page.ok) throw new Error('site returned HTTP ' + page.code);
       const f = siteFacts_(page);
       const sys = 'You analyse an online store from its public homepage data so a sales email can refer to real, checkable things. Use ONLY the data given. Never guess. Output JSON only: ' +
-        '{"what_they_sell":"one short line","audience":"who buys, one short line","signal":"one line: why they look like a fit for the given track","site_notes":"2 to 4 short, concrete observations about the page that are supported by the text (not just missing-from-source signals), each one a plain sentence"}. ' +
+        '{"what_they_sell":"one short line","audience":"who buys, one short line","niche":"2 to 3 words, e.g. pet accessories","signal":"one line: why they look like a fit for the given track","site_notes":"2 to 4 short, concrete observations about the page that are supported by the text (not just missing-from-source signals), each one a plain sentence"}. ' +
         'Signals marked "not spotted in the source" are weak: use them only as a soft observation, never as proof something is absent.';
       const user = 'Track: ' + (lead.track || 'unknown') + '. Niche: ' + (lead.niche || '') + '. Brand: ' + (lead.brand || '') + '.\nTitle: ' + f.title + '\nMeta: ' + f.desc +
         '\nHeadings: ' + f.headings.join(' | ') + '\nSignals: ' + f.signals.join('; ') + '\nHomepage text: ' + f.text;
@@ -195,9 +198,11 @@ function profileLeads_(S, stats, timeLeft) {
       if (!j || !j.what_they_sell) throw new Error('profile: AI returned no JSON');
       appendObj_('Profiles', { lead_id: lead.lead_id, what_they_sell: j.what_they_sell, audience: j.audience || '', signal: j.signal || '',
         site_notes: (j.site_notes || '') + (f.signals.length ? ' [Signals: ' + f.signals.join('; ') + ']' : ''), updated_at: new Date() });
+      if (!String(lead.niche).trim() && j.niche) set_(leads, lead, 'niche', String(j.niche).slice(0, 40));
       have[String(lead.lead_id)] = true;
       stats.profiles++;
-    } catch (e) { note_(leads, lead, 'profile failed: ' + String(e.message || e).slice(0, 420), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
+      Utilities.sleep(6000);   // free-tier Gemini allows only a handful of calls a minute
+    } catch (e) { note_(leads, lead, 'profile failed: ' + String(e.message || e).slice(0, 420), true); stats.problems.push(lead.lead_id + ': ' + e.message); if (/HTTP 429|RESOURCE_EXHAUSTED/i.test(String(e.message))) stats.limited = true; }
   });
 }
 
@@ -221,7 +226,7 @@ function writeSequences_(S, stats, timeLeft) {
   const ex = String(S.VOICE_EXAMPLES || '').trim();
 
   candidates_(leads, l => !has1[String(l.lead_id)] && profiles.rows.some(p => String(p.lead_id) === String(l.lead_id)), PREP_BATCH_.sequence).forEach(lead => {
-    if (!timeLeft()) return;
+    if (!timeLeft() || stats.limited) return;
     try {
       const p = profiles.rows.find(x => String(x.lead_id) === String(lead.lead_id));
       const sys = BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[regionKey_(lead.country)] + '\n\n' + SEQ_TASK_ +
@@ -246,7 +251,8 @@ function writeSequences_(S, stats, timeLeft) {
       if (isTrue_(S.AUTO_APPROVE) && !flags.length && sendableStatus_(lead.email_status, S)) set_(leads, lead, 'approved', true);
       has1[String(lead.lead_id)] = true;
       stats.sequences++;
-    } catch (e) { note_(leads, lead, 'sequence failed: ' + String(e.message || e).slice(0, 420), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
+      Utilities.sleep(6000);
+    } catch (e) { note_(leads, lead, 'sequence failed: ' + String(e.message || e).slice(0, 420), true); stats.problems.push(lead.lead_id + ': ' + e.message); if (/HTTP 429|RESOURCE_EXHAUSTED/i.test(String(e.message))) stats.limited = true; }
   });
 }
 

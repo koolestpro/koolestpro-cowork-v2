@@ -27,6 +27,7 @@ const TABS = {
     'message_id', 'sender_account'],
   Memory: ['lead_id', 'summary', 'updated_at'],
   Drafts: ['lead_id', 'created_at', 'reply_to_message_id', 'draft_body', 'status', 'sent_at', 'model'],
+  Discovery: ['domain', 'source', 'niche', 'country', 'status', 'score', 'reasons', 'checked_at', 'lead_id'],
 };
 
 const STAGES = ['New', 'Contacted', 'Finished', 'Replied', 'Talking', 'Call booked', 'Won', 'Lost', 'Bounced'];
@@ -48,6 +49,7 @@ function defaultSettings_() {
     ['SEND_END_HOUR', '17', 'Stop sending at this hour (lead\'s local time).'],
     ['FOLLOWUP_GAPS', '3,4,5,6', 'Days between steps 1>2, 2>3, 3>4, 4>5.'],
     ['SEND_TO_CATCH_ALL', 'FALSE', 'TRUE = also email addresses the verifier marks catch-all (domain accepts everything, so the mailbox is unproven). Unknown or risky are never sent.'],
+    ['MIN_FIT_SCORE', '55', 'Discovery: a store needs at least this score (0 to 100) to become a lead. Higher = pickier.'],
     ['AUTO_APPROVE', 'FALSE', 'TRUE = a lead whose sequence passes all checks (valid email, no flags) is approved automatically. FALSE = you tick approved yourself.'],
     ['SEND_WEEKENDS', 'FALSE', 'FALSE = never send on Saturday or Sunday in the lead\'s own time zone.'],
     ['AI_ORDER', 'gemini,claude,deepseek', 'Which AI writes reply drafts, tried in this order. Keys go in Script Properties (see SETUP.md).'],
@@ -184,7 +186,7 @@ const COUNTRY_TZ_ = {
   germany: 'Europe/Berlin', france: 'Europe/Paris', netherlands: 'Europe/Amsterdam', spain: 'Europe/Madrid', italy: 'Europe/Rome',
   sweden: 'Europe/Stockholm', norway: 'Europe/Oslo', denmark: 'Europe/Copenhagen', finland: 'Europe/Helsinki', belgium: 'Europe/Brussels',
   austria: 'Europe/Vienna', switzerland: 'Europe/Zurich', portugal: 'Europe/Lisbon', poland: 'Europe/Warsaw',
-  australia: 'Australia/Sydney', 'new zealand': 'Pacific/Auckland', india: 'Asia/Kolkata', uae: 'Asia/Dubai', 'united arab emirates': 'Asia/Dubai',
+  australia: 'Australia/Sydney', 'new zealand': 'Pacific/Auckland', india: 'Asia/Kolkata', uae: 'Asia/Dubai', 'united arab emirates': 'Asia/Dubai', europe: 'Europe/Paris',
 };
 
 /** The lead's own time zone: the time_zone column if valid, else from country, else Lagos. */

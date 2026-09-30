@@ -55,7 +55,7 @@ Ridwan's decision: Gemini free is the main model. Claude (Anthropic) is not fund
 2. Reply drafts + Memory summaries: built, needs API keys and a real-account test (SETUP.md 3b).
 3. ~~Email finding + MyEmailVerifier~~ built (needs real run + key).
 4. ~~Sequence writer~~ built (needs real run). First batch goes to Ridwan for approval.
-5. Lead finders write to the Sheet (dedupe against the Sheet and `.ai-workflow/taken-brands-ledger.json`).
+5. Lead finders write to the Sheet. **Started 2026-09-30:** `Discovery.gs` qualifies any list of store domains (upcoming-brand score, see BRIEF.md 4b) into Leads. Still to build: the sources that fill the Discovery tab automatically (store-finder export, Apify actor, Reddit and ad-library scans) and dedupe against `.ai-workflow/taken-brands-ledger.json`.
 6. KoolestFlow dashboard over the Sheet.
 
 ## Costs (target)

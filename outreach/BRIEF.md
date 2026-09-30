@@ -64,6 +64,15 @@ Rule 2 of the project: **never invent a result and never imply a concept brand w
   - International: store audit $200, single page build $750, full store build $1,500.
   These are the midpoints of the earlier growth-plan bands. Change them in `brief-ai.md` (PRICES) and here, then rebuild. Never price in the wrong currency; never volunteer prices in a first email.
 
+## 4b. Who to target (Ridwan, 2026-09-30)
+
+- **Any e-commerce niche, especially DTC.** Leans towards products that solve a real problem over fashion, but does not discriminate.
+- **Markets:** UK, US and Canada, Europe, Nigeria and wider Africa. The market decides the voice (section 6).
+- **Upcoming, not established:** small teams (about 2 to 10 people, like Tap and Rate, an NFC brand), young stores. Three kinds: (1) building or about to build a site, (2) selling a lot through DMs and ready for a real site, (3) already selling and wanting to do better.
+- **Not wanted:** big brands with massive traffic, big teams and millions in revenue. They already have a working plan.
+- **No website:** pitch a free site built with AI and sent to them. See the open question in section 12 about the growth plan's limits on free sites. These leads usually have no email, so they are reached by Instagram DM or WhatsApp (KoolestFlow), not by this email system.
+- **How the system enforces it:** the Discovery tab scores each store (small catalogue, young store, default theme, light app stack, target market) and only promotes upcoming ones. See `outreach/gmail-sender/Discovery.gs`.
+
 ## 5. The people he writes to
 
 Two markets that never mix (project rule 4).
@@ -183,4 +192,6 @@ Per lead the system holds: brand, website, contact name, country, niche, track a
 7. **Nigerian register.** Confirm how much Nigerian English you want ("Kindly", "revert", "no wahala" only after rapport?). The default here is light and warm, never pidgin first.
 8. **Time zones.** Send in the lead's working hours (needs `time_zone` on every lead), or keep Lagos hours?
 9. **WhatsApp and Instagram.** Emails to Nigerian leads are new (the playbook says DM is primary). Should the reply also offer WhatsApp?
+11. **Free AI-built sites.** The growth plan (D8) limits free sample sites to 3 a week and only for people who replied. You want to offer them to no-website businesses up front. Which rule wins, and who builds them?
+12. **"GT Metrics".** Which site is this exactly (name and URL)? Search found nothing with that name.
 10. **Auto-approval.** Once the first batch is trusted, should leads that pass automatic checks (valid email, real observation present, no blocklist hits) send without a per-lead tick, with a daily digest for you to skim?
