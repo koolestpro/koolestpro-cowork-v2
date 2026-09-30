@@ -638,12 +638,21 @@ function geminiModel_(key, props, refresh) {
   return pick;
 }
 
-/** Menu: sends one tiny request through the AI chain and shows which provider answered, or why each failed. */
+/** Menu: tests each AI provider on its own and shows one line per provider, in a dialog so nothing is cut off. */
 function testAi() {
-  try {
-    const r = callAi_(settings_(), 'Reply with the single word OK.', 'Say OK.', 50);
-    toast_('AI works. Answered by ' + r.provider + ': ' + String(r.text).slice(0, 40));
-  } catch (e) { toast_(String(e.message || e).slice(0, 400)); }
+  const S = settings_();
+  const lines = ['AI_ORDER in Settings = "' + (S.AI_ORDER || '(empty, default gemini,claude,deepseek)') + '"', ''];
+  ['gemini', 'claude', 'deepseek'].forEach(p => {
+    try {
+      const r = callAi_(Object.assign({}, S, { AI_ORDER: p }), 'Reply with the single word OK.', 'Say OK.', 50);
+      lines.push('OK     ' + p + ' answered (' + r.provider + ')');
+    } catch (e) {
+      lines.push('FAILED ' + p + ': ' + String(e.message || e).replace(/^No AI answered\.\s*/, '').slice(0, 260));
+    }
+  });
+  const text = lines.join('\n');
+  Logger.log(text);
+  try { SpreadsheetApp.getUi().alert('Test AI', text, SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) { toast_(text.slice(0, 400)); }
 }
 
 function postJson_(url, headers, payload) {
