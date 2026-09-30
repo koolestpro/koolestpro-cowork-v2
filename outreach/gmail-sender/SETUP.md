@@ -19,7 +19,14 @@ Do this signed in as **koolestpro@gmail.com**.
 3. Reply to that test email from your main Gmail. The alert email is sent only when a reply arrives, not on approval or send. Then Outreach > **Check replies now**. The lead moves to **Replied**, the follow-up is stopped, a row appears in **Drafts**, and you get an alert.
 4. In **Drafts**, type something in `draft_body`, set status to **Approved**, then **Check replies now** again. It sends in the same thread.
 
-## 3a. Two files now
+## 3a. Three files now
+The script is `Code.gs`, `Brief.gs` (the master brief, compiled from `outreach/brief-ai.md`) and `Pipeline.gs` (finds emails, verifies them, profiles each store, writes the 5-email sequences). Add each as its own file in Apps Script (+ > Script). After editing `brief-ai.md`, run `node outreach/build_brief.js` and paste the new `Brief.gs`. Run Outreach > **1. Set up tabs** once (adds new columns and Settings rows) and **2. Turn on automation** once (adds the new triggers).
+
+**How a new lead flows:** put a row in Leads with `lead_id`, `brand`, `website`, `country`, `niche`, `track` (and `contact_name`, `email` if you have them). Every 30 minutes, or via Outreach > **Prepare new leads now**, the script finds an email on their site if `email` is empty, verifies it, writes the Profile, then writes the 5-email Sequence. Check `notes` on the lead: it says what the first email's observation is based on, and `CHECK:` if something needs your eyes. Then tick `approved` (or set `AUTO_APPROVE` = TRUE in Settings to auto-approve clean ones). Sending follows each lead's own working hours (9 to 5, weekdays, from `time_zone` or their country).
+
+Email verification: get a free key at myemailverifier.com and add Script property `MYEMAILVERIFIER_API_KEY`. Without it, emails stay `unverified` and are never sent. Verify the response format against their docs the first time; anything other than Valid or Invalid is treated as `risky` and not sent.
+
+
 The script is `Code.gs` plus `Brief.gs` (the master brief, compiled from `outreach/brief-ai.md`). In Apps Script click **+** > Script, name it `Brief`, and paste `Brief.gs`. After editing `brief-ai.md`, run `node outreach/build_brief.js` and paste the new `Brief.gs` again. Also run Outreach > **2. Turn on automation** again once, to add the 6pm daily report trigger. Try it with Outreach > **Send daily report now**.
 
 ## 3b. AI reply drafts (Gemini, then Claude Haiku, then DeepSeek)

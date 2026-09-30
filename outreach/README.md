@@ -28,8 +28,8 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 | Step | How | Status |
 |---|---|---|
 | Find leads | Existing weekly BrowserAct/Maps (Tue) + Ad Library (Wed) tasks, later agency + Shopify-store sources. Point them at the Sheet. | exists, not yet wired to the Sheet |
-| Find + verify emails | Scrape site/contact pages, then MyEmailVerifier free API (100/day) | not built |
-| Pick pitch + write 5 emails | Claude, from REAL proof only (`project_client_history` / CLAUDE.md rule 2), humanizer rules, no em dashes, under ~100 words, plain text, no links in email 1 | not built |
+| Find + verify emails | `Pipeline.gs`: scrapes site/contact pages (own domain or a free-mail address they published), then MyEmailVerifier free API | built, mock-tested, needs a real run + verifier key |
+| Profile + write 5 emails | `Pipeline.gs`: fetches the site, AI builds a Profile from real page facts, then writes the 5-email sequence from `BRIEF_` (real proof only, region voice, no em dashes, under ~100 words, no links in email 1). `{{greeting}}` is filled at send time from the lead's clock. `notes` records the observation basis and any `CHECK:` flags. `AUTO_APPROVE` setting optional. | built, mock-tested, needs a real run |
 | Approve | `approved` checkbox in Leads tab | built |
 | Send, follow up, log, stop on reply, alert, bounces | `outreach/gmail-sender/Code.gs` (Apps Script, one copy per Gmail, shared Sheet) | built, simulated only |
 | Reply drafts + relationship memory | Decided 2026-09-30: Apps Script calls AI in order Gemini free, Claude Haiku, DeepSeek fallback (keys in Script Properties, order in Settings `AI_ORDER`). Reads Profile + Messages thread + Memory, writes the draft (Ready for review) and updates Memory. Never sends; Ridwan approves. | built, mocked-tested; needs keys + real test (SETUP.md 3b) |
@@ -40,7 +40,7 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 
 `outreach/gmail-sender/` — `Code.gs`, `appsscript.json`, `SETUP.md`.
 - Creates 7 tabs: Settings, Leads, Profiles, Sequence, Messages, Memory, Drafts (schema = `TABS` at the top of `Code.gs`).
-- Hourly: sends due follow-ups first, then approved first emails. Cap 5/day in week 1, +5/week, max 20/day, max 2 per run, 9am-5pm Lagos. Steps 2-5 go in the same Gmail thread (Gmail advanced service, In-Reply-To). Only steps 2+ use `Re: <step 1 subject>`.
+- Hourly: sends due follow-ups first, then approved first emails. Cap 5/day in week 1, +5/week, max 20/day, max 2 per run, weekdays 9am-5pm in the LEAD's own time zone (decided 2026-09-30). Steps 2-5 go in the same Gmail thread (Gmail advanced service, In-Reply-To). Only steps 2+ use `Re: <step 1 subject>`.
 - Every 30 min (`tick`): logs replies and Ridwan's manual Gmail replies, stops the sequence on reply, adds a `Needs draft` row, emails ALERT_EMAIL, sends drafts marked `Approved`, marks bounces.
 - `TEST_MODE=TRUE` by default: everything goes to ALERT_EMAIL. ALERT_EMAIL must be his main Gmail, not the sending account.
 - Confirmed working in Ridwan's real Google account on 2026-09-30 (TEST_MODE): send, reply, Replied stage, Drafts row and alert email all worked. Fixed that day: test-row seeding and row appends (the checkbox column pre-fills FALSE down 2000 rows, so `getLastRow()` and `appendRow` are unreliable on Leads). Still to test: approving a draft sends in-thread, and follow-ups (step 2).
@@ -49,8 +49,8 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 
 1. ~~Confirm the real-account test worked~~ done. Remaining: test sending an approved draft, then go live (SETUP.md section 4).
 2. Reply drafts + Memory summaries: built, needs API keys and a real-account test (SETUP.md 3b).
-3. Email finding + MyEmailVerifier.
-4. Sequence writer (5 emails per lead from Profile + track/play + real proof). First batch goes to Ridwan for approval.
+3. ~~Email finding + MyEmailVerifier~~ built (needs real run + key).
+4. ~~Sequence writer~~ built (needs real run). First batch goes to Ridwan for approval.
 5. Lead finders write to the Sheet (dedupe against the Sheet and `.ai-workflow/taken-brands-ledger.json`).
 6. KoolestFlow dashboard over the Sheet.
 

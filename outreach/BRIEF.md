@@ -10,7 +10,7 @@
 
 ## 1. Who Ridwan is
 
-Ridwan Adekunle, known online as @koolestpro. A Shopify CRO and UX specialist and Liquid developer based in Ibadan, Nigeria (Lagos time zone). He designs in Figma, builds in Shopify Liquid, Replo and Instant, and works on conversion, SEO and custom product pages. He is self-taught in public: he teaches on LinkedIn, TikTok and YouTube, posts CRO fixes and past work, and has been paid by clients who found him that way.
+Ridwan Adekunle, known online as @koolestpro. A Shopify CRO and UX specialist and Liquid developer based in Offa, Kwara State, Nigeria (Lagos time zone). He designs in Figma, builds in Shopify Liquid, Replo and Instant, and works on conversion, SEO and custom product pages. He is self-taught in public: he teaches on LinkedIn, TikTok and YouTube, posts CRO fixes and past work, and has been paid by clients who found him that way.
 
 He is a practitioner, not an agency. One person, real work, answers his own email.
 
@@ -59,10 +59,10 @@ Rule 2 of the project: **never invent a result and never imply a concept brand w
 - **Anything free that goes out is approved by Ridwan first.**
 - **Never promise a date or timeline.** He does not control the build queue.
 - **Never re-quote someone mid conversation, never discount.** Discount requests go to Ridwan.
-- **Prices the AI may state, only when directly asked, and nothing else:**
-  - Nigeria: Starter N250k to N500k, Business N500k to N1M, Premium N1M and up.
-  - International: audit $150 to $250, page build $600 to $900, full build $1,200 to $1,800.
-  Never price in the wrong currency for the market. Never volunteer prices in a first email.
+- **Prices (decided 2026-09-30): fixed and published, above marketplace freelancers, below agencies, built for volume.** The AI states them only when directly asked, and says final scope is confirmed on a short call.
+  - Nigeria: Starter N350k, Business N750k, Premium from N1.2M.
+  - International: store audit $200, single page build $750, full store build $1,500.
+  These are the midpoints of the earlier growth-plan bands. Change them in `brief-ai.md` (PRICES) and here, then rebuild. Never price in the wrong currency; never volunteer prices in a first email.
 
 ## 5. The people he writes to
 
@@ -174,7 +174,8 @@ Per lead the system holds: brand, website, contact name, country, niche, track a
 ## 12. Open items for Ridwan (please settle these)
 
 1. **Real replies.** Paste 5 to 10 real messages you are proud of (client replies, DMs, Upwork replies) into the Settings cell `VOICE_EXAMPLES`. This is the biggest quality lever.
-2. **Sending domain conflict.** The outreach playbook says international email goes from `hello@mail.koolestpro.com`. The README decision (2026-09-27) says secondary Gmails only, never koolestpro.com. This brief follows the README. Confirm.
+2. ~~Sending domain conflict.~~ **Settled 2026-09-30:** Gmail accounts now, a domain email later.
+2b. **(old note)** The outreach playbook says international email goes from `hello@mail.koolestpro.com`. The README decision (2026-09-27) says secondary Gmails only, never koolestpro.com. This brief follows the README. Confirm.
 3. **Links in email 1.** Playbook Day 0 email includes a link to a rebuild; the README rule says no links in email 1. This brief follows the README until the Gmail accounts are warmed. Confirm.
 4. **Pricing in email.** Prices are stated only if asked. Are the ladder figures still current (the growth plan also mentions "$300 to $800 today")?
 5. **Proof.** Which real projects should be cited for which niche? Is Captain & Skipper scope confirmed? Do you have any real number you are allowed to quote (even a small one)?

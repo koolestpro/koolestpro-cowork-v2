@@ -20,7 +20,7 @@ const TABS = {
   Settings: ['key', 'value', 'notes'],
   Leads: ['lead_id', 'brand', 'website', 'contact_name', 'email', 'email_status', 'country', 'time_zone',
     'niche', 'source', 'track', 'play', 'stage', 'approved', 'sender', 'touch_count', 'last_touch_at',
-    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at'],
+    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries'],
   Profiles: ['lead_id', 'what_they_sell', 'audience', 'signal', 'site_notes', 'updated_at'],
   Sequence: ['lead_id', 'step', 'subject', 'body', 'status', 'sent_at'],
   Messages: ['logged_at', 'lead_id', 'direction', 'from', 'to', 'subject', 'body', 'sent_at', 'thread_id',
@@ -44,9 +44,11 @@ function defaultSettings_() {
     ['RAMP_PER_WEEK', '5', 'Added to the daily cap each week.'],
     ['DAILY_CAP_MAX', '20', 'Hard ceiling per day for this Gmail.'],
     ['MAX_PER_RUN', '2', 'Emails per hourly run, so sends are spread through the day.'],
-    ['SEND_START_HOUR', '9', 'Earliest hour to send (Lagos time).'],
-    ['SEND_END_HOUR', '17', 'Stop sending at this hour.'],
+    ['SEND_START_HOUR', '9', 'Earliest hour to send, in the LEAD\'s local time.'],
+    ['SEND_END_HOUR', '17', 'Stop sending at this hour (lead\'s local time).'],
     ['FOLLOWUP_GAPS', '3,4,5,6', 'Days between steps 1>2, 2>3, 3>4, 4>5.'],
+    ['AUTO_APPROVE', 'FALSE', 'TRUE = a lead whose sequence passes all checks (valid email, no flags) is approved automatically. FALSE = you tick approved yourself.'],
+    ['SEND_WEEKENDS', 'FALSE', 'FALSE = never send on Saturday or Sunday in the lead\'s own time zone.'],
     ['AI_ORDER', 'gemini,claude,deepseek', 'Which AI writes reply drafts, tried in this order. Keys go in Script Properties (see SETUP.md).'],
     ['GEMINI_MODEL', 'gemini-2.5-flash', 'Gemini model name.'],
     ['CLAUDE_MODEL', 'claude-haiku-4-5-20251001', 'Claude model name.'],
@@ -64,6 +66,7 @@ function onOpen() {
     .addSeparator()
     .addItem('Send due emails now', 'sendDueNow')
     .addItem('Check replies now', 'tick')
+    .addItem('Prepare new leads now', 'prepareLeadsNow')
     .addItem('Draft replies now', 'draftRepliesNow')
     .addItem('Send daily report now', 'dailyReport')
     .addItem('Create / reset test lead', 'addTestLead')
@@ -158,12 +161,43 @@ function installTriggers() {
   removeTriggers();
   ScriptApp.newTrigger('sendDue').timeBased().everyHours(1).create();
   ScriptApp.newTrigger('tick').timeBased().everyMinutes(30).create();
+  ScriptApp.newTrigger('prepareLeads').timeBased().everyMinutes(30).create();
   ScriptApp.newTrigger('dailyReport').timeBased().everyDays(1).atHour(18).create();
   toast_('Automation on: sends hourly, checks replies every 30 minutes.');
 }
 
 function removeTriggers() {
   ScriptApp.getProjectTriggers().forEach(t => ScriptApp.deleteTrigger(t));
+}
+
+// ---------- Lead time zones and working hours ----------
+
+const COUNTRY_TZ_ = {
+  nigeria: 'Africa/Lagos', ghana: 'Africa/Accra', kenya: 'Africa/Nairobi', uganda: 'Africa/Kampala', tanzania: 'Africa/Dar_es_Salaam',
+  'south africa': 'Africa/Johannesburg', senegal: 'Africa/Dakar', egypt: 'Africa/Cairo', morocco: 'Africa/Casablanca',
+  'united kingdom': 'Europe/London', uk: 'Europe/London', england: 'Europe/London', scotland: 'Europe/London', wales: 'Europe/London', ireland: 'Europe/Dublin',
+  'united states': 'America/New_York', usa: 'America/New_York', us: 'America/New_York', canada: 'America/Toronto',
+  germany: 'Europe/Berlin', france: 'Europe/Paris', netherlands: 'Europe/Amsterdam', spain: 'Europe/Madrid', italy: 'Europe/Rome',
+  sweden: 'Europe/Stockholm', norway: 'Europe/Oslo', denmark: 'Europe/Copenhagen', finland: 'Europe/Helsinki', belgium: 'Europe/Brussels',
+  austria: 'Europe/Vienna', switzerland: 'Europe/Zurich', portugal: 'Europe/Lisbon', poland: 'Europe/Warsaw',
+  australia: 'Australia/Sydney', 'new zealand': 'Pacific/Auckland', india: 'Asia/Kolkata', uae: 'Asia/Dubai', 'united arab emirates': 'Asia/Dubai',
+};
+
+/** The lead's own time zone: the time_zone column if valid, else from country, else Lagos. */
+function leadTz_(lead) {
+  const tryTz = z => { try { Utilities.formatDate(new Date(), z, 'H'); return z; } catch (e) { return ''; } };
+  const given = String(lead.time_zone || '').trim();
+  if (given && tryTz(given)) return given;
+  return COUNTRY_TZ_[lc_(lead.country)] || 'Africa/Lagos';
+}
+
+/** True if it is currently working hours (and a weekday, unless SEND_WEEKENDS) where the lead is. */
+function inLeadWindow_(lead, S) {
+  const tz = leadTz_(lead), now = new Date();
+  const hour = Number(Utilities.formatDate(now, tz, 'H'));
+  const day = Utilities.formatDate(now, tz, 'u'); // 1 Mon .. 7 Sun
+  if (!isTrue_(S.SEND_WEEKENDS) && (day === '6' || day === '7')) return false;
+  return hour >= Number(S.SEND_START_HOUR || 9) && hour < Number(S.SEND_END_HOUR || 17);
 }
 
 // ---------- Sending the sequence ----------
@@ -177,8 +211,6 @@ function sendDue(ignoreHours) {
   try {
     const S = settings_();
     if (isTrue_(S.PAUSED)) { if (ignoreHours === true) toast_('Nothing sent: PAUSED is TRUE in Settings.'); return; }
-    const hour = Number(Utilities.formatDate(new Date(), tz_(), 'H'));
-    if (ignoreHours !== true && (hour < Number(S.SEND_START_HOUR) || hour >= Number(S.SEND_END_HOUR))) return;
 
     const me = me_();
     const leads = read_('Leads');
@@ -195,6 +227,7 @@ function sendDue(ignoreHours) {
       ['New', 'Contacted', ''].indexOf(String(l.stage)) !== -1 &&
       lc_(l.email_status) === 'valid' && l.email &&
       (!l.sender || lc_(l.sender) === me) &&
+      (ignoreHours === true || inLeadWindow_(l, S)) &&
       (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now)));
     due.sort((a, b) => Number(b.touch_count || 0) - Number(a.touch_count || 0)); // follow-ups first
 
@@ -211,7 +244,7 @@ function sendDue(ignoreHours) {
       if (step > 1 && !lead.thread_id) continue; // follow-up without a thread: skip, needs a look
 
       const subject = step === 1 ? String(row.subject) : 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
-      const body = String(row.body).trim() + (S.SIGNATURE ? '\n\n' + S.SIGNATURE : '');
+      const body = String(row.body).replace(/\{\{greeting\}\}/g, localGreeting_(lead)).trim() + (S.SIGNATURE ? '\n\n' + S.SIGNATURE : '');
       const to = isTrue_(S.TEST_MODE) ? S.ALERT_EMAIL : String(lead.email).trim();
       const finalSubject = isTrue_(S.TEST_MODE) ? '[TEST to ' + lead.email + '] ' + subject : subject;
 
@@ -410,9 +443,7 @@ function aiSystem_(S, lead) {
 
 /** "Good morning/afternoon/evening" for the lead's own clock (used for Nigerian and West African leads). */
 function localGreeting_(lead) {
-  let tz = String(lead.time_zone || '').trim() || 'Africa/Lagos';
-  let h;
-  try { h = Number(Utilities.formatDate(new Date(), tz, 'H')); } catch (e) { h = Number(Utilities.formatDate(new Date(), 'Africa/Lagos', 'H')); }
+  const h = Number(Utilities.formatDate(new Date(), leadTz_(lead), 'H'));
   return h < 12 ? 'Good morning' : (h < 17 ? 'Good afternoon' : 'Good evening');
 }
 
@@ -483,7 +514,7 @@ function draftReplies_(interactive) {
 }
 
 /** Tries each provider in AI_ORDER until one answers. Returns { text, provider }. */
-function callAi_(S, system, user) {
+function callAi_(S, system, user, maxTokens) {
   const props = PropertiesService.getScriptProperties();
   const order = String(S.AI_ORDER || 'gemini,claude,deepseek').split(',').map(lc_).filter(String);
   const errors = [];
@@ -495,7 +526,7 @@ function callAi_(S, system, user) {
         const j = postJson_('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(key), {}, {
           systemInstruction: { parts: [{ text: system }] },
           contents: [{ role: 'user', parts: [{ text: user }] }],
-          generationConfig: { temperature: 0.6, maxOutputTokens: 2048 },
+          generationConfig: { temperature: 0.6, maxOutputTokens: Math.max(2048, (maxTokens || 900) * 2) },
         });
         return { text: j.candidates[0].content.parts.map(x => x.text || '').join(''), provider: 'gemini:' + model };
       }
@@ -503,7 +534,7 @@ function callAi_(S, system, user) {
         const key = props.getProperty('ANTHROPIC_API_KEY'); if (!key) { errors.push('claude: no key'); continue; }
         const model = S.CLAUDE_MODEL || 'claude-haiku-4-5-20251001';
         const j = postJson_('https://api.anthropic.com/v1/messages', { 'x-api-key': key, 'anthropic-version': '2023-06-01' }, {
-          model: model, max_tokens: 900, temperature: 0.6, system: system, messages: [{ role: 'user', content: user }],
+          model: model, max_tokens: maxTokens || 900, temperature: 0.6, system: system, messages: [{ role: 'user', content: user }],
         });
         return { text: j.content.map(x => x.text || '').join(''), provider: 'claude:' + model };
       }
@@ -511,7 +542,7 @@ function callAi_(S, system, user) {
         const key = props.getProperty('DEEPSEEK_API_KEY'); if (!key) { errors.push('deepseek: no key'); continue; }
         const model = S.DEEPSEEK_MODEL || 'deepseek-chat';
         const j = postJson_('https://api.deepseek.com/chat/completions', { Authorization: 'Bearer ' + key }, {
-          model: model, temperature: 0.6, max_tokens: 900,
+          model: model, temperature: 0.6, max_tokens: maxTokens || 900,
           messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
         });
         return { text: j.choices[0].message.content, provider: 'deepseek:' + model };

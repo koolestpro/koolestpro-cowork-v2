@@ -1,7 +1,7 @@
 # Ridwan Adekunle (@koolestpro)
 
 ## Professional Identity
-**Shopify CRO & UX Designer** based in Ibadan, Nigeria
+**Shopify CRO & UX Designer** based in Offa, Kwara State, Nigeria
 
 ## Services
 - Store design and development
