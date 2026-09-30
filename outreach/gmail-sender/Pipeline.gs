@@ -48,8 +48,10 @@ function candidates_(leads, filter, n) {
 }
 
 function note_(leads, lead, msg, failed) {
-  set_(leads, lead, 'prep_note', msg);
-  if (failed) set_(leads, lead, 'prep_tries', Number(lead.prep_tries || 0) + 1);
+  // A missing API key is a setup problem, not the lead's fault: say so and do not use up the retries.
+  const setup = /no key/i.test(msg);
+  set_(leads, lead, 'prep_note', setup ? 'SETUP NEEDED: add an AI key in Apps Script > Project Settings > Script properties (GEMINI_API_KEY, ANTHROPIC_API_KEY or DEEPSEEK_API_KEY). ' + msg : msg);
+  if (failed && !setup) set_(leads, lead, 'prep_tries', Number(lead.prep_tries || 0) + 1);
 }
 
 // ---------- 1. Find a contact email ----------

@@ -221,6 +221,10 @@ function whyNotSending() {
   out.push('Sending as: ' + me);
   out.push('Sent today by this Gmail: ' + sentToday + ' of ' + cap + ' allowed' + (sentToday >= cap ? '   <-- DAILY CAP REACHED. Nothing more goes out until tomorrow, or raise DAILY_CAP_START.' : ''));
   out.push('Gmail quota left today: ' + MailApp.getRemainingDailyQuota());
+  const pr = PropertiesService.getScriptProperties();
+  const has = k => pr.getProperty(k) ? 'yes' : 'NO';
+  out.push('Keys in Script properties: GEMINI ' + has('GEMINI_API_KEY') + ', CLAUDE ' + has('ANTHROPIC_API_KEY') + ', DEEPSEEK ' + has('DEEPSEEK_API_KEY') + ', MYEMAILVERIFIER ' + has('MYEMAILVERIFIER_API_KEY') +
+    (has('GEMINI_API_KEY') === 'NO' && has('ANTHROPIC_API_KEY') === 'NO' && has('DEEPSEEK_API_KEY') === 'NO' ? '   <-- PROBLEM: no AI key at all, so profiles and emails cannot be written' : ''));
   out.push('');
   const rows = leads.rows.filter(l => l.lead_id);
   if (!rows.length) out.push('No leads in the Leads tab.');
@@ -239,6 +243,7 @@ function whyNotSending() {
     else if (!nextRow) why.push('no unsent step ' + (touched + 1) + ' in Sequence');
     const tz = leadTz_(l), hr = Utilities.formatDate(now, tz, 'H:mm EEE');
     const inWin = inLeadWindow_(l, S);
+    if (why.length && l.prep_note) why.push('prep_note: ' + String(l.prep_note).slice(0, 140) + (Number(l.prep_tries || 0) >= 3 ? ' [gave up after 3 tries: set prep_tries to 0 to retry]' : ''));
     out.push((why.length ? 'X ' : 'OK ') + l.lead_id + ' (' + (l.brand || '') + ', ' + (l.country || 'no country') + '): ' +
       (why.length ? why.join('; ') : 'ready to send. Click "Send due emails now" (ignores hours). The hourly automation only sends inside working hours: it is ' + hr + ' at the lead (' + tz + '), ' + (inWin ? 'inside the window' : 'OUTSIDE the window, so it waits')));
   });
