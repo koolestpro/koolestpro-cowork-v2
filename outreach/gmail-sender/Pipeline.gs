@@ -70,7 +70,7 @@ function findEmails_(S, stats, timeLeft) {
       } else {
         note_(leads, lead, 'no email found on site: add one by hand, or use another source', true);
       }
-    } catch (e) { note_(leads, lead, 'email search failed: ' + String(e.message || e).slice(0, 100), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
+    } catch (e) { note_(leads, lead, 'email search failed: ' + String(e.message || e).slice(0, 300), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
   });
 }
 
@@ -137,7 +137,7 @@ function verifyEmails_(S, stats, timeLeft) {
       set_(leads, lead, 'email_status', verdict);
       note_(leads, lead, 'verifier said: ' + (j.Status || j.status || '?'), false);
       stats.verified++;
-    } catch (e) { note_(leads, lead, 'verify failed: ' + String(e.message || e).slice(0, 100), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
+    } catch (e) { note_(leads, lead, 'verify failed: ' + String(e.message || e).slice(0, 300), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
   });
 }
 
@@ -197,7 +197,7 @@ function profileLeads_(S, stats, timeLeft) {
         site_notes: (j.site_notes || '') + (f.signals.length ? ' [Signals: ' + f.signals.join('; ') + ']' : ''), updated_at: new Date() });
       have[String(lead.lead_id)] = true;
       stats.profiles++;
-    } catch (e) { note_(leads, lead, 'profile failed: ' + String(e.message || e).slice(0, 120), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
+    } catch (e) { note_(leads, lead, 'profile failed: ' + String(e.message || e).slice(0, 420), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
   });
 }
 
@@ -246,7 +246,7 @@ function writeSequences_(S, stats, timeLeft) {
       if (isTrue_(S.AUTO_APPROVE) && !flags.length && sendableStatus_(lead.email_status, S)) set_(leads, lead, 'approved', true);
       has1[String(lead.lead_id)] = true;
       stats.sequences++;
-    } catch (e) { note_(leads, lead, 'sequence failed: ' + String(e.message || e).slice(0, 120), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
+    } catch (e) { note_(leads, lead, 'sequence failed: ' + String(e.message || e).slice(0, 420), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
   });
 }
 

@@ -244,13 +244,13 @@ function whyNotSending() {
     else if (!nextRow) why.push('no unsent step ' + (touched + 1) + ' in Sequence');
     const tz = leadTz_(l), hr = Utilities.formatDate(now, tz, 'H:mm EEE');
     const inWin = inLeadWindow_(l, S);
-    if (why.length && l.prep_note) why.push('prep_note: ' + String(l.prep_note).slice(0, 140) + (Number(l.prep_tries || 0) >= 3 ? ' [gave up after 3 tries: set prep_tries to 0 to retry]' : ''));
+    if (why.length && l.prep_note) why.push('prep_note: ' + String(l.prep_note).slice(0, 420) + (Number(l.prep_tries || 0) >= 3 ? ' [gave up after 3 tries: set prep_tries to 0 to retry]' : ''));
     out.push((why.length ? 'X ' : 'OK ') + l.lead_id + ' (' + (l.brand || '') + ', ' + (l.country || 'no country') + '): ' +
       (why.length ? why.join('; ') : 'ready to send. Click "Send due emails now" (ignores hours). The hourly automation only sends inside working hours: it is ' + hr + ' at the lead (' + tz + '), ' + (inWin ? 'inside the window' : 'OUTSIDE the window, so it waits')));
   });
   const text = out.join('\n');
   Logger.log(text);
-  try { SpreadsheetApp.getUi().alert('Why isn\'t it sending?', text.slice(0, 1800), SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) { toast_(text.slice(0, 300)); }
+  try { SpreadsheetApp.getUi().alert('Why isn\'t it sending?', text.slice(0, 3000), SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) { toast_(text.slice(0, 300)); }
 }
 
 /** Sends follow-ups that are due first, then new first emails, within today's cap. */
@@ -616,7 +616,7 @@ function callAi_(S, system, user, maxTokens) {
       }
       errors.push(p + ': unknown provider');
     } catch (e) {
-      errors.push(p + ': ' + String(e.message || e).slice(0, 150));
+      errors.push(p + ': ' + String(e.message || e).slice(0, 110));
     }
   }
   throw new Error('No AI answered. ' + errors.join(' | '));
@@ -655,7 +655,7 @@ function postJson_(url, headers, payload) {
       payload: JSON.stringify(payload), muteHttpExceptions: true });
     const code = res.getResponseCode();
     if (code >= 200 && code < 300) return JSON.parse(res.getContentText());
-    last = 'HTTP ' + code + ' ' + res.getContentText().slice(0, 120);
+    last = 'HTTP ' + code + ' ' + res.getContentText().replace(/\s+/g, ' ').slice(0, 90);
     if (code !== 429 && code < 500) break;   // a real error (bad key, bad model): retrying will not help
   }
   throw new Error(last);
