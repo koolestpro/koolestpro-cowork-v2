@@ -520,11 +520,27 @@ def main():
     print(f"Stage 1 complete: {len(items)} ads found.", file=sys.stderr)
     source_query = f"Country={args.country}; Keyword={args.keyword}; Actor={args.actor_id}"
 
+    # Ledger + in-batch dedupe (2026-09-30). The --queue path used to write
+    # every scored lead, so brands already in taken-brands-ledger.json (e.g.
+    # AristoMan Luxury, re-found on 2026-09-30 after being taken 2026-09-01)
+    # landed in the queue again. Filter here, same key as koolestflow_client,
+    # mirroring what leadgen_run.py already does for the BrowserAct source.
+    ledger_keys = set(kc.load_ledger().get("brands", {}).keys())
+    seen_keys = set()
     prospects = []
     for item in items:
         prospect = build_prospect(item, args.niche, args.country, args.city, args.audience_type, source_query)
-        if prospect:
-            prospects.append(prospect)
+        if not prospect:
+            continue
+        key_str = kc._ledger_key_str(kc.dedupe_key(prospect))
+        if key_str in ledger_keys:
+            print(f"  skipping {prospect.get('brand_name', '(unnamed)')} — already taken (ledger)", file=sys.stderr)
+            continue
+        if key_str in seen_keys:
+            print(f"  skipping {prospect.get('brand_name', '(unnamed)')} — already taken (duplicate ad within same batch)", file=sys.stderr)
+            continue
+        seen_keys.add(key_str)
+        prospects.append(prospect)
 
     print(f"Stage 3 complete: {len(prospects)} prospects scored.", file=sys.stderr)
 
@@ -548,6 +564,11 @@ def main():
     if args.queue:
         # Hybrid pipeline (2026-09-01): score in the cloud, let the Mac-side
         # import_pending_push.sh do the actual push into local KoolestFlow.
+        if not prospects:
+            # 2026-09-30: an empty file makes push_prospects_file.py exit 1 and
+            # the importer retry it forever (W38 food ended up in failed/).
+            print("Queued 0 prospect(s) -> no file written (nothing new to import).", file=sys.stderr)
+            return
         import datetime
         pending_dir = os.path.join(PROJECT_ROOT, ".ai-workflow", "pending-push")
         os.makedirs(pending_dir, exist_ok=True)

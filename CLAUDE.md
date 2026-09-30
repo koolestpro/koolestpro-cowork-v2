@@ -51,6 +51,7 @@ Every task reads its own scoped doc instead of this whole file. When a task is d
 | Staleness check (`koolestpro-replo-cache-staleness-check`) | 5 | `docs/system/05-build-assets.md` |
 | BrowserAct/Maps + Ad Library lead gen (Tue/Wed) | 3 + 4 | `.ai-workflow/tools/README.md`, `docs/system/03-prospect-intelligence.md` |
 | Trend radar (`koolestpro-trend-radar-weekly`) | 1 | `.ai-workflow/skills/koolestpro-trend-radar/`, `trend-radar-config.json` |
+| Cold email outreach (own AI SDR: Sheet + Gmail sender + reply drafts) | 4 | **`outreach/README.md`** (decisions, status, next steps), `outreach/gmail-sender/SETUP.md` |
 | TikTok drafts / Instagram publishing | 2 | `.ai-workflow/tiktok-weekly-procedure.md`, `.ai-workflow/tools/README.md` |
 | System status weekly (`koolestpro-system-status-weekly`) | 7 | `.ai-workflow/tools/build_system_status.py` |
 
@@ -60,7 +61,7 @@ Every task reads its own scoped doc instead of this whole file. When a task is d
 
 1. **Every content CTA points at a real destination** — a service page or case study on the domain, not at engagement.
 2. **Never invent a client result, and never imply a concept brand was a client.** KURA, HALOS, MERIDIAN, Lumora are concept builds and must always be labelled as such. Highest-stakes rule in the project.
-3. **Local-first, including the CRM.** `outreach_tracker.json` is the outbound system of record. No Notion.
+3. **Local-first, including the CRM.** `outreach_tracker.json` is the outbound (DM) system of record. No Notion. Exception, Ridwan's decision 2026-09-27: cold email lives in the outreach Google Sheet (see `outreach/README.md`).
 4. **Two prospect pools, never merged, never given a `segment` field.** Which file a prospect is in already says market + motion:
    - **`targets_pool.json`** = content-production pool. International DTC/Shopify brands with a real, live, auditable `url`. Every entry has one; that is what makes it eligible. Rotation tracked in `usedFor`, not `status`.
    - **KoolestFlow** = outbound pool. Fed by browseract/Maps (Tue) + Meta Ad Library (Wed) through the hybrid cloud-scores/Mac-imports pipeline, with `.ai-workflow/taken-brands-ledger.json` preventing double-push. `dm_leads_pool.json` is a historical staging log, not a third pool.

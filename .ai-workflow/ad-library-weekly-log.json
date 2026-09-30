@@ -152,6 +152,36 @@
       },
       "status": "queued",
       "note": "10 raw ads for NG/food, 0 cleared filters. Power Oil (296,545 page likes, matched 3 separate ads) is a well-known Nigerian cooking-oil brand (PZ Wilmar) - correctly caught by the mega-brand like-count filter, but flagging per rule 6 since it's a recognizable national brand, not just a generic big-follower page. The other 7 ads (Bussin Grills Marketing, Bambau Cafe, Hub Topmost, Funmi's kitchen, Boatnaija.com, mayschills x2) had no detectable Nigeria signal in page name/body/link despite the --city='Lagos' append - 'Funmi' and 'Boatnaija.com' read like plausible Nigerian names/domains but didn't trip the automated checker, worth Ridwan's eyeball if food keeps underperforming. Queued (0 prospects) to pending-push per the hybrid pipeline - not pushed to KoolestFlow from this cloud run."
+    },
+    {
+      "week": "2026-W40",
+      "ranAt": "2026-09-30T11:26:48.000Z",
+      "countryUsed": "NG",
+      "keywordUsed": "fashion",
+      "leadsScored": 0,
+      "leadsPushed": 0,
+      "pendingPushFile": null,
+      "brandsQueued": [],
+      "brandsSkipped": {
+        "megaBrand": [],
+        "noNigeriaSignal": [
+          "Rtwbykay",
+          "sufiguccii",
+          "Yomee The Brand",
+          "Tolexafrik Fashion School",
+          "sufiguccii",
+          "Gerald Babies and kids",
+          "FunZ",
+          "Ananse Africa",
+          "Hair Education Beauty Summit"
+        ],
+        "marketplaceLowVolume": [],
+        "alreadyTaken": [
+          "AristoMan Luxury"
+        ]
+      },
+      "status": "skipped",
+      "note": "10 raw ads for NG/fashion Lagos. 9 failed the Nigeria-signal check (sufiguccii twice). The only one to clear filters, AristoMan Luxury (Scale, aristomanluxury.com, 90/100, 1,263 likes), was already in the taken-brands ledger (taken 2026-09-01), so 0 new leads. It was first queued because the --queue path didn't check the ledger; fixed same day in ad_library_koolestflow_bridge.py (ledger + in-batch dedupe before queueing, and no file is written when 0 prospects remain). The queue file was moved to pending-push/failed/. No recognizable chains in the batch."
     }
   ]
 }

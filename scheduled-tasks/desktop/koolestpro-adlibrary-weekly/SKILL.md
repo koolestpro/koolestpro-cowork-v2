@@ -25,7 +25,7 @@ The fix Ridwan chose: score in the cloud, queue to a file, let his Mac import it
 
 6. **Known blind spot, not auto-fixed:** a re-run on 2026-08-27 pushed "Burger King Nigeria" — it passed every filter (only 5,785 page likes on that specific Facebook page) despite being a large international franchise that already has its own site and isn't really a from-scratch-website prospect. Like-count alone can't distinguish "small local business" from "famous chain's smaller regional page." Flag anything that looks like a recognizable national/international brand name in your run summary for Ridwan to eyeball, even if it passed the automated filters.
 
-7. **Taken-brands ledger.** `.ai-workflow/taken-brands-ledger.json` prevents the same brand being sent twice across BOTH sources (Ad Library and BrowserAct/Maps share one push path). As of the hybrid change, the CLOUD run no longer writes the ledger — the Mac-side importer does, on a verified push. Do not write it yourself and do not call KoolestFlow's API directly.
+7. **Taken-brands ledger.** `.ai-workflow/taken-brands-ledger.json` prevents the same brand being sent twice across BOTH sources (Ad Library and BrowserAct/Maps share one push path). As of the hybrid change, the CLOUD run no longer writes the ledger — the Mac-side importer does, on a verified push. Do not write it yourself and do not call KoolestFlow's API directly. Since 2026-09-30 the script READS the ledger before queueing: brands already in it (or repeated within the same batch) are printed as "skipping X — already taken (...)" and left out of the queue file, and if nothing new remains no file is written at all ("Queued 0 prospect(s) -> no file written"). That means the ledger file must be present wherever you run the script; if you copy the tools into a cloud sandbox, copy taken-brands-ledger.json with them.
 
 STEPS:
 
@@ -39,7 +39,7 @@ STEPS:
    python3 .ai-workflow/tools/ad_library_koolestflow_bridge.py --country "<country>" --keyword "<keyword>" --limit <limitPerRun> --niche "<niche>" --city "<city>" --audience-type "<audienceType>" --queue
    ALWAYS pass --queue. Do NOT pass --dry-run (it scores nothing to a file). Do NOT omit --city (see rule 1).
 
-5. Capture the FULL stderr output, not just the final "Queued N" line — the script prints each skipped lead with its reason (mega-brand / no Nigeria signal / marketplace-but-low-likes / already taken). You need all of this for step 9.
+5. Capture the FULL stderr output, not just the final "Queued N" line — the script prints each skipped lead with its reason (mega-brand / no Nigeria signal / marketplace-but-low-likes / already taken). If the script wrote no file, set pendingPushFile to null and status to "skipped" in step 7. You need all of this for step 9.
 
 6. Update ad_library_rotation.json: currentIndex = (currentIndex + 1) mod (length of slots), updatedAt = current ISO timestamp via shell `date -u +%Y-%m-%dT%H:%M:%S.000Z`.
 

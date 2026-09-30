@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "week": "2026-W40",
+    "ranAt": "2026-09-30T11:26:13.000Z",
+    "source": "apify-ad-library",
+    "sourceQuery": "Country=NG; Keyword=fashion; Actor=curious_coder~facebook-ads-library-scraper",
+    "country": "NG",
+    "city": "Lagos",
+    "niche": "Fashion & Apparel",
+    "ledgerAlreadyRecorded": false,
+    "note": "Scored in the cloud, not yet pushed. import_pending_push.sh pushes this into local KoolestFlow and records the brands in the taken-brands ledger."
+  },
+  "prospects": [
+    {
+      "id": "koolestflow-adlibrary-aristoman-luxury",
+      "brand_name": "AristoMan Luxury",
+      "website_url": "https://aristomanluxury.com/shop/",
+      "instagram_url": "",
+      "email": "",
+      "whatsapp": "",
+      "country": "NG",
+      "city": "Lagos",
+      "timezone": "",
+      "track": "Scale",
+      "niche": "Fashion & Apparel",
+      "audience_type": "E-commerce/DTC",
+      "source": "apify-ad-library",
+      "source_query": "Country=NG; Keyword=fashion; Actor=curious_coder~facebook-ads-library-scraper",
+      "source_url": "https://aristomanluxury.com/shop/",
+      "notes": "Track: Scale. | Recommended: SEO for category + style keywords, paid social ads management, seasonal collection launches. | Channel: Instagram DM primary, WhatsApp second. Manual send only — no DM automation (ban risk). | Pricing frame: Nigeria ladder: Starter N250k-500k / Business N500k-1M / Premium N1M+ (see growth plan D7) | Site quality score: 90/100 (Fast load (1.9s); Has mobile viewport meta tag; No meta description — basic SEO gap) | Ad destination type: own_site (https://aristomanluxury.com/shop/) | Sourced via Meta Ad Library (Apify). Review before outreach.",
+      "signals": "Ad currently active; 1263 Facebook page likes; Ad also runs on Instagram; Ad destination is their own site and it checks out (quality 90/100)",
+      "fit_score": 80,
+      "confidence": "high",
+      "status": "Qualified",
+      "pipeline_stage": "First Message Ready",
+      "next_action": "Send first DM"
+    }
+  ]
+}

@@ -1175,3 +1175,7 @@ The plan is working when:
 **Built.** `outreach/gmail-sender/` (`Code.gs`, `appsscript.json`, `SETUP.md`). The script lives in the outreach Sheet and creates 7 tabs: Settings, Leads, Profiles, Sequence, Messages, Memory, Drafts. It sends approved first emails plus due follow-ups in one run, keeps steps 2-5 in the same Gmail thread (Gmail advanced service + In-Reply-To), warms up at 5/day +5/week to a 20/day cap with max 2 per hourly run, stops a sequence on reply, logs every message both ways (including replies Ridwan sends by hand from Gmail), queues a Drafts row and emails an alert, sends drafts marked Approved in-thread, and marks bounces. TEST_MODE (on by default) redirects everything to ALERT_EMAIL. Verified with a simulated Sheet/Gmail run end to end; not yet run in a real Google account.
 
 **Next.** AI reply drafts + per-lead Memory summaries; email finding + MyEmailVerifier; sequence writing from real proof (no invented numbers); lead finders writing to the Sheet; KoolestFlow as the dashboard over the Sheet.
+
+### 2026-09-30: Outreach handoff for Claude Code
+
+Added `outreach/README.md` (goal, Ridwan's decisions, architecture with per-step status, next steps, don'ts) so any agent working from the GitHub repo has the full context of the 2026-09-27 planning chats. CLAUDE.md: new Task Router row for cold email, and rule 3 now records the Google Sheet exception for cold email.
