@@ -19,6 +19,10 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 - **Reply handling:** the AI drafts, Ridwan edits and approves, the system sends in-thread. The AI never replies to a lead on its own.
 - **Lead types, all in parallel:** intent leads (hiring, launching, running ads, funded), agencies (white-label dev partner), general Shopify stores by niche, plus the existing Build/Fix/Scale tracks from `.ai-workflow/tools/lead_playbook.py`. Stored as `track` + `play` columns. Do NOT add a `segment` field (CLAUDE.md rule 4).
 
+## AI provider order (2026-09-30)
+
+Ridwan's decision: Gemini free is the main model. Claude (Anthropic) is not funded and will not be. DeepSeek is unfunded for now. Test AI on 2026-09-30: Gemini OK, Claude "credit balance too low", DeepSeek 402 insufficient balance. Set Settings `AI_ORDER` = `gemini` until DeepSeek is funded, then `gemini,deepseek`. Gemini calls already retry on 503 and fall back across Google's model names.
+
 ## Voice and messaging (2026-09-30)
 
 `outreach/BRIEF.md` is the master brief (who Ridwan is, real proof, offers, limits, regional voice, email and reply structure, humanizer rules, and section 12 of open decisions). `brief-ai.md` is the compact version the AI reads; `build_brief.js` compiles it to `gmail-sender/Brief.gs`. Regional voice is chosen from the lead's `country`: Nigeria/Africa (time-based greeting, warm), UK, US/Canada, Europe, other. Drafts get a `CHECK:` note in the `model` column if they contain a blocklist phrase, a number or price, or a link. The script emails a daily report at 6pm.
