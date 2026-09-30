@@ -59,6 +59,7 @@ function onOpen() {
     .addSeparator()
     .addItem('Send due emails now', 'sendDueNow')
     .addItem('Check replies now', 'tick')
+    .addItem('Create / reset test lead', 'addTestLead')
     .addSeparator()
     .addItem('Turn off automation', 'removeTriggers')
     .addToUi();
@@ -105,21 +106,40 @@ function setup() {
     SpreadsheetApp.newDataValidation().requireValueInList(DRAFT_STATUSES, true).setAllowInvalid(false).build());
 
   // One sample lead so the flow can be tested end to end in TEST_MODE.
-  if (leads.getLastRow() < 2) {
-    appendObj_('Leads', {
-      lead_id: 'test-001', brand: 'Test Brand', website: 'example.com', contact_name: 'Ada',
-      email: 'test@example.com', email_status: 'valid', country: 'Nigeria', time_zone: 'Africa/Lagos',
-      niche: 'skincare', source: 'manual', track: 'Fix', play: 'cro_sprint', stage: 'New',
-      approved: false, touch_count: 0, notes: 'Sample row. Delete when you go live.', created_at: new Date(),
-    });
-    appendObj_('Sequence', { lead_id: 'test-001', step: 1, subject: 'quick question about Test Brand',
-      body: 'Hi Ada,\n\nThis is a test of step 1.', status: 'Draft' });
-    appendObj_('Sequence', { lead_id: 'test-001', step: 2, subject: '',
-      body: 'Hi Ada,\n\nThis is a test of step 2 (follow-up in the same thread).', status: 'Draft' });
+  // (Checked on column A: the checkbox column pre-fills FALSE down 2000 rows, so getLastRow() is useless here.)
+  if (!leads.getRange(2, 1, Math.max(1, leads.getMaxRows() - 1), 1).getValues().some(r => String(r[0]) !== '')) {
+    seedTestLead_();
   }
   const sheet1 = ss.getSheetByName('Sheet1');
   if (sheet1 && sheet1.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(sheet1);
   toast_('Tabs ready. Check the Settings tab, then choose "Turn on automation".');
+}
+
+/** Menu: wipes any test-001 / test_001 rows and recreates a clean, complete test lead. */
+function addTestLead() {
+  ['Leads', 'Sequence', 'Messages', 'Drafts'].forEach(name => {
+    const sh = ss_().getSheetByName(name);
+    const ids = sh.getRange(1, 1, sh.getLastRow(), name === 'Messages' ? 2 : 1).getValues();
+    const col = name === 'Messages' ? 1 : 0;
+    for (let i = ids.length - 1; i >= 1; i--) {
+      if (['test-001', 'test_001'].indexOf(String(ids[i][col]).trim()) !== -1) sh.deleteRow(i + 1);
+    }
+  });
+  seedTestLead_();
+  toast_('Test lead test-001 created. Tick "approved" on it, then Outreach > Send due emails now.');
+}
+
+function seedTestLead_() {
+  appendObj_('Leads', {
+    lead_id: 'test-001', brand: 'Test Brand', website: 'example.com', contact_name: 'Ada',
+    email: 'test@example.com', email_status: 'valid', country: 'Nigeria', time_zone: 'Africa/Lagos',
+    niche: 'skincare', source: 'manual', track: 'Fix', play: 'cro_sprint', stage: 'New',
+    approved: false, touch_count: 0, notes: 'Sample row. Delete when you go live.', created_at: new Date(),
+  });
+  appendObj_('Sequence', { lead_id: 'test-001', step: 1, subject: 'quick question about Test Brand',
+    body: 'Hi Ada,\n\nThis is a test of step 1.', status: 'Draft' });
+  appendObj_('Sequence', { lead_id: 'test-001', step: 2, subject: '',
+    body: 'Hi Ada,\n\nThis is a test of step 2 (follow-up in the same thread).', status: 'Draft' });
 }
 
 function installTriggers() {
@@ -143,7 +163,7 @@ function sendDue(ignoreHours) {
   if (!lock.tryLock(30000)) return;
   try {
     const S = settings_();
-    if (isTrue_(S.PAUSED)) return;
+    if (isTrue_(S.PAUSED)) { if (ignoreHours === true) toast_('Nothing sent: PAUSED is TRUE in Settings.'); return; }
     const hour = Number(Utilities.formatDate(new Date(), tz_(), 'H'));
     if (ignoreHours !== true && (hour < Number(S.SEND_START_HOUR) || hour >= Number(S.SEND_END_HOUR))) return;
 
@@ -154,7 +174,7 @@ function sendDue(ignoreHours) {
 
     const sentToday = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && isToday_(m.sent_at)).length;
     let budget = Math.min(dailyCap_(S) - sentToday, Number(S.MAX_PER_RUN) || 2, MailApp.getRemainingDailyQuota() - 5);
-    if (budget <= 0) return;
+    if (budget <= 0) { if (ignoreHours === true) toast_('Nothing sent: daily cap or per-run limit reached.'); return; }
 
     const now = new Date();
     const due = leads.rows.filter(l =>
@@ -213,7 +233,16 @@ function sendDue(ignoreHours) {
       budget--; sent++;
       if (budget > 0) Utilities.sleep(20000 + Math.floor(Math.random() * 40000));
     }
-    if (ignoreHours === true) toast_(sent + ' email(s) sent.');
+    if (ignoreHours === true) {
+      if (sent > 0) toast_(sent + ' email(s) sent.');
+      else {
+        const appr = leads.rows.filter(l => isTrue_(l.approved));
+        toast_('0 sent. Approved leads: ' + appr.length +
+          '. Of those, email_status = valid: ' + appr.filter(l => lc_(l.email_status) === 'valid' && l.email).length +
+          ', with a step 1 row in Sequence: ' + appr.filter(l => seq.rows.some(r => String(r.lead_id) === String(l.lead_id) && Number(r.step) === 1)).length +
+          '. Each of those three numbers must be at least 1.');
+      }
+    }
   } finally {
     lock.releaseLock();
   }
@@ -389,7 +418,19 @@ function set_(tab, row, field, value) {
 function appendObj_(name, obj) {
   const sheet = ss_().getSheetByName(name);
   const headers = header_(sheet);
-  sheet.appendRow(headers.map(h => (obj[h] === undefined || obj[h] === null) ? '' : obj[h]));
+  const row = nextRow_(sheet);
+  if (row > sheet.getMaxRows()) sheet.insertRowsAfter(sheet.getMaxRows(), 1);
+  sheet.getRange(row, 1, 1, headers.length)
+    .setValues([headers.map(h => (obj[h] === undefined || obj[h] === null) ? '' : obj[h])]);
+}
+
+/** First row after the last one with something in column A (appendRow would land below pre-filled checkboxes). */
+function nextRow_(sheet) {
+  const n = sheet.getLastRow();
+  if (n < 2) return 2;
+  const col = sheet.getRange(1, 1, n, 1).getValues();
+  for (let i = n - 1; i >= 1; i--) if (String(col[i][0]) !== '') return i + 2;
+  return 2;
 }
 
 function settings_() {
