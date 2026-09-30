@@ -51,6 +51,7 @@ function defaultSettings_() {
     ['GEMINI_MODEL', 'gemini-2.5-flash', 'Gemini model name.'],
     ['CLAUDE_MODEL', 'claude-haiku-4-5-20251001', 'Claude model name.'],
     ['DEEPSEEK_MODEL', 'deepseek-chat', 'DeepSeek model name.'],
+    ['VOICE_EXAMPLES', '', 'Paste 3 to 5 real replies you have written to leads or clients, separated by a blank line. The AI copies their voice.'],
   ];
 }
 
@@ -336,6 +337,15 @@ const AI_SYSTEM_ = [
   '- Answer what they actually asked. If they ask for a call, offer one simple next step. If they ask about price, say it depends on scope and suggest a short call or a quick look at their store first. Never quote prices, timelines, discounts or guarantees.',
   '- Never invent results, numbers, clients, case studies or claims about their store that are not in the context. Concept builds (KURA, HALOS, MERIDIAN, Lumora) are never clients.',
   '- If they say no, not interested or ask to stop: reply in one or two polite lines, no pitch, and say you will not email again.',
+  '',
+  'Ridwan\'s voice (from his own profile):',
+  '- Conversational, never corporate. Short sentences, active voice. A confident specialist talking to a peer, not someone begging for work.',
+  '- Direct and warm, Nigerian-natural, no excessive hedging. Outcome first: lead with what the lead gets or what you will do next, not who Ridwan is.',
+  '- Concrete nouns and verbs. Plain words. One idea per sentence. Line breaks for pacing, no paragraphs longer than three lines.',
+  '- Never say: "I hope this finds you well", "excited to", "passionate", "leverage", "I would be delighted", "Thank you for your time and consideration", "reach out", "circle back".',
+  '- No false contrast ("it\'s not just X, it\'s Y"), no grand statements, no lists of three adjectives, no empty openers like "Great question".',
+  '',
+  'Other rules:',
   '- No em dashes. No hashtags, no emojis, no exclamation-heavy hype. Avoid: unlock, digital journey, synergy, holistic, valuable insights, "I hope this email finds you well".',
   '- Do not add a signature or sign-off name; the system adds it. End on the question or next step.',
   '',
@@ -343,6 +353,12 @@ const AI_SYSTEM_ = [
   '<reply>the email body</reply>',
   '<memory>An updated running summary of this lead in under 120 words: who they are, what they sell, what was said both ways, what is offered so far, current stage, and the best next step.</memory>',
 ].join('\n');
+
+/** System prompt plus any of Ridwan's own example replies pasted into the Settings tab (VOICE_EXAMPLES). */
+function aiSystem_(S) {
+  const ex = String(S.VOICE_EXAMPLES || '').trim();
+  return AI_SYSTEM_ + (ex ? '\n\nReal replies written by Ridwan. Match their voice, length and rhythm closely:\n' + ex : '');
+}
 
 function draftRepliesNow() { draftReplies_(true); }
 
@@ -381,7 +397,7 @@ function draftReplies_(interactive) {
     ].join('\n');
 
     let out;
-    try { out = callAi_(S, AI_SYSTEM_, user); } catch (e) { failed = String(e.message || e); set_(drafts, d, 'model', 'failed: ' + failed.slice(0, 200)); continue; }
+    try { out = callAi_(S, aiSystem_(S), user); } catch (e) { failed = String(e.message || e); set_(drafts, d, 'model', 'failed: ' + failed.slice(0, 200)); continue; }
     const reply = clean_((out.text.match(/<reply>([\s\S]*?)<\/reply>/i) || [])[1] || '');
     const summary = clean_((out.text.match(/<memory>([\s\S]*?)<\/memory>/i) || [])[1] || '');
     if (!reply) { failed = 'AI returned no <reply> block'; set_(drafts, d, 'model', 'failed: no reply block'); continue; }

@@ -29,6 +29,7 @@ When a lead replies, the script now writes a draft into **Drafts** (status **Rea
 3. Apps Script > Project Settings (gear) > **Script properties** > Add: `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, `DEEPSEEK_API_KEY`. Never put keys in the Sheet or in `Code.gs`.
 4. Google asks for one more permission (external requests) the first time. Approve it.
 5. Test: on your test lead, reply to the test email, then Outreach > **Check replies now**, then Outreach > **Draft replies now**. The Drafts row fills in and the `model` column shows which AI wrote it. If it says `failed: ...`, that text is the reason.
+To make drafts sound like you: paste 3 to 5 of your own real replies into the `VOICE_EXAMPLES` cell in Settings (after re-running Set up tabs). Real examples beat any instruction.
 Order and model names are in Settings (`AI_ORDER`, `GEMINI_MODEL`, `CLAUDE_MODEL`, `DEEPSEEK_MODEL`).
 
 ## 4. Go live (only after the first batch is approved)
