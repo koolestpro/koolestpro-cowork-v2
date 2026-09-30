@@ -581,9 +581,19 @@ function callAi_(S, system, user, maxTokens) {
         let model = wanted || cached || geminiModel_(key, props), j;
         try { j = call(model); }
         catch (e) {
-          if (!/HTTP (404|400)/.test(String(e.message))) throw e;
-          model = geminiModel_(key, props, true);          // the name is gone or not open to this key: find one that works
-          j = call(model);
+          const msg = String(e.message);
+          if (/HTTP (404|400)/.test(msg)) {
+            model = geminiModel_(key, props, true);          // the name is gone or not open to this key: find one that works
+            j = call(model);
+          } else if (/HTTP (429|5\d\d)/.test(msg)) {
+            // overloaded: try Google's rolling aliases before giving up on Gemini
+            let done = false;
+            for (const alt of ['gemini-flash-latest', 'gemini-flash-lite-latest']) {
+              if (alt === model) continue;
+              try { j = call(alt); model = alt; done = true; break; } catch (e2) { /* next */ }
+            }
+            if (!done) throw e;
+          } else throw e;
         }
         return { text: j.candidates[0].content.parts.map(x => x.text || '').join(''), provider: 'gemini:' + model };
       }
@@ -637,11 +647,18 @@ function testAi() {
 }
 
 function postJson_(url, headers, payload) {
-  const res = UrlFetchApp.fetch(url, { method: 'post', contentType: 'application/json', headers: headers,
-    payload: JSON.stringify(payload), muteHttpExceptions: true });
-  const code = res.getResponseCode();
-  if (code < 200 || code >= 300) throw new Error('HTTP ' + code + ' ' + res.getContentText().slice(0, 120));
-  return JSON.parse(res.getContentText());
+  const waits = [0, 3000, 8000];   // retry overloaded or rate-limited calls twice before giving up on this provider
+  let last = '';
+  for (let i = 0; i < waits.length; i++) {
+    if (waits[i]) Utilities.sleep(waits[i]);
+    const res = UrlFetchApp.fetch(url, { method: 'post', contentType: 'application/json', headers: headers,
+      payload: JSON.stringify(payload), muteHttpExceptions: true });
+    const code = res.getResponseCode();
+    if (code >= 200 && code < 300) return JSON.parse(res.getContentText());
+    last = 'HTTP ' + code + ' ' + res.getContentText().slice(0, 120);
+    if (code !== 429 && code < 500) break;   // a real error (bad key, bad model): retrying will not help
+  }
+  throw new Error(last);
 }
 
 /** House rules that must hold even if the model slips: no em dashes, tidy whitespace. */
