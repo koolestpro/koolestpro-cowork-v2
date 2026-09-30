@@ -38,11 +38,11 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 - Hourly: sends due follow-ups first, then approved first emails. Cap 5/day in week 1, +5/week, max 20/day, max 2 per run, 9am-5pm Lagos. Steps 2-5 go in the same Gmail thread (Gmail advanced service, In-Reply-To). Only steps 2+ use `Re: <step 1 subject>`.
 - Every 30 min (`tick`): logs replies and Ridwan's manual Gmail replies, stops the sequence on reply, adds a `Needs draft` row, emails ALERT_EMAIL, sends drafts marked `Approved`, marks bounces.
 - `TEST_MODE=TRUE` by default: everything goes to ALERT_EMAIL. ALERT_EMAIL must be his main Gmail, not the sending account.
-- Verified only against a mocked Sheet/Gmail in Node. **Not yet confirmed running in a real Google account** — ask Ridwan whether he completed SETUP.md and the test.
+- Confirmed working in Ridwan's real Google account on 2026-09-30 (TEST_MODE): send, reply, Replied stage, Drafts row and alert email all worked. Fixed that day: test-row seeding and row appends (the checkbox column pre-fills FALSE down 2000 rows, so `getLastRow()` and `appendRow` are unreliable on Leads). Still to test: approving a draft sends in-thread, and follow-ups (step 2).
 
 ## Next, in order
 
-1. Confirm the real-account test worked; fix anything it surfaced.
+1. ~~Confirm the real-account test worked~~ done. Remaining: test sending an approved draft, then go live (SETUP.md section 4).
 2. Reply drafts + Memory summaries (decide: AI API from Apps Script vs Claude scheduled task).
 3. Email finding + MyEmailVerifier.
 4. Sequence writer (5 emails per lead from Profile + track/play + real proof). First batch goes to Ridwan for approval.
