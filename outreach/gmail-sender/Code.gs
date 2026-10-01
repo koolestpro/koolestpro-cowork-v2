@@ -20,7 +20,7 @@ const TABS = {
   Settings: ['key', 'value', 'notes'],
   Leads: ['lead_id', 'brand', 'website', 'contact_name', 'email', 'email_status', 'country', 'time_zone',
     'niche', 'source', 'track', 'play', 'stage', 'approved', 'sender', 'touch_count', 'last_touch_at',
-    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model'],
+    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model', 'signature'],
   Profiles: ['lead_id', 'what_they_sell', 'audience', 'signal', 'site_notes', 'updated_at'],
   Sequence: ['lead_id', 'step', 'subject', 'body', 'status', 'sent_at'],
   Messages: ['logged_at', 'lead_id', 'direction', 'from', 'to', 'subject', 'body', 'sent_at', 'thread_id',
@@ -41,6 +41,14 @@ function defaultSettings_() {
     ['PAUSED', 'FALSE', 'TRUE stops all sending immediately.'],
     ['SENDER_NAME', 'Ridwan | Koolestpro', 'Display name on outgoing emails.'],
     ['SIGNATURE', 'Ridwan Adekunle\nShopify expert, Koolestpro\nkoolestpro.com', 'Added under every email. Plain text.'],
+    ['SIGNATURE_FOLLOWUP', 'Ridwan', 'Used under follow-ups (steps 2 to 5) and replies. A short sign-off reads more human. Leave empty to use SIGNATURE.'],
+    ['SIGNATURE_BUILD', 'Ridwan Adekunle\nI build online stores for growing brands, Koolestpro\nkoolestpro.com', 'First email to a business with no website (track Build). Optional.'],
+    ['SIGNATURE_FIX', 'Ridwan Adekunle\nShopify CRO and store fixes, Koolestpro\nkoolestpro.com', 'First email about fixing or rebuilding an existing site (track Fix). Optional.'],
+    ['SIGNATURE_SCALE', 'Ridwan Adekunle\nShopify SEO and growth, Koolestpro\nkoolestpro.com', 'First email to a store with a good site (track Scale). Optional.'],
+    ['SIGNATURE_NG', '', 'Optional override for Nigeria and Africa leads (e.g. a warmer sign-off). Empty = not used.'],
+    ['SIGNATURE_UK', '', 'Optional override for UK leads. Empty = not used.'],
+    ['SIGNATURE_US', '', 'Optional override for US and Canada leads. Empty = not used.'],
+    ['SIGNATURE_EU', '', 'Optional override for European leads. Empty = not used.'],
     ['ALERT_EMAIL', '', 'Where reply alerts and TEST_MODE emails go (your main Gmail).'],
     ['START_DATE', Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd'), 'Warm-up counts weeks from this date.'],
     ['DAILY_CAP_START', '5', 'Emails per day in week 1.'],
@@ -188,6 +196,21 @@ function removeTriggers() {
   ScriptApp.getProjectTriggers().forEach(t => ScriptApp.deleteTrigger(t));
 }
 
+/**
+ * The signature for one email. Most specific wins, and only non-empty cells count:
+ * the lead's own `signature` cell > SIGNATURE_<PLAY> > SIGNATURE_<TRACK> > SIGNATURE_<MARKET: NG, UK, US, EU> > SIGNATURE.
+ * Follow-ups and replies (isFollowUp) use SIGNATURE_FOLLOWUP first when it is set.
+ */
+function signatureFor_(lead, S, isFollowUp) {
+  const pick = k => { const v = S[k]; return v && String(v).trim() ? String(v).replace(/\\n/g, '\n') : ''; };
+  if (isFollowUp && pick('SIGNATURE_FOLLOWUP')) return pick('SIGNATURE_FOLLOWUP');
+  if (lead && String(lead.signature || '').trim()) return String(lead.signature).replace(/\\n/g, '\n');
+  const play = lead && String(lead.play || '').trim().toUpperCase().replace(/[^A-Z0-9]+/g, '_');
+  const track = lead && String(lead.track || '').trim().toUpperCase();
+  const market = lead ? regionKey_(lead.country).toUpperCase() : '';
+  return (play && pick('SIGNATURE_' + play)) || (track && pick('SIGNATURE_' + track)) || (market && pick('SIGNATURE_' + market)) || pick('SIGNATURE');
+}
+
 // ---------- Lead time zones and working hours ----------
 
 const COUNTRY_TZ_ = {
@@ -307,7 +330,8 @@ function sendDue(ignoreHours) {
       if (step > 1 && !lead.thread_id) continue; // follow-up without a thread: skip, needs a look
 
       const subject = step === 1 ? String(row.subject) : 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
-      const body = String(row.body).replace(/\{\{greeting\}\}/g, localGreeting_(lead)).trim() + (S.SIGNATURE ? '\n\n' + S.SIGNATURE : '');
+      const sig = signatureFor_(lead, S, step > 1);
+      const body = String(row.body).replace(/\{\{greeting\}\}/g, localGreeting_(lead)).trim() + (sig ? '\n\n' + sig : '');
       const to = isTrue_(S.TEST_MODE) ? S.ALERT_EMAIL : String(lead.email).trim();
       const finalSubject = isTrue_(S.TEST_MODE) ? '[TEST to ' + lead.email + '] ' + subject : subject;
 
@@ -702,7 +726,8 @@ function sendApprovedDrafts_() {
     if (!lead || lc_(lead.sender) !== me || !lead.thread_id) continue;
 
     const subject = 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
-    const body = String(d.draft_body).trim() + (S.SIGNATURE ? '\n\n' + S.SIGNATURE : '');
+    const sig = signatureFor_(lead, S, true);
+    const body = String(d.draft_body).trim() + (sig ? '\n\n' + sig : '');
     const to = isTrue_(S.TEST_MODE) ? S.ALERT_EMAIL : String(lead.email).trim();
     const finalSubject = isTrue_(S.TEST_MODE) ? '[TEST to ' + lead.email + '] ' + subject : subject;
     const res = sendRaw_({ to: to, subject: finalSubject, body: body, name: S.SENDER_NAME, from: me,

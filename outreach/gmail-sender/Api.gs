@@ -15,7 +15,7 @@
 
 const API_SETTINGS_ALLOWED_ = ['PAUSED', 'AUTO_APPROVE', 'SEND_TO_CATCH_ALL', 'MIN_FIT_SCORE', 'DAILY_CAP_START', 'MAX_PER_RUN', 'AI_ORDER'];
 const API_LEAD_FIELDS_ = ['lead_id', 'brand', 'website', 'contact_name', 'email', 'email_status', 'country', 'time_zone', 'niche', 'source',
-  'track', 'play', 'notes', 'platform', 'business_model'];
+  'track', 'play', 'notes', 'platform', 'business_model', 'signature'];
 
 function doGet() { return apiOut_({ ok: true, service: 'koolestpro-outreach' }); }
 

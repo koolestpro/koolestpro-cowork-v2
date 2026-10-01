@@ -39,6 +39,9 @@ The script is `Code.gs` plus `Brief.gs` (the master brief, compiled from `outrea
 
 **Nothing sending?** Outreach > **Why isn't it sending?** checks the settings, today's cap, and every lead, and names the exact reason for each.
 
+## 3d. Flexible signatures
+The signature is chosen per email, most specific first (only non-empty cells count): the lead's own `signature` cell in Leads > `SIGNATURE_<PLAY>` (e.g. `SIGNATURE_CRO_SPRINT`) > `SIGNATURE_BUILD` / `SIGNATURE_FIX` / `SIGNATURE_SCALE` (by the lead's track) > `SIGNATURE_NG` / `SIGNATURE_UK` / `SIGNATURE_US` / `SIGNATURE_EU` (by market) > `SIGNATURE`. Follow-ups (steps 2 to 5) and replies use `SIGNATURE_FOLLOWUP` (default just "Ridwan", which reads more human). To add a signature for a new play, add a Settings row named `SIGNATURE_<PLAY>` in capitals. Run **Set up tabs** once to add the new rows; existing cells such as `SIGNATURE` are never overwritten, so edit any old text yourself. Use `\n` or real line breaks for new lines.
+
 ## 3c. KoolestFlow connection (the dashboard)
 `Api.gs` is a small secured web API on the Sheet. KoolestFlow (`koolestpro/cold-dm-app`, branch `claude/outreach-alert-email-debug-b2d85x`) shows a **Cold email** screen on top of it: leads, each 5-email sequence (editable until sent), the conversation, reply drafts with Approve, and a box to add store domains.
 1. Add `Api.gs` as a file in Apps Script. Project Settings > Script properties: add `OUTREACH_API_TOKEN` = a long random string (make one up, 40+ characters).
