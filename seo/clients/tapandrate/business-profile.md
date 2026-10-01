@@ -82,7 +82,7 @@ Competitors seen in Ubersuggest overlap: **reviewscard.com** (DA 6, 39 shared ke
 - One-off cost, no subscription on NFC products (`/pages/faqs`).
 - Setup done for you before delivery (`/pages/faqs`).
 - No Wi-Fi, no charging, works on iPhone and Android (`/pages/faqs`, `/pages/nfc-fact-sheet`).
-- NFC + QR on the same product (product titles).
+- NFC + QR on the same product **only for products with "& QR" in the title** (74 of 184, incl. the Google review stands, cards and table coin). 102 products sell QR as a paid add-on (`addon_qr_code` tag). Never say "every product has a QR code".
 - 14-day free trial of review management (`/pages/review-management-1`).
 
 **UNVERIFIED (do not use until the client confirms):**
@@ -91,6 +91,7 @@ Competitors seen in Ubersuggest overlap: **reviewscard.com** (DA 6, 39 shared ke
 - "Next day" vs "fast shipping": confirm the actual dispatch promise.
 
 **Never write (Google policy):** anything that suggests offering incentives for reviews, review gating (sending only happy customers to Google), or buying reviews. Google prohibits these, and content that implies them would hurt the client.
+Also from Google's Maps UGC policy (checked 2026-10-01, https://support.google.com/contributionpolicy/answer/7400114): merchants "should not require or pressure users to leave ratings or write reviews while on the premises", and must not set staff review quotas or ask for reviews naming staff. Frame every tap product as an **optional invitation** ("tap now or later"). The homepage line "Ask customers to tap our devices before they leave" is fine as an invitation, but copy must never read as "make them review before they go".
 
 ## 9. Site issues spotted (feed into quick wins / the client report)
 1. **Placeholder testimonial text in the homepage HTML**: the reviews block contains "Rodell Cruz 3 days ago Duis at nu…" (lorem ipsum). Check whether it's visible on the rendered page or only sitting in a hidden template. Either way Google can read it. This is a trust and quality problem. Fix first.

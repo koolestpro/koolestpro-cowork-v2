@@ -1,6 +1,6 @@
 # Stage 3: Content brief
 
-**Inputs:** `topic.md` winner, `business-profile.md`, `clusters.md`, snapshot (for real URLs), top 5 organic results for the keyword (Ubersuggest `serp_analysis` or web search), GSC queries for related pages.
+**Inputs:** `topic.md` winner, `business-profile.md`, `clusters.md`, snapshot (for real URLs), top 5 organic results for the keyword (`runs/<date>/serp.json` from `dataforseo.py serp`, incl. People Also Ask and AI Overview; Ubersuggest `serp_analysis` or web search as fallback), GSC queries for related pages.
 **Output:** `runs/<date>/brief.md`
 
 ---

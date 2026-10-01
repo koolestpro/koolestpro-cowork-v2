@@ -10,9 +10,29 @@
   "ga4_property_id": "",
   "blog_handle": "keep-informed",
   "blog_author": "Tap and Rate",
-  "outreach_sender": { "name": "", "role": "", "email_from": "" },
-  "competitors": ["reviewscard.com", "seritag.com", "tapilink.co.uk"],
+  "outreach_sender": {
+    "name": "",
+    "role": "",
+    "email_from": ""
+  },
+  "competitors": [
+    "reviewscard.com",
+    "seritag.com",
+    "tapilink.co.uk"
+  ],
   "cadence": "weekly",
   "approval": "shopify-hidden-draft",
-  "notes": "Ridwan manages SEO. Confirm gsc_property format (domain vs URL-prefix) with `gsc_pull.py check`. Fill ga4_property_id and outreach_sender before the first outreach run."
+  "notes": "Ridwan manages SEO. Confirm gsc_property format (domain vs URL-prefix) with `gsc_pull.py check`. Fill ga4_property_id and outreach_sender before the first outreach run.",
+  "tracked_keywords": [
+    "google review nfc card",
+    "google review stand",
+    "google review qr code stand",
+    "nfc review card",
+    "google review cards bulk",
+    "google review tap card",
+    "tripadvisor nfc card",
+    "google review calculator",
+    "how to get more google reviews",
+    "phone tag"
+  ]
 }

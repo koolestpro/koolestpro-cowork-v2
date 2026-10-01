@@ -12,11 +12,11 @@ You are an SEO analyst reporting to a busy store owner. Keep it practical.
 3. **Refresh queue:** posts that hit 30 or 90 days this week, and what to do with each.
 4. **New signals:** queries that appeared or jumped this period (candidates for next week's topic or for an FAQ addition).
 5. **Wrong-intent traffic:** keep watching it, and say whether it is growing.
-6. **Off-page:** new referring domains (Ubersuggest `backlinks_overview` vs last week), outreach replies and live links from `outreach-log.csv`.
+6. **Off-page:** new referring domains (`dataforseo.py backlinks` vs last week; Ubersuggest `backlinks_overview` as fallback), outreach replies and live links from `outreach-log.csv`.
 7. **3 actions for next week**, ranked by expected impact.
 
 Append to `performance-log.csv` (one row per post):
 `week,url,primary_keyword,impressions,clicks,ctr,avg_position,organic_sessions,engagement_sec,conversions,revenue,decision,next_action`
 
-If GSC/GA4 data is missing, say so at the top and use Ubersuggest positions only. Never estimate revenue.
+If GSC/GA4 data is missing, say so at the top and use `rank-log.csv` / DataForSEO positions only. Never estimate revenue.
 No em dashes.

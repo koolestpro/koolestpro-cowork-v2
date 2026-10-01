@@ -10,7 +10,7 @@ These rules merge the Perplexity plan with this project's own rules. Where they 
 
 ## 2. Site first, data first
 - **Quick wins before new content.** Each week, check GSC before picking a new topic. A page with high impressions and low CTR, or one sitting at positions 8 to 20, can be fixed in 20 minutes and is often worth more than a new post. Up to one quick win per week goes into the run as well as the new article.
-- **Data priority.** Order of trust: GSC queries and pages → GA4 landing-page engagement and conversions → Ubersuggest volume and difficulty → general web research.
+- **Data priority.** Order of trust: GSC queries and pages → GA4 landing-page engagement and conversions → DataForSEO volume, difficulty, intent and SERP data → Ubersuggest (fallback) → general web research.
 - **Intent over volume.** Never pick a keyword for volume alone. A 50-searches-a-month query with buying intent beats a 6,600 query with the wrong intent (example: tapandrate ranks for "google cards" because people are looking for Google Play gift cards, not review cards).
 - **Wrong-intent traffic is a finding, not a win.** Flag it in the report, and don't build content to chase it.
 

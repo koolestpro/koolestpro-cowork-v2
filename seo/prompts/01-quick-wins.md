@@ -17,5 +17,5 @@ Find and rank (max 3):
 For each item give: URL, evidence (numbers), the exact change (before → after text), expected effect, effort (minutes).
 Pick **one** as "Do this week".
 
-No GSC data? Say so, use Ubersuggest position data, and mark the confidence as low.
+No GSC data? Say so, use DataForSEO `ranked` positions (or Ubersuggest), and mark the confidence as low.
 No em dashes. Never edit live pages. These are instructions for Ridwan.

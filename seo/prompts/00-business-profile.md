@@ -1,6 +1,6 @@
 # Stage 0: Business profile (run once per client, refresh every 90 days)
 
-**Inputs:** `clients/<slug>/client.json`, `clients/<slug>/snapshot/*` (from `store_snapshot.py`), the live homepage, About, FAQ, How it works, 3 to 5 best-selling product pages, the existing blog posts, Ubersuggest `domain_overview` + `domain_keywords` + `competitors` (locId from client.json).
+**Inputs:** `clients/<slug>/client.json`, `clients/<slug>/snapshot/*` (from `store_snapshot.py`), the live homepage, About, FAQ, How it works, 3 to 5 best-selling product pages, the existing blog posts (or, for `nextjs-resources`, the site repo's `content/*.ts`), `dataforseo.py ranked` + `competitors` + `backlinks` (Ubersuggest `domain_overview` / `domain_keywords` / `competitors` as fallback; location from client.json).
 **Output:** `clients/<slug>/business-profile.md` (overwrite; keep the old one as `business-profile.<date>.bak.md`).
 
 ---

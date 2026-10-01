@@ -2,7 +2,7 @@
   "slug": "CLIENT_SLUG",
   "name": "Client Name",
   "site_url": "https://example.com",
-  "platform": "shopify",
+  "platform": "shopify  (or nextjs-resources: also set site_repo, site_repo_path[], articles_file)",
   "market": "UK",
   "language": "en-GB",
   "ubersuggest_loc_id": 2826,
@@ -10,9 +10,14 @@
   "ga4_property_id": "",
   "blog_handle": "news",
   "blog_author": "",
-  "outreach_sender": { "name": "", "role": "", "email_from": "" },
+  "outreach_sender": {
+    "name": "",
+    "role": "",
+    "email_from": ""
+  },
   "competitors": [],
   "cadence": "weekly",
   "approval": "shopify-hidden-draft",
-  "notes": ""
+  "notes": "",
+  "tracked_keywords": []
 }
