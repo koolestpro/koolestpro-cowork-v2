@@ -206,6 +206,6 @@ Per lead the system holds: brand, website, contact name, country, niche, track a
 9. **WhatsApp and Instagram.** Emails to Nigerian leads are new (the playbook says DM is primary). Should the reply also offer WhatsApp?
 11. ~~Free AI-built sites.~~ **Settled 2026-10-01:** stick to the old plan (growth plan D8: free sample sites only after a reply, max 3 a week). Businesses that have an email but no website (for example found on Google Maps) go into the email system as track Build: email 1 offers a free ad creative, and the free AI-built site comes only after a reply.
 13. **Name on emails.** about-me.md says Ridwan Adekunle; the Ava emails say Ridwan Abdulrasheed. Which name goes in the signature?
-14. **Dropshipping stores.** Same price ladder, or a lower tier? Today: same single-page offer, no retainer pitch (SCORING.md section 3).
+14. ~~Dropshipping stores.~~ **Settled 2026-10-01: lower tier.** Proposed numbers (Ridwan to confirm): Nigeria Starter N250k; international store audit $120, single product page $400, no full-build or retainer pitch. Set in brief-ai.md PRICES.
 12. ~~"GT Metrics".~~ **Settled:** it is Merchant Genius (merchantgenius.io). Other directories Ridwan named: eachspy, builtwith free list, techpeeker, sellerdirectories, zikanalytics new-stores list, cro.media. They are seeded in the Sources tab.
 10. **Auto-approval.** Once the first batch is trusted, should leads that pass automatic checks (valid email, real observation present, no blocklist hits) send without a per-lead tick, with a daily digest for you to skim?

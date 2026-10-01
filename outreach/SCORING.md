@@ -55,7 +55,7 @@ Detected from apps, image hosts, shipping-time text and the `vendor` field of th
 | reseller | 8 or more different vendors | Catalogue navigation, collection filters, search | Page build or full build |
 | unknown | none of the above | Generic | Generic |
 
-**Open decision for Ridwan:** should dropship-likely stores get a lower price tier, or the same ladder? Today they get the same single-page offer and no retainer pitch.
+**Decided 2026-10-01: dropship-likely stores get a lower tier** (proposed: Nigeria Starter N250k; international audit $120, product page $400; no full build or retainer). Numbers to be confirmed by Ridwan.
 
 ## 4. Platform
 
@@ -73,4 +73,4 @@ Real revenue and traffic (Store Leads, BuiltWith, or the store's public sales si
 | Merchant Genius (merchantgenius.io) | Free archive of Shopify stores ordered by domain registration date, so genuinely new stores | Free | No API found. Pages exist per store and per date; needs a look in a real browser to confirm structure |
 | Store Leads (via Apify actors, or Store Leads' own plans) | Shopify, WooCommerce, BigCommerce stores with estimated sales, employee count, apps, contact emails, 80+ fields | About $1.40 to $8 per 1,000 records on Apify actors; own plans not verified | Not built. Best fit for "small but already selling" filtering |
 | BuiltWith Lists API | Domains by technology, with contact data | From about $295 a month | Too expensive for now |
-| Apify Shopify store finders | Domains by keyword, optionally with emails and apps | About $1 to $5 per 1,000 | Not built |
+| Apify Shopify store finders | Domains by keyword, optionally with emails and apps | About $1 to $5 per 1,000 | Connector built (`Apify.gs`), untested. Ridwan is open to a small test. Actor input formats could not be read from the Claude sandbox, so the actor's own Input JSON is pasted into the Apify tab |

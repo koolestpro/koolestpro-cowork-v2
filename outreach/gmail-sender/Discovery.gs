@@ -44,6 +44,8 @@ function qualifyDiscovery_(S, stats, timeLeft) {
     const domain = cleanDomain_(r.domain);
     try {
       if (have[domain]) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'already in Leads'); set_(disc, r, 'checked_at', new Date()); return; }
+      const emp = Number((String(r.signals).match(/employee[^:]*:\s*(\d+)/i) || [])[1]);
+      if (emp > 30) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'team of ' + emp + ' (too large)'); set_(disc, r, 'checked_at', new Date()); return; }
       const v = scoreStore_(domain, r);
       set_(disc, r, 'score', v.score);
       set_(disc, r, 'reasons', v.reasons.join('; '));

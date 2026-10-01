@@ -28,7 +28,8 @@ const TABS = {
   Memory: ['lead_id', 'summary', 'updated_at'],
   Drafts: ['lead_id', 'created_at', 'reply_to_message_id', 'draft_body', 'status', 'sent_at', 'model'],
   Sources: ['url', 'source', 'niche', 'country', 'max_pages', 'status', 'last_run', 'found', 'new', 'result'],
-  Discovery: ['domain', 'source', 'niche', 'country', 'status', 'score', 'reasons', 'checked_at', 'lead_id'],
+  Apify: ['actor', 'input_json', 'max_items', 'status', 'run_id', 'started_at', 'items', 'new', 'result'],
+  Discovery: ['domain', 'source', 'niche', 'country', 'status', 'score', 'reasons', 'checked_at', 'lead_id', 'signals', 'data'],
 };
 
 const STAGES = ['New', 'Contacted', 'Finished', 'Replied', 'Talking', 'Call booked', 'Won', 'Lost', 'Bounced'];
@@ -73,6 +74,7 @@ function onOpen() {
     .addItem('Check replies now', 'tick')
     .addItem('Test AI', 'testAi')
     .addItem('Import store lists now', 'importSourcesNow')
+    .addItem('Run Apify imports now', 'apifyImportsNow')
     .addItem('Prepare new leads now', 'prepareLeadsNow')
     .addItem('Test email verifier key', 'testVerifier')
     .addItem('Draft replies now', 'draftRepliesNow')
@@ -543,7 +545,7 @@ function draftReplies_(interactive) {
       .join('\n\n');
     const user = [
       'LEAD: ' + [lead.brand, lead.contact_name, lead.website].filter(String).join(' | '),
-      'Niche: ' + (lead.niche || '') + ' | Country: ' + (lead.country || '') + ' | Track/play: ' + (lead.track || '') + '/' + (lead.play || ''),
+      'Niche: ' + (lead.niche || '') + ' | Platform: ' + (lead.platform || 'unknown') + ' | Business model: ' + (lead.business_model || 'unknown') + ' | Country: ' + (lead.country || '') + ' | Track/play: ' + (lead.track || '') + '/' + (lead.play || ''),
       'Profile: ' + [profile.what_they_sell, profile.audience, profile.signal, profile.site_notes].filter(String).join(' / '),
       'Notes: ' + (lead.notes || ''),
       regionKey_(lead.country) === 'ng' ? 'If you greet, use exactly: ' + localGreeting_(lead) + ' (their local time). Only greet if this is the first message of a new exchange, not mid-thread.' : 'No greeting phrase like Good morning.',

@@ -29,6 +29,7 @@ function prepareLeads_(interactive) {
     const started = Date.now();
     const timeLeft = () => Date.now() - started < 4.5 * 60 * 1000;
 
+    try { apifyImports_(stats, timeLeft); } catch (e) { stats.problems.push('apify: ' + e.message); }
     try { importSources_(S, stats, timeLeft, false); } catch (e) { stats.problems.push('sources: ' + e.message); }
     try { qualifyDiscovery_(S, stats, timeLeft); } catch (e) { stats.problems.push('discovery: ' + e.message); }
     findEmails_(S, stats, timeLeft);
