@@ -54,7 +54,7 @@ Every task reads its own scoped doc instead of this whole file. When a task is d
 | Cold email outreach (own AI SDR: Sheet + Gmail sender + reply drafts) | 4 | **`outreach/README.md`** (decisions, status, next steps), `outreach/gmail-sender/SETUP.md` |
 | TikTok drafts / Instagram publishing | 2 | `.ai-workflow/tiktok-weekly-procedure.md`, `.ai-workflow/tools/README.md` |
 | System status weekly (`koolestpro-system-status-weekly`) | 7 | `.ai-workflow/tools/build_system_status.py` |
-| SEO weekly run for a client (blog post, quick wins, report, outreach), e.g. tapandrate | 8 | **`seo/SOP.md`**, `seo/config/seo-rules.md`, `seo/clients/<slug>/business-profile.md` (setup + decisions: `seo/README.md`) |
+| SEO weekly run for koolestpro.com (article as draft PR, quick wins, report, link-building outreach) | 6 | **`seo/engine/SOP.md`**, `seo/engine/rules.md`, `seo/project/business-profile.md` (setup + decisions: `seo/README.md`). `seo/engine/` is a portable kit for client projects: keep it free of Koolestpro specifics |
 
 ---
 

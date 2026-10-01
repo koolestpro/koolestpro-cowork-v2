@@ -1,2 +1,0 @@
-date,week,primary_keyword,title,handle,url,cluster,stage,word_count,image_source,shopify_article_gid,status,published_date,refresh_30d,refresh_90d,notes
-2026-10-01,2026-W40,how to get more google reviews,How to Get More Google Reviews: A Practical Guide for UK Businesses,how-to-get-more-google-reviews,/blogs/keep-informed/how-to-get-more-google-reviews,C2,Awareness,1622,store,,files-only,,2026-10-31,2026-12-30,First run. No Shopify token yet; push with shopify_publish.py once SHOPIFY_TAPANDRATE_* is set

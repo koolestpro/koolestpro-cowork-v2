@@ -29,6 +29,7 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 | Approve | `approved` checkbox in Leads tab | built |
 | Send, follow up, log, stop on reply, alert, bounces | `outreach/gmail-sender/Code.gs` (Apps Script, one copy per Gmail, shared Sheet) | built, simulated only |
 | Reply drafts + relationship memory | On a new reply: AI reads Profile + full Messages thread + Memory, writes a Drafts row and updates the Memory summary. Preferred: fast (Apps Script calling a cheap AI API within minutes); fallback: Claude scheduled task twice a day | not built (Drafts/Memory tabs exist) |
+| SEO link-building leads | `seo/engine/tools/outreach_push.py` appends prospects from the weekly SEO run to Leads/Profiles/Sequence as `track = seo-links` (2-step sequence, `approved = FALSE`, `email_status = unchecked`). Same sender, caps and approval as cold email. Step 1 carries no link. See `seo/README.md`. | built |
 | Dashboard | KoolestFlow lead page: profile, timeline, stage, editable suggested reply, Send (sets draft to Approved) | not built |
 
 ## What exists now

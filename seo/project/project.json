@@ -1,0 +1,37 @@
+{
+  "name": "Koolestpro",
+  "site_url": "https://koolestpro.com",
+  "platform": "nextjs-resources",
+  "site_repo": "koolestpro/koolestpro",
+  "site_repo_path": [
+    "site",
+    "../koolestpro",
+    "/home/user/koolestpro"
+  ],
+  "articles_file": "content/resources.ts",
+  "market": "International (US/UK/EU DTC Shopify brands); /ng is a separate market and out of scope for this engine",
+  "language": "en",
+  "gsc_property": "sc-domain:koolestpro.com",
+  "ga4_property_id": "",
+  "blog_author": "Ridwan Adekunle",
+  "competitors": [],
+  "tracked_keywords": [
+    "replo vs pagefly",
+    "replo vs shogun",
+    "instant vs replo",
+    "hire a replo developer",
+    "shopify cro audit",
+    "shopify landing page designer"
+  ],
+  "cadence": "weekly",
+  "approval": "draft-pr-vercel-preview",
+  "notes": "Articles are typed Article objects in content/resources.ts of the koolestpro/koolestpro repo (submodule at site/). Publishing = merging the draft PR. Existing articles are tool comparisons written for answer engines; keep that format. US 2840 by default; check UK 2826 for comparisons too.",
+  "location_code": 2840,
+  "data_provider": "free",
+  "outreach": {
+    "mode": "sheet",
+    "sheet_id": "",
+    "track": "seo-links",
+    "note": "Pushes link-building pitches into the Koolestpro Outreach Sheet (outreach/gmail-sender). The Apps Script sender emails them once approved."
+  }
+}
