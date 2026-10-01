@@ -1,0 +1,18 @@
+{
+  "slug": "tapandrate",
+  "name": "Tap and Rate",
+  "site_url": "https://tapandrate.co.uk",
+  "platform": "shopify",
+  "market": "UK",
+  "language": "en-GB",
+  "ubersuggest_loc_id": 2826,
+  "gsc_property": "sc-domain:tapandrate.co.uk",
+  "ga4_property_id": "",
+  "blog_handle": "keep-informed",
+  "blog_author": "Tap and Rate",
+  "outreach_sender": { "name": "", "role": "", "email_from": "" },
+  "competitors": ["reviewscard.com", "seritag.com", "tapilink.co.uk"],
+  "cadence": "weekly",
+  "approval": "shopify-hidden-draft",
+  "notes": "Ridwan manages SEO. Confirm gsc_property format (domain vs URL-prefix) with `gsc_pull.py check`. Fill ga4_property_id and outreach_sender before the first outreach run."
+}
