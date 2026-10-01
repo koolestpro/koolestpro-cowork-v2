@@ -40,7 +40,7 @@ function defaultSettings_() {
     ['TEST_MODE', 'TRUE', 'While TRUE, every email goes to ALERT_EMAIL instead of the lead. Set FALSE to go live.'],
     ['PAUSED', 'FALSE', 'TRUE stops all sending immediately.'],
     ['SENDER_NAME', 'Ridwan | Koolestpro', 'Display name on outgoing emails.'],
-    ['SIGNATURE', 'Ridwan\nShopify developer, Koolestpro', 'Added under every email. Plain text.'],
+    ['SIGNATURE', 'Ridwan Adekunle\nShopify expert, Koolestpro\nkoolestpro.com', 'Added under every email. Plain text.'],
     ['ALERT_EMAIL', '', 'Where reply alerts and TEST_MODE emails go (your main Gmail).'],
     ['START_DATE', Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd'), 'Warm-up counts weeks from this date.'],
     ['DAILY_CAP_START', '5', 'Emails per day in week 1.'],

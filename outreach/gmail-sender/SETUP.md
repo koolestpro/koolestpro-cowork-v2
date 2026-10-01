@@ -39,6 +39,15 @@ The script is `Code.gs` plus `Brief.gs` (the master brief, compiled from `outrea
 
 **Nothing sending?** Outreach > **Why isn't it sending?** checks the settings, today's cap, and every lead, and names the exact reason for each.
 
+## 3c. KoolestFlow connection (the dashboard)
+`Api.gs` is a small secured web API on the Sheet. KoolestFlow (`koolestpro/cold-dm-app`, branch `claude/outreach-alert-email-debug-b2d85x`) shows a **Cold email** screen on top of it: leads, each 5-email sequence (editable until sent), the conversation, reply drafts with Approve, and a box to add store domains.
+1. Add `Api.gs` as a file in Apps Script. Project Settings > Script properties: add `OUTREACH_API_TOKEN` = a long random string (make one up, 40+ characters).
+2. Deploy > New deployment > type **Web app** > Execute as **Me** > Who has access **Anyone** > Deploy. Authorise when asked. Copy the Web app URL (ends in `/exec`). The URL alone does nothing: every call must carry the token.
+3. In KoolestFlow's environment (`.env.local` for the local app, and the Vercel project's environment variables for the hosted one) set `OUTREACH_API_URL` = that URL and `OUTREACH_API_TOKEN` = the same token. Restart the backend.
+4. Open KoolestFlow > **Cold email** in the sidebar.
+After you change `Api.gs`, use Deploy > Manage deployments > edit > New version, or the URL keeps serving the old code.
+What it can and cannot do: it can approve leads, edit unsent emails, edit and approve reply drafts, add leads and store domains, and change a few Settings (not `TEST_MODE`). It never sends mail itself: approvals queue for the normal sender, and "Check replies and send approved" runs the same check the 30 minute trigger does.
+
 ## 3b. AI reply drafts (Gemini, then Claude Haiku, then DeepSeek)
 When a lead replies, the script now writes a draft into **Drafts** (status **Ready for review**) and updates that lead's **Memory** summary. It never sends on its own: you edit `draft_body`, set status **Approved**, and the next check sends it.
 1. Paste the new `Code.gs`, save, reload the Sheet, then run Outreach > **1. Set up tabs** once (adds the new Settings rows and a `model` column in Drafts).

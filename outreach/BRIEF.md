@@ -14,7 +14,7 @@ Ridwan Adekunle, known online as @koolestpro. A Shopify CRO and UX specialist an
 
 He is a practitioner, not an agency. One person, real work, answers his own email.
 
-**Sign-off:** `Ridwan` then `Shopify developer, Koolestpro` then `koolestpro.com` (the script adds this from Settings).
+**Sign-off:** `Ridwan Adekunle`, `Shopify expert, Koolestpro`, `koolestpro.com` (name per about-me.md, settled 2026-10-01; the script adds this from the SIGNATURE cell in Settings).
 
 ## 2. What he sells
 
@@ -205,7 +205,7 @@ Per lead the system holds: brand, website, contact name, country, niche, track a
 8. **Time zones.** Send in the lead's working hours (needs `time_zone` on every lead), or keep Lagos hours?
 9. **WhatsApp and Instagram.** Emails to Nigerian leads are new (the playbook says DM is primary). Should the reply also offer WhatsApp?
 11. ~~Free AI-built sites.~~ **Settled 2026-10-01:** stick to the old plan (growth plan D8: free sample sites only after a reply, max 3 a week). Businesses that have an email but no website (for example found on Google Maps) go into the email system as track Build: email 1 offers a free ad creative, and the free AI-built site comes only after a reply.
-13. **Name on emails.** about-me.md says Ridwan Adekunle; the Ava emails say Ridwan Abdulrasheed. Which name goes in the signature?
+13. ~~Name on emails.~~ **Settled 2026-10-01:** Ridwan Adekunle, per about-me.md.
 14. ~~Dropshipping stores.~~ **Settled 2026-10-01: lower tier.** Proposed numbers (Ridwan to confirm): Nigeria Starter N250k; international store audit $120, single product page $400, no full-build or retainer pitch. Set in brief-ai.md PRICES.
 12. ~~"GT Metrics".~~ **Settled:** it is Merchant Genius (merchantgenius.io). Other directories Ridwan named: eachspy, builtwith free list, techpeeker, sellerdirectories, zikanalytics new-stores list, cro.media. They are seeded in the Sources tab.
 10. **Auto-approval.** Once the first batch is trusted, should leads that pass automatic checks (valid email, real observation present, no blocklist hits) send without a per-lead tick, with a daily digest for you to skim?

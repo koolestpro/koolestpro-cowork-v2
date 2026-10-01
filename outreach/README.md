@@ -42,7 +42,7 @@ Ridwan's decision: Gemini free is the main model. Claude (Anthropic) is not fund
 | Send, follow up, log, stop on reply, alert, bounces | `outreach/gmail-sender/Code.gs` (Apps Script, one copy per Gmail, shared Sheet) | built, simulated only |
 | Reply drafts + relationship memory | Decided 2026-09-30: Apps Script calls AI in order Gemini free, Claude Haiku, DeepSeek fallback (keys in Script Properties, order in Settings `AI_ORDER`). Reads Profile + Messages thread + Memory, writes the draft (Ready for review) and updates Memory. Never sends; Ridwan approves. | built, mocked-tested; needs keys + real test (SETUP.md 3b) |
 | Daily report | `dailyReport` at 6pm emails ALERT_EMAIL: sent, replies, drafts to review, queue, pipeline | built |
-| Dashboard | KoolestFlow as front end over the Sheet via an Apps Script web API (Sheet stays source of truth). `cold-email-app` is the submodule `koolestpro/cold-dm-app`; attach it to a session to build this side. | not built |
+| Dashboard | KoolestFlow (`koolestpro/cold-dm-app`, the `cold-email-app` submodule) has a **Cold email** screen over the Sheet through `Api.gs` (Apps Script web app, secret token) and `backend/outreach_bridge.py`. Sheet stays the source of truth. See SETUP.md 3c. | built 2026-10-01 on branch `claude/outreach-alert-email-debug-b2d85x` of cold-dm-app; mock and browser tested, not yet against the real Sheet |
 
 ## What exists now
 
@@ -60,7 +60,7 @@ Ridwan's decision: Gemini free is the main model. Claude (Anthropic) is not fund
 3. ~~Email finding + MyEmailVerifier~~ built (needs real run + key).
 4. ~~Sequence writer~~ built (needs real run). First batch goes to Ridwan for approval.
 5. Lead finders write to the Sheet. **Started 2026-09-30:** `Discovery.gs` qualifies any list of store domains (upcoming-brand score, see BRIEF.md 4b) into Leads. `Sources` tab imports domains from public list pages (Merchant Genius, ZIK new stores, cro.media, techpeeker, eachspy, BuiltWith free list, sellerdirectories; none could be inspected from the Claude sandbox, so each needs a real run to confirm it yields domains). No-website businesses with an email (Maps) go straight into Leads as track Build. Still to build: Reddit and ad-library scans, the Maps bridge into the Sheet and dedupe against `.ai-workflow/taken-brands-ledger.json`.
-6. KoolestFlow dashboard over the Sheet.
+6. ~~KoolestFlow dashboard over the Sheet.~~ Built (needs deployment, SETUP.md 3c).
 
 ## Costs (target)
 
