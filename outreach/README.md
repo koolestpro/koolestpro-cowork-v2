@@ -23,6 +23,10 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 
 Ridwan's decision: Gemini free is the main model. Claude (Anthropic) is not funded and will not be. DeepSeek is unfunded for now. Test AI on 2026-09-30: Gemini OK, Claude "credit balance too low", DeepSeek 402 insufficient balance. Set Settings `AI_ORDER` = `gemini` until DeepSeek is funded, then `gemini,deepseek`. Gemini calls already retry on 503 and fall back across Google's model names.
 
+## Agencies and intent signals (2026-10-01)
+
+Agency partner track built: `PARTNER-OFFER.md` (offer, proposed rate card), `scoreAgency_` in `Discovery.gs`, partner sequence in `Pipeline.gs`, `SIGNATURE_PARTNER`, partner section in `brief-ai.md`. Intent signals from job postings are designed in `INTENT-SIGNALS.md`, not built. Upwork and Contra postings cannot be traced to companies (terms forbid scraping, client names hidden).
+
 ## Lead scoring and data sources (2026-10-01)
 
 `outreach/SCORING.md` is the full rubric (gates, points, business model: own-brand versus dropship, platforms) and the table of data-source options and costs. Scoring lives in `gmail-sender/Discovery.gs`.

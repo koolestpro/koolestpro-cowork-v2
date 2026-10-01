@@ -85,6 +85,10 @@ Three emails sent by the Ava tool. What works, and what must NOT be copied:
 - Filler openers like "Happy Friday!", and the three-item "reviews, trust signals, and urgency cues" list.
 - Signature divider lines and a LinkedIn link in a first email.
 
+## 4d. Agencies (partner track, decided 2026-10-01)
+
+Ridwan offers design, branding and ad agencies a white-label Shopify development partnership. He has **never done white-label work**: the AI must never claim it. The offer, proposed partner rate card ($140 audit, $525 page, $1,050 full build, first pilot task half price, rates locked 12 months for founding partners) and how to be credible are in `PARTNER-OFFER.md`. Partner rates are stated only when asked. Pitch: capacity and margin, the agency keeps the client.
+
 ## 5. The people he writes to
 
 Two markets that never mix (project rule 4).

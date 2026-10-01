@@ -39,6 +39,9 @@ The script is `Code.gs` plus `Brief.gs` (the master brief, compiled from `outrea
 
 **Nothing sending?** Outreach > **Why isn't it sending?** checks the settings, today's cap, and every lead, and names the exact reason for each.
 
+## 3e. Agencies (the Partner track)
+The offer is in `outreach/PARTNER-OFFER.md`. To find agencies: paste agency domains into the **Discovery** tab with `track` = **Partner**, or use Sources rows with `track` = Partner (Clutch and the Shopify Partner Directory are pre-filled after you run **Set up tabs**; if they return 0 domains, copy domains by hand). Agencies are scored by `scoreAgency_` (see SCORING.md section 7), promoted to Leads as track Partner, play `agency_partner`, then go through the normal email finding, verification, profile and a dedicated partner sequence. Their signature is `SIGNATURE_PARTNER`. Partner rates are only stated by the AI when the agency asks.
+
 ## 3d. Flexible signatures
 The signature is chosen per email, most specific first (only non-empty cells count): the lead's own `signature` cell in Leads > `SIGNATURE_<PLAY>` (e.g. `SIGNATURE_CRO_SPRINT`) > `SIGNATURE_BUILD` / `SIGNATURE_FIX` / `SIGNATURE_SCALE` (by the lead's track) > `SIGNATURE_NG` / `SIGNATURE_UK` / `SIGNATURE_US` / `SIGNATURE_EU` (by market) > `SIGNATURE`. Follow-ups (steps 2 to 5) and replies use `SIGNATURE_FOLLOWUP` (default just "Ridwan", which reads more human). To add a signature for a new play, add a Settings row named `SIGNATURE_<PLAY>` in capitals. Run **Set up tabs** once to add the new rows; existing cells such as `SIGNATURE` are never overwritten, so edit any old text yourself. Use `\n` or real line breaks for new lines.
 

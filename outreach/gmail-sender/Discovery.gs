@@ -46,17 +46,19 @@ function qualifyDiscovery_(S, stats, timeLeft) {
       if (have[domain]) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'already in Leads'); set_(disc, r, 'checked_at', new Date()); return; }
       const emp = Number((String(r.signals).match(/employee[^:]*:\s*(\d+)/i) || [])[1]);
       if (emp > 30) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'team of ' + emp + ' (too large)'); set_(disc, r, 'checked_at', new Date()); return; }
-      const v = scoreStore_(domain, r);
+      const isPartner = lc_(r.track) === 'partner';
+      const v = isPartner ? scoreAgency_(domain, r) : scoreStore_(domain, r);
       set_(disc, r, 'score', v.score);
       set_(disc, r, 'reasons', v.reasons.join('; '));
       set_(disc, r, 'checked_at', new Date());
       if (v.skip) { set_(disc, r, 'status', 'Skipped'); return; }
-      if (v.score < min) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'score ' + v.score + ' below ' + min + ': ' + v.reasons.join('; ')); return; }
+      const need = isPartner ? Number(S.MIN_PARTNER_SCORE || 55) : min;
+      if (v.score < need) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'score ' + v.score + ' below ' + need + ': ' + v.reasons.join('; ')); return; }
       const id = domain.replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30) || domain;
       let leadId = id, n = 2;
       while (leads.rows.some(l => String(l.lead_id) === leadId)) leadId = id + '-' + n++;
       appendObj_('Leads', { lead_id: leadId, brand: v.brand || id, website: domain, contact_name: '', email: '', email_status: '', country: v.country,
-        time_zone: '', niche: r.niche || '', source: r.source || 'discovery', platform: v.platform, business_model: v.model, track: 'Fix', play: '', stage: 'New', approved: false, touch_count: 0,
+        time_zone: '', niche: r.niche || '', source: r.source || 'discovery', platform: v.platform, business_model: v.model, track: isPartner ? 'Partner' : 'Fix', play: isPartner ? 'agency_partner' : '', stage: 'New', approved: false, touch_count: 0,
         notes: 'Fit ' + v.score + ': ' + v.reasons.join('; '), created_at: new Date() });
       leads.rows.push({ lead_id: leadId, website: domain });
       have[domain] = true;
@@ -202,7 +204,7 @@ const SKIP_LABELS_ = ['facebook', 'fb', 'instagram', 'twitter', 'x', 'linkedin',
   'paypal', 'klaviyo', 'trustpilot', 'reddit', 'medium', 'bit', 'goo', 'whatsapp', 'wa', 'snapchat', 'tumblr', 'vimeo', 'calendly', 'zoom',
   'notion', 'canva', 'typeform', 'fontawesome', 'fonts', 'ajax', 'sentry', 'wixpress', 'gmpg', 'creativecommons', 'mozilla', 'microsoft', 'bing',
   'yahoo', 'outlook', 'live', 'adobe', 'cloudinary', 'imgur', 'giphy', 'discord', 'telegram', 'producthunt', 'crunchbase', 'builtwith',
-  'ampproject', 'googlesyndication', 'googleusercontent', 'cloudflareinsights', 'json-schema', 'shopifysvc', 'doubleclick', 'gtm', 'jsdelivr',
+  'clutch', 'ampproject', 'googlesyndication', 'googleusercontent', 'cloudflareinsights', 'json-schema', 'shopifysvc', 'doubleclick', 'gtm', 'jsdelivr',
   'myshopify', 'wixstatic', 'squarespace', 'bigcommerce', 'wpengine', 'wordpress', 'woocommerce', 'webflow', 'vercel', 'netlify', 'herokuapp', 'bootstrap'];
 
 function extractDomains_(html, ownHost) {
@@ -247,7 +249,7 @@ function importSources_(S, stats, timeLeft, force) {
         doms.forEach(d => {
           if (known[d] || budget <= 0) return;
           known[d] = true; budget--; added++;
-          appendObj_('Discovery', { domain: d, source: r.source || ownHost, niche: r.niche || '', country: r.country || '', status: 'New' });
+          appendObj_('Discovery', { domain: d, source: r.source || ownHost, niche: r.niche || '', country: r.country || '', track: r.track || '', status: 'New' });
         });
         if (!doms.length) break;
       } catch (e) { problem = String(e.message || e).slice(0, 100); break; }
@@ -264,4 +266,55 @@ function importSourcesNow() {
   const stats = { problems: [] };
   importSources_(settings_(), stats, () => true, true);
   toast_('Imported ' + (stats.imported || 0) + ' new store domains into Discovery. See the result column in Sources.');
+}
+
+
+// ---------- Agencies (the Partner track) ----------
+// An agency is not scored like a store. The question is: would this studio plausibly want overflow Shopify development?
+// Good: sells design, branding or ads for e-commerce brands but shows little or no development of its own, small team.
+// Bad: already a development shop, large team, enterprise focus. See outreach/SCORING.md section 7.
+function scoreAgency_(domain, row) {
+  const reasons = [];
+  let score = 40;
+  const page = fetchPage_(domain);
+  if (!page.ok) return { score: 0, reasons: ['site unreachable (HTTP ' + page.code + ')'], skip: true };
+  let text = page.html.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').toLowerCase();
+  for (const path of ['/services', '/about', '/about-us']) {   // one more page of context, if it exists
+    try { const p = fetchPage_(domain + path); if (p.ok) { text += ' ' + p.html.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').toLowerCase().slice(0, 6000); break; } } catch (e) { /* skip */ }
+  }
+  text = text.slice(0, 20000);
+  const has = re => (text.match(re) || []).length;
+
+  if (!has(/\b(agency|studio|consultanc|we design|we build|our services|our work|case stud)/g)) return { score: 0, reasons: ['does not look like an agency or studio'], skip: true };
+  const ecom = has(/\b(shopify|e-?commerce|dtc|d2c|online store|woocommerce|webflow)\b/g);
+  if (!ecom) return { score: 0, reasons: ['no e-commerce focus seen'], skip: true };
+  score += ecom >= 5 ? 20 : 10; reasons.push('e-commerce focus (' + ecom + ' mentions: +' + (ecom >= 5 ? 20 : 10) + ')');
+  if (has(/shopify (plus )?partner|shopify experts?|shopify agency/g)) { score += 5; reasons.push('Shopify partner or expert (+5)'); }
+
+  const needs = has(/\b(branding|brand identity|web ?design|ux|ui design|performance marketing|paid (social|media|ads)|meta ads|facebook ads|tiktok ads|google ads|seo|social media|content marketing|creative)\b/g);
+  if (needs) { score += 15; reasons.push('sells design, brand or ads work that leads to builds (+15)'); }
+
+  const dev = has(/\b(shopify develop|web develop|full[- ]?stack|front[- ]?end|back[- ]?end|liquid|headless|custom apps?|engineering|our developers|development team|in-house develop|software)\b/g);
+  if (dev >= 4) { score -= 20; reasons.push('strong in-house development language (' + dev + ' mentions: -20)'); }
+  else if (dev >= 1) { score += 0; reasons.push('some development language (' + dev + ')'); }
+  else { score += 15; reasons.push('no development shown: dev is likely the bottleneck (+15)'); }
+
+  const team = (text.match(/team of (\d{1,3})\b/) || text.match(/\b(\d{1,3})\+? (people|team members|experts|specialists|designers|strategists)\b/) || [])[1];
+  if (team) {
+    const n = Number(team);
+    if (n <= 15) { score += 15; reasons.push('small team (about ' + n + ': +15)'); }
+    else if (n <= 40) { score += 5; reasons.push('mid-size team (about ' + n + ': +5)'); }
+    else { score -= 15; reasons.push('large team (about ' + n + ': -15)'); }
+  }
+  if (has(/\b(fortune 500|enterprise|global offices|offices in)\b/g)) { score -= 15; reasons.push('enterprise or multi-office language (-15)'); }
+
+  const code = (page.html.match(/Shopify\.country\s*=\s*"([A-Z]{2})"/) || [])[1];
+  const tld = /\.co\.uk$|\.com\.ng$/.test(domain) ? domain.match(/(co\.uk|com\.ng)$/)[1] : domain.split('.').pop();
+  const country = String(row.country || '').trim() || CODE_COUNTRY_[code] || TLD_COUNTRY_[tld] || '';
+  reasons.push(country ? 'market ' + country : 'country unknown (-5)');
+  if (!country) score -= 5;
+
+  const title = (page.html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '';
+  const brand = title.replace(/\s+/g, ' ').split(/[|–\-:]/)[0].trim().slice(0, 40);
+  return { score: Math.max(0, Math.min(100, score)), reasons: reasons, country: country, brand: brand, platform: 'Agency', model: 'agency', skip: false };
 }

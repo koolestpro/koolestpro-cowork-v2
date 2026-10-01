@@ -27,9 +27,9 @@ const TABS = {
     'message_id', 'sender_account'],
   Memory: ['lead_id', 'summary', 'updated_at'],
   Drafts: ['lead_id', 'created_at', 'reply_to_message_id', 'draft_body', 'status', 'sent_at', 'model'],
-  Sources: ['url', 'source', 'niche', 'country', 'max_pages', 'status', 'last_run', 'found', 'new', 'result'],
+  Sources: ['url', 'source', 'niche', 'country', 'track', 'max_pages', 'status', 'last_run', 'found', 'new', 'result'],
   Apify: ['actor', 'input_json', 'max_items', 'status', 'run_id', 'started_at', 'items', 'new', 'result'],
-  Discovery: ['domain', 'source', 'niche', 'country', 'status', 'score', 'reasons', 'checked_at', 'lead_id', 'signals', 'data'],
+  Discovery: ['domain', 'source', 'niche', 'country', 'track', 'status', 'score', 'reasons', 'checked_at', 'lead_id', 'signals', 'data'],
 };
 
 const STAGES = ['New', 'Contacted', 'Finished', 'Replied', 'Talking', 'Call booked', 'Won', 'Lost', 'Bounced'];
@@ -59,6 +59,8 @@ function defaultSettings_() {
     ['SEND_END_HOUR', '17', 'Stop sending at this hour (lead\'s local time).'],
     ['FOLLOWUP_GAPS', '3,4,5,6', 'Days between steps 1>2, 2>3, 3>4, 4>5.'],
     ['SEND_TO_CATCH_ALL', 'FALSE', 'TRUE = also email addresses the verifier marks catch-all (domain accepts everything, so the mailbox is unproven). Unknown or risky are never sent.'],
+    ['MIN_PARTNER_SCORE', '55', 'Agency discovery: an agency needs at least this score (0 to 100) to become a partner lead.'],
+    ['SIGNATURE_PARTNER', 'Ridwan Adekunle\nShopify development partner for agencies, Koolestpro\nkoolestpro.com', 'First email to an agency or studio (track Partner). Optional.'],
     ['MIN_FIT_SCORE', '55', 'Discovery: a store needs at least this score (0 to 100) to become a lead. Higher = pickier.'],
     ['AUTO_APPROVE', 'FALSE', 'TRUE = a lead whose sequence passes all checks (valid email, no flags) is approved automatically. FALSE = you tick approved yourself.'],
     ['SEND_WEEKENDS', 'FALSE', 'FALSE = never send on Saturday or Sunday in the lead\'s own time zone.'],
@@ -144,13 +146,14 @@ function setup() {
     seedTestLead_();
   }
   const sources = ss.getSheetByName('Sources');
-  if (sources.getLastRow() < 2) {
-    [['https://www.merchantgenius.io/', 'merchantgenius'], ['https://www.zikanalytics.com/store-list/list-of-new-shopify-stores', 'zik new stores'],
-     ['https://cro.media/all-shopify-stores/', 'cro.media'], ['https://www.techpeeker.com/shopify-stores', 'techpeeker'],
-     ['https://www.eachspy.com/shopify/stores/', 'eachspy'], ['https://trends.builtwith.com/websitelist/Shopify', 'builtwith free list'],
-     ['https://sellerdirectories.com/pages/amazon-shopify-brands-database', 'sellerdirectories']].forEach(x =>
-      appendObj_('Sources', { url: x[0], source: x[1], max_pages: 1, status: 'Active' }));
-  }
+  const haveSrc = {};
+  sources.getRange(2, 1, Math.max(1, sources.getMaxRows() - 1), 1).getValues().forEach(r => { haveSrc[String(r[0]).trim()] = true; });
+  [['https://www.merchantgenius.io/', 'merchantgenius', ''], ['https://www.zikanalytics.com/store-list/list-of-new-shopify-stores', 'zik new stores', ''],
+   ['https://cro.media/all-shopify-stores/', 'cro.media', ''], ['https://www.techpeeker.com/shopify-stores', 'techpeeker', ''],
+   ['https://www.eachspy.com/shopify/stores/', 'eachspy', ''], ['https://trends.builtwith.com/websitelist/Shopify', 'builtwith free list', ''],
+   ['https://sellerdirectories.com/pages/amazon-shopify-brands-database', 'sellerdirectories', ''],
+   ['https://clutch.co/developers/shopify', 'clutch shopify developers (agencies)', 'Partner'], ['https://www.shopify.com/partners/directory/services', 'shopify partner directory (agencies)', 'Partner']
+  ].forEach(x => { if (!haveSrc[x[0]] && (sources.getLastRow() < 2 || x[2] === 'Partner')) appendObj_('Sources', { url: x[0], source: x[1], track: x[2], max_pages: 1, status: 'Active' }); });
   const sheet1 = ss.getSheetByName('Sheet1');
   if (sheet1 && sheet1.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(sheet1);
   toast_('Tabs ready. Check the Settings tab, then choose "Turn on automation".');

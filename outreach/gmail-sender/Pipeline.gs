@@ -200,7 +200,8 @@ function profileLeads_(S, stats, timeLeft) {
       const page = fetchPage_(lead.website);
       if (!page.ok) throw new Error('site returned HTTP ' + page.code);
       const f = siteFacts_(page);
-      const sys = 'You analyse an online store from its public homepage data so a sales email can refer to real, checkable things. Use ONLY the data given. Never guess. Output JSON only: ' +
+      const partner = lc_(lead.track) === 'partner';
+      const sys = partner ? 'You analyse an agency or studio from its public homepage data so a partnership email can refer to real, checkable things. Use ONLY the data given. Never guess. Output JSON only: {"what_they_sell":"the services they sell, one short line","audience":"who their clients are, one short line","niche":"2 to 3 words","signal":"one line: why they might want overflow Shopify development (for example design or ads work but no development shown)","site_notes":"2 to 4 short, concrete, true observations: named client projects or brands, markets, services, team size hints, anything on dev capacity"}.' : 'You analyse an online store from its public homepage data so a sales email can refer to real, checkable things. Use ONLY the data given. Never guess. Output JSON only: ' +
         '{"what_they_sell":"one short line","audience":"who buys, one short line","niche":"2 to 3 words, e.g. pet accessories","signal":"one line: why they look like a fit for the given track","site_notes":"2 to 4 short, concrete observations about the page that are supported by the text (not just missing-from-source signals), each one a plain sentence"}. ' +
         'Signals marked "not spotted in the source" are weak: use them only as a soft observation, never as proof something is absent.';
       const user = 'Track: ' + (lead.track || 'unknown') + '. Niche: ' + (lead.niche || '') + '. Brand: ' + (lead.brand || '') + '.\nTitle: ' + f.title + '\nMeta: ' + f.desc +
@@ -231,6 +232,17 @@ const SEQ_TASK_ = [
   'Output JSON only: {"basis":"one line: which profile facts the email-1 observation rests on","emails":[{"step":1,"subject":"...","body":"..."},{"step":2,"body":"..."},{"step":3,"body":"..."},{"step":4,"body":"..."},{"step":5,"body":"..."}]}',
 ].join('\n');
 
+const SEQ_PARTNER_TASK_ = [
+  'TASK: write a 5-email cold sequence from Ridwan to the owner or lead of an AGENCY or STUDIO, proposing he becomes their white-label Shopify development partner (see PARTNER TRACK in the brief). Use ONLY facts in the lead data and profile plus the brief. Ridwan has NOT done white-label work before: never claim it, never write "agencies like yours", never invent results or numbers.',
+  'Step 1: one true, specific observation about THEM from the profile (a service they sell, a client project or market they name, or a gap such as design and ads but no development shown), the bottleneck that usually follows, one sentence on the offer (overflow Shopify builds, delivered under their brand, they keep the client), one interest question such as whether overflow Shopify work ever piles up. No prices. If the profile has no solid observation, keep it honest and general.',
+  'Step 2: how it works in plain words: they keep the client and the relationship, work ships under their brand, fixed price per project, scope and turnaround confirmed before any work starts, an NDA on request. No numbers, no dates.',
+  'Step 3: the founding partner offer: the first few agencies get partner rates locked for 12 months and the first small task as a paid pilot at half the partner rate, so there is almost no risk. Rates are shared on request, not in the email.',
+  'Step 4: honest proof: Ridwan builds Shopify stores for real DTC brands (name one real project from the brief, as direct client work, never as white-label). Say plainly that the partner programme is new. Offer to scope one small task.',
+  'Step 5: a warm, clean close that leaves the door open.',
+  'Every email under 100 words, plain text, no links, no signature, ends with a light way out in Ridwan\'s voice. Steps 2 to 5 read as replies in the same thread: no subject. Greeting: contact name if given ("Hi Sam,"), else "Hi,". For a Nigerian or African lead, email 1 begins with exactly {{greeting}} then the name; steps 2 to 5 begin "Hi Name,". Subject for step 1: short, lower case, specific ("overflow shopify builds for [agency]"), no clickbait.',
+  'Output JSON only: {"basis":"one line: which profile facts the email-1 observation rests on","emails":[{"step":1,"subject":"...","body":"..."},{"step":2,"body":"..."},{"step":3,"body":"..."},{"step":4,"body":"..."},{"step":5,"body":"..."}]}',
+].join('\n');
+
 function writeSequences_(S, stats, timeLeft) {
   const leads = read_('Leads');
   const profiles = read_('Profiles');
@@ -243,7 +255,7 @@ function writeSequences_(S, stats, timeLeft) {
     if (!timeLeft() || stats.limited) return;
     try {
       const p = profiles.rows.find(x => String(x.lead_id) === String(lead.lead_id));
-      const sys = BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[regionKey_(lead.country)] + '\n\n' + SEQ_TASK_ +
+      const sys = BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[regionKey_(lead.country)] + '\n\n' + (lc_(lead.track) === 'partner' ? SEQ_PARTNER_TASK_ : SEQ_TASK_) +
         (ex ? '\n\nReal writing by Ridwan. Match its voice, length and rhythm:\n' + ex : '');
       const user = 'LEAD: ' + [lead.brand, lead.contact_name || '(no contact name)', lead.website].filter(String).join(' | ') +
         '\nPlatform: ' + (lead.platform || 'unknown') + '. Business model: ' + (lead.business_model || 'unknown') + '. Country: ' + (lead.country || '') + '. Niche: ' + (lead.niche || '') + '. Track: ' + (lead.track || '') + '. Play: ' + (lead.play || '') + '. Source: ' + (lead.source || '') +

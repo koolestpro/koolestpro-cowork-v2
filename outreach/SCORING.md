@@ -74,3 +74,23 @@ Real revenue and traffic (Store Leads, BuiltWith, or the store's public sales si
 | Store Leads (via Apify actors, or Store Leads' own plans) | Shopify, WooCommerce, BigCommerce stores with estimated sales, employee count, apps, contact emails, 80+ fields | About $1.40 to $8 per 1,000 records on Apify actors; own plans not verified | Not built. Best fit for "small but already selling" filtering |
 | BuiltWith Lists API | Domains by technology, with contact data | From about $295 a month | Too expensive for now |
 | Apify Shopify store finders | Domains by keyword, optionally with emails and apps | About $1 to $5 per 1,000 | Connector built (`Apify.gs`), untested. Ridwan is open to a small test. Actor input formats could not be read from the Claude sandbox, so the actor's own Input JSON is pasted into the Apify tab |
+
+## 7. Agency scoring (Partner track)
+
+An agency is scored on one question: would it plausibly want overflow Shopify development? Code: `scoreAgency_` in `Discovery.gs`. Threshold: `MIN_PARTNER_SCORE` (55). Base 40.
+
+| Signal | Points | Reason |
+|---|---|---|
+| Looks like an agency or studio | gate | Otherwise skipped |
+| E-commerce focus (Shopify, DTC, e-commerce mentions) | gate, then +10 (a few mentions) or +20 (5 or more) | No e-commerce focus: skipped |
+| Shopify Partner or Expert wording | +5 | Exactly who gets build requests |
+| Sells design, branding, web design or ads work | +15 | That work creates build demand |
+| No development language at all | +15 | Dev is probably the bottleneck |
+| Strong in-house development language (4 or more mentions) | -20 | Already a development shop |
+| Team of 15 or fewer | +15 | Small studio, feels the capacity limit |
+| Team of 16 to 40 | +5 | |
+| Team over 40 | -15 | Has its own capacity |
+| Enterprise or multi-office wording | -15 | |
+| Country unknown | -5 | Market decides voice |
+
+Sources for agency lists: the `Sources` tab rows with `track` = Partner (Clutch Shopify developers, Shopify Partner Directory are pre-filled; both may block automated reading, in which case export or paste agency domains into Discovery with `track` = Partner).
