@@ -29,6 +29,7 @@ function prepareLeads_(interactive) {
     const started = Date.now();
     const timeLeft = () => Date.now() - started < 4.5 * 60 * 1000;
 
+    try { importSources_(S, stats, timeLeft, false); } catch (e) { stats.problems.push('sources: ' + e.message); }
     try { qualifyDiscovery_(S, stats, timeLeft); } catch (e) { stats.problems.push('discovery: ' + e.message); }
     findEmails_(S, stats, timeLeft);
     verifyEmails_(S, stats, timeLeft);
@@ -182,6 +183,16 @@ function profileLeads_(S, stats, timeLeft) {
   const profiles = read_('Profiles');
   const have = {};
   profiles.rows.forEach(p => { have[String(p.lead_id)] = true; });
+
+  // Businesses with an email but no website (for example from Google Maps): profile them from what we already know.
+  candidates_(leads, l => !String(l.website).trim() && String(l.email).trim() && !have[String(l.lead_id)], 10).forEach(lead => {
+    appendObj_('Profiles', { lead_id: lead.lead_id, what_they_sell: lead.niche || '(see notes)', audience: lead.country || '', signal: 'No website. ' + (lead.notes || ''),
+      site_notes: 'No website found for this business. Track Build: they sell without a proper site.', updated_at: new Date() });
+    if (!String(lead.track).trim()) set_(leads, lead, 'track', 'Build');
+    have[String(lead.lead_id)] = true;
+    stats.profiles++;
+  });
+
   candidates_(leads, l => String(l.website).trim() && !have[String(l.lead_id)], PREP_BATCH_.profile).forEach(lead => {
     if (!timeLeft() || stats.limited) return;
     try {
@@ -213,6 +224,7 @@ const SEQ_TASK_ = [
   'Step 1: the observation, the problem it usually causes, what Ridwan does, one interest question. Steps 2 to 5 must each add something NEW (a second observation, a small useful point, a lighter ask, a different offer) and never say "just checking in" or "following up". Step 3 may use one real proof line from the brief if it genuinely fits. Step 5 is a warm, clean close that leaves the door open.',
   'Every email under 100 words, plain text, no links, no signature (added by the system), each ends with a light way out in Ridwan\'s voice (vary the wording). Steps 2 to 5 read as replies in the same thread: no subject.',
   'Greeting: use the contact name if given ("Hi Amina,"). If no name, start with "Hi," and the observation. For a Nigerian or African lead, email 1 must begin with exactly {{greeting}} followed by the name, e.g. "{{greeting}} Amina." and steps 2 to 5 begin "Hi Amina,". For everyone else, no greeting phrase.',
+  'If Track is Build (the business has no website): the observation comes from the notes (what they sell and how, for example orders by DM or on a marketplace); pitch a simple online store; email 1 offers a free ad creative made from their own product photos, nothing owed. Do not offer a free website in the sequence: that comes only if they reply.',
   'Subject for step 1: short, lower case, specific, no clickbait, no brand-name-only.',
   'Output JSON only: {"basis":"one line: which profile facts the email-1 observation rests on","emails":[{"step":1,"subject":"...","body":"..."},{"step":2,"body":"..."},{"step":3,"body":"..."},{"step":4,"body":"..."},{"step":5,"body":"..."}]}',
 ].join('\n');

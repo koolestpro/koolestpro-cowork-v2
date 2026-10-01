@@ -132,3 +132,79 @@ function scoreStore_(domain, row) {
   const brand = title.replace(/\s+/g, ' ').split(/[|–\-:]/)[0].trim().slice(0, 40);
   return { score: Math.max(0, Math.min(100, score)), reasons: reasons, country: country, brand: brand, skip: false };
 }
+
+
+// ---------- Importing store lists from any public page ----------
+// The Sources tab holds list pages (a directory, a "new Shopify stores" page, a CSV link). Each active source is
+// read at most once every 20 hours; every store domain found that is not already known goes into Discovery.
+// Works on public pages only. A page behind a login, or one that builds its list with JavaScript, finds 0
+// domains: the result column says so. Some sites forbid scraping in their terms: where a site offers an
+// export or API, prefer that and paste the domains into Discovery yourself.
+
+const SKIP_LABELS_ = ['facebook', 'fb', 'instagram', 'twitter', 'x', 'linkedin', 'youtube', 'youtu', 'tiktok', 'pinterest', 'google', 'googleapis',
+  'gstatic', 'googletagmanager', 'google-analytics', 'cloudflare', 'cloudfront', 'amazonaws', 'shopify', 'shopifycdn', 'wikipedia', 'apple', 'amazon',
+  'github', 'w3', 'schema', 'jsdelivr', 'unpkg', 'cdnjs', 'bootstrapcdn', 'jquery', 'wordpress', 'gravatar', 'mailchimp', 'hubspot', 'stripe',
+  'paypal', 'klaviyo', 'trustpilot', 'reddit', 'medium', 'bit', 'goo', 'whatsapp', 'wa', 'snapchat', 'tumblr', 'vimeo', 'calendly', 'zoom',
+  'notion', 'canva', 'typeform', 'fontawesome', 'fonts', 'ajax', 'sentry', 'wixpress', 'gmpg', 'creativecommons', 'mozilla', 'microsoft', 'bing',
+  'yahoo', 'outlook', 'live', 'adobe', 'cloudinary', 'imgur', 'giphy', 'discord', 'telegram', 'producthunt', 'crunchbase', 'builtwith'];
+
+function extractDomains_(html, ownHost) {
+  const found = {};
+  const own = String(ownHost || '').split('.').filter(l => l.length > 3);
+  const add = raw => {
+    let d = cleanDomain_(raw);
+    if (!/^[a-z0-9][a-z0-9.-]*\.[a-z]{2,10}$/.test(d)) return;
+    if (/\.(png|jpe?g|gif|svg|webp|json|xml|pdf|woff2?|css|js|ico|mp4)$/.test(d)) return;
+    const labels = d.split('.');
+    if (labels.some(l => SKIP_LABELS_.indexOf(l) !== -1)) return;
+    if (own.some(o => labels.indexOf(o) !== -1)) return;
+    found[d] = true;
+  };
+  (html.match(/href=["']https?:\/\/[^"'\/?#]+/gi) || []).forEach(m => add(m.replace(/^href=["']https?:\/\//i, '')));
+  (html.match(/\b[a-z0-9][a-z0-9-]{1,61}\.(?:com|co\.uk|co|net|org|shop|store|io|ng|com\.ng|uk|ca|de|fr|nl|es|it|se|ie|dk|no|fi|be|at|ch|pt|pl|eu|ke|gh|co\.za|us|life|online|site|studio|co\.ke|app|xyz)\b/gi) || []).forEach(add);
+  return Object.keys(found);
+}
+
+function importSources_(S, stats, timeLeft, force) {
+  const src = read_('Sources');
+  if (!src.rows.length) return;
+  const disc = read_('Discovery'), leads = read_('Leads');
+  const known = {};
+  disc.rows.forEach(r => { known[cleanDomain_(r.domain)] = true; });
+  leads.rows.forEach(l => { if (l.website) known[cleanDomain_(l.website)] = true; });
+  let budget = 60;   // new domains per run
+
+  src.rows.filter(r => String(r.url).trim() && lc_(r.status) !== 'paused').forEach(r => {
+    if (!timeLeft() || budget <= 0) return;
+    if (!force && r.last_run && Date.now() - new Date(r.last_run).getTime() < 20 * 3600 * 1000) return;
+    let total = 0, added = 0, problem = '';
+    const pages = Math.max(1, Math.min(10, Number(r.max_pages) || 1));
+    const ownHost = cleanDomain_(r.url);
+    for (let p = 1; p <= pages && budget > 0; p++) {
+      const url = String(r.url).trim().replace('{page}', p);
+      try {
+        const page = fetchPage_(url);
+        if (!page.ok) { problem = 'HTTP ' + page.code + (page.code === 403 ? ' (site blocks automated readers)' : ''); break; }
+        const doms = extractDomains_(page.html, ownHost);
+        total += doms.length;
+        doms.forEach(d => {
+          if (known[d] || budget <= 0) return;
+          known[d] = true; budget--; added++;
+          appendObj_('Discovery', { domain: d, source: r.source || ownHost, niche: r.niche || '', country: r.country || '', status: 'New' });
+        });
+        if (!doms.length) break;
+      } catch (e) { problem = String(e.message || e).slice(0, 100); break; }
+    }
+    set_(src, r, 'last_run', new Date());
+    set_(src, r, 'found', total);
+    set_(src, r, 'new', added);
+    set_(src, r, 'result', problem || (total === 0 ? '0 domains found: the list may need a login or be built with JavaScript. Use its export instead.' : added + ' new of ' + total));
+    stats.imported = (stats.imported || 0) + added;
+  });
+}
+
+function importSourcesNow() {
+  const stats = { problems: [] };
+  importSources_(settings_(), stats, () => true, true);
+  toast_('Imported ' + (stats.imported || 0) + ' new store domains into Discovery. See the result column in Sources.');
+}

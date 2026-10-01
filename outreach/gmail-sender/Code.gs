@@ -27,6 +27,7 @@ const TABS = {
     'message_id', 'sender_account'],
   Memory: ['lead_id', 'summary', 'updated_at'],
   Drafts: ['lead_id', 'created_at', 'reply_to_message_id', 'draft_body', 'status', 'sent_at', 'model'],
+  Sources: ['url', 'source', 'niche', 'country', 'max_pages', 'status', 'last_run', 'found', 'new', 'result'],
   Discovery: ['domain', 'source', 'niche', 'country', 'status', 'score', 'reasons', 'checked_at', 'lead_id'],
 };
 
@@ -71,6 +72,7 @@ function onOpen() {
     .addItem('Why isn\'t it sending?', 'whyNotSending')
     .addItem('Check replies now', 'tick')
     .addItem('Test AI', 'testAi')
+    .addItem('Import store lists now', 'importSourcesNow')
     .addItem('Prepare new leads now', 'prepareLeadsNow')
     .addItem('Test email verifier key', 'testVerifier')
     .addItem('Draft replies now', 'draftRepliesNow')
@@ -130,6 +132,14 @@ function setup() {
   // (Checked on column A: the checkbox column pre-fills FALSE down 2000 rows, so getLastRow() is useless here.)
   if (!leads.getRange(2, 1, Math.max(1, leads.getMaxRows() - 1), 1).getValues().some(r => String(r[0]) !== '')) {
     seedTestLead_();
+  }
+  const sources = ss.getSheetByName('Sources');
+  if (sources.getLastRow() < 2) {
+    [['https://www.merchantgenius.io/', 'merchantgenius'], ['https://www.zikanalytics.com/store-list/list-of-new-shopify-stores', 'zik new stores'],
+     ['https://cro.media/all-shopify-stores/', 'cro.media'], ['https://www.techpeeker.com/shopify-stores', 'techpeeker'],
+     ['https://www.eachspy.com/shopify/stores/', 'eachspy'], ['https://trends.builtwith.com/websitelist/Shopify', 'builtwith free list'],
+     ['https://sellerdirectories.com/pages/amazon-shopify-brands-database', 'sellerdirectories']].forEach(x =>
+      appendObj_('Sources', { url: x[0], source: x[1], max_pages: 1, status: 'Active' }));
   }
   const sheet1 = ss.getSheetByName('Sheet1');
   if (sheet1 && sheet1.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(sheet1);

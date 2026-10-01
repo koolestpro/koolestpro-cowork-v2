@@ -192,6 +192,6 @@ Per lead the system holds: brand, website, contact name, country, niche, track a
 7. **Nigerian register.** Confirm how much Nigerian English you want ("Kindly", "revert", "no wahala" only after rapport?). The default here is light and warm, never pidgin first.
 8. **Time zones.** Send in the lead's working hours (needs `time_zone` on every lead), or keep Lagos hours?
 9. **WhatsApp and Instagram.** Emails to Nigerian leads are new (the playbook says DM is primary). Should the reply also offer WhatsApp?
-11. **Free AI-built sites.** The growth plan (D8) limits free sample sites to 3 a week and only for people who replied. You want to offer them to no-website businesses up front. Which rule wins, and who builds them?
-12. **"GT Metrics".** Which site is this exactly (name and URL)? Search found nothing with that name.
+11. ~~Free AI-built sites.~~ **Settled 2026-10-01:** stick to the old plan (growth plan D8: free sample sites only after a reply, max 3 a week). Businesses that have an email but no website (for example found on Google Maps) go into the email system as track Build: email 1 offers a free ad creative, and the free AI-built site comes only after a reply.
+12. ~~"GT Metrics".~~ **Settled:** it is Merchant Genius (merchantgenius.io). Other directories Ridwan named: eachspy, builtwith free list, techpeeker, sellerdirectories, zikanalytics new-stores list, cro.media. They are seeded in the Sources tab.
 10. **Auto-approval.** Once the first batch is trusted, should leads that pass automatic checks (valid email, real observation present, no blocklist hits) send without a per-lead tick, with a daily digest for you to skim?
