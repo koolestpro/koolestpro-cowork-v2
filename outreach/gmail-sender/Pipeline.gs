@@ -225,6 +225,7 @@ const SEQ_TASK_ = [
   'Every email under 100 words, plain text, no links, no signature (added by the system), each ends with a light way out in Ridwan\'s voice (vary the wording). Steps 2 to 5 read as replies in the same thread: no subject.',
   'Greeting: use the contact name if given ("Hi Amina,"). If no name, start with "Hi," and the observation. For a Nigerian or African lead, email 1 must begin with exactly {{greeting}} followed by the name, e.g. "{{greeting}} Amina." and steps 2 to 5 begin "Hi Amina,". For everyone else, no greeting phrase.',
   'If Track is Build (the business has no website): the observation comes from the notes (what they sell and how, for example orders by DM or on a marketplace); pitch a simple online store; email 1 offers a free ad creative made from their own product photos, nothing owed. Do not offer a free website in the sequence: that comes only if they reply.',
+  'PLATFORM and BUSINESS MODEL change the pitch. Own-brand: pitch conversion, trust and the brand story. Dropship-likely: pitch only product-page conversion and trust (their money comes from ads sending traffic to a page); do not assume they make the product, do not pitch a brand-building retainer. Print-on-demand: pitch product pages and brand polish. Reseller (many brands): pitch catalogue navigation, collection filters and search. Unknown: keep it generic. If the platform is not Shopify, Ridwan works mainly in Shopify: offer a CRO review of the current site, or a move to Shopify, and never claim skills on that platform. Never say you detected their business model; just fit the pitch to it.',
   'Subject for step 1: short, lower case, specific, no clickbait, no brand-name-only.',
   'Output JSON only: {"basis":"one line: which profile facts the email-1 observation rests on","emails":[{"step":1,"subject":"...","body":"..."},{"step":2,"body":"..."},{"step":3,"body":"..."},{"step":4,"body":"..."},{"step":5,"body":"..."}]}',
 ].join('\n');
@@ -244,7 +245,7 @@ function writeSequences_(S, stats, timeLeft) {
       const sys = BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[regionKey_(lead.country)] + '\n\n' + SEQ_TASK_ +
         (ex ? '\n\nReal writing by Ridwan. Match its voice, length and rhythm:\n' + ex : '');
       const user = 'LEAD: ' + [lead.brand, lead.contact_name || '(no contact name)', lead.website].filter(String).join(' | ') +
-        '\nCountry: ' + (lead.country || '') + '. Niche: ' + (lead.niche || '') + '. Track: ' + (lead.track || '') + '. Play: ' + (lead.play || '') + '. Source: ' + (lead.source || '') +
+        '\nPlatform: ' + (lead.platform || 'unknown') + '. Business model: ' + (lead.business_model || 'unknown') + '. Country: ' + (lead.country || '') + '. Niche: ' + (lead.niche || '') + '. Track: ' + (lead.track || '') + '. Play: ' + (lead.play || '') + '. Source: ' + (lead.source || '') +
         '\nWhat they sell: ' + p.what_they_sell + '\nAudience: ' + p.audience + '\nSignal: ' + p.signal + '\nObservations: ' + p.site_notes + '\nNotes: ' + (lead.notes || '');
       const out = callAi_(S, sys, user, 1800);
       const j = parseJson_(out.text);

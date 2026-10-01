@@ -73,6 +73,18 @@ Rule 2 of the project: **never invent a result and never imply a concept brand w
 - **No website:** pitch a free site built with AI and sent to them. See the open question in section 12 about the growth plan's limits on free sites. These leads usually have no email, so they are reached by Instagram DM or WhatsApp (KoolestFlow), not by this email system.
 - **How the system enforces it:** the Discovery tab scores each store (small catalogue, young store, default theme, light app stack, target market) and only promotes upcoming ones. See `outreach/gmail-sender/Discovery.gs`.
 
+## 4c. Reference emails from Ava (Artisan), shown by Ridwan 2026-10-01
+
+Three emails sent by the Ava tool. What works, and what must NOT be copied:
+
+**Worth learning from:** one specific, true fact about the brand opens each email (their certifications, what their customers care about); then one plain line on what Ridwan fixes; then a proof line; then one interest question ("Want me to share what is likely costing you sales?"); then an opt-out line. Short, no links, no attachments.
+
+**Do not copy:**
+- **Invented results.** "Champion Biotics saw a measurable drop in cart abandonment within two weeks" and "Mother of Macros went from a generic template to a store built to sell" are claims Ava wrote, not facts Ridwan recorded. Project rule 2: never invent a result. Our emails only state what was done on a page, and only for projects in BRIEF.md section 3.
+- **The name.** Ava signed "Ridwan Abdulrasheed". about-me.md says Ridwan Adekunle. Which is right for outbound email?
+- Filler openers like "Happy Friday!", and the three-item "reviews, trust signals, and urgency cues" list.
+- Signature divider lines and a LinkedIn link in a first email.
+
 ## 5. The people he writes to
 
 Two markets that never mix (project rule 4).
@@ -193,5 +205,7 @@ Per lead the system holds: brand, website, contact name, country, niche, track a
 8. **Time zones.** Send in the lead's working hours (needs `time_zone` on every lead), or keep Lagos hours?
 9. **WhatsApp and Instagram.** Emails to Nigerian leads are new (the playbook says DM is primary). Should the reply also offer WhatsApp?
 11. ~~Free AI-built sites.~~ **Settled 2026-10-01:** stick to the old plan (growth plan D8: free sample sites only after a reply, max 3 a week). Businesses that have an email but no website (for example found on Google Maps) go into the email system as track Build: email 1 offers a free ad creative, and the free AI-built site comes only after a reply.
+13. **Name on emails.** about-me.md says Ridwan Adekunle; the Ava emails say Ridwan Abdulrasheed. Which name goes in the signature?
+14. **Dropshipping stores.** Same price ladder, or a lower tier? Today: same single-page offer, no retainer pitch (SCORING.md section 3).
 12. ~~"GT Metrics".~~ **Settled:** it is Merchant Genius (merchantgenius.io). Other directories Ridwan named: eachspy, builtwith free list, techpeeker, sellerdirectories, zikanalytics new-stores list, cro.media. They are seeded in the Sources tab.
 10. **Auto-approval.** Once the first batch is trusted, should leads that pass automatic checks (valid email, real observation present, no blocklist hits) send without a per-lead tick, with a daily digest for you to skim?

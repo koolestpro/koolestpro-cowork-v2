@@ -23,6 +23,10 @@ The original research was a Perplexity thread (5 turns). Its useful parts are fo
 
 Ridwan's decision: Gemini free is the main model. Claude (Anthropic) is not funded and will not be. DeepSeek is unfunded for now. Test AI on 2026-09-30: Gemini OK, Claude "credit balance too low", DeepSeek 402 insufficient balance. Set Settings `AI_ORDER` = `gemini` until DeepSeek is funded, then `gemini,deepseek`. Gemini calls already retry on 503 and fall back across Google's model names.
 
+## Lead scoring and data sources (2026-10-01)
+
+`outreach/SCORING.md` is the full rubric (gates, points, business model: own-brand versus dropship, platforms) and the table of data-source options and costs. Scoring lives in `gmail-sender/Discovery.gs`.
+
 ## Voice and messaging (2026-09-30)
 
 `outreach/BRIEF.md` is the master brief (who Ridwan is, real proof, offers, limits, regional voice, email and reply structure, humanizer rules, and section 12 of open decisions). `brief-ai.md` is the compact version the AI reads; `build_brief.js` compiles it to `gmail-sender/Brief.gs`. Regional voice is chosen from the lead's `country`: Nigeria/Africa (time-based greeting, warm), UK, US/Canada, Europe, other. Drafts get a `CHECK:` note in the `model` column if they contain a blocklist phrase, a number or price, or a link. The script emails a daily report at 6pm.

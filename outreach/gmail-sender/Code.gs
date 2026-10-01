@@ -20,7 +20,7 @@ const TABS = {
   Settings: ['key', 'value', 'notes'],
   Leads: ['lead_id', 'brand', 'website', 'contact_name', 'email', 'email_status', 'country', 'time_zone',
     'niche', 'source', 'track', 'play', 'stage', 'approved', 'sender', 'touch_count', 'last_touch_at',
-    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries'],
+    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model'],
   Profiles: ['lead_id', 'what_they_sell', 'audience', 'signal', 'site_notes', 'updated_at'],
   Sequence: ['lead_id', 'step', 'subject', 'body', 'status', 'sent_at'],
   Messages: ['logged_at', 'lead_id', 'direction', 'from', 'to', 'subject', 'body', 'sent_at', 'thread_id',

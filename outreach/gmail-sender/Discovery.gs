@@ -54,7 +54,7 @@ function qualifyDiscovery_(S, stats, timeLeft) {
       let leadId = id, n = 2;
       while (leads.rows.some(l => String(l.lead_id) === leadId)) leadId = id + '-' + n++;
       appendObj_('Leads', { lead_id: leadId, brand: v.brand || id, website: domain, contact_name: '', email: '', email_status: '', country: v.country,
-        time_zone: '', niche: r.niche || '', source: r.source || 'discovery', track: 'Fix', play: '', stage: 'New', approved: false, touch_count: 0,
+        time_zone: '', niche: r.niche || '', source: r.source || 'discovery', platform: v.platform, business_model: v.model, track: 'Fix', play: '', stage: 'New', approved: false, touch_count: 0,
         notes: 'Fit ' + v.score + ': ' + v.reasons.join('; '), created_at: new Date() });
       leads.rows.push({ lead_id: leadId, website: domain });
       have[domain] = true;
@@ -69,70 +69,123 @@ function qualifyDiscovery_(S, stats, timeLeft) {
   });
 }
 
-/** Reads a store's public pages and returns { score, reasons[], country, brand, skip }. */
+// Platform fingerprints for non-Shopify stores. Ridwan builds in Shopify, so these leads are pitched a CRO review
+// of their current site or a move to Shopify.
+const PLATFORMS_ = [
+  ['WooCommerce', /woocommerce|wc-ajax|wp-content\/plugins\/woocommerce/i],
+  ['BigCommerce', /cdn\d*\.bigcommerce\.com|bigcommerce/i],
+  ['Wix', /wixstatic\.com|wix-ecommerce|wixstores|_wixCIDX/i],
+  ['Squarespace', /squarespace\.com|static1\.squarespace|sqs-add-to-cart/i],
+  ['Magento', /Mage\.Cookies|mage\/cookies|magento/i],
+  ['PrestaShop', /prestashop/i],
+  ['Ecwid', /ecwid/i],
+  ['Webflow', /webflow\.com|data-wf-site/i],
+];
+const DROPSHIP_APPS_ = ['dsers', 'oberlo', 'spocket', 'zendrop', 'cjdropshipping', 'autods', 'dropified', 'modalyst', 'syncee', 'aliexpress', 'alicdn', 'ae01.alicdn'];
+const POD_APPS_ = ['printful', 'printify', 'gelato', 'gooten'];
+
+/**
+ * Reads a store's public pages and returns { score, reasons[], country, brand, platform, model, skip }.
+ * The full rubric, with the reason for every point, is in outreach/SCORING.md. Keep the two in step.
+ */
 function scoreStore_(domain, row) {
   const reasons = [];
   let score = 40;
   const page = fetchPage_(domain);
   if (!page.ok) return { score: 0, reasons: ['site unreachable (HTTP ' + page.code + ')'], skip: true };
-  const html = page.html;
+  const html = page.html, lower = html.toLowerCase();
 
+  // 1. Is it an online store, and on what?
+  let platform = '';
   const isShopify = /cdn\.shopify\.com|Shopify\.theme|myshopify\.com/i.test(html);
-  if (!isShopify) return { score: 0, reasons: ['not a Shopify store'], skip: true };
-  reasons.push('Shopify');
+  if (isShopify) platform = 'Shopify';
+  else {
+    const hit = PLATFORMS_.find(p => p[1].test(html));
+    const looksLikeStore = /add[\s_-]?to[\s_-]?cart|addtocart|"@type"\s*:\s*"Product"|\/cart\b|woocommerce/i.test(html);
+    if (hit && looksLikeStore) platform = hit[0];
+    else if (looksLikeStore) platform = 'Other';
+  }
+  if (!platform) return { score: 0, reasons: ['not an online store'], skip: true };
+  reasons.push(platform);
 
-  // Market
+  // 2. Market
   const code = (html.match(/Shopify\.country\s*=\s*"([A-Z]{2})"/) || [])[1];
-  const cur = (html.match(/Shopify\.currency\s*=\s*\{\s*"active"\s*:\s*"([A-Z]{3})"/) || [])[1];
+  const cur = (html.match(/Shopify\.currency\s*=\s*\{\s*"active"\s*:\s*"([A-Z]{3})"/) || [])[1] || (html.match(/"priceCurrency"\s*:\s*"([A-Z]{3})"/) || [])[1];
   const tld = /\.co\.uk$|\.com\.ng$/.test(domain) ? domain.match(/(co\.uk|com\.ng)$/)[1] : domain.split('.').pop();
   const country = String(row.country || '').trim() || CODE_COUNTRY_[code] || CURRENCY_COUNTRY_[cur] || TLD_COUNTRY_[tld] || '';
   if (!country) return { score: 0, reasons: ['outside the target markets or country unknown (country ' + (code || '?') + ', currency ' + (cur || '?') + ')'], skip: true };
   reasons.push('market ' + country);
 
-  // Catalogue size and store age from the public products feed (many stores leave it on)
+  // 3. Catalogue size, store age and vendors: Shopify products feed, WooCommerce store API
+  let nProducts = -1, vendors = {}, prods = [];
   try {
-    const res = UrlFetchApp.fetch('https://' + domain + '/products.json?limit=250', { muteHttpExceptions: true, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; KoolestproBot/1.0)' } });
-    if (res.getResponseCode() === 200) {
-      const prods = (JSON.parse(res.getContentText()).products || []);
-      const n = prods.length;
-      if (n >= 250) { score -= 30; reasons.push('250+ products (large catalogue: -30)'); }
-      else if (n >= 151) { reasons.push(n + ' products (big)'); }
-      else if (n >= 3) { score += 20; reasons.push(n + ' products (+20)'); }
-      else { score -= 10; reasons.push('only ' + n + ' products (-10)'); }
-      const dates = prods.map(p => Date.parse(p.created_at || p.published_at)).filter(x => x);
-      if (dates.length) {
-        const years = (Date.now() - Math.min.apply(null, dates)) / 31557600000;
-        if (years < 4) { score += 10; reasons.push('newest-era store, oldest product ' + years.toFixed(1) + 'y (+10)'); }
-        else if (years > 8) { score -= 10; reasons.push('old store, oldest product ' + years.toFixed(1) + 'y (-10)'); }
-      }
-    } else { reasons.push('product feed not public'); }
+    if (platform === 'Shopify') {
+      const res = UrlFetchApp.fetch('https://' + domain + '/products.json?limit=250', { muteHttpExceptions: true, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; KoolestproBot/1.0)' } });
+      if (res.getResponseCode() === 200) { prods = JSON.parse(res.getContentText()).products || []; nProducts = prods.length; }
+      else reasons.push('product feed not public');
+    } else if (platform === 'WooCommerce') {
+      const res = UrlFetchApp.fetch('https://' + domain + '/wp-json/wc/store/v1/products?per_page=1', { muteHttpExceptions: true });
+      if (res.getResponseCode() === 200) { const h = res.getAllHeaders(); nProducts = Number(h['x-wp-total'] || h['X-WP-Total'] || -1); }
+    }
   } catch (e) { reasons.push('product feed unreadable'); }
+  if (nProducts >= 0) {
+    if (nProducts >= 250) { score -= 10; reasons.push('250+ products (-10)'); }
+    else if (nProducts >= 61) { score += 15; reasons.push(nProducts + ' products (+15)'); }
+    else if (nProducts >= 4) { score += 20; reasons.push(nProducts + ' products (+20)'); }
+    else if (nProducts >= 1) { score += 10; reasons.push(nProducts + ' product(s): focused single-product brand (+10)'); }
+    else { score -= 15; reasons.push('empty catalogue (-15)'); }
+  }
+  const dates = prods.map(p => Date.parse(p.created_at || p.published_at)).filter(x => x);
+  if (dates.length) {
+    const years = (Date.now() - Math.min.apply(null, dates)) / 31557600000;
+    if (years < 1) { score += 15; reasons.push('very new store, ' + years.toFixed(1) + 'y (+15)'); }
+    else if (years < 3) { score += 10; reasons.push('young store, ' + years.toFixed(1) + 'y (+10)'); }
+    else if (years > 6) { score -= 10; reasons.push('established store, ' + years.toFixed(1) + 'y (-10)'); }
+    else reasons.push('store age ' + years.toFixed(1) + 'y');
+  }
 
-  // Theme: a default or free theme suggests nobody has designed this store yet
+  // 4. Pre-launch: a store behind a password page is being built right now
+  if (platform === 'Shopify' && /Opening soon|<form[^>]+storefront_password|password-page|\/password/i.test(html) && nProducts <= 0) { score += 15; reasons.push('password or opening-soon page: building now (+15)'); }
+
+  // 5. Theme
   const theme = (html.match(/Shopify\.theme\s*=\s*\{[^}]*"name"\s*:\s*"([^"]+)"/) || [])[1] || '';
   if (theme) {
-    if (FREE_THEMES_.indexOf(theme.toLowerCase()) !== -1) { score += 15; reasons.push('theme ' + theme + ' (free/default: +15)'); }
+    if (FREE_THEMES_.indexOf(theme.toLowerCase()) !== -1) { score += 10; reasons.push('theme ' + theme + ' (free/default: +10)'); }
     else reasons.push('theme ' + theme);
   }
 
-  // Big-brand tells: heavy app stack, many language versions
-  const lower = html.toLowerCase();
+  // 6. Size tells: app stack, language versions
   const apps = APP_MARKERS_.filter(a => lower.indexOf(a) !== -1);
-  if (apps.length >= 9) { score -= 30; reasons.push(apps.length + ' marketing/support apps (established: -30)'); }
-  else if (apps.length >= 6) { score -= 15; reasons.push(apps.length + ' apps (-15)'); }
-  else if (apps.length >= 1) { score += 5; reasons.push('some tooling: ' + apps.slice(0, 3).join(', ') + ' (+5)'); }
+  if (apps.length >= 9) { score -= 20; reasons.push(apps.length + ' marketing/support apps (established: -20)'); }
+  else if (apps.length >= 6) { score -= 10; reasons.push(apps.length + ' apps (-10)'); }
+  else if (apps.length <= 2) { score += 5; reasons.push('light app stack (+5)'); }
   const hreflang = (html.match(/hreflang=/g) || []).length;
   if (hreflang > 5) { score -= 15; reasons.push(hreflang + ' language versions (international brand: -15)'); }
 
-  // Weak build signals that a designer could fix
-  if (!/<meta[^>]+name=["']viewport["']/i.test(html)) { score += 5; reasons.push('no mobile viewport tag (+5)'); }
+  // 7. Visible weaknesses a designer can fix
+  if (!/<meta[^>]+name=["']viewport["']/i.test(html)) { score += 10; reasons.push('no mobile viewport tag (+10)'); }
   if (page.seconds > 3) { score += 5; reasons.push('slow first load ' + page.seconds.toFixed(1) + 's (+5)'); }
+  if (!/refund|return(s)?[\s-]?policy|shipping[\s-]?policy/i.test(lower)) { score += 5; reasons.push('no returns or shipping policy link seen (+5)'); }
 
+  // 8. Business model: own brand, dropshipping, print on demand, or reseller. Changes the pitch, not the score.
+  let ds = DROPSHIP_APPS_.filter(a => lower.indexOf(a) !== -1).length;
+  if (/ships?\s+from\s+(china|overseas|abroad)|(7|10|12|14|15|20|21)\s*(-|to)\s*(1[0-9]|2[0-9]|30|45)\s*(business\s*)?days/i.test(lower)) ds++;
+  const pod = POD_APPS_.filter(a => lower.indexOf(a) !== -1).length > 0;
+  prods.forEach(p => { if (p.vendor) vendors[String(p.vendor).toLowerCase()] = (vendors[String(p.vendor).toLowerCase()] || 0) + 1; });
+  const nVendors = Object.keys(vendors).length;
   const title = (html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '';
   const brand = title.replace(/\s+/g, ' ').split(/[|–\-:]/)[0].trim().slice(0, 40);
-  return { score: Math.max(0, Math.min(100, score)), reasons: reasons, country: country, brand: brand, skip: false };
-}
+  const brandKey = (domain.split('.')[0] || '').replace(/[^a-z0-9]/g, '');
+  let model = 'unknown';
+  if (ds >= 2) model = 'dropship-likely';
+  else if (pod) model = 'print-on-demand';
+  else if (nVendors >= 8) model = 'reseller';
+  else if (nVendors >= 1 && Object.keys(vendors).some(v => v.replace(/[^a-z0-9]/g, '').indexOf(brandKey) !== -1 || brandKey.indexOf(v.replace(/[^a-z0-9]/g, '')) !== -1)) model = 'own-brand';
+  else if (ds === 0 && nVendors === 1) model = 'own-brand';
+  reasons.push('model: ' + model + (ds ? ' (' + ds + ' dropship signal' + (ds > 1 ? 's' : '') + ')' : ''));
 
+  return { score: Math.max(0, Math.min(100, score)), reasons: reasons, country: country, brand: brand, platform: platform, model: model, skip: false };
+}
 
 // ---------- Importing store lists from any public page ----------
 // The Sources tab holds list pages (a directory, a "new Shopify stores" page, a CSV link). Each active source is
@@ -146,7 +199,9 @@ const SKIP_LABELS_ = ['facebook', 'fb', 'instagram', 'twitter', 'x', 'linkedin',
   'github', 'w3', 'schema', 'jsdelivr', 'unpkg', 'cdnjs', 'bootstrapcdn', 'jquery', 'wordpress', 'gravatar', 'mailchimp', 'hubspot', 'stripe',
   'paypal', 'klaviyo', 'trustpilot', 'reddit', 'medium', 'bit', 'goo', 'whatsapp', 'wa', 'snapchat', 'tumblr', 'vimeo', 'calendly', 'zoom',
   'notion', 'canva', 'typeform', 'fontawesome', 'fonts', 'ajax', 'sentry', 'wixpress', 'gmpg', 'creativecommons', 'mozilla', 'microsoft', 'bing',
-  'yahoo', 'outlook', 'live', 'adobe', 'cloudinary', 'imgur', 'giphy', 'discord', 'telegram', 'producthunt', 'crunchbase', 'builtwith'];
+  'yahoo', 'outlook', 'live', 'adobe', 'cloudinary', 'imgur', 'giphy', 'discord', 'telegram', 'producthunt', 'crunchbase', 'builtwith',
+  'ampproject', 'googlesyndication', 'googleusercontent', 'cloudflareinsights', 'json-schema', 'shopifysvc', 'doubleclick', 'gtm', 'jsdelivr',
+  'myshopify', 'wixstatic', 'squarespace', 'bigcommerce', 'wpengine', 'wordpress', 'woocommerce', 'webflow', 'vercel', 'netlify', 'herokuapp', 'bootstrap'];
 
 function extractDomains_(html, ownHost) {
   const found = {};
