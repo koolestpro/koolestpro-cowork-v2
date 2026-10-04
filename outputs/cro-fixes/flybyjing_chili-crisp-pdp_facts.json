@@ -1,0 +1,17 @@
+{
+  "brand": "Fly By Jing",
+  "page": "Original Sichuan Chili Crisp",
+  "pageType": "Product Page (PDP)",
+  "url": "https://flybyjing.com/products/sichuan-chili-crisp",
+  "checked": "2026-10-04",
+  "isClient": false,
+  "measuredMobile390x844": {"h1": 566, "starsCount": 657, "packPicker": 1017, "price": 1146, "membershipPrice": 1206, "addToCart": 1357, "ratingNumber": 5748, "popupOnLoad": "full-screen UNLOCK 20% OFF spice quiz"},
+  "packs": [{"title": "2-Pack", "price": 30.00, "perJar": 15.00}, {"title": "3-Pack", "price": 42.75, "perJar": 14.25}, {"title": "4-Pack", "price": 54.00, "perJar": 13.50}, {"title": "16 oz.", "price": 32.00}],
+  "membership": "Join Membership & Save 20%: $24.00 for the 2-pack; free shipping always for members",
+  "rating": {"value": 4.9, "count": 2459, "wouldRecommend": "97%"},
+  "shipping": "ships within 48 to 72 hours; 3-7 business days transit; free shipping over $75",
+  "copy": ["Hot, spicy, crispy, numbing and deliciously savory", "Intensely flavorful yet not off-the-charts spicy", "Use it on everything. Yes, even that.", "Our #1 best seller!", "6oz. crafted in Chengdu, Sichuan.", "Vegan, sugar free, no artificial flavors, and no preservatives."],
+  "reviewQuotes": [{"who": "Christina R.", "text": "I put it on everything because it enhances everything."}, {"who": "Joyce H.", "text": "Good on all types of food. If you haven't tried it you're missing something!"}],
+  "assets": {"logo": "https://flybyjing.com/cdn/shop/files/FBJ-Web-Logo_2026.svg", "hero": "Core4PDP-Original-Lifestyle-1-1200x1200.png", "fonts": ["JeanLucThin.woff", "PublicoRoman.woff", "PublicoMedium.woff"]},
+  "builder": "Fallback: Claude authored the page from the brief (unattended run, no page builder driven)."
+}

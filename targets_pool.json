@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.0.0",
     "description": "Ranked pool of Shopify/DTC and DTC/B2B ecommerce targets for weekly CRO/static-ad/template content production. See docs/koolestpro-content-operating-plan.md Steps 1-2.",
-    "updatedAt": "2026-09-28T10:01:08+00:00",
+    "updatedAt": "2026-10-04T19:12:47+00:00",
     "recordSchema": {
       "id": "string, unique, e.g. target-<brand-slug>-<timestamp>",
       "brand": "string",
@@ -363,10 +363,17 @@
       "isRealBrand": true,
       "isClient": false,
       "status": "Available",
-      "usedFor": [],
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-10-04",
+          "pipelineItemId": "cro-fix-flybyjing_chili-crisp-pdp-20261004",
+          "note": "Zero prior cro-fix entries. Original Sichuan Chili Crisp PDP. Food/beverage chosen to rotate away from beauty (Minimalist, 09-27), baby (Kyte Baby, 09-20) and home-kitchen (Caraway). #1 finding: screen one has no price; pack picker 1,017px, price ($30 for a 2-pack, never per jar) 1,146px, Add to Cart 1,357px, 4.9 rating ~5,750px down. Concept work only, Fly By Jing is not a client."
+        }
+      ],
       "notes": "Founder-led Sichuan chili crisp brand, small team, strong visual identity. Reviewed 2026-09-28: /collections/all. Fills the thin food-beverage category.",
       "addedAt": "2026-09-28T10:01:08+00:00",
-      "lastUsedAt": null
+      "lastUsedAt": "2026-10-04T19:12:47+00:00"
     },
     {
       "id": "target-fishwife-1790589668640",

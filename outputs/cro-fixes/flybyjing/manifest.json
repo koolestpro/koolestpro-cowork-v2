@@ -1,0 +1,28 @@
+{
+  "brand": "Fly By Jing",
+  "slug": "flybyjing_chili-crisp-pdp",
+  "date": "2026-10-04",
+  "pipelineItemId": "cro-fix-flybyjing_chili-crisp-pdp-20261004",
+  "pageType": "Product Page (PDP)",
+  "url": "https://flybyjing.com/products/sichuan-chili-crisp",
+  "images": {
+    "COVER": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png",
+    "BA": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png",
+    "ANNO": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png",
+    "ANNO-GRAPHIC": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_annotated.png"
+  },
+  "carouselHtml": "outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html",
+  "annotationHtml": "outputs/cro-fixes/flybyjing_chili-crisp-pdp_annotation.html",
+  "rebuildHtml": "outputs/cro-fixes/flybyjing_chili-crisp-pdp_rebuild.html",
+  "reviewPack": "outputs/cro-fixes/flybyjing_chili-crisp-pdp_content.html",
+  "audit": "outputs/audits/flybyjing_chili-crisp-pdp_audit.md",
+  "facts": "outputs/cro-fixes/flybyjing_chili-crisp-pdp_facts.json",
+  "brief": "outputs/cro-fixes/flybyjing_chili-crisp-pdp_build-brief.md",
+  "captions": "outputs/cro-fixes/flybyjing/captions.txt",
+  "builders": [
+    ".ai-workflow/build_flybyjing_rebuild.py",
+    ".ai-workflow/build_flybyjing_carousel.py",
+    ".ai-workflow/build_flybyjing_annotation.py"
+  ],
+  "exportedVia": "each page's own captureSlide()/captureSheet() (html2canvas, scale 2) driven by headless Playwright"
+}

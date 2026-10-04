@@ -6,7 +6,7 @@ set -e
 ROOT="$HOME/koolestpro-cowork-v2"
 cd "$ROOT/outreach/scrapers"
 python3 -m venv .venv
-./.venv/bin/pip install --quiet playwright
+./.venv/bin/pip install --quiet playwright certifi
 ./.venv/bin/playwright install chromium
 echo "Installed. Test it without pushing anything:"
 echo "  $ROOT/outreach/scrapers/.venv/bin/python $ROOT/outreach/scrapers/directory_scrape.py --dry-run --headed"

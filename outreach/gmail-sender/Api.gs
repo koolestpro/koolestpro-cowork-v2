@@ -56,6 +56,7 @@ function apiRoute_(action, a) {
       case 'update_draft': return apiUpdateDraft_(a);
       case 'add_lead': return apiAddLead_(a);
       case 'add_domains': return apiAddDomains_(a);
+      case 'add_discovery_rows': return apiAddDiscoveryRows_(a);
       case 'set_settings': return apiSetSettings_(a);
       default: throw new Error('unknown action: ' + action);
     }
@@ -239,3 +240,40 @@ function apiAddDomains_(a) {
   });
   return { received: list.length, added: added };
 }
+
+/**
+ * Rich directory rows from the Mac scraper: { domain, source, country, niche, brand, contact_name, emails[], phone, signals, data }.
+ * New domains are added to Discovery. A domain already in Discovery gets only its EMPTY fields filled and new emails merged in,
+ * so nothing a person typed is overwritten. Domains already in Leads are ignored.
+ */
+function apiAddDiscoveryRows_(a) {
+  const rows = (a.rows || []).slice(0, 300);
+  const disc = read_('Discovery');
+  const byDomain = {};
+  disc.rows.forEach(r => { byDomain[cleanDomain_(r.domain)] = r; });
+  const inLeads = {};
+  read_('Leads').rows.forEach(l => { if (l.website) inLeads[cleanDomain_(l.website)] = true; });
+  let added = 0, merged = 0, skipped = 0;
+  rows.forEach(x => {
+    const d = cleanDomain_(x.domain);
+    if (!/^[a-z0-9][a-z0-9.-]*\.[a-z]{2,10}$/.test(d) || INFRA_DOMAINS_.test(d + '.') || inLeads[d]) { skipped++; return; }
+    const emails = (x.emails || []).map(e => String(e).toLowerCase().trim()).filter(e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e));
+    const have = byDomain[d];
+    if (have) {
+      let changed = false;
+      const mergedEmails = String(have.emails || '').split(/[|,;\s]+/).filter(Boolean);
+      emails.forEach(e => { if (mergedEmails.indexOf(e) === -1) { mergedEmails.push(e); changed = true; } });
+      if (changed) set_(disc, have, 'emails', mergedEmails.join(' | '));
+      ['brand', 'contact_name', 'phone', 'signals', 'data', 'niche', 'country'].forEach(f => { if (x[f] && !String(have[f] || '').trim()) { set_(disc, have, f, String(x[f]).slice(0, 2000)); changed = true; } });
+      if (changed) merged++; else skipped++;
+      return;
+    }
+    appendObj_('Discovery', { domain: d, source: x.source || 'directory', niche: x.niche || '', country: x.country || '', track: x.track || '', status: 'New',
+      brand: x.brand || '', contact_name: x.contact_name || '', emails: emails.join(' | '), phone: x.phone || '',
+      signals: String(x.signals || '').slice(0, 2000), data: String(x.data || '').slice(0, 2000) });
+    byDomain[d] = { domain: d };
+    added++;
+  });
+  return { received: rows.length, added: added, merged: merged, skipped: skipped };
+}
+

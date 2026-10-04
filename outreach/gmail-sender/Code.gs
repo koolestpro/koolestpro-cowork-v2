@@ -29,7 +29,7 @@ const TABS = {
   Drafts: ['lead_id', 'created_at', 'reply_to_message_id', 'draft_body', 'status', 'sent_at', 'model'],
   Sources: ['url', 'source', 'niche', 'country', 'track', 'max_pages', 'status', 'last_run', 'found', 'new', 'result'],
   Apify: ['actor', 'input_json', 'max_items', 'status', 'run_id', 'started_at', 'items', 'new', 'result'],
-  Discovery: ['domain', 'source', 'niche', 'country', 'track', 'status', 'score', 'reasons', 'checked_at', 'lead_id', 'signals', 'data'],
+  Discovery: ['domain', 'source', 'niche', 'country', 'track', 'status', 'score', 'reasons', 'checked_at', 'lead_id', 'signals', 'data', 'brand', 'contact_name', 'emails', 'phone'],
 };
 
 const STAGES = ['New', 'Contacted', 'Finished', 'Replied', 'Talking', 'Call booked', 'Won', 'Lost', 'Bounced'];

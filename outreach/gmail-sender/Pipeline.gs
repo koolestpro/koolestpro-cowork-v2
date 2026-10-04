@@ -106,19 +106,10 @@ function findEmailOnSite_(website) {
   const bad = /\.(png|jpe?g|gif|svg|webp|css|js)$|sentry|wixpress|example\.|domain\.com|shopify\.com|cloudflare|noreply|no-reply|donotreply|@2x|schema\.org|yourdomain|email\.com$/i;
   const list = Object.keys(found).filter(e => !bad.test(e));
   if (!list.length) return '';
-  const score = e => {
-    const local = e.split('@')[0], dom = e.split('@')[1];
-    let s = 0;
-    if (dom === host || dom.endsWith('.' + host) || host.endsWith(dom)) s += 10;      // their own domain
-    if (/^(hello|hi|hey|owner|founder|sales|info|contact|team|shop|store)$/.test(local)) s += 4;
-    else if (/^(support|help|care|service|orders?|customer)/.test(local)) s += 1;
-    else s += 3;                                                                         // looks like a person
-    return s;
-  };
-  list.sort((a, b) => score(b) - score(a));
+  list.sort((a, b) => rankEmail_(b, host, '') - rankEmail_(a, host, ''));
   const free = /@(gmail|yahoo|outlook|hotmail|icloud|proton|protonmail|live)\./i;
   const top = list[0];
-  return (score(top) >= 10 || free.test(top)) ? top : '';   // their own domain, or a free-mail address they published themselves
+  return (rankEmail_(top, host, '') >= 10 || free.test(top)) ? top : '';   // their own domain, or a free-mail address they published themselves
 }
 
 // ---------- 2. Verify ----------
@@ -287,4 +278,35 @@ function parseJson_(text) {
   const a = t.indexOf('{'), b = t.lastIndexOf('}');
   if (a === -1 || b === -1) return null;
   try { return JSON.parse(t.slice(a, b + 1)); } catch (e) { return null; }
+}
+
+
+// ---------- Email ranking: aim for the decision maker ----------
+// Higher is better. Their own domain counts most; then a person (founder, owner, a name that matches the contact)
+// beats a shared inbox (hello, contact, info), which beats a ticket desk (support, orders). Bounce traps score -100.
+function rankEmail_(email, host, contactName) {
+  const e = String(email || '').toLowerCase().trim();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return -100;
+  const local = e.split('@')[0], dom = e.split('@')[1];
+  const h = String(host || '').toLowerCase().replace(/^www\./, '');
+  if (/^(no-?reply|do-?not-?reply|mailer-daemon|postmaster|abuse|webmaster|privacy|legal|unsubscribe|returns?|billing|accounts?|jobs?|careers?|press|media|pr)$/.test(local)) return -100;
+  let s = 0;
+  if (h && (dom === h || dom.endsWith('.' + h) || h.endsWith('.' + dom) || h === dom)) s += 10;       // their own domain
+  const parts = String(contactName || '').toLowerCase().split(/[^a-z]+/).filter(p => p.length > 2);
+  if (/^(founder|owner|ceo|director|md|principal|president|cofounder|co-founder)$/.test(local)) s += 8;   // the decision maker's role mailbox
+  else if (parts.some(p => local.indexOf(p) !== -1)) s += 8;                                          // matches the named contact
+  else if (/^[a-z]{2,}([._-][a-z]{2,})?$/.test(local) && !/^(hello|hi|hey|info|contact|team|shop|store|sales|support|help|care|service|orders?|customer|admin|enquiries|enquiry|general|mail|office|hola)$/.test(local)) s += 6;   // looks like a person's name
+  else if (/^(hello|hi|hey|contact|team|info|enquiries|enquiry|hola|office)$/.test(local)) s += 3;    // shared inbox
+  else if (/^(sales|shop|store|admin|general|mail)$/.test(local)) s += 2;
+  else if (/^(support|help|care|service|orders?|customer)/.test(local)) s += 1;                       // ticket desk
+  if (/@(gmail|yahoo|outlook|hotmail|icloud|proton|protonmail|live)\./i.test(e)) s += 2;            // a free-mail address a small owner published is usually the owner
+  return s;
+}
+
+/** Best address from a list (array or " | " separated text). Returns { best, others[] }. */
+function pickBestEmail_(list, host, contactName) {
+  const arr = (Array.isArray(list) ? list : String(list || '').split(/[|,;\s]+/)).map(x => String(x).trim().toLowerCase()).filter(Boolean);
+  const uniq = arr.filter((x, i) => arr.indexOf(x) === i && rankEmail_(x, host, contactName) > -100);
+  uniq.sort((a, b) => rankEmail_(b, host, contactName) - rankEmail_(a, host, contactName));
+  return { best: uniq[0] || '', others: uniq.slice(1) };
 }

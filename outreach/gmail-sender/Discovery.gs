@@ -28,6 +28,9 @@ const CURRENCY_COUNTRY_ = { NGN: 'Nigeria', GHS: 'Ghana', KES: 'Kenya', GBP: 'Un
 const TLD_COUNTRY_ = { 'co.uk': 'United Kingdom', uk: 'United Kingdom', ng: 'Nigeria', 'com.ng': 'Nigeria', gh: 'Ghana', ke: 'Kenya', ca: 'Canada',
   de: 'Germany', fr: 'France', nl: 'Netherlands', es: 'Spain', it: 'Italy', se: 'Sweden', ie: 'Ireland', dk: 'Denmark', no: 'Norway' };
 
+// Hosts that are infrastructure, not stores. Never worth a check.
+const INFRA_DOMAINS_ = /(^|\.)(googlesyndication|googleusercontent|googletagmanager|google-analytics|cloudflareinsights|cloudflare|json-schema|schema|shopifysvc|shopifycdn|shopify|myshopify|bootleads|wixpress|sentry|gstatic|googleapis|facebook|instagram|twitter|linkedin|youtube|tiktok|w3|jsdelivr|unpkg|cdnjs|gravatar|doubleclick)\./i;
+
 function cleanDomain_(d) {
   return String(d || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/[\/?#].*$/, '');
 }
@@ -43,6 +46,7 @@ function qualifyDiscovery_(S, stats, timeLeft) {
     if (!timeLeft()) return;
     const domain = cleanDomain_(r.domain);
     try {
+      if (INFRA_DOMAINS_.test(domain + '.')) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'not a store (infrastructure or platform domain)'); set_(disc, r, 'checked_at', new Date()); return; }
       if (have[domain]) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'already in Leads'); set_(disc, r, 'checked_at', new Date()); return; }
       const emp = Number((String(r.signals).match(/employee[^:]*:\s*(\d+)/i) || [])[1]);
       if (emp > 30) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'team of ' + emp + ' (too large)'); set_(disc, r, 'checked_at', new Date()); return; }
@@ -57,9 +61,14 @@ function qualifyDiscovery_(S, stats, timeLeft) {
       const id = domain.replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30) || domain;
       let leadId = id, n = 2;
       while (leads.rows.some(l => String(l.lead_id) === leadId)) leadId = id + '-' + n++;
-      appendObj_('Leads', { lead_id: leadId, brand: v.brand || id, website: domain, contact_name: '', email: '', email_status: '', country: v.country,
+      // Everything the directory showed us rides along: name, contact, emails, phone. With more than one email, keep the best.
+      const pick = pickBestEmail_(r.emails, domain, r.contact_name);
+      const extra = [];
+      if (pick.others.length) extra.push('other emails: ' + pick.others.join(', '));
+      if (r.phone) extra.push('phone: ' + r.phone);
+      appendObj_('Leads', { lead_id: leadId, brand: v.brand || r.brand || id, website: domain, contact_name: r.contact_name || '', email: pick.best, email_status: pick.best ? 'unverified' : '', country: v.country || r.country,
         time_zone: '', niche: r.niche || '', source: r.source || 'discovery', platform: v.platform, business_model: v.model, track: isPartner ? 'Partner' : 'Fix', play: isPartner ? 'agency_partner' : '', stage: 'New', approved: false, touch_count: 0,
-        notes: 'Fit ' + v.score + ': ' + v.reasons.join('; '), created_at: new Date() });
+        notes: 'Fit ' + v.score + ': ' + v.reasons.join('; ') + (pick.best ? '; email from directory (' + (r.source || '') + ')' : '') + (extra.length ? '; ' + extra.join('; ') : ''), created_at: new Date() });
       leads.rows.push({ lead_id: leadId, website: domain });
       have[domain] = true;
       set_(disc, r, 'status', 'Promoted');
@@ -233,7 +242,10 @@ function importSources_(S, stats, timeLeft, force) {
   leads.rows.forEach(l => { if (l.website) known[cleanDomain_(l.website)] = true; });
   let budget = 60;   // new domains per run
 
+  // Directories that block Google's servers are read by the Mac scraper (outreach/scrapers), not here.
+  const MAC_HOSTS_ = /merchantgenius\.io|zikanalytics\.com|eachspy\.com|techpeeker\.com|cro\.media|builtwith\.com|sellerdirectories\.com|myip\.ms/i;
   src.rows.filter(r => String(r.url).trim() && lc_(r.status) !== 'paused').forEach(r => {
+    if (MAC_HOSTS_.test(String(r.url))) { if (!r.result || String(r.result).indexOf('Mac scraper') === -1) set_(src, r, 'result', 'handled by the Mac scraper (outreach/scrapers), skipped here'); return; }
     if (!timeLeft() || budget <= 0) return;
     if (!force && r.last_run && Date.now() - new Date(r.last_run).getTime() < 20 * 3600 * 1000) return;
     let total = 0, added = 0, problem = '';

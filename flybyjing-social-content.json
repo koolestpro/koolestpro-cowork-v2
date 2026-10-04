@@ -1,0 +1,82 @@
+{
+  "brand": "Fly By Jing",
+  "brandSlug": "flybyjing",
+  "isConceptBrand": false,
+  "note": "Real brand, unofficial portfolio/concept CRO work. Not a Fly By Jing client engagement.",
+  "pipelineItemId": "cro-fix-flybyjing_chili-crisp-pdp-20261004",
+  "items": {
+    "CRO-FLYBYJING-COVER": {
+      "assetPath": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png",
+      "usedIn": "carousel slide 1 (cover: real live buy box crop + AFTER phone, real logo)"
+    },
+    "CRO-FLYBYJING-BA": {
+      "assetPath": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png",
+      "usedIn": "carousel slide 2, standalone before/after post",
+      "caption": "PRODUCT PAGE (PDP): Fly By Jing's chili crisp page, on a phone. Screen one is the jar, the name, five stars and a paragraph. No price.\n\nThe price shows up 1,146px down and Add to Cart at 1,357px. The default is $30 next to a pill that says \"2-PACK\". It never says 2 jars, or $15 a jar.\n\nTheir best proof, 4.9 stars from 2,459 reviews and 97% would recommend, sits about 5,750px down.\n\nI rebuilt the first screen using only what was already on their page:\n\n1. Their own photo, with a headline in their own words: crunchy, numbing, goes on everything.\n2. The heat level up front. They already wrote it: \"intensely flavorful yet not off-the-charts spicy.\"\n3. 4.9 stars and 2,459 reviews right under the photo.\n4. Packs shown as jars, with a per-jar price. 2 jars, $30, $15 a jar.\n5. One button: Add 2 jars to cart, $30. Ships in 48-72 hours, free shipping over $75, right under it.\n\nEvery fact was already on the page. I only changed the order.\n\nThis is unofficial concept work. Fly By Jing isn't a client."
+    },
+    "CRO-FLYBYJING-ANNO": {
+      "assetPath": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png",
+      "usedIn": "carousel slide 3, standalone annotation post"
+    },
+    "CRO-FLYBYJING-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_annotated.png",
+      "usedIn": "standalone clear-background annotation graphic (1080x1080)"
+    },
+    "CRO-FLYBYJING-CAROUSEL": {
+      "assetPath": "outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html",
+      "usedIn": "the review/export HTML (all 3 slides + download panel)",
+      "captionOptions": [
+        {
+          "id": "linkedin",
+          "caption": "PRODUCT PAGE (PDP): Fly By Jing's chili crisp page, on a phone. Screen one is the jar, the name, five stars and a paragraph. No price.\n\nThe price shows up 1,146px down and Add to Cart at 1,357px. The default is $30 next to a pill that says \"2-PACK\". It never says 2 jars, or $15 a jar.\n\nTheir best proof, 4.9 stars from 2,459 reviews and 97% would recommend, sits about 5,750px down.\n\nI rebuilt the first screen using only what was already on their page:\n\n1. Their own photo, with a headline in their own words: crunchy, numbing, goes on everything.\n2. The heat level up front. They already wrote it: \"intensely flavorful yet not off-the-charts spicy.\"\n3. 4.9 stars and 2,459 reviews right under the photo.\n4. Packs shown as jars, with a per-jar price. 2 jars, $30, $15 a jar.\n5. One button: Add 2 jars to cart, $30. Ships in 48-72 hours, free shipping over $75, right under it.\n\nEvery fact was already on the page. I only changed the order.\n\nThis is unofficial concept work. Fly By Jing isn't a client.",
+          "hashtags": [
+            "#CRO",
+            "#Shopify",
+            "#EcommerceUX",
+            "#ProductPage"
+          ]
+        }
+      ]
+    },
+    "CRO-FLYBYJING-X-CAROUSEL": {
+      "assetPath": [
+        "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png",
+        "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png",
+        "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png"
+      ],
+      "caption": "PDP teardown: Fly By Jing's chili crisp.\n\n1 $30 for 2 jars, not on screen one\n2 Same jar, the price moved up\n3 The questions it now answers first\n\nEvery number came from their own page.",
+      "platform": "X",
+      "captionKey": "x_carousel",
+      "chars": 185
+    },
+    "CRO-FLYBYJING-X-COVER": {
+      "assetPath": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png",
+      "caption": "Fly By Jing's chili crisp PDP, on a phone:\n\nScreen one: the jar and a paragraph.\nPack picker: 1,017px down.\nPrice: 1,146px down.\n\nAnd the $30 sits next to \"2-PACK\". It never says 2 jars, or $15 a jar.\n\nThe price is part of the pitch.",
+      "platform": "X",
+      "captionKey": "x_cover",
+      "chars": 233
+    },
+    "CRO-FLYBYJING-X-BA": {
+      "assetPath": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png",
+      "caption": "Fly By Jing PDP. Same chili crisp, different first screen.\n\nBefore:\nX Jar, name, a paragraph\nX Price 1,146px down\nX 4.9 rating about 5,750px down\n\nAfter:\nOK 4.9 stars under the photo\nOK 2 jars, $15 a jar\nOK Add to Cart on screen one\n\nNothing invented. Just moved up.",
+      "platform": "X",
+      "captionKey": "x_ba",
+      "chars": 266
+    },
+    "CRO-FLYBYJING-X-ANNO": {
+      "assetPath": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png",
+      "caption": "PDP fix: Fly By Jing's chili crisp.\n\nA first-time buyer asks:\n1 Is this too hot for me?\n2 What does $30 get me?\n3 Where do I buy?\n\nAll 3 answers were on the page. None were on screen one.\n\nNow they are.",
+      "platform": "X",
+      "captionKey": "x_anno",
+      "chars": 202
+    },
+    "CRO-FLYBYJING-X-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_annotated.png",
+      "caption": "Redesigned this chili crisp PDP around 3 questions:\n\n1 How hot is it?\n2 Is it any good?\n3 What does $30 get me?\n\nTheir page already had the answers: not off-the-charts spicy, 4.9 from 2,459 reviews, $15 a jar.\n\nThey just sat too far down.",
+      "platform": "X",
+      "captionKey": "x_anno_graphic",
+      "chars": 238
+    }
+  },
+  "knownGaps": []
+}
