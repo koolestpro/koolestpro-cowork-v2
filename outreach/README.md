@@ -44,7 +44,7 @@ Agency partner track built: `PARTNER-OFFER.md` (offer, proposed rate card), `sco
 | Profile + write 5 emails | `Pipeline.gs`: fetches the site, AI builds a Profile from real page facts, then writes the 5-email sequence from `BRIEF_` (real proof only, region voice, no em dashes, under ~100 words, no links in email 1). `{{greeting}}` is filled at send time from the lead's clock. `notes` records the observation basis and any `CHECK:` flags. `AUTO_APPROVE` setting optional. | built, mock-tested, needs a real run |
 | Approve | `approved` checkbox in Leads tab | built |
 | Send, follow up, log, stop on reply, alert, bounces | `outreach/gmail-sender/Code.gs` (Apps Script, one copy per Gmail, shared Sheet) | built, simulated only |
-| Reply drafts + relationship memory | Decided 2026-09-30: Apps Script calls AI in order Gemini free, Claude Haiku, DeepSeek fallback (keys in Script Properties, order in Settings `AI_ORDER`). Reads Profile + Messages thread + Memory, writes the draft (Ready for review) and updates Memory. Never sends; Ridwan approves. | built, mocked-tested; needs keys + real test (SETUP.md 3b) |
+| Reply drafts + relationship memory | Decided 2026-09-30: Apps Script calls AI in order Gemini free, Claude Haiku, DeepSeek fallback (keys in Script Properties, order in Settings `AI_ORDER`). Reads Profile + Messages thread + Memory, writes the draft (Ready for review) and updates Memory. Never sends; Ridwan approves. | built; real-account test (SETUP.md 3b) done and passed per Ridwan 2026-10-04. `VOICE_EXAMPLES` cell in Settings was still EMPTY when checked 2026-10-04 |
 | Daily report | `dailyReport` at 6pm emails ALERT_EMAIL: sent, replies, drafts to review, queue, pipeline | built |
 | Dashboard | KoolestFlow (`koolestpro/cold-dm-app`, the `cold-email-app` submodule) has a **Cold email** screen over the Sheet through `Api.gs` (Apps Script web app, secret token) and `backend/outreach_bridge.py`. Sheet stays the source of truth. See SETUP.md 3c. | built 2026-10-01 on branch `claude/outreach-alert-email-debug-b2d85x` of cold-dm-app; mock and browser tested, not yet against the real Sheet |
 
@@ -60,11 +60,11 @@ Agency partner track built: `PARTNER-OFFER.md` (offer, proposed rate card), `sco
 ## Next, in order
 
 1. ~~Confirm the real-account test worked~~ done. Remaining: test sending an approved draft, then go live (SETUP.md section 4).
-2. Reply drafts + Memory summaries: built, needs API keys and a real-account test (SETUP.md 3b).
+2. ~~Reply drafts + Memory summaries~~ built and tested 2026-10-04 (3b). Open: paste 3 to 5 real replies into Settings `VOICE_EXAMPLES` (empty on 2026-10-04).
 3. ~~Email finding + MyEmailVerifier~~ built (needs real run + key).
 4. ~~Sequence writer~~ built (needs real run). First batch goes to Ridwan for approval.
-5. Lead finders write to the Sheet. **Started 2026-09-30:** `Discovery.gs` qualifies any list of store domains (upcoming-brand score, see BRIEF.md 4b) into Leads. `Sources` tab imports domains from public list pages (Merchant Genius, ZIK new stores, cro.media, techpeeker, eachspy, BuiltWith free list, sellerdirectories; none could be inspected from the Claude sandbox, so each needs a real run to confirm it yields domains). No-website businesses with an email (Maps) go straight into Leads as track Build. Still to build: Reddit and ad-library scans, the Maps bridge into the Sheet and dedupe against `.ai-workflow/taken-brands-ledger.json`.
-6. ~~KoolestFlow dashboard over the Sheet.~~ Built (needs deployment, SETUP.md 3c).
+5. Lead finders write to the Sheet. **Started 2026-09-30:** `Discovery.gs` qualifies any list of store domains (upcoming-brand score, see BRIEF.md 4b) into Leads. `Sources` tab imports domains from public list pages (Merchant Genius, ZIK new stores, cro.media, techpeeker, eachspy, BuiltWith free list, sellerdirectories; none could be inspected from the Claude sandbox, so each needs a real run to confirm it yields domains). No-website businesses with an email (Maps) go straight into Leads as track Build. **Directory scraping moved to the Mac 2026-10-04** (see section below). Still to build: Reddit and ad-library scans, the Maps bridge into the Sheet and dedupe against `.ai-workflow/taken-brands-ledger.json`.
+6. ~~KoolestFlow dashboard over the Sheet.~~ Built. 2026-10-04: merged into local `main` of `cold-email-app` (`4b093e5`) but NOT yet pushed to GitHub/Vercel, so the live app has no Cold email screen. Ridwan pushes from Mac Terminal, then sets `OUTREACH_API_URL` and `OUTREACH_API_TOKEN` on Vercel and redeploys.
 
 ## Costs (target)
 
@@ -77,3 +77,12 @@ About $4-5/month total, mostly existing BrowserAct credits. Sheets, Apps Script,
 - Nothing reaches a real lead while TEST_MODE is TRUE or before Ridwan approves.
 - Don't create Google or Gmail accounts; Ridwan does that himself.
 - Update the Build Log in `docs/koolestpro-content-operating-plan.md` whenever this system changes.
+
+## Directory scraping on the Mac (2026-10-04)
+
+The cloud and Apps Script (`Sources` tab) cannot read these directories (blocked). A Playwright script on Ridwan's Mac can: `outreach/scrapers/directory_scrape.py`. It pushes new store domains to the Sheet's Discovery tab through `Api.gs` `add_domains` (same token as KoolestFlow), after deduping against its own state, the taken-brands ledger and the Sheet. Setup: `bash outreach/scrapers/install_mac.sh` in Mac Terminal (installs Playwright, optional daily 07:30 launchd job). Test with `--dry-run --headed` first.
+
+Checked in Ridwan's real Chrome on 2026-10-04:
+- **Works:** Merchant Genius (dated pages `/shop/date/YYYY-MM-DD`, about 500 stores a day, some with email and phone; newest date listed on 2026-10-04 was 2026-07-28, so the site may lag), Zik (renders with JavaScript; its "new stores" list showed 2024 launch dates), EachSpy (country pages, about 40 domains each, includes big brands the scorer will drop).
+- **Does not work:** cro.media (Cloudflare block even in a normal browser), BuiltWith (CAPTCHA; never bypassed), TechPeeker (free page shows 10 stores), SellerDirectories (a sales page for a paid database).
+- Not yet run end to end: the script was written without being able to run Playwright against the sites from here. First real run needs a look.

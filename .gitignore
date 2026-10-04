@@ -46,3 +46,8 @@ video-gen/_promo/
 *.bak
 *.bak-*
 .ai-workflow/.leadgen-state.json
+
+# ---- Directory scraper (local state, output, venv) ----
+outreach/scrapers/.venv/
+outreach/scrapers/state/
+outreach/scrapers/output/

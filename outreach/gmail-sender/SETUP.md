@@ -28,6 +28,8 @@ The script is `Code.gs`, `Brief.gs` (the master brief, compiled from `outreach/b
 
 **Apify test (optional, costs money, off until you say so).** 1) Make an Apify account and create an API token (Console > Settings > Integrations). 2) Apps Script > Project Settings > Script properties: `APIFY_TOKEN` = the token. 3) Pick an actor, for example a Store Leads based store finder (Apify Store > search "store leads"). Check its price per 1,000 results first. 4) In the **Apify** tab add a row: `actor` (username/actor-name from its page), `input_json` (copy the actor's own Input JSON from its Input tab and set your filters: small stores, your countries, new stores), `max_items` = 50, `status` = Ready. 5) Outreach > **Run Apify imports now**. It starts the run (status Running); run it again a minute later to import. New stores land in Discovery with the raw result in the `data` column and any sales or employee numbers in `signals`. Stores whose `signals` show more than 30 employees are skipped automatically. Send me one row of the `data` column and I will wire the exact field names into the scoring.
 
+**Directory sites run from the Mac, not from here.** The Sources tab cannot read most directories (blocked). Use `outreach/scrapers/directory_scrape.py` on your Mac instead (see README, "Directory scraping on the Mac"); it feeds this same Discovery tab.
+
 **Businesses with an email but no website** (for example from Google Maps): add them straight into Leads with `brand`, `email`, `country`, `niche`, `notes` (rating, reviews, city) and leave `website` empty. They are treated as track Build: email 1 offers a free ad creative.
 
 **How a new lead flows:** put a row in Leads with `lead_id`, `brand`, `website`, `country`, `niche`, `track` (and `contact_name`, `email` if you have them). Every 30 minutes, or via Outreach > **Prepare new leads now**, the script finds an email on their site if `email` is empty, verifies it, writes the Profile, then writes the 5-email Sequence. Check `notes` on the lead: it says what the first email's observation is based on, and `CHECK:` if something needs your eyes. Then tick `approved` (or set `AUTO_APPROVE` = TRUE in Settings to auto-approve clean ones). Sending follows each lead's own working hours (9 to 5, weekdays, from `time_zone` or their country).
@@ -55,6 +57,8 @@ After you change `Api.gs`, use Deploy > Manage deployments > edit > New version,
 What it can and cannot do: it can approve leads, edit unsent emails, edit and approve reply drafts, add leads and store domains, and change a few Settings (not `TEST_MODE`). It never sends mail itself: approvals queue for the normal sender, and "Check replies and send approved" runs the same check the 30 minute trigger does.
 
 ## 3b. AI reply drafts (Gemini, then Claude Haiku, then DeepSeek)
+**Status 2026-10-04: done and tested by Ridwan.** Still open: the `VOICE_EXAMPLES` cell in Settings was empty when checked; paste 3 to 5 of your real replies there.
+
 When a lead replies, the script now writes a draft into **Drafts** (status **Ready for review**) and updates that lead's **Memory** summary. It never sends on its own: you edit `draft_body`, set status **Approved**, and the next check sends it.
 1. Paste the new `Code.gs`, save, reload the Sheet, then run Outreach > **1. Set up tabs** once (adds the new Settings rows and a `model` column in Drafts).
 2. Get keys (any one is enough; all three gives the fallback chain):

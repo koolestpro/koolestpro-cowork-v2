@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key><string>com.koolestpro.directory-scrape</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/mac/koolestpro-cowork-v2/outreach/scrapers/.venv/bin/python</string>
+        <string>/Users/mac/koolestpro-cowork-v2/outreach/scrapers/directory_scrape.py</string>
+    </array>
+    <key>WorkingDirectory</key><string>/Users/mac/koolestpro-cowork-v2</string>
+    <!-- Daily 07:30. If the Mac was asleep, launchd runs it when it wakes. -->
+    <key>StartCalendarInterval</key>
+    <dict><key>Hour</key><integer>7</integer><key>Minute</key><integer>30</integer></dict>
+    <key>StandardOutPath</key><string>/Users/mac/koolestpro-cowork-v2/outreach/scrapers/state/scrape.log</string>
+    <key>StandardErrorPath</key><string>/Users/mac/koolestpro-cowork-v2/outreach/scrapers/state/scrape.log</string>
+</dict>
+</plist>

@@ -1183,3 +1183,8 @@ The plan is working when:
 ### 2026-09-30: Outreach handoff for Claude Code
 
 Added `outreach/README.md` (goal, Ridwan's decisions, architecture with per-step status, next steps, don'ts) so any agent working from the GitHub repo has the full context of the 2026-09-27 planning chats. CLAUDE.md: new Task Router row for cold email, and rule 3 now records the Google Sheet exception for cold email.
+
+### 2026-10-04: Outreach merged to main, directory scraper for the Mac
+
+Merged the cloud branch `claude/outreach-alert-email-debug-b2d85x` into local `main` (fast-forward, 23 commits: AI reply drafts, email finder and verifier, sequence writer, Discovery/Sources, Apify, Api.gs, partner track) and the matching KoolestFlow branch into `cold-email-app` main (Cold email screen). Neither is pushed yet. Ridwan confirmed 3b (AI reply drafts) tested; the `VOICE_EXAMPLES` Settings cell was empty when checked. Added `outreach/scrapers/` (`directory_scrape.py`, `install_mac.sh`, launchd plist): a Mac-side Playwright scraper for Merchant Genius, Zik and EachSpy that pushes new store domains to the Sheet's Discovery tab through Api.gs. cro.media, BuiltWith (CAPTCHA), TechPeeker and SellerDirectories were checked and left out. Written but not yet run against the live sites.
+
