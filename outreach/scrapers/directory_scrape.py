@@ -333,7 +333,19 @@ def main():
             continue
         keys[d] = r
         fresh.append(r)
-    fresh = fresh[: args.limit]
+    # Round-robin across sources so one big source (merchantgenius) can't fill the whole limit.
+    by_src = {}
+    for r in fresh:
+        by_src.setdefault(r["source"].split()[0], []).append(r)
+    for k in by_src:                                    # rows that already have an email go first
+        by_src[k].sort(key=lambda r: not r["emails"])
+    mixed = []
+    while any(by_src.values()) and len(mixed) < args.limit:
+        for k in list(by_src):
+            if by_src[k] and len(mixed) < args.limit:
+                mixed.append(by_src[k].pop(0))
+    fresh = mixed
+    log("kept per source: " + ", ".join(f"{k}={sum(1 for r in fresh if r['source'].split()[0]==k)}" for k in sorted({r['source'].split()[0] for r in fresh})))
     with_email = sum(1 for r in fresh if r["emails"])
     log(f"scraped {len(found)} rows, {len(fresh)} new after dedupe ({with_email} with an email)")
     if not fresh:
