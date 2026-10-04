@@ -109,6 +109,18 @@ def rec(domain, source, **kw):
     return r
 
 
+MG_SCRAPED = set()
+OPTS = {"mg_min_age": 45, "zik_min": 1000, "zik_max": 25000, "myipms_url": ""}
+
+
+def money(txt):
+    m = re.search(r"\$\s*([\d.,]+)\s*([KkMm]?)", txt or "")
+    if not m:
+        return None
+    v = float(m.group(1).replace(",", ""))
+    return v * {"k": 1e3, "m": 1e6}.get(m.group(2).lower(), 1)
+
+
 def scrape_merchantgenius(page, days, log):
     """Newest N dated pages. The home page links /shop/date/YYYY-MM-DD; each date page lists every store that
     launched that day as /shop/url/<domain> links. Card text: NAME, DOMAIN, description, (CUR / LANG), EMAIL PHONE."""
@@ -121,7 +133,8 @@ def scrape_merchantgenius(page, days, log):
         log("merchantgenius: no date links found on the home page (layout changed?)")
         return []
     done = set(load_json(STATE / "merchantgenius_dates.json", []))
-    todo = [d for d in dates if d not in done][:days]
+    cutoff = (datetime.now() - timedelta(days=OPTS["mg_min_age"])).strftime("%Y-%m-%d")
+    todo = [d for d in dates if d not in done and d <= cutoff][:days]   # skip stores too new to have traction
     log(f"merchantgenius: newest date listed {dates[0]}; scraping {todo or 'nothing new'}")
     rows = []
     for d in todo:
@@ -157,8 +170,7 @@ def scrape_merchantgenius(page, days, log):
                             signals=f"launched {d}" + (f"; {cur.group(1)}/{cur.group(2).strip().title()}" if cur else ""),
                             data=desc[:400]))
         log(f"merchantgenius {d}: {len(domains)} stores, {sum(1 for r in rows if r['emails'] and r['source'].endswith(d))} with email")
-        done.add(d)
-        (STATE / "merchantgenius_dates.json").write_text(json.dumps(sorted(done)))
+        MG_SCRAPED.add(d)                      # saved to state only after a real push
         pause()
     return rows
 
@@ -185,6 +197,9 @@ def scrape_zik(page, days, log):
         theme = cells[1] if len(cells) > 1 else ""
         launched = cells[2] if len(cells) > 2 else ""
         rev = next((c for c in reversed(cells) if c.startswith("$")), "")
+        rv = money(rev)
+        if rv is not None and not (OPTS["zik_min"] <= rv <= OPTS["zik_max"]):
+            continue                                   # outside the "already selling, still small" band
         sig = "; ".join(x for x in [f"theme {theme}" if theme else "", f"launched {launched}" if launched else "",
                                      f"Zik est. revenue {rev}" if rev else ""] if x)
         rows.append(rec(m.group(0), "zik new stores", brand=first[0] if len(first) > 1 else "", signals=sig))
@@ -224,7 +239,7 @@ def scrape_myipms(page, days, log):
     """Shopify, Inc IP-owner page. Sorted by world popularity, so page 1 is huge brands (pch.com, barnesandnoble.com).
     Rows with a world rank under MIN_RANK are dropped: they are not small-store leads."""
     MIN_RANK = 300000
-    rows, url = [], "https://myip.ms/view/ip_owners/376714/Shopify_Inc.html"
+    rows, url = [], OPTS["myipms_url"] or "https://myip.ms/view/ip_owners/376714/Shopify_Inc.html"
     for pg in range(max(1, days)):
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_timeout(2500)
@@ -285,6 +300,10 @@ def main():
     ap.add_argument("--sources", default=",".join(SOURCES))
     ap.add_argument("--days", type=int, default=3, help="merchantgenius: new dates per run; myipms: pages per run")
     ap.add_argument("--limit", type=int, default=600, help="max new domains pushed per run")
+    ap.add_argument("--mg-min-age", type=int, default=45, help="merchantgenius: skip dates newer than N days")
+    ap.add_argument("--zik-min", type=float, default=1000, help="zik: min est. revenue ($)")
+    ap.add_argument("--zik-max", type=float, default=25000, help="zik: max est. revenue ($)")
+    ap.add_argument("--myipms-url", default="", help="myip.ms: start from this list page instead of page 1")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--headed", action="store_true")
     args = ap.parse_args()
@@ -297,6 +316,7 @@ def main():
     except ImportError:
         raise SystemExit("Playwright missing. Run outreach/scrapers/install_mac.sh first.")
 
+    OPTS.update(mg_min_age=args.mg_min_age, zik_min=args.zik_min, zik_max=args.zik_max, myipms_url=args.myipms_url)
     env = load_env()
     seen = set(load_json(STATE / "seen_domains.json", []))
     taken = ledger_domains()
@@ -369,6 +389,8 @@ def main():
         added += res.get("added", 0)
         merged += res.get("merged", 0)
         pause(0.5, 1.5)
+    done = set(load_json(STATE / "merchantgenius_dates.json", [])) | MG_SCRAPED
+    (STATE / "merchantgenius_dates.json").write_text(json.dumps(sorted(done)))
     seen.update(r["domain"] for r in fresh)
     (STATE / "seen_domains.json").write_text(json.dumps(sorted(seen)))
     log(f"pushed to the Sheet: {added} new rows in Discovery, {merged} existing rows filled in")
