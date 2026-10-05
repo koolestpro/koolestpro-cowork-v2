@@ -10,8 +10,9 @@ Modes
   default   search the subreddits below for owner posts and job posts
   --watch   also search Reddit for every lead / Discovery domain we already hold (mentions of our own list)
 
-Access: official API when REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET are in .env (recommended), else the public
-.json endpoints. It never logs in as you.
+Access: official API if REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET are in .env (optional, Reddit now gates new apps),
+else the public .json endpoints, else a real Chromium on your Mac reading the same pages a signed-out visitor sees.
+It never logs in as you and never gets around a block.
 
 Run: python outreach/scrapers/reddit_scrape.py [--dry-run] [--watch] [--subs a,b] [--limit 150]
 """
@@ -73,6 +74,25 @@ class Reddit:
         if got:
             self.token, self.ua = got
         self.mode = "official API" if self.token else "public json"
+        self.pw = self.browser = self.page = None
+
+    def _browser_get(self, url):
+        """Fallback with no API app: a real Chromium on your own Mac opens the same JSON a signed-out visitor sees."""
+        if not self.page:
+            from playwright.sync_api import sync_playwright
+            self.pw = sync_playwright().start()
+            self.browser = self.pw.chromium.launch(headless=True)
+            self.page = self.browser.new_context(viewport={"width": 1366, "height": 900}, locale="en-GB").new_page()
+            self.mode = "browser (no API app)"
+        self.page.goto(url.replace("https://www.reddit.com", "https://old.reddit.com"), timeout=45000)
+        txt = self.page.inner_text("body").strip()
+        if not txt.startswith("{"):
+            raise SystemExit("Reddit showed a block page to the browser too. Stopping (not bypassed). Log posts by hand with add_signal.py, or try again later.")
+        return json.loads(txt)
+
+    def close(self):
+        if self.browser:
+            self.browser.close(); self.pw.stop()
 
     def search(self, q, sub=None, t="month"):
         p = {"q": q, "sort": "new", "t": t, "limit": 50, "raw_json": 1}
@@ -88,8 +108,9 @@ class Reddit:
             data = get_json(url, hdr)
         except urllib.error.HTTPError as e:
             if e.code in (403, 429) and not self.token:
-                raise SystemExit(f"Reddit returned {e.code} to the public endpoint. Add REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET to .env (free script app at reddit.com/prefs/apps) and rerun.")
-            raise
+                data = self._browser_get(url)
+            else:
+                raise
         return [c["data"] for c in data.get("data", {}).get("children", [])]
 
 
@@ -193,6 +214,7 @@ def main():
                 log(f"watch {d}: {type(e).__name__} {str(e)[:80]}")
             time.sleep(random.uniform(2.0, 4.0))
 
+    rd.close()
     rows = rows[:args.limit]
     hot = sum(1 for r in rows if r["urgency"] == "Hot")
     log(f"{len(rows)} new signals ({hot} hot)")
