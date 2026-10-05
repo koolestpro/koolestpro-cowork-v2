@@ -110,7 +110,7 @@ def rec(domain, source, **kw):
 
 
 MG_SCRAPED = set()
-OPTS = {"mg_min_age": 45, "zik_min": 1000, "zik_max": 25000, "myipms_url": ""}
+OPTS = {"mg_min_age": 45, "zik_min": 1000, "zik_max": 25000, "myipms_url": "", "myipms_start": 400}
 
 
 def money(txt):
@@ -236,11 +236,12 @@ def scrape_eachspy(page, days, log):
 
 
 def scrape_myipms(page, days, log):
-    """Shopify, Inc IP-owner page. Sorted by world popularity, so page 1 is huge brands (pch.com, barnesandnoble.com).
-    Rows with a world rank under MIN_RANK are dropped: they are not small-store leads."""
-    MIN_RANK = 300000
-    rows, url = [], OPTS["myipms_url"] or "https://myip.ms/view/ip_owners/376714/Shopify_Inc.html"
-    for pg in range(max(1, days)):
+    """Shopify, Inc IP-owner list, browsed by page number. Pages are sorted by popularity, so page 1 is huge brands.
+    Start deep (--myipms-start 400 is about 1,000 visitors a day) and walk `days` pages from there."""
+    base = OPTS["myipms_url"] or "https://myip.ms/browse/sites/{n}/ownerID/376714/ownerIDii/376714"
+    start, rows = OPTS["myipms_start"], []
+    for pg in range(start, start + max(1, days)):
+        url = base.format(n=pg) if "{n}" in base else re.sub(r"/sites/\d+/", f"/sites/{pg}/", base)
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_timeout(2500)
         if re.search(r"captcha|verify you are human|robot", page.inner_text("body")[:2000], re.I):
@@ -250,24 +251,16 @@ def scrape_myipms(page, days, log):
             "table tr", "els => els.map(r => [...r.querySelectorAll('td')].map(c => c.innerText.trim()))")
         n = 0
         for cells in table:
-            joined = " ".join(cells)
-            m = DOMAIN_RE.search(cells[1]) if len(cells) > 1 else None
-            if not m or "Shopify" not in joined:
+            m = next((DOMAIN_RE.search(c) for c in cells[:4] if DOMAIN_RE.search(c)), None)
+            if not m:
                 continue
-            rk = re.search(r"#\s*([\d,]+)", joined)
-            rank = int(rk.group(1).replace(",", "")) if rk else None
-            if rank is not None and rank < MIN_RANK:
+            d = clean(m.group(0))
+            if not is_store_domain(d) or any(r["domain"] == d for r in rows):
                 continue
-            if is_store_domain(clean(m.group(0))):
-                rows.append(rec(m.group(0), "myip.ms shopify ips", signals=f"world rank {rank}" if rank else "",
-                                data=f"IP {cells[2]}" if len(cells) > 2 else ""))
-                n += 1
-        log(f"myipms page {pg + 1}: {n} small-enough stores kept")
-        nxt = page.query_selector("a:has-text('Next'), a:has-text('›'), a.next")
-        href = nxt.get_attribute("href") if nxt else None
-        if not href:
-            break
-        url = href if href.startswith("http") else "https://myip.ms" + href
+            joined = " | ".join(c.replace("\n", " ") for c in cells if c)[:300]
+            rows.append(rec(m.group(0), "myip.ms shopify ips", signals=f"myip.ms page {pg}", data=joined))
+            n += 1
+        log(f"myipms page {pg}: {n} sites")
         pause(3, 6)
     return rows
 
@@ -304,6 +297,7 @@ def main():
     ap.add_argument("--zik-min", type=float, default=1000, help="zik: min est. revenue ($)")
     ap.add_argument("--zik-max", type=float, default=25000, help="zik: max est. revenue ($)")
     ap.add_argument("--myipms-url", default="", help="myip.ms: start from this list page instead of page 1")
+    ap.add_argument("--myipms-start", type=int, default=400, help="myip.ms: first list page (50 sites per page)")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--headed", action="store_true")
     args = ap.parse_args()
@@ -316,7 +310,7 @@ def main():
     except ImportError:
         raise SystemExit("Playwright missing. Run outreach/scrapers/install_mac.sh first.")
 
-    OPTS.update(mg_min_age=args.mg_min_age, zik_min=args.zik_min, zik_max=args.zik_max, myipms_url=args.myipms_url)
+    OPTS.update(mg_min_age=args.mg_min_age, zik_min=args.zik_min, zik_max=args.zik_max, myipms_url=args.myipms_url, myipms_start=args.myipms_start)
     env = load_env()
     seen = set(load_json(STATE / "seen_domains.json", []))
     taken = ledger_domains()

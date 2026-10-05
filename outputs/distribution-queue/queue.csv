@@ -1727,7 +1727,7 @@ Same product. Same price. The only thing that changed is the order the page tell
 Full before/after and annotated breakdown in the carousel.
 
 Repost if this is useful to someone building a product page right now.",tab-linkedin,Ready,"Needs Review: X caption variant(s) over 280-char limit: x_thread[3]=316 chars — will be rejected by X for non-Premium accounts; verify populate_sheet.py isn't joining multiple variants into one post body; claims to verify (2): linkedin: ""...mobile.  You think 18,886 reviews means the trust is..."" | linkedin: ""...pper is deciding if $125 is worth it. And de...""; manual-visual-pending: open 22 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/,"""Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\n\nYou think 18,886 reviews means the trust is already there.\n\nIt doesn't, if the page can't render them in time.\n\nReal findings, nothing invented:\n\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \""Reviews\"" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\n\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\n\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\n\nFull before/after and annotated breakdown in the carousel.\n\nRepost if this is useful to someone building a product page right now.""",https://res.cloudinary.com/drl0rscuf/raw/upload/v1789584048/li/cro-fix-caraway_fry-pan-pdp-20260907-20260923-li-0900.pdf
-cro-fix-caraway_fry-pan-pdp-20260907-20260923-ig-1200,cro-fix-caraway_fry-pan-pdp-20260907,CRO Fix,Instagram,2026-10-07,17:00,12:00 ET,outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide1.png; outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide2.png; outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide3.png,"Product Page (PDP) audit: Caraway's $125 fry pan has 18,886 reviews.
+cro-fix-caraway_fry-pan-pdp-20260907-20260923-ig-1200,cro-fix-caraway_fry-pan-pdp-20260907,CRO Fix,Instagram,2026-10-14,17:00,12:00 ET,outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide1.png; outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide2.png; outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide3.png,"Product Page (PDP) audit: Caraway's $125 fry pan has 18,886 reviews.
 
 On a live load, that trust signal can render as just the word ""Reviews,"" with no stars and no count, right next to the price.
 
@@ -1861,3 +1861,162 @@ Fixed the button. Not the proof.
 
 Same product.
 Better signal = better conversion.",kytebaby-social-content.json:CRO-KYTEBABY-X1/X2/X3,Posted,"Needs Review: claims to verify (1): x[0]: ""...t under the button  29,067 reviews already agreed. Now...""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",2026-09-27 23:00,outputs/cro-fixes/kytebaby_sleep-bag-oat-1-0-pdp_carousel.html,"""Kyte Baby's PDP already had 29,067 five star reviews.\n\nThen the buy button rendered flat gray, like it was disabled.\n\nFixed the button. Not the proof.\n\nSame product.\nBetter signal = better conversion.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1789975365/dist/cro-fix-kytebaby-sleep-bag-oat-1-0-pdp-20260920/koolestpro_kytebaby_sleep-bag-oat-1-0-pdp_annotated.png
+cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261014-li-0900,cro-fix-minimalist_niacinamide-10-serum-pdp-20260927,CRO Fix,LinkedIn,2026-10-14,14:00,09:00 ET,outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png; outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png; outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png,"PRODUCT PAGE (PDP): Minimalist's Niacinamide 10% serum page opens on a really good studio photo. On a phone, that photo is the entire first screen.
+
+The product name starts right at the bottom edge. The price (₹539) is about 1,576px down. Add to Cart is at 1,870px. So a shopper scrolls twice before they find out what it costs.
+
+There's also a chat bubble that pops up asking ""Is this safe to use while pregnant?"" The page does answer that. Inside a closed accordion, near the bottom.
+
+I rebuilt the first screen using only what was already on the page and in Minimalist's own policies:
+
+1. A headline that says what it does: control oil, refine pores, even out tone. The product name sits under it.
+2. The 3.9 rating from 1,480 reviews, ₹539 with the MRP, the sizes and one Add to Cart, all on screen one.
+3. Pregnancy-safe and dermatologist patch-tested as chips next to the price.
+4. Ships in 48 hours, Cash on Delivery and 7-day replacement, right under the button.
+
+I kept the photo. It just shouldn't have to sell the serum on its own.
+
+This is unofficial concept work. Minimalist isn't a client.",tab-linkedin,Ready,"Needs Review: claims to verify (3): linkedin: ""...alist's Niacinamide 10% serum page opens on..."" | linkedin: ""...The 3.9 rating from 1,480 reviews, ₹539 with the MRP,..."" | linkedin: ""...Minimalist isn't a client....""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_carousel.html,"""PRODUCT PAGE (PDP): Minimalist's Niacinamide 10% serum page opens on a really good studio photo. On a phone, that photo is the entire first screen.\n\nThe product name starts right at the bottom edge. The price (₹539) is about 1,576px down. Add to Cart is at 1,870px. So a shopper scrolls twice before they find out what it costs.\n\nThere's also a chat bubble that pops up asking \""Is this safe to use while pregnant?\"" The page does answer that. Inside a closed accordion, near the bottom.\n\nI rebuilt the first screen using only what was already on the page and in Minimalist's own policies:\n\n1. A headline that says what it does: control oil, refine pores, even out tone. The product name sits under it.\n2. The 3.9 rating from 1,480 reviews, ₹539 with the MRP, the sizes and one Add to Cart, all on screen one.\n3. Pregnancy-safe and dermatologist patch-tested as chips next to the price.\n4. Ships in 48 hours, Cash on Delivery and 7-day replacement, right under the button.\n\nI kept the photo. It just shouldn't have to sell the serum on its own.\n\nThis is unofficial concept work. Minimalist isn't a client.""",https://res.cloudinary.com/drl0rscuf/raw/upload/v1791187452/li/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261014-li-0900.pdf
+cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261007-ig-1200,cro-fix-minimalist_niacinamide-10-serum-pdp-20260927,CRO Fix,Instagram,2026-10-21,17:00,12:00 ET,outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png; outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png; outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png,"PRODUCT PAGE (PDP): Minimalist's Niacinamide 10% serum page opens on a really good studio photo. On a phone, that photo is the entire first screen.
+
+The product name starts right at the bottom edge. The price (₹539) is about 1,576px down. Add to Cart is at 1,870px. So a shopper scrolls twice before they find out what it costs.
+
+There's also a chat bubble that pops up asking ""Is this safe to use while pregnant?"" The page does answer that. Inside a closed accordion, near the bottom.
+
+I rebuilt the first screen using only what was already on the page and in Minimalist's own policies:
+
+1. A headline that says what it does: control oil, refine pores, even out tone. The product name sits under it.
+2. The 3.9 rating from 1,480 reviews, ₹539 with the MRP, the sizes and one Add to Cart, all on screen one.
+3. Pregnancy-safe and dermatologist patch-tested as chips next to the price.
+4. Ships in 48 hours, Cash on Delivery and 7-day replacement, right under the button.
+
+I kept the photo. It just shouldn't have to sell the serum on its own.
+
+This is unofficial concept work. Minimalist isn't a client.",tab-ig,Ready,"Needs Review: claims to verify (3): linkedin: ""...alist's Niacinamide 10% serum page opens on..."" | linkedin: ""...The 3.9 rating from 1,480 reviews, ₹539 with the MRP,..."" | linkedin: ""...Minimalist isn't a client....""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_carousel.html,"""PRODUCT PAGE (PDP): Minimalist's Niacinamide 10% serum page opens on a really good studio photo. On a phone, that photo is the entire first screen.\n\nThe product name starts right at the bottom edge. The price (₹539) is about 1,576px down. Add to Cart is at 1,870px. So a shopper scrolls twice before they find out what it costs.\n\nThere's also a chat bubble that pops up asking \""Is this safe to use while pregnant?\"" The page does answer that. Inside a closed accordion, near the bottom.\n\nI rebuilt the first screen using only what was already on the page and in Minimalist's own policies:\n\n1. A headline that says what it does: control oil, refine pores, even out tone. The product name sits under it.\n2. The 3.9 rating from 1,480 reviews, ₹539 with the MRP, the sizes and one Add to Cart, all on screen one.\n3. Pregnancy-safe and dermatologist patch-tested as chips next to the price.\n4. Ships in 48 hours, Cash on Delivery and 7-day replacement, right under the button.\n\nI kept the photo. It just shouldn't have to sell the serum on its own.\n\nThis is unofficial concept work. Minimalist isn't a client.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187471/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/v1791187473/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/v1791187476/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png
+cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261007-x-1300,cro-fix-minimalist_niacinamide-10-serum-pdp-20260927,CRO Fix,Twitter,2026-10-14,18:00,13:00 ET,outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png; outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png; outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png,"PDP teardown: Minimalist's Niacinamide 10% serum.
+
+1 The price sat two scrolls down
+2 Same serum, new first screen
+3 The questions it now answers up front
+
+Swipe through. Every fact came from their own page.",tab-x-carousel,Ready,"Needs Review: claims to verify (3): linkedin: ""...alist's Niacinamide 10% serum page opens on..."" | linkedin: ""...The 3.9 rating from 1,480 reviews, ₹539 with the MRP,..."" | linkedin: ""...Minimalist isn't a client....""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_carousel.html,"""PDP teardown: Minimalist's Niacinamide 10% serum.\n\n1 The price sat two scrolls down\n2 Same serum, new first screen\n3 The questions it now answers up front\n\nSwipe through. Every fact came from their own page.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187471/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/v1791187473/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/v1791187476/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png
+cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261008-x-0900,cro-fix-minimalist_niacinamide-10-serum-pdp-20260927,CRO Fix,Twitter,2026-10-15,14:00,09:00 ET,outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png,"Minimalist's serum PDP, measured on a phone:
+
+Screen 1 ends at 844px. Only the photo.
+Price: 1,576px down.
+Add to Cart: 1,870px down.
+
+Great photo.
+It shouldn't have to sell the serum alone.",tab-x-cover,Ready,"Needs Review: claims to verify (3): linkedin: ""...alist's Niacinamide 10% serum page opens on..."" | linkedin: ""...The 3.9 rating from 1,480 reviews, ₹539 with the MRP,..."" | linkedin: ""...Minimalist isn't a client....""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_carousel.html,"""Minimalist's serum PDP, measured on a phone:\n\nScreen 1 ends at 844px. Only the photo.\nPrice: 1,576px down.\nAdd to Cart: 1,870px down.\n\nGreat photo.\nIt shouldn't have to sell the serum alone.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187471/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide1.png
+cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261009-x-0900,cro-fix-minimalist_niacinamide-10-serum-pdp-20260927,CRO Fix,Twitter,2026-10-16,14:00,09:00 ET,outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png,"Minimalist's serum PDP: great photo, then nothing.
+
+Before:
+X Screen one is only the photo
+X Price 1,576px down
+X Add to Cart at 1,870px
+
+After:
+OK Headline, rating, price and button on screen one
+
+Same serum.
+Nothing invented. Just moved up.",tab-x-ba,Ready,"Needs Review: claims to verify (3): linkedin: ""...alist's Niacinamide 10% serum page opens on..."" | linkedin: ""...The 3.9 rating from 1,480 reviews, ₹539 with the MRP,..."" | linkedin: ""...Minimalist isn't a client....""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_carousel.html,"""Minimalist's serum PDP: great photo, then nothing.\n\nBefore:\nX Screen one is only the photo\nX Price 1,576px down\nX Add to Cart at 1,870px\n\nAfter:\nOK Headline, rating, price and button on screen one\n\nSame serum.\nNothing invented. Just moved up.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187473/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide2.png
+cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261010-x-1300,cro-fix-minimalist_niacinamide-10-serum-pdp-20260927,CRO Fix,Twitter,2026-10-17,18:00,13:00 ET,outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png,"PDP fix: Minimalist's serum page already answered ""safe in pregnancy?""
+
+The answer sat in a closed accordion. Meanwhile a chat bubble asked the same question on screen one.
+
+Moved it next to the price.
+
+Same serum.
+Better answers = better conversion.",tab-x-anno,Ready,"Needs Review: claims to verify (3): linkedin: ""...alist's Niacinamide 10% serum page opens on..."" | linkedin: ""...The 3.9 rating from 1,480 reviews, ₹539 with the MRP,..."" | linkedin: ""...Minimalist isn't a client....""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_carousel.html,"""PDP fix: Minimalist's serum page already answered \""safe in pregnancy?\""\n\nThe answer sat in a closed accordion. Meanwhile a chat bubble asked the same question on screen one.\n\nMoved it next to the price.\n\nSame serum.\nBetter answers = better conversion.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187476/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_carousel_slide3.png
+cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261011-x-1800,cro-fix-minimalist_niacinamide-10-serum-pdp-20260927,CRO Fix,Twitter,2026-10-18,23:00,18:00 ET,outputs/cro-fixes/minimalist/koolestpro_minimalist_niacinamide-10-serum-pdp_annotated.png,"Redesigned this PDP (Minimalist Niacinamide 10%) around one thing:
+
+What a buyer asks before scrolling.
+
+1 What will it do for my skin?
+2 Is it safe while I'm pregnant?
+3 What does it cost?
+
+All 3 answers were already on the page.
+Now they're on screen one.",tab-x-anno-graphic,Ready,"Needs Review: claims to verify (3): linkedin: ""...alist's Niacinamide 10% serum page opens on..."" | linkedin: ""...The 3.9 rating from 1,480 reviews, ₹539 with the MRP,..."" | linkedin: ""...Minimalist isn't a client....""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_carousel.html,"""Redesigned this PDP (Minimalist Niacinamide 10%) around one thing:\n\nWhat a buyer asks before scrolling.\n\n1 What will it do for my skin?\n2 Is it safe while I'm pregnant?\n3 What does it cost?\n\nAll 3 answers were already on the page.\nNow they're on screen one.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187479/dist/cro-fix-minimalist_niacinamide-10-serum-pdp-20260927/koolestpro_minimalist_niacinamide-10-serum-pdp_annotated.png
+cro-fix-flybyjing_chili-crisp-pdp-20261004-20261021-li-0900,cro-fix-flybyjing_chili-crisp-pdp-20261004,CRO Fix,LinkedIn,2026-10-21,14:00,09:00 ET,outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png; outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png; outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png,"PRODUCT PAGE (PDP): Fly By Jing's chili crisp page, on a phone. Screen one is the jar, the name, five stars and a paragraph. No price.
+
+The price shows up 1,146px down and Add to Cart at 1,357px. The default is $30 next to a pill that says ""2-PACK"". It never says 2 jars, or $15 a jar.
+
+Their best proof, 4.9 stars from 2,459 reviews and 97% would recommend, sits about 5,750px down.
+
+I rebuilt the first screen using only what was already on their page:
+
+1. Their own photo, with a headline in their own words: crunchy, numbing, goes on everything.
+2. The heat level up front. They already wrote it: ""intensely flavorful yet not off-the-charts spicy.""
+3. 4.9 stars and 2,459 reviews right under the photo.
+4. Packs shown as jars, with a per-jar price. 2 jars, $30, $15 a jar.
+5. One button: Add 2 jars to cart, $30. Ships in 48-72 hours, free shipping over $75, right under it.
+
+Every fact was already on the page. I only changed the order.
+
+This is unofficial concept work. Fly By Jing isn't a client.",tab-linkedin,Ready,"Needs Review: claims to verify (10): linkedin: ""...7px. The default is $30 next to a pill that..."" | linkedin: ""...ver says 2 jars, or $15 a jar.  Their best..."" | linkedin: ""...oof, 4.9 stars from 2,459 reviews and 97% would recom..."" | linkedin: ""...m 2,459 reviews and 97% would recommend, si..."" | linkedin: ""...."" 3. 4.9 stars and 2,459 reviews right under the pho..."" | linkedin: ""...-jar price. 2 jars, $30, $15 a jar. 5. One b...""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html,"""PRODUCT PAGE (PDP): Fly By Jing's chili crisp page, on a phone. Screen one is the jar, the name, five stars and a paragraph. No price.\n\nThe price shows up 1,146px down and Add to Cart at 1,357px. The default is $30 next to a pill that says \""2-PACK\"". It never says 2 jars, or $15 a jar.\n\nTheir best proof, 4.9 stars from 2,459 reviews and 97% would recommend, sits about 5,750px down.\n\nI rebuilt the first screen using only what was already on their page:\n\n1. Their own photo, with a headline in their own words: crunchy, numbing, goes on everything.\n2. The heat level up front. They already wrote it: \""intensely flavorful yet not off-the-charts spicy.\""\n3. 4.9 stars and 2,459 reviews right under the photo.\n4. Packs shown as jars, with a per-jar price. 2 jars, $30, $15 a jar.\n5. One button: Add 2 jars to cart, $30. Ships in 48-72 hours, free shipping over $75, right under it.\n\nEvery fact was already on the page. I only changed the order.\n\nThis is unofficial concept work. Fly By Jing isn't a client.""",https://res.cloudinary.com/drl0rscuf/raw/upload/v1791187464/li/cro-fix-flybyjing_chili-crisp-pdp-20261004-20261021-li-0900.pdf
+cro-fix-flybyjing_chili-crisp-pdp-20261004-20261007-ig-1200,cro-fix-flybyjing_chili-crisp-pdp-20261004,CRO Fix,Instagram,2026-10-07,17:00,12:00 ET,outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png; outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png; outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png,"PRODUCT PAGE (PDP): Fly By Jing's chili crisp page, on a phone. Screen one is the jar, the name, five stars and a paragraph. No price.
+
+The price shows up 1,146px down and Add to Cart at 1,357px. The default is $30 next to a pill that says ""2-PACK"". It never says 2 jars, or $15 a jar.
+
+Their best proof, 4.9 stars from 2,459 reviews and 97% would recommend, sits about 5,750px down.
+
+I rebuilt the first screen using only what was already on their page:
+
+1. Their own photo, with a headline in their own words: crunchy, numbing, goes on everything.
+2. The heat level up front. They already wrote it: ""intensely flavorful yet not off-the-charts spicy.""
+3. 4.9 stars and 2,459 reviews right under the photo.
+4. Packs shown as jars, with a per-jar price. 2 jars, $30, $15 a jar.
+5. One button: Add 2 jars to cart, $30. Ships in 48-72 hours, free shipping over $75, right under it.
+
+Every fact was already on the page. I only changed the order.
+
+This is unofficial concept work. Fly By Jing isn't a client.",tab-ig,Ready,"Needs Review: claims to verify (10): linkedin: ""...7px. The default is $30 next to a pill that..."" | linkedin: ""...ver says 2 jars, or $15 a jar.  Their best..."" | linkedin: ""...oof, 4.9 stars from 2,459 reviews and 97% would recom..."" | linkedin: ""...m 2,459 reviews and 97% would recommend, si..."" | linkedin: ""...."" 3. 4.9 stars and 2,459 reviews right under the pho..."" | linkedin: ""...-jar price. 2 jars, $30, $15 a jar. 5. One b...""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html,"""PRODUCT PAGE (PDP): Fly By Jing's chili crisp page, on a phone. Screen one is the jar, the name, five stars and a paragraph. No price.\n\nThe price shows up 1,146px down and Add to Cart at 1,357px. The default is $30 next to a pill that says \""2-PACK\"". It never says 2 jars, or $15 a jar.\n\nTheir best proof, 4.9 stars from 2,459 reviews and 97% would recommend, sits about 5,750px down.\n\nI rebuilt the first screen using only what was already on their page:\n\n1. Their own photo, with a headline in their own words: crunchy, numbing, goes on everything.\n2. The heat level up front. They already wrote it: \""intensely flavorful yet not off-the-charts spicy.\""\n3. 4.9 stars and 2,459 reviews right under the photo.\n4. Packs shown as jars, with a per-jar price. 2 jars, $30, $15 a jar.\n5. One button: Add 2 jars to cart, $30. Ships in 48-72 hours, free shipping over $75, right under it.\n\nEvery fact was already on the page. I only changed the order.\n\nThis is unofficial concept work. Fly By Jing isn't a client.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187483/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/v1791187485/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/v1791187494/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png
+cro-fix-flybyjing_chili-crisp-pdp-20261004-20261007-x-1300,cro-fix-flybyjing_chili-crisp-pdp-20261004,CRO Fix,Twitter,2026-10-07,18:00,13:00 ET,outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png; outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png; outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png,"PDP teardown: Fly By Jing's chili crisp.
+
+1 $30 for 2 jars, not on screen one
+2 Same jar, the price moved up
+3 The questions it now answers first
+
+Every number came from their own page.",tab-x-carousel,Ready,"Needs Review: claims to verify (10): linkedin: ""...7px. The default is $30 next to a pill that..."" | linkedin: ""...ver says 2 jars, or $15 a jar.  Their best..."" | linkedin: ""...oof, 4.9 stars from 2,459 reviews and 97% would recom..."" | linkedin: ""...m 2,459 reviews and 97% would recommend, si..."" | linkedin: ""...."" 3. 4.9 stars and 2,459 reviews right under the pho..."" | linkedin: ""...-jar price. 2 jars, $30, $15 a jar. 5. One b...""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html,"""PDP teardown: Fly By Jing's chili crisp.\n\n1 $30 for 2 jars, not on screen one\n2 Same jar, the price moved up\n3 The questions it now answers first\n\nEvery number came from their own page.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187483/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/v1791187485/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/v1791187494/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png
+cro-fix-flybyjing_chili-crisp-pdp-20261004-20261008-x-0900,cro-fix-flybyjing_chili-crisp-pdp-20261004,CRO Fix,Twitter,2026-10-08,14:00,09:00 ET,outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png,"Fly By Jing's chili crisp PDP, on a phone:
+
+Screen one: the jar and a paragraph.
+Pack picker: 1,017px down.
+Price: 1,146px down.
+
+And the $30 sits next to ""2-PACK"". It never says 2 jars, or $15 a jar.
+
+The price is part of the pitch.",tab-x-cover,Ready,"Needs Review: claims to verify (10): linkedin: ""...7px. The default is $30 next to a pill that..."" | linkedin: ""...ver says 2 jars, or $15 a jar.  Their best..."" | linkedin: ""...oof, 4.9 stars from 2,459 reviews and 97% would recom..."" | linkedin: ""...m 2,459 reviews and 97% would recommend, si..."" | linkedin: ""...."" 3. 4.9 stars and 2,459 reviews right under the pho..."" | linkedin: ""...-jar price. 2 jars, $30, $15 a jar. 5. One b...""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html,"""Fly By Jing's chili crisp PDP, on a phone:\n\nScreen one: the jar and a paragraph.\nPack picker: 1,017px down.\nPrice: 1,146px down.\n\nAnd the $30 sits next to \""2-PACK\"". It never says 2 jars, or $15 a jar.\n\nThe price is part of the pitch.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187483/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide1.png
+cro-fix-flybyjing_chili-crisp-pdp-20261004-20261009-x-0900,cro-fix-flybyjing_chili-crisp-pdp-20261004,CRO Fix,Twitter,2026-10-09,14:00,09:00 ET,outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png,"Fly By Jing PDP. Same chili crisp, different first screen.
+
+Before:
+X Jar, name, a paragraph
+X Price 1,146px down
+X 4.9 rating about 5,750px down
+
+After:
+OK 4.9 stars under the photo
+OK 2 jars, $15 a jar
+OK Add to Cart on screen one
+
+Nothing invented. Just moved up.",tab-x-ba,Ready,"Needs Review: claims to verify (10): linkedin: ""...7px. The default is $30 next to a pill that..."" | linkedin: ""...ver says 2 jars, or $15 a jar.  Their best..."" | linkedin: ""...oof, 4.9 stars from 2,459 reviews and 97% would recom..."" | linkedin: ""...m 2,459 reviews and 97% would recommend, si..."" | linkedin: ""...."" 3. 4.9 stars and 2,459 reviews right under the pho..."" | linkedin: ""...-jar price. 2 jars, $30, $15 a jar. 5. One b...""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html,"""Fly By Jing PDP. Same chili crisp, different first screen.\n\nBefore:\nX Jar, name, a paragraph\nX Price 1,146px down\nX 4.9 rating about 5,750px down\n\nAfter:\nOK 4.9 stars under the photo\nOK 2 jars, $15 a jar\nOK Add to Cart on screen one\n\nNothing invented. Just moved up.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187485/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide2.png
+cro-fix-flybyjing_chili-crisp-pdp-20261004-20261010-x-1300,cro-fix-flybyjing_chili-crisp-pdp-20261004,CRO Fix,Twitter,2026-10-10,18:00,13:00 ET,outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png,"PDP fix: Fly By Jing's chili crisp.
+
+A first-time buyer asks:
+1 Is this too hot for me?
+2 What does $30 get me?
+3 Where do I buy?
+
+All 3 answers were on the page. None were on screen one.
+
+Now they are.",tab-x-anno,Ready,"Needs Review: claims to verify (10): linkedin: ""...7px. The default is $30 next to a pill that..."" | linkedin: ""...ver says 2 jars, or $15 a jar.  Their best..."" | linkedin: ""...oof, 4.9 stars from 2,459 reviews and 97% would recom..."" | linkedin: ""...m 2,459 reviews and 97% would recommend, si..."" | linkedin: ""...."" 3. 4.9 stars and 2,459 reviews right under the pho..."" | linkedin: ""...-jar price. 2 jars, $30, $15 a jar. 5. One b...""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html,"""PDP fix: Fly By Jing's chili crisp.\n\nA first-time buyer asks:\n1 Is this too hot for me?\n2 What does $30 get me?\n3 Where do I buy?\n\nAll 3 answers were on the page. None were on screen one.\n\nNow they are.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187494/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_carousel_slide3.png
+cro-fix-flybyjing_chili-crisp-pdp-20261004-20261011-x-1800,cro-fix-flybyjing_chili-crisp-pdp-20261004,CRO Fix,Twitter,2026-10-11,23:00,18:00 ET,outputs/cro-fixes/flybyjing/koolestpro_flybyjing_chili-crisp-pdp_annotated.png,"Redesigned this chili crisp PDP around 3 questions:
+
+1 How hot is it?
+2 Is it any good?
+3 What does $30 get me?
+
+Their page already had the answers: not off-the-charts spicy, 4.9 from 2,459 reviews, $15 a jar.
+
+They just sat too far down.",tab-x-anno-graphic,Ready,"Needs Review: claims to verify (10): linkedin: ""...7px. The default is $30 next to a pill that..."" | linkedin: ""...ver says 2 jars, or $15 a jar.  Their best..."" | linkedin: ""...oof, 4.9 stars from 2,459 reviews and 97% would recom..."" | linkedin: ""...m 2,459 reviews and 97% would recommend, si..."" | linkedin: ""...."" 3. 4.9 stars and 2,459 reviews right under the pho..."" | linkedin: ""...-jar price. 2 jars, $30, $15 a jar. 5. One b...""; manual-visual-pending: open 4 image(s) to eyeball brand/legibility/framing",,outputs/cro-fixes/flybyjing_chili-crisp-pdp_carousel.html,"""Redesigned this chili crisp PDP around 3 questions:\n\n1 How hot is it?\n2 Is it any good?\n3 What does $30 get me?\n\nTheir page already had the answers: not off-the-charts spicy, 4.9 from 2,459 reviews, $15 a jar.\n\nThey just sat too far down.""",https://res.cloudinary.com/drl0rscuf/image/upload/v1791187506/dist/cro-fix-flybyjing_chili-crisp-pdp-20261004/koolestpro_flybyjing_chili-crisp-pdp_annotated.png
