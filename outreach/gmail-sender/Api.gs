@@ -220,6 +220,7 @@ function apiAddLead_(a) {
     lead.lead_id = id;
   } else if (leads.rows.some(l => String(l.lead_id) === String(lead.lead_id))) throw new Error('lead_id already exists');
   if (lead.website && leads.rows.some(l => l.website && cleanDomain_(l.website) === cleanDomain_(lead.website))) throw new Error('that website is already a lead');
+  if (lead.email && leads.rows.some(l => String(l.email || '').trim().toLowerCase() === String(lead.email).trim().toLowerCase())) throw new Error('that email is already a lead');
   if (!lead.track) lead.track = lead.website ? 'Fix' : 'Build';
   if (lead.email && !lead.email_status) lead.email_status = 'unverified';
   Object.assign(lead, { stage: 'New', approved: false, touch_count: 0, created_at: new Date() });

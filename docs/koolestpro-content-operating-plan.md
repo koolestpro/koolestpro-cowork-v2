@@ -1204,3 +1204,7 @@ Scraper: Merchant Genius skips stores newer than 45 days; Zik keeps est. revenue
 ### 2026-10-05 (later): opt-out and deliverability
 
 Code.gs: every first email and follow-up now ends with an opt-out line (Settings OPT_OUT_LINE, default "reply STOP") and an optional postal address (POSTAL_ADDRESS, needed for US recipients). Outgoing cold emails carry a List-Unsubscribe mailto header. A reply that starts with or clearly says STOP / unsubscribe / remove me / do not contact moves the lead to stage "Unsubscribed", stops its sequence, clears approval, and skips the AI draft and alert. Deliverability check (dig): koolestpro.com has Cloudflare email routing only (SPF `include:_spf.mx.cloudflare.net`, no DMARC, no Google DKIM), which is fine while sending from the Gmail address, because gmail.com authenticates itself. Moving sends to a koolestpro.com address needs SPF including Google, a Google DKIM key and a DMARC record first.
+
+### 2026-10-05 (later): Maps / Ad Library bridge into the Sheet
+
+`outreach/scrapers/koolestflow_to_sheet.py` reads the prospects the weekly BrowserAct (Maps) and Ad Library tasks queue in `.ai-workflow/pending-push/` and sends them to the Sheet: prospects with a website go to Discovery (scored, email-searched, deduped against Leads), email-only prospects go to Leads as track Build. It remembers what it sent in `state/koolestflow_sent.json`. `add_lead` now also rejects an email that is already a lead. Needs the new Api.gs deployed as a new version.
