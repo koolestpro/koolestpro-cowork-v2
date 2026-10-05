@@ -42,7 +42,7 @@ function qualifyDiscovery_(S, stats, timeLeft) {
   leads.rows.forEach(l => { if (l.website) have[cleanDomain_(l.website)] = true; });
   const min = Number(S.MIN_FIT_SCORE || 55);
 
-  disc.rows.filter(r => cleanDomain_(r.domain) && ['', 'New'].indexOf(String(r.status)) !== -1).slice(0, DISCOVERY_BATCH_).forEach(r => {
+  disc.rows.filter(r => cleanDomain_(r.domain) && ['', 'New'].indexOf(String(r.status)) !== -1).sort((a, b) => (lc_(b.priority) === 'hot' ? 1 : 0) - (lc_(a.priority) === 'hot' ? 1 : 0)).slice(0, DISCOVERY_BATCH_).forEach(r => {
     if (!timeLeft()) return;
     const domain = cleanDomain_(r.domain);
     try {
@@ -57,7 +57,7 @@ function qualifyDiscovery_(S, stats, timeLeft) {
       set_(disc, r, 'checked_at', new Date());
       if (v.skip) { set_(disc, r, 'status', 'Skipped'); return; }
       const need = isPartner ? Number(S.MIN_PARTNER_SCORE || 55) : min;
-      if (v.score < need) { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'score ' + v.score + ' below ' + need + ': ' + v.reasons.join('; ')); return; }
+      if (v.score < need && lc_(r.priority) !== 'hot') { set_(disc, r, 'status', 'Skipped'); set_(disc, r, 'reasons', 'score ' + v.score + ' below ' + need + ': ' + v.reasons.join('; ')); return; }
       const id = domain.replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30) || domain;
       let leadId = id, n = 2;
       while (leads.rows.some(l => String(l.lead_id) === leadId)) leadId = id + '-' + n++;
@@ -67,8 +67,8 @@ function qualifyDiscovery_(S, stats, timeLeft) {
       if (pick.others.length) extra.push('other emails: ' + pick.others.join(', '));
       if (r.phone) extra.push('phone: ' + r.phone);
       appendObj_('Leads', { lead_id: leadId, brand: v.brand || r.brand || id, website: domain, contact_name: r.contact_name || '', email: pick.best, email_status: pick.best ? 'unverified' : '', country: v.country || r.country,
-        time_zone: '', niche: r.niche || '', source: r.source || 'discovery', platform: v.platform, business_model: v.model, track: isPartner ? 'Partner' : 'Fix', play: isPartner ? 'agency_partner' : '', stage: 'New', approved: false, touch_count: 0,
-        notes: 'Fit ' + v.score + ': ' + v.reasons.join('; ') + (pick.best ? '; email from directory (' + (r.source || '') + ')' : '') + (extra.length ? '; ' + extra.join('; ') : ''), created_at: new Date() });
+        time_zone: '', niche: r.niche || '', source: r.source || 'discovery', platform: v.platform, business_model: v.model, track: isPartner ? 'Partner' : 'Fix', play: isPartner ? 'agency_partner' : '', stage: 'New', approved: false, touch_count: 0, priority: r.priority || '', signal_at: r.signal_at || '',
+        notes: 'Fit ' + v.score + ': ' + v.reasons.join('; ') + (pick.best ? '; email from directory (' + (r.source || '') + ')' : '') + (extra.length ? '; ' + extra.join('; ') : '') + (lc_(r.priority) === 'hot' ? '; HOT signal: ' + String(r.signals || '').slice(0, 250) : ''), created_at: new Date() });
       leads.rows.push({ lead_id: leadId, website: domain });
       have[domain] = true;
       set_(disc, r, 'status', 'Promoted');

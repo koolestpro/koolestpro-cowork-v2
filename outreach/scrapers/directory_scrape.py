@@ -315,6 +315,7 @@ def main():
     OPTS.update(mg_min_age=args.mg_min_age, zik_min=args.zik_min, zik_max=args.zik_max, myipms_url=args.myipms_url, myipms_start=args.myipms_start)
     env = load_env()
     seen = set(load_json(STATE / "seen_domains.json", []))
+    seen_src = load_json(STATE / "seen_sources.json", {})   # domain -> sources that found it
     taken = ledger_domains()
     found = []
     with sync_playwright() as pw:
@@ -338,8 +339,12 @@ def main():
     fresh, keys = [], {}
     for r in found:
         d = r["domain"]
-        if not is_store_domain(d) or d in seen or d in taken:
+        src = r["source"].split()[0]
+        if not is_store_domain(d) or d in taken:
             continue
+        if d in seen and src in seen_src.get(d, []):
+            continue                                    # same source again: nothing new
+        # seen by another source: still pushed, the Sheet logs it as an extra sighting and keeps its emails, contact, phone
         if d in keys:                                   # same store from two sources: merge what each knows
             k = keys[d]
             k["emails"] = sorted(set(k["emails"]) | set(r["emails"]))
@@ -379,19 +384,25 @@ def main():
         log("dry run: nothing pushed")
         return
 
-    added = merged = 0
+    added = merged = sightings = 0
     for i in range(0, len(fresh), 100):
         res = api_call(env, "add_discovery_rows", {"rows": fresh[i:i + 100]})
         added += res.get("added", 0)
         merged += res.get("merged", 0)
+        sightings += res.get("sightings", 0)
         pause(0.5, 1.5)
     done = set(load_json(STATE / "merchantgenius_dates.json", [])) | MG_SCRAPED
     (STATE / "merchantgenius_dates.json").write_text(json.dumps(sorted(done)))
     if MY_LAST[0]:
         (STATE / "myipms_next.json").write_text(json.dumps(MY_LAST[0]))
     seen.update(r["domain"] for r in fresh)
+    for r in fresh:
+        seen_src.setdefault(r["domain"], [])
+        if r["source"].split()[0] not in seen_src[r["domain"]]:
+            seen_src[r["domain"]].append(r["source"].split()[0])
     (STATE / "seen_domains.json").write_text(json.dumps(sorted(seen)))
-    log(f"pushed to the Sheet: {added} new rows in Discovery, {merged} existing rows filled in")
+    (STATE / "seen_sources.json").write_text(json.dumps(seen_src))
+    log(f"pushed to the Sheet: {added} new rows in Discovery, {merged} existing rows filled in, {sightings} extra sightings logged on stores we already had")
 
 
 if __name__ == "__main__":

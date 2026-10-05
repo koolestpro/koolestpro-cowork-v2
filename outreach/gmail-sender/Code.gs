@@ -20,7 +20,7 @@ const TABS = {
   Settings: ['key', 'value', 'notes'],
   Leads: ['lead_id', 'brand', 'website', 'contact_name', 'email', 'email_status', 'country', 'time_zone',
     'niche', 'source', 'track', 'play', 'stage', 'approved', 'sender', 'touch_count', 'last_touch_at',
-    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model', 'signature'],
+    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model', 'signature', 'priority', 'signal_at'],
   Profiles: ['lead_id', 'what_they_sell', 'audience', 'signal', 'site_notes', 'updated_at'],
   Sequence: ['lead_id', 'step', 'subject', 'body', 'status', 'sent_at'],
   Messages: ['logged_at', 'lead_id', 'direction', 'from', 'to', 'subject', 'body', 'sent_at', 'thread_id',
@@ -29,7 +29,8 @@ const TABS = {
   Drafts: ['lead_id', 'created_at', 'reply_to_message_id', 'draft_body', 'status', 'sent_at', 'model'],
   Sources: ['url', 'source', 'niche', 'country', 'track', 'max_pages', 'status', 'last_run', 'found', 'new', 'result'],
   Apify: ['actor', 'input_json', 'max_items', 'status', 'run_id', 'started_at', 'items', 'new', 'result'],
-  Discovery: ['domain', 'source', 'niche', 'country', 'track', 'status', 'score', 'reasons', 'checked_at', 'lead_id', 'signals', 'data', 'brand', 'contact_name', 'emails', 'phone'],
+  Discovery: ['domain', 'source', 'niche', 'country', 'track', 'status', 'score', 'reasons', 'checked_at', 'lead_id', 'signals', 'data', 'brand', 'contact_name', 'emails', 'phone', 'priority', 'signal_at'],
+  Signals: ['signal_id', 'found_at', 'domain', 'lead_id', 'source', 'kind', 'urgency', 'who', 'text', 'url', 'status'],
 };
 
 const STAGES = ['New', 'Contacted', 'Finished', 'Replied', 'Talking', 'Call booked', 'Won', 'Lost', 'Bounced', 'Unsubscribed'];
@@ -57,6 +58,9 @@ function defaultSettings_() {
     ['RAMP_PER_WEEK', '5', 'Added to the daily cap each week.'],
     ['DAILY_CAP_MAX', '20', 'Hard ceiling per day for this Gmail.'],
     ['MAX_PER_RUN', '2', 'Emails per hourly run, so sends are spread through the day.'],
+    ['HOT_EXTRA_PER_DAY', '5', 'Hot leads (someone publicly asked a question, posted a job, asked for store feedback) may be sent this many emails per day ON TOP of the daily cap.'],
+    ['HOT_PER_RUN', '4', 'Emails per hourly run when hot leads are waiting (normal leads still use MAX_PER_RUN).'],
+    ['HOT_WINDOW_HOURS', '72', 'A lead stays Hot for this long after its signal. Hot leads are prepared and sent first, inside the lead\'s working hours but including weekends.'],
     ['SEND_START_HOUR', '9', 'Earliest hour to send, in the LEAD\'s local time.'],
     ['SEND_END_HOUR', '17', 'Stop sending at this hour (lead\'s local time).'],
     ['FOLLOWUP_GAPS', '3,4,5,6', 'Days between steps 1>2, 2>3, 3>4, 4>5.'],
@@ -255,11 +259,19 @@ function leadTz_(lead) {
 }
 
 /** True if it is currently working hours (and a weekday, unless SEND_WEEKENDS) where the lead is. */
-function inLeadWindow_(lead, S) {
+/** True while a lead's live signal (public question, job post, feedback request) is fresh. Hot leads jump the queue. */
+function isHot_(lead, S) {
+  if (lc_(lead.priority) !== 'hot' || !lead.signal_at) return false;
+  const t = new Date(lead.signal_at).getTime();
+  const hrs = Number((S && S.HOT_WINDOW_HOURS) || 72);
+  return !isNaN(t) && Date.now() - t < hrs * 3600000;
+}
+
+function inLeadWindow_(lead, S, hot) {
   const tz = leadTz_(lead), now = new Date();
   const hour = Number(Utilities.formatDate(now, tz, 'H'));
   const day = Utilities.formatDate(now, tz, 'u'); // 1 Mon .. 7 Sun
-  if (!isTrue_(S.SEND_WEEKENDS) && (day === '6' || day === '7')) return false;
+  if (!hot && !isTrue_(S.SEND_WEEKENDS) && (day === '6' || day === '7')) return false;
   return hour >= Number(S.SEND_START_HOUR || 9) && hour < Number(S.SEND_END_HOUR || 17);
 }
 
@@ -326,8 +338,10 @@ function sendDue(ignoreHours) {
     const msgs = read_('Messages');
 
     const sentToday = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && isToday_(m.sent_at)).length;
-    let budget = Math.min(dailyCap_(S) - sentToday, Number(S.MAX_PER_RUN) || 2, MailApp.getRemainingDailyQuota() - 5);
-    if (budget <= 0) { if (ignoreHours === true) toast_('Nothing sent: daily cap or per-run limit reached.'); return; }
+    const quota = MailApp.getRemainingDailyQuota() - 5;
+    let budget = Math.min(dailyCap_(S) - sentToday, Number(S.MAX_PER_RUN) || 2, quota);
+    let hotBudget = Math.min(dailyCap_(S) + (Number(S.HOT_EXTRA_PER_DAY) || 5) - sentToday, Number(S.HOT_PER_RUN) || 4, quota);
+    if (budget <= 0 && hotBudget <= 0) { if (ignoreHours === true) toast_('Nothing sent: daily cap or per-run limit reached.'); return; }
 
     const now = new Date();
     const due = leads.rows.filter(l =>
@@ -335,17 +349,19 @@ function sendDue(ignoreHours) {
       ['New', 'Contacted', ''].indexOf(String(l.stage)) !== -1 &&
       sendableStatus_(l.email_status, S) && l.email &&
       (!l.sender || lc_(l.sender) === me) &&
-      (ignoreHours === true || inLeadWindow_(l, S)) &&
+      (ignoreHours === true || inLeadWindow_(l, S, isHot_(l, S))) &&
       (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now)));
-    due.sort((a, b) => Number(b.touch_count || 0) - Number(a.touch_count || 0)); // follow-ups first
+    due.sort((a, b) => (isHot_(b, S) ? 1 : 0) - (isHot_(a, S) ? 1 : 0) || Number(b.touch_count || 0) - Number(a.touch_count || 0)); // hot leads first, then follow-ups
 
     const gaps = String(S.FOLLOWUP_GAPS).split(',').map(Number);
     let sent = 0;
     for (const lead of due) {
-      if (budget <= 0) break;
+      if (budget <= 0 && hotBudget <= 0) break;
+      const hot = isHot_(lead, S);
+      if (hot ? hotBudget <= 0 : budget <= 0) continue;
       const id = String(lead.lead_id);
       const step = Number(lead.touch_count || 0) + 1;
-      const steps = seq.rows.filter(r => String(r.lead_id) === id);
+      const steps = seq.rows.filter(r => String(r.lead_id) === id && r.status !== 'Superseded');
       const row = steps.find(r => Number(r.step) === step && r.status !== 'Sent' && r.status !== 'Stopped');
       if (!row) continue;
       const lastStep = Math.max.apply(null, steps.map(r => Number(r.step)));
@@ -386,8 +402,9 @@ function sendDue(ignoreHours) {
         sent_at: now, thread_id: res.threadId, message_id: res.id, sender_account: me,
       });
 
-      budget--; sent++;
-      if (budget > 0) Utilities.sleep(20000 + Math.floor(Math.random() * 40000));
+      if (!hot) budget--;
+      hotBudget--; sent++;
+      if (budget > 0 || hotBudget > 0) Utilities.sleep(20000 + Math.floor(Math.random() * 40000));
     }
     if (ignoreHours === true) {
       if (sent > 0) toast_(sent + ' email(s) sent.');

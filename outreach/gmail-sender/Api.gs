@@ -13,7 +13,7 @@
  * directly: approving a draft or lead only queues it for the normal sender.
  */
 
-const API_SETTINGS_ALLOWED_ = ['PAUSED', 'AUTO_APPROVE', 'SEND_TO_CATCH_ALL', 'MIN_FIT_SCORE', 'DAILY_CAP_START', 'MAX_PER_RUN', 'AI_ORDER'];
+const API_SETTINGS_ALLOWED_ = ['HOT_EXTRA_PER_DAY', 'HOT_PER_RUN', 'HOT_WINDOW_HOURS', 'PAUSED', 'AUTO_APPROVE', 'SEND_TO_CATCH_ALL', 'MIN_FIT_SCORE', 'DAILY_CAP_START', 'MAX_PER_RUN', 'AI_ORDER'];
 const API_LEAD_FIELDS_ = ['lead_id', 'brand', 'website', 'contact_name', 'email', 'email_status', 'country', 'time_zone', 'niche', 'source',
   'track', 'play', 'notes', 'platform', 'business_model', 'signature'];
 
@@ -57,6 +57,7 @@ function apiRoute_(action, a) {
       case 'add_lead': return apiAddLead_(a);
       case 'add_domains': return apiAddDomains_(a);
       case 'add_discovery_rows': return apiAddDiscoveryRows_(a);
+      case 'add_signals': return apiAddSignals_(a);
       case 'set_settings': return apiSetSettings_(a);
       default: throw new Error('unknown action: ' + action);
     }
@@ -252,16 +253,42 @@ function apiAddDiscoveryRows_(a) {
   const disc = read_('Discovery');
   const byDomain = {};
   disc.rows.forEach(r => { byDomain[cleanDomain_(r.domain)] = r; });
+  const leadsTab = read_('Leads');
   const inLeads = {};
-  read_('Leads').rows.forEach(l => { if (l.website) inLeads[cleanDomain_(l.website)] = true; });
-  let added = 0, merged = 0, skipped = 0;
+  leadsTab.rows.forEach(l => { if (l.website) inLeads[cleanDomain_(l.website)] = l; });
+  let sigTab = null;
+  try { sigTab = read_('Signals'); } catch (e) { /* run Outreach > Set up tabs to enable sightings */ }
+  const sighted = {};
+  if (sigTab) sigTab.rows.forEach(s => { if (lc_(s.kind) === 'also found on') sighted[cleanDomain_(s.domain) + '|' + srcKey_(s.source)] = true; });
+  let added = 0, merged = 0, skipped = 0, sightings = 0;
+  // A domain we already hold, found again by ANOTHER source: keep what that source knows (emails, contact, phone) and log it.
+  const sighting = (d, x, emails, lead, discRow) => {
+    if (!sigTab) return false;
+    const key = d + '|' + srcKey_(x.source);
+    if (sighted[key] || (discRow && srcKey_(discRow.source) === srcKey_(x.source)) || (lead && srcKey_(lead.source) === srcKey_(x.source))) return false;
+    sighted[key] = true;
+    const text = ['Also listed on ' + (x.source || 'another source'), x.brand, x.country, x.niche, emails.length ? 'emails: ' + emails.join(', ') : '', x.phone ? 'phone: ' + x.phone : '', x.signals, x.data]
+      .filter(Boolean).join(' | ').slice(0, 900);
+    appendObj_('Signals', { signal_id: 'sig-' + Utilities.getUuid().slice(0, 8), found_at: new Date(), domain: d, lead_id: lead ? lead.lead_id : (discRow && discRow.lead_id) || '',
+      source: x.source || '', kind: 'Also found on', urgency: 'Normal', who: '', text: text, url: '', status: 'New' });
+    if (lead) {
+      if (x.contact_name && !String(lead.contact_name || '').trim()) set_(leadsTab, lead, 'contact_name', String(x.contact_name).slice(0, 120));
+      if (emails.length && !String(lead.email || '').trim()) { set_(leadsTab, lead, 'email', emails[0]); set_(leadsTab, lead, 'email_status', 'unverified'); }
+      const bits = [];
+      emails.forEach(e => { if (lc_(lead.email) !== e && String(lead.notes || '').toLowerCase().indexOf(e) === -1) bits.push(e); });
+      if (bits.length) set_(leadsTab, lead, 'notes', (String(lead.notes || '') + ' | also seen on ' + (x.source || '?') + ', other emails: ' + bits.join(', ') + (x.phone ? ', phone ' + x.phone : '')).slice(0, 900));
+    }
+    sightings++;
+    return true;
+  };
   rows.forEach(x => {
     const d = cleanDomain_(x.domain);
-    if (!/^[a-z0-9][a-z0-9.-]*\.[a-z]{2,10}$/.test(d) || INFRA_DOMAINS_.test(d + '.') || inLeads[d]) { skipped++; return; }
+    if (!/^[a-z0-9][a-z0-9.-]*\.[a-z]{2,10}$/.test(d) || INFRA_DOMAINS_.test(d + '.')) { skipped++; return; }
     const emails = (x.emails || []).map(e => String(e).toLowerCase().trim()).filter(e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e));
+    if (inLeads[d]) { if (!sighting(d, x, emails, inLeads[d], null)) skipped++; return; }
     const have = byDomain[d];
     if (have) {
-      let changed = false;
+      let changed = sighting(d, x, emails, null, have);
       const mergedEmails = String(have.emails || '').split(/[|,;\s]+/).filter(Boolean);
       emails.forEach(e => { if (mergedEmails.indexOf(e) === -1) { mergedEmails.push(e); changed = true; } });
       if (changed) set_(disc, have, 'emails', mergedEmails.join(' | '));
@@ -275,6 +302,96 @@ function apiAddDiscoveryRows_(a) {
     byDomain[d] = { domain: d };
     added++;
   });
-  return { received: rows.length, added: added, merged: merged, skipped: skipped };
+  return { received: rows.length, added: added, merged: merged, skipped: skipped, sightings: sightings };
 }
 
+
+
+/**
+ * Live signals from Reddit, Quora, job posts, anything public: { domain, source, kind, urgency, who, text, url }.
+ * kind: Question | Hiring | Feedback request | Launch | Complaint | Mention. urgency "Hot" jumps the whole queue.
+ * Nothing is dropped: the signal is logged in the Signals tab and attached to the lead, or to the Discovery row, or it
+ * creates a new Discovery row. A lead not yet emailed that turns Hot gets its unsent sequence replaced by one written
+ * around the signal (needs your approval again unless AUTO_APPROVE). A lead already emailed gets an alert only.
+ */
+function apiAddSignals_(a) {
+  const rows = (a.rows || []).slice(0, 200);
+  const S = settings_();
+  const sigs = read_('Signals'), leads = read_('Leads'), disc = read_('Discovery'), seq = read_('Sequence');
+  const seen = {};
+  sigs.rows.forEach(s => { seen[cleanDomain_(s.domain) + '|' + String(s.url || s.text).slice(0, 200)] = true; });
+  const leadBy = {}, discBy = {};
+  leads.rows.forEach(l => { if (l.website) leadBy[cleanDomain_(l.website)] = l; });
+  disc.rows.forEach(r => { if (r.domain) discBy[cleanDomain_(r.domain)] = r; });
+  const out = { received: rows.length, logged: 0, duplicates: 0, hot: 0, attached_to_lead: 0, attached_to_discovery: 0, new_discovery: 0, already_contacted: 0, unmatched: 0 };
+  const alerts = [];
+  const now = new Date();
+  const addNote = (l, msg) => set_(leads, l, 'notes', (msg + (l.notes ? ' | ' + l.notes : '')).slice(0, 900));
+
+  rows.forEach(x => {
+    const d = cleanDomain_(x.domain || '');
+    const kind = ['Question', 'Hiring', 'Feedback request', 'Launch', 'Complaint', 'Mention'].indexOf(x.kind) !== -1 ? x.kind : 'Mention';
+    const urgent = x.urgency ? lc_(x.urgency) === 'hot' : ['Question', 'Hiring', 'Feedback request'].indexOf(kind) !== -1;
+    const text = String(x.text || '').slice(0, 1500);
+    const key = d + '|' + String(x.url || text).slice(0, 200);
+    if (seen[key]) { out.duplicates++; return; }
+    seen[key] = true;
+    const tag = '[' + kind + (x.source ? ', ' + x.source : '') + ']';
+    const lead = d ? leadBy[d] : null;
+    let leadId = lead ? lead.lead_id : '';
+
+    if (lead) {
+      const stage = String(lead.stage || 'New');
+      const fresh = ['New', ''].indexOf(stage) !== -1 && Number(lead.touch_count || 0) === 0;
+      if (urgent && fresh) {
+        set_(leads, lead, 'priority', 'Hot');
+        set_(leads, lead, 'signal_at', now);
+        set_(leads, lead, 'prep_tries', 0);
+        set_(leads, lead, 'prep_note', '');
+        // The email already written does not know about this signal: replace what has not been sent.
+        seq.rows.filter(r => String(r.lead_id) === String(lead.lead_id) && ['Sent', 'Stopped', 'Superseded'].indexOf(String(r.status)) === -1)
+          .forEach(r => set_(seq, r, 'status', 'Superseded'));
+        if (!isTrue_(S.AUTO_APPROVE)) set_(leads, lead, 'approved', false);
+        out.hot++;
+        alerts.push('HOT ' + tag + ' ' + (lead.brand || d) + ': ' + text.slice(0, 200) + (x.url ? ' ' + x.url : '') + ' (new email will be ready within about an hour, then tick approved)');
+      } else if (!fresh && ['Contacted', 'Finished'].indexOf(stage) !== -1 && urgent) {
+        out.already_contacted++;
+        alerts.push('ALREADY EMAILED ' + tag + ' ' + (lead.brand || d) + ': ' + text.slice(0, 200) + (x.url ? ' ' + x.url : '') + ' (consider a personal reply)');
+      }
+      addNote(lead, tag + ' ' + text.slice(0, 200));
+      out.attached_to_lead++;
+    } else if (d) {
+      const r = discBy[d];
+      if (r) {
+        set_(disc, r, 'signals', (tag + ' ' + text.slice(0, 300) + (r.signals ? ' || ' + r.signals : '')).slice(0, 2000));
+        if (urgent) {
+          set_(disc, r, 'priority', 'Hot');
+          set_(disc, r, 'signal_at', now);
+          if (['Skipped', 'Error'].indexOf(String(r.status)) !== -1 && !String(r.lead_id || '').trim()) { set_(disc, r, 'status', 'New'); set_(disc, r, 'reasons', 'reopened: hot signal'); }
+          out.hot++;
+          alerts.push('HOT ' + tag + ' ' + d + ': ' + text.slice(0, 200) + (x.url ? ' ' + x.url : ''));
+        }
+        leadId = r.lead_id || '';
+        out.attached_to_discovery++;
+      } else {
+        appendObj_('Discovery', { domain: d, source: x.source || 'signal', status: 'New', priority: urgent ? 'Hot' : '', signal_at: urgent ? now : '',
+          signals: (tag + ' ' + text).slice(0, 2000), data: x.url || '' });
+        discBy[d] = { domain: d };
+        out.new_discovery++;
+        if (urgent) { out.hot++; alerts.push('HOT ' + tag + ' ' + d + ' (new store): ' + text.slice(0, 200) + (x.url ? ' ' + x.url : '')); }
+      }
+    } else {
+      out.unmatched++;
+      if (urgent) alerts.push('NO STORE LINK ' + tag + ' ' + (x.who || '') + ': ' + text.slice(0, 200) + (x.url ? ' ' + x.url : '') + ' (reply on the platform yourself)');
+    }
+    appendObj_('Signals', { signal_id: 'sig-' + Utilities.getUuid().slice(0, 8), found_at: now, domain: d, lead_id: leadId, source: x.source || '', kind: kind,
+      urgency: urgent ? 'Hot' : 'Normal', who: String(x.who || '').slice(0, 120), text: text, url: x.url || '', status: 'New' });
+    out.logged++;
+  });
+  if (alerts.length && S.ALERT_EMAIL) {
+    try { MailApp.sendEmail(S.ALERT_EMAIL, 'Hot signals: ' + alerts.length + ' to look at', alerts.join('\n\n')); } catch (e) { /* mail quota */ }
+  }
+  return out;
+}
+
+function srcKey_(v) { return lc_(String(v || '').split(/\s+/)[0]); }

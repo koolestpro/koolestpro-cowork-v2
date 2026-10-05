@@ -47,7 +47,8 @@ function prepareLeads_(interactive) {
 
 function candidates_(leads, filter, n) {
   return leads.rows.filter(l => l.lead_id && ['New', ''].indexOf(String(l.stage)) !== -1 &&
-    Number(l.prep_tries || 0) < PREP_MAX_TRIES_ && filter(l)).slice(0, n);
+    Number(l.prep_tries || 0) < PREP_MAX_TRIES_ && filter(l))
+    .sort((a, b) => (isHot_(b) ? 1 : 0) - (isHot_(a) ? 1 : 0)).slice(0, n); // hot leads are prepared first
 }
 
 function note_(leads, lead, msg, failed) {
@@ -307,17 +308,20 @@ function writeSequences_(S, stats, timeLeft) {
   const profiles = read_('Profiles');
   const seq = read_('Sequence');
   const has1 = {};
-  seq.rows.forEach(r => { if (Number(r.step) === 1) has1[String(r.lead_id)] = true; });
+  seq.rows.forEach(r => { if (Number(r.step) === 1 && r.status !== 'Superseded') has1[String(r.lead_id)] = true; });
   const ex = String(S.VOICE_EXAMPLES || '').trim();
+  let sigRows = [];
+  try { sigRows = read_('Signals').rows; } catch (e) { /* tab not created yet: run Outreach > Set up tabs */ }
 
   candidates_(leads, l => !has1[String(l.lead_id)] && profiles.rows.some(p => String(p.lead_id) === String(l.lead_id)), PREP_BATCH_.sequence).forEach(lead => {
     if (!timeLeft() || stats.limited) return;
     try {
       const p = profiles.rows.find(x => String(x.lead_id) === String(lead.lead_id));
-      const sys = BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[regionKey_(lead.country)] + '\n\n' + (lc_(lead.track) === 'partner' ? SEQ_PARTNER_TASK_ : SEQ_TASK_) +
+      const sys = BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[regionKey_(lead.country)] + '\n\n' + (lc_(lead.track) === 'partner' ? SEQ_PARTNER_TASK_ : SEQ_TASK_) + (liveSignals_(sigRows, lead) ? '\n\n' + SIGNAL_TASK_ : '') +
         (ex ? '\n\nReal writing by Ridwan. Match its voice, length and rhythm:\n' + ex : '');
       const user = 'LEAD: ' + [lead.brand, lead.contact_name || '(no contact name)', lead.website].filter(String).join(' | ') +
         '\nPlatform: ' + (lead.platform || 'unknown') + '. Business model: ' + (lead.business_model || 'unknown') + '. Country: ' + (lead.country || '') + '. Niche: ' + (lead.niche || '') + '. Track: ' + (lead.track || '') + '. Play: ' + (lead.play || '') + '. Source: ' + (lead.source || '') +
+        (liveSignals_(sigRows, lead) ? '\nLIVE SIGNALS (most recent first):\n' + liveSignals_(sigRows, lead) : '') + (alsoOn_(sigRows, lead) ? '\nAlso listed on: ' + alsoOn_(sigRows, lead) : '') +
         '\nWhat they sell: ' + p.what_they_sell + '\nAudience: ' + p.audience + '\nSignal: ' + p.signal + '\nObservations: ' + p.site_notes + '\nNotes: ' + (lead.notes || '');
       const out = callAi_(S, sys, user, 1800);
       const j = parseJson_(out.text);
@@ -377,4 +381,21 @@ function pickBestEmail_(list, host, contactName) {
   const uniq = arr.filter((x, i) => arr.indexOf(x) === i && rankEmail_(x, host, contactName) > -100);
   uniq.sort((a, b) => rankEmail_(b, host, contactName) - rankEmail_(a, host, contactName));
   return { best: uniq[0] || '', others: uniq.slice(1) };
+}
+
+
+// ---------- Live signals (public questions, job posts, feedback requests) ----------
+const SIGNAL_TASK_ = 'THIS LEAD HAS A LIVE SIGNAL: someone at the business publicly asked something, posted a job, or asked for feedback on their store (see LIVE SIGNALS). Email 1 must respond to that directly and be useful about it before offering anything. It overrides the site-observation rule: the observation is the signal itself. Do not paste the post, do not name the platform unless the signal is a public post about their own store ("saw your post asking about X" is fine). For a hiring signal, speak to the role they described and offer to take that work on. Use only what the signal says: nothing personal, nothing creepy. If a signal is only "also listed on" another site, ignore it for the angle.';
+
+function liveSignals_(rows, lead) {
+  const id = String(lead.lead_id), dom = cleanDomain_(lead.website || '');
+  return rows.filter(s => lc_(s.kind) !== 'also found on' && ((s.lead_id && String(s.lead_id) === id) || (dom && cleanDomain_(s.domain) === dom)))
+    .sort((a, b) => new Date(b.found_at) - new Date(a.found_at)).slice(0, 3)
+    .map(s => '- [' + s.kind + (s.who ? ', ' + s.who : '') + (s.source ? ', ' + s.source : '') + '] ' + String(s.text).slice(0, 500)).join('\n');
+}
+
+function alsoOn_(rows, lead) {
+  const id = String(lead.lead_id), dom = cleanDomain_(lead.website || '');
+  return rows.filter(s => lc_(s.kind) === 'also found on' && ((s.lead_id && String(s.lead_id) === id) || (dom && cleanDomain_(s.domain) === dom)))
+    .slice(0, 4).map(s => String(s.text).slice(0, 160)).join(' ; ');
 }
