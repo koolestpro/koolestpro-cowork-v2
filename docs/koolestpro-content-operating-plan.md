@@ -1200,3 +1200,7 @@ Scraper: Merchant Genius skips stores newer than 45 days; Zik keeps est. revenue
 ### 2026-10-05: scraper moved to GitHub Actions (cloud)
 
 `.github/workflows/directory-scrape.yml` runs the directory scraper daily at 06:30 UTC (07:30 Lagos) on GitHub's runners, so the Mac no longer has to be awake. Repo secrets needed: OUTREACH_API_URL, OUTREACH_API_TOKEN. State (seen domains, next myip.ms page, Merchant Genius dates) is committed to outreach/scrapers/state-cloud/. Risk: datacenter IPs may hit Cloudflare/CAPTCHA on some directories; the scraper skips a blocked site and never bypasses it. Run it once by hand from the Actions tab to see which sources work from the cloud.
+
+### 2026-10-05 (later): opt-out and deliverability
+
+Code.gs: every first email and follow-up now ends with an opt-out line (Settings OPT_OUT_LINE, default "reply STOP") and an optional postal address (POSTAL_ADDRESS, needed for US recipients). Outgoing cold emails carry a List-Unsubscribe mailto header. A reply that starts with or clearly says STOP / unsubscribe / remove me / do not contact moves the lead to stage "Unsubscribed", stops its sequence, clears approval, and skips the AI draft and alert. Deliverability check (dig): koolestpro.com has Cloudflare email routing only (SPF `include:_spf.mx.cloudflare.net`, no DMARC, no Google DKIM), which is fine while sending from the Gmail address, because gmail.com authenticates itself. Moving sends to a koolestpro.com address needs SPF including Google, a Google DKIM key and a DMARC record first.

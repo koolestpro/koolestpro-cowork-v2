@@ -32,7 +32,7 @@ const TABS = {
   Discovery: ['domain', 'source', 'niche', 'country', 'track', 'status', 'score', 'reasons', 'checked_at', 'lead_id', 'signals', 'data', 'brand', 'contact_name', 'emails', 'phone'],
 };
 
-const STAGES = ['New', 'Contacted', 'Finished', 'Replied', 'Talking', 'Call booked', 'Won', 'Lost', 'Bounced'];
+const STAGES = ['New', 'Contacted', 'Finished', 'Replied', 'Talking', 'Call booked', 'Won', 'Lost', 'Bounced', 'Unsubscribed'];
 const DRAFT_STATUSES = ['Needs draft', 'Ready for review', 'Approved', 'Sent', 'Discarded'];
 
 function defaultSettings_() {
@@ -49,6 +49,8 @@ function defaultSettings_() {
     ['SIGNATURE_UK', '', 'Optional override for UK leads. Empty = not used.'],
     ['SIGNATURE_US', '', 'Optional override for US and Canada leads. Empty = not used.'],
     ['SIGNATURE_EU', '', 'Optional override for European leads. Empty = not used.'],
+    ['OPT_OUT_LINE', "If this isn't relevant, just reply STOP and I won't email you again.", 'Added under the signature of every first email and follow-up. Leave empty only if you accept the legal risk.'],
+    ['POSTAL_ADDRESS', '', 'Your business address. Required by CAN-SPAM for US recipients; added under the opt-out line when filled in.'],
     ['ALERT_EMAIL', '', 'Where reply alerts and TEST_MODE emails go (your main Gmail).'],
     ['START_DATE', Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd'), 'Warm-up counts weeks from this date.'],
     ['DAILY_CAP_START', '5', 'Emails per day in week 1.'],
@@ -214,6 +216,23 @@ function signatureFor_(lead, S, isFollowUp) {
   return (play && pick('SIGNATURE_' + play)) || (track && pick('SIGNATURE_' + track)) || (market && pick('SIGNATURE_' + market)) || pick('SIGNATURE');
 }
 
+/** Opt-out line and postal address, added to every cold email and follow-up (not to your replies in a live conversation). */
+const DEFAULT_OPT_OUT_ = "If this isn't relevant, just reply STOP and I won't email you again.";
+function complianceFooter_(S) {
+  const line = ('OPT_OUT_LINE' in S) ? String(S.OPT_OUT_LINE || '').trim() : DEFAULT_OPT_OUT_;   // key present but empty = no line
+  const addr = String(S.POSTAL_ADDRESS || '').trim();
+  return [line, addr].filter(String).join('\n');
+}
+
+/** True when a reply is asking not to be contacted. Looks at the start of the reply, so a long message that merely mentions "stop" is not caught. */
+function isOptOut_(text) {
+  const t = String(text || '').trim().toLowerCase().replace(/\s+/g, ' ').slice(0, 220);
+  if (!t) return false;
+  return /^(please )?(stop|unsubscribe|remove me|remove us|opt[ -]?out)\b/.test(t) ||
+    /\b(unsubscribe|opt[ -]?out|take me off|remove me|remove us|stop (emailing|contacting|messaging|sending)|do not (email|contact)|don'?t (email|contact) me|no more emails)\b/.test(t) ||
+    /^(not interested|no thanks?|no thank you)\b.*\b(stop|remove|unsubscribe)\b/.test(t);
+}
+
 // ---------- Lead time zones and working hours ----------
 
 const COUNTRY_TZ_ = {
@@ -334,13 +353,14 @@ function sendDue(ignoreHours) {
 
       const subject = step === 1 ? String(row.subject) : 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
       const sig = signatureFor_(lead, S, step > 1);
-      const body = String(row.body).replace(/\{\{greeting\}\}/g, localGreeting_(lead)).trim() + (sig ? '\n\n' + sig : '');
+      const foot = complianceFooter_(S);
+      const body = String(row.body).replace(/\{\{greeting\}\}/g, localGreeting_(lead)).trim() + (sig ? '\n\n' + sig : '') + (foot ? '\n\n' + foot : '');
       const to = isTrue_(S.TEST_MODE) ? S.ALERT_EMAIL : String(lead.email).trim();
       const finalSubject = isTrue_(S.TEST_MODE) ? '[TEST to ' + lead.email + '] ' + subject : subject;
 
       const res = sendRaw_({
         to: to, subject: finalSubject, body: body, name: S.SENDER_NAME, from: me,
-        threadId: step > 1 ? lead.thread_id : null, inReplyTo: step > 1 ? lead.first_message_id : null,
+        threadId: step > 1 ? lead.thread_id : null, inReplyTo: step > 1 ? lead.first_message_id : null, unsubscribe: true,
       });
 
       if (step === 1) {
@@ -473,6 +493,17 @@ function checkReplies_() {
       if (outbound) {
         // You replied from Gmail directly: keep the record current.
         set_(leads, lead, 'last_touch_at', m.getDate());
+        continue;
+      }
+
+      // "STOP" and friends: end the sequence, never email again, no AI draft, no alert.
+      if (isOptOut_(stripQuoted_(m.getPlainBody()))) {
+        set_(leads, lead, 'stage', 'Unsubscribed');
+        set_(leads, lead, 'next_touch_at', '');
+        set_(leads, lead, 'approved', false);
+        seq.rows.filter(r => String(r.lead_id) === String(lead.lead_id) && r.status !== 'Sent')
+          .forEach(r => set_(seq, r, 'status', 'Stopped'));
+        set_(leads, lead, 'notes', (String(lead.notes || '') + ' | Unsubscribed ' + Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd')).replace(/^ \| /, ''));
         continue;
       }
 
@@ -774,6 +805,7 @@ function sendRaw_(o) {
     'Content-Type: text/plain; charset=UTF-8',
     'Content-Transfer-Encoding: base64',
   ];
+  if (o.unsubscribe) headers.push('List-Unsubscribe: <mailto:' + o.from + '?subject=STOP>');
   if (o.inReplyTo) {
     headers.push('In-Reply-To: ' + o.inReplyTo);
     headers.push('References: ' + o.inReplyTo);
