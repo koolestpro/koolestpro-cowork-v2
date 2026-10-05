@@ -1,0 +1,8 @@
+{
+  "_note": "Rows the 'this week' overwrite in populate_sheet.py must never bump. Matched by pipeline_item_id (all of an item's rows) or post_id. Added 2026-10-05, Ridwan's instruction: newer builds still jump OLDER backlog, but never displace these. Health-check reschedules of missed rows are unaffected.",
+  "pipeline_item_ids": [
+    "cro-fix-flybyjing_chili-crisp-pdp-20261004",
+    "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927"
+  ],
+  "post_ids": []
+}

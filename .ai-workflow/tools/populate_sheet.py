@@ -127,6 +127,7 @@ def fetch_live_rows(root):
             rows.append({
                 "row_number": i,
                 "post_id": r[0] if len(r) > 0 else "",
+                "pipeline_item_id": r[1] if len(r) > 1 else "",
                 "stream": r[2] if len(r) > 2 else "",
                 "platform": r[3] if len(r) > 3 else "",
                 "scheduled_date": r[4] if len(r) > 4 else "",
@@ -653,6 +654,21 @@ def _find_bump_target(slot, after_monday, taken_keys, linkedin_dates_taken, loca
     return local_date, local_time  # pragma: no cover — safety-cap fallback
 
 
+def load_protected(tools_dir=None):
+    """Rows the this-week overwrite must never bump (protected_rows.json,
+    added 2026-10-05). Returns (pipeline_item_ids, post_ids)."""
+    path = os.path.join(tools_dir or os.path.dirname(os.path.abspath(__file__)), "protected_rows.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            d = json.load(f)
+        return set(d.get("pipeline_item_ids", [])), set(d.get("post_ids", []))
+    except FileNotFoundError:
+        return set(), set()
+    except Exception as e:
+        print(f"[sheet] WARNING: could not read protected_rows.json ({e}); no rows protected this run")
+        return set(), set()
+
+
 def build_rows(record, week_monday, local_tz=DEFAULT_LOCAL_TZ, taken_keys=None, pin_to_start=False,
                 known_rows=None, overwrite_this_week=True):
     stream = record.get("type", "")
@@ -670,6 +686,7 @@ def build_rows(record, week_monday, local_tz=DEFAULT_LOCAL_TZ, taken_keys=None, 
     linkedin_dates_taken = {r["scheduled_date"] for r in known_rows
                              if r.get("platform") == "LinkedIn" and r.get("scheduled_date")}
     used_bump_ids = set()
+    protected_items, protected_posts = load_protected()
     rows, warnings, bumps = [], [], []
     variant_seen = {}  # caption_key -> how many slots have already drawn from it
     for slot in slots:
@@ -686,6 +703,8 @@ def build_rows(record, week_monday, local_tz=DEFAULT_LOCAL_TZ, taken_keys=None, 
                 natural_local_time = natural_local_dt.strftime("%H:%M")
                 for r in known_rows:
                     if (r.get("post_id") not in used_bump_ids
+                            and r.get("post_id") not in protected_posts
+                            and r.get("pipeline_item_id") not in protected_items
                             and r.get("stream") == stream
                             and r.get("platform") == slot["platform"]
                             and r.get("scheduled_time_local") == natural_local_time
@@ -878,6 +897,7 @@ def main():
         live_counterpart = live_by_id.get(r.get("post_id"))
         known_rows.append({
             "post_id": r.get("post_id"),
+            "pipeline_item_id": r.get("pipeline_item_id"),
             "stream": r.get("stream"),
             "platform": r.get("platform"),
             # prefer the LIVE date/time/status when a live counterpart exists —

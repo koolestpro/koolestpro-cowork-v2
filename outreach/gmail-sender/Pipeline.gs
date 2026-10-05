@@ -73,10 +73,78 @@ function findEmails_(S, stats, timeLeft) {
         note_(leads, lead, 'email found on site', false);
         stats.emails++;
       } else {
-        note_(leads, lead, 'no email found on site: add one by hand, or use another source', true);
+        const g = guessEmail_(S, lead);
+        if (g && g.email) {
+          set_(leads, lead, 'email', g.email);
+          set_(leads, lead, 'email_status', 'valid');
+          if (g.name && !String(lead.contact_name || '').trim()) set_(leads, lead, 'contact_name', g.name);
+          note_(leads, lead, 'not published on the site: guessed ' + g.email + ' and the verifier said valid' + (g.name ? ' (owner/founder: ' + g.name + ')' : ''), false);
+          stats.emails++;
+        } else {
+          note_(leads, lead, 'no email on the site and no guessed address verified as valid' + (g && g.why ? ' (' + g.why + ')' : '') + ': add one by hand, or use another source', true);
+        }
       }
     } catch (e) { note_(leads, lead, 'email search failed: ' + String(e.message || e).slice(0, 300), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
   });
+}
+
+/** One verifier call. Returns 'valid' | 'invalid' | 'catch-all' | 'risky' | '' (no key or call failed). */
+function verifyOne_(email) {
+  const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
+  if (!key) return '';
+  try {
+    const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key), { muteHttpExceptions: true });
+    if (res.getResponseCode() !== 200) return '';
+    const j = JSON.parse(res.getContentText());
+    const st = lc_(j.Status || j.status || '');
+    return st === 'valid' ? 'valid' : (st === 'invalid' ? 'invalid' : (/catch/.test(st) ? 'catch-all' : 'risky'));
+  } catch (e) { return ''; }
+}
+
+/** Asks the AI for the owner/founder name from the About text. Returns '' when it can't tell. */
+function ownerName_(S, host) {
+  let text = '';
+  for (const p of ['/pages/about', '/pages/about-us', '/pages/our-story', '/about']) {
+    try {
+      const pg = fetchPage_(host + p);
+      if (!pg.ok) continue;
+      text = pg.html.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 3500);
+      if (text.length > 200) break;
+    } catch (e) {}
+  }
+  if (text.length < 200) return '';
+  try {
+    const r = callAi_(S, 'You read a store\'s About text. Reply with JSON only: {"name":"First Last"} for the founder or owner if the text names one, otherwise {"name":""}. Never guess.', text, 80);
+    const m = String(r.text).match(/\{[\s\S]*\}/);
+    const n = m ? String(JSON.parse(m[0]).name || '').trim() : '';
+    return /^[A-Za-z][A-Za-z'\- ]{1,40}$/.test(n) ? n : '';
+  } catch (e) { return ''; }
+}
+
+/** No email on the site: find the owner's name, try likely addresses, keep the first one the verifier calls valid. */
+function guessEmail_(S, lead) {
+  if (!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY')) return { why: 'no verifier key' };
+  const host = String(lead.website).trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/^www\./i, '').toLowerCase();
+  if (!host) return null;
+  const name = ownerName_(S, host);
+  const cands = [];
+  if (name) {
+    const parts = name.toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(String);
+    const f = parts[0], l = parts.length > 1 ? parts[parts.length - 1] : '';
+    cands.push(f + '@' + host);
+    if (l) cands.push(f + '.' + l + '@' + host, f + l + '@' + host, f[0] + l + '@' + host);
+  }
+  ['hello', 'info', 'contact', 'support', 'hi', 'team'].forEach(r => cands.push(r + '@' + host));
+  let tried = 0;
+  for (const c of cands) {
+    if (tried >= 6) break;
+    const v = verifyOne_(c);
+    if (!v) return { why: 'verifier did not answer' };
+    tried++;
+    if (v === 'valid') return { email: c, name: name };
+    if (v === 'catch-all') return { why: 'domain accepts every address, cannot prove a mailbox', name: name };
+  }
+  return { why: 'tried ' + tried + ' addresses', name: name };
 }
 
 function fetchPage_(url, timeoutMs) {
@@ -92,7 +160,7 @@ function fetchPage_(url, timeoutMs) {
 function findEmailOnSite_(website) {
   const base = String(website).trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
   const host = base.replace(/^www\./i, '').toLowerCase();
-  const paths = ['', '/pages/contact', '/contact', '/pages/contact-us', '/contact-us', '/pages/about', '/about'];
+  const paths = ['', '/pages/contact', '/contact', '/pages/contact-us', '/contact-us', '/policies/contact-information', '/pages/about', '/about', '/pages/about-us', '/pages/our-story', '/pages/faq', '/policies/refund-policy', '/policies/privacy-policy', '/policies/terms-of-service'];
   const found = {};
   for (const p of paths) {
     let page;

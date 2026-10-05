@@ -1,0 +1,106 @@
+{
+ "header": [
+  "post_id",
+  "pipeline_item_id",
+  "stream",
+  "platform",
+  "scheduled_date",
+  "scheduled_time_local",
+  "intended_et",
+  "asset_paths",
+  "caption",
+  "caption_source_tab",
+  "status",
+  "qa_status",
+  "posted_at",
+  "content_system_folder",
+  "caption_json",
+  "asset_urls"
+ ],
+ "rows": [
+  {
+   "sheet_row": 51,
+   "values": [
+    "cro-fix-caraway_fry-pan-pdp-20260907-20260923-x-1300",
+    "cro-fix-caraway_fry-pan-pdp-20260907",
+    "CRO Fix",
+    "Twitter",
+    "2026-09-30",
+    "18:00",
+    "13:00 ET",
+    "outputs/cro-fixes/caraway/koolestpro_caraway_before-after-final.png",
+    "Product Page (PDP) audit: Caraway's Fry Pan. Price sits top-right, disconnected from the title. Moved it directly underneath at display size. Small change, but now the eye doesn't have to jump.",
+    "tab-twitter-angles (manually split \u2014 source authored all 3 angles as one <pre> block with [1/3]/[2/3]/[3/3] markers instead of separate DOM nodes; harvester has no structural split point here, unlike the already-fixed multi-div case)",
+    "Draft",
+    "Needs Review: X caption variant(s) over 280-char limit: x_thread[3]=316 chars \u2014 will be rejected by X for non-Premium accounts; verify populate_sheet.py isn't joining multiple variants into one post body; claims to verify (2): linkedin: \"...mobile.  You think 18,886 reviews means the trust is...\" | linkedin: \"...pper is deciding if $125 is worth it. And de...\"; manual-visual-pending: open 22 image(s) to eyeball brand/legibility/framing",
+    "",
+    "outputs/cro-fixes/",
+    "\"Product Page (PDP) audit: Caraway's Fry Pan. Price sits top-right, disconnected from the title. Moved it directly underneath at display size. Small change, but now the eye doesn't have to jump.\"",
+    "https://res.cloudinary.com/drl0rscuf/image/upload/v1789975318/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_before-after-final.png"
+   ]
+  },
+  {
+   "sheet_row": 52,
+   "values": [
+    "cro-fix-caraway_fry-pan-pdp-20260907-20260923-li-0900",
+    "cro-fix-caraway_fry-pan-pdp-20260907",
+    "CRO Fix",
+    "LinkedIn",
+    "2026-09-30",
+    "14:00",
+    "09:00 ET",
+    "outputs/cro-fixes/caraway/koolestpro_caraway_before-after-final.png; outputs/cro-fixes/caraway/koolestpro_caraway_annotated-final.png",
+    "Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\n\nYou think 18,886 reviews means the trust is already there.\n\nIt doesn't, if the page can't render them in time.\n\nReal findings, nothing invented:\n\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \"Reviews\" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\n\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\n\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\n\nFull before/after and annotated breakdown in the carousel.\n\nRepost if this is useful to someone building a product page right now.",
+    "tab-linkedin",
+    "Draft",
+    "Needs Review: X caption variant(s) over 280-char limit: x_thread[3]=316 chars \u2014 will be rejected by X for non-Premium accounts; verify populate_sheet.py isn't joining multiple variants into one post body; claims to verify (2): linkedin: \"...mobile.  You think 18,886 reviews means the trust is...\" | linkedin: \"...pper is deciding if $125 is worth it. And de...\"; manual-visual-pending: open 22 image(s) to eyeball brand/legibility/framing",
+    "",
+    "outputs/cro-fixes/",
+    "\"Product Page (PDP) audit: Caraway's Fry Pan, on mobile.\\n\\nYou think 18,886 reviews means the trust is already there.\\n\\nIt doesn't, if the page can't render them in time.\\n\\nReal findings, nothing invented:\\n\\nThe price sits top-right, aligned with the review line, disconnected from the title above it. On a fresh load, that review line can paint as the bare word \\\"Reviews\\\" with no stars and no count, right next to the price, exactly when a shopper is deciding if $125 is worth it. And depending on what's loaded above it, the product photo itself can land past the fold.\\n\\nThe rebuild moves price directly under the title, renders stars and count inline every time, and gives the real product photo (background removed, composited on a dark surface) the whole first screen.\\n\\nSame product. Same price. The only thing that changed is the order the page tells its own story in.\\n\\nFull before/after and annotated breakdown in the carousel.\\n\\nRepost if this is useful to someone building a product page right now.\"",
+    "https://res.cloudinary.com/drl0rscuf/raw/upload/v1789584048/li/cro-fix-caraway_fry-pan-pdp-20260907-20260923-li-0900.pdf"
+   ]
+  },
+  {
+   "sheet_row": 55,
+   "values": [
+    "cro-fix-caraway_fry-pan-pdp-20260907-20260925-x-0900",
+    "cro-fix-caraway_fry-pan-pdp-20260907",
+    "CRO Fix",
+    "Twitter",
+    "2026-10-02",
+    "14:00",
+    "09:00 ET",
+    "outputs/cro-fixes/caraway/koolestpro_caraway_before-after-final.png",
+    "On a live load, the review line can paint as literal text \"Reviews,\" no stars, no count. 18,886 real reviews exist. The fix: never let the number that matters most render empty.",
+    "tab-twitter-angles (manually split \u2014 source authored all 3 angles as one <pre> block with [1/3]/[2/3]/[3/3] markers instead of separate DOM nodes; harvester has no structural split point here, unlike the already-fixed multi-div case)",
+    "Draft",
+    "Needs Review: X caption variant(s) over 280-char limit: x_thread[3]=316 chars \u2014 will be rejected by X for non-Premium accounts; verify populate_sheet.py isn't joining multiple variants into one post body; claims to verify (2): linkedin: \"...mobile.  You think 18,886 reviews means the trust is...\" | linkedin: \"...pper is deciding if $125 is worth it. And de...\"; manual-visual-pending: open 22 image(s) to eyeball brand/legibility/framing",
+    "",
+    "outputs/cro-fixes/",
+    "\"On a live load, the review line can paint as literal text \\\"Reviews,\\\" no stars, no count. 18,886 real reviews exist. The fix: never let the number that matters most render empty.\"",
+    "https://res.cloudinary.com/drl0rscuf/image/upload/v1789975318/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_before-after-final.png"
+   ]
+  },
+  {
+   "sheet_row": 78,
+   "values": [
+    "cro-fix-caraway_fry-pan-pdp-20260907-20260923-ig-1200",
+    "cro-fix-caraway_fry-pan-pdp-20260907",
+    "CRO Fix",
+    "Instagram",
+    "2026-10-14",
+    "17:00",
+    "12:00 ET",
+    "outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide1.png; outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide2.png; outputs/cro-fixes/caraway/koolestpro_caraway_fry-pan-pdp_carousel_slide3.png",
+    "Product Page (PDP) audit: Caraway's $125 fry pan has 18,886 reviews.\n\nOn a live load, that trust signal can render as just the word \"Reviews,\" with no stars and no count, right next to the price.\n\nPrice also sits disconnected from the title, and the real product photo can miss the first screen entirely.\n\nSwipe for the real before/after. Rebuild puts price under the title, stars + count inline always, and the photo front and center.\n\nSave this if you're auditing your own PDP this week.",
+    "tab-ig",
+    "Ready",
+    "Needs Review: X caption variant(s) over 280-char limit: x_thread[3]=316 chars \u2014 will be rejected by X for non-Premium accounts; verify populate_sheet.py isn't joining multiple variants into one post body; claims to verify (2): linkedin: \"...mobile.  You think 18,886 reviews means the trust is...\" | linkedin: \"...pper is deciding if $125 is worth it. And de...\"; manual-visual-pending: open 22 image(s) to eyeball brand/legibility/framing",
+    "",
+    "outputs/cro-fixes/",
+    "\"Product Page (PDP) audit: Caraway's $125 fry pan has 18,886 reviews.\\n\\nOn a live load, that trust signal can render as just the word \\\"Reviews,\\\" with no stars and no count, right next to the price.\\n\\nPrice also sits disconnected from the title, and the real product photo can miss the first screen entirely.\\n\\nSwipe for the real before/after. Rebuild puts price under the title, stars + count inline always, and the photo front and center.\\n\\nSave this if you're auditing your own PDP this week.\"",
+    "https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_fry-pan-pdp_carousel_slide1.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_fry-pan-pdp_carousel_slide2.png; https://res.cloudinary.com/drl0rscuf/image/upload/dist/cro-fix-caraway_fry-pan-pdp-20260907/koolestpro_caraway_fry-pan-pdp_carousel_slide3.png"
+   ]
+  }
+ ]
+}

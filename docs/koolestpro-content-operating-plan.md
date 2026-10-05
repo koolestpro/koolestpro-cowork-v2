@@ -1192,3 +1192,11 @@ Merged the cloud branch `claude/outreach-alert-email-debug-b2d85x` into local `m
 
 Ridwan's Discovery tab showed noisy rows from the old Apps Script Sources importer. Fixes: that importer now skips the directories the Mac scraper handles; `INFRA_DOMAINS_` drops infrastructure hosts; the scraper keeps name, country, all emails, phone, description and signals and pushes them through a new `add_discovery_rows` API action (new Discovery columns brand, contact_name, emails, phone); promotion to Leads picks the best email (decision maker first) and keeps the rest in notes. Added myip.ms (Shopify IP owner page) as a source, with big brands dropped by world rank. Apps Script files must be re-pasted and Set up tabs re-run; the web app needs a new deployment version for the new API action. Offline-tested the parsing and ranking, not yet run against the live sites.
 
+
+### 2026-10-05: scraper targeting and missing-email finder
+
+Scraper: Merchant Genius skips stores newer than 45 days; Zik keeps est. revenue $1K to $25K; EachSpy kept (big brands on purpose); myip.ms now browses by page number from page 400 (about 1,000 visitors a day) and remembers its next page; the per-run limit is shared round-robin across sources; dry runs no longer mark dates as done. Pipeline.gs: when a store publishes no email, the finder reads more pages, asks the AI for the owner name, tries first@, first.last@, hello@, info@ and similar, and keeps the first address MyEmailVerifier calls valid (max 6 checks per lead). Needs a paste of Pipeline.gs into Apps Script.
+
+### 2026-10-05: scraper moved to GitHub Actions (cloud)
+
+`.github/workflows/directory-scrape.yml` runs the directory scraper daily at 06:30 UTC (07:30 Lagos) on GitHub's runners, so the Mac no longer has to be awake. Repo secrets needed: OUTREACH_API_URL, OUTREACH_API_TOKEN. State (seen domains, next myip.ms page, Merchant Genius dates) is committed to outreach/scrapers/state-cloud/. Risk: datacenter IPs may hit Cloudflare/CAPTCHA on some directories; the scraper skips a blocked site and never bypasses it. Run it once by hand from the Actions tab to see which sources work from the cloud.

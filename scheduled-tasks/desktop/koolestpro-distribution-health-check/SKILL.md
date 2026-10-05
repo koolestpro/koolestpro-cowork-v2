@@ -14,7 +14,7 @@ Ridwan wants posts going out at an average of 3/day, with zero silent gaps, no t
 3. Two rows for the same platform share the exact same `(scheduled_date, scheduled_time_local)` — Make's "due now" filter matches both in the same execution and they post back to back, which reads to Ridwan as "two posts went out at once."
 4. Two or more LinkedIn rows land on the same `scheduled_date`, even at different times — Ridwan's hard rule is max 1 LinkedIn post per calendar day, no exceptions. Twitter has no such cap.
 5. A Twitter/X caption is over the 280-character limit and gets silently rejected by X on post (added 2026-09-07, Ridwan's standing instruction — see Step 1b).
-6. An Instagram row's `asset_urls` has more than one non-video image URL — Instagram's Make branch (modules 301/302) only implements a single-image post (no carousel route exists yet), so a multi-URL string gets sent as one malformed `image_url` param and Instagram's Graph API returns 400 Bad Request. Confirmed live 2026-09-08 on a real stuck post (execution ddef648826f34f9f9c81fdb26c91a31c) — see Step 1c.
+6. An Instagram row is in a format that won't post: a single image (route deliberately off since 2026-10-05, carousels + videos only) or a malformed carousel — see Step 1c.
 7. The "Distribution Queue Reschedule" webhook scenario (id 7111659) is itself inactive — the webhook still returns HTTP 200/"Accepted" and silently queues the request, but nothing actually updates in the Sheet until the scenario is reactivated. Discovered live 2026-09-08: 9 reschedule calls in this same task returned 200 but did nothing until the scenario was turned back on. Always verify a reschedule actually landed (re-read the row after calling the webhook), never trust the 200 alone.
 
 Your job: catch all seven, actually fix what's safely fixable, and tell Ridwan exactly what still needs his attention — including if the backlog of ready-to-post rows is running too thin to sustain 3/day.
@@ -49,16 +49,14 @@ If you find a caption over 280 characters that is NOT already flagged in `qa_sta
 
 Report a one-line rollup in the summary either way: how many Twitter captions you checked, how many were found over 280 chars (new findings vs. already-flagged), so this check is visibly happening every run rather than assumed.
 
-## Step 1c — Instagram multi-image carousel check (added 2026-09-08, permanent, every run)
-For every Instagram row classified **Upcoming/queued and NOT already Blocked** (these are the ones that will actually fire next), check `asset_urls` (column 15): if it contains more than one URL (semicolon-separated) AND does not end in `.mp4` (a Reel), this row WILL fail with a 400 Bad Request the moment Make tries to post it — module 301 only sends a single `image_url`, there is no carousel route.
+## Step 1c — Instagram format check (rewritten 2026-10-05, Ridwan's instruction)
 
-`.ai-workflow/tools/feed_media.py` was fixed 2026-09-08 to only ever write ONE (cover) image URL into `asset_urls` for a multi-image Instagram row going forward, so this should be rare on rows assembled after that date. If you find one anyway (a hand-edited row, a row assembled before the fix, or a regression in the script):
-1. Do NOT reschedule it as-is — rescheduling doesn't fix a content-shape problem, it would just fail again on the new date.
-2. Fix it the same way the 2026-09-08 incident was fixed: read the row's `asset_urls`, take the first URL (before the first `;`), write that back as the row's entire `asset_urls` value via a direct Sheets API `values.update` call on that one cell (see the auth pattern in `append_sheet_rows.py`). Leave `asset_paths` untouched — it's the full generated set, useful as a record.
-3. Log this as a real finding in Step 5 and the final summary (post_id, how many images it had, that it was trimmed to 1) — this is a content-format compromise (posts as a single image instead of a swipeable carousel), not a routine fix, so Ridwan should be able to see it happened even though you didn't need to ask him each time.
-4. If you ever find MORE than a handful of these in one run, or the same post_id keeps re-breaking, that's a sign the root-cause fix in `feed_media.py` regressed — flag it prominently rather than just quietly patching row after row.
-
-Real carousel support (child media containers + `is_carousel_item` + a parent container + `/media_publish`) does not exist in the Make scenario yet — this is a known, deliberate stopgap, not something this task should attempt to build. Building it requires editing scenario 6565331's Instagram branch, which this task must not do (see Step 3's blueprint-editing note).
+Instagram posts carousels and videos only. Make has a native carousel route (310-317, 2-10 images) and a Reels route (304-306). The single-image route (318) is deliberately blocked. So:
+- Never trim a multi-URL `asset_urls` to one image. Multi-URL rows are correct and post as carousels.
+- Flag (don't fix) any upcoming Ready Instagram row whose `asset_urls` is a single image or empty: it will never post. Report post_id + date.
+- Flag any carousel with more than 10 URLs, or a mix of .mp4 and images (the carousel route only handles images).
+- Instagram cap: max 1 post per day. Treat a second Ready carousel/video on the same day as a violation and move the clean one to the next free day at 17:00.
+- When rescheduling overdue Instagram carousels/videos, use 17:00, one per day, and avoid the same template video on consecutive days.
 
 ## Step 1d — Caption matches its image (added 2026-09-28, Ridwan's instruction, permanent, every run)
 

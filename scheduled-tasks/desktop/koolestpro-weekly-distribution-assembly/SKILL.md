@@ -34,7 +34,7 @@ Step 3 — Build the calendar rows locally:
 
     python3 .ai-workflow/tools/populate_sheet.py /tmp/<slug>_harvest.json --project-root .
 
-(omit --week-monday — the default of "next Monday from today" is correct for a Monday assembly run). This is idempotent by post_id and only ever appends to the LOCAL queue.json/queue.csv.
+Newest builds go ahead of older backlog via the this-week overwrite, EXCEPT rows listed in `.ai-workflow/tools/protected_rows.json`, which are never bumped (Ridwan, 2026-10-05). Do not add to that list yourself unless Ridwan asks. (omit --week-monday — the default of "next Monday from today" is correct for a Monday assembly run). This is idempotent by post_id and only ever appends to the LOCAL queue.json/queue.csv.
 
 Step 3b — Confirm the strip actually got a row. After populating, grep the new rows for the "X #5 full page at a glance" angle on every Template Showcase / Store Template item, and confirm its `asset_paths` is non-empty and points at the strip (the compressed `-x.jpg` sibling when one exists — `resolve_assets` prefers it automatically, so an oversized PNG can no longer sneak through). An empty asset_paths on that row means the matcher found nothing and the post would go out text-only. Fix the record and re-run rather than shipping the empty row.
 

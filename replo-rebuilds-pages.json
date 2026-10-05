@@ -1,6 +1,6 @@
 {
   "_readme": "Manifest of replo-rebuilds pages eligible for Template Showcase. SOURCE CHANGED 2026-08-31: replo-rebuilds is now a SUBFOLDER of koolestpro-cowork-v2 (replo-rebuilds/), so the scheduled task reads pages LIVE from sourcePath. The replo-pages-cache/ workaround built 2026-07-12 (when the two projects were separate folders and a scheduled task could only bind to one) is RETIRED — do not read from it, do not refresh it, and do not treat its staleness as a problem. cachePath/cacheFolder fields are kept on old entries as history only. SELECTION RULE: pick entries with active=true and usedForTemplateShowcase=false, lowest sortOrder first. KURA entries with active=false are retired fallbacks — only use if no active page is left, and say so explicitly in the run summary. MAINTENANCE: because the source is live now, new pages under replo-rebuilds/brands/*/pages/ do NOT auto-appear here. Any run that finds an uncatalogued page folder should add an entry for it rather than skipping it. Set usedForTemplateShowcase=true with a date once a page is actually showcased.",
-  "lastRefreshed": "2026-09-19",
+  "lastRefreshed": "2026-10-05",
   "sourceProject": "replo-rebuilds",
   "cacheDir": null,
   "pages": [
@@ -291,10 +291,32 @@
       "socialContentNote": "HALOS has no pre-written caption library. The weekly task writes LinkedIn/X captions itself from the page, runs them through the humanizer skill, and stores them on the companion page, the pipeline record captions field, and halos-social-content.json/.md.",
       "usedForTikTok": false,
       "usedForTikTokDate": null
+    },
+    {
+      "hasSocialContentDraft": false,
+      "socialContentFile": null,
+      "socialContentSection": null,
+      "usedForTemplateShowcase": false,
+      "usedForTemplateShowcaseDate": null,
+      "active": true,
+      "retired": false,
+      "cachePathRetired": null,
+      "cacheFolderRetired": null,
+      "brand": "MOULT",
+      "brandSlug": "moult",
+      "pageType": "Product Page (PDP)",
+      "templateId": "pdp-01",
+      "showcaseSlug": "moult_pdp-01",
+      "sourcePath": "replo-rebuilds/brands/moult/pages/moult-pdp-01/index.html",
+      "sortOrder": 8,
+      "notes": "ADDED 2026-10-05 manifest sweep, was uncatalogued. New concept brand MOULT (self-cleaning pet slicker brush), PDP built 2026-09-30 by koolestpro-weekly-template-build from pdp-01-story-arc. Concept build, never a client. 12 local images (hero, villain, before/after, gallery-1..4, lifestyle, upgrade, pay-option, social-banner), all verified to resolve; the only unresolved refs are placeholder store nav links (/collections/all, /pages/about|contact|privacy), expected. 2 position:sticky rules, check before scroll capture. Folder 3.7MB. Mobile strip already built at presentation/moult-pdp-01-mobile-strip.png, plus desktop-full/mobile-full captures. Rating, review count, percentages and reviewer names are placeholder demo copy, never present as real metrics.",
+      "socialContentNote": "MOULT has no pre-written caption library. The weekly task writes captions itself, runs them through the humanizer skill, and stores them on the companion page, the pipeline record and moult-social-content.json/.md.",
+      "usedForTikTok": false,
+      "usedForTikTokDate": null
     }
   ],
-  "activeBrand": "HALOS (sole active brand)",
-  "activeBrandNote": "2026-09-19: Ridwan called a standing rule change — NO MORE KURA. Every KURA entry in this manifest is now retired/inactive regardless of when it was built. HALOS is the sole active showcase brand going forward. Prior note (kept for history): HALOS replaced KURA as the primary showcase brand on 2026-07-18; pages built after that date were briefly still eligible on their own merit (e.g. kura_pdp-02, showcased 2026-09-19) until this 2026-09-19 rule closed that loophole entirely.",
+  "activeBrand": "HALOS and MOULT (active brands as of 2026-10-05)",
+  "activeBrandNote": "2026-09-19: Ridwan called a standing rule change — NO MORE KURA. Every KURA entry in this manifest is now retired/inactive regardless of when it was built. HALOS is the sole active showcase brand going forward. Prior note (kept for history): HALOS replaced KURA as the primary showcase brand on 2026-07-18; pages built after that date were briefly still eligible on their own merit (e.g. kura_pdp-02, showcased 2026-09-19) until this 2026-09-19 rule closed that loophole entirely. 2026-10-05: MOULT joined as a second active brand — its first page (moult-pdp-01) was catalogued this run as sortOrder 8, active=true, unused. HALOS is no longer the sole active brand; both HALOS and MOULT entries are eligible for Template Showcase selection going forward, in sortOrder order.",
   "sourceMode": "live-subfolder",
   "sourceRoot": "replo-rebuilds",
   "cacheDirNote": "replo-pages-cache/ retired 2026-08-31 — superseded by the live replo-rebuilds/ subfolder. Safe to delete.",

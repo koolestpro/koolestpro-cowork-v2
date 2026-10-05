@@ -8,38 +8,6 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 
 ---
 
-## 2026-09-01 19:42 WAT — health check
-
-**Sheet:** "Koolestpro Distribution Queue" — 151 rows total (79 Twitter, 25 LinkedIn, 47 Instagram). Read via a Google Visualization API query (`gviz/tq`) against the sheet through the browser instead of the Drive CSV export — the full CSV round-trip (~376K base64 chars) blew past this session's tool-output limits, same problem noted in the 2026-08-27 QA-pass entry above. The gviz endpoint lets column selection and `WHERE`/`GROUP BY` happen server-side, which kept every query small enough to read directly and let the classification itself run as SQL-style filters rather than manual row-by-row scanning.
-
-**Missed rows found (Twitter + LinkedIn): 0.** Query: `status <> 'Posted' AND scheduled_date < 2026-09-01` returned zero rows. Cross-checked against `posted_at IS NULL AND scheduled_date < 2026-09-01`, which returned exactly one row (`cro-fix-v1ce_tap-review-card-20260719-20260722-li-0900`) — its `status` and `qa_status` both already read "Posted", just with an empty `posted_at` timestamp (a data-entry gap, not a missed post). No webhook calls needed this run.
-
-**Make.com scenario health: 🚩 flagged, but appears just fixed.** `isPaused: false`, `isinvalid: false`, `islinked: true`, `nextExec: 2026-09-01T22:00:00Z` (~23:00 WAT tonight, the normal nightly slot). But the last several hours were rough: scheduled (`type:auto`) executions **errored** at 2026-08-28 13:00 (403 Forbidden), 2026-08-31 16:00 and 16:04 (401 Unauthorized), and **today** at 16:26, 17:00, and 17:15 WAT-adjacent UTC (400 Bad Request, `ActionSendData`/http module each time) — six failed scheduled runs across the review window, which trips this task's "any execution in the window errored" flag on its own. Ridwan made manual `modify` edits at 2026-08-31 14:02, 15:22, and again today at 18:16, each followed by a manual test run; the most recent one (18:16:59 today) succeeded. Given this log's history of the X-token-refresh step silently wiping other credential fields on every X post (see the 2026-08-31 15:2x entry), a 401→400 progression right after a LinkedIn-post cycle fits the same failure family — **worth Ridwan double-checking the datastore's `linkedin_token`/`x_*` fields haven't been blanked again**, since today's fix hasn't yet been proven against a real unattended scheduled run (next one is tonight's 23:00 WAT slot, not a manual trigger).
-
-**7-day pacing (2026-09-01 → 2026-09-07, Twitter + LinkedIn):** 28 rows queued — 1, 4, 5, 6, 4, 4, 4 per day — averaging **4.0/day, above the 3/day target** on raw count. But only **17 of those 28 are QA-clean** (11 carry "Needs Review" flags — manual-visual-pending images, unverified claims, X captions over 280 chars, same recurring flag types as every prior entry). Clean pacing is closer to **2.4/day**, under target once QA-blocked rows are excluded — consistent with this log's recurring finding that the QA backlog, not scheduling, is the real constraint.
-
-**Instagram (informational only, out of scope):** 47 rows in the sheet. Not classified or counted above per the standing exclusion rule.
-
-**Verdict:** No missed-post gap (0 found, 0 fixed). Make.com had a genuine multi-hour error streak today (400/401 across at least 3 scheduled slots) that a manual fix *appears* to have just resolved — flag as unconfirmed until tonight's 23:00 WAT automatic run posts cleanly. Pacing: healthy on raw count, soft on QA-clean count (17 of 28, ~2.4/day) — same standing recommendation to clear review backlog rather than add new content.
-
----
-
-## 2026-09-04 06:26 WAT — health check
-
-**Sheet:** "Koolestpro Distribution Queue" — 145 rows total (79 Twitter, 25 LinkedIn, 41 Instagram — sums exactly, nothing dropped silently). Read via a subagent that pulled the Drive CSV export and parsed it out-of-context (the ~281K-char base64 round-trip still exceeds this session's tool-output limit — same structural issue noted since 2026-08-27), so only the classified summary below entered this session.
-
-**Missed rows found (Twitter + LinkedIn): 0.** Every row with `scheduled_date` before 2026-09-04 already shows `status = "Posted"`. No webhook calls needed this run — first fully clean check in this log's history (every prior run had at least a few overdue rows, even if QA-blocked).
-
-**Make.com scenario health: ✅ Healthy, and the 2026-09-01 fix has now held for 2+ days.** `isPaused: false`, `isinvalid: false`, `islinked: true`, `nextExec: 2026-09-04T13:00:00Z` (14:00 WAT today, normal scheduled slot). Checked executions from 2026-09-01 13:26 WAT through now: every scheduled (`type:auto`) run from **2026-09-01 22:00 WAT onward through 2026-09-03 22:30 WAT succeeded** (status 1) — 21 consecutive clean executions, spanning the credential-wipe fix pushed at 2026-09-01 18:16 (see that date's entry). The 400/401 error streak from earlier that same day has not recurred since. Most recent execution: 2026-09-03T22:30:29Z (~7.5h before this check — normal gap, matches the scenario's windowed schedule, next window opens at 14:00 WAT).
-
-**7-day pacing (2026-09-04 → 2026-09-10, Twitter + LinkedIn):** 33 rows queued — 6, 4, 4, 4, 5, 4, 6 per day — averaging **4.71/day raw**, above the 3/day target. But only **19 of those 33 are QA-clean (14 carry "Needs Review" flags)** — clean pacing is **2.71/day**, just under target. Would need roughly **2 more clean rows** over the window to hit 3/day, though clearing even 2-3 of the 14 blocked rows would do the same job and is the higher-leverage fix (clearing all 14 would push raw pacing to 4.71/day clean). Blocked rows by date: 09-04 (4 of 6), 09-05 (2 of 4), 09-06 (1 of 4), 09-07 (0 of 4), 09-08 (2 of 5), 09-09 (1 of 4), 09-10 (4 of 6). Two post_ids have a literal space instead of a hyphen after "template" (`template showcase-lumora_store-template-...`) — a source data-entry quirk worth a look, not a parsing artifact.
-
-**Instagram (informational only, out of scope):** 41 rows in the sheet, 3 with `scheduled_date` before today. Not classified or counted above per the standing exclusion rule.
-
-**Verdict:** No missed-post gap (0 found, 0 needed fixing) — cleanest run in this log's history. Make.com: healthy, and the credential-wipe fix from 2026-09-01 is now confirmed stable across 21 consecutive scheduled executions. Pacing: raw count comfortably above target (4.71/day), QA-clean count just under target (2.71/day) — same standing recommendation as every prior run: clearing a few of the 14 blocked upcoming rows closes the gap faster than drafting new content.
-
----
-
 ## 2026-09-07 13:47 UTC (~14:47 WAT) — health check (scheduled task run)
 
 **Sheet:** "Koolestpro Distribution Queue" — read via `read_file_content` (plain Markdown-table export, not base64), which still exceeded this session's per-call token limit and got auto-saved to a host-side tool-results file. Worked through it via a Grep `.{1,450}` re-chunk + `Read` in 25-line batches (no subagent, no CSV/base64 round-trip) — a new, slower but reliable method for this session specifically, since the usual gviz-query/subagent-CSV approaches from prior entries weren't available or hit rate limits this run. Full table read start to finish, 626 lines of chunked text, nothing skipped.
@@ -120,3 +88,36 @@ Ridwan reported a Make.com error on today's Instagram post (a 7-slide Tips carou
 **Pacing (09-29 to 10-05):** 23 unposted rows (13 Twitter, 5 LinkedIn, 5 Instagram), 3.3/day raw. Realistically posting: 14 Ready Twitter+LinkedIn rows = **2.0/day** (Draft rows never fire, and Instagram is paused). About 7 more Ready Twitter/LinkedIn rows would get this week to 3/day. QA-clean: **0 of 23** in the window, and 1 of 35 across the whole upcoming backlog (97% flagged). Most flags are the recurring "claims to verify" and "manual-visual-pending" on Template Showcase rows. Clearing flags is still the biggest lever.
 
 **Verdict:** Make healthy, nothing overdue on X/LinkedIn that could be fixed, no collisions. Two things need Ridwan: the 319-char Gainful X post due tomorrow 14:00, and pacing at about 2 real posts/day with a backlog that's almost entirely QA-flagged. Separately, 46 Instagram rows are waiting to be rescheduled when IG is un-paused.
+
+## 2026-10-05 08:40 UTC (09:40 WAT) — health check (scheduled task run)
+
+**Sheet read:** live Sheets API, 209 rows (125 Posted, 75 Ready, 9 Draft).
+
+**Twitter/LinkedIn missed rows:** 5, all Draft + Needs Review, so none rescheduled (Draft never fires; a new date won't fix the content):
+- `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LI, 09-28) — claims to verify (carried over from last run)
+- `static-ad-caraway_fry-pan-20260909-20260929-x-1300` (X, 09-29) — claims to verify ("18,878 reviews")
+- `cro-fix-caraway_fry-pan-pdp-20260907-20260923-x-1300` (X, 09-30), `...-li-0900` (LI, 09-30), `...-20260925-x-0900` (X, 10-02) — x_thread[3] variant 316 chars
+**Instagram missed rows:** 50 past-dated unposted (was 46). Not rescheduled: Instagram is still paused in Make (CLAUDE.md, 2026-09-18). Batch-reschedule when IG is switched back on.
+
+**Collisions / LinkedIn same-day violations (upcoming):** none. 5 upcoming LinkedIn rows each on their own day (10-06, 10-07, 10-08, 10-14, 10-21). No webhook calls this run.
+
+**Step 1b, X char count:** 18 unposted Twitter captions checked, 0 over 280, 0 empty. Last run's 319-char Gainful post (`...-20260906-x-1800`) is now marked Posted 2026-09-30 14:01 and the Make run succeeded, so X apparently accepted it.
+
+**Step 1c, Instagram multi-image:** 2 upcoming IG rows with 3 URLs (`cro-fix-flybyjing_chili-crisp-pdp-20261004-20261007-ig-1200`, `cro-fix-caraway_fry-pan-pdp-20260907-20260923-ig-1200`). NOT trimmed: Make has a native IG carousel route (310-317) since 2026-09-27, so the trim rule in this task's SKILL.md is obsolete (flagged last run too).
+
+**Step 1d, caption/image fit:** `caption_fit.py` reported 0 problem rows (reads local `queue.json`).
+
+**Reschedule scenario 7111659:** active, not paused. No reactivation needed.
+
+**Make health (6565331):** healthy. Active, not paused, next run 2026-10-05 13:00 UTC. All 50 executions from 09-28 22:00 UTC to 10-04 22:25 UTC succeeded (status 1), no warnings. Lifetime error count still 3 (old).
+
+**Pacing (10-05 to 10-11):** 18 unposted rows (10 X, 3 LI, 5 IG) = 2.6/day raw. Excluding paused Instagram: 13 X+LI rows = **1.9/day**; about 8 more Ready X/LI rows needed to reach 3/day. 10-11 has only 1 post. Beyond 10-11 the backlog is just 11 rows to 10-21, with nothing on 10-12, 10-19, 10-20. QA: 0 of 18 clean in the window, 1 of 29 across the whole upcoming backlog. These Ready-but-flagged rows still fire (Make ignores qa_status), so the flags are a review risk rather than a blocker.
+
+**Verdict:** Make healthy, no fixable gaps, no collisions. Needs Ridwan: pacing under 2 real posts/day with a thin queue after 10-11, 5 Draft X/LI rows waiting on caption/claim fixes, 50 Instagram rows parked until IG is unpaused, and the outdated Step 1c in the task SKILL.md.
+
+## 2026-10-05 ~10:20 WAT — Instagram re-enabled + Caraway CRO cleanup (ad hoc, Ridwan present)
+
+- Make 6565331: Instagram router filter fixed (`Instagram`), single-image route blocked, Reel wait 90s. Live blueprint diffed against intended: identical.
+- 26 overdue IG carousels/videos rescheduled 1/day at 17:00 (10-05 18:00 to 11-06). Verified landed. No IG same-slot collisions.
+- Deleted 4 pending Caraway CRO rows from the Sheet + local queue (backup in `outputs/distribution-queue/deleted/`).
+- IG token expires 2026-11-07, same week the rescheduled backlog ends.

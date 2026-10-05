@@ -37,9 +37,9 @@ from urllib.parse import urlparse
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
-STATE = HERE / "state"
+STATE = (ROOT / os.environ["SCRAPER_STATE_DIR"]) if os.environ.get("SCRAPER_STATE_DIR") else HERE / "state"
 OUT = HERE / "output"
-STATE.mkdir(exist_ok=True)
+STATE.mkdir(parents=True, exist_ok=True)
 OUT.mkdir(exist_ok=True)
 
 CURRENCY_COUNTRY = {"GBP": "United Kingdom", "USD": "United States", "CAD": "Canada", "AUD": "Australia",
@@ -110,6 +110,7 @@ def rec(domain, source, **kw):
 
 
 MG_SCRAPED = set()
+MY_LAST = [0]
 OPTS = {"mg_min_age": 45, "zik_min": 1000, "zik_max": 25000, "myipms_url": "", "myipms_start": 400}
 
 
@@ -239,7 +240,7 @@ def scrape_myipms(page, days, log):
     """Shopify, Inc IP-owner list, browsed by page number. Pages are sorted by popularity, so page 1 is huge brands.
     Start deep (--myipms-start 400 is about 1,000 visitors a day) and walk `days` pages from there."""
     base = OPTS["myipms_url"] or "https://myip.ms/browse/sites/{n}/ownerID/376714/ownerIDii/376714"
-    start, rows = OPTS["myipms_start"], []
+    start, rows = max(OPTS["myipms_start"], load_json(STATE / "myipms_next.json", 0) or 0), []
     for pg in range(start, start + max(1, days)):
         url = base.format(n=pg) if "{n}" in base else re.sub(r"/sites/\d+/", f"/sites/{pg}/", base)
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
@@ -261,6 +262,7 @@ def scrape_myipms(page, days, log):
             rows.append(rec(m.group(0), "myip.ms shopify ips", signals=f"myip.ms page {pg}", data=joined))
             n += 1
         log(f"myipms page {pg}: {n} sites")
+        MY_LAST[0] = pg + 1
         pause(3, 6)
     return rows
 
@@ -385,6 +387,8 @@ def main():
         pause(0.5, 1.5)
     done = set(load_json(STATE / "merchantgenius_dates.json", [])) | MG_SCRAPED
     (STATE / "merchantgenius_dates.json").write_text(json.dumps(sorted(done)))
+    if MY_LAST[0]:
+        (STATE / "myipms_next.json").write_text(json.dumps(MY_LAST[0]))
     seen.update(r["domain"] for r in fresh)
     (STATE / "seen_domains.json").write_text(json.dumps(sorted(seen)))
     log(f"pushed to the Sheet: {added} new rows in Discovery, {merged} existing rows filled in")
