@@ -11,12 +11,13 @@ Modes
   --watch   also search Reddit for every lead / Discovery domain we already hold (mentions of our own list)
 
 Access: official API if REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET are in .env (optional, Reddit now gates new apps),
-else the public .json endpoints, else a real Chromium on your Mac reading the same pages a signed-out visitor sees.
+else Reddit's RSS feeds (not blocked, about one request a minute, so a full run takes ~10 minutes).
 It never logs in as you and never gets around a block.
 
 Run: python outreach/scrapers/reddit_scrape.py [--dry-run] [--watch] [--subs a,b] [--limit 150]
 """
-import argparse, base64, csv, json, re, sys, time, random, urllib.request, urllib.parse, urllib.error
+import argparse, base64, csv, html, json, re, sys, time, random, urllib.request, urllib.parse, urllib.error
+import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
 
@@ -89,6 +90,51 @@ class Reddit:
         if not txt.startswith("{"):
             raise SystemExit("Reddit showed a block page to the browser too. Stopping (not bypassed). Log posts by hand with add_signal.py, or try again later.")
         return json.loads(txt)
+
+    # ---- RSS: Reddit's feed-reader endpoint. Not blocked, but strictly rate limited, so one request per window. ----
+    def _rss(self, url):
+        for attempt in (1, 2):
+            req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/atom+xml"})
+            try:
+                with urllib.request.urlopen(req, timeout=40, context=ctx()) as r:
+                    body, h = r.read().decode("utf-8", "replace"), r.headers
+            except urllib.error.HTTPError as e:
+                if e.code == 429 and attempt == 1:
+                    time.sleep(min(90, float(e.headers.get("x-ratelimit-reset") or 60)) + 2)
+                    continue
+                raise
+            try:                                       # wait out the window so the next call is not refused
+                if float(h.get("x-ratelimit-remaining", "1")) < 1:
+                    time.sleep(min(90, float(h.get("x-ratelimit-reset", "60"))) + 2)
+            except ValueError:
+                time.sleep(62)
+            return body
+        return ""
+
+    def _entries(self, xml_text, sub_hint):
+        if not xml_text.strip().startswith("<"):
+            return []
+        ns = {"a": "http://www.w3.org/2005/Atom"}
+        out = []
+        for e in ET.fromstring(xml_text).findall("a:entry", ns):
+            content = (e.findtext("a:content", default="", namespaces=ns) or "")
+            links = " ".join(re.findall(r'href="([^"]+)"', content))
+            text = html.unescape(re.sub(r"<[^>]+>", " ", content))
+            link = (e.find("a:link", ns).get("href") if e.find("a:link", ns) is not None else "")
+            m = re.search(r"/r/([^/]+)/comments/([a-z0-9]+)", link)
+            out.append({"id": (e.findtext("a:id", default="", namespaces=ns) or "").replace("t3_", "") or (m.group(2) if m else link),
+                        "title": html.unescape(e.findtext("a:title", default="", namespaces=ns) or ""),
+                        "selftext": (text + " " + links).strip(),
+                        "author": (e.findtext("a:author/a:name", default="", namespaces=ns) or "").replace("/u/", ""),
+                        "permalink": re.sub(r"^https?://[^/]+", "", link), "subreddit": m.group(1) if m else sub_hint, "is_self": True})
+        return out
+
+    def feed(self, sub):
+        """Newest ~100 posts of a subreddit. We classify them ourselves, so one request per subreddit is enough."""
+        return self._entries(self._rss(f"https://www.reddit.com/r/{sub}/new/.rss?limit=100"), sub)
+
+    def search_rss(self, q):
+        return self._entries(self._rss(f"https://www.reddit.com/search.rss?{urllib.parse.urlencode({'q': q, 'sort': 'new', 't': 'year'})}"), "all")
 
     def close(self):
         if self.browser:
@@ -165,7 +211,7 @@ def main():
     ap.add_argument("--subs", default=",".join(SUBS))
     ap.add_argument("--limit", type=int, default=150)
     ap.add_argument("--watch", action="store_true", help="also search Reddit for the domains already in the Sheet")
-    ap.add_argument("--watch-max", type=int, default=60)
+    ap.add_argument("--watch-max", type=int, default=15, help="without an API app Reddit allows about one request a minute, so keep this small")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     log = lambda m: print(f"[{datetime.now():%H:%M:%S}] {m}", flush=True)
@@ -184,6 +230,16 @@ def main():
             rows.append(r)
 
     for sub in [s.strip() for s in args.subs.split(",") if s.strip()]:
+        if not rd.token:
+            rd.mode = "rss feeds"
+            try:
+                take(rd.feed(sub), sub)
+            except SystemExit:
+                raise
+            except Exception as e:
+                log(f"r/{sub}: {type(e).__name__} {str(e)[:100]}")
+            log(f"r/{sub} done: {len(rows)} signals so far ({rd.mode})")
+            continue
         for q in QUERIES:
             if sub.lower() == "forhire" and "hiring" not in q and "looking" not in q and "need" not in q and "expert" not in q:
                 continue
@@ -207,7 +263,7 @@ def main():
         log(f"watch: searching Reddit for {len(doms)} stores we already hold")
         for d in doms:
             try:
-                take(rd.search(f'"{d}"', None, "year"), "all", forced=d)
+                take(rd.search(f'"{d}"', None, "year") if rd.token else rd.search_rss(f'"{d}"'), "all", forced=d)
             except SystemExit:
                 raise
             except Exception as e:
