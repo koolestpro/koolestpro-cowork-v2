@@ -121,6 +121,10 @@ function scoreStore_(domain, row) {
   if (!platform) return { score: 0, reasons: ['not an online store'], skip: true };
   reasons.push(platform);
 
+  // Big brands are never leads (Ridwan, 2026-10-06). Tranco lists the top 1M sites by traffic; small upcoming stores are not in it.
+  const rank = trancoRank_(domain);
+  if (rank && rank <= Number(settings_().BIG_BRAND_RANK || 1000000)) return { score: 0, reasons: ['big brand: Tranco traffic rank #' + rank], skip: true };
+
   // 2. Market
   const code = (html.match(/Shopify\.country\s*=\s*"([A-Z]{2})"/) || [])[1];
   const cur = (html.match(/Shopify\.currency\s*=\s*\{\s*"active"\s*:\s*"([A-Z]{3})"/) || [])[1] || (html.match(/"priceCurrency"\s*:\s*"([A-Z]{3})"/) || [])[1];

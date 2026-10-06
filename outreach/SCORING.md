@@ -8,6 +8,7 @@ Written 2026-10-01 from Ridwan's corrections. The code is `gmail-sender/Discover
 
 | Check | Why |
 |---|---|
+| Not in the Tranco top 1M traffic list (`BIG_BRAND_RANK`, added 2026-10-06) | Big brands are never emailed; the target is upcoming stores under about 1,000 visits a day |
 | Site loads | Dead sites cannot be pitched |
 | It is an online store (Shopify, WooCommerce, BigCommerce, Wix, Squarespace, Magento, PrestaShop, Ecwid, Webflow, or cart and product markup) | Any e-commerce that sells products is wanted |
 | Market is one of: Nigeria, Ghana, Kenya, South Africa, UK, Ireland, US, Canada, EU countries | Decides voice and currency |

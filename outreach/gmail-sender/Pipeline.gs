@@ -310,7 +310,6 @@ function siteFacts_(page) {
   const revApp = (html.match(/judge\.me|yotpo|loox|stamped\.io|okendo|trustpilot|reviews\.io/i) || [])[0];
   sig.push(revApp ? 'reviews widget present: ' + revApp : 'no reviews widget spotted in the page source (it may load later)');
   if (!/[$£€₦]\s?\d|\d\s?(NGN|USD|GBP)|N\s?\d{2,3},\d{3}/i.test(text)) sig.push('no prices spotted in the homepage text');
-  sig.push('page load about ' + page.seconds.toFixed(1) + 's from the server, ' + Math.round(html.length / 1024) + 'KB of HTML');
   return { title: title, desc: desc, headings: h.slice(0, 8), text: text.slice(0, 3500), signals: sig };
 }
 
@@ -342,30 +341,42 @@ function profileLeads_(S, stats, timeLeft) {
       const f = siteFacts_(page);
       const partner = lc_(lead.track) === 'partner';
       const r = partner ? null : researchStore_(S, lead, page);
+      if (r && r.big) {   // big brands are never emailed (Ridwan, 2026-10-06): they already have a team and a plan
+        set_(leads, lead, 'stage', 'Lost');
+        set_(leads, lead, 'notes', ('SKIP: big brand: ' + r.bigReasons.join('; ') + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
+        note_(leads, lead, 'SKIP: big brand, marked Lost. ' + r.bigReasons.join('; '), false);
+        stats.profiles++;
+        return;
+      }
       const sys = partner ? 'You analyse an agency or studio from its public homepage data so a partnership email can refer to real, checkable things. Use ONLY the data given. Never guess. Output JSON only: {"what_they_sell":"the services they sell, one short line","audience":"who their clients are, one short line","niche":"2 to 3 words","signal":"one line: why they might want overflow Shopify development (for example design or ads work but no development shown)","site_notes":"2 to 4 short, concrete, true observations: named client projects or brands, markets, services, team size hints, anything on dev capacity"}.'
         : STORE_PROFILE_SYS_;
       const user = 'Track: ' + (lead.track || 'unknown') + '. Niche: ' + (lead.niche || '') + '. Brand: ' + (lead.brand || '') + '. Website: ' + lead.website + '\nTitle: ' + f.title + '\nMeta: ' + f.desc +
-        '\nHeadings: ' + f.headings.join(' | ') + '\nHomepage signals (treat as [SOFT] unless a number): ' + f.signals.join('; ') + '\nHomepage text: ' + f.text +
+        '\nHeadings: ' + f.headings.join(' | ') + (partner ? '\nSignals: ' + f.signals.join('; ') : '') + '\nHomepage text: ' + f.text +
         (r ? '\n\nEVIDENCE:\n' + r.evidence.join('\n') + '\n\nSOCIAL (context only):\n' + (r.social.join('\n') || 'no social links found on the site') : '');
       const out = callAi_(S, sys, user, partner ? 700 : 1500);
       const j = parseJson_(out.text);
       if (!j || !j.what_they_sell) throw new Error('profile: AI returned no JSON');
       const row = { lead_id: lead.lead_id, what_they_sell: j.what_they_sell, audience: j.audience || '', signal: j.signal || '',
-        site_notes: (j.site_notes || '') + (f.signals.length ? ' [Signals: ' + f.signals.join('; ') + ']' : ''), updated_at: new Date() };
+        site_notes: (j.site_notes || '') + (partner && f.signals.length ? ' [Signals: ' + f.signals.join('; ') + ']' : ''), updated_at: new Date() };
       if (r && upgraded) {
         let worth = Math.max(0, Math.min(5, Math.round(Number(j.worth) || 0)));
         if (!j.problem || /\[SOFT\]/.test(String(j.problem_evidence || '')) && !/\[(MEASURED|SEEN)\]/.test(String(j.problem_evidence || ''))) worth = Math.min(worth, 2);   // a soft signal alone never carries an email
-        Object.assign(row, { problem: j.problem || '', problem_evidence: String(j.problem_evidence || '') + (j.cost ? ' | Cost: ' + j.cost : '') + (j.fix ? ' | Fix: ' + j.fix : ''),
+        const dm = j.decision_maker || {};
+        Object.assign(row, { offer: j.offer || '', decision_maker: dm.name ? dm.name + (dm.role ? ', ' + dm.role : '') + (dm.basis ? ' (about page: "' + String(dm.basis).slice(0, 120) + '")' : '') : '', team: j.team || 'unknown',
+          what_they_sell: j.what_they_sell + (j.business ? ' | ' + j.business : ''), problem: j.problem || '', problem_evidence: String(j.problem_evidence || '') + (j.cost ? ' | Cost: ' + j.cost : '') + (j.fix ? ' | Fix: ' + j.fix : ''),
           problem_page: j.problem_page || r.pdpUrl || '', problem_worth: worth,
-          second_problem: j.second && j.second.problem ? j.second.problem + ' (evidence: ' + (j.second.evidence || '') + '; worth ' + (j.second.worth || '?') + ')' : '',
+          second_problem: j.second && j.second.problem ? (j.second.offer ? '[' + j.second.offer + '] ' : '') + j.second.problem + ' (evidence: ' + (j.second.evidence || '') + '; worth ' + (j.second.worth || '?') + ')' : '',
           research: (r.evidence.join('\n') + (j.rejected ? '\nRejected: ' + j.rejected : '')).slice(0, 4500), socials: r.social.join('\n').slice(0, 2000) });
       }
       const old = have[String(lead.lead_id)];
       if (old && old !== true) Object.keys(row).forEach(k => { if (profiles.headers.indexOf(k) !== -1 && k !== 'lead_id') set_(profiles, old, k, row[k]); });
       else appendObj_('Profiles', row);
       if (!String(lead.niche).trim() && j.niche) set_(leads, lead, 'niche', String(j.niche).slice(0, 40));
+      if (r && j.decision_maker && j.decision_maker.name && /^[A-Za-z][A-Za-z'\- ]{1,40}$/.test(j.decision_maker.name)) {
+        try { const up = upgradeToDecisionMaker_(S, leads, lead, j.decision_maker.name.trim(), j.decision_maker.role || ''); if (up) note_(leads, lead, 'decision maker: ' + up, false); } catch (e) { stats.problems.push(lead.lead_id + ' decision maker: ' + e.message); }
+      }
       if (row.problem_worth !== undefined && row.problem_worth < Number(S.MIN_PROBLEM_SCORE || 4))
-        note_(leads, lead, 'HOLD: research found no problem worth a cold email (best: "' + String(row.problem || 'none').slice(0, 160) + '", worth ' + row.problem_worth + '/5). See Profiles > research. To email anyway, write the problem in Profiles > problem and set problem_worth to 5.', false);
+        note_(leads, lead, 'HOLD: research found nothing worth selling them (best: "' + String(row.problem || 'none').slice(0, 160) + '", worth ' + row.problem_worth + '/5). See Profiles > research. To email anyway, write the problem in Profiles > problem and set problem_worth to 5.', false);
       have[String(lead.lead_id)] = row;
       stats.profiles++;
       Utilities.sleep(6000);   // free-tier Gemini allows only a handful of calls a minute
@@ -377,7 +388,7 @@ function profileLeads_(S, stats, timeLeft) {
 
 const SEQ_TASK_ = [
   'TASK: write a 5-email cold sequence from Ridwan to this lead. Use ONLY facts in the lead data and profile below plus the brief. Any observation in email 1 must be supported by the profile. If the profile has no solid observation, keep email 1 honest and general rather than inventing one.',
-  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE PROBLEM, email 1 is built on it: name the page and the exact element, product or number from its evidence, say what a shopper runs into there, and what that costs in plain words. It must be specific enough that the founder can open the page and check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it.',
+  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE OFFER and THE PROBLEM, email 1 is built on them: show you understood how THIS business sells (their product, price point, how customers reach them), name the page, product or element from the evidence, say what the shopper or the ad click runs into, what that costs in plain words, and exactly what Ridwan would build (THE FIX). It must be specific enough that the founder can check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. A [SOFT] gap is asked, never stated: "is cold traffic going straight to the product page, or is there a pre-sell page I missed?". Never mention page speed or load time. Never pitch a small fix (a size chart, a photo, a description) as the reason to talk. Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it. Address the decision maker by first name when known, even when the email goes to a shared inbox.',
   'Step 1: the observation, the problem it usually causes, what Ridwan does, one interest question. Steps 2 to 5 must each add something NEW (a second observation, a small useful point, a lighter ask, a different offer) and never say "just checking in" or "following up". Step 3 may use one real proof line from the brief if it genuinely fits. Step 5 is a warm, clean close that leaves the door open.',
   'Every email under 100 words, plain text, no links, no signature (added by the system), each ends with a light way out in Ridwan\'s voice (vary the wording). Steps 2 to 5 read as replies in the same thread: no subject.',
   'Greeting: use the contact name if given ("Hi Amina,"). If no name, start with "Hi," and the observation. For a Nigerian or African lead, email 1 must begin with exactly {{greeting}} followed by the name, e.g. "{{greeting}} Amina." and steps 2 to 5 begin "Hi Amina,". For everyone else, no greeting phrase.',
@@ -419,7 +430,8 @@ function writeSequences_(S, stats, timeLeft) {
         '\nPlatform: ' + (lead.platform || 'unknown') + '. Business model: ' + (lead.business_model || 'unknown') + '. Country: ' + (lead.country || '') + '. Niche: ' + (lead.niche || '') + '. Track: ' + (lead.track || '') + '. Play: ' + (lead.play || '') + '. Source: ' + (lead.source || '') +
         (liveSignals_(sigRows, lead) ? '\nLIVE SIGNALS (most recent first):\n' + liveSignals_(sigRows, lead) : '') + (alsoOn_(sigRows, lead) ? '\nAlso listed on: ' + alsoOn_(sigRows, lead) : '') +
         '\nWhat they sell: ' + p.what_they_sell + '\nAudience: ' + p.audience + '\nSignal: ' + p.signal + '\nObservations: ' + p.site_notes +
-        (p.problem ? '\nTHE PROBLEM (email 1 rests on this): ' + p.problem + '\nIts evidence: ' + (p.problem_evidence || '') + '\nPage: ' + (p.problem_page || '') : '') +
+        (p.offer ? '\nTHE OFFER: ' + p.offer : '') + (p.decision_maker ? '\nDecision maker: ' + p.decision_maker + '. Team: ' + (p.team || 'unknown') : '') +
+        (p.problem ? '\nTHE PROBLEM (email 1 rests on this): ' + p.problem + '\nIts evidence, cost and THE FIX: ' + (p.problem_evidence || '') + '\nPage: ' + (p.problem_page || '') : '') +
         (p.second_problem ? '\nSECOND PROBLEM (for step 2): ' + p.second_problem : '') + (p.socials ? '\nSocial (context only, never flatter or criticise the following): ' + String(p.socials).slice(0, 600) : '') +
         '\nNotes: ' + (lead.notes || '');
       const out = callAi_(S, sys, user, 1800);
@@ -435,6 +447,7 @@ function writeSequences_(S, stats, timeLeft) {
         if (f) flags.push('step ' + e.step + ': ' + f);
         appendObj_('Sequence', { lead_id: lead.lead_id, step: Number(e.step), subject: subject, body: body, status: 'Draft' });
       });
+      if (p.team && lc_(p.team) !== 'solo' && sharedInbox_(lead.email)) flags.push('email goes to a shared inbox (' + lead.email + '), not the decision maker' + (p.decision_maker ? ' (' + String(p.decision_maker).split(' (')[0] + ')' : '') + ': find their own address before approving');
       set_(leads, lead, 'notes', ('Observation basis: ' + (j.basis || '?') + ' [' + out.provider + ']' + (flags.length ? ' | CHECK: ' + flags.join('; ') : '') +
         (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
       if (isTrue_(S.AUTO_APPROVE) && !flags.length && sendableStatus_(lead.email_status, S)) set_(leads, lead, 'approved', true);
