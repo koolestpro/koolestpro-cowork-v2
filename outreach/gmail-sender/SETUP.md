@@ -34,6 +34,12 @@ The script is `Code.gs`, `Brief.gs` (the master brief, compiled from `outreach/b
 
 **How a new lead flows:** put a row in Leads with `lead_id`, `brand`, `website`, `country`, `niche`, `track` (and `contact_name`, `email` if you have them). Every 30 minutes, or via Outreach > **Prepare new leads now**, the script finds an email on their site if `email` is empty, verifies it, writes the Profile, then writes the 5-email Sequence. Check `notes` on the lead: it says what the first email's observation is based on, and `CHECK:` if something needs your eyes. Then tick `approved` (or set `AUTO_APPROVE` = TRUE in Settings to auto-approve clean ones). Sending follows each lead's own working hours (9 to 5, weekdays, from `time_zone` or their country).
 
+**Problem research and email rescue (added 2026-10-06).** Add `Research.gs` as a file, paste the new `Pipeline.gs`, `Code.gs` and `Brief.gs`, then run Outreach > **1. Set up tabs** once (adds the Profiles columns `problem`, `problem_evidence`, `problem_page`, `problem_worth`, `second_problem`, `research`, `socials`, the Leads column `email_rescue`, and the Settings rows `MIN_PROBLEM_SCORE` and `INSTAGRAM_LOOKUP`).
+- `PAGESPEED_API_KEY` (Script property, free, needed in practice): Google Cloud Console > APIs & Services > enable "PageSpeed Insights API" > Credentials > Create API key. Without it Google's shared quota is usually used up and the speed test is skipped.
+- `HUNTER_API_KEY` (Script property, optional, free plan 25 domain searches a month): hunter.io > API. Used only when a lead's email fails verification, to find other published addresses for the domain.
+- Instagram: `INSTAGRAM_LOOKUP` = free (default, often blocked), apify (needs `APIFY_TOKEN`, paid per profile), or off. LinkedIn cannot be read without a login; only the link is recorded.
+- Test phase: Outreach > **Redo research + emails for unsent leads** supersedes the Draft emails of every lead not yet emailed and researches them again. Sent emails are never touched.
+
 Email verification: get a free key at myemailverifier.com and add Script property `MYEMAILVERIFIER_API_KEY`. Without it, emails stay `unverified` and are never sent. Verify the response format against their docs the first time; Valid is sent. Invalid never is. Catch-all (the domain accepts every address, so the mailbox is unproven) is sent only if you set `SEND_TO_CATCH_ALL` = TRUE in Settings. Unknown or grey-listed is `risky` and never sent.
 
 

@@ -3,15 +3,17 @@
  *
  * For each new lead in the Leads tab this does, in order, and only what is still missing:
  *   1. finds a contact email on the lead's website (if `email` is empty)
- *   2. verifies it (MyEmailVerifier free API; sending requires email_status = valid)
- *   3. reads the site and writes a Profile (what they sell, audience, signal, real observations)
+ *   2. verifies it (MyEmailVerifier free API; sending requires email_status = valid). If it fails, tries the other addresses
+ *      for the domain (on the site, Hunter.io if keyed, common role addresses) and swaps in the first valid one
+ *   3. researches the store (Research.gs: catalogue, a product page, PageSpeed, socials), writes a Profile and picks ONE problem
+ *      worth a cold email, scored 1 to 5; leads under MIN_PROBLEM_SCORE are held, not emailed
  *   4. writes the 5-email sequence in Ridwan's voice for the lead's market, into the Sequence tab
  * Then the lead waits for your `approved` tick (or is auto-approved if AUTO_APPROVE = TRUE and no check flagged it).
  *
  * Uses helpers from Code.gs and Brief.gs. Keys (Script Properties): MYEMAILVERIFIER_API_KEY plus the AI keys.
  */
 
-const PREP_BATCH_ = { email: 5, profile: 3, sequence: 3 }; // per run, keeps each run under Apps Script's 6 minute limit
+const PREP_BATCH_ = { email: 5, profile: 2, sequence: 3, rescue: 3 }; // per run, keeps each run under Apps Script's 6 minute limit (profiles now include a PageSpeed test)
 const PREP_MAX_TRIES_ = 3;
 
 function prepareLeadsNow() { prepareLeads_(true); }
@@ -34,6 +36,7 @@ function prepareLeads_(interactive) {
     try { qualifyDiscovery_(S, stats, timeLeft); } catch (e) { stats.problems.push('discovery: ' + e.message); }
     findEmails_(S, stats, timeLeft);
     verifyEmails_(S, stats, timeLeft);
+    rescueEmails_(S, stats, timeLeft);
     profileLeads_(S, stats, timeLeft);
     writeSequences_(S, stats, timeLeft);
   } finally {
@@ -154,11 +157,14 @@ function fetchPage_(url, timeoutMs) {
   const t0 = Date.now();
   const res = UrlFetchApp.fetch(u, { muteHttpExceptions: true, followRedirects: true,
     headers: { 'User-Agent': 'Mozilla/5.0 (compatible; KoolestproBot/1.0)' } });
-  const html = res.getContentText().slice(0, 400000);
+  const full = res.getContentText();
+  // Big stores ship 500KB+ of HTML and the footer (contact email, social links) is at the very end: keep the head AND the tail.
+  const html = full.length > 600000 ? full.slice(0, 350000) + '\n<!-- cut -->\n' + full.slice(-250000) : full;
   return { ok: res.getResponseCode() >= 200 && res.getResponseCode() < 300, code: res.getResponseCode(), html: html, seconds: (Date.now() - t0) / 1000, url: u };
 }
 
-function findEmailOnSite_(website) {
+/** Every usable address published on the site (homepage footer, contact, about, policies), best first. */
+function siteEmails_(website) {
   const base = String(website).trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
   const host = base.replace(/^www\./i, '').toLowerCase();
   const paths = ['', '/pages/contact', '/contact', '/pages/contact-us', '/contact-us', '/policies/contact-information', '/pages/about', '/about', '/pages/about-us', '/pages/our-story', '/pages/faq', '/policies/refund-policy', '/policies/privacy-policy', '/policies/terms-of-service'];
@@ -167,18 +173,87 @@ function findEmailOnSite_(website) {
     let page;
     try { page = fetchPage_(base + p); } catch (e) { continue; }
     if (!page.ok) continue;
-    const text = page.html.replace(/&#64;|&commat;/gi, '@').replace(/\s*\[at\]\s*/gi, '@');
+    const text = page.html.replace(/&#64;|&commat;/gi, '@').replace(/\s*\[at\]\s*/gi, '@').replace(/mailto:/gi, ' ');
     const matches = text.match(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g) || [];
     matches.forEach(m => { found[m.toLowerCase()] = true; });
     if (Object.keys(found).length >= 3) break;
   }
   const bad = /\.(png|jpe?g|gif|svg|webp|css|js)$|sentry|wixpress|example\.|domain\.com|shopify\.com|cloudflare|noreply|no-reply|donotreply|@2x|schema\.org|yourdomain|email\.com$/i;
-  const list = Object.keys(found).filter(e => !bad.test(e));
-  if (!list.length) return '';
-  list.sort((a, b) => rankEmail_(b, host, '') - rankEmail_(a, host, ''));
   const free = /@(gmail|yahoo|outlook|hotmail|icloud|proton|protonmail|live)\./i;
-  const top = list[0];
-  return (rankEmail_(top, host, '') >= 10 || free.test(top)) ? top : '';   // their own domain, or a free-mail address they published themselves
+  return Object.keys(found).filter(e => !bad.test(e) && rankEmail_(e, host, '') > -100 && (rankEmail_(e, host, '') >= 10 || free.test(e)))   // their own domain, or a free-mail address they published themselves
+    .sort((x, y) => rankEmail_(y, host, '') - rankEmail_(x, host, ''));
+}
+
+function findEmailOnSite_(website) { return siteEmails_(website)[0] || ''; }
+
+/**
+ * Hunter.io domain search: addresses for this domain that Hunter has seen published anywhere on the web, with names, roles
+ * and the company's address pattern. Optional: Script property HUNTER_API_KEY (free plan: 25 searches a month). Returns [].
+ */
+function hunterEmails_(host) {
+  const key = PropertiesService.getScriptProperties().getProperty('HUNTER_API_KEY');
+  if (!key || !host) return [];
+  try {
+    const res = UrlFetchApp.fetch('https://api.hunter.io/v2/domain-search?limit=10&domain=' + encodeURIComponent(host) + '&api_key=' + encodeURIComponent(key), { muteHttpExceptions: true });
+    if (res.getResponseCode() !== 200) return [];
+    const d = JSON.parse(res.getContentText()).data || {};
+    return (d.emails || []).map(e => ({ email: lc_(e.value), name: [e.first_name, e.last_name].filter(String).join(' '), position: e.position || '', confidence: Number(e.confidence || 0) }));
+  } catch (e) { return []; }
+}
+
+/**
+ * The lead's email failed verification (invalid, risky, or catch-all when catch-all is not allowed). Often it came from a
+ * directory or a guess and was never theirs, while the site itself shows a working address. Collect every candidate for
+ * the domain (on the site, Hunter, common role addresses), verify them best-first, and swap in the first valid one.
+ * Runs once per lead (email_rescue column). The failed address is kept in notes.
+ */
+function rescueEmail_(S, leads, lead) {
+  const failed = lc_(lead.email), was = lc_(lead.email_status) || '?';
+  const host = cleanDomain_(lead.website);
+  if (!host) return '';
+  set_(leads, lead, 'email_rescue', new Date());
+  const cands = [], seen = {};
+  seen[failed] = true;
+  const add = (email, source, bonus, name) => {
+    email = lc_(email);
+    if (!email || seen[email] || rankEmail_(email, host, lead.contact_name) <= -100) return;
+    seen[email] = true;
+    cands.push({ email: email, source: source, name: name || '', score: rankEmail_(email, host, lead.contact_name) + bonus });
+  };
+  siteEmails_(lead.website).forEach(e => add(e, 'published on their site', 4));
+  hunterEmails_(host).forEach(h => add(h.email, 'Hunter (' + (h.position || 'listed') + ', ' + h.confidence + '% confidence)', h.confidence >= 80 ? 2 : 0, h.name));
+  ['hello', 'info', 'contact', 'support', 'team'].forEach(r => add(r + '@' + host, 'common address, guessed', -2));
+  cands.sort((a, b) => b.score - a.score);
+  if (!cands.length) return 'no other address found for ' + host;
+  const tried = [];
+  for (const c of cands.slice(0, 5)) {
+    const v = verifyOne_(c.email);
+    if (!v) { tried.push(c.email + ': verifier did not answer'); break; }
+    tried.push(c.email + ': ' + v);
+    if (v === 'valid' || (v === 'catch-all' && isTrue_(S.SEND_TO_CATCH_ALL) && /their site/.test(c.source))) {
+      set_(leads, lead, 'email', c.email);
+      set_(leads, lead, 'email_status', v);
+      if (c.name && !String(lead.contact_name || '').trim()) set_(leads, lead, 'contact_name', c.name);
+      set_(leads, lead, 'notes', ('Email swapped: ' + failed + ' was ' + was + '; now ' + c.email + ' (' + c.source + ', verifier: ' + v + ')' + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
+      return 'swapped to ' + c.email + ' (' + c.source + ')';
+    }
+  }
+  return 'no valid replacement for ' + failed + '. Tried: ' + tried.join(', ');
+}
+
+function rescueEmails_(S, stats, timeLeft) {
+  if (!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY')) return;
+  const leads = read_('Leads');
+  if (leads.headers.indexOf('email_rescue') === -1) return;   // run Outreach > Set up tabs once
+  candidates_(leads, l => String(l.email).trim() && String(l.website).trim() && !String(l.email_rescue || '').trim() &&
+    ['invalid', 'risky'].concat(isTrue_(S.SEND_TO_CATCH_ALL) ? [] : ['catch-all']).indexOf(lc_(l.email_status)) !== -1, PREP_BATCH_.rescue).forEach(lead => {
+    if (!timeLeft()) return;
+    try {
+      const msg = rescueEmail_(S, leads, lead);
+      if (/^swapped/.test(msg)) stats.emails++;
+      note_(leads, lead, 'email check: ' + msg, false);
+    } catch (e) { stats.problems.push(lead.lead_id + ' rescue: ' + e.message); }
+  });
 }
 
 // ---------- 2. Verify ----------
@@ -242,8 +317,13 @@ function siteFacts_(page) {
 function profileLeads_(S, stats, timeLeft) {
   const leads = read_('Leads');
   const profiles = read_('Profiles');
-  const have = {};
-  profiles.rows.forEach(p => { have[String(p.lead_id)] = true; });
+  const seq = read_('Sequence');
+  const have = {}, has1 = {};
+  profiles.rows.forEach(p => { have[String(p.lead_id)] = p; });
+  seq.rows.forEach(r => { if (Number(r.step) === 1 && r.status !== 'Superseded') has1[String(r.lead_id)] = true; });
+  const upgraded = profiles.headers.indexOf('problem_worth') !== -1;
+  // A store lead whose profile has no problem research yet (made before 2026-10-06, or reset) is researched again, as long as no email is written for it.
+  const needsResearch = l => upgraded && lc_(l.track) !== 'partner' && have[String(l.lead_id)] && String(have[String(l.lead_id)].problem_worth) === '' && !has1[String(l.lead_id)];
 
   // Businesses with an email but no website (for example from Google Maps): profile them from what we already know.
   candidates_(leads, l => !String(l.website).trim() && String(l.email).trim() && !have[String(l.lead_id)], 10).forEach(lead => {
@@ -254,25 +334,39 @@ function profileLeads_(S, stats, timeLeft) {
     stats.profiles++;
   });
 
-  candidates_(leads, l => String(l.website).trim() && !have[String(l.lead_id)], PREP_BATCH_.profile).forEach(lead => {
+  candidates_(leads, l => String(l.website).trim() && (!have[String(l.lead_id)] || needsResearch(l)), PREP_BATCH_.profile).forEach(lead => {
     if (!timeLeft() || stats.limited) return;
     try {
       const page = fetchPage_(lead.website);
       if (!page.ok) throw new Error('site returned HTTP ' + page.code);
       const f = siteFacts_(page);
       const partner = lc_(lead.track) === 'partner';
-      const sys = partner ? 'You analyse an agency or studio from its public homepage data so a partnership email can refer to real, checkable things. Use ONLY the data given. Never guess. Output JSON only: {"what_they_sell":"the services they sell, one short line","audience":"who their clients are, one short line","niche":"2 to 3 words","signal":"one line: why they might want overflow Shopify development (for example design or ads work but no development shown)","site_notes":"2 to 4 short, concrete, true observations: named client projects or brands, markets, services, team size hints, anything on dev capacity"}.' : 'You analyse an online store from its public homepage data so a sales email can refer to real, checkable things. Use ONLY the data given. Never guess. Output JSON only: ' +
-        '{"what_they_sell":"one short line","audience":"who buys, one short line","niche":"2 to 3 words, e.g. pet accessories","signal":"one line: why they look like a fit for the given track","site_notes":"2 to 4 short, concrete observations about the page that are supported by the text (not just missing-from-source signals), each one a plain sentence"}. ' +
-        'Signals marked "not spotted in the source" are weak: use them only as a soft observation, never as proof something is absent.';
-      const user = 'Track: ' + (lead.track || 'unknown') + '. Niche: ' + (lead.niche || '') + '. Brand: ' + (lead.brand || '') + '.\nTitle: ' + f.title + '\nMeta: ' + f.desc +
-        '\nHeadings: ' + f.headings.join(' | ') + '\nSignals: ' + f.signals.join('; ') + '\nHomepage text: ' + f.text;
-      const out = callAi_(S, sys, user, 700);
+      const r = partner ? null : researchStore_(S, lead, page);
+      const sys = partner ? 'You analyse an agency or studio from its public homepage data so a partnership email can refer to real, checkable things. Use ONLY the data given. Never guess. Output JSON only: {"what_they_sell":"the services they sell, one short line","audience":"who their clients are, one short line","niche":"2 to 3 words","signal":"one line: why they might want overflow Shopify development (for example design or ads work but no development shown)","site_notes":"2 to 4 short, concrete, true observations: named client projects or brands, markets, services, team size hints, anything on dev capacity"}.'
+        : STORE_PROFILE_SYS_;
+      const user = 'Track: ' + (lead.track || 'unknown') + '. Niche: ' + (lead.niche || '') + '. Brand: ' + (lead.brand || '') + '. Website: ' + lead.website + '\nTitle: ' + f.title + '\nMeta: ' + f.desc +
+        '\nHeadings: ' + f.headings.join(' | ') + '\nHomepage signals (treat as [SOFT] unless a number): ' + f.signals.join('; ') + '\nHomepage text: ' + f.text +
+        (r ? '\n\nEVIDENCE:\n' + r.evidence.join('\n') + '\n\nSOCIAL (context only):\n' + (r.social.join('\n') || 'no social links found on the site') : '');
+      const out = callAi_(S, sys, user, partner ? 700 : 1500);
       const j = parseJson_(out.text);
       if (!j || !j.what_they_sell) throw new Error('profile: AI returned no JSON');
-      appendObj_('Profiles', { lead_id: lead.lead_id, what_they_sell: j.what_they_sell, audience: j.audience || '', signal: j.signal || '',
-        site_notes: (j.site_notes || '') + (f.signals.length ? ' [Signals: ' + f.signals.join('; ') + ']' : ''), updated_at: new Date() });
+      const row = { lead_id: lead.lead_id, what_they_sell: j.what_they_sell, audience: j.audience || '', signal: j.signal || '',
+        site_notes: (j.site_notes || '') + (f.signals.length ? ' [Signals: ' + f.signals.join('; ') + ']' : ''), updated_at: new Date() };
+      if (r && upgraded) {
+        let worth = Math.max(0, Math.min(5, Math.round(Number(j.worth) || 0)));
+        if (!j.problem || /\[SOFT\]/.test(String(j.problem_evidence || '')) && !/\[(MEASURED|SEEN)\]/.test(String(j.problem_evidence || ''))) worth = Math.min(worth, 2);   // a soft signal alone never carries an email
+        Object.assign(row, { problem: j.problem || '', problem_evidence: String(j.problem_evidence || '') + (j.cost ? ' | Cost: ' + j.cost : '') + (j.fix ? ' | Fix: ' + j.fix : ''),
+          problem_page: j.problem_page || r.pdpUrl || '', problem_worth: worth,
+          second_problem: j.second && j.second.problem ? j.second.problem + ' (evidence: ' + (j.second.evidence || '') + '; worth ' + (j.second.worth || '?') + ')' : '',
+          research: (r.evidence.join('\n') + (j.rejected ? '\nRejected: ' + j.rejected : '')).slice(0, 4500), socials: r.social.join('\n').slice(0, 2000) });
+      }
+      const old = have[String(lead.lead_id)];
+      if (old && old !== true) Object.keys(row).forEach(k => { if (profiles.headers.indexOf(k) !== -1 && k !== 'lead_id') set_(profiles, old, k, row[k]); });
+      else appendObj_('Profiles', row);
       if (!String(lead.niche).trim() && j.niche) set_(leads, lead, 'niche', String(j.niche).slice(0, 40));
-      have[String(lead.lead_id)] = true;
+      if (row.problem_worth !== undefined && row.problem_worth < Number(S.MIN_PROBLEM_SCORE || 4))
+        note_(leads, lead, 'HOLD: research found no problem worth a cold email (best: "' + String(row.problem || 'none').slice(0, 160) + '", worth ' + row.problem_worth + '/5). See Profiles > research. To email anyway, write the problem in Profiles > problem and set problem_worth to 5.', false);
+      have[String(lead.lead_id)] = row;
       stats.profiles++;
       Utilities.sleep(6000);   // free-tier Gemini allows only a handful of calls a minute
     } catch (e) { note_(leads, lead, 'profile failed: ' + String(e.message || e).slice(0, 420), true); stats.problems.push(lead.lead_id + ': ' + e.message); if (/HTTP 429|RESOURCE_EXHAUSTED/i.test(String(e.message))) stats.limited = true; }
@@ -283,6 +377,7 @@ function profileLeads_(S, stats, timeLeft) {
 
 const SEQ_TASK_ = [
   'TASK: write a 5-email cold sequence from Ridwan to this lead. Use ONLY facts in the lead data and profile below plus the brief. Any observation in email 1 must be supported by the profile. If the profile has no solid observation, keep email 1 honest and general rather than inventing one.',
+  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE PROBLEM, email 1 is built on it: name the page and the exact element, product or number from its evidence, say what a shopper runs into there, and what that costs in plain words. It must be specific enough that the founder can open the page and check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it.',
   'Step 1: the observation, the problem it usually causes, what Ridwan does, one interest question. Steps 2 to 5 must each add something NEW (a second observation, a small useful point, a lighter ask, a different offer) and never say "just checking in" or "following up". Step 3 may use one real proof line from the brief if it genuinely fits. Step 5 is a warm, clean close that leaves the door open.',
   'Every email under 100 words, plain text, no links, no signature (added by the system), each ends with a light way out in Ridwan\'s voice (vary the wording). Steps 2 to 5 read as replies in the same thread: no subject.',
   'Greeting: use the contact name if given ("Hi Amina,"). If no name, start with "Hi," and the observation. For a Nigerian or African lead, email 1 must begin with exactly {{greeting}} followed by the name, e.g. "{{greeting}} Amina." and steps 2 to 5 begin "Hi Amina,". For everyone else, no greeting phrase.',
@@ -313,7 +408,8 @@ function writeSequences_(S, stats, timeLeft) {
   let sigRows = [];
   try { sigRows = read_('Signals').rows; } catch (e) { /* tab not created yet: run Outreach > Set up tabs */ }
 
-  candidates_(leads, l => !has1[String(l.lead_id)] && profiles.rows.some(p => String(p.lead_id) === String(l.lead_id)), PREP_BATCH_.sequence).forEach(lead => {
+  const prof = id => profiles.rows.find(x => String(x.lead_id) === String(id));
+  candidates_(leads, l => !has1[String(l.lead_id)] && prof(l.lead_id) && problemOk_(l, prof(l.lead_id), S), PREP_BATCH_.sequence).forEach(lead => {
     if (!timeLeft() || stats.limited) return;
     try {
       const p = profiles.rows.find(x => String(x.lead_id) === String(lead.lead_id));
@@ -322,7 +418,10 @@ function writeSequences_(S, stats, timeLeft) {
       const user = 'LEAD: ' + [lead.brand, lead.contact_name || '(no contact name)', lead.website].filter(String).join(' | ') +
         '\nPlatform: ' + (lead.platform || 'unknown') + '. Business model: ' + (lead.business_model || 'unknown') + '. Country: ' + (lead.country || '') + '. Niche: ' + (lead.niche || '') + '. Track: ' + (lead.track || '') + '. Play: ' + (lead.play || '') + '. Source: ' + (lead.source || '') +
         (liveSignals_(sigRows, lead) ? '\nLIVE SIGNALS (most recent first):\n' + liveSignals_(sigRows, lead) : '') + (alsoOn_(sigRows, lead) ? '\nAlso listed on: ' + alsoOn_(sigRows, lead) : '') +
-        '\nWhat they sell: ' + p.what_they_sell + '\nAudience: ' + p.audience + '\nSignal: ' + p.signal + '\nObservations: ' + p.site_notes + '\nNotes: ' + (lead.notes || '');
+        '\nWhat they sell: ' + p.what_they_sell + '\nAudience: ' + p.audience + '\nSignal: ' + p.signal + '\nObservations: ' + p.site_notes +
+        (p.problem ? '\nTHE PROBLEM (email 1 rests on this): ' + p.problem + '\nIts evidence: ' + (p.problem_evidence || '') + '\nPage: ' + (p.problem_page || '') : '') +
+        (p.second_problem ? '\nSECOND PROBLEM (for step 2): ' + p.second_problem : '') + (p.socials ? '\nSocial (context only, never flatter or criticise the following): ' + String(p.socials).slice(0, 600) : '') +
+        '\nNotes: ' + (lead.notes || '');
       const out = callAi_(S, sys, user, 1800);
       const j = parseJson_(out.text);
       if (!j || !j.emails || j.emails.length < 5) throw new Error('sequence: AI returned fewer than 5 emails');
@@ -331,7 +430,8 @@ function writeSequences_(S, stats, timeLeft) {
       j.emails.slice().sort((a, b) => a.step - b.step).forEach(e => {
         const body = clean_(e.body || '');
         const subject = Number(e.step) === 1 ? clean_(e.subject || '').toLowerCase().slice(0, 90) : '';
-        const f = draftFlags_(body.replace(/\{\{greeting\}\}/g, ''));
+        let f = draftFlags_(body.replace(/\{\{greeting\}\}/g, ''));
+        if (Number(e.step) === 1 && GENERIC_PROBLEM_.test(body)) f = (f ? f + '; ' : '') + 'generic problem line, not specific to this store';
         if (f) flags.push('step ' + e.step + ': ' + f);
         appendObj_('Sequence', { lead_id: lead.lead_id, step: Number(e.step), subject: subject, body: body, status: 'Draft' });
       });
@@ -344,6 +444,8 @@ function writeSequences_(S, stats, timeLeft) {
     } catch (e) { note_(leads, lead, 'sequence failed: ' + String(e.message || e).slice(0, 420), true); stats.problems.push(lead.lead_id + ': ' + e.message); if (/HTTP 429|RESOURCE_EXHAUSTED/i.test(String(e.message))) stats.limited = true; }
   });
 }
+
+const GENERIC_PROBLEM_ = /could (be|convert|perform) better|small tweaks|few tweaks|some friction|optimi[sz]e your (site|store|website)|boost (your )?(sales|conversions)|improve (your )?conversions?|take your (store|brand) to the next level|leaving money on the table/i;
 
 function parseJson_(text) {
   const t = String(text).replace(/```json|```/gi, '');
@@ -363,7 +465,8 @@ function rankEmail_(email, host, contactName) {
   const h = String(host || '').toLowerCase().replace(/^www\./, '');
   if (/^(no-?reply|do-?not-?reply|mailer-daemon|postmaster|abuse|webmaster|privacy|legal|unsubscribe|returns?|billing|accounts?|jobs?|careers?|press|media|pr)$/.test(local)) return -100;
   let s = 0;
-  if (h && (dom === h || dom.endsWith('.' + h) || h.endsWith('.' + dom) || h === dom)) s += 10;       // their own domain
+  const stem = d => d.replace(/\.(co|com|org|net|ac|gov)\.[a-z]{2}$|\.[a-z]{2,}$/, '').split('.').pop();
+  if (h && (dom === h || dom.endsWith('.' + h) || h.endsWith('.' + dom) || (stem(dom).length > 3 && stem(dom) === stem(h)))) s += 10;   // their own domain (also brand.ca on brand.com)
   const parts = String(contactName || '').toLowerCase().split(/[^a-z]+/).filter(p => p.length > 2);
   if (/^(founder|owner|ceo|director|md|principal|president|cofounder|co-founder)$/.test(local)) s += 8;   // the decision maker's role mailbox
   else if (parts.some(p => local.indexOf(p) !== -1)) s += 8;                                          // matches the named contact

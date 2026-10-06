@@ -20,8 +20,8 @@ const TABS = {
   Settings: ['key', 'value', 'notes'],
   Leads: ['lead_id', 'brand', 'website', 'contact_name', 'email', 'email_status', 'country', 'time_zone',
     'niche', 'source', 'track', 'play', 'stage', 'approved', 'sender', 'touch_count', 'last_touch_at',
-    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model', 'signature', 'priority', 'signal_at'],
-  Profiles: ['lead_id', 'what_they_sell', 'audience', 'signal', 'site_notes', 'updated_at'],
+    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model', 'signature', 'priority', 'signal_at', 'email_rescue'],
+  Profiles: ['lead_id', 'what_they_sell', 'audience', 'signal', 'site_notes', 'updated_at', 'problem', 'problem_evidence', 'problem_page', 'problem_worth', 'second_problem', 'research', 'socials'],
   Sequence: ['lead_id', 'step', 'subject', 'body', 'status', 'sent_at'],
   Messages: ['logged_at', 'lead_id', 'direction', 'from', 'to', 'subject', 'body', 'sent_at', 'thread_id',
     'message_id', 'sender_account'],
@@ -68,6 +68,8 @@ function defaultSettings_() {
     ['MIN_PARTNER_SCORE', '55', 'Agency discovery: an agency needs at least this score (0 to 100) to become a partner lead.'],
     ['SIGNATURE_PARTNER', 'Ridwan Adekunle\nShopify development partner for agencies, Koolestpro\nkoolestpro.com', 'First email to an agency or studio (track Partner). Optional.'],
     ['MIN_FIT_SCORE', '55', 'Discovery: a store needs at least this score (0 to 100) to become a lead. Higher = pickier.'],
+    ['MIN_PROBLEM_SCORE', '4', 'Research scores the problem it found in each store from 1 (guesswork) to 5 (verified, specific, clearly costs sales). Below this, the lead is held and no emails are written. See Profiles > problem and research.'],
+    ['INSTAGRAM_LOOKUP', 'free', 'free = try to read Instagram followers from the public page (often blocked). apify = Apify Instagram Profile Scraper, reads followers and recent posts (needs APIFY_TOKEN, paid per profile). off = skip.'],
     ['AUTO_APPROVE', 'FALSE', 'TRUE = a lead whose sequence passes all checks (valid email, no flags) is approved automatically. FALSE = you tick approved yourself.'],
     ['SEND_WEEKENDS', 'FALSE', 'FALSE = never send on Saturday or Sunday in the lead\'s own time zone.'],
     ['AI_ORDER', 'gemini,claude,deepseek', 'Which AI writes reply drafts, tried in this order. Keys go in Script Properties (see SETUP.md).'],
@@ -92,6 +94,7 @@ function onOpen() {
     .addItem('Import store lists now', 'importSourcesNow')
     .addItem('Run Apify imports now', 'apifyImportsNow')
     .addItem('Prepare new leads now', 'prepareLeadsNow')
+    .addItem('Redo research + emails for unsent leads', 'redoUnsentLeads')
     .addItem('Test email verifier key', 'testVerifier')
     .addItem('Draft replies now', 'draftRepliesNow')
     .addItem('Send daily report now', 'dailyReport')
