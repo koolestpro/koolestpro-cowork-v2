@@ -33,6 +33,17 @@
       "status": "queued",
       "pendingPushFile": ".ai-workflow/pending-push/2026-W38_ikeja-lagos-baby-and-kids-store.json",
       "note": "5 scored and queued for local import. 0 skipped as already taken. leadsPushed stays 0 until import_pending_push.sh confirms the local push."
+    },
+    {
+      "week": "2026-W41",
+      "ranAt": "2026-10-06T10:28:45.000Z",
+      "areaUsed": "Surulere, Lagos",
+      "keywordUsed": "home decor store",
+      "leadsScored": 5,
+      "leadsPushed": 0,
+      "status": "queued",
+      "pendingPushFile": ".ai-workflow/pending-push/2026-W41_surulere-lagos-home-decor-store.json",
+      "note": "5 scored and queued for local import. 0 skipped as already taken. Enrichment stalled for: FUN HOME, Global Interior Decor, FRINK-D HOME DECOR. leadsPushed stays 0 until import_pending_push.sh confirms the local push."
     }
   ]
 }

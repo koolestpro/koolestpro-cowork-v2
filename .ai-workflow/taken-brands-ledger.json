@@ -267,6 +267,56 @@
       "sourceQuery": "Area=Ikeja, Lagos; Keyword=baby and kids store",
       "koolestflowId": "koolestflow-browseract-kids-market-place",
       "takenAt": "2026-09-28T09:23:36.000Z"
+    },
+    "funhome|lagos": {
+      "brandName": "FUN HOME",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Surulere, Lagos; Keyword=home decor store",
+      "koolestflowId": "koolestflow-browseract-fun-home",
+      "takenAt": "2026-10-06T10:46:01.000Z"
+    },
+    "globalinteriordecor|lagos": {
+      "brandName": "Global Interior Decor",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Surulere, Lagos; Keyword=home decor store",
+      "koolestflowId": "koolestflow-browseract-global-interior-decor",
+      "takenAt": "2026-10-06T10:46:01.000Z"
+    },
+    "homenecessitieswarehouse|lagos": {
+      "brandName": "Home Necessities Warehouse",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Surulere, Lagos; Keyword=home decor store",
+      "koolestflowId": "koolestflow-browseract-home-necessities-warehouse",
+      "takenAt": "2026-10-06T10:46:01.000Z"
+    },
+    "europeanstandardhomes|lagos": {
+      "brandName": "EUROPEAN STANDARD HOMES",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Surulere, Lagos; Keyword=home decor store",
+      "koolestflowId": "koolestflow-browseract-european-standard-homes",
+      "takenAt": "2026-10-06T10:46:01.000Z"
+    },
+    "frinkdhomedecor|lagos": {
+      "brandName": "FRINK-D HOME DECOR",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "websiteUrl": "",
+      "source": "browseract",
+      "sourceQuery": "Area=Surulere, Lagos; Keyword=home decor store",
+      "koolestflowId": "koolestflow-browseract-frink-d-home-decor",
+      "takenAt": "2026-10-06T10:46:01.000Z"
     }
   }
 }
