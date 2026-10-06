@@ -5,7 +5,7 @@
  *   1. finds a contact email on the lead's website (if `email` is empty)
  *   2. verifies it (MyEmailVerifier free API; sending requires email_status = valid). If it fails, tries the other addresses
  *      for the domain (on the site, Hunter.io if keyed, common role addresses) and swaps in the first valid one
- *   3. researches the store (Research.gs: catalogue, a product page, PageSpeed, socials), writes a Profile and picks ONE problem
+ *   3. researches the store (Research.gs: catalogue, a product page, funnel, speed only when obviously slow, socials), writes a Profile and picks ONE problem
  *      worth a cold email, scored 1 to 5; leads under MIN_PROBLEM_SCORE are held, not emailed
  *   4. writes the 5-email sequence in Ridwan's voice for the lead's market, into the Sequence tab
  * Then the lead waits for your `approved` tick (or is auto-approved if AUTO_APPROVE = TRUE and no check flagged it).
@@ -13,7 +13,7 @@
  * Uses helpers from Code.gs and Brief.gs. Keys (Script Properties): MYEMAILVERIFIER_API_KEY plus the AI keys.
  */
 
-const PREP_BATCH_ = { email: 5, profile: 2, sequence: 3, rescue: 3 }; // per run, keeps each run under Apps Script's 6 minute limit (profiles now include a PageSpeed test)
+const PREP_BATCH_ = { email: 5, profile: 2, sequence: 3, rescue: 3 }; // per run, keeps each run under Apps Script's 6 minute limit (profiles include PageSpeed runs)
 const PREP_MAX_TRIES_ = 3;
 
 function prepareLeadsNow() { prepareLeads_(true); }
@@ -30,6 +30,7 @@ function prepareLeads_(interactive) {
     if (isTrue_(S.PAUSED)) { if (interactive) toast_('PAUSED is TRUE in Settings.'); return; }
     const started = Date.now();
     const timeLeft = () => Date.now() - started < 4.5 * 60 * 1000;
+    S._started = started;
 
     try { apifyImports_(stats, timeLeft); } catch (e) { stats.problems.push('apify: ' + e.message); }
     try { importSources_(S, stats, timeLeft, false); } catch (e) { stats.problems.push('sources: ' + e.message); }
@@ -388,7 +389,7 @@ function profileLeads_(S, stats, timeLeft) {
 
 const SEQ_TASK_ = [
   'TASK: write a 5-email cold sequence from Ridwan to this lead. Use ONLY facts in the lead data and profile below plus the brief. Any observation in email 1 must be supported by the profile. If the profile has no solid observation, keep email 1 honest and general rather than inventing one.',
-  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE OFFER and THE PROBLEM, email 1 is built on them: show you understood how THIS business sells (their product, price point, how customers reach them), name the page, product or element from the evidence, say what the shopper or the ad click runs into, what that costs in plain words, and exactly what Ridwan would build (THE FIX). It must be specific enough that the founder can check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. A [SOFT] gap is asked, never stated: "is cold traffic going straight to the product page, or is there a pre-sell page I missed?". Never mention page speed or load time. Never pitch a small fix (a size chart, a photo, a description) as the reason to talk. Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it. Address the decision maker by first name when known, even when the email goes to a shared inbox.',
+  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE OFFER and THE PROBLEM, email 1 is built on them: show you understood how THIS business sells (their product, price point, how customers reach them), name the page, product or element from the evidence, say what the shopper or the ad click runs into, what that costs in plain words, and exactly what Ridwan would build (THE FIX). It must be specific enough that the founder can check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. A [SOFT] gap is asked, never stated: "is cold traffic going straight to the product page, or is there a pre-sell page I missed?". Mention page speed or load time ONLY when THE PROBLEM rests on a [SPEED] evidence line: then use its exact numbers and say it is Google\'s own measurement on phones, never a guess or a rounded-up claim. Never pitch a small fix (a size chart, a photo, a description) as the reason to talk. Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it. Address the decision maker by first name when known, even when the email goes to a shared inbox.',
   'Step 1: the observation, the problem it usually causes, what Ridwan does, one interest question. Steps 2 to 5 must each add something NEW (a second observation, a small useful point, a lighter ask, a different offer) and never say "just checking in" or "following up". Step 3 may use one real proof line from the brief if it genuinely fits. Step 5 is a warm, clean close that leaves the door open.',
   'Every email under 100 words, plain text, no links, no signature (added by the system), each ends with a light way out in Ridwan\'s voice (vary the wording). Steps 2 to 5 read as replies in the same thread: no subject.',
   'Greeting: use the contact name if given ("Hi Amina,"). If no name, start with "Hi," and the observation. For a Nigerian or African lead, email 1 must begin with exactly {{greeting}} followed by the name, e.g. "{{greeting}} Amina." and steps 2 to 5 begin "Hi Amina,". For everyone else, no greeting phrase.',
@@ -447,6 +448,8 @@ function writeSequences_(S, stats, timeLeft) {
         if (f) flags.push('step ' + e.step + ': ' + f);
         appendObj_('Sequence', { lead_id: lead.lead_id, step: Number(e.step), subject: subject, body: body, status: 'Draft' });
       });
+      if (!/\[SPEED\]/.test(String(p.problem_evidence || '') + String(p.research || '')) && j.emails.some(e => SPEED_WORDS_.test(String(e.body || ''))))
+        flags.push('mentions speed but research found no obvious slowness');
       if (p.team && lc_(p.team) !== 'solo' && sharedInbox_(lead.email)) flags.push('email goes to a shared inbox (' + lead.email + '), not the decision maker' + (p.decision_maker ? ' (' + String(p.decision_maker).split(' (')[0] + ')' : '') + ': find their own address before approving');
       set_(leads, lead, 'notes', ('Observation basis: ' + (j.basis || '?') + ' [' + out.provider + ']' + (flags.length ? ' | CHECK: ' + flags.join('; ') : '') +
         (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
@@ -458,6 +461,7 @@ function writeSequences_(S, stats, timeLeft) {
   });
 }
 
+const SPEED_WORDS_ = /\bslow|speed|load(s|ing)? (time|in)|takes? .{0,20}to load|seconds to (load|appear)|pagespeed/i;
 const GENERIC_PROBLEM_ = /could (be|convert|perform) better|small tweaks|few tweaks|some friction|optimi[sz]e your (site|store|website)|boost (your )?(sales|conversions)|improve (your )?conversions?|take your (store|brand) to the next level|leaving money on the table/i;
 
 function parseJson_(text) {

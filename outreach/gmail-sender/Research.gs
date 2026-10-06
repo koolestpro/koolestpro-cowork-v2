@@ -2,7 +2,7 @@
  * Koolestpro Outreach: store research (2026-10-06, Ridwan's feedback on the first test emails).
  *
  * A lead is only emailed when there is a tangible reason: a project worth paying for, tied to how this business sells.
- * Not a small fix they could do in ten minutes, and never a speed claim. Big brands are skipped outright.
+ * Not a small fix they could do in ten minutes. Speed only when the store is obviously slow (speedCheck_). Big brands are skipped.
  * The method follows the koolestpro-client-audit skill (funnel discovery, Tier 1 "fix what's leaking", Tier 2 "add what's
  * missing") and the store-auditor skill (specific, located, named element, real data only).
  *
@@ -141,6 +141,47 @@ function funnel_(base, host, homeHtml, pdpHtml) {
   return { ev: ev, hasPresell: funnelPages.length > 0 || probed.length > 0 || subs.length > 0 };
 }
 
+// ---------- Speed: only when it is obviously slow ----------
+
+/**
+ * Speed is a strong reason to reply, but only when nobody could argue with it. Returns an evidence line starting [SPEED],
+ * or '' (nothing at all, so the AI cannot mention speed). Two ways to qualify:
+ *   1. Google's real-user data (Chrome UX Report) rates the page or the whole site SLOW, with the 75th-percentile time to
+ *      the main content at or above SPEED_FIELD_LCP seconds (default 4, Google's own "poor" line). Real visitors, not a test.
+ *   2. No real-user data (common for small stores): the lab test on a phone shows the main content at or above
+ *      SPEED_LAB_LCP seconds (default 8) with a performance score of 35 or less, and a second run agrees.
+ * Needs Script property PAGESPEED_API_KEY (free); without it Google's shared quota is usually used up and this returns ''.
+ */
+function psi_(url) {
+  const key = PropertiesService.getScriptProperties().getProperty('PAGESPEED_API_KEY');
+  const r = get_('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?strategy=mobile&category=performance&url=' + encodeURIComponent(url) + (key ? '&key=' + encodeURIComponent(key) : ''));
+  if (r.code !== 200) return null;
+  try { return JSON.parse(r.text); } catch (e) { return null; }
+}
+
+function speedCheck_(S, url) {
+  const fieldMin = Number(S.SPEED_FIELD_LCP || 4), labMin = Number(S.SPEED_LAB_LCP || 8);
+  const a = psi_(url);
+  if (!a) return '';
+  const pick = x => (x && x.metrics && x.metrics.LARGEST_CONTENTFUL_PAINT_MS) ? x.metrics.LARGEST_CONTENTFUL_PAINT_MS : null;
+  const page = pick(a.loadingExperience), site = pick(a.originLoadingExperience);
+  const field = page || site;
+  if (field) {   // real-user data exists: it decides, the lab test is ignored
+    const secs = field.percentile / 1000;
+    if (field.category === 'SLOW' && secs >= fieldMin)
+      return '[SPEED] [MEASURED] Google real-user data (Chrome UX Report, phones, ' + (page ? 'this page: ' + url : 'whole site') + '): for 1 in 4 visits the main image or text takes longer than ' + secs.toFixed(1) + 's to appear. Google rates this slow.';
+    return '';
+  }
+  const lab = j => { const lh = j.lighthouseResult || {}; return { lcp: (((lh.audits || {})['largest-contentful-paint'] || {}).numericValue || 0) / 1000, score: Math.round((((lh.categories || {}).performance || {}).score || 0) * 100) }; };
+  const one = lab(a);
+  if (one.lcp < labMin || one.score > 35) return '';
+  const b = psi_(url);   // lab results vary run to run: a second run must agree
+  if (!b) return '';
+  const two = lab(b);
+  if (two.lcp < labMin || two.score > 35) return '';
+  return '[SPEED] [MEASURED] Google PageSpeed lab test on a phone, run twice, ' + url + ': main image or text appears after ' + one.lcp.toFixed(1) + 's and ' + two.lcp.toFixed(1) + 's (performance ' + one.score + ' and ' + two.score + ' out of 100).';
+}
+
 // ---------- Who decides ----------
 
 function aboutText_(base) {
@@ -206,6 +247,9 @@ function researchStore_(S, lead, homePage) {
     ev.push('[SEEN] no public Shopify catalogue (/products.json closed or not a Shopify store); only the homepage was read');
   }
 
+  const sp = (Date.now() - (S._started || Date.now()) < 3 * 60 * 1000) ? speedCheck_(S, pdpUrl || ('https://' + base)) : '';   // skipped late in a run (Apps Script's 6 minute limit)
+  if (sp) ev.push(sp);
+
   const f = funnel_(base, host, homePage.html, pdpHtml);
   f.ev.forEach(x => ev.push(x));
 
@@ -270,13 +314,14 @@ const STORE_PROFILE_SYS_ = [
   '- bundle_builder: a build-your-own bundle page (Ridwan built one for Champion Biotics). Strong for consumables, supplements, food, skincare, pet, or several related products at one price point.',
   '- quiz: a product finder quiz. Strong when there are many similar products and buyers must choose (skincare by skin type, supplements by goal).',
   '- subscription: subscribe and save. Strong for consumables with no subscription app.',
+  '- speed: the store is obviously slow on phones. ONLY when the evidence has a [SPEED] line; quote its numbers exactly and say it is Google\'s own measurement. Strong when they run ads (every paid click waits).',
   '- custom_feature: a specific custom Shopify feature this business type needs (a configurator, a sample pack flow, a shorter checkout path); name it exactly.',
-  'NOT worth an email: anything a founder fixes in minutes (add a size chart, upload another photo, write a description, hide sold-out items, a typo); taste (colours, fonts); page speed or load time in any form; generic advice ("improve conversions", "add trust"). Those can be a supporting detail, never the reason.',
+  'NOT worth an email: anything a founder fixes in minutes (add a size chart, upload another photo, write a description, hide sold-out items, a typo); taste (colours, fonts); page speed or load time UNLESS there is a [SPEED] evidence line (no [SPEED] line means the store is not obviously slow, so speed is never mentioned); generic advice ("improve conversions", "add trust"). Those can be a supporting detail, never the reason.',
   'Decision maker: from the About page text, the founder or owner\'s name and role if the text states it (never guess a name). Team: "solo" if the text reads as one person, "small" for a few named people, "larger" if it mentions a team, departments or many staff, else "unknown".',
   'Score worth 1 to 5. 5: a clear project (page or feature to build) that fits how this business sells, backed by MEASURED or SEEN evidence. 4: a good project with slightly weaker evidence. 3: plausible but generic for the niche. 1 or 2: small fixes, guesses or soft gaps only. Be strict: an honest 2 is better than a dressed-up 4.',
   'Output JSON only: {"what_they_sell":"one short line","audience":"who buys, one short line","niche":"2 to 3 words","business":"one line: how they make money, price point, consumable or not, how they get customers","signal":"one line: why they fit","site_notes":"2 to 4 short, true observations",' +
   '"decision_maker":{"name":"First Last or empty","role":"Founder, Owner, CEO... or empty","basis":"the words in the about text, or empty"},"team":"solo|small|larger|unknown",' +
-  '"offer":"page_rebuild|advertorial|listicle|post_purchase|bundle_builder|quiz|subscription|custom_feature","problem":"one sentence a founder would recognise: what is happening in their store or funnel and what the shopper or the ad click runs into","problem_evidence":"the exact evidence lines it rests on, with their labels","problem_page":"url",' +
+  '"offer":"page_rebuild|speed|advertorial|listicle|post_purchase|bundle_builder|quiz|subscription|custom_feature","problem":"one sentence a founder would recognise: what is happening in their store or funnel and what the shopper or the ad click runs into","problem_evidence":"the exact evidence lines it rests on, with their labels","problem_page":"url",' +
   '"cost":"one line, what it costs them in plain words, no numbers","fix":"one line: exactly what Ridwan would build for them","worth":1-5,"second":{"offer":"...","problem":"a different angle for a follow-up","evidence":"labelled evidence","worth":1-5} or null,"rejected":"weaker points you considered and why not"}',
 ].join('\n');
 
