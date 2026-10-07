@@ -66,6 +66,7 @@ function defaultSettings_() {
     ['FOLLOWUP_GAPS', '3,4,5,6', 'Days between steps 1>2, 2>3, 3>4, 4>5.'],
     ['SEND_TO_CATCH_ALL', 'FALSE', 'TRUE = also email addresses the verifier marks catch-all (domain accepts everything, so the mailbox is unproven). Unknown or risky are never sent.'],
     ['MIN_PARTNER_SCORE', '55', 'Agency discovery: an agency needs at least this score (0 to 100) to become a partner lead.'],
+    ['SIGNATURE_LAUNCH', 'Ridwan Adekunle\nShopify store builds and launches, Koolestpro\nkoolestpro.com', 'First email to a store that is not open yet (password or coming-soon page, track Launch). Optional.'],
     ['SIGNATURE_PARTNER', 'Ridwan Adekunle\nShopify development partner for agencies, Koolestpro\nkoolestpro.com', 'First email to an agency or studio (track Partner). Optional.'],
     ['MIN_FIT_SCORE', '55', 'Discovery: a store needs at least this score (0 to 100) to become a lead. Higher = pickier.'],
     ['MIN_PROBLEM_SCORE', '4', 'Research picks one offer per store (page rebuild, speed, advertorial, listicle, post-purchase, bundle builder, quiz, subscription, custom feature) and scores it from 1 (small fix or guesswork) to 5 (a real project backed by evidence). Below this, the lead is held and no emails are written. See Profiles > offer, problem and research.'],

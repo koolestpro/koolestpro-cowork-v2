@@ -388,7 +388,7 @@ const STORE_PROFILE_SYS_ = [
 
 /** A sequence may be written only when the store has an offer worth emailing about (agencies and no-website leads are exempt). */
 function problemOk_(lead, profile, S) {
-  if (lc_(lead.track) === 'partner' || lc_(lead.track) === 'build' || !String(lead.website).trim()) return true;
+  if (['partner', 'build', 'launch'].indexOf(lc_(lead.track)) !== -1 || !String(lead.website).trim()) return true;   // Launch: the timing is the reason
   if (!profile || profile.problem_worth === undefined) return true;   // Profiles tab not upgraded yet: old behaviour
   return Number(profile.problem_worth || 0) >= Number(S.MIN_PROBLEM_SCORE || 4);
 }
@@ -452,12 +452,16 @@ function redoUnsentLeads() {
 // Directory lists can be months old. framelo.com was emailed while it redirected to a domain-for-sale page.
 
 const PARKED_HOSTS_ = /brandsly|afternic|sedo\.|dan\.com|hugedomains|godaddy|squadhelp|atom\.com|undeveloped|parkingcrew|bodis|sav\.com|porkbun|namecheap|domainmarket|buydomains|epik\.com|uniregistry|parklogic|above\.com|dynadot/i;
-const DEAD_TEXT_ = /domain (is|may be) for sale|buy this domain|this domain is parked|parked free|this store is unavailable|this shop is currently unavailable|store is closed|shop is closed|account (has been )?suspended|website (is )?(expired|suspended)|coming soon|opening soon|under construction|site not found|no longer (available|in business|operating)/i;
+const DEAD_TEXT_ = /domain (is|may be) for sale|buy this domain|this domain is parked|parked free|this store is unavailable|this shop is currently unavailable|store is closed|shop is closed|account (has been )?suspended|website (is )?(expired|suspended)|site not found|no longer (available|in business|operating)/i;
+// Pre-launch is NOT dead (Ridwan, 2026-10-07): a password or coming-soon page means they are building right now. Track Launch.
+const PASSWORD_PAGE_ = /<form[^>]+storefront_password|password-page|action=["']\/password["']/i;
+const PRELAUNCH_TEXT_ = /coming soon|opening soon|launching soon|under construction|something (big|exciting) is coming|stay tuned|be the first to know/i;
 
 /**
  * Follows redirects by hand (Apps Script hides the final URL) and decides whether the site is a live store.
  * Returns { active, why, finalHost }. Not active: 4xx/5xx, unreachable, a redirect to a domain marketplace or parking page,
- * a redirect to a different domain (store moved: needs a human look), a parked/for-sale/closed/password page, or no shop at all.
+ * a redirect to a different domain (store moved: needs a human look), a parked/for-sale/closed page, or no shop at all.
+ * A password or coming-soon page IS active, with prelaunch: true (they are building the store right now: track Launch).
  */
 function siteStatus_(website) {
   let url = 'https://' + cleanDomain_(website) + '/';
@@ -480,13 +484,39 @@ function siteStatus_(website) {
     if (code >= 400) return { active: false, why: 'site returns HTTP ' + code, finalHost: finalHost };
     if (finalStem !== startStem && !/myshopify\.com$/.test(finalHost)) return { active: false, why: 'redirects to a different domain (' + finalHost + '): store moved or sold, check by hand', finalHost: finalHost };
     const html = res.getContentText().slice(0, 300000), text = textOf_(html).slice(0, 4000);
-    if (/<form[^>]+storefront_password|password-page|\/password"/i.test(html)) return { active: false, why: 'password page: store not open', finalHost: finalHost };
     if (DEAD_TEXT_.test(text)) return { active: false, why: 'page says: "' + (text.match(DEAD_TEXT_) || [''])[0] + '"', finalHost: finalHost };
+    // A password page is proof. "Coming soon" wording only counts on a small page with no shop (live stores say "new drop coming soon").
+    if (PASSWORD_PAGE_.test(html) || /\/password$/.test(url) || (PRELAUNCH_TEXT_.test(text) && textOf_(html).length < 2500 && !/add[\s_-]?to[\s_-]?(cart|bag)|\/products\//i.test(html))) return { active: true, prelaunch: true, why: 'pre-launch: password or coming-soon page (building now)', finalHost: finalHost, html: html };
     if (text.length < 300 && !/add to (cart|bag)|shop|products?/i.test(text)) return { active: false, why: 'almost empty page (' + text.length + ' characters of text)', finalHost: finalHost };
     return { active: true, why: 'live (HTTP ' + code + ')', finalHost: finalHost };
   }
   return { active: false, why: 'too many redirects', finalHost: cleanDomain_(url) };
 }
+
+// ---------- Pre-launch stores: what can be offered (2026-10-07) ----------
+// Nothing behind the password can be seen, so the observation comes only from the coming-soon page itself and their socials.
+// Offers, in order of fit: (1) finish or build the store for launch, (2) a free pre-launch review of their store if they share
+// the password, (3) a proper coming-soon / waitlist page that collects emails, (4) launch ad creatives from their product photos.
+
+function launchFacts_(html, base) {
+  const t = textOf_(html).slice(0, 2500);
+  const facts = [];
+  facts.push('[SEEN] coming-soon or password page text: "' + t + '"');
+  const signup = /contact\[email\]|customer\[email\]|type=["']email["']|klaviyo|newsletter|sign ?up|subscribe|join (the )?(list|waitlist)|notify me/i.test(html);
+  facts.push(signup ? '[SEEN] the page has an email signup (waitlist or newsletter)' : '[SEEN] no email signup form on the page: visitors before launch have no way to hear when it opens');
+  const date = (t.match(/\b(launch(ing)?|opening|open|live|drops?)\b[^.]{0,40}\b(\d{1,2}(st|nd|rd|th)?\s+\w+|\w+\s+\d{1,2}(st|nd|rd|th)?|20\d\d|this (week|month)|next (week|month)|soon)\b/i) || [])[0];
+  if (date) facts.push('[SEEN] launch timing mentioned: "' + date + '"');
+  const theme = (html.match(/Shopify\.theme\s*=\s*\{[^}]*"name"\s*:\s*"([^"]+)"/) || [])[1];
+  if (theme) facts.push('[SEEN] Shopify theme: ' + theme);
+  return facts;
+}
+
+const LAUNCH_PROFILE_SYS_ = [
+  'You profile a store that is NOT open yet: it shows a password or coming-soon page, so the founder is building it right now. Use ONLY the data given. Never claim anything about the store behind the password, its products, design or pages: nobody can see them.',
+  'Pick ONE offer that fits what you can see: launch_build (help finish or build the store so it launches properly: product pages, homepage, theme setup), launch_review (a free pre-launch review of their product page if they share the store password; low friction, best default), waitlist_page (only if the page has NO email signup: a coming-soon page that collects emails before launch), launch_creatives (ad creatives from their product photos for launch, when their socials show products).',
+  'The problem is about timing, not a flaw: they are about to launch, and the first visitors decide fast. Only state what is SEEN (for example no email signup on the coming-soon page, a launch date). Never invent a launch date or products.',
+  'Output JSON only: {"what_they_sell":"one short line, or unknown","audience":"one short line, or unknown","niche":"2 to 3 words","business":"one line","signal":"pre-launch: building the store now","site_notes":"1 to 3 true observations from the coming-soon page and socials","decision_maker":{"name":"","role":"","basis":""},"team":"solo|small|larger|unknown","offer":"launch_build|launch_review|waitlist_page|launch_creatives","problem":"one sentence about their launch moment, from what is seen","problem_evidence":"labelled evidence","problem_page":"url","cost":"one plain line","fix":"one line: exactly what Ridwan would do","worth":1-5,"second":{"offer":"...","problem":"...","evidence":"...","worth":1-5} or null}',
+].join('\n');
 
 // ---------- Is the email theirs? (2026-10-07) ----------
 // Directories often list a Gmail or an old agency address. A free-mail or other-domain address is kept only when the store

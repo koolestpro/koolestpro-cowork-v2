@@ -122,3 +122,15 @@ Every lesson from a wrong email (Nomalife, District Lounge, Sellare) is written 
 - **Dead proof.** aminazaid.com is down (404). The brief now names Amina Zaid as a business only, never the domain; drafts naming aminazaid.com, justdarlings or Jellys Glamour domains get a `CHECK:` flag. scentsavenue.ng is the one live Nigerian proof link.
 - **GitHub scrape removed.** `.github/workflows/directory-scrape.yml` deleted at Ridwan's request (scraping runs elsewhere now; it was failing and emailing him). The repo secrets `OUTREACH_API_URL` and `OUTREACH_API_TOKEN` are no longer used by GitHub and can be deleted in the repo settings.
 
+## Pre-launch stores: track Launch (2026-10-07, Ridwan)
+
+Password and coming-soon pages are no longer treated as dead: the founder is building the store right now, which is the best moment to talk. `siteStatus_` returns `prelaunch: true` for a Shopify password page (proof on its own) or for "coming soon / launching soon" wording on a small page with no products or add-to-cart (so a live store saying "new drop coming soon" stays a normal store). Parked, for-sale, closed and 404 sites are still dead.
+
+What can be offered, since nothing behind the password is visible (`LAUNCH_PROFILE_SYS_`, `launchFacts_`):
+- **launch_review** (default): a free look at their product page before launch if they share the store password. Low friction, real value, and it starts the conversation.
+- **launch_build**: help finish or build the store so it launches properly (product pages, homepage, theme setup).
+- **waitlist_page**: only when the coming-soon page has no email signup: a page that collects emails before launch so the first day has buyers.
+- **launch_creatives**: launch ad creatives from their product photos, when their socials show the products.
+
+The email opens with what is visible (the coming-soon page, a stated launch date, the signup form or its absence), never claims anything about the store behind the password, and asks whether they are building it themselves or someone is helping. Launch leads are exempt from `MIN_PROBLEM_SCORE` (the timing is the reason). New Settings row `SIGNATURE_LAUNCH`. Discovery already gives a password page +15.
+

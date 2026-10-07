@@ -344,6 +344,32 @@ function profileLeads_(S, stats, timeLeft) {
         stats.profiles++;
         return;
       }
+      if (live.prelaunch && lc_(lead.track) !== 'partner') {   // building now: profile from the coming-soon page and socials only
+        const base = cleanDomain_(lead.website);
+        const ev = launchFacts_(live.html, base);
+        const links = socialLinks_(live.html), social = Object.keys(links).map(k => k + ': ' + links[k]);
+        if (links.instagram) { const ig = instagram_(S, links.instagram); if (ig) social.push(ig); }
+        const out = callAi_(S, LAUNCH_PROFILE_SYS_, 'Brand: ' + (lead.brand || base) + '. Website: ' + lead.website + '. Country: ' + (lead.country || '') + '\nEVIDENCE:\n' + ev.join('\n') + '\nSOCIAL:\n' + (social.join('\n') || 'none found'), 900);
+        const j = parseJson_(out.text);
+        if (!j || !j.what_they_sell) throw new Error('launch profile: AI returned no JSON');
+        const dm = j.decision_maker || {};
+        const row = { lead_id: lead.lead_id, what_they_sell: j.what_they_sell + (j.business ? ' | ' + j.business : ''), audience: j.audience || '', signal: j.signal || 'pre-launch',
+          site_notes: j.site_notes || '', updated_at: new Date(), offer: j.offer || 'launch_review', decision_maker: dm.name ? dm.name + (dm.role ? ', ' + dm.role : '') : '', team: j.team || 'unknown',
+          problem: j.problem || '', problem_evidence: String(j.problem_evidence || '') + (j.cost ? ' | Cost: ' + j.cost : '') + (j.fix ? ' | Fix: ' + j.fix : ''), problem_page: 'https://' + base,
+          problem_worth: Math.max(0, Math.min(5, Math.round(Number(j.worth) || 0))), second_problem: j.second && j.second.problem ? '[' + (j.second.offer || '') + '] ' + j.second.problem : '',
+          research: ('PRE-LAUNCH (' + live.why + ')\n' + ev.join('\n')).slice(0, 4500), socials: social.join('\n').slice(0, 2000) };
+        const old = have[String(lead.lead_id)];
+        if (old && old !== true) Object.keys(row).forEach(k => { if (profiles.headers.indexOf(k) !== -1 && k !== 'lead_id') set_(profiles, old, k, row[k]); });
+        else appendObj_('Profiles', row);
+        set_(leads, lead, 'track', 'Launch');
+        if (!String(lead.niche).trim() && j.niche) set_(leads, lead, 'niche', String(j.niche).slice(0, 40));
+        try { const rc = recipientCheck_(S, leads, lead); if (rc) note_(leads, lead, rc, false); } catch (e) {}
+        note_(leads, lead, 'pre-launch store (password or coming-soon page): track Launch, offer ' + row.offer, false);
+        have[String(lead.lead_id)] = row;
+        stats.profiles++;
+        Utilities.sleep(6000);
+        return;
+      }
       const page = fetchPage_(lead.website);
       if (!page.ok) throw new Error('site returned HTTP ' + page.code);
       const f = siteFacts_(page);
@@ -411,6 +437,7 @@ const SEQ_TASK_ = [
   'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE OFFER and THE PROBLEM, email 1 is built on them: show you understood how THIS business sells (their product, price point, how customers reach them), name the page, product or element from the evidence, say what the shopper or the ad click runs into, what that costs in plain words, and exactly what Ridwan would build (THE FIX). It must be specific enough that the founder can check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. A [SOFT] gap is asked, never stated: "is cold traffic going straight to the product page, or is there a pre-sell page I missed?". Mention page speed or load time ONLY when THE PROBLEM rests on a [SPEED] evidence line: then use its exact numbers and say it is Google\'s own measurement on phones, never a guess or a rounded-up claim. Never pitch a small fix (a size chart, a photo, a description) as the reason to talk. Never mention language, translation, currency, price display, country or market differences (stores adapt these to where the visitor browses from, and research browses from Google servers abroad, so what it sees is not what their customers see). Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it. Address the decision maker by first name when known, even when the email goes to a shared inbox.',
   'Step 1: the observation, the problem it usually causes, what Ridwan does, one interest question. Steps 2 to 5 must each add something NEW (a second observation, a small useful point, a lighter ask, a different offer) and never say "just checking in" or "following up". Step 3 may use one real proof line from the brief if it genuinely fits. Step 5 is a warm, clean close that leaves the door open.',
   'Every email under 100 words, plain text, no links, no signature (added by the system), each ends with a light way out in Ridwan\'s voice (vary the wording). Steps 2 to 5 read as replies in the same thread: no subject.',
+  'If Track is Launch (the store is behind a password or coming-soon page, so they are building it now): never describe the store behind the password, its products or design (nobody can see them). Open with what is visible (their coming-soon page, the launch timing, an email signup or the lack of one), then THE OFFER: launch_review = offer a free look at their product page before launch if they share the password; launch_build = help finish the store so it launches properly; waitlist_page = a coming-soon page that collects emails before launch; launch_creatives = launch ad creatives from their product photos. Good ask: whether they are building it themselves or someone is helping. Follow-ups stay about the launch.',
   'Greeting: use the contact name if given ("Hi Amina,"). If no name, start with "Hi," and the observation. For a Nigerian or African lead, email 1 must begin with exactly {{greeting}} followed by the name, e.g. "{{greeting}} Amina." and steps 2 to 5 begin "Hi Amina,". For everyone else, no greeting phrase.',
   'If Track is Build (the business has no website): the observation comes from the notes (what they sell and how, for example orders by DM or on a marketplace); pitch a simple online store; email 1 offers a free ad creative made from their own product photos, nothing owed. Do not offer a free website in the sequence: that comes only if they reply.',
   'PLATFORM and BUSINESS MODEL change the pitch. Own-brand: pitch conversion, trust and the brand story. Dropship-likely: pitch only product-page conversion and trust (their money comes from ads sending traffic to a page); do not assume they make the product, do not pitch a brand-building retainer. Print-on-demand: pitch product pages and brand polish. Reseller (many brands): pitch catalogue navigation, collection filters and search. Unknown: keep it generic. If the platform is not Shopify, Ridwan works mainly in Shopify: offer a CRO review of the current site, or a move to Shopify, and never claim skills on that platform. Never say you detected their business model; just fit the pitch to it.',
