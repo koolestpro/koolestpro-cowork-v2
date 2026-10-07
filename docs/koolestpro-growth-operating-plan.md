@@ -64,13 +64,13 @@ What is real:
 | **Mother of Macros** | In portfolio | International case study — partial scope (CRO) |
 | **Captain & Skipper** | In portfolio | International case study — verify scope |
 | **scentsavenue.ng** | Finished, **live** | **Nigeria anchor case study** — pain: drowning in DM questions |
-| **aminazaid.com** | Finished, **live** | **Nigeria anchor case study** — pain: non-technical, couldn't operate the platform |
+| **Amina Zaid** (aminazaid.com) | Finished, **site down since 2026-10 (name only, no link)** | **Nigeria anchor case study** — pain: non-technical, couldn't operate the platform |
 | **justdarlings** | Finished, **NOT live** | Case study from screenshots/archive only — the site is down |
 | **Jellys Glamour** | Finished, **NOT live** | Case study from screenshots/archive only. Still the key **TikTok proof point** — she found him via TikTok and came to his DMs |
 | Two foreign PageFly clients | Finished, details not recorded | Mention only. No case study possible without records. |
 | KURA, HALOS | Concept builds | Portfolio only. **Always labelled as concept work. Never implied to be clients.** |
 
-**Two live Nigerian client sites (scentsavenue.ng, aminazaid.com) are linkable proof and should lead every `/ng` page.**
+**scentsavenue.ng is the one live Nigerian client site and should lead every `/ng` page.** (aminazaid.com went down, confirmed 2026-10-07: name Amina Zaid only.)
 
 **justdarlings and Jellys Glamour are down.** Their case studies must be built from whatever visual record exists — old screenshots, exports, or the Wayback Machine. Do this **before** the record disappears entirely; a dead site with no archive is a client story that can never be told. If nothing is recoverable, tell the story in words and say plainly that the site is no longer live rather than implying it is.
 
@@ -396,7 +396,7 @@ A prospect cannot picture "a free sample site." They need to see one. This is th
 
 **Where it lives:** hosted on Vercel, linked from `/ng/samples`, and sent directly in DMs as the "here's exactly what you get" link.
 
-**Alongside it, show the real ones.** aminazaid.com and scentsavenue.ng are live and linkable. Lead with those as proof, then use the demo to set expectations for the free tier specifically — real client sites show the paid result and would over-promise on their own. (justdarlings and Jellys Glamour are down; recover screenshots before building their case studies.)
+**Alongside it, show the real ones.** scentsavenue.ng is live and linkable (Amina Zaid by name only, site down). Lead with it as proof, then use the demo to set expectations for the free tier specifically — real client sites show the paid result and would over-promise on their own. (justdarlings and Jellys Glamour are down; recover screenshots before building their case studies.)
 
 ## D3. Free sample site — build spec
 

@@ -41,7 +41,8 @@ Rule 2 of the project: **never invent a result and never imply a concept brand w
 - **Tap and Rate** (tapandrate.co.uk): custom product page. Ongoing client that started on Fiverr over a year ago.
 - **Champion Biotics** (championbiotics.com): homepage, product page and build-a-bundle page. Same origin, ongoing.
 - **Mother of Macros** (motherofmacros.com): CRO work, partial scope.
-- **Nigeria, live and linkable:** **aminazaid.com** (modest dresses; owner was not technical) and **scentsavenue.ng** (perfume; drowning in repetitive DM questions).
+- **Nigeria, live and linkable:** **scentsavenue.ng** (perfume; drowning in repetitive DM questions).
+- **Nigeria, name only (site down):** **Amina Zaid** (modest dresses; owner was not technical). aminazaid.com returns 404 (checked 2026-10-07, Ridwan confirmed): mention the business, never the domain or a link.
 
 **Careful:**
 - Captain & Skipper: in the portfolio, scope not confirmed. Do not describe the work.

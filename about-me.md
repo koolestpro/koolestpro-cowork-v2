@@ -41,7 +41,7 @@
 ### Completed — Nigeria, from LinkedIn/YouTube teaching content (the referral chain)
 The first came from LinkedIn during the YouTube Shopify-teaching period; she referred the second, who referred the third. Each pain matches the current Nigeria target prospect exactly, which makes these the strongest local proof assets.
 
-- **aminazaid.com** — modest dresses. Not technical, couldn't operate the platform herself. **Origin: LinkedIn content. Site is LIVE.**
+- **Amina Zaid** (aminazaid.com) — modest dresses. Not technical, couldn't operate the platform herself. **Origin: LinkedIn content. Site is NOT live (404, confirmed 2026-10-07): name only, never the domain or a link.**
 - **justdarlings** — kids products. Instagram account banned, following wiped, needed an asset she owned. **Origin: referred by aminazaid. Site is NOT live.**
 - **scentsavenue.ng** — perfume. Drowning in repetitive DM questions, needed a site to absorb them. **Origin: referred by justdarlings. Site is LIVE.**
 
@@ -49,7 +49,7 @@ The first came from LinkedIn during the YouTube Shopify-teaching period; she ref
 - **Jellys Glamour** — handmade body care products, Nigeria. Full store build. **She found Ridwan through his TikTok videos and came to his DMs.** The clearest example of content directly producing a client. **Site is NOT live.**
 - **Two foreign clients** — PageFly-related work, details not recorded. Also arrived via TikTok.
 
-> Only **aminazaid.com** and **scentsavenue.ng** are still live and linkable. Recover screenshots or Wayback captures for justdarlings and Jellys Glamour before those stories become untellable.
+> Only **scentsavenue.ng** is still live and linkable (aminazaid.com went down; confirmed 2026-10-07). Recover screenshots or Wayback captures for justdarlings and Jellys Glamour before those stories become untellable.
 
 ### Concept builds (NOT clients — always label as such)
 - **KURA**, **HALOS** — self-invented brands built for the portfolio and content pipeline. Never present or imply these as client work.

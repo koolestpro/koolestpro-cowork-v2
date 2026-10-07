@@ -104,6 +104,8 @@ const POD_APPS_ = ['printful', 'printify', 'gelato', 'gooten'];
 function scoreStore_(domain, row) {
   const reasons = [];
   let score = 40;
+  const live = siteStatus_(domain);   // directory lists go stale: parked, for-sale, closed and moved stores never become leads
+  if (!live.active) return { score: 0, reasons: ['site not active: ' + live.why], skip: true };
   const page = fetchPage_(domain);
   if (!page.ok) return { score: 0, reasons: ['site unreachable (HTTP ' + page.code + ')'], skip: true };
   const html = page.html, lower = html.toLowerCase();

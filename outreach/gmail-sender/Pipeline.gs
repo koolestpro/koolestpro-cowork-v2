@@ -336,6 +336,14 @@ function profileLeads_(S, stats, timeLeft) {
   candidates_(leads, l => String(l.website).trim() && (!have[String(l.lead_id)] || needsResearch(l)), PREP_BATCH_.profile).forEach(lead => {
     if (!timeLeft() || stats.limited) return;
     try {
+      const live = siteStatus_(lead.website);
+      if (!live.active) {   // never research or email a dead, parked, for-sale or moved store
+        set_(leads, lead, 'stage', 'Lost');
+        set_(leads, lead, 'notes', ('SKIP: site not active: ' + live.why + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
+        note_(leads, lead, 'SKIP, marked Lost. Site not active: ' + live.why, false);
+        stats.profiles++;
+        return;
+      }
       const page = fetchPage_(lead.website);
       if (!page.ok) throw new Error('site returned HTTP ' + page.code);
       const f = siteFacts_(page);
@@ -386,6 +394,7 @@ function profileLeads_(S, stats, timeLeft) {
       if (r && j.decision_maker && j.decision_maker.name && /^[A-Za-z][A-Za-z'\- ]{1,40}$/.test(j.decision_maker.name)) {
         try { const up = upgradeToDecisionMaker_(S, leads, lead, j.decision_maker.name.trim(), j.decision_maker.role || ''); if (up) note_(leads, lead, 'decision maker: ' + up, false); } catch (e) { stats.problems.push(lead.lead_id + ' decision maker: ' + e.message); }
       }
+      if (r) { try { const rc = recipientCheck_(S, leads, lead); if (rc) note_(leads, lead, rc, false); } catch (e) { stats.problems.push(lead.lead_id + ' recipient: ' + e.message); } }
       if (row.problem_worth !== undefined && row.problem_worth < Number(S.MIN_PROBLEM_SCORE || 4))
         note_(leads, lead, 'HOLD: research found nothing worth selling them (best: "' + String(row.problem || 'none').slice(0, 160) + '", worth ' + row.problem_worth + '/5). See Profiles > research. To email anyway, write the problem in Profiles > problem and set problem_worth to 5.', false);
       have[String(lead.lead_id)] = row;
@@ -460,6 +469,7 @@ function writeSequences_(S, stats, timeLeft) {
       });
       if (!/\[SPEED\]/.test(String(p.problem_evidence || '') + String(p.research || '')) && j.emails.some(e => SPEED_WORDS_.test(String(e.body || ''))))
         flags.push('mentions speed but research found no obvious slowness');
+      if (String(lead.notes || '').indexOf(UNCONFIRMED_TAG_) !== -1) flags.push('recipient not confirmed: ' + lead.email + ' is not published on their site');
       if (j.emails.some(e => LOCALE_WORDS_.test(String(e.body || '') + ' ' + String(e.subject || '')))) flags.push('mentions language, translation or currency: never a reason to email');
       if (p.team && lc_(p.team) !== 'solo' && sharedInbox_(lead.email)) flags.push('email goes to a shared inbox (' + lead.email + '), not the decision maker' + (p.decision_maker ? ' (' + String(p.decision_maker).split(' (')[0] + ')' : '') + ': find their own address before approving');
       set_(leads, lead, 'notes', ('Observation basis: ' + (j.basis || '?') + ' [' + out.provider + ']' + (flags.length ? ' | CHECK: ' + flags.join('; ') : '') +

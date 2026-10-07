@@ -447,3 +447,78 @@ function redoUnsentLeads() {
   if (prof.headers.indexOf('problem_worth') !== -1) prof.rows.filter(p => unsent[String(p.lead_id)]).forEach(p => set_(prof, p, 'problem_worth', ''));
   toast_(Object.keys(unsent).length + ' unsent lead(s) reset (' + n + ' draft emails superseded, approvals cleared). Run Prepare new leads now.');
 }
+
+// ---------- Is the site still a live store? (2026-10-07) ----------
+// Directory lists can be months old. framelo.com was emailed while it redirected to a domain-for-sale page.
+
+const PARKED_HOSTS_ = /brandsly|afternic|sedo\.|dan\.com|hugedomains|godaddy|squadhelp|atom\.com|undeveloped|parkingcrew|bodis|sav\.com|porkbun|namecheap|domainmarket|buydomains|epik\.com|uniregistry|parklogic|above\.com|dynadot/i;
+const DEAD_TEXT_ = /domain (is|may be) for sale|buy this domain|this domain is parked|parked free|this store is unavailable|this shop is currently unavailable|store is closed|shop is closed|account (has been )?suspended|website (is )?(expired|suspended)|coming soon|opening soon|under construction|site not found|no longer (available|in business|operating)/i;
+
+/**
+ * Follows redirects by hand (Apps Script hides the final URL) and decides whether the site is a live store.
+ * Returns { active, why, finalHost }. Not active: 4xx/5xx, unreachable, a redirect to a domain marketplace or parking page,
+ * a redirect to a different domain (store moved: needs a human look), a parked/for-sale/closed/password page, or no shop at all.
+ */
+function siteStatus_(website) {
+  let url = 'https://' + cleanDomain_(website) + '/';
+  const startStem = cleanDomain_(website).replace(/\.(co|com|org|net)\.[a-z]{2}$|\.[a-z]{2,}$/, '').split('.').pop();
+  for (let hop = 0; hop < 6; hop++) {
+    let res;
+    try { res = UrlFetchApp.fetch(url, { muteHttpExceptions: true, followRedirects: false, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; KoolestproBot/1.0)' } }); }
+    catch (e) { return { active: false, why: 'unreachable (' + String(e.message || e).slice(0, 80) + ')', finalHost: cleanDomain_(url) }; }
+    const code = res.getResponseCode();
+    const host = cleanDomain_(url);
+    if (code >= 300 && code < 400) {
+      const h = res.getAllHeaders();
+      const loc = h.Location || h.location;
+      if (!loc) return { active: false, why: 'redirect with no target', finalHost: host };
+      url = /^https?:\/\//i.test(loc) ? loc : 'https://' + host + (loc.charAt(0) === '/' ? '' : '/') + loc;
+      if (PARKED_HOSTS_.test(cleanDomain_(url))) return { active: false, why: 'redirects to a domain-for-sale or parking page (' + cleanDomain_(url) + ')', finalHost: cleanDomain_(url) };
+      continue;
+    }
+    const finalHost = host, finalStem = finalHost.replace(/\.(co|com|org|net)\.[a-z]{2}$|\.[a-z]{2,}$/, '').split('.').pop();
+    if (code >= 400) return { active: false, why: 'site returns HTTP ' + code, finalHost: finalHost };
+    if (finalStem !== startStem && !/myshopify\.com$/.test(finalHost)) return { active: false, why: 'redirects to a different domain (' + finalHost + '): store moved or sold, check by hand', finalHost: finalHost };
+    const html = res.getContentText().slice(0, 300000), text = textOf_(html).slice(0, 4000);
+    if (/<form[^>]+storefront_password|password-page|\/password"/i.test(html)) return { active: false, why: 'password page: store not open', finalHost: finalHost };
+    if (DEAD_TEXT_.test(text)) return { active: false, why: 'page says: "' + (text.match(DEAD_TEXT_) || [''])[0] + '"', finalHost: finalHost };
+    if (text.length < 300 && !/add to (cart|bag)|shop|products?/i.test(text)) return { active: false, why: 'almost empty page (' + text.length + ' characters of text)', finalHost: finalHost };
+    return { active: true, why: 'live (HTTP ' + code + ')', finalHost: finalHost };
+  }
+  return { active: false, why: 'too many redirects', finalHost: cleanDomain_(url) };
+}
+
+// ---------- Is the email theirs? (2026-10-07) ----------
+// Directories often list a Gmail or an old agency address. A free-mail or other-domain address is kept only when the store
+// publishes it on its own site; otherwise an address from the site replaces it, or the lead is flagged for a human look.
+
+const FREEMAIL_ = /@(gmail|googlemail|yahoo|ymail|outlook|hotmail|live|msn|icloud|me|aol|proton|protonmail|gmx|mail|yandex|zoho)\./i;
+const UNCONFIRMED_TAG_ = '[UNCONFIRMED RECIPIENT]';
+
+function isOwnDomain_(email, host) {
+  const dom = lc_(String(email).split('@')[1] || ''), h = cleanDomain_(host);
+  const stem = d => d.replace(/\.(co|com|org|net|ac|gov)\.[a-z]{2}$|\.[a-z]{2,}$/, '').split('.').pop();
+  return !!dom && !!h && (dom === h || dom.endsWith('.' + h) || h.endsWith('.' + dom) || (stem(dom).length > 3 && stem(dom) === stem(h)));
+}
+
+/** Returns a short note, and fixes or flags the lead. Only for leads with a website (Maps leads without one keep their Maps email). */
+function recipientCheck_(S, leads, lead) {
+  const email = lc_(lead.email), host = cleanDomain_(lead.website);
+  if (!email || !host || isOwnDomain_(email, host)) return '';
+  const site = siteEmails_(lead.website);
+  if (site.indexOf(email) !== -1) return 'recipient ok: ' + email + ' is published on their own site';
+  const cands = site.filter(e => e !== email).sort((a, b) => (isOwnDomain_(b, host) ? 1 : 0) - (isOwnDomain_(a, host) ? 1 : 0) || rankEmail_(b, host, lead.contact_name) - rankEmail_(a, host, lead.contact_name));
+  const canVerify = !!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
+  for (const c of cands.slice(0, 3)) {
+    const v = canVerify ? verifyOne_(c) : '';
+    if (v === 'valid' || (v === 'catch-all' && isTrue_(S.SEND_TO_CATCH_ALL))) {
+      set_(leads, lead, 'notes', ('Recipient fixed: ' + email + ' (from a directory, not on their site) replaced by ' + c + ' (published on ' + host + ', verifier: ' + v + ')' + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
+      set_(leads, lead, 'email', c);
+      set_(leads, lead, 'email_status', v);
+      return 'recipient fixed: now ' + c;
+    }
+  }
+  if (String(lead.notes || '').indexOf(UNCONFIRMED_TAG_) === -1)
+    set_(leads, lead, 'notes', (UNCONFIRMED_TAG_ + ' ' + email + ' is ' + (FREEMAIL_.test(email) ? 'a free-mail address' : 'on another domain') + ' and is not published on ' + host + '. Confirm it belongs to the owner before approving.' + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
+  return 'recipient unconfirmed: ' + email + ' not found on ' + host;
+}

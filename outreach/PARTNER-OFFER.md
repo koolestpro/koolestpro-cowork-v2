@@ -38,7 +38,7 @@ Illustration for the pitch (not a claim): an agency that sells a store build to 
 ## How to be credible with no white-label history
 
 1. **Be open that the programme is new**, and let the pilot price remove the risk.
-2. **Lead with real direct client work** (Tap and Rate, Champion Biotics, Mother of Macros, aminazaid.com, scentsavenue.ng). Good development is what an agency buys; it never needs to be called white-label.
+2. **Lead with real direct client work** (Tap and Rate, Champion Biotics, Mother of Macros, Amina Zaid (name only, site down), scentsavenue.ng). Good development is what an agency buys; it never needs to be called white-label.
 3. **Offer a free short dev review** of one of the agency's own live client sites, the same shape as the store audit. It shows quality and starts the conversation.
 4. **A partner starter pack** (to build): a one-page capability sheet, the rate card, a simple intake brief form, an NDA template, and a plain description of how a project runs.
 5. **Reply and quote fast.** Speed is the main trust signal for a new partner.

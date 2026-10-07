@@ -372,6 +372,14 @@ function sendDue(ignoreHours) {
       if (!row) continue;
       const lastStep = Math.max.apply(null, steps.map(r => Number(r.step)));
       if (step > 1 && !lead.thread_id) continue; // follow-up without a thread: skip, needs a look
+      if (step === 1 && String(lead.website || '').trim()) {   // last check before the first email: the store must still be live
+        const live = siteStatus_(lead.website);
+        if (!live.active) {
+          set_(leads, lead, 'stage', 'Lost');
+          set_(leads, lead, 'notes', ('SKIP at send time: site not active: ' + live.why + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
+          continue;
+        }
+      }
 
       const subject = step === 1 ? String(row.subject) : 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
       const sig = signatureFor_(lead, S, step > 1);
@@ -597,6 +605,7 @@ function draftFlags_(text) {
   BLOCKLIST_.forEach(w => { if (t.indexOf(w) !== -1) f.push('blocklist:' + w); });
   if (/\d\s?%|[$£€₦]\s?\d|\bN\d+\s?[km]\b/i.test(text)) f.push('has a number or price: check it is allowed');
   if (/https?:\/\/|www\./i.test(text)) f.push('has a link');
+  if (/aminazaid\.com|justdarlings\.|jellysglamour\./i.test(text)) f.push('names the domain of a past client whose site is down: use the business name only');
   if (String(text).split(/\s+/).length > 140) f.push('long');
   return f.join('; ');
 }
