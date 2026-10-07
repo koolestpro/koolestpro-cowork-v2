@@ -51,3 +51,6 @@ video-gen/_promo/
 outreach/scrapers/.venv/
 outreach/scrapers/state/
 outreach/scrapers/output/
+
+# Skill zips built for re-upload to claude.ai (rebuild from .agents/skills)
+skill-uploads/
