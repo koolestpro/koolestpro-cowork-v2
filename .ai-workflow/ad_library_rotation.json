@@ -1,8 +1,8 @@
 {
   "meta": {
     "description": "Rotation list + pointer for koolestpro-adlibrary-weekly. Mirrors browseract_rotation.json's category set so both sourcing routes (organic Maps vs paid Ad Library) cover the same niches. See docs/koolestpro-growth-operating-plan.md Section C2.",
-    "updatedAt": "2026-09-30T11:26:48.000Z",
-    "currentIndex": 1,
+    "updatedAt": "2026-10-07T17:59:04.000Z",
+    "currentIndex": 2,
     "limitPerRun": 10
   },
   "slots": [

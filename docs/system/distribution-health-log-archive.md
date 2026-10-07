@@ -349,3 +349,42 @@ Ridwan asked directly to check Make for recent errors and fix them, and to push 
 **Verdict:** No missed-post gap (0 found, 0 needed fixing) — cleanest run in this log's history. Make.com: healthy, and the credential-wipe fix from 2026-09-01 is now confirmed stable across 21 consecutive scheduled executions. Pacing: raw count comfortably above target (4.71/day), QA-clean count just under target (2.71/day) — same standing recommendation as every prior run: clearing a few of the 14 blocked upcoming rows closes the gap faster than drafting new content.
 
 ---
+
+## 2026-09-07 13:47 UTC (~14:47 WAT) — health check (scheduled task run)
+
+**Sheet:** "Koolestpro Distribution Queue" — read via `read_file_content` (plain Markdown-table export, not base64), which still exceeded this session's per-call token limit and got auto-saved to a host-side tool-results file. Worked through it via a Grep `.{1,450}` re-chunk + `Read` in 25-line batches (no subagent, no CSV/base64 round-trip) — a new, slower but reliable method for this session specifically, since the usual gviz-query/subagent-CSV approaches from prior entries weren't available or hit rate limits this run. Full table read start to finish, 626 lines of chunked text, nothing skipped.
+
+Counted 79 Twitter rows, 23 LinkedIn rows, ~41 Instagram rows (Instagram count is an eyeballed tally from manual scanning, not a query — treat as approximate; informational only per standing scope rule).
+
+**Missed rows found (Twitter + LinkedIn): 0.** Every row with `scheduled_date` before 2026-09-07 already shows `status = "Posted"`. Nothing needed fixing on this front.
+
+**Collisions/violations found and fixed (1):**
+
+Scanned the entire unposted Twitter + LinkedIn backlog (not just the next 7 days) for same-platform same-`(date,time)` collisions, per the standing rule. Found a 3-way pileup on Twitter at **2026-09-11 23:00**:
+
+| post_id | qa_status |
+|---|---|
+| template-showcase-kura_pp-01-20260721-20260830-x-2300 | clean (no HTML source, pre-existing captions — not a "Needs Review" flag) |
+| idea-why-your-pdp-loses-sales-at-60-scroll-...-20260830-x-1800 | Needs Review (export-compat + X caption 536 chars) |
+| cro-fix-bebemoss_toys-collection-20260818-20260830-x-1800 | Needs Review (2 claims to verify) |
+
+Only the KURA post-purchase row is QA-clean, so it's the only one moved. Rescheduled to **2026-09-11 09:00** (a free standard slot that day — 09:00 and 13:00 were both open). Webhook call returned HTTP 200 / `Accepted`. The other two stay put — content isn't ready, a new time doesn't fix that.
+
+Also found (not fixed, same reason): Twitter 2026-09-11 18:00 has **two** rows sharing the slot — `static-ad-v1ce_nfc-review-card-20260814-20260829-x-1300` and `template showcase-lumora_store-template-20260828-20260911-x-1300` — both Needs Review. Logging this as a found-but-unfixable collision; whichever clears QA first should be moved off the shared slot at that point.
+
+LinkedIn: scanned the full backlog for the max-1-post-per-day rule — every upcoming LinkedIn date (09-07, 09-09, 09-11, 09-12, 09-14, 09-15, 09-16, 09-17, 09-18, 09-19) has exactly one row. No violations.
+
+**Twitter caption character-count check (new standing instruction, applied this run):** independently counted every QA-clean, non-blocked upcoming/today Twitter caption against the 280-char limit (not just trusting existing `qa_status` text) — covers the 9 rows scheduled 09-07 through 09-11. All under 280 (longest was 276 chars, the Lumora free-offer post on 09-09 — worth a glance since it's only 4 chars of margin, but not a violation). No new over-limit captions found beyond what QA had already flagged on the blocked rows (`cro-fix-gainful...x-1800`: two variants at 292/319 chars; `idea-mobile-thumb-zone...`: 430 chars; `idea-why-your-pdp-loses-sales...`: 536 chars — all pre-existing flags, already blocking those rows for other reasons too).
+
+**Make.com scenario health: ✅ Healthy right now.** `isPaused: false`, `isinvalid: false`, `islinked: true`. Most recent scheduled (`type:auto`) execution: 2026-09-07T13:28:42Z, status 1 (success), ~19 minutes before this check. Several manual runs by Ridwan this morning (08:30, 08:37, 08:38, 11:29, 13:10 UTC) all succeeded too.
+
+**Two historical errors worth flagging, both self-recovered:** a `403 Forbidden` on the `ActionSendData`/http module at 2026-09-04 13:00 UTC (auto) and again at 2026-09-06 22:00 UTC (auto) — same failure shape as the credential-wipe bug fixed on 2026-08-31, though every execution since each error has succeeded, so this doesn't look like a recurrence of that specific bug so much as an occasional transient auth hiccup. Not currently blocking anything, but two 403s in 3 days is enough of a pattern to keep an eye on next run.
+
+**7-day pacing (2026-09-07 → 2026-09-13, Twitter + LinkedIn):** 27 rows queued — 5, 3, 4, 6, 7, 2, 0 per day — averaging **3.86/day raw**, above the 3/day target. But only **13 of those 27 are QA-clean (1.86/day)** — 14 carry "Needs Review" flags. Same standing gap as every prior entry: raw volume looks fine, real postable pacing is under target. Would need roughly 8 more QA-clean rows across the window (or clearing 8 of the 14 blocked ones) to hit 3/day on a clean basis. Blocked-by-day: 09-07 (1 of 5), 09-09 (1 of 4), 09-10 (4 of 6), 09-11 (6 of 7), 09-12 (2 of 2 — both LinkedIn and Twitter blocked that day).
+
+**Backlog-wide QA split (all upcoming rows, not just the 7-day window):** 41 unposted Twitter+LinkedIn rows total — **14 QA-clean, 27 blocked (66% blocked).** This is the highest blocked-share seen in this log's history. The blockers are almost entirely the same two recurring flag types: "claims to verify" (unsourced or unconfirmed factual statements in captions) and "manual-visual-pending" (images never actually eyeballed) — heavily concentrated in the Template Showcase / Store Template stream (Lumora, Meridian, HALOS, KURA pdp-01 rows). Clearing even a handful of these — most look like a quick claims-check + image glance rather than a rebuild — would do more for pacing than writing new content right now.
+
+**Instagram (informational only, out of scope):** ~41 rows counted in the sheet. Not classified or touched, per standing scope rule.
+
+**Verdict:** No missed-post gap. One real collision found and fixed (KURA post-purchase → 09:00 on 09-11); one more found but can't be fixed yet (both rows blocked). Twitter char-count check ran clean, no new violations. Make.com healthy right now, two isolated 403s in the last 3 days worth a glance next run. Pacing: raw count fine, QA-clean count soft (1.86/day) — the QA backlog (66% of the upcoming queue) is the actual bottleneck, same standing recommendation as every prior run.
+

@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "week": "2026-W41",
+    "ranAt": "2026-10-07T17:58:34.000Z",
+    "source": "apify-ad-library",
+    "sourceQuery": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+    "country": "NG",
+    "city": "Lagos",
+    "niche": "Beauty & Skincare",
+    "ledgerAlreadyRecorded": false,
+    "note": "Scored in the cloud, not yet pushed. import_pending_push.sh pushes this into local KoolestFlow and records the brands in the taken-brands ledger."
+  },
+  "prospects": [
+    {
+      "id": "koolestflow-adlibrary-neutriherbs",
+      "brand_name": "Neutriherbs",
+      "website_url": "",
+      "instagram_url": "https://www.instagram.com/",
+      "email": "",
+      "whatsapp": "",
+      "country": "NG",
+      "city": "Lagos",
+      "timezone": "",
+      "track": "Build",
+      "niche": "Beauty & Skincare",
+      "audience_type": "E-commerce/DTC",
+      "source": "apify-ad-library",
+      "source_query": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+      "source_url": "https://www.instagram.com/",
+      "notes": "Track: Build. | Recommended: Ingredient/benefit-led storefront, before/after gallery, routine-builder UX. | Channel: Instagram DM primary, WhatsApp second. Manual send only — no DM automation (ban risk). | Pricing frame: Nigeria ladder: Starter N250k-500k / Business N500k-1M / Premium N1M+ (see growth plan D7) | Ad destination type: instagram (https://www.instagram.com/) | Sourced via Meta Ad Library (Apify). Review before outreach.",
+      "signals": "Ad currently active; 4214 Facebook page likes; Ad also runs on Instagram; Ad destination is a instagram link, not a website (free-template candidate)",
+      "fit_score": 95,
+      "confidence": "high",
+      "status": "Qualified",
+      "pipeline_stage": "First Message Ready",
+      "next_action": "Send first DM"
+    },
+    {
+      "id": "koolestflow-adlibrary-faelifestyle-lagos",
+      "brand_name": "Faelifestyle lagos",
+      "website_url": "",
+      "instagram_url": "",
+      "email": "",
+      "whatsapp": "",
+      "country": "NG",
+      "city": "Lagos",
+      "timezone": "",
+      "track": "Low Priority",
+      "niche": "Beauty & Skincare",
+      "audience_type": "E-commerce/DTC",
+      "source": "apify-ad-library",
+      "source_query": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+      "source_url": "",
+      "notes": "Track: Low Priority. | Recommended: Not enough signal to recommend a service yet — needs manual review. | Channel: Instagram DM primary, WhatsApp second. Manual send only — no DM automation (ban risk). | Pricing frame: Nigeria ladder: Starter N250k-500k / Business N500k-1M / Premium N1M+ (see growth plan D7) | Ad destination type: unknown (not captured) | Sourced via Meta Ad Library (Apify). Review before outreach.",
+      "signals": "Ad currently active; Ad also runs on Instagram; Ad destination unclear from available data — needs manual review",
+      "fit_score": 65,
+      "confidence": "medium",
+      "status": "Qualified",
+      "pipeline_stage": "First Message Ready",
+      "next_action": "Send first DM"
+    }
+  ]
+}
