@@ -216,6 +216,7 @@ function restricted_(text) {
  */
 function factCheck_(S, claim, r) {
   if (!claim) return { holds: false, why: 'no claim' };
+  if (LOCALE_WORDS_.test(claim)) return { holds: false, why: 'language, translation or currency point: stores adapt these to the visitor\'s country and research browses from abroad, so it is never a reason to email' };
   if (/sold.?out|out of stock|unavailable|no stock/i.test(claim) && r.stock) {
     if (r.stock.available / r.stock.total > 0.5) return { holds: false, why: 'product feed shows ' + r.stock.available + ' of ' + r.stock.total + ' products in stock' };
   }
@@ -230,6 +231,10 @@ function factCheck_(S, claim, r) {
     return { holds: j.holds !== false, why: (j.why || '') + (j.quote ? ' Page says: "' + String(j.quote).slice(0, 200) + '"' : '') };
   } catch (e) { return { holds: true, why: 'fact check failed: ' + e.message + ' (kept, check by hand)' }; }
 }
+
+// Language, translation and currency points are never a reason to email (Ridwan, 2026-10-07: sellare-es.com got an email about
+// "Italian cart words" on a Spanish store; stores geo-adapt language and currency, and our fetches come from Google servers abroad).
+const LOCALE_WORDS_ = /translat|\blanguages?\b|italian|spanish|french|german|portuguese|dutch|english text|currenc|\b(EUR|USD|GBP|AUD|CAD)\b|locali[sz]|\blocale\b|geo-?|wrong country|mixed (language|currency)/i;
 
 // ---------- Who decides ----------
 
@@ -371,6 +376,7 @@ const STORE_PROFILE_SYS_ = [
   '- speed: the store is obviously slow on phones. ONLY when the evidence has a [SPEED] line; quote its numbers exactly and say it is Google\'s own measurement. Strong when they run ads (every paid click waits).',
   '- custom_feature: a specific custom Shopify feature this business type needs (a configurator, a sample pack flow, a shorter checkout path); name it exactly.',
   'NEVER claim a page lacks something or leaves a doubt unanswered unless the evidence includes that page\'s visible text and it is truly absent there. A worry typical for the niche ("buyers of X usually wonder Y") is not evidence. Stock levels (sold-out items) are a supply decision, not a project: at most a supporting detail.',
+  'NEVER pick language, translation, currency, price display, country or market differences (stores adapt these to where the visitor browses from, and research browses from Google servers abroad, so what it sees is not what their customers see). Not even as a supporting detail.',
   'NOT worth an email: anything a founder fixes in minutes (add a size chart, upload another photo, write a description, hide sold-out items, a typo); taste (colours, fonts); page speed or load time UNLESS there is a [SPEED] evidence line (no [SPEED] line means the store is not obviously slow, so speed is never mentioned); generic advice ("improve conversions", "add trust"). Those can be a supporting detail, never the reason.',
   'Decision maker: from the About page text, the founder or owner\'s name and role if the text states it (never guess a name). Team: "solo" if the text reads as one person, "small" for a few named people, "larger" if it mentions a team, departments or many staff, else "unknown".',
   'Score worth 1 to 5. 5: a clear project (page or feature to build) that fits how this business sells, backed by MEASURED or SEEN evidence. 4: a good project with slightly weaker evidence. 3: plausible but generic for the niche. 1 or 2: small fixes, guesses or soft gaps only. Be strict: an honest 2 is better than a dressed-up 4.',
