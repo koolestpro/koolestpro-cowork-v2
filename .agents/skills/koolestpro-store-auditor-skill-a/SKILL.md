@@ -45,6 +45,17 @@ If the screenshot is not provided, ask for it. Do not proceed without it.
 
 ---
 
+## VERIFICATION GATE (read first, every audit)
+
+Read `references/finding-rules.md` before auditing. It is the living list of what counts as a real finding, built from findings that turned out wrong. The short version:
+
+- **Every finding gets an evidence label.** MEASURED (a number from a tool or the store's own data), SEEN (visible on the live page at 390px) or SOFT (not found: may load later, may be elsewhere). Only MEASURED or SEEN findings can be headline findings or annotations. A SOFT gap is never stated as missing.
+- **Check the live page before claiming it lacks something.** Open the accordions: collapsed FAQ, shipping and ingredients sections count as present. A doubt that is typical for the niche ("supplement buyers wonder if it works") is not a finding unless this page truly leaves it unanswered.
+- **Read what is visible, not raw HTML.** Themes carry hidden labels such as "Sold out" on in-stock products.
+- **Never a finding:** language, translation or currency differences (stores adapt them to where you browse from), stock levels, taste, generic advice. A ten-minute fix (size chart, extra photo, description, typo) can be in the list but never leads.
+- **Speed only when obviously slow:** Google real-user data rates it Poor with LCP 4s or more on phones, or (no real-user data) two mobile lab runs both show LCP 8s or more with a score of 35 or less. Quote Google's exact number.
+- **Restricted categories are never audited for content:** vapes, nicotine, tobacco, kratom, replicas, weapons.
+
 ## AUDIT FRAMEWORK
 
 Apply all frameworks below in sequence. Every finding must be:
@@ -245,6 +256,7 @@ Area: [Value Proposition / Above the Fold / CTA / Trust Signals /
        Product Info / Friction / Objection Handling / Visual Hierarchy /
        Typography / Color / Spacing / Image]
 Problem: (specific, located, named element)
+Evidence: [MEASURED / SEEN] + the exact quote, number or screenshot detail it rests on
 Why it hurts: (conversion impact, what the buyer experiences)
 Fix: (specific, actionable, implementable in HTML/CSS)
 Content angle: (which of the 4 angles this finding is most relevant to)
@@ -384,6 +396,10 @@ Main CRO lesson of this project: [one sentence — the transferable insight]
 Before outputting the brief, check:
 
 - [ ] Every finding names a specific element, not a category
+- [ ] Every finding has an Evidence line; the top findings and every annotation are MEASURED or SEEN, never SOFT
+- [ ] I checked the live page (accordions opened) for anything that already answers each finding
+- [ ] No finding is about language, translation, currency, stock levels or taste, and no ten-minute fix is a lead finding
+- [ ] Any speed finding meets the "obviously slow" bar in `references/finding-rules.md` and quotes Google's number
 - [ ] Every finding has a specific fix, not a vague direction
 - [ ] No finding recommends a sticky ATC visible above the fold or during first viewport
 - [ ] Sticky ATC (if recommended) is correctly scoped to post-scroll appearance only

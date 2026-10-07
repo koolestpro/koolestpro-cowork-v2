@@ -145,6 +145,8 @@ This creates the benchmark that makes every client finding land harder:
 
 ### STEP 3 — THREE-TIER AUDIT (MOBILE-FIRST)
 
+**Before any finding goes in the report, apply `references/finding-rules.md`** (the living list of what counts as a real finding). Every finding carries an evidence label (MEASURED, SEEN or SOFT); only MEASURED or SEEN findings are stated as fact, SOFT ones become questions for the client. Open the accordions before saying a page lacks something. Never report language, translation or currency differences (stores adapt them to the visitor's location), stock levels or taste as findings, and never lead with a ten-minute fix. Tier 2 gaps (advertorial, listicle, post-purchase, bundle builder, quiz, subscription) are checked with the funnel methods in section 5 of that file before being called missing.
+
 Run all tiers in sequence. Full framework in `references/audit-tiers.md`.
 
 **Tier 1 — Fix what's leaking**
@@ -183,6 +185,8 @@ Flag checkout findings as Tier 1 if they're blocking purchase, Tier 2 if they're
 Ask: *"Please paste your PageSpeed Insights results for each page from pagespeed.web.dev — mobile scores are the priority."*
 
 If not provided: flag Speed Report as incomplete, leave placeholder with instructions. Don't block the rest of the audit.
+
+Speed becomes a finding only when it is obviously slow (section 4 of `references/finding-rules.md`): Google real-user data rates it Poor with LCP 4s or more on phones, or, with no real-user data, two mobile lab runs both show LCP 8s or more with a score of 35 or less. Quote the exact number as Google's measurement. Borderline lab scores go in the Speed Report as context, not as a Tier 1 finding.
 
 ---
 
