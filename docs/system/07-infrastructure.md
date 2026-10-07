@@ -64,6 +64,8 @@ These are not trivia. Most bugs in this project's history trace to one of them.
 
 **Two scheduled triggers previously became unreachable** from later sessions and had to be recreated as `-v2`. Recorded so a vanished task is recognised as a known failure mode rather than a mystery.
 
+**Desktop-app (Cowork) scheduled tasks need the Mac (diagnosed 2026-10-07).** Every `koolestpro-*` Routine is bound to the local folder `/Users/mac/koolestpro-cowork-v2`, so it only runs while the Mac is awake, the Claude app is open and the folder is connected. Otherwise the run waits (e.g. CRO Fix due Sun 08:06 UTC fired 18:56 UTC) or the Routine is suspended as `device_absent` and switched off (health check, template build, ad library). The repo-based `Weekly SEO run` cloud Routine has no folder and runs on time. The fix is to run these as cloud Routines on the GitHub repo: `scripts/cloud-run-start.sh` (fresh `main`, `.env` written from the cloud environment's secrets) at the start and `scripts/cloud-run-finish.sh <task>` (commit, push to `main` for the Mac's hourly git-sync) at the end.
+
 ---
 
 ## How authoring works
