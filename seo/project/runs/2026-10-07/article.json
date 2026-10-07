@@ -1,0 +1,149 @@
+{
+  "slug": "shopify-landing-page-designer-cost",
+  "title": "Shopify Landing Page Designer Cost: 2026 Price Guide",
+  "h1": "How much does a Shopify landing page designer cost?",
+  "description": "What a Shopify landing page designer charges, what pushes a quote up, and what to check before you hire. Published prices from $150.",
+  "targetQuestion": "How much does a Shopify landing page designer cost?",
+  "updated": "2026-10-07",
+  "readingMinutes": 4,
+  "pricesCheckedOn": "October 2026",
+  "blocks": [
+    {
+      "type": "p",
+      "text": "A Shopify landing page designer on this site costs $600 to $900 for a single page, built in Replo, Instant, PageFly, Shogun or Liquid. A full store build is $1,200 to $1,800, and a conversion audit alone is $150 to $250. Those are my published prices. Below is what moves a quote up or down, so you can judge any designer's number, mine included."
+    },
+    {
+      "type": "h2",
+      "text": "How much does a Shopify landing page designer cost?"
+    },
+    {
+      "type": "p",
+      "text": "For a single page, my range is $600 to $900. The spread depends on how many sections the page has, whether the copy and imagery are ready, and which builder it lives in."
+    },
+    {
+      "type": "table",
+      "head": [
+        "What you need",
+        "Price",
+        "Page"
+      ],
+      "rows": [
+        [
+          "Conversion audit of one page or flow",
+          "$150 to $250",
+          "/services/cro-audit"
+        ],
+        [
+          "Single landing or product page build",
+          "$600 to $900",
+          "/services/page-build"
+        ],
+        [
+          "Full store build",
+          "$1,200 to $1,800",
+          "/services/store-build"
+        ]
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What makes a landing page quote go up?"
+    },
+    {
+      "type": "p",
+      "text": "Scope, content readiness and custom behaviour push a quote up. A page with eight sections and finished copy costs less than a page where the designer also has to work out the offer and the layout logic."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Number of sections and how custom each one is",
+        "Whether copy, product photos and brand assets are ready",
+        "Custom behaviour such as bundle pickers, sticky add to cart or quizzes",
+        "Rounds of revisions and how fast you need it",
+        "Whether the page needs to match an existing theme or stand alone"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Should the designer audit the page before building it?"
+    },
+    {
+      "type": "p",
+      "text": "Yes. An audit finds the reason the current page is not converting, so the new build fixes that instead of only looking different. It is the cheapest line on my price list, and it keeps you from paying $600 or more to rebuild the wrong thing."
+    },
+    {
+      "type": "h2",
+      "text": "Which builder should the page be built in?"
+    },
+    {
+      "type": "p",
+      "text": "Pick the builder your team can edit after handover. I build in Replo, Instant, PageFly, Shogun and Liquid, so the choice follows your team and traffic, not my habits."
+    },
+    {
+      "type": "callout",
+      "title": "Choosing between builders",
+      "text": "Read Replo vs PageFly at /resources/replo-vs-pagefly, Replo vs Shogun at /resources/replo-vs-shogun and Instant vs Replo at /resources/instant-vs-replo before you brief a designer."
+    },
+    {
+      "type": "h2",
+      "text": "How long does a landing page build take?"
+    },
+    {
+      "type": "p",
+      "text": "A single page usually takes five to eight working days once copy and assets are in. A full store takes longer. Late copy is the most common reason a page slips."
+    },
+    {
+      "type": "h2",
+      "text": "What should you check before hiring a landing page designer?"
+    },
+    {
+      "type": "p",
+      "text": "Check that the designer shows real client pages, states a price range up front and explains how they decide what goes above the fold. Ask who owns the files and whether you can edit the page yourself afterwards."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Real client work you can look at, not only concepts. Concept builds should be labelled as concepts.",
+        "A stated price range and what it includes",
+        "A way to review the page before it goes live",
+        "Handover so your team can edit the page",
+        "A clear answer on timeline and revision rounds"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "My client work is listed on the work page. The KURA, HALOS and MERIDIAN pages in the portfolio are concept builds, not client projects, and are labelled that way."
+    },
+    {
+      "type": "h2",
+      "text": "Is a freelancer or an agency better for a landing page?"
+    },
+    {
+      "type": "p",
+      "text": "For one page or a small store, a freelancer is usually faster and cheaper because you talk to the person building it. An agency fits when you need several specialists and a project manager at once."
+    }
+  ],
+  "faq": [
+    {
+      "q": "How much does a Shopify landing page cost?",
+      "a": "A single landing page build with me is $600 to $900. A conversion audit is $150 to $250 and a full store build is $1,200 to $1,800."
+    },
+    {
+      "q": "How long does a Shopify landing page take to build?",
+      "a": "Five to eight working days for a single page once copy and assets are ready."
+    },
+    {
+      "q": "Do I need an audit before a landing page build?",
+      "a": "It is not required, but it shows what is holding the current page back, so the build targets the real problem."
+    },
+    {
+      "q": "Which page builder is best for a Shopify landing page?",
+      "a": "The one your team can edit after handover. I build in Replo, Instant, PageFly, Shogun and Liquid."
+    }
+  ],
+  "cta": {
+    "text": "Send me the page you want built and I will quote it against the published range.",
+    "href": "/services/page-build",
+    "label": "See the page build service"
+  }
+}
