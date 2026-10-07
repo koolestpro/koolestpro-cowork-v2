@@ -43,7 +43,7 @@ In `project.json` set `site_repo`, `site_repo_path` (where it's cloned) and `art
 
 ## 6. Outreach hand-off
 `project.json → outreach.mode`:
-- `gmail-drafts` (default): the agent creates Gmail drafts with its Gmail connector. Set `sender_name` / `sender_role`.
-- `sheet`: appends to a Google Sheet that uses the Leads / Profiles / Sequence tab layout (an Apps Script sender emails approved rows). Set `sheet_id`, share the Sheet with the Google account from section 1, and make sure that sign-in included the Sheets API.
-- `csv`: writes `outreach-import.csv` per run.
+- `csv` (default, **manual**): each run writes `outreach.md` (pitches ready to copy) + `outreach-import.csv`. You send them yourself. Set `sender_name` / `sender_role` so the pitches are signed correctly.
+- `gmail-drafts`: the agent creates Gmail drafts with its Gmail connector, in the mailbox the connector is signed into.
+- `sheet` (**automated**): pitches go into the project's outreach Sheet unapproved, and the included Apps Script sender (`seo/engine/outreach-sender/`) emails approved leads from the business's own mailbox, with follow-up, stop-on-reply and alerts. Setup and the pre-flight checklist: **`outreach-sender/SETUP.md`**. Switching from `csv` to `sheet` later is just that setup plus changing `mode` and `sheet_id`; past runs and the log carry over.
 Test any mode: `python3 seo/engine/tools/outreach_push.py --run <run with outreach.json> --dry-run`

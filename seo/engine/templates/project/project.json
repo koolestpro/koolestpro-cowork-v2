@@ -12,7 +12,13 @@
   "blog_author": "",
   "competitors": [],
   "tracked_keywords": [],
-  "outreach": { "mode": "gmail-drafts", "sender_name": "", "sender_role": "", "sheet_id": "", "track": "seo-links" },
+  "outreach": {
+    "mode": "csv",
+    "sender_name": "",
+    "sender_role": "",
+    "sheet_id": "",
+    "track": "seo-links"
+  },
   "cadence": "weekly",
   "approval": "draft-only",
   "notes": ""

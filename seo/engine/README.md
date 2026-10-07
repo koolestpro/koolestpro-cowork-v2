@@ -48,7 +48,9 @@ Set `project.json → data_provider` to `free` or `dataforseo`. Ubersuggest, if 
 | `md_to_html.py` | `article.md` → Shopify body HTML + FAQPage JSON-LD |
 | `shopify_publish.py` | Creates the article as a **hidden** Shopify draft (QA gate built in) |
 | `site_publish.py` | Inserts a typed article into a Next.js site's data file for a draft PR |
-| `outreach_push.py` | Queues link-building pitches: Google Sheet, Gmail drafts or CSV, unapproved |
+| `outreach_push.py` | Queues link-building pitches: CSV for manual sending (default), Gmail drafts, or the outreach Sheet |
+
+`outreach-sender/` is the optional email automation: a Google Sheet + Apps Script sender that emails approved link pitches from the business's own mailbox (2-step sequence, stop on reply, alerts, caps, opt-out line). Turn it on per project with `outreach-sender/SETUP.md`.
 
 ## Hard rules
 Drafts only (never publish, merge or send without a person approving). No invented stats, reviews, prices or results. No em dashes. Keys only in `.env`.

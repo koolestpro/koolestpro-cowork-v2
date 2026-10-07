@@ -64,9 +64,9 @@ Append to `seo/project/content-log.csv` (status `draft-in-shopify` | `draft-pr` 
 
 ## Step 11: Link-building outreach (max 5 prospects)
 `prompts/08-outreach.md` → `outreach.md` + `outreach.json`. Then hand it off per `project.json → outreach.mode`:
-- `sheet`: `python3 seo/engine/tools/outreach_push.py --run …` adds the leads unapproved to the outreach Sheet, and the project's own sender emails them after a person approves.
+- `csv` (default, manual): `python3 seo/engine/tools/outreach_push.py --run …` writes `outreach-import.csv` and logs the prospects. The owner sends the pitches in `outreach.md` themselves.
 - `gmail-drafts`: create one Gmail draft per prospect with the Gmail connector, then run `outreach_push.py` to log them.
-- `csv`: `outreach_push.py` writes `outreach-import.csv`.
+- `sheet` (automated, only once `outreach-sender/SETUP.md` is done): `outreach_push.py` adds the leads unapproved to the outreach Sheet, and the project's sender emails them after a person approves.
 Never send directly from the engine, and never send before a person has approved.
 
 ## Step 12: Notes + hand-off

@@ -7,11 +7,12 @@ Reads <run>/outreach.json (written by prompts/08-outreach.md):
     "emails": [{"subject", "body"}, {"subject", "body"}]}]     # step 1 pitch, step 2 follow-up
 
 project.json "outreach.mode":
-  "sheet"         append to a Google Sheet with the Koolestpro outreach layout (Leads / Profiles /
-                  Sequence tabs, see outreach/gmail-sender/Code.gs). Rows go in unapproved
+  "csv"           (default, manual sending) write <run>/outreach-import.csv (one row per email step).
+                  You send the pitches yourself from outreach.md until automation is set up.
+  "sheet"         (automated) append to the project's outreach Sheet (Leads / Profiles / Sequence tabs,
+                  sender in seo/engine/outreach-sender/). Rows go in unapproved
                   (approved=FALSE, email_status=unchecked), so nothing sends until a person ticks them.
                   Needs outreach.sheet_id + the Google sign-in with the spreadsheets scope (gsc_pull.py auth).
-  "csv"           write <run>/outreach-import.csv (one row per email step) to import anywhere.
   "gmail-drafts"  no-op here: the agent creates Gmail drafts with its Gmail connector instead.
 Every mode appends to seo/project/outreach-log.csv and skips domains contacted in the last 90 days.
 
@@ -149,7 +150,10 @@ def main():
     if mode == "sheet":
         to_sheet(fresh, cfg, args.dry_run)
     elif mode == "csv":
-        to_csv(fresh, run)
+        if args.dry_run:
+            print(f"CSV (dry run): would write {sum(len(p['emails']) for p in fresh)} email row(s) for {len(fresh)} prospect(s)")
+        else:
+            to_csv(fresh, run)
     else:
         print("mode gmail-drafts: create the drafts with the Gmail connector, then log them.")
 
