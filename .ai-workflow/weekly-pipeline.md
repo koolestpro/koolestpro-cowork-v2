@@ -39,6 +39,12 @@ so there's always a buffer to swap something out if needed.
 
 3. **Audit** the target with `koolestpro-store-auditor-skill-a` — real findings only,
    no fabricated metrics. Save the brief to `outputs/audits/{slug}_audit.md`.
+   **First read `docs/system/cro-finding-rules.md` in this project and apply it, whichever
+   copy of the skill loaded** (the account copy can lag behind the repo). Every finding in
+   the brief carries an Evidence line (MEASURED or SEEN for anything headlined or annotated);
+   check the live page with accordions open before claiming something is missing; never a
+   language/currency/stock/taste finding; speed only when obviously slow. If no finding
+   passes, pick the next target rather than shipping a weak one.
 
 4. **Rebuild.** Author the "after" HTML directly in Claude, referencing the current best
    CRO Fix rebuild as the bar to beat (see the QUALITY RATCHET rule in the parent

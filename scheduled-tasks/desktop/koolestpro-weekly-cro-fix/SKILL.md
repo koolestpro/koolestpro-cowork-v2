@@ -7,6 +7,8 @@ You are running the koolestpro weekly content pipeline, unsupervised. This is a 
 
 Read and follow `.ai-workflow/weekly-pipeline.md` in that project exactly, step by step — it is the canonical procedure (target selection, audit, DeepSeek-delegated rebuild, real Playwright screenshots, the before/after + annotation graphics, static image export via `.ai-workflow/tools/export_static_images.py` into `outputs/cro-fixes/{brand-lowercase}/`, syncing into `ridwan_content_system_updated.html`, updating `targets_pool.json`, updating the brand's `{brand-slug}-social-content.md`/`.json` pair, logging a row in `outputs/weekly-tracker.xlsx`, and presenting HTML previews in chat).
 
+Before the audit, read `docs/system/cro-finding-rules.md` (what counts as a real finding: evidence labels, check the page first, no language/currency/stock/taste findings, speed only when obviously slow). It applies whichever copy of the audit skill loads.
+
 Also read `CLAUDE.md` and `.ai-workflow/project-constitution.md` in the same project — they hold the mandatory JSON schema, gradient/export rules, the DeepSeek Task File Format, the Per-Brand Social Content Library convention, and the carousel/product-photo/layout/logo rules referenced below. **Specifically read CLAUDE.md's "IMAGE INTEGRITY, PAGE-TYPE LABELING, FULL-SPACE CAROUSELS & CONTEXTUAL VISUALS" section (added 2026-09-07)** — it is the enforced spec for the four rules below, with a worked example against the Caraway Fry Pan run.
 
 Hard rules, no exceptions:
