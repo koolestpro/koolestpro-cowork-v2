@@ -21,8 +21,22 @@
  * lead is held. Optional: Script property APIFY_TOKEN (Instagram via Apify), Settings BIG_BRAND_RANK.
  */
 
+/**
+ * Removes what a shopper never sees: templates, noscript, and short hidden state labels. Themes ship labels like
+ * <span class="sold-out-message hidden">Sold out</span> on every in-stock product; reading those as real text made an email
+ * claim a fully stocked store was sold out (District Lounge, 2026-10-07).
+ */
+function stripHidden_(html) {
+  let h = String(html || '').replace(/<(template|noscript|svg)[\s\S]*?<\/\1>/gi, ' ');
+  const hiddenEl = /<(span|p|div|small|label|li|a|button|strong|em|h[1-6])\b([^>]*(?:class=["'][^"']*\b(?:hidden|visually-hidden|sr-only|is-hidden|d-none|hide)\b[^"']*["']|\shidden(?:[\s>=])|aria-hidden=["']true["']|style=["'][^"']*display:\s*none)[^>]*)>[\s\S]*?<\/\1>/gi;
+  // Only short hidden labels go ("Sold out", "Unavailable", "Added to cart"). Long hidden blocks are collapsed accordions
+  // (FAQ answers, shipping details) that a shopper opens with one tap, so they count as on the page.
+  for (let i = 0; i < 3; i++) h = h.replace(hiddenEl, m => m.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().length <= 60 ? ' ' : m);
+  return h;
+}
+
 function textOf_(html) {
-  return String(html || '').replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ')
+  return stripHidden_(html).replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&rsquo;/g, "'").replace(/\s+/g, ' ').trim();
 }
 
@@ -182,6 +196,41 @@ function speedCheck_(S, url) {
   return '[SPEED] [MEASURED] Google PageSpeed lab test on a phone, run twice, ' + url + ': main image or text appears after ' + one.lcp.toFixed(1) + 's and ' + two.lcp.toFixed(1) + 's (performance ' + one.score + ' and ' + two.score + ' out of 100).';
 }
 
+// ---------- Restricted categories: never emailed ----------
+
+/** Products Ridwan should not be selling services to (illegal to sell in many markets, payment-processor bans, or scam-prone). */
+function restricted_(text) {
+  const m = String(text || '').match(/\b(disposable vapes?|vapes?|e-?cig(arette)?s?|e-?liquids?|nicotine|tobacco|cigarettes?|shisha|hookah|\d{3,5} puffs|kratom|replica (bags|watches|shoes)|counterfeit|firearms?|ammunition)\b/i);
+  return m ? m[0] : '';
+}
+
+// ---------- Fact check: does the page already answer the claim? ----------
+
+/**
+ * Every claimed problem is checked against the store's own visible text and data before an email can be written.
+ * 1. Stock claims are checked against the product feed (the store's own truth), not page text.
+ * 2. A skeptical second AI pass reads the visible product page, homepage and about text and looks for anything that
+ *    answers, contradicts or weakens the claim (Nomalife 2026-10-07: the email said buyers wonder how fast it works and what
+ *    if it does not, while the page showed 84 reviews, a 30-day money-back guarantee and an FAQ answering both).
+ * Returns { holds, why }.
+ */
+function factCheck_(S, claim, r) {
+  if (!claim) return { holds: false, why: 'no claim' };
+  if (/sold.?out|out of stock|unavailable|no stock/i.test(claim) && r.stock) {
+    if (r.stock.available / r.stock.total > 0.5) return { holds: false, why: 'product feed shows ' + r.stock.available + ' of ' + r.stock.total + ' products in stock' };
+  }
+  const sys = 'You are a skeptical reviewer. A cold email to this store is about to claim the problem below. Read the store\'s own VISIBLE text and decide if the claim survives. ' +
+    'It FAILS if the page already shows the thing the claim says is missing or unclear (for example reviews, a guarantee, delivery or returns info, an FAQ answer, ingredients, how it works, results timing), if any text contradicts it, ' +
+    'or if the claim is a generic worry for the niche rather than something specific to this page. Answer JSON only: {"holds":true|false,"quote":"the exact words from the page that answer or contradict it, or empty","why":"one short line"}';
+  const user = 'CLAIM: ' + claim + '\n\nPRODUCT PAGE (visible text): ' + r.pages.pdp + '\n\nHOMEPAGE (visible text): ' + r.pages.home + (r.pages.about ? '\n\nABOUT: ' + r.pages.about : '') +
+    (r.stock ? '\n\nPRODUCT FEED: ' + r.stock.available + ' of ' + r.stock.total + ' products in stock' : '');
+  try {
+    const j = parseJson_(callAi_(S, sys, user, 300).text);
+    if (!j) return { holds: true, why: 'fact check returned no JSON (kept, check by hand)' };
+    return { holds: j.holds !== false, why: (j.why || '') + (j.quote ? ' Page says: "' + String(j.quote).slice(0, 200) + '"' : '') };
+  } catch (e) { return { holds: true, why: 'fact check failed: ' + e.message + ' (kept, check by hand)' }; }
+}
+
 // ---------- Who decides ----------
 
 function aboutText_(base) {
@@ -208,8 +257,10 @@ function researchStore_(S, lead, homePage) {
   const pj = get_('https://' + base + '/products.json?limit=250');
   if (pj.code === 200) { try { products = JSON.parse(pj.text).products || []; } catch (e) {} }
 
+  const restricted = restricted_(textOf_(homePage.html).slice(0, 8000) + ' ' + products.slice(0, 50).map(p => p.title + ' ' + (p.product_type || '')).join(' '));
+  if (restricted) return { big: true, bigReasons: ['restricted or high-risk category, never emailed: ' + restricted], evidence: [], social: [], pdpUrl: '' };
   const big = bigBrand_(S, host, homePage.html, products.length);
-  if (big.big) return { big: true, bigReasons: big.reasons, evidence: [], social: [], pdpUrl: '' };
+  if (big.big) return { big: true, bigReasons: ['big brand: ' + big.reasons.join('; ')], evidence: [], social: [], pdpUrl: '' };
   ev.push('[MEASURED] size check: ' + (big.reasons.join('; ') || 'no big-brand signals'));
 
   if (products.length) {
@@ -239,7 +290,7 @@ function researchStore_(S, lead, homePage) {
         const t = textOf_(pg.html);
         ev.push('[SEEN] product page ' + pdpUrl + ' ("' + pick.title + '"): ' + (pick.images || []).length + ' photos, description ' + textOf_(pick.body_html).split(/\s+/).filter(String).length + ' words, ' +
           (pick.variants || []).length + ' variants' + ((pick.options || []).length ? ' (options: ' + pick.options.map(o => o.name).join(', ') + ')' : '') +
-          '. Page text starts: "' + t.slice(0, 400) + '"');
+          '. Visible page text starts: "' + t.slice(0, 1200) + '"');
         if (/\b0 reviews?\b|no reviews yet|be the first to review/i.test(t)) ev.push('[SEEN] product page shows no reviews yet');
       }
     } catch (e) { /* product page unreachable */ }
@@ -262,7 +313,10 @@ function researchStore_(S, lead, homePage) {
   Object.keys(links).forEach(k => social.push(k + ': ' + links[k]));
   if (links.instagram) { const ig = instagram_(S, links.instagram); if (ig) social.push(ig); }
   if (links.linkedin) social.push('LinkedIn page found (not read: LinkedIn needs a login). Use it only to know they are on LinkedIn.');
-  return { big: false, evidence: ev, social: social, pdpUrl: pdpUrl, hasPresell: f.hasPresell };
+  const avail = products.filter(p => (p.variants || []).some(v => v.available !== false));
+  return { big: false, evidence: ev, social: social, pdpUrl: pdpUrl, hasPresell: f.hasPresell,
+    pages: { home: textOf_(homePage.html).slice(0, 6000), pdp: textOf_(pdpHtml).slice(0, 9000), about: about ? about.text : '' },
+    stock: products.length ? { total: products.length, available: avail.length, soldOut: products.filter(p => avail.indexOf(p) === -1).map(p => p.title) } : null };
 }
 
 function socialLinks_(html) {
@@ -316,6 +370,7 @@ const STORE_PROFILE_SYS_ = [
   '- subscription: subscribe and save. Strong for consumables with no subscription app.',
   '- speed: the store is obviously slow on phones. ONLY when the evidence has a [SPEED] line; quote its numbers exactly and say it is Google\'s own measurement. Strong when they run ads (every paid click waits).',
   '- custom_feature: a specific custom Shopify feature this business type needs (a configurator, a sample pack flow, a shorter checkout path); name it exactly.',
+  'NEVER claim a page lacks something or leaves a doubt unanswered unless the evidence includes that page\'s visible text and it is truly absent there. A worry typical for the niche ("buyers of X usually wonder Y") is not evidence. Stock levels (sold-out items) are a supply decision, not a project: at most a supporting detail.',
   'NOT worth an email: anything a founder fixes in minutes (add a size chart, upload another photo, write a description, hide sold-out items, a typo); taste (colours, fonts); page speed or load time UNLESS there is a [SPEED] evidence line (no [SPEED] line means the store is not obviously slow, so speed is never mentioned); generic advice ("improve conversions", "add trust"). Those can be a supporting detail, never the reason.',
   'Decision maker: from the About page text, the founder or owner\'s name and role if the text states it (never guess a name). Team: "solo" if the text reads as one person, "small" for a few named people, "larger" if it mentions a team, departments or many staff, else "unknown".',
   'Score worth 1 to 5. 5: a clear project (page or feature to build) that fits how this business sells, backed by MEASURED or SEEN evidence. 4: a good project with slightly weaker evidence. 3: plausible but generic for the niche. 1 or 2: small fixes, guesses or soft gaps only. Be strict: an honest 2 is better than a dressed-up 4.',

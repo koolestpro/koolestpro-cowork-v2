@@ -302,8 +302,7 @@ function siteFacts_(page) {
   const desc = pick(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["']/i);
   const h = [];
   html.replace(/<h[12][^>]*>([\s\S]*?)<\/h[12]>/gi, (m, t) => { const x = t.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(); if (x) h.push(x); return m; });
-  const text = html.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+  const text = textOf_(html);   // visible text only (hidden theme labels removed)
   const sig = [];
   sig.push(/cdn\.shopify\.com|Shopify\.theme/i.test(html) ? 'platform: Shopify' : 'platform: not obviously Shopify');
   if (!/<meta[^>]+name=["']viewport["']/i.test(html)) sig.push('no mobile viewport tag in the page source');
@@ -344,8 +343,8 @@ function profileLeads_(S, stats, timeLeft) {
       const r = partner ? null : researchStore_(S, lead, page);
       if (r && r.big) {   // big brands are never emailed (Ridwan, 2026-10-06): they already have a team and a plan
         set_(leads, lead, 'stage', 'Lost');
-        set_(leads, lead, 'notes', ('SKIP: big brand: ' + r.bigReasons.join('; ') + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
-        note_(leads, lead, 'SKIP: big brand, marked Lost. ' + r.bigReasons.join('; '), false);
+        set_(leads, lead, 'notes', ('SKIP: ' + r.bigReasons.join('; ') + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
+        note_(leads, lead, 'SKIP, marked Lost. ' + r.bigReasons.join('; '), false);
         stats.profiles++;
         return;
       }
@@ -357,6 +356,17 @@ function profileLeads_(S, stats, timeLeft) {
       const out = callAi_(S, sys, user, partner ? 700 : 1500);
       const j = parseJson_(out.text);
       if (!j || !j.what_they_sell) throw new Error('profile: AI returned no JSON');
+      let checkNote = '';
+      if (r && j.problem) {   // the claim must survive the store's own pages before any email is written
+        const fc = factCheck_(S, j.problem + ' Evidence: ' + (j.problem_evidence || ''), r);
+        if (!fc.holds) {
+          checkNote = 'Fact check rejected "' + String(j.problem).slice(0, 140) + '": ' + fc.why;
+          const fc2 = j.second && j.second.problem ? factCheck_(S, j.second.problem + ' Evidence: ' + (j.second.evidence || ''), r) : { holds: false };
+          if (fc2.holds) { Object.assign(j, { offer: j.second.offer || j.offer, problem: j.second.problem, problem_evidence: j.second.evidence || '', worth: Number(j.second.worth) || 0, cost: '', fix: '', second: null }); checkNote += '. Using the second problem instead.'; }
+          else j.worth = Math.min(Number(j.worth) || 0, 1);
+        } else checkNote = 'Fact check passed' + (fc.why ? ': ' + fc.why : '');
+        Utilities.sleep(4000);
+      }
       const row = { lead_id: lead.lead_id, what_they_sell: j.what_they_sell, audience: j.audience || '', signal: j.signal || '',
         site_notes: (j.site_notes || '') + (partner && f.signals.length ? ' [Signals: ' + f.signals.join('; ') + ']' : ''), updated_at: new Date() };
       if (r && upgraded) {
@@ -367,7 +377,7 @@ function profileLeads_(S, stats, timeLeft) {
           what_they_sell: j.what_they_sell + (j.business ? ' | ' + j.business : ''), problem: j.problem || '', problem_evidence: String(j.problem_evidence || '') + (j.cost ? ' | Cost: ' + j.cost : '') + (j.fix ? ' | Fix: ' + j.fix : ''),
           problem_page: j.problem_page || r.pdpUrl || '', problem_worth: worth,
           second_problem: j.second && j.second.problem ? (j.second.offer ? '[' + j.second.offer + '] ' : '') + j.second.problem + ' (evidence: ' + (j.second.evidence || '') + '; worth ' + (j.second.worth || '?') + ')' : '',
-          research: (r.evidence.join('\n') + (j.rejected ? '\nRejected: ' + j.rejected : '')).slice(0, 4500), socials: r.social.join('\n').slice(0, 2000) });
+          research: (r.evidence.join('\n') + (j.rejected ? '\nRejected: ' + j.rejected : '') + (checkNote ? '\n' + checkNote : '')).slice(0, 4500), socials: r.social.join('\n').slice(0, 2000) });
       }
       const old = have[String(lead.lead_id)];
       if (old && old !== true) Object.keys(row).forEach(k => { if (profiles.headers.indexOf(k) !== -1 && k !== 'lead_id') set_(profiles, old, k, row[k]); });
