@@ -19,11 +19,13 @@ Absence is always SOFT until checked on the live page in a real browser. Reviews
 Before a finding goes in, open the live page and look for anything that already answers it: reviews, guarantee, returns, FAQ answers, ingredients, how it works, results timing, delivery. Open the accordions: collapsed content counts as on the page (a shopper opens it with one tap).
 
 - **Niche-typical doubts are not findings.** "Buyers of a $99 supplement usually wonder what it does, how fast, and what if it fails" is a guess about the niche, not a finding about this page. *(Nomalife, 2026-10-07: the Rise page already showed 84 reviews, "Science Backed · 30-Day Guarantee · Easy Returns", and an FAQ answering timing and refunds.)*
+- **Closed dropdowns, menus and footers are not page content.** A country/currency picker is a closed dropdown even when the raw HTML lists 476 countries near the top; a menu link ("Stockholm Store") is a link, not a section. *(sneakblessed.shop and ilouity.com, 2026-10-08.)*
 - **Hidden theme labels are not page content.** Themes ship `<span class="sold-out-message hidden">Sold out</span>` on every product. Read what is visible, not the raw HTML. *(District Lounge, 2026-10-07: "every featured product is sold out" while all 18 products were in stock.)*
 
 ## 3. Never a finding
 
 - **Language, translation, currency, price display, country or market differences.** Stores adapt these to where the visitor browses from; a fetch from a server abroad, a VPN or your own location shows a version their customers never see. *(sellare-es.com, 2026-10-07: "Italian cart words" on a Spanish store.)*
+- **Price amounts and price display.** Shopify converts and formats prices per visitor country, and themes hide compare-at prices that sit in the data. *(nexvy.shop, 2026-10-08: the data held a compare-at price of 7.36 below the 19.99 sale price, but the page never shows it. naturanimal.shop: every product priced 100 to 7,990 EUR, a store setup problem, not a pitch.)*
 - **Stock levels.** Sold-out items are a supply decision, not a design problem, and the owner already knows. At most a supporting detail (a homepage featuring products nobody can buy). Check the product feed (`/products.json`) before saying anything about stock.
 - **Ten-minute fixes as the headline.** Add a size chart, upload another photo, write a description, fix a typo, hide sold-out items. These can be in the list; they are never the lead finding or the reason to talk.
 - **Taste.** Colours, fonts or layout you would have chosen differently, without a conversion reason tied to a specific element.
@@ -66,5 +68,7 @@ Then match the gap to the business: consumables and repeat buys → bundle build
 - [ ] Every number comes from the live page or the store's own data
 
 ## Change log
+
+- 2026-10-08: closed dropdowns, menus and footers are not content; price amounts and display are never findings; follow-ups may not add new claims beyond the checked problems (ilouity.com follow-up invented a "which one is for me" worry from a real store section).
 
 - 2026-10-07: created from the cold-email test phase (Nomalife, District Lounge, sellare-es.com) and Ridwan's rules on speed, small fixes, Tier 2 offers and restricted categories.

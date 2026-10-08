@@ -134,3 +134,12 @@ What can be offered, since nothing behind the password is visible (`LAUNCH_PROFI
 
 The email opens with what is visible (the coming-soon page, a stated launch date, the signup form or its absence), never claims anything about the store behind the password, and asks whether they are building it themselves or someone is helping. Launch leads are exempt from `MIN_PROBLEM_SCORE` (the timing is the reason). New Settings row `SIGNATURE_LAUNCH`. Discovery already gives a password page +15.
 
+## Second round of test emails (2026-10-08, sent after the files were updated)
+
+Checked against the live sites:
+- **sneakblessed.shop** "a long country and currency list across the top": a closed country/currency picker (476 entries in the raw HTML). `stripHidden_` now drops `<select>`, `<nav>`, `<footer>`, localization forms, menu drawers and mega menus before anything reads the page; currency points were already blocked by `LOCALE_WORDS_`.
+- **nexvy.shop** "regular price under it is 7.36": the product data holds a compare-at of 7.36 below the 19.99 price, but the theme never shows it. **naturanimal.shop** "pack listed at 5,751": true in their data, but the whole catalogue runs 100 to 7,990 EUR (a currency setup problem). New `PRICE_CLAIM_`: price amounts and price display are rejected by the fact check, banned in the research prompt and brief, and flagged on drafts.
+- **ilouity.com** follow-up "Stockholm store and online shopping in the same place": the section is real, the worry was invented. Follow-ups may now only use the first email's point or the SECOND PROBLEM, and the second problem is fact-checked too (dropped if it fails). Without one, follow-ups talk about the offer, never a new observation.
+- **Closing way-out lines removed** ("No problem if you would rather not go into this now"): the footer already carries the STOP opt-out. Removed from the prompts and brief, and `stripWayOut_` deletes any that still appear.
+- **Leads already emailed under old rules:** Outreach > **Rewrite unsent follow-ups (leads already emailed)** supersedes their unsent follow-up drafts; the next Prepare run rewrites them with `writeFollowups_` from the email actually sent. Sent emails never change. If a rewrite is flagged, the lead is unapproved until reviewed.
+

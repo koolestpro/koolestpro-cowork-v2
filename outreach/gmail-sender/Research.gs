@@ -27,7 +27,11 @@
  * claim a fully stocked store was sold out (District Lounge, 2026-10-07).
  */
 function stripHidden_(html) {
-  let h = String(html || '').replace(/<(template|noscript|svg)[\s\S]*?<\/\1>/gi, ' ');
+  let h = String(html || '').replace(/<(template|noscript|svg|select|datalist|nav|footer)\b[\s\S]*?<\/\1>/gi, ' ');
+  // Country/currency pickers and menu drawers are closed dropdowns, never page content (sneakblessed.shop 2026-10-08: a hidden
+  // list of 476 countries was read as "a long country list across the top"; ilouity.com: a "Stockholm Store" menu link became a claim).
+  h = h.replace(/<form[^>]*(localization|country|currency)[^>]*>[\s\S]*?<\/form>/gi, ' ')
+       .replace(/<(details|div|ul)[^>]*(localization|country-selector|currency-selector|disclosure__list|menu-drawer|mega-menu|header__menu|header__inline-menu|drawer__menu)[^>]*>[\s\S]*?<\/\1>/gi, ' ');
   const hiddenEl = /<(span|p|div|small|label|li|a|button|strong|em|h[1-6])\b([^>]*(?:class=["'][^"']*\b(?:hidden|visually-hidden|sr-only|is-hidden|d-none|hide)\b[^"']*["']|\shidden(?:[\s>=])|aria-hidden=["']true["']|style=["'][^"']*display:\s*none)[^>]*)>[\s\S]*?<\/\1>/gi;
   // Only short hidden labels go ("Sold out", "Unavailable", "Added to cart"). Long hidden blocks are collapsed accordions
   // (FAQ answers, shipping details) that a shopper opens with one tap, so they count as on the page.
@@ -216,6 +220,7 @@ function restricted_(text) {
  */
 function factCheck_(S, claim, r) {
   if (!claim) return { holds: false, why: 'no claim' };
+  if (PRICE_CLAIM_.test(claim)) return { holds: false, why: 'price amount or price display point: Shopify converts and formats prices per visitor country, and themes hide compare-at prices, so what research reads is not what shoppers see' };
   if (LOCALE_WORDS_.test(claim)) return { holds: false, why: 'language, translation or currency point: stores adapt these to the visitor\'s country and research browses from abroad, so it is never a reason to email' };
   if (/sold.?out|out of stock|unavailable|no stock/i.test(claim) && r.stock) {
     if (r.stock.available / r.stock.total > 0.5) return { holds: false, why: 'product feed shows ' + r.stock.available + ' of ' + r.stock.total + ' products in stock' };
@@ -235,6 +240,10 @@ function factCheck_(S, claim, r) {
 // Language, translation and currency points are never a reason to email (Ridwan, 2026-10-07: sellare-es.com got an email about
 // "Italian cart words" on a Spanish store; stores geo-adapt language and currency, and our fetches come from Google servers abroad).
 const LOCALE_WORDS_ = /translat|\blanguages?\b|italian|spanish|french|german|portuguese|dutch|english text|currenc|\b(EUR|USD|GBP|AUD|CAD)\b|locali[sz]|\blocale\b|geo-?|wrong country|mixed (language|currency)/i;
+
+// Price amounts and price display are never a reason either (2026-10-08): nexvy.shop's feed had a compare-at price the theme never
+// shows; naturanimal.shop's whole catalogue sat at 100 to 7,990 EUR, a store setup problem, not a pitch.
+const PRICE_CLAIM_ = /(sale|regular|original|crossed.?out|struck.?through|compare.?at|full|old) price|price (is|shows|sits|reads|listed|display)|listed at|priced at|[€$£₦]\s?\d|\d\s?(EUR|USD|GBP|NGN)\b/i;
 
 // ---------- Who decides ----------
 
@@ -376,6 +385,7 @@ const STORE_PROFILE_SYS_ = [
   '- speed: the store is obviously slow on phones. ONLY when the evidence has a [SPEED] line; quote its numbers exactly and say it is Google\'s own measurement. Strong when they run ads (every paid click waits).',
   '- custom_feature: a specific custom Shopify feature this business type needs (a configurator, a sample pack flow, a shorter checkout path); name it exactly.',
   'NEVER claim a page lacks something or leaves a doubt unanswered unless the evidence includes that page\'s visible text and it is truly absent there. A worry typical for the niche ("buyers of X usually wonder Y") is not evidence. Stock levels (sold-out items) are a supply decision, not a project: at most a supporting detail.',
+  'NEVER pick a price amount, a sale or compare-at price, or how prices are shown (Shopify converts prices per visitor country and themes hide compare-at prices). NEVER build a point from menu or navigation link text (a "Stockholm Store" link is just a link). Not even as supporting details.',
   'NEVER pick language, translation, currency, price display, country or market differences (stores adapt these to where the visitor browses from, and research browses from Google servers abroad, so what it sees is not what their customers see). Not even as a supporting detail.',
   'NOT worth an email: anything a founder fixes in minutes (add a size chart, upload another photo, write a description, hide sold-out items, a typo); taste (colours, fonts); page speed or load time UNLESS there is a [SPEED] evidence line (no [SPEED] line means the store is not obviously slow, so speed is never mentioned); generic advice ("improve conversions", "add trust"). Those can be a supporting detail, never the reason.',
   'Decision maker: from the About page text, the founder or owner\'s name and role if the text states it (never guess a name). Team: "solo" if the text reads as one person, "small" for a few named people, "larger" if it mentions a team, departments or many staff, else "unknown".',

@@ -99,6 +99,7 @@ function onOpen() {
     .addItem('Run Apify imports now', 'apifyImportsNow')
     .addItem('Prepare new leads now', 'prepareLeadsNow')
     .addItem('Redo research + emails for unsent leads', 'redoUnsentLeads')
+    .addItem('Rewrite unsent follow-ups (leads already emailed)', 'redoOldFollowups')
     .addItem('Test email verifier key', 'testVerifier')
     .addItem('Draft replies now', 'draftRepliesNow')
     .addItem('Send daily report now', 'dailyReport')
