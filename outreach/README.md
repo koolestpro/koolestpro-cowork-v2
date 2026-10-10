@@ -149,3 +149,15 @@ Reviewed the 27 TEST emails of 2026-10-05 to 10-09 from Gmail. The Oct 9 first e
 
 Extra Gmails: a script copy with a `SHEET_ID` property is a secondary sender (`isSecondary_`). It installs only the send and reply triggers, never writes reply drafts, and warms up from its own `START_DATE` Script property. Research, AI writing and the daily report run once, on the main account, so nothing is duplicated (Apps Script locks do not work across separate script projects). Step-by-step setup and the go-live checklist are in `gmail-sender/SETUP.md`.
 
+## Lead-gen health and the Mac catch-up job (2026-10-11)
+
+Checked 2026-10-10: Maps (BrowserAct) produced 5 leads in W36, W37, W38 and W41, nothing in W39 and W40; Ad Library produced 1 to 2 leads in W36, W37, W40 (failed import) and W41. About 28 leads in six weeks, only 5 with an email, because these are Instagram and WhatsApp businesses for KoolestFlow DMs. The cold email pipeline is fed mainly by the daily directory scraper. Duplicate scheduled tasks were found (two Ad Library tasks ran together on 2026-10-07 and moved the rotation forward twice; a second BrowserAct task pointed at the old Downloads folder). The duplicates were turned off; `koolestpro-browseract-weekly` and `koolestpro-adlibrary-weekly` remain.
+
+The Mac had not synced since 2026-10-06 (the old `git-sync.sh` stopped for good on any conflict). Fix, run once in Mac Terminal:
+
+    cd ~/koolestpro-cowork-v2 && git fetch origin && git show origin/main:scripts/fix-mac.sh > /tmp/fix-mac.sh && bash /tmp/fix-mac.sh
+
+- `scripts/git-sync.sh` now merges and resolves conflicts itself: Mac-owned data (lead queues, logs, ledgers, rotation files, scraper state) keeps the Mac's copy, code and docs take GitHub's copy, and the losing copy is saved in `.ai-workflow/sync-conflicts/`.
+- `scripts/mac-catchup.sh` (launchd `com.koolestpro.catchup`, every 5 minutes and at login) replaces the three separate jobs and runs whatever is overdue: git sync hourly, lead import whenever leads are queued, `koolestflow_to_sheet.py` right after each import (and daily), and the directory scrape once a day after 07:30. Anything missed while the Mac was asleep, off or offline runs within about 5 minutes of it coming back. Log: `.ai-workflow/catchup.log`.
+- `fix-mac.sh` also puts the Ad Library rotation back on "kids" (index 2) if it is still at 3 before 2026-10-14.
+

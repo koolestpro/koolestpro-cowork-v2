@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Replaces com.koolestpro.git-sync, com.koolestpro.leadgen-import and com.koolestpro.directory-scrape (2026-10-11).
+         Runs every 5 minutes and at login; scripts/mac-catchup.sh decides what is overdue, so anything missed while
+         the Mac was asleep, off or offline runs within about 5 minutes of it coming back. Installed by scripts/fix-mac.sh. -->
+    <key>Label</key>
+    <string>com.koolestpro.catchup</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/mac/koolestpro-cowork-v2/scripts/mac-catchup.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/mac/koolestpro-cowork-v2</string>
+
+    <key>StartInterval</key>
+    <integer>300</integer>
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/mac/koolestpro-cowork-v2/.ai-workflow/catchup.launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/mac/koolestpro-cowork-v2/.ai-workflow/catchup.launchd.log</string>
+</dict>
+</plist>

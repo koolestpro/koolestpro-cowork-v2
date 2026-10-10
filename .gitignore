@@ -54,3 +54,6 @@ outreach/scrapers/output/
 
 # Skill zips built for re-upload to claude.ai (rebuild from .agents/skills)
 skill-uploads/
+
+# Mac catch-up job state (scripts/mac-catchup.sh)
+.ai-workflow/.stamps/
