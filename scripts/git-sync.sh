@@ -17,6 +17,12 @@ say() { echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] $*" | tee -a "$LOG"; }
 
 git remote get-url origin >/dev/null 2>&1 || { say "no origin remote, run scripts/setup-github.sh first"; exit 0; }
 
+# A crashed git process can leave .git/index.lock behind, which blocks every later git command (this is what stopped the
+# Mac syncing on 2026-10-06). Remove it only when no git process is running and it is over 2 minutes old.
+if [ -f .git/index.lock ] && ! pgrep -x git >/dev/null 2>&1 && [ -n "$(find .git/index.lock -mmin +2 2>/dev/null)" ]; then
+  rm -f .git/index.lock && echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] removed a stale .git/index.lock" >> .ai-workflow/git-sync.log
+fi
+
 # Leftovers from an interrupted run of the old script.
 [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ] && { git rebase --abort 2>/dev/null; say "aborted a leftover rebase"; }
 [ -f .git/MERGE_HEAD ] && { git merge --abort 2>/dev/null; say "aborted a leftover merge"; }

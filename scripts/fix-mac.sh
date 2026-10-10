@@ -21,9 +21,13 @@ tail -n 5 .ai-workflow/git-sync.log 2>/dev/null || echo "(no log)"
 git status -sb | head -n 3
 
 echo; echo "== 1. Getting the latest sync script from GitHub and syncing"
+if [ -f .git/index.lock ]; then
+  if pgrep -x git >/dev/null 2>&1; then echo "A git command is running right now. Wait a minute and run this again."; exit 1; fi
+  rm -f .git/index.lock && echo "Removed a stale .git/index.lock (left by a crashed git process; this is what blocked every sync)."
+fi
 git fetch -q origin main || { echo "Cannot reach GitHub. Check the internet connection and run this again."; exit 1; }
 # Take the new scripts from GitHub first, so the merge below finds identical copies and the sync can resolve conflicts itself.
-git checkout origin/main -- scripts/git-sync.sh scripts/mac-catchup.sh .ai-workflow/com.koolestpro.catchup.plist
+git checkout origin/main -- scripts/git-sync.sh scripts/mac-catchup.sh .ai-workflow/com.koolestpro.catchup.plist || { echo "Could not get the new scripts from GitHub. Send this output to Claude."; exit 1; }
 bash scripts/git-sync.sh
 tail -n 6 .ai-workflow/git-sync.log
 
@@ -40,7 +44,7 @@ if mark.exists():
     print("already fixed earlier, leaving it")
 elif idx == 3 and datetime.date.today() < datetime.date(2026, 10, 14):
     r["meta"]["currentIndex"] = 2
-    r["meta"]["updatedAt"] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.000Z")
+    r["meta"]["updatedAt"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
     p.write_text(json.dumps(r, indent=2) + "\n")
     mark.parent.mkdir(parents=True, exist_ok=True); mark.write_text("done\n")
     print("fixed: currentIndex 3 -> 2, next Wednesday runs:", slots[2])
@@ -61,9 +65,13 @@ done
 if [ -f outreach/scrapers/state/scrape.log ] && [ -n "$(find outreach/scrapers/state/scrape.log -newermt "$(date +%Y-%m-%d) 07:30" 2>/dev/null)" ]; then
   date +%Y-%m-%d > .ai-workflow/.stamps/scrape-day
 fi
-cp .ai-workflow/com.koolestpro.catchup.plist "$AGENTS/"
+cp .ai-workflow/com.koolestpro.catchup.plist "$AGENTS/" || { echo "FAILED: catch-up job file missing. Send this output to Claude."; exit 1; }
 launchctl unload "$AGENTS/com.koolestpro.catchup.plist" 2>/dev/null
-launchctl load "$AGENTS/com.koolestpro.catchup.plist" && echo "catch-up job installed: runs every 5 minutes and at login"
+if launchctl load "$AGENTS/com.koolestpro.catchup.plist" && launchctl list | grep -q com.koolestpro.catchup; then
+  echo "catch-up job installed: runs every 5 minutes and at login"
+else
+  echo "FAILED to install the catch-up job. Send this output to Claude."
+fi
 [ -x outreach/scrapers/.venv/bin/python ] || echo "NOTE: the scraper's Playwright setup is missing. Run: bash outreach/scrapers/install_mac.sh (answer N to scheduling)"
 
 echo; echo "== 4. Running the catch-up job once now (this can take a while if the daily scrape is due)"
