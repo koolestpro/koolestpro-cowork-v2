@@ -204,6 +204,12 @@ function installTriggers() {
   removeTriggers();
   ScriptApp.newTrigger('sendDue').timeBased().everyHours(1).create();
   ScriptApp.newTrigger('tick').timeBased().everyMinutes(30).create();
+  if (isSecondary_()) {   // extra sending Gmail: send + its own replies only; research, AI writing and the report stay on the main account
+    const props = PropertiesService.getScriptProperties();
+    if (!props.getProperty('START_DATE')) props.setProperty('START_DATE', Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd'));   // its own warm-up
+    toast_('Automation on for this extra Gmail: sends hourly and checks its own replies. Warm-up started ' + props.getProperty('START_DATE') + '.');
+    return;
+  }
   ScriptApp.newTrigger('prepareLeads').timeBased().everyMinutes(30).create();
   ScriptApp.newTrigger('dailyReport').timeBased().everyDays(1).atHour(18).create();
   toast_('Automation on: sends hourly, checks replies every 30 minutes.');
@@ -374,6 +380,7 @@ function sendDue(ignoreHours) {
       if (!row) continue;
       const lastStep = Math.max.apply(null, steps.map(r => Number(r.step)));
       if (step > 1 && !lead.thread_id) continue; // follow-up without a thread: skip, needs a look
+      if (!emailOk_(lead.email)) { set_(leads, lead, 'email_status', 'invalid'); continue; }   // typo or template placeholder: never sent
       if (step === 1 && String(lead.website || '').trim()) {   // last check before the first email: the store must still be live
         const live = siteStatus_(lead.website);
         if (!live.active) {
@@ -490,7 +497,7 @@ function tick() {
   if (!lock.tryLock(30000)) return;
   try {
     checkReplies_();
-    try { draftReplies_(); } catch (e) { Logger.log('draftReplies_: ' + e); }
+    if (!isSecondary_()) { try { draftReplies_(); } catch (e) { Logger.log('draftReplies_: ' + e); } }   // one account writes drafts, so no duplicates
     sendApprovedDrafts_();
     checkBounces_();
   } finally {
@@ -868,6 +875,24 @@ function sendableStatus_(status, S) {
   return st === 'valid' || (st === 'catch-all' && isTrue_(S.SEND_TO_CATCH_ALL));
 }
 function isTrue_(v) { return v === true || lc_(v) === 'true'; }
+
+/**
+ * Is this a real-looking address? Rejects typos on free-mail domains ("gmail.comw", 2026-10-08) and template placeholders a theme
+ * ships with ("support@store-name.com", 2026-10-08). The verifier still decides whether the mailbox exists.
+ */
+const FREEMAIL_DOMAINS_ = ['gmail.com', 'googlemail.com', 'yahoo.com', 'yahoo.co.uk', 'yahoo.fr', 'ymail.com', 'outlook.com', 'hotmail.com', 'hotmail.co.uk', 'hotmail.fr', 'live.com', 'msn.com',
+  'icloud.com', 'me.com', 'aol.com', 'proton.me', 'protonmail.com', 'gmx.com', 'gmx.de', 'mail.com', 'yandex.com', 'zoho.com'];
+const PLACEHOLDER_EMAIL_ = /store-?name|your-?store|your-?shop|your-?domain|your-?email|example\.|@domain\.|@email\.com$|@test\.|^(test|name|email|user|someone|abc|xyz)@|@sample|lorem|changeme/i;
+function emailOk_(email) {
+  const e = lc_(email);
+  if (!/^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,24}$/.test(e) || PLACEHOLDER_EMAIL_.test(e)) return false;
+  const dom = e.split('@')[1];
+  if (/^(gmail|googlemail|yahoo|ymail|outlook|hotmail|live|msn|icloud|aol|proton|protonmail|gmx|yandex|zoho)\./.test(dom)) return FREEMAIL_DOMAINS_.indexOf(dom) !== -1;
+  return true;
+}
+
+/** A second (third...) sending Gmail: its script copy has a SHEET_ID property. It only sends and reads its own replies. */
+function isSecondary_() { return !!PropertiesService.getScriptProperties().getProperty('SHEET_ID'); }
 function toast_(msg) { try { ss_().toast(msg, 'Outreach', 8); } catch (e) { Logger.log(msg); } }
 function header_(sh) { return sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String); }
 
@@ -916,7 +941,8 @@ function settings_() {
 }
 
 function dailyCap_(S) {
-  const start = new Date(S.START_DATE);
+  const own = PropertiesService.getScriptProperties().getProperty('START_DATE');   // extra Gmails warm up from their own first day
+  const start = new Date(own || S.START_DATE);
   const days = isNaN(start) ? 0 : Math.max(0, Math.floor((Date.now() - start.getTime()) / 86400000));
   const cap = Number(S.DAILY_CAP_START || 5) + Math.floor(days / 7) * Number(S.RAMP_PER_WEEK || 5);
   return Math.min(cap, Number(S.DAILY_CAP_MAX || 20));

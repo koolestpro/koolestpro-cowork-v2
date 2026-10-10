@@ -143,3 +143,9 @@ Checked against the live sites:
 - **Closing way-out lines removed** ("No problem if you would rather not go into this now"): the footer already carries the STOP opt-out. Removed from the prompts and brief, and `stripWayOut_` deletes any that still appear.
 - **Leads already emailed under old rules:** Outreach > **Rewrite unsent follow-ups (leads already emailed)** supersedes their unsent follow-up drafts; the next Prepare run rewrites them with `writeFollowups_` from the email actually sent. Sent emails never change. If a rewrite is flagged, the lead is unapproved until reviewed.
 
+## Go-live review and extra Gmails (2026-10-10)
+
+Reviewed the 27 TEST emails of 2026-10-05 to 10-09 from Gmail. The Oct 9 first email still ended with "No worries if you would rather wait until it is live" and Oct 8 to 9 follow-ups opened with "One more thing I noticed", both removed by the 2026-10-08 code, so the Sheet was still on the 2026-10-07 files. New problems found and fixed: a malformed recipient (`support.samxia@gmail.comw`) and a template placeholder (`support@store-name.com`). `emailOk_` (Code.gs) now rejects malformed addresses, typos on free-mail domains and placeholders, in ranking, verification and at send time.
+
+Extra Gmails: a script copy with a `SHEET_ID` property is a secondary sender (`isSecondary_`). It installs only the send and reply triggers, never writes reply drafts, and warms up from its own `START_DATE` Script property. Research, AI writing and the daily report run once, on the main account, so nothing is duplicated (Apps Script locks do not work across separate script projects). Step-by-step setup and the go-live checklist are in `gmail-sender/SETUP.md`.
+

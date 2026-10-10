@@ -90,5 +90,31 @@ Order and model names are in Settings (`AI_ORDER`, `GEMINI_MODEL`, `CLAUDE_MODEL
 - A reply stops the sequence immediately. Bounced addresses are marked and never emailed again.
 - **PAUSED = TRUE** stops everything.
 
-## Adding more Gmails later
-Each new Gmail gets its own copy of the script pointed at this same Sheet: new Apps Script project (script.google.com) in that account, paste the same two files, then Project Settings > Script properties > add `SHEET_ID` = the Sheet's ID (the long part of its URL). Share the Sheet with that Gmail as an editor, then in the editor pick `installTriggers` and press Run. Leads a Gmail sends to are claimed by it, so two accounts never email the same lead.
+## Adding more Gmails (updated 2026-10-10)
+
+Your main sending Gmail (the script inside the Sheet) does everything: research, writing emails, reply drafts, the 6pm report and sending. Each extra Gmail gets its own small copy of the script that ONLY sends emails and reads its own replies. That way nothing is researched or written twice.
+
+For each extra Gmail (never your main personal Gmail):
+1. **Share the Sheet** with the new Gmail as an Editor (Share button in the Sheet).
+2. **Sign in to the new Gmail** in a separate browser profile, go to script.google.com and click **New project**. Name it "Outreach sender (that Gmail)".
+3. **Add the files.** Delete the empty `Code.gs`, then add each file from `outreach/gmail-sender/` with **+ > Script** and paste its contents: `Code.gs`, `Brief.gs`, `Pipeline.gs`, `Research.gs`, `Discovery.gs`, `Apify.gs`, `Api.gs`. Use the same names.
+4. **Turn on the Gmail service:** left sidebar **Services (+)**, pick **Gmail API**, Add.
+5. **Copy the manifest:** Project Settings (gear) > tick "Show appsscript.json", then replace its contents with `outreach/gmail-sender/appsscript.json`.
+6. **Point it at the Sheet:** Project Settings > Script properties > Add `SHEET_ID` = the long ID in your Sheet's URL (between `/d/` and `/edit`). This property is what makes the copy an extra sender. Add `MYEMAILVERIFIER_API_KEY` too, so it can re-check addresses before sending. No AI keys are needed.
+7. **Start it:** in the editor pick `installTriggers` from the function list and click **Run**, then allow the permissions. It creates two triggers only (send hourly, check replies every 30 minutes) and starts **its own warm-up** from today: 5 a day in week 1, then +5 a week, max 20.
+8. **Check it:** in the Sheet, `Outreach > Why isn't it sending?` run from the new account's copy (or run `whyNotSending` in its editor) to see its cap and queue.
+
+How the accounts share work: an approved lead is taken by whichever Gmail sends its first email, and that Gmail is written into the lead's `sender` column. Every follow-up and every reply for that lead then goes through the same Gmail, in the same thread. Replies to an extra Gmail are logged and alerted like any other; the main account writes the reply draft, and the extra Gmail sends it when you mark it Approved.
+
+Tips: add one Gmail at a time, a few days apart. Give each a real name and profile photo, and send and receive a few normal emails from it first. Ten accounts at 20 a day is 200 emails a day: only go that high once replies and bounces look healthy in the daily report.
+
+## Go-live checklist
+
+1. **Paste the latest files** into the main script (all seven `.gs` files from `outreach/gmail-sender/` on `main`), then run **Outreach > 1. Set up tabs**.
+2. **Script properties:** `GEMINI_API_KEY`, `MYEMAILVERIFIER_API_KEY` (required); `PAGESPEED_API_KEY` (speed checks); `HUNTER_API_KEY` (optional).
+3. **Reset the test leads:** run **Redo research + emails for unsent leads**, then **Rewrite unsent follow-ups (leads already emailed)**, then **Prepare new leads now** a few times.
+4. **One more test round** with `TEST_MODE` = TRUE: read 10 to 15 new emails and check each claim on the live site. Every email should end on its question (no "no worries if..." line) and no follow-up should start "One more thing I noticed". If any does, the old files are still running.
+5. **Settings for go-live:** `AUTO_APPROVE` = FALSE (you tick `approved` per lead for the first two weeks), `SEND_TO_CATCH_ALL` = FALSE, `POSTAL_ADDRESS` filled in (required for US leads), `ALERT_EMAIL` = your main Gmail.
+6. **Only approve leads whose notes have no `CHECK:` and no `[UNCONFIRMED RECIPIENT]`.**
+7. **Go live:** set `TEST_MODE` = FALSE. Set `START_DATE` to today so the warm-up starts at 5 a day.
+8. **Watch the 6pm report daily** for the first two weeks: bounces above about 3% or any spam complaint means set `PAUSED` = TRUE and tell me.

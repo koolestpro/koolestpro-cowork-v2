@@ -266,7 +266,7 @@ function verifyEmails_(S, stats, timeLeft) {
   candidates_(leads, l => String(l.email).trim() && ['', 'unverified'].indexOf(lc_(l.email_status)) !== -1, 20).forEach(lead => {
     if (!timeLeft()) return;
     const email = String(lead.email).trim();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { set_(leads, lead, 'email_status', 'invalid'); return; }
+    if (!emailOk_(email)) { set_(leads, lead, 'email_status', 'invalid'); return; }   // the rescue step then looks for a real address
     if (!key) { set_(leads, lead, 'email_status', 'unverified'); note_(leads, lead, 'Script property MYEMAILVERIFIER_API_KEY not found (Apps Script > Project Settings > Script properties: name = MYEMAILVERIFIER_API_KEY, value = your key). Cannot verify.', false); return; }
     try {
       const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key),
@@ -540,7 +540,7 @@ function parseJson_(text) {
 // beats a shared inbox (hello, contact, info), which beats a ticket desk (support, orders). Bounce traps score -100.
 function rankEmail_(email, host, contactName) {
   const e = String(email || '').toLowerCase().trim();
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return -100;
+  if (!emailOk_(e)) return -100;   // malformed, free-mail typo or template placeholder
   const local = e.split('@')[0], dom = e.split('@')[1];
   const h = String(host || '').toLowerCase().replace(/^www\./, '');
   if (/^(no-?reply|do-?not-?reply|mailer-daemon|postmaster|abuse|webmaster|privacy|legal|unsubscribe|returns?|billing|accounts?|jobs?|careers?|press|media|pr)$/.test(local)) return -100;
