@@ -237,7 +237,7 @@ Moved out of CLAUDE.md on 2026-09-27 to keep the always-loaded rulebook small. F
 
 ## GIT / IGNORE
 
-There is no git repo at this root today. Sub-projects (`site/`, `cold-email-app/`, `replo-rebuilds/`) each have their own `.gitignore`. Media-heavy dirs (`replo-rebuilds/`, `video-gen/`, `outputs/`, `site/.next/`) should be treated as build artifacts — exclude from any future top-level repo, and keep out of the routine read surface. Prefer a root `.gitignore` over duplicating if one is ever created.
+There is no git repo at this root today. Sub-projects (`site/`, `cold-email-app/`, `replo-rebuilds/`, `video-gen/`) each have their own `.gitignore`. Media-heavy dirs (`replo-rebuilds/`, `video-gen/`, `outputs/`, `site/.next/`) should be treated as build artifacts — exclude from any future top-level repo, and keep out of the routine read surface. Prefer a root `.gitignore` over duplicating if one is ever created.
 
 ---
 

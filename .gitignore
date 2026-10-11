@@ -14,6 +14,7 @@
 # site/            -> github.com/koolestpro/koolestpro
 # cold-email-app/  -> github.com/koolestpro/cold-dm-app
 # replo-rebuilds/  -> github.com/koolestpro/koolestpro-portfolio
+# video-gen/       -> github.com/koolestpro/video-gen
 
 # ---- Dependencies, builds, caches ----
 node_modules/
@@ -37,9 +38,6 @@ __pycache__/
 *.m4v
 *.webm
 *.gif
-video-gen/_pilot/
-video-gen/_tiktok_ref/
-video-gen/_promo/
 
 # ---- Local-only runtime files ----
 *.log
