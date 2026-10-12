@@ -1,2 +1,3 @@
 date,prospect_domain,prospect_url,type,contact,target_page,cluster,pitch_angle,status,gmail_draft_id,live_link_url,anchor_text,notes
 2026-10-07,replo.app,https://replo.app/experts,platform-directory,experts@replo.app,/services/page-build,K2,Apply to Replo Experts directory,not-pushed (no sheet_id/Google creds),,,,queued in outreach.json only
+2026-10-12,ecomm.design,https://ecomm.design/tools/conversion-optimization/,resource-page,hi@ecomm.design,/services/cro-audit,K3,Suggest diagnosis guide for CRO category,not-pushed (no sheet_id/Google creds),,,,queued in outreach.json only
