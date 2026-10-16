@@ -7,3 +7,6 @@
 [submodule "replo-rebuilds"]
 	path = replo-rebuilds
 	url = https://github.com/koolestpro/koolestpro-portfolio.git
+[submodule "video-gen"]
+	path = video-gen
+	url = https://github.com/koolestpro/video-gen.git
