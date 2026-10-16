@@ -1,0 +1,25 @@
+{
+  "name": "Business Name",
+  "site_url": "https://example.com",
+  "platform": "shopify",
+  "market": "UK local businesses",
+  "language": "en",
+  "location_code": 2826,
+  "data_provider": "free",
+  "gsc_property": "sc-domain:example.com",
+  "ga4_property_id": "",
+  "blog_handle": "news",
+  "blog_author": "",
+  "competitors": [],
+  "tracked_keywords": [],
+  "outreach": {
+    "mode": "csv",
+    "sender_name": "",
+    "sender_role": "",
+    "sheet_id": "",
+    "track": "seo-links"
+  },
+  "cadence": "weekly",
+  "approval": "draft-only",
+  "notes": ""
+}

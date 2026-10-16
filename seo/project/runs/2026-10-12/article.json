@@ -1,0 +1,147 @@
+{
+  "slug": "why-is-my-shopify-store-not-converting",
+  "title": "Why Your Shopify Store Isn't Converting: Diagnose It",
+  "h1": "Why is my Shopify store not converting?",
+  "description": "A four-step way to find why a Shopify store gets traffic but few orders: traffic, product page, cart, mobile. Plus when an audit is worth it.",
+  "targetQuestion": "Why is my Shopify store not converting?",
+  "updated": "2026-10-12",
+  "readingMinutes": 4,
+  "pricesCheckedOn": "October 2026",
+  "blocks": [
+    {
+      "type": "p",
+      "text": "If your Shopify store gets visitors but few orders, work through four places in order: who is arriving, what the product page says, what happens in the cart, and how the site behaves on a phone. Fixing them out of order wastes money. This is the order I use before I touch a design, and the same one my conversion audit follows."
+    },
+    {
+      "type": "h2",
+      "text": "Where do you start when a Shopify store is not converting?"
+    },
+    {
+      "type": "p",
+      "text": "Start with where visitors drop off, not with the design. Open your analytics and look at the funnel: sessions, product page views, add to cart, checkout, purchase. The step with the biggest fall is the one to fix first."
+    },
+    {
+      "type": "table",
+      "head": [
+        "Where the drop is",
+        "What it usually means",
+        "Check first"
+      ],
+      "rows": [
+        [
+          "Few product page views",
+          "Wrong or weak traffic, or a confusing landing page",
+          "Ad targeting, the page the ad points to"
+        ],
+        [
+          "Views but few add to carts",
+          "The page does not answer why buy and why trust you",
+          "Headline, proof, price clarity, reviews"
+        ],
+        [
+          "Add to carts but few checkouts",
+          "Surprise costs or doubt about delivery and returns",
+          "Shipping info, returns policy, cart layout"
+        ],
+        [
+          "Checkouts but few orders",
+          "Friction at payment",
+          "Payment options, form length, error messages"
+        ]
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Is it a traffic problem?"
+    },
+    {
+      "type": "p",
+      "text": "It is if the people arriving were never likely to buy. Broad ad targeting and unrelated social traffic can fill a report with sessions and still produce no orders. Compare conversion by source before you redesign anything."
+    },
+    {
+      "type": "p",
+      "text": "If one channel converts and another does not, the page is probably fine for the first audience. Cut or retarget the weak source instead of rebuilding."
+    },
+    {
+      "type": "h2",
+      "text": "Is the product page the problem?"
+    },
+    {
+      "type": "p",
+      "text": "Often, yes. A product page has to answer three things above the fold: what is it, why should I buy it from you, and what happens if it is wrong. When the first screen shows only a photo and a title, the reason to buy sits too far down the page."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "A headline that says the outcome, not just the product name",
+        "Proof near the button: real reviews, real photos, a clear guarantee",
+        "A price and a shipping message the shopper does not have to hunt for",
+        "One main button that stays easy to reach on a phone"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Is the cart or checkout the problem?"
+    },
+    {
+      "type": "p",
+      "text": "Look here when shoppers add items and then leave. The usual causes are costs that appear late, unclear delivery dates and a returns policy that is hard to find. Show shipping and returns before the cart, not after it."
+    },
+    {
+      "type": "h2",
+      "text": "Is it a speed or mobile problem?"
+    },
+    {
+      "type": "p",
+      "text": "Check it on your own phone, on mobile data, before you trust any score. Most DTC traffic arrives on a phone, so a page that looks fine on a laptop can still hide the button, push the proof off screen or load slowly."
+    },
+    {
+      "type": "p",
+      "text": "Run the store through Google PageSpeed Insights and then scroll the page yourself. Note what you had to hunt for."
+    },
+    {
+      "type": "h2",
+      "text": "When is a paid conversion audit worth it?"
+    },
+    {
+      "type": "p",
+      "text": "It is worth it when you have traffic, you can see the drop-off, and you do not know which fix matters most. My conversion audit costs $150 to $250 and ranks the changes by impact, so you know what to fix before you spend $600 or more on a rebuild."
+    },
+    {
+      "type": "callout",
+      "title": "Next steps",
+      "text": "See what the audit covers at /services/cro-audit. If the audit points to a page rebuild, the single page build is at /services/page-build. If you are weighing who should build it, read /resources/hire-a-replo-developer."
+    },
+    {
+      "type": "h2",
+      "text": "What should you fix first?"
+    },
+    {
+      "type": "p",
+      "text": "Fix the single biggest drop in your funnel, then measure again. Changing the headline, the proof and the shipping message on one page teaches you more than redesigning the whole store at once."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Why does my Shopify store get traffic but no sales?",
+      "a": "Usually the traffic is the wrong fit, the product page does not give a reason to buy, or something in the cart or checkout creates doubt. Find the funnel step with the biggest drop and fix that first."
+    },
+    {
+      "q": "What is a good Shopify conversion rate?",
+      "a": "It varies by product, price and traffic source, so compare your own numbers by channel over time instead of chasing one benchmark."
+    },
+    {
+      "q": "How much does a Shopify conversion audit cost?",
+      "a": "My conversion audit is $150 to $250."
+    },
+    {
+      "q": "Should I redesign my store if it is not converting?",
+      "a": "Not before you know why. Diagnose the drop-off first, because a redesign that misses the cause costs money and changes nothing."
+    }
+  ],
+  "cta": {
+    "text": "Get a ranked list of what to fix on your store, from $150.",
+    "href": "/services/cro-audit",
+    "label": "See the conversion audit"
+  }
+}
