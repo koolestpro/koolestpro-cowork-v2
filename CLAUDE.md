@@ -50,6 +50,7 @@ Every task reads its own scoped doc instead of this whole file. When a task is d
 | Target pool refresh (`koolestpro-target-pool-refresh`) | 1/3 | `docs/system/03-prospect-intelligence.md`, `targets_pool.json` |
 | Staleness check (`koolestpro-replo-cache-staleness-check`) | 5 | `docs/system/05-build-assets.md` |
 | BrowserAct/Maps + Ad Library lead gen (Tue/Wed) | 3 + 4 | `.ai-workflow/tools/README.md`, `docs/system/03-prospect-intelligence.md` |
+| Site work refresh (`koolestpro-site-work-refresh`, also after any CRO Fix / Replo rebuild) | 6 | `docs/system/site-work-refresh.md`, `site/scripts/README-updating-work.md` |
 | Trend radar (`koolestpro-trend-radar-weekly`) | 1 | `.ai-workflow/skills/koolestpro-trend-radar/`, `trend-radar-config.json` |
 | Cold email outreach (own AI SDR: Sheet + Gmail sender + reply drafts) | 4 | **`outreach/README.md`** (decisions, status, next steps), `outreach/gmail-sender/SETUP.md` |
 | TikTok drafts / Instagram publishing | 2 | `.ai-workflow/tiktok-weekly-procedure.md`, `.ai-workflow/tools/README.md` |

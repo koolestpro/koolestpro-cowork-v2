@@ -55,6 +55,8 @@ A prospect arrives from one of four places: a content CTA, an outbound DM, a sea
 
   **An earlier draft of this doc claimed there were no case studies. That was wrong** — it read the empty `outputs/case-studies/` folder and stopped there. The proof lives in `site/content/work.ts`, not in `outputs/`. The empty folder is a naming leftover, not a missing deliverable. Corrected here so the mistake is not inherited.
 
+**2026-10-07:** homepage restructured after theconversioncodex.com (outcome hero, services by page type, process, revenue calculator, FAQ), nav cut to six items with an always-visible "Book a call", the market switch removed from the chrome, `/ng` made direct-response, new `/rebuilds` archive. Work wall and before/after are now data-driven and refreshed twice a month: see [site-work-refresh.md](site-work-refresh.md).
+
 **Not done — and these are the gaps that matter:**
 
 - **The Nigeria anchor case studies specifically.** Track B asks for three, in Naira, aimed at the `/ng` path. The 8 real clients above are the international proof. `/ng/stories` needs its own.
