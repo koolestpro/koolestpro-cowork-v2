@@ -516,13 +516,13 @@ function launchFacts_(html, base) {
   facts.push(signup ? '[SEEN] the page has an email signup (waitlist or newsletter)' : '[SEEN] no email signup form on the page: visitors before launch have no way to hear when it opens');
   const date = (t.match(/\b(launch(ing)?|opening|open|live|drops?)\b[^.]{0,40}\b(\d{1,2}(st|nd|rd|th)?\s+\w+|\w+\s+\d{1,2}(st|nd|rd|th)?|20\d\d|this (week|month)|next (week|month)|soon)\b/i) || [])[0];
   if (date) facts.push('[SEEN] launch timing mentioned: "' + date + '"');
-  const theme = (html.match(/Shopify\.theme\s*=\s*\{[^}]*"name"\s*:\s*"([^"]+)"/) || [])[1];
-  if (theme) facts.push('[SEEN] Shopify theme: ' + theme);
+  // The theme name is deliberately NOT a fact (2026-10-17): gromix.shop was told "the stock Dawn theme leaves the selling to the
+  // default layout". Nothing behind the password can be seen, so a verdict on the theme or layout is a guess.
   return facts;
 }
 
 const LAUNCH_PROFILE_SYS_ = [
-  'You profile a store that is NOT open yet: it shows a password or coming-soon page, so the founder is building it right now. Use ONLY the data given. Never claim anything about the store behind the password, its products, design or pages: nobody can see them.',
+  'You profile a store that is NOT open yet: it shows a password or coming-soon page, so the founder is building it right now. Use ONLY the data given. Never claim anything about the store behind the password, its products, design, theme, layout or pages: nobody can see them. Never name or judge their theme (Dawn, Debut or any other).',
   'Pick ONE offer that fits what you can see: launch_build (help finish or build the store so it launches properly: product pages, homepage, theme setup), launch_review (a free pre-launch review of their product page if they share the store password; low friction, best default), waitlist_page (only if the page has NO email signup: a coming-soon page that collects emails before launch), launch_creatives (ad creatives from their product photos for launch, when their socials show products).',
   'The problem is about timing, not a flaw: they are about to launch, and the first visitors decide fast. Only state what is SEEN (for example no email signup on the coming-soon page, a launch date). Never invent a launch date or products.',
   'Output JSON only: {"what_they_sell":"one short line, or unknown","audience":"one short line, or unknown","niche":"2 to 3 words","business":"one line","signal":"pre-launch: building the store now","site_notes":"1 to 3 true observations from the coming-soon page and socials","decision_maker":{"name":"","role":"","basis":""},"team":"solo|small|larger|unknown","offer":"launch_build|launch_review|waitlist_page|launch_creatives","problem":"one sentence about their launch moment, from what is seen","problem_evidence":"labelled evidence","problem_page":"url","cost":"one plain line","fix":"one line: exactly what Ridwan would do","worth":1-5,"second":{"offer":"...","problem":"...","evidence":"...","worth":1-5} or null}',
@@ -561,4 +561,60 @@ function recipientCheck_(S, leads, lead) {
   if (String(lead.notes || '').indexOf(UNCONFIRMED_TAG_) === -1)
     set_(leads, lead, 'notes', (UNCONFIRMED_TAG_ + ' ' + email + ' is ' + (FREEMAIL_.test(email) ? 'a free-mail address' : 'on another domain') + ' and is not published on ' + host + '. Confirm it belongs to the owner before approving.' + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
   return 'recipient unconfirmed: ' + email + ' not found on ' + host;
+}
+
+
+// ---------- Test sends never count as progress (2026-10-17, Ridwan) ----------
+// While TEST_MODE is TRUE every email goes to ALERT_EMAIL with "[TEST to <lead email>]" at the start of its subject, so the lead never
+// got it. Messages keeps that subject, which is the proof. A lead whose outgoing emails are ALL test emails has made no real progress:
+// this puts it back at the start (stage New, touch 0, no thread, unsent sequence, approval removed, fake reply drafts and memory cleared)
+// so its real first email goes out once you tick approved. A lead with even ONE real outgoing email is never touched, so real progress
+// is kept however many times TEST_MODE is switched. Safe to run any number of times. sendDue runs it by itself when TEST_MODE is FALSE.
+
+const TEST_SUBJECT_ = /^\s*\[TEST to /i;
+
+function resetTestSendsMenu() {
+  const ui = SpreadsheetApp.getUi();
+  const plan = resetTestSends_(true);
+  if (!plan.leads.length) { ui.alert('Reset test sends', 'Nothing to reset. Every lead that has been emailed got at least one real email, or none was sent in test mode.', ui.ButtonSet.OK); return; }
+  if (ui.alert('Reset test sends?', plan.leads.length + ' lead(s) only ever received TEST emails (they went to your inbox, not to the lead). They go back to the start and approval is removed. Leads with a real email are not touched. Continue?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  const done = resetTestSends_(false);
+  ui.alert('Reset test sends', done.leads.length + ' lead(s) reset, ' + done.seqRows + ' sequence email(s) set back to Draft, ' + done.drafts + ' reply draft(s) discarded. Tick approved again on the leads you want sent.', ui.ButtonSet.OK);
+}
+
+/** dryRun true = only report. Returns { leads, seqRows, drafts }. */
+function resetTestSends_(dryRun) {
+  const leads = read_('Leads'), msgs = read_('Messages'), seq = read_('Sequence'), drafts = read_('Drafts');
+  const testOut = {}, realOut = {};
+  msgs.rows.filter(m => lc_(m.direction) === 'out').forEach(m => {
+    const id = String(m.lead_id);
+    if (TEST_SUBJECT_.test(String(m.subject || ''))) testOut[id] = true; else realOut[id] = true;
+  });
+  const STARTED = ['contacted', 'finished', 'replied', 'talking'];
+  const hit = leads.rows.filter(l => {
+    const id = String(l.lead_id);
+    if (/^test-/i.test(id)) return false;   // the sample lead is handled by Create / reset test lead
+    if (realOut[id] || !testOut[id]) return false;
+    return Number(l.touch_count || 0) > 0 || STARTED.indexOf(lc_(l.stage)) !== -1 || !!l.thread_id;
+  });
+  const ids = {}; hit.forEach(l => { ids[String(l.lead_id)] = true; });
+  const seqHit = seq.rows.filter(r => ids[String(r.lead_id)] && (r.status === 'Sent' || r.status === 'Stopped'));
+  const draftHit = drafts.rows.filter(d => ids[String(d.lead_id)] && ['Needs draft', 'Ready for review', 'Approved'].indexOf(String(d.status)) !== -1);
+  const out = { leads: hit.map(l => String(l.lead_id)), seqRows: seqHit.length, drafts: draftHit.length };
+  if (dryRun || !hit.length) return out;
+
+  hit.forEach(l => {
+    ['sender', 'last_touch_at', 'next_touch_at', 'thread_id', 'first_message_id', 'subject'].forEach(f => set_(leads, l, f, ''));
+    set_(leads, l, 'touch_count', 0);
+    set_(leads, l, 'stage', 'New');
+    set_(leads, l, 'approved', false);
+    set_(leads, l, 'notes', ('RESET: only test emails had been sent; back at step 1, approval removed ' + Utilities.formatDate(new Date(), tz_(), 'd MMM') + (l.notes ? ' | ' + l.notes : '')).slice(0, 900));
+  });
+  seqHit.forEach(r => { set_(seq, r, 'status', 'Draft'); set_(seq, r, 'sent_at', ''); });
+  draftHit.forEach(d => set_(drafts, d, 'status', 'Discarded'));
+  try {
+    const mem = read_('Memory');
+    mem.rows.filter(m => ids[String(m.lead_id)]).forEach(m => { set_(mem, m, 'summary', ''); });
+  } catch (e) { /* no Memory tab yet */ }
+  return out;
 }

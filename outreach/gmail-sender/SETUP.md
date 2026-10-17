@@ -110,6 +110,8 @@ Tips: add one Gmail at a time, a few days apart. Give each a real name and profi
 
 ## Go-live checklist
 
+0. **Paste `Code.gs` and `Research.gs`, reload the Sheet, then run Outreach > Reset test sends** (2026-10-17). A lead that only ever got TEST emails (subject starts `[TEST to `) goes back to step 1 with approval removed; a lead with any real email is never touched, however often TEST_MODE is switched. It also runs by itself every hour while TEST_MODE is FALSE, and in TEST_MODE a lead that already got a real email is not advanced by test sends.
+
 1. **Paste the latest files** into the main script (all seven `.gs` files from `outreach/gmail-sender/` on `main`), then run **Outreach > 1. Set up tabs**.
 2. **Script properties:** `GEMINI_API_KEY`, `MYEMAILVERIFIER_API_KEY` (required); `PAGESPEED_API_KEY` (speed checks); `HUNTER_API_KEY` (optional).
 3. **Reset the test leads:** run **Redo research + emails for unsent leads**, then **Rewrite unsent follow-ups (leads already emailed)**, then **Prepare new leads now** a few times.

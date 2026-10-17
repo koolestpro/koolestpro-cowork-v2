@@ -104,6 +104,7 @@ function onOpen() {
     .addItem('Draft replies now', 'draftRepliesNow')
     .addItem('Send daily report now', 'dailyReport')
     .addItem('Create / reset test lead', 'addTestLead')
+    .addItem('Reset test sends (leads only emailed in test mode)', 'resetTestSendsMenu')
     .addSeparator()
     .addItem('Turn off automation', 'removeTriggers')
     .addToUi();
@@ -346,10 +347,16 @@ function sendDue(ignoreHours) {
     const S = settings_();
     if (isTrue_(S.PAUSED)) { if (ignoreHours === true) toast_('Nothing sent: PAUSED is TRUE in Settings.'); return; }
 
+    // Live: anything that was only ever sent as a TEST email goes back to the start first. Real progress is never touched.
+    if (!isTrue_(S.TEST_MODE) && !isSecondary_() && typeof resetTestSends_ === 'function') { try { resetTestSends_(false); } catch (e) { Logger.log('resetTestSends_ failed: ' + e); } }
+
     const me = me_();
     const leads = read_('Leads');
     const seq = read_('Sequence');
     const msgs = read_('Messages');
+    // In TEST_MODE a lead that already got a real email must not be advanced by a test send, or its real progress would be corrupted.
+    const realOut = {};
+    msgs.rows.filter(m => lc_(m.direction) === 'out' && !/^\s*\[TEST to /i.test(String(m.subject || ''))).forEach(m => { realOut[String(m.lead_id)] = true; });
 
     const sentToday = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && isToday_(m.sent_at)).length;
     const quota = MailApp.getRemainingDailyQuota() - 5;
@@ -363,6 +370,7 @@ function sendDue(ignoreHours) {
       ['New', 'Contacted', ''].indexOf(String(l.stage)) !== -1 &&
       sendableStatus_(l.email_status, S) && l.email &&
       (!l.sender || lc_(l.sender) === me) &&
+      !(isTrue_(S.TEST_MODE) && realOut[String(l.lead_id)]) &&
       (ignoreHours === true || inLeadWindow_(l, S, isHot_(l, S))) &&
       (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now)));
     due.sort((a, b) => (isHot_(b, S) ? 1 : 0) - (isHot_(a, S) ? 1 : 0) || Number(b.touch_count || 0) - Number(a.touch_count || 0)); // hot leads first, then follow-ups
