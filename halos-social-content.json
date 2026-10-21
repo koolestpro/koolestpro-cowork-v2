@@ -4,13 +4,15 @@
   "isRealBrand": false,
   "isClient": false,
   "created": "2026-07-31T16:23:56.000Z",
-  "updated": "2026-09-05T15:20:00.000Z",
-  "howToUse": "Each key under 'assets' maps one generated image or video to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' \u2014 the exact relative path from the koolestpro-cowork-v2 project root \u2014 or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md). HALOS has no pre-written caption library like kura-social-content.md \u2014 this file IS that library, started fresh on the first HALOS Template Showcase run.",
+  "updated": "2026-10-17T10:03:26.029782+00:00",
+  "howToUse": "Each key under 'assets' maps one generated image or video to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' — the exact relative path from the koolestpro-cowork-v2 project root — or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md). HALOS has no pre-written caption library like kura-social-content.md — this file IS that library, started fresh on the first HALOS Template Showcase run.",
   "relatedPipelineItemIds": [
     "template-showcase-halos_pdp-01-2026-07-31",
     "template-showcase-halos_hp-01-2026-08-18",
     "template-showcase-halos_lp-01-2026-08-23",
-    "template-showcase-halos_ad-01-20260905"
+    "template-showcase-halos_ad-01-20260905",
+    "template-showcase-halos_li-02-2026-10-10",
+    "template-showcase-halos_pp-01-2026-10-17"
   ],
   "assets": {
     "TS-HALOS-HP01-COVER-VID": {
@@ -524,6 +526,347 @@
       "hashtags": [],
       "status": "Not Posted",
       "postedAt": null
+    },
+    "TS-HALOS-LI02-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 cover.mp4",
+      "hashtags": [
+        "#ecommerce",
+        "#shopify",
+        "#webdesign",
+        "#landingpage"
+      ],
+      "caption": "Built a listicle page for HALOS, a red light therapy brand I made up. It's a concept build, not a client.\n\nThe angle is \"five reasons people keep the panel after the trial ends\". Each reason answers a doubt a buyer has before paying for a panel: does it work, will I actually use it, is it well made, what else is it good for, what does it cost me over time.\n\nOnly after that does the page start selling. Comparison table, offer, buy box, reviews, FAQ.\n\nDesktop and mobile run in the same order, and I didn't cut anything for the small screen.\n\nIf your product needs a page like this, here's where to start: koolestpro.com/services/page-build",
+      "captionKey": "TS-HALOS-LI02-COVER-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-LAPTOP-VID": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 laptop.mp4",
+      "hashtags": [
+        "#webdesign",
+        "#ecommerce"
+      ],
+      "caption": "Desktop scroll-through of the HALOS listicle.\n\nHero, then the five reasons, with a small nudge after reason two for people who are already sold. Then the comparison table, the offer, the buy box, reviews and the FAQ.\n\nConcept build, not a live client site.",
+      "captionKey": "TS-HALOS-LI02-LAPTOP-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-MOBILE-VID": {
+      "platform": [
+        "instagram",
+        "x"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 mobile.mp4",
+      "hashtags": [
+        "#mobiledesign",
+        "#ecommerce"
+      ],
+      "caption": "The HALOS listicle on a phone.\n\nSame five reasons, same order as desktop. The buy box comes right after the proof.\n\nDemo brand I made up, not a client. Want one for your product? DM me.",
+      "captionKey": "TS-HALOS-LI02-MOBILE-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-COVER-IMG": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 cover.png",
+      "hashtags": [
+        "#ecommerce",
+        "#shopify",
+        "#uidesign"
+      ],
+      "caption": "A listicle page for HALOS, a concept home red light panel.\n\nThe reasons come first and the pitch comes after. I think that order is why listicles work for products people are unsure about.\n\nNeed a page like this built? DM me.",
+      "captionKey": "TS-HALOS-LI02-COVER-IMG",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-PREVIEW": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-preview.png",
+      "hashtags": [
+        "#webdesign",
+        "#ecommerce"
+      ],
+      "caption": "Three screens from the HALOS listicle on mobile: the hero, the comparison table running into the $20 offer, and the FAQ with the footer.\n\nConcept build, not a live client site.",
+      "captionKey": "TS-HALOS-LI02-PREVIEW",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-FULLPAGE": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-full-page.png",
+      "hashtags": [
+        "#ecommerce",
+        "#webdesign",
+        "#CRO"
+      ],
+      "caption": "The whole HALOS listicle, split into two columns.\n\nThe left column is the convincing part. Five reasons, each one a doubt answered, with a quote from a buyer at the end.\n\nThe right column is where it sells. Comparison, offer, buy box, reviews, the why-we-built-it story, FAQ.\n\nA lot of product pages put the buy button first and hope the reasons get read later. This is the other way round. Concept build for a brand I made up.",
+      "captionKey": "TS-HALOS-LI02-FULLPAGE",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-MOBILESTRIP": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-mobile-strip.png",
+      "hashtags": [],
+      "caption": "Full page at a glance.\n\nThe HALOS listicle on mobile, cut into four columns:\n-> hero\n-> five reasons\n-> comparison\n-> offer and buy box\n-> reviews\n\nI laid out every section for a thumb first.\n\nDemo brand, not a client.",
+      "captionKey": "TS-HALOS-LI02-MOBILESTRIP",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 cover.png",
+      "hashtags": [],
+      "caption": "Built a listicle page for a red light panel brand I made up.\n\nFive reasons people keep it:\n-> two wavelengths\n-> ten-minute sessions\n-> sixty diodes, evenly lit\n-> works on sore shoulders too\n-> no refills\n\nThen the buy box.\n\nConcept build, not a client.",
+      "captionKey": "TS-HALOS-LI02-X1",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-preview.png",
+      "hashtags": [],
+      "caption": "Three screens from one mobile listicle.\n\n-> the hero asks for one thing\n-> the comparison table does the arguing\n-> the FAQ handles the last doubts\n\nHALOS is a demo brand I made up, not a client.\n\nNeed a page like this? DM me.",
+      "captionKey": "TS-HALOS-LI02-X2",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-full-page.png",
+      "hashtags": [],
+      "caption": "A whole desktop listicle in one image.\n\nLeft column convinces. Right column sells.\n\nReasons first, buy box second. Most product pages do it the other way round.\n\nConcept build for HALOS, a brand I made up.",
+      "captionKey": "TS-HALOS-LI02-X3",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-LI02-IG-CAROUSEL": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide1.png",
+      "assetPaths": [
+        "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide1.png",
+        "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide2.png",
+        "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide3.png",
+        "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide4.png",
+        "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide5.png",
+        "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide6.png"
+      ],
+      "hashtags": [
+        "#shopify",
+        "#ecommerce",
+        "#webdesign",
+        "#landingpage",
+        "#shopifydesign"
+      ],
+      "caption": "Concept store build: a listicle page for HALOS, a red light panel brand I made up. Not a client.\n\nSwipe for the whole page, the mobile view, the hero and buy box up close, and what I built it with.\n\nWant your page built next? Link in bio.",
+      "captionKey": "TS-HALOS-LI02-IG-CAROUSEL",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01 cover.mp4",
+      "hashtags": [
+        "#shopify",
+        "#ecommerce",
+        "#postpurchase",
+        "#webdesign"
+      ],
+      "caption": "Built a post-purchase page for HALOS, a red light therapy brand I made up. It's a concept build, not a client.\n\nMost thank-you pages say thanks and stop. This one keeps going:\n✅ the order confirmation sits on top, so nobody wonders if it went through\n✅ a one-time offer for a second panel at $99, shipped in the same box\n✅ an honest timeline that admits week one does nothing\n✅ reviews, a short care guide and a three-email check-in signup\n\nWeek one took the longest to write. Telling a new buyer they won't see anything yet feels risky, but I'd rather they hear it from the page than decide it's broken in week two.\n\nNeed a store like this built? Start here: koolestpro.com/services/page-build",
+      "captionKey": "TS-HALOS-PP01-COVER-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-LAPTOP-VID": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01 laptop.mp4",
+      "hashtags": [
+        "#webdesign",
+        "#ecommerce"
+      ],
+      "caption": "Desktop scroll-through of the HALOS order confirmation page.\n\nConfirmation, the second-panel offer, the eight-week timeline, reviews, the care guide and the check-in signup.\n\nConcept build, not a live client site.",
+      "captionKey": "TS-HALOS-PP01-LAPTOP-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-MOBILE-VID": {
+      "platform": [
+        "instagram",
+        "x"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01 mobile.mp4",
+      "hashtags": [],
+      "caption": "The HALOS thank-you page on a phone.\n\nThe receipt comes first. The offer for a second panel comes right after, while the buyer still has their card nearby.\n\nDemo brand I made up, not a client. Need a store like this built? DM me.",
+      "captionKey": "TS-HALOS-PP01-MOBILE-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-COVER-IMG": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01 cover.png",
+      "hashtags": [
+        "#shopify",
+        "#webdesign",
+        "#ecommerce"
+      ],
+      "caption": "A post-purchase page for HALOS, a concept red light panel brand.\n\nThe laptop shows the one-time offer. The phone shows the order confirmation it sits under.\n\nNeed a store like this built? DM me.",
+      "captionKey": "TS-HALOS-PP01-COVER-IMG",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-PREVIEW": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01-preview.png",
+      "hashtags": [
+        "#webdesign",
+        "#ecommerce"
+      ],
+      "caption": "Three screens from the HALOS post-purchase page on mobile: the order confirmation, the eight-week timeline, and the check-in signup with the footer.\n\nConcept build, not a live client site.",
+      "captionKey": "TS-HALOS-PP01-PREVIEW",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-FULLPAGE": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01-full-page.png",
+      "hashtags": [
+        "#ecommerce",
+        "#webdesign",
+        "#postpurchase"
+      ],
+      "caption": "The whole HALOS thank-you page, split into two columns.\n\nLeft column handles the moment after paying: the confirmation, a one-time offer for a second panel, and what the first eight weeks look like.\n\nRight column keeps them using it: three reviews, a do and avoid care guide, and three check-in emails over sixty days.\n\nMost stores stop at \"thanks for your order\". Concept build for a brand I made up.",
+      "captionKey": "TS-HALOS-PP01-FULLPAGE",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-MOBILESTRIP": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01-mobile-strip.png",
+      "hashtags": [],
+      "caption": "Full page at a glance.\n\nThe HALOS post-purchase page on a phone, in three columns:\n-> the confirmation and the offer\n-> the second panel and weeks one to eight\n-> reviews and the care guide\n\nBuilt for someone who just paid, phone still in hand.\n\nDemo brand, not a client.",
+      "captionKey": "TS-HALOS-PP01-MOBILESTRIP",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01 cover.png",
+      "hashtags": [],
+      "caption": "Built a thank-you page for a red light panel brand I made up.\n\nAfter the sale it still has work to do:\n-> confirm the order\n-> offer a second panel in the same box\n-> warn them week one does nothing\n-> sign them up for three check-ins\n\nConcept build, not a client.",
+      "captionKey": "TS-HALOS-PP01-X1",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01-preview.png",
+      "hashtags": [],
+      "caption": "Three screens from one post-purchase page.\n\n-> the confirmation, so nobody refreshes in a panic\n-> weeks one to eight, written honestly\n-> three check-in emails, then it leaves you alone\n\nHALOS is a demo brand I made up, not a client.\n\nNeed a store like this built? DM me.",
+      "captionKey": "TS-HALOS-PP01-X2",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/halos_pp-01-full-page.png",
+      "hashtags": [],
+      "caption": "A whole thank-you page in one image.\n\nLeft column: confirm, offer a second panel, set expectations.\nRight column: reviews, care guide, check-in emails.\n\nMost stores stop at \"thanks for your order\".\n\nConcept build for HALOS, a brand I made up.",
+      "captionKey": "TS-HALOS-PP01-X3",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-HALOS-PP01-IG-CAROUSEL": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": "outputs/templates/halos_pp-01_2026-10-17/ig-carousel/slide1.png",
+      "hashtags": [
+        "#shopify",
+        "#ecommerce",
+        "#webdesign",
+        "#postpurchase",
+        "#shopifydesign"
+      ],
+      "caption": "Concept store build: a thank-you page for HALOS, a red light panel brand I made up. Not a client.\n\nSwipe for the whole page, the mobile view, the confirmation and the offer up close, and what I built it with.\n\nNeed a store like this built? Link in bio.",
+      "captionKey": "TS-HALOS-PP01-IG-CAROUSEL",
+      "status": "Not Posted",
+      "postedAt": null,
+      "assetPaths": [
+        "outputs/templates/halos_pp-01_2026-10-17/ig-carousel/slide1.png",
+        "outputs/templates/halos_pp-01_2026-10-17/ig-carousel/slide2.png",
+        "outputs/templates/halos_pp-01_2026-10-17/ig-carousel/slide3.png",
+        "outputs/templates/halos_pp-01_2026-10-17/ig-carousel/slide4.png",
+        "outputs/templates/halos_pp-01_2026-10-17/ig-carousel/slide5.png",
+        "outputs/templates/halos_pp-01_2026-10-17/ig-carousel/slide6.png"
+      ]
     }
   }
 }

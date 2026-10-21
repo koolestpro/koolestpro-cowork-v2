@@ -78,6 +78,8 @@ so there's always a buffer to swap something out if needed.
    fixed" pitch. If the real file truly can't be retrieved, say so in the run
    summary rather than inventing one silently.
 
+4b. **Hero variants + variants board (2026-10-11, mandatory).** Before settling the rebuild, build 3-4 hero directions on the brand's real assets (families in `docs/system/homepage-hero-patterns.md`), board them, record the pick in `CHOICE.md`. Then build the neutral X debate post with `.ai-workflow/tools/build_variants_board.py` + `.ai-workflow/tools/export_sheet.py` -> `outputs/cro-fixes/{brand}/koolestpro_{slug}_variants-board.png`, caption in the review pack tab `tab-x-variants` (key `x_variants`). It posts on X BEFORE the carousel. Rule: `docs/system/variants-board-post.md`. Reference run: Bala homepage, 2026-10-11 (`.ai-workflow/build_bala_hero_variants.py`).
+
 5. **Real screenshots**, not mockups. Use `.ai-workflow/tools/screenshot.py` against
    the live "before" URL and the local "after" rebuild HTML. Both at the same
    mobile viewport/crop so the before/after graphic lines up.
@@ -109,11 +111,15 @@ so there's always a buffer to swap something out if needed.
    (derive from the single #1 finding, a different angle per surface, max 2 lines, never
    reuse last week's line). Caption *text* is written directly, never delegated. Run
    every caption through the `humanizer` skill before finalizing.
-   **Posting rule (2026-09-27):** the 3-slide carousel posts to LinkedIn, Instagram AND X,
-   and each of the four graphics (slides 1, 2, 3 and the clear-bg annotated graphic) also
-   posts alone on X. So write the LinkedIn/IG caption plus **five** X captions, one per X
-   post, each under 280 and counted, in the review pack's `tab-x-carousel`, `tab-x-cover`,
-   `tab-x-ba`, `tab-x-anno`, `tab-x-anno-graphic` panels (table in
+   In caption before/after or positive/negative lists, use ✅ for improvements and ❌ for
+   missing or negative items. Do not use `OK` or `X` as list markers.
+   **Posting rule (updated 2026-10-15):** the 3-slide carousel posts to LinkedIn, Instagram AND X.
+   Never post the cover as a standalone X post; it is already the first slide people see in the
+   carousel. Only the before/after (slide 2), dark annotation (slide 3), and clear-bg annotated
+   graphic post alone on X. Write the LinkedIn/IG caption plus **five** X captions: variants board,
+   X carousel, and one for each of the three standalone graphics. Keep each X caption under 280
+   characters and counted, in the review pack's `tab-x-variants`, `tab-x-carousel`, `tab-x-ba`,
+   `tab-x-anno`, `tab-x-anno-graphic` panels (table in
    `docs/system/cro-3-slide-carousel-format.md`). The cover must carry a
    real dominant visual (phone hero + brand logo), and slides 2 and 3 must each read as a
    standalone post (top-left handle + full title + page type), not just as a slide.
@@ -169,7 +175,7 @@ so there's always a buffer to swap something out if needed.
     Also update/create `{brand-slug}-social-content.md` / `.json` at the project
     root (see "Per-Brand Social Content Library" in `CLAUDE.md`) with the new
     `CRO-{BRAND}-COVER` / `-BA` / `-ANNO` / `-ANNO-GRAPHIC` / `-CAROUSEL` plus
-    `-X-CAROUSEL` / `-X-COVER` / `-X-BA` / `-X-ANNO` / `-X-ANNO-GRAPHIC` asset keys pointing at the
+    `-X-CAROUSEL` / `-X-BA` / `-X-ANNO` / `-X-ANNO-GRAPHIC` asset keys pointing at the
     real exported file paths — that file, not this folder, is the durable
     cross-post source of truth for captions once there are multiple weeks of
     output for the same brand.
@@ -188,6 +194,15 @@ so there's always a buffer to swap something out if needed.
     build" in `CLAUDE.md` — this rule is project-wide, not CRO-Fix-specific, so the
     other weekly output skills (Static Ad, Template Showcase, Tips) follow the same
     pattern with their own equivalent rebuild/review HTML files.
+
+    **Previews must be self-contained (2026-10-18, Ridwan: "the html did not display, all
+    images didn't show").** A file sent into chat is opened on its own, so relative image
+    paths and iframes break. The review pack embeds every image as a data URI (JPEG at
+    review size) and shows the rebuild as an embedded full-page screenshot plus a link,
+    and the rebuild embeds its images as WebP at display size (keep it well under 1MB).
+    Pattern: `.ai-workflow/finalize_topicals_cro.py` (`embed()`) and
+    `.ai-workflow/build_topicals_rebuild.py`. Before sending, check the file renders from
+    an empty folder with every image loaded.
 
 ## Known failure modes to watch for (from the V1CE build)
 

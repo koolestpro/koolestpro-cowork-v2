@@ -1219,4 +1219,32 @@ Code.gs: every first email and follow-up now ends with an opt-out line (Settings
 - **2026-10-07, Outreach: live sites only, right recipients, GitHub scrape removed.** `siteStatus_` blocks dead, parked, for-sale and moved stores at Discovery, research and send time (framelo.com had become a for-sale page). `recipientCheck_` replaces directory Gmail or foreign addresses with the store's own published address, or flags the lead. aminazaid.com is down: name only in all copy. `.github/workflows/directory-scrape.yml` deleted (supersedes the daily GitHub runner entry above).
 - **2026-10-07, Outreach: pre-launch stores become track Launch.** Password and coming-soon pages are kept (not dead). Offers: free pre-launch product page review (password shared), finish the build, waitlist page (only if no email signup), launch creatives. Details in `outreach/README.md`.
 - **2026-10-08, Outreach: second test round fixes.** Closed dropdowns, menus and footers stripped before reading pages; price claims banned and fact-checked; second problem fact-checked; follow-ups cannot invent new claims; closing way-out line removed (footer has the opt-out); new menu to rewrite unsent follow-ups for already-contacted leads. Finding rules updated.
+
+### 2026-10-08: Tips status check, weekly task cleaned to V4 only
+
+Ridwan said recent Tips posts were not impressive. Audit: the V4 spec and prototype (2026-09-27) meet his bar, but no production Tips post has been built to V4 yet. The newest real posts (typography-hierarchy 2026-09-18, advertorial 2026-07-31) predate it and fail it (mono body, ~30px, empty bands). `koolestpro-tips-weekly` had never recorded a run. Its SKILL.md still carried V2 text (540x680, 15px floor, V2 region-swap base) under the V4 override; those lines are now replaced so V4 is the only spec (backup: `SKILL.md.bak-2026-10-08`). Topic selection is the next thing being reworked with Ridwan, using a competitor's LinkedIn approach he likes.
+
+### 2026-10-08 (later): posting variety rules, `space_queue.py`
+
+Ridwan: the same brand's carousel, then before/after, then annotated were going out on consecutive days; same for static ads. New rules (details in `.ai-workflow/tools/DISTRIBUTION.md`): a brand never posts within 5 days of itself on any platform (7 preferred), no same stream back to back on X, one hero item a day on LinkedIn + X (+ Instagram when it is on), X toward 3 a day, LinkedIn max 1 a day. Built `.ai-workflow/tools/space_queue.py` (reads the live Sheet, moves only date/time of Ready rows, backs up every move). Applied once: 10 rows moved (Fly By Jing 10-09/10/11 now 10-13/18/23, Minimalist now 10-09/14/19/24/29, Halos 10-10). Wired into the assembly task (Step 6a) and the health check (rescheduling rule). Finding: only 11 Ready X/LinkedIn rows are left, so with spacing there are 56 empty X slots in the next 45 days. The queue is nearly drained; the new Tips content lanes (build breakdown, found-page, save-worthy list, expert remix, sourced take) are what fill it.
+
+
+### 2026-10-08 (later still): Tips topic process rewritten (evidence-first lanes)
+
+Ridwan studied a competitor's LinkedIn (Arijan Janes) and called our Tips textbook-style, template-bound and badly chosen. Approved direction: topics start from real evidence (own builds, real pages found, the calendar, sourced remixes, sourced takes), five post lanes plus an occasional V4 carousel, no fixed template, week packs of 4+ posts, daily posting across LinkedIn/X/Instagram. Ridwan has no opinions of his own to invent: takes must be factually correct and sourced. Written into `scheduled-tasks/desktop/koolestpro-tips-weekly/SKILL.md` ("TOPIC + FORMAT OVERRIDE"). Not built yet: harvest/populate support for the new single-image lane posts (`populate_sheet.py` CALENDAR has no slots for them), and the first real lane posts.
+
+### 2026-10-08 - Instagram corrections
+Instagram is live (earlier "paused" note was wrong). 6 Ready Tip IG rows set to Retired. IG spaced one/day at 17:00, carousels and videos only, same brand-gap rules; 23 rows rescheduled, 0 violations. 4 halos IG rows plus past-dated single-image rows cannot post and were left untouched. Standing rule: no automation on instagram.com.
+
+### 2026-10-08 - Dead Instagram rows retired
+15 past-dated Ready Instagram rows that can never publish (single-image / no usable media) set to Retired at Ridwan's approval. New flag `space_queue.py --retire-dead-ig`. Backup: outputs/distribution-queue/retire_backup_*.json.
+
+### 2026-10-08 - Tip Lane stream scaffolded
+Added "Tip Lane" CALENDAR stream (LinkedIn + X single, no IG) in populate_sheet.py. Harvest wiring and a real lane post come next; space_queue.py re-spaces after ingestion.
+
+
+### 2026-10-10: Product title rule for future CRO rebuilds
+
+Ridwan noticed the newest CRO rebuilds (Fly By Jing chili crisp, Minimalist niacinamide) show a slogan as the `<h1>` and shrink the real product name to a small subline, so a shopper (and the page's SEO) loses the product title above the fold. Root cause: dimension 2 of `docs/system/cro-redesign-standard.md` said "value headline, not the product name", and `build_page_brief.py` repeated it. New rule: the real full product title is the only `<h1>`, top of the first screen, above the price, 22px+; the outcome line becomes a subhead. Updated the standard (dimension 2, rubric, checklist, anti-patterns), `page-build-brief.md`, `build_page_brief.py` (new `product_title` facts field, falls back to the page name with a warning), both repo copies of Skill B, and CLAUDE.md standing rule 12. Past builds are deliberately NOT redone. Backups: `.ai-workflow/backups/2026-10-10-title-rule/`.
+
 - **2026-10-11, Mac: catch-up job and conflict-proof sync.** Mac sync had stopped since 2026-10-06. New `scripts/git-sync.sh` (merge with per-path conflict rules, losing copies saved), `scripts/mac-catchup.sh` + `com.koolestpro.catchup` launchd job (every 5 min: hourly sync, lead import, leads to Sheet after each import, daily directory scrape after 07:30, all caught up after sleep or offline), one-time `scripts/fix-mac.sh`. Duplicate lead-gen scheduled tasks turned off.

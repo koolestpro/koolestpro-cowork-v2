@@ -187,17 +187,25 @@ CALENDAR = {
         # carousels never go to Twitter (plan) — no X rows for Tips
     ],
     # ── CRO Fix (rewritten 2026-09-27, Ridwan's instruction) ──────────────
-    # One audit = the 3-slide carousel + 4 single graphics:
+    # One audit = the 3-slide carousel + 3 standalone graphics:
     #   carousel_slide1 = cover, carousel_slide2 = before/after,
     #   carousel_slide3 = dark annotation, *_annotated.png = clear-bg annotation.
-    # The 3-image carousel ALWAYS posts to LinkedIn, Instagram AND X. Then each
-    # of the four graphics posts on its own as an X single, each with its own
+    # The cover is only posted as part of the carousel, never as a standalone X
+    # post. The 3-image carousel ALWAYS posts to LinkedIn, Instagram AND X. The
+    # other three graphics post on their own as X singles, each with its own
     # caption_key so no slot recycles another's tweet. Times picked to avoid
     # every other stream's Twitter slot (TS: Tue09/Thu13/Sat09/Sun11,
     # SA: Mon09/Tue13/Wed18/Fri13/Sat18, Store: Tue13/Wed09/Fri13/Sat09/Sun11).
     # NOTE: the X carousel row carries 3 asset_urls; the Make X scenario must
     # upload every URL and attach all media_ids (X allows up to 4 images).
     "CRO Fix": [
+        # VARIANTS BOARD (added 2026-10-11, Ridwan): the neutral A/B/C/D board of the
+        # hero directions we explored posts on X FIRST, the day before the carousel,
+        # to start a debate ("which would you ship?"). The carousel the next day is
+        # the reveal. space_queue.py keeps it on the day before its hero (or ahead of
+        # it the same day). See docs/system/variants-board-post.md.
+        {"platform": "Twitter",   "dow": 1, "time": "18:00", "fmt": "single",
+         "assets": ["variants-board"], "caption_key": "x_variants", "angle": "X single: variants board debate (goes first)"},
         {"platform": "LinkedIn",  "dow": 2, "time": "09:00", "fmt": "carousel-3",
          "assets": ["carousel_slide1", "carousel_slide2", "carousel_slide3"],
          "caption_key": "linkedin", "angle": "3-slide carousel"},
@@ -207,8 +215,6 @@ CALENDAR = {
         {"platform": "Twitter",   "dow": 2, "time": "13:00", "fmt": "carousel-3",
          "assets": ["carousel_slide1", "carousel_slide2", "carousel_slide3"],
          "caption_key": "x_carousel", "angle": "X 3-image carousel"},
-        {"platform": "Twitter",   "dow": 3, "time": "09:00", "fmt": "single",
-         "assets": ["carousel_slide1"], "caption_key": "x_cover", "angle": "X single: cover"},
         {"platform": "Twitter",   "dow": 4, "time": "09:00", "fmt": "single",
          "assets": ["carousel_slide2"], "caption_key": "x_ba", "angle": "X single: before/after"},
         {"platform": "Twitter",   "dow": 5, "time": "13:00", "fmt": "single",
@@ -216,37 +222,45 @@ CALENDAR = {
         {"platform": "Twitter",   "dow": 6, "time": "18:00", "fmt": "single",
          "assets": ["_annotated.png"], "caption_key": "x_anno_graphic", "angle": "X single: clear-bg annotation"},
     ],
+    # ── Tip Lane (added 2026-10-08) ─────────────────────────────────────────
+    # Single-image / flexible lane posts (build breakdown, found page, save-worthy
+    # list, expert remix, sourced take). LinkedIn hero + X only. NO Instagram:
+    # single images cannot publish there (route 318 blocked); a lane post only
+    # goes to IG if it is built as a carousel, and then it uses the "Tip" stream.
+    # Dates are provisional: space_queue.py re-spaces them after ingestion.
+    # Harvest wiring (folder/type -> "Tip Lane") lands with the first real lane post.
+    "Tip Lane": [
+        {"platform": "LinkedIn",  "dow": 1, "time": "09:00", "fmt": "single",
+         "assets": ["lane_image"], "caption_key": "linkedin", "angle": "lane hero"},
+        {"platform": "Twitter",   "dow": 1, "time": "09:00", "fmt": "single",
+         "assets": ["lane_image"], "caption_key": "x", "angle": "lane X single"},
+    ],
     "Template Showcase": [
+        # REBUILT 2026-10-10 (Ridwan): each page ships 4 LEAD posts, so one
+        # page clears in ~3-4 weeks under space_queue.py's 5-7 day brand
+        # cooldown instead of ~8 weeks. Leads: LinkedIn cover video, Instagram
+        # 6-slide carousel, X preview, X mobile strip. The laptop video,
+        # mobile video and full page are still made and queued, but only as
+        # SECONDARY rows: space_queue.py's asset_rank() schedules them after
+        # every lead row, so they only fill slots nothing else can.
         {"platform": "LinkedIn",  "dow": 4, "time": "09:00", "fmt": "video",
-         "assets": ["cover.mp4"], "caption_key": "linkedin", "angle": "cover video + thumbnail"},
-        {"platform": "Instagram", "dow": 1, "time": "12:00", "fmt": "reel",
-         "assets": ["laptop.mp4"], "caption_key": "linkedin", "angle": "Reel #1"},
-        {"platform": "Instagram", "dow": 3, "time": "12:00", "fmt": "reel",
-         # was caption_key "x" — bug fixed 2026-07-22: Instagram has no 280-char
-         # constraint, so it was needlessly competing with the 3 Twitter slots
-         # below for the same 3 harvested X-post variants (a record with
-         # exactly 3 X variants would starve the last Twitter slot). "instagram"
-         # falls back to "linkedin" via the fallback table, same as Reel #1/#3.
-         "assets": ["mobile.mp4"], "caption_key": "instagram", "angle": "Reel #2"},
-        {"platform": "Instagram", "dow": 4, "time": "12:00", "fmt": "reel",
-         "assets": ["cover.mp4"], "caption_key": "linkedin", "angle": "Reel #3 (cross-post)"},
-        {"platform": "Twitter",   "dow": 1, "time": "09:00", "fmt": "video",
-         "assets": ["mobile.mp4"], "caption_key": "x", "angle": "video single #1"},
+         "assets": ["cover.mp4"], "caption_key": "linkedin", "angle": "LEAD cover video + thumbnail"},
+        {"platform": "Instagram", "dow": 1, "time": "12:00", "fmt": "carousel-6",
+         "assets": ["CAROUSEL_HTML"], "caption_key": "ig_carousel", "angle": "LEAD IG carousel (6 slides)"},
         {"platform": "Twitter",   "dow": 3, "time": "13:00", "fmt": "single",
-         "assets": ["preview"], "caption_key": "x", "angle": "still single #1"},
-        {"platform": "Twitter",   "dow": 5, "time": "09:00", "fmt": "single",
-         # "full-mosaic" was the pre-2026-07-29 name; the grid mosaic was retired and
-         # replaced by the 2-column split page ("{slug}-full-page.png"). Both listed so
-         # historical assets still match. See CLAUDE.md "CORRECTED v4".
-         "assets": ["full-page", "full-mosaic"], "caption_key": "x", "angle": "still single #2"},
-        # X #5 — the mobile strip (added 2026-09-02, Ridwan's instruction that
-        # this asset "should always be posted in my x account" and must never be
-        # skipped). Own caption_key so it cannot draw a recycled variant from
-        # the shared "x" pool the way the slots above do — the whole point of
-        # this post is the "full page at a glance" angle, a different pitch from
-        # the build-in-public angle full-page.png carries.
+         "assets": ["preview"], "caption_key": "x_preview", "angle": "LEAD X preview"},
+        # X #5, the mobile strip: mandatory since 2026-09-02, own caption key.
         {"platform": "Twitter",   "dow": 6, "time": "11:00", "fmt": "single",
-         "assets": ["mobile-strip"], "caption_key": "x_glance", "angle": "X #5 full page at a glance"},
+         "assets": ["mobile-strip"], "caption_key": "x_glance", "angle": "LEAD X full page at a glance"},
+        # ---- secondary cuts (posted only when no lead row qualifies)
+        {"platform": "Instagram", "dow": 3, "time": "12:00", "fmt": "reel",
+         "assets": ["laptop.mp4"], "caption_key": "instagram", "angle": "SECONDARY reel laptop"},
+        {"platform": "Instagram", "dow": 4, "time": "12:00", "fmt": "reel",
+         "assets": ["mobile.mp4"], "caption_key": "instagram", "angle": "SECONDARY reel mobile"},
+        {"platform": "Twitter",   "dow": 1, "time": "09:00", "fmt": "video",
+         "assets": ["mobile.mp4"], "caption_key": "x", "angle": "SECONDARY X mobile video"},
+        {"platform": "Twitter",   "dow": 5, "time": "09:00", "fmt": "single",
+         "assets": ["full-page", "full-mosaic"], "caption_key": "x", "angle": "SECONDARY X full page"},
     ],
     # Twitter widened from 3 to 5 posts (Ridwan's call, 2026-08-19): one per
     # distinct static-ad asset (4 individual angles + the combo showcase),
@@ -406,9 +420,9 @@ THREAD_KEYS = {"x_thread"}
 # exception to the 2026-08-27 "always Ready" rule: a caption that describes the
 # wrong image is never something Ridwan wants posted. Set to False to go back
 # to flag-only.
-PER_IMAGE_KEYS = {"x_cover", "x_ba", "x_anno", "x_anno_graphic",
+PER_IMAGE_KEYS = {"x_variants", "x_cover", "x_ba", "x_anno", "x_anno_graphic",
                   "x_problem", "x_benefit", "x_proof", "x_offer", "x_combo",
-                  "ig_single", "x_glance"}
+                  "ig_single", "x_glance", "x_preview"}
 HOLD_MISMATCHED_CAPTIONS = True
 
 try:
@@ -444,8 +458,8 @@ def caption_text(record, key, variant_index=0):
     # future non-X key that merely starts with "x", so keep it explicit.
     X_KEYS = ("x", "x_singles", "x_angles", "x_thread",
               "x_showcase", "x_freeoffer", "x_niche", "x_buildpublic", "x_results",
-              "x_glance",
-              "x_carousel", "x_cover", "x_ba", "x_anno", "x_anno_graphic",
+              "x_glance", "x_preview",
+              "x_carousel", "x_variants", "x_cover", "x_ba", "x_anno", "x_anno_graphic",
               "x_problem", "x_benefit", "x_proof", "x_offer", "x_combo")
 
     def check_len(text):
@@ -513,6 +527,7 @@ def caption_text(record, key, variant_index=0):
         # caption that posts is not. The carousel caption may still fall back,
         # since a 3-image post can carry a general angle.
         "x_carousel": ["x_carousel", "x_angles", "x"],
+        "x_variants": ["x_variants"],
         "x_cover": ["x_cover"],
         "x_ba": ["x_ba"],
         "x_anno": ["x_anno"],
@@ -523,6 +538,9 @@ def caption_text(record, key, variant_index=0):
         "x_offer": ["x_offer"],
         "x_combo": ["x_combo"],
         "ig_single": ["ig_single"],
+        # Template Showcase leads (2026-10-10)
+        "x_preview": ["x_preview"],
+        "ig_carousel": ["ig_carousel", "instagram", "linkedin"],
         "x_freeoffer": ["x_freeoffer"],
         "x_results": ["x_results"],
     }

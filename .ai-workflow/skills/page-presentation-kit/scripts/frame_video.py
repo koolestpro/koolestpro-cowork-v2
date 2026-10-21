@@ -41,6 +41,8 @@ Usage:
 """
 
 import argparse
+import shutil
+import numpy as np
 import subprocess
 import tempfile
 from pathlib import Path
@@ -195,7 +197,7 @@ def probe_duration(path):
     return float(out.stdout.strip())
 
 
-def build_laptop_or_mobile(mode, video, output, canvas_w, canvas_h, status_bar="auto"):
+def build_laptop_or_mobile(mode, video, output, canvas_w, canvas_h, status_bar="auto", trim_start=None):
     tmp = tempfile.mkdtemp(prefix="fv_")
     bg_png = f"{tmp}/bg.png"
     frame_png = f"{tmp}/frame.png"
@@ -216,81 +218,119 @@ def build_laptop_or_mobile(mode, video, output, canvas_w, canvas_h, status_bar="
     placement["asset"] = asset
     render_frame_png(canvas_w, canvas_h, [placement], frame_png)
 
-    video_specs = [{
-        "video": video, "x": placement["screen_x"], "y": placement["screen_y"],
-        "w": placement["screen_w"], "h": placement["screen_h"],
-    }]
-    ffmpeg_compose(bg_png, frame_png, video_specs, output, canvas_w, canvas_h)
+    trim = detect_lead_in(video) if trim_start is None else trim_start
+    print(f"[lead-in] trimming {trim:.1f}s")
+    ffmpeg_compose_layers(bg_png, [{
+        "video": video, "trim": trim, "frame_png": frame_png, "x": placement["screen_x"],
+        "y": placement["screen_y"], "w": placement["screen_w"], "h": placement["screen_h"],
+    }], output, canvas_w, canvas_h)
     print(f"Saved: {output} ({probe_duration(output):.1f}s)")
 
 
-def build_cover(video_laptop, video_mobile, output, canvas_w=960, canvas_h=720, status_bar="auto"):
-    """FIXED 2026-07-21 (Ridwan flagged the phone bezel visibly cutting across
-    the laptop's screen content in kura_hp-01 cover.mp4). The old formula
-    deliberately overlapped the phone onto the laptop's lower-right corner
-    (`phone_x = laptop right edge - phone_w*0.62`) to avoid the phone bleeding
-    off-canvas — but that overlap zone reached well above the laptop's screen
-    BOTTOM edge, so the phone bezel sat on top of live screen content, not just
-    the laptop's base/keyboard chrome. Root cause: side-by-side (non-overlapping)
-    placement was never actually attempted — there IS enough width for it once
-    the laptop's margin is tuned to leave a real gap, it just wasn't computed.
-    Fix: laptop sized/positioned to leave a genuine right-hand gap, phone
-    scaled to fit that gap (width-constrained, capped by canvas height too) and
-    placed fully beside the laptop with a visible margin. Zero overlap by
-    construction — no clamping-back-into-overlap possible."""
+# ── COVER LAYOUT v3 (2026-10-10, Ridwan) ─────────────────────────────────
+# "The mobile is supposed to be very close, in fact on top of the laptop, to
+# the right of it... make better use of our space." This REVERSES the
+# 2026-07-21 zero-overlap rule on purpose: the phone now overlaps the laptop's
+# right edge (screen bezel + base) and is drawn ON TOP of it, big enough to
+# read. Proportions are taken from the cover Ridwan approved as the target
+# look (KURA laptop+phone, 1440x1080): laptop ~86% of canvas width (its base runs under the phone) from a
+# ~1.7% left margin, phone ~19% of canvas width, its left edge at ~75% of the
+# width, bottom at ~87.5% of the height. Both the video cover and the still
+# cover use this one function so they always match. Ridwan said he will send
+# his original reference again; when it arrives, retune these fractions only.
+COVER_GEOM = {
+    "laptop_x": 0.017, "laptop_w": 0.862, "laptop_bottom": 0.83,
+    "phone_x": 0.752, "phone_w": 0.19, "phone_bottom": 0.875,
+}
+
+
+def overlap_cover_geometry(canvas_w, canvas_h, g=None):
+    g = dict(COVER_GEOM, **(g or {}))
+    ls = canvas_w * g["laptop_w"] / MACBOOK_NATIVE[0]
+    lw, lh = MACBOOK_NATIVE[0] * ls, MACBOOK_NATIVE[1] * ls
+    lx, ly = canvas_w * g["laptop_x"], canvas_h * g["laptop_bottom"] - lh
+    ps = canvas_w * g["phone_w"] / IPHONE_NATIVE[0]
+    pw, ph = IPHONE_NATIVE[0] * ps, IPHONE_NATIVE[1] * ps
+    if ph > canvas_h * 0.9:  # never taller than the canvas allows
+        ps = canvas_h * 0.9 / IPHONE_NATIVE[1]; pw, ph = IPHONE_NATIVE[0] * ps, IPHONE_NATIVE[1] * ps
+    px = min(canvas_w * g["phone_x"], canvas_w - pw - canvas_w * 0.01)
+    py = min(canvas_h * g["phone_bottom"] - ph, canvas_h - ph - canvas_h * 0.01)
+    def mk(x, y, w, h, s, box):
+        return {"scale": s, "frame_x": x, "frame_y": y, "frame_w": w, "frame_h": h,
+                "screen_x": x + box[0] * s, "screen_y": y + box[1] * s,
+                "screen_w": (box[2] - box[0]) * s, "screen_h": (box[3] - box[1]) * s}
+    return mk(lx, ly, lw, lh, ls, MACBOOK_SCREEN), mk(px, py, pw, ph, ps, IPHONE_SCREEN)
+
+
+def detect_lead_in(video_path, max_trim=3.0, fps=10):
+    """Seconds of dead opening to cut: blank frames and the static hero hold
+    before the scroll starts moving. Ridwan, 2026-10-10: 'always cut maybe
+    like three seconds at the beginning so it starts immediately, most of the
+    time it starts with an empty device screen.' Capped at max_trim."""
+    tmp = tempfile.mkdtemp(prefix="lead_")
+    try:
+        subprocess.run(["ffmpeg", "-v", "error", "-t", str(max_trim + 1.5), "-i", video_path,
+                        "-vf", f"fps={fps},scale=160:-1", f"{tmp}/%04d.png"], check=True)
+        files = sorted(Path(tmp).glob("*.png"))
+        prev = None
+        for i, f in enumerate(files):
+            a = np.asarray(Image.open(f).convert("L"), dtype=float)
+            if prev is not None and prev.std() > 8 and a.std() > 8 and np.abs(a - prev).mean() > 0.6:
+                return min(max((i - 1) / fps, 0.0), max_trim)
+            prev = a
+        return max_trim
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def ffmpeg_compose_layers(bg_png, layers, out_path, canvas_w, canvas_h):
+    """Ordered layers: each {"video", "x","y","w","h", "trim", "frame_png"}.
+    Draws bg, then for each device its video THEN its own bezel, so a device
+    later in the list sits fully on top of an earlier one (needed once the
+    phone overlaps the laptop)."""
+    inputs = ["-i", bg_png]
+    for L in layers:
+        if L.get("trim"):
+            inputs += ["-ss", f"{L['trim']:.2f}"]
+        inputs += ["-i", L["video"], "-i", L["frame_png"]]
+    parts, last = [], "0:v"
+    for i, L in enumerate(layers):
+        vi, fi = 1 + 2 * i, 2 + 2 * i
+        w, h = round(L["w"]), round(L["h"])
+        parts.append(f"[{vi}:v]scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h}[v{i}]")
+        parts.append(f"[{last}][v{i}]overlay={round(L['x'])}:{round(L['y'])}[a{i}]")
+        parts.append(f"[a{i}][{fi}:v]overlay=0:0:format=auto[b{i}]")
+        last = f"b{i}"
+    cmd = ["ffmpeg", "-y"] + inputs + ["-filter_complex", ";".join(parts), "-map", f"[{last}]",
+           "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart", out_path]
+    subprocess.run(cmd, check=True, capture_output=True)
+
+
+def build_cover(video_laptop, video_mobile, output, canvas_w=960, canvas_h=720, status_bar="auto",
+                trim_start=None):
     tmp = tempfile.mkdtemp(prefix="fv_")
     bg_png = f"{tmp}/bg.png"
-    frame_png = f"{tmp}/frame.png"
     make_background(canvas_w, canvas_h, bg_png)
-
-    left_margin = canvas_w * 0.03
-    gap = canvas_w * 0.025
-    right_margin = canvas_w * 0.02
-
-    laptop_p = compute_placement(
-        canvas_w, canvas_h, MACBOOK_NATIVE, MACBOOK_SCREEN,
-        margin_frac=0.11, x_bias=0, y_bias=-canvas_h * 0.02,
-    )
-    # anchor laptop's left edge explicitly (x_bias alone is fragile — it's
-    # relative to a centered position, not a direct left-edge target)
-    laptop_p["frame_x"] = left_margin
-    laptop_p["screen_x"] = laptop_p["frame_x"] + MACBOOK_SCREEN[0] * laptop_p["scale"]
+    laptop_p, phone_p = overlap_cover_geometry(canvas_w, canvas_h)
     laptop_p["asset"] = str(FRAMES_DIR / "macbook-pro.png")
-
-    # phone: fill the real remaining width to the right of the laptop (with a
-    # visible gap + margin), capped by canvas height so it never bleeds
-    # off-canvas vertically either. Width-driven and height-driven scale are
-    # both computed; the smaller one wins so both constraints hold.
-    available_w = canvas_w - (laptop_p["frame_x"] + laptop_p["frame_w"]) - gap - right_margin
-    scale_w = available_w / IPHONE_NATIVE[0]
-    scale_h = (canvas_h * 0.86) / IPHONE_NATIVE[1]  # leave a top/bottom margin
-    scale = max(0.05, min(scale_w, scale_h))
-    phone_w, phone_h = IPHONE_NATIVE[0] * scale, IPHONE_NATIVE[1] * scale
-    phone_x = laptop_p["frame_x"] + laptop_p["frame_w"] + gap
-    phone_y = (canvas_h - phone_h) / 2  # vertically centered, no overlap risk either axis
-    phone_p = {
-        "scale": scale, "frame_x": phone_x, "frame_y": phone_y,
-        "frame_w": phone_w, "frame_h": phone_h,
-        "screen_x": phone_x + IPHONE_SCREEN[0] * scale, "screen_y": phone_y + IPHONE_SCREEN[1] * scale,
-        "screen_w": (IPHONE_SCREEN[2] - IPHONE_SCREEN[0]) * scale,
-        "screen_h": (IPHONE_SCREEN[3] - IPHONE_SCREEN[1]) * scale,
-        "asset": str(FRAMES_DIR / "iphone-frame.png"),
-    }
+    phone_p["asset"] = str(FRAMES_DIR / "iphone-frame.png")
     if status_bar != "none":
         variant, color = sample_video_top_color(video_mobile, tmp) if status_bar == "auto" else (status_bar, (230, 230, 230))
         phone_p["status_bar_color"] = color
         phone_p["status_bar_variant"] = variant
         print(f"[status-bar] cover phone clip -> variant={variant} (notch-flank placement)")
-
-    render_frame_png(canvas_w, canvas_h, [laptop_p, phone_p], frame_png)
-
-    video_specs = [
-        {"video": video_laptop, "x": laptop_p["screen_x"], "y": laptop_p["screen_y"],
-         "w": laptop_p["screen_w"], "h": laptop_p["screen_h"]},
-        {"video": video_mobile, "x": phone_p["screen_x"], "y": phone_p["screen_y"],
-         "w": phone_p["screen_w"], "h": phone_p["screen_h"]},
+    render_frame_png(canvas_w, canvas_h, [laptop_p], f"{tmp}/f_laptop.png")
+    render_frame_png(canvas_w, canvas_h, [phone_p], f"{tmp}/f_phone.png")
+    tl = detect_lead_in(video_laptop) if trim_start is None else trim_start
+    tm = detect_lead_in(video_mobile) if trim_start is None else trim_start
+    print(f"[lead-in] trimming laptop {tl:.1f}s, phone {tm:.1f}s")
+    layers = [
+        {"video": video_laptop, "trim": tl, "frame_png": f"{tmp}/f_laptop.png", "x": laptop_p["screen_x"],
+         "y": laptop_p["screen_y"], "w": laptop_p["screen_w"], "h": laptop_p["screen_h"]},
+        {"video": video_mobile, "trim": tm, "frame_png": f"{tmp}/f_phone.png", "x": phone_p["screen_x"],
+         "y": phone_p["screen_y"], "w": phone_p["screen_w"], "h": phone_p["screen_h"]},
     ]
-    ffmpeg_compose(bg_png, frame_png, video_specs, output, canvas_w, canvas_h)
+    ffmpeg_compose_layers(bg_png, layers, output, canvas_w, canvas_h)
     print(f"Saved: {output} ({probe_duration(output):.1f}s)")
 
 
@@ -305,6 +345,9 @@ if __name__ == "__main__":
     ap.add_argument("--status-bar", default="auto", choices=["auto", "dark", "light", "none"],
                      help="mobile status bar icon variant — auto samples the clip's own top-strip "
                           "brightness (default), dark/light forces one, none skips it entirely")
+    ap.add_argument("--trim-start", type=float, default=None,
+                    help="seconds to cut from the start of each clip; default auto-detects the "
+                         "blank/static lead-in (capped at 3s) so the video opens on motion")
     args = ap.parse_args()
 
     if args.mode == "cover":
@@ -312,11 +355,12 @@ if __name__ == "__main__":
             raise SystemExit("cover mode needs --video2 (the mobile clip)")
         build_cover(args.video, args.video2, args.output,
                     canvas_w=args.width or 960, canvas_h=args.height or 720,
-                    status_bar=args.status_bar)
+                    status_bar=args.status_bar, trim_start=args.trim_start)
     elif args.mode == "laptop":
         build_laptop_or_mobile("laptop", args.video, args.output,
-                                canvas_w=args.width or 960, canvas_h=args.height or 720)
+                                canvas_w=args.width or 960, canvas_h=args.height or 720,
+                                trim_start=args.trim_start)
     else:
         build_laptop_or_mobile("mobile", args.video, args.output,
                                 canvas_w=args.width or 1080, canvas_h=args.height or 1350,
-                                status_bar=args.status_bar)
+                                status_bar=args.status_bar, trim_start=args.trim_start)

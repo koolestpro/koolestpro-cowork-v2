@@ -1,0 +1,31 @@
+{
+  "brand": "Topicals",
+  "slug": "topicals_homepage-hero",
+  "date": "2026-10-18",
+  "pipelineItemId": "cro-fix-topicals_homepage-hero-20261018",
+  "pageType": "Homepage",
+  "url": "https://mytopicals.com/",
+  "images": {
+    "VARIANTS": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_variants-board.png",
+    "COVER": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide1.png",
+    "BA": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide2.png",
+    "ANNO": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide3.png",
+    "ANNO-GRAPHIC": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_annotated.png"
+  },
+  "carouselHtml": "outputs/cro-fixes/topicals_homepage-hero_carousel.html",
+  "annotationHtml": "outputs/cro-fixes/topicals_homepage-hero_annotation.html",
+  "variantsBoardHtml": "outputs/cro-fixes/topicals_homepage-hero_variants-board.html",
+  "heroVariants": "outputs/cro-fixes/topicals/_variants/ (CHOICE.md)",
+  "rebuildHtml": "outputs/cro-fixes/topicals_homepage-hero_rebuild.html",
+  "reviewPack": "outputs/cro-fixes/topicals_homepage-hero_content.html",
+  "audit": "outputs/audits/topicals_homepage-hero_audit.md",
+  "facts": "outputs/cro-fixes/topicals_homepage-hero_facts.json",
+  "brief": "outputs/cro-fixes/topicals_homepage-hero_build-brief.md",
+  "captions": "outputs/cro-fixes/topicals/captions.txt",
+  "builders": [
+    ".ai-workflow/build_topicals_rebuild.py",
+    ".ai-workflow/build_topicals_carousel.py",
+    ".ai-workflow/build_topicals_annotation.py"
+  ],
+  "exportedVia": "each page's own captureSlide()/captureSheet() (html2canvas, scale 2) driven by headless Playwright"
+}

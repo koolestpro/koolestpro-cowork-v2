@@ -73,7 +73,7 @@ from PIL import Image, ImageOps
 import status_bar_util as sbu
 from frame_video import (
     FRAMES_DIR, MACBOOK_NATIVE, MACBOOK_SCREEN, IPHONE_NATIVE, IPHONE_SCREEN,
-    make_background, compute_placement,
+    make_background, compute_placement, overlap_cover_geometry,
 )
 
 # ---------------------------------------------------------------------------
@@ -357,36 +357,19 @@ def build_single(device, screenshot, output, canvas_w, canvas_h, status_bar="aut
 
 def build_cover(screenshot_laptop, screenshot_mobile, output, canvas_w=1440, canvas_h=1080,
                  status_bar="auto", bg_mode="gradient", bg_color=None):
-    """Mirrors frame_video.build_cover's non-overlapping side-by-side layout
-    (laptop left, phone right, real gap, zero overlap by construction) but
-    for a single still frame instead of a video."""
+    """Laptop + phone, phone overlapping the laptop's right side and drawn on
+    top (COVER LAYOUT v3, 2026-10-10). Geometry is shared with
+    frame_video.build_cover via overlap_cover_geometry so the still and the
+    video cover always match."""
     tmp_dir = tempfile.mkdtemp(prefix="bds_")
     base = _make_canvas_background(canvas_w, canvas_h, bg_mode, bg_color, tmp_dir)
-
-    left_margin = canvas_w * 0.03
-    gap = canvas_w * 0.025
-    right_margin = canvas_w * 0.02
-
-    laptop_p = compute_placement(canvas_w, canvas_h, MACBOOK_NATIVE, MACBOOK_SCREEN,
-                                  margin_frac=0.11, y_bias=-canvas_h * 0.02)
-    laptop_p["frame_x"] = left_margin
-
-    available_w = canvas_w - (laptop_p["frame_x"] + laptop_p["frame_w"]) - gap - right_margin
-    scale_w = available_w / IPHONE_NATIVE[0]
-    scale_h = (canvas_h * 0.86) / IPHONE_NATIVE[1]
-    scale = max(0.05, min(scale_w, scale_h))
-    phone_w, phone_h = IPHONE_NATIVE[0] * scale, IPHONE_NATIVE[1] * scale
-    phone_x = laptop_p["frame_x"] + laptop_p["frame_w"] + gap
-    phone_y = (canvas_h - phone_h) / 2
-
+    lp, pp = overlap_cover_geometry(canvas_w, canvas_h)
     laptop_flat = compose_laptop_flat(screenshot_laptop)
     mobile_flat, variant = compose_mobile_flat(screenshot_mobile, status_bar=status_bar)
-
-    _paste_scaled(base, laptop_flat, laptop_p["frame_x"], laptop_p["frame_y"], laptop_p["frame_w"], laptop_p["frame_h"])
-    _paste_scaled(base, mobile_flat, phone_x, phone_y, phone_w, phone_h)
-
+    _paste_scaled(base, laptop_flat, lp["frame_x"], lp["frame_y"], lp["frame_w"], lp["frame_h"])
+    _paste_scaled(base, mobile_flat, pp["frame_x"], pp["frame_y"], pp["frame_w"], pp["frame_h"])
     base.convert("RGB").save(output)
-    print(f"Saved: {output} ({canvas_w}x{canvas_h}) [status bar: {variant}]")
+    print(f"Saved: {output} ({canvas_w}x{canvas_h}) [status bar: {variant}] [cover layout v3: phone overlaps laptop]")
 
 
 def build_preview(screenshots, output, canvas_w=2880, canvas_h=1800, status_bar="auto",

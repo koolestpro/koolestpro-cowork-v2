@@ -16,33 +16,43 @@ give Instagram/LinkedIn variants:
 
 **Posting rule (2026-09-27, Ridwan's instruction, every CRO Fix from now on):**
 1. The **3-slide carousel** is always posted as one multi-image post on **LinkedIn, Instagram AND X**.
-2. **Each of the four graphics** (cover = slide 1, before/after = slide 2, dark annotation = slide 3,
-   clear-background annotated graphic) is **also posted on its own on X**.
+2. The **cover (slide 1) is never posted as a standalone post**. It is the first thing people see
+   in the carousel, so do not repeat it later as a single-image post.
+3. The **before/after (slide 2), dark annotation (slide 3), and clear-background annotated graphic**
+   are each posted on their own on X.
 
-That is 3 carousel posts + 4 X singles = 7 posts per audit, so every run writes **5 X captions**,
-one per X post, each under 280 characters, never recycled between posts. In the review pack
+**Variants board first (2026-10-11, Ridwan):** before any of the above, the neutral A/B/C/D board of the hero directions we explored posts alone on X to start a debate; the carousel is the reveal. Full rule: `docs/system/variants-board-post.md`. With this board, an audit has **7 posts** total and **5 X captions** (x_variants + the four below).
+
+That is 3 carousel posts + 3 X singles + the variants-board post = 7 posts per audit, so every run
+writes **5 X captions**: one for the variants board, one for the X carousel, and one for each of
+the three standalone X graphics. Each must be under 280 characters and never recycled between
+posts. In the review pack
 (`{slug}_content.html`) they live in `div.tab-panel` blocks with these ids, which is what
 `harvest_content.py` reads and `populate_sheet.py` schedules:
 
 | Post | Image(s) | Tab id -> caption key | Slot (ET) |
 |---|---|---|---|
+| **Variants board, X single (GOES FIRST)** | `*_variants-board.png` | `tab-x-variants` -> `x_variants` | Tue 18:00 (day before the carousel) |
 | Carousel, LinkedIn | slides 1-3 | `tab-linkedin` -> `linkedin` | Wed 09:00 |
 | Carousel, Instagram | slides 1-3 | `tab-ig` -> `instagram` | Wed 12:00 |
 | Carousel, X | slides 1-3 | `tab-x-carousel` -> `x_carousel` | Wed 13:00 |
-| Cover, X single | slide 1 | `tab-x-cover` -> `x_cover` | Thu 09:00 |
-| Before/after, X single | slide 2 | `tab-x-ba` -> `x_ba` | Fri 09:00 |
-| Dark annotation, X single | slide 3 | `tab-x-anno` -> `x_anno` | Sat 13:00 |
-| Clear-bg annotation, X single | `*_annotated.png` | `tab-x-anno-graphic` -> `x_anno_graphic` | Sun 18:00 |
+| Before/after, X single | slide 2 | `tab-x-ba` -> `x_ba` | Thu 09:00 |
+| Dark annotation, X single | slide 3 | `tab-x-anno` -> `x_anno` | Fri 13:00 |
+| Clear-bg annotation, X single | `*_annotated.png` | `tab-x-anno-graphic` -> `x_anno_graphic` | Sat 18:00 |
 
-Social-content keys: `CRO-{BRAND}-X-CAROUSEL`, `-X-COVER`, `-X-BA`, `-X-ANNO`, `-X-ANNO-GRAPHIC`, each with `assetPath` (the image it posts with) and `captionKey`.
+Social-content keys for new builds: `CRO-{BRAND}-X-CAROUSEL`, `-X-BA`, `-X-ANNO`, and
+`-X-ANNO-GRAPHIC`, each with `assetPath` (the image it posts with) and `captionKey`.
+Do not create a new `-X-COVER` entry.
 
 **Caption = image (Ridwan, 2026-09-28).** Write each X single while looking at the exact PNG it posts with. What each one says:
-- **Cover:** the hook shown on slide 1.
 - **Before/after:** the contrast, before vs after.
 - **Annotations:** the numbered changes the image points at.
-- **Single images:** never mention "carousel", "swipe" or "slides".
+- **Standalone single images:** never mention "carousel", "swipe" or "slides".
 
-Since 2026-09-28 the four single keys have **no fallback**. If `tab-x-ba` (etc.) is missing, `populate_sheet.py` writes that row empty and holds it as Draft instead of borrowing another image's tweet. Run `python3 .ai-workflow/tools/caption_fit.py` before finishing and fix anything flagged for this item.
+The three standalone graphic captions have **no fallback**. If `tab-x-ba` (or another required
+standalone caption) is missing, `populate_sheet.py` writes that row empty and holds it as Draft
+instead of borrowing another image's tweet. Run `python3 .ai-workflow/tools/caption_fit.py`
+before finishing and fix anything flagged for this item.
 Reference run: Minimalist Niacinamide 10% PDP (2026-09-27), `outputs/cro-fixes/minimalist_niacinamide-10-serum-pdp_content.html`.
 
 **Retired:** the standalone `ba-graphic.png` (slide 2 replaces it). **Back by request

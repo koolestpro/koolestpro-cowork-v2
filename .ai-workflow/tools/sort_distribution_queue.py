@@ -164,7 +164,7 @@ def main():
     for r in rows[1:]:
         platform = r[3] if len(r) > 3 else ""
         status = (r[10] if len(r) > 10 else "").strip()
-        is_posted = status.lower() == "posted"
+        is_posted = status.lower() in ("posted", "retired")
         posted_tier.append(1 if is_posted else 0)
         platform_priority.append(PLATFORM_PRIORITY.get(platform, 9))
         status_priority.append(1 if status.lower() == "ready" else 2)

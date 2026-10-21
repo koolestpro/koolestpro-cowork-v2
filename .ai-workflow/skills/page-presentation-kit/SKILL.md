@@ -114,3 +114,10 @@ If `ffmpeg` isn't available in the environment, the script saves a raw `.webm` i
 - **`device-in-hand-lifestyle` requested with no calibrated background yet:** do the one-time setup (Step 2b) rather than substituting a different style silently.
 - **Reference doesn't clearly match any of the seven styles:** pick the closest and say which one you matched, or file it to `inbox/` if you're doing a pure library-dump rather than a live generation — don't force a bad match into a named folder just to avoid `inbox/`. If it's a real, coherent pattern that just isn't a device mockup (like `flat-full-page-screenshot` and `page-unroll-surreal` themselves started out), that's grounds to propose it as a new named style rather than defaulting to `inbox/` — see Step 4's "reclassify on user correction" note.
 - **No screenshot possible (page requires auth, geo-blocked, etc.):** say so plainly rather than producing a mockup of a blank/error page and presenting it as done.
+
+
+## Video capture and cover layout (2026-10-10, Ridwan)
+
+- Capture scroll videos with `scripts/scroll_video_frames.py` (one exact scroll position + screenshot per frame at 30fps, then encoded). Live recording with stepped scrolling (`scroll_video_raw.py`) stuttered on the desktop/laptop video and is a fallback only.
+- Videos must open on real content: no empty device screen, no idle hold. `frame_video.py` auto-trims any blank/static opening (max 3s, `--trim-start` overrides).
+- Laptop + phone covers (video and still) put the phone overlapping the laptop's right side, drawn on top, sized to use the space. Geometry lives in `frame_video.py` `COVER_GEOM` / `overlap_cover_geometry()` and is shared by `build_device_still.py cover`.

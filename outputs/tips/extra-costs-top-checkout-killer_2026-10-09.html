@@ -1,0 +1,211 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Extra costs: sourced take</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#111;color:#fff;font-family:'DM Sans',sans-serif;padding:32px 16px 80px}
+.wrap{max-width:1120px;margin:0 auto}
+.chrome-h{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;margin-bottom:6px}
+.chrome-p{color:rgba(255,255,255,.55);font-size:15px;line-height:1.5;margin-bottom:22px;max-width:760px}
+#viewport{position:relative;width:540px;height:675px;overflow:hidden;border-radius:14px;margin:0 auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#stage{width:1080px;height:1350px;transform:scale(.5);transform-origin:top left}
+#track{display:flex;width:max-content;transition:transform .35s ease}
+.navrow{display:flex;align-items:center;justify-content:center;gap:16px;margin:16px 0 4px}
+.navbtn{background:#222;border:1px solid #333;color:#fff;border-radius:30px;padding:8px 18px;cursor:pointer;font-size:14px}
+#pager{font-size:14px;color:rgba(255,255,255,.6);min-width:60px;text-align:center}
+#dots{display:flex;gap:8px;justify-content:center;margin:8px 0 18px}
+.dot{width:8px;height:8px;border-radius:50%;background:#444;cursor:pointer}.dot.active{background:#FF9500}
+.swb{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;
+  background:rgba(0,0,0,.55);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5}
+#download-panel{max-width:760px;margin:0 auto 30px;background:#0a0a0a;border:1px solid #222;border-radius:12px;padding:18px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+#download-panel button{background:#1c1c1c;border:1px solid #333;color:#fff;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px}
+#download-status{width:100%;text-align:center;font-size:12px;color:rgba(255,255,255,.45)}
+.section-label{font-family:'Syne';font-weight:800;font-size:18px;margin:36px 0 12px;color:#FF9500}
+.section-divider{height:1px;background:#222;margin:30px 0}
+.tabs-wrap{max-width:760px;margin:0 auto}
+.tab-buttons{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tab-btn{background:#1c1c1c;border:1px solid #333;color:#ccc;border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px}
+.tab-btn.active{background:#FF9500;color:#000;border-color:#FF9500}
+.tab-panel{display:none;background:#0a0a0a;border:1px solid #222;border-radius:10px;padding:16px}.tab-panel.active{display:block}
+.tab-panel pre{white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.55;color:#ddd}
+.copy-btn{margin-top:10px;background:#222;border:1px solid #333;color:#fff;border-radius:6px;padding:6px 12px;cursor:pointer}
+.notes{max-width:760px;margin:0 auto;font-size:14px;line-height:1.6;color:rgba(255,255,255,.65)}
+.notes b{color:#fff}
+/* ---- V4 slide system (native 1080x1350) ---- */
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;background:#0B0B0D;color:#fff;font-family:'DM Sans',sans-serif;flex:none}
+.glowA{position:absolute;width:900px;height:900px;border-radius:50%;left:-380px;top:-300px;
+  background:radial-gradient(circle,rgba(255,149,0,.30),rgba(224,64,160,.10) 45%,transparent 70%);filter:blur(40px)}
+.glowB{position:absolute;width:900px;height:900px;border-radius:50%;right:-420px;bottom:-360px;
+  background:radial-gradient(circle,rgba(123,47,190,.38),transparent 70%);filter:blur(40px)}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.035) 1.5px,transparent 1.5px);background-size:44px 44px}
+.wm{position:absolute;right:-60px;top:330px;line-height:0}
+.in{position:absolute;inset:0;padding:88px 80px 128px;display:flex;flex-direction:column}
+.h{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-3px;line-height:1.02}
+.o{color:#FF9500}
+.eyebrow{font-family:'Syne',sans-serif;font-weight:800;font-size:34px;letter-spacing:4px;color:#FF9500}
+.pill{align-self:flex-start;font-family:'Syne',sans-serif;font-weight:800;font-size:34px;letter-spacing:1px;
+  padding:14px 34px;border-radius:60px;color:#fff;background:linear-gradient(90deg,#FF9500,#7B2FBE)}
+.pill.ghost{background:transparent;border:3px solid #FF9500}
+.tag{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;letter-spacing:1px;padding:8px 22px;border-radius:40px}
+.body{font-size:42px;line-height:1.3;color:#C9C9CF;font-weight:500}
+.cap{font-size:28px;color:rgba(255,255,255,.55);font-weight:500}
+.foot{position:absolute;left:80px;right:80px;bottom:52px;display:flex;justify-content:space-between;align-items:center;
+  font-size:27px;color:rgba(255,255,255,.62);font-weight:500}
+.foot b{color:#fff;font-weight:700}
+.count{background:rgba(11,11,13,.72);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:8px 22px;color:#fff}
+.card{min-height:0;overflow:hidden;background:rgba(255,255,255,.035);border:2px solid rgba(255,255,255,.10);border-radius:32px}
+.icon{width:104px;height:104px;border-radius:50%;background:rgba(255,149,0,.10);border:2px solid rgba(255,149,0,.35);
+  display:flex;align-items:center;justify-content:center;flex:none}
+.row{display:flex;align-items:center;justify-content:space-between}
+.shot{display:block;width:100%;height:100%;object-fit:contain}
+</style></head><body><div class="wrap">
+<div data-chrome><div class="chrome-h">Extra costs: sourced take</div>
+<div class="chrome-p">Lane E: Sourced take &middot; Tips week pack 2026-10-09 &middot; status Created, waiting for Ridwan's review. Native 1080&times;1350 per slide, preview shown at 50%.</div></div>
+<div class="section-label">&#9312; Post</div>
+<div id="viewport"><div id="stage"><div id="track"><div class="slide" data-n="1"><div class="glowA"></div><div class="glowB"></div><div class="dots"></div><div class="wm"><svg style="opacity:0.06" xmlns="http://www.w3.org/2000/svg" width="520" height="520" viewBox="0 0 24 24"><g fill="none" stroke="#FF9500" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 17V7m4 1h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/><path d="M4 3a1 1 0 0 1 1-1a1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1a1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2a1 1 0 0 1-1-1z"/></g></svg></div><div class="in">
+  <div class="row" style="align-items:flex-start"><div class="h" style="font-size:240px;letter-spacing:-10px;line-height:.82;color:#FF9500">40%</div><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"><g fill="none" stroke="#FF9500" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 17V7m4 1h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/><path d="M4 3a1 1 0 0 1 1-1a1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1a1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2a1 1 0 0 1-1-1z"/></g></svg></div></div>
+  <div class="h" style="font-size:60px;letter-spacing:-2px;line-height:1.08;margin-top:22px">of checkout quitters<br>blame <span class="o">extra costs.</span></div>
+  <div class="card" style="flex:1;margin-top:36px;padding:36px 44px;display:flex;flex-direction:column;justify-content:space-between"><div>
+  <div class="row" style="margin-bottom:10px"><div style="font-size:32px;font-weight:700;color:#fff">Extra costs too high <span style="color:rgba(255,255,255,.5);font-weight:500">(shipping, tax, fees)</span></div>
+  <div style="font-family:Syne;font-weight:800;font-size:36px;color:#FF9500">40%</div></div>
+  <div style="height:30px;border-radius:12px;background:rgba(255,255,255,.07)"><div style="height:100%;width:92%;border-radius:12px;background:linear-gradient(90deg,#FF9500,#E040A0)"></div></div></div><div>
+  <div class="row" style="margin-bottom:10px"><div style="font-size:32px;font-weight:500;color:rgba(255,255,255,.75)">Delivery too slow</div>
+  <div style="font-family:Syne;font-weight:800;font-size:36px;color:rgba(255,255,255,.75)">20%</div></div>
+  <div style="height:20px;border-radius:12px;background:rgba(255,255,255,.07)"><div style="height:100%;width:46%;border-radius:12px;background:rgba(255,255,255,.38)"></div></div></div><div>
+  <div class="row" style="margin-bottom:10px"><div style="font-size:32px;font-weight:500;color:rgba(255,255,255,.75)">Didn't trust the site with a card</div>
+  <div style="font-family:Syne;font-weight:800;font-size:36px;color:rgba(255,255,255,.75)">19%</div></div>
+  <div style="height:20px;border-radius:12px;background:rgba(255,255,255,.07)"><div style="height:100%;width:44%;border-radius:12px;background:rgba(255,255,255,.38)"></div></div></div><div>
+  <div class="row" style="margin-bottom:10px"><div style="font-size:32px;font-weight:500;color:rgba(255,255,255,.75)">Had to create an account</div>
+  <div style="font-family:Syne;font-weight:800;font-size:36px;color:rgba(255,255,255,.75)">18%</div></div>
+  <div style="height:20px;border-radius:12px;background:rgba(255,255,255,.07)"><div style="height:100%;width:41%;border-radius:12px;background:rgba(255,255,255,.38)"></div></div></div><div>
+  <div class="row" style="margin-bottom:10px"><div style="font-size:32px;font-weight:500;color:rgba(255,255,255,.75)">Checkout too long or complicated</div>
+  <div style="font-family:Syne;font-weight:800;font-size:36px;color:rgba(255,255,255,.75)">17%</div></div>
+  <div style="height:20px;border-radius:12px;background:rgba(255,255,255,.07)"><div style="height:100%;width:39%;border-radius:12px;background:rgba(255,255,255,.38)"></div></div></div></div>
+  <div class="body" style="margin-top:26px;color:#fff">Show shipping on the product page.</div>
+  <div class="cap" style="margin-top:10px">Source: Baymard Institute, US shoppers, updated Sept 2025</div>
+</div><div class="foot"><span><b>@koolestpro</b> | Shopify CRO &amp; UX</span></div></div></div></div></div>
+<div class="navrow" data-chrome><button class="navbtn" onclick="goTo(current-1)">&#8249; Prev</button><span id="pager">1 / 1</span><button class="navbtn" id="nav-next" onclick="goTo(current+1)">Next &#8250;</button></div>
+<div id="dots" data-chrome></div>
+<div id="download-panel"><button onclick="dlSlide(0)">Slide 1</button><button onclick="dlAll()">All slides</button><button onclick="dlPDF()">PDF</button><div id="download-status"></div></div>
+<div class="section-divider"></div><div class="section-label">&#9313; Notes and sources</div><div class="notes"><p><b>Lane E, sourced take.</b> Every number on the image comes from Baymard Institute, <a href="https://baymard.com/lists/cart-abandonment-rate" style="color:#FF9500">baymard.com/lists/cart-abandonment-rate</a> (page last updated 22 Sept 2025, read 9 Oct 2026): reasons for abandonment during checkout, US online shoppers, "just browsing" excluded. 40% extra costs, 20% delivery too slow, 19% didn't trust the site with card info, 18% account creation required, 17% checkout too long or complicated. No Koolestpro result is claimed.</p></div>
+<div class="section-divider"></div><div class="section-label">&#9314; Post Copy</div>
+<div class="tabs-wrap"><div class="tab-buttons"><button class="tab-btn active" onclick="openTab(this,'tab-linkedin')">LinkedIn</button><button class="tab-btn" onclick="openTab(this,'tab-hook')">Hook</button><button class="tab-btn" onclick="openTab(this,'tab-x-image')">X (this image)</button></div><div id="tab-linkedin" class="tab-panel active"><pre>40% of US shoppers who quit at checkout say the extra costs were too high. Shipping, tax, fees.
+
+That&#x27;s from Baymard Institute&#x27;s checkout abandonment research (page updated September 2025, with &quot;just browsing&quot; answers left out). It&#x27;s the top reason by a wide margin. Slow delivery is second at 20%.
+
+Most of those costs exist long before anyone opens the cart. You already know your shipping rate, your free-shipping threshold and your duties. The shopper just meets them too late.
+
+So a lot of the fix is timing. Show the cost where people decide, on the product page and in the cart, instead of on step three of checkout.
+
+Ways I see stores do it well:
+A shipping line right next to the price.
+A free-shipping threshold with a progress bar in the cart.
+Duties and taxes stated up front for international orders.
+
+Black Friday brings a lot of first-time buyers who don&#x27;t know your shipping policy yet. Tell them before checkout does.
+
+Source: baymard.com/lists/cart-abandonment-rate
+
+#Shopify #CRO #Checkout #Ecommerce #BlackFriday</pre><button class="copy-btn" onclick="copyText('tab-linkedin')">Copy</button></div><div id="tab-hook" class="tab-panel"><pre>The top reason people quit checkout isn&#x27;t the checkout. It&#x27;s the shipping cost they only meet there.
+
+40% of US checkout abandoners say extra costs were too high (Baymard Institute).
+
+Where does your store first show the shipping cost?</pre><button class="copy-btn" onclick="copyText('tab-hook')">Copy</button></div><div id="tab-x-image" class="tab-panel"><pre>40% of US shoppers who abandon at checkout say the extra costs were too high: shipping, tax, fees.
+
+That&#x27;s the #1 reason, double slow delivery (20%). Source: Baymard Institute.
+
+Show the cost on the product page, not on step three of checkout.</pre><button class="copy-btn" onclick="copyText('tab-x-image')">Copy</button></div></div>
+<div class="section-divider"></div>
+<div style="max-width:760px;margin:0 auto"><div style="background:#0a0a0a;border:1px solid rgba(255,149,0,.18);border-radius:12px;padding:22px">
+<div style="font-size:12px;font-weight:700;letter-spacing:2px;color:#FF9500;margin-bottom:8px">CONTENT PIPELINE</div>
+<div style="font-size:13px;color:rgba(255,255,255,.45);margin-bottom:14px">Downloads a .json for ridwan_content_system_updated.html. Status is always Created.</div>
+<button onclick="sendToPipeline()" style="background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE);color:#fff;font-family:Syne;font-weight:700;font-size:14px;padding:12px 26px;border:none;border-radius:8px;cursor:pointer">Send to Content Pipeline &#8594;</button>
+<div id="pipeline-status" style="font-size:12px;color:rgba(255,255,255,.4);margin-top:10px"></div></div></div>
+</div>
+<script>const POST_BRAND='Koolestpro';const POST_SLUG='extra-costs-top-checkout-killer';const POST_TYPE='Tip';const POST_FOLDER='outputs/tips/extra-costs-top-checkout-killer_2026-10-09.html';const POST_ID='tip-extra-costs-top-checkout-killer-20261009';const POST_TITLE='40% of checkout quitters blame extra costs';
+const TOTAL = 1;
+let current = 0;
+const track = document.getElementById('track');
+const stage = document.getElementById('stage');
+const vp = document.getElementById('viewport');
+const pager = document.getElementById('pager');
+const dotsEl = document.getElementById('dots');
+const slides = document.querySelectorAll('.slide');
+function buildDots(){dotsEl.innerHTML='';slides.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);});}
+function goTo(n){
+  current=Math.max(0,Math.min(n,TOTAL-1));
+  track.style.transform=`translateX(-${current*1080}px)`;
+  pager.textContent=`${current+1} / ${TOTAL}`;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  const s=document.getElementById('main-swb'); if(s) s.style.display=current>=TOTAL-1?'none':'';
+}
+buildDots(); goTo(0);
+let startX=0;
+vp.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
+vp.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>40)goTo(current+(dx<0?1:-1));});
+vp.addEventListener('mousedown',e=>{startX=e.clientX;});
+vp.addEventListener('mouseup',e=>{const dx=e.clientX-startX;if(Math.abs(dx)>40)goTo(current+(dx<0?1:-1));});
+
+async function waitForSlideAssets(slide){
+  if(document.fonts&&document.fonts.ready) await document.fonts.ready;
+  const images=Array.from(slide.querySelectorAll('img'));
+  await Promise.all(images.map(img=>{
+    if(img.complete&&img.naturalWidth>0) return Promise.resolve();
+    if(img.decode) return img.decode().catch(()=>{});
+    return new Promise(r=>{img.onload=r;img.onerror=r;});
+  }));
+}
+function setDownloadStatus(m){const s=document.getElementById('download-status');if(s)s.textContent=m||'';}
+async function captureSlide(idx){
+  const slide=slides[idx]; if(!slide) throw new Error(`Slide ${idx+1} was not found.`);
+  const toHide=document.querySelectorAll('[data-chrome], #download-panel, .posts-shell, .swb, .section-label, .section-divider, .gcard-wrap');
+  toHide.forEach(el=>el.style.visibility='hidden');
+  const prev={t:track.style.transform,tr:track.style.transition,st:stage.style.transform,w:vp.style.width,h:vp.style.height};
+  track.style.transition='none'; track.style.transform=`translateX(-${idx*1080}px)`;
+  stage.style.transform='none'; vp.style.width='1080px'; vp.style.height='1350px';
+  try{
+    await waitForSlideAssets(slide);
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+    return await html2canvas(slide,{scale:1,useCORS:true,allowTaint:false,backgroundColor:'#0B0B0D',logging:false,width:1080,height:1350});
+  } finally {
+    track.style.transform=prev.t; track.style.transition=prev.tr; stage.style.transform=prev.st; vp.style.width=prev.w; vp.style.height=prev.h;
+    toHide.forEach(el=>el.style.visibility='');
+  }
+}
+async function dlSlide(idx){
+  try{
+    setDownloadStatus(`Preparing slide ${idx+1}...`);
+    const canvas=await captureSlide(idx);
+    const a=document.createElement('a'); a.href=canvas.toDataURL('image/png');
+    a.download=`koolestpro_${POST_SLUG}_slide${idx+1}.png`; a.click();
+    setDownloadStatus(`Slide ${idx+1} downloaded.`);
+  }catch(err){console.error(err);setDownloadStatus(`Slide ${idx+1} failed: ${err.message}`);}
+}
+async function dlAll(){for(let i=0;i<TOTAL;i++){await dlSlide(i);await new Promise(r=>setTimeout(r,300));}}
+async function dlPDF(){
+  try{
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'portrait',unit:'px',format:[1080,1350],compress:true});
+    for(let i=0;i<TOTAL;i++){
+      setDownloadStatus(`Adding slide ${i+1} of ${TOTAL} to PDF...`);
+      const c=await captureSlide(i); if(i>0) pdf.addPage([1080,1350],'portrait');
+      pdf.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',0,0,1080,1350);
+    }
+    pdf.save(`koolestpro_${POST_SLUG}.pdf`); setDownloadStatus('PDF downloaded.');
+  }catch(err){console.error(err);setDownloadStatus(`PDF failed: ${err.message}`);}
+}
+function openTab(el,id){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.getElementById(id).classList.add('active');}
+function copyText(id){const t=document.getElementById(id).querySelector('pre').innerText;navigator.clipboard.writeText(t).then(()=>{const b=document.querySelector(`[onclick="copyText('${id}')"]`);if(b){b.textContent='Copied!';setTimeout(()=>b.textContent='Copy',1800);}});}
+function sendToPipeline(){
+  const now=new Date();
+  const data={id:POST_ID,type:POST_TYPE,title:POST_TITLE,slug:POST_SLUG,status:'Created',day:'',created:now.toISOString(),folder:POST_FOLDER,
+    week:'Week of '+now.toLocaleDateString('en-US',{month:'long',day:'numeric'}),month:now.toLocaleDateString('en-US',{month:'long',year:'numeric'}),monthSlug:now.toISOString().slice(0,7)};
+  console.log('EXPORT_POST_JSON',JSON.stringify(data));
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=POST_SLUG+'_pipeline.json';a.click();URL.revokeObjectURL(a.href);
+  const s=document.getElementById('pipeline-status'); if(s) s.textContent='Exported. Open ridwan_content_system_updated.html and sync.';
+}
+</script>
+</body></html>

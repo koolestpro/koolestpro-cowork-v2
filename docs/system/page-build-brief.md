@@ -22,7 +22,10 @@ the output half. Together they close the loop.
   otherwise generate one with AI and build on that. Product pages and homepages alike. (Standing
   rule 15.)
 - **Real facts only**, with an explicit verify list. Never invent a number, quote, or guarantee.
-- The **first screen carries the whole decision**: outcome headline, price, rating and review count,
+- The **product title as the page's only `<h1>`**, real full title from the live page, at the top of the first
+  screen above the price, never outranked by a slogan (the 2026-10-10 title rule in
+  `cro-redesign-standard.md`). Product pages only.
+- The **first screen carries the whole decision**: product title, outcome line, price, rating and review count,
   benefit reasons, a trust row, and the CTA.
 - The **real logo and product image** used as-is, never recreated or cropped.
 - **No gradient text.**

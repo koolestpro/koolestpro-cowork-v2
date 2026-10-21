@@ -1,5 +1,7 @@
 # Tips carousel V4 format (approved direction 2026-09-27)
 
+> **2026-10-09 update (Ridwan):** no post-type labels on graphics, no gradient pill labels (needed labels like `LEAK #2` or BEFORE/AFTER become plain Syne letter-spaced eyebrow text), no website in the footer (handle only, carousels keep `n / N`; the CTA slide keeps its service URL). Wherever this doc says "pill", read "plain eyebrow". Full list: `scheduled-tasks/desktop/koolestpro-tips-weekly/SKILL.md`, LABELS, URL + EVIDENCE OVERRIDE. Bar for practical posts: `outputs/tips/first-screen-leaks-before-bfcm_2026-10-09.html`.
+
 Ridwan: the typography-hierarchy post (2026-09-18) was the best so far, but not enough. Every run must fill the full frame and use fonts that read on a phone. V4 merges three sources, and each Tips run must acknowledge all three:
 
 | Source (look at it, don't guess) | What V4 takes from it |

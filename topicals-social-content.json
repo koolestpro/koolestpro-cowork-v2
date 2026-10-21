@@ -1,0 +1,86 @@
+{
+  "brand": "Topicals",
+  "brandSlug": "topicals",
+  "isConceptBrand": false,
+  "note": "Real brand, unofficial portfolio/concept CRO work. Not a Topicals client engagement.",
+  "pipelineItemId": "cro-fix-topicals_homepage-hero-20261018",
+  "items": {
+    "CRO-TOPICALS-COVER": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide1.png",
+      "usedIn": "carousel slide 1 (cover: real crop of the live hero + AFTER phone, real logo)"
+    },
+    "CRO-TOPICALS-BA": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide2.png",
+      "usedIn": "carousel slide 2, standalone before/after post",
+      "caption": "HOMEPAGE: Open Topicals on a phone and the first thing you get is a scratch card. \"Try your luck. Scratch below to see what you win.\"\n\nClose it and you get the TOPICALS wordmark, a face, and a promo for one kit. Then a black \"Scratch to win\" pill sits right on top of the only Shop now button.\n\nWhat I couldn't find on the homepage was a single star rating. Faded Serum has 4.9 stars from 882 reviews. Like Butter has 4.9 from 719. Neither shows up. And \"skincare for flare-ups\", which is what Topicals sells, only appears in the browser tab title.\n\nSo I rebuilt screen one with what was already on their site:\n\n1. Their own Faded Dark Spot Kit photo, full screen, with the kit name and price on it ($28, was $44).\n2. 4.9 from 882 Faded Serum reviews, right above the headline.\n3. A headline that names the category and keeps their voice: Skincare for flare-ups. Made fun.\n4. One red Shop best sellers button with nothing covering it, then a pill for each flare-up: Dark spots, Dry skin, Under eyes, Body.\n5. The $30 kit offer moved up into the top bar, where it doesn't block anything.\n\nThe fun stays. The game just stops being the first thing you see.\n\nI'd still keep the scratch card. Just later, once people know what they'd be winning.\n\nThis is unofficial concept work. Topicals isn't a client."
+    },
+    "CRO-TOPICALS-ANNO": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide3.png",
+      "usedIn": "carousel slide 3, standalone annotation post"
+    },
+    "CRO-TOPICALS-VARIANTS": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_variants-board.png",
+      "usedIn": "variants board (4 hero directions A-D, neutral, no pick shown); X debate post that goes out BEFORE the carousel"
+    },
+    "CRO-TOPICALS-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_annotated.png",
+      "usedIn": "standalone clear-background annotation graphic (1080x1080)"
+    },
+    "CRO-TOPICALS-CAROUSEL": {
+      "assetPath": "outputs/cro-fixes/topicals_homepage-hero_carousel.html",
+      "usedIn": "the review/export HTML (all 3 slides + download panel)",
+      "captionOptions": [
+        {
+          "id": "linkedin",
+          "caption": "HOMEPAGE: Open Topicals on a phone and the first thing you get is a scratch card. \"Try your luck. Scratch below to see what you win.\"\n\nClose it and you get the TOPICALS wordmark, a face, and a promo for one kit. Then a black \"Scratch to win\" pill sits right on top of the only Shop now button.\n\nWhat I couldn't find on the homepage was a single star rating. Faded Serum has 4.9 stars from 882 reviews. Like Butter has 4.9 from 719. Neither shows up. And \"skincare for flare-ups\", which is what Topicals sells, only appears in the browser tab title.\n\nSo I rebuilt screen one with what was already on their site:\n\n1. Their own Faded Dark Spot Kit photo, full screen, with the kit name and price on it ($28, was $44).\n2. 4.9 from 882 Faded Serum reviews, right above the headline.\n3. A headline that names the category and keeps their voice: Skincare for flare-ups. Made fun.\n4. One red Shop best sellers button with nothing covering it, then a pill for each flare-up: Dark spots, Dry skin, Under eyes, Body.\n5. The $30 kit offer moved up into the top bar, where it doesn't block anything.\n\nThe fun stays. The game just stops being the first thing you see.\n\nI'd still keep the scratch card. Just later, once people know what they'd be winning.\n\nThis is unofficial concept work. Topicals isn't a client.",
+          "hashtags": [
+            "#CRO",
+            "#Shopify",
+            "#EcommerceUX",
+            "#Homepage"
+          ]
+        }
+      ]
+    },
+    "CRO-TOPICALS-X-VARIANTS": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_variants-board.png",
+      "caption": "Topicals' homepage hero, 4 ways. Same brand, same products.\n\nA: best sellers, labelled\nB: face photo first\nC: full-bleed product\nD: headline first\n\nHot take: the live page opens on a scratch card. Any of these beats that.\n\nWhich would you ship? My pick goes up next.",
+      "platform": "X",
+      "captionKey": "x_variants",
+      "chars": 266
+    },
+    "CRO-TOPICALS-X-CAROUSEL": {
+      "assetPath": [
+        "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide1.png",
+        "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide2.png",
+        "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide3.png"
+      ],
+      "caption": "Homepage teardown: Topicals.\n\n1 A scratch card loads before the skincare\n2 Same products, now named on screen one\n3 The three questions screen one now answers\n\nEvery rating and price came from their own product pages.",
+      "platform": "X",
+      "captionKey": "x_carousel",
+      "chars": 217
+    },
+    "CRO-TOPICALS-X-BA": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide2.png",
+      "caption": "Topicals homepage, before and after.\n\nBefore:\n❌ A scratch card fills screen one\n❌ \"Scratch to win\" sits on the Shop now button\n❌ Zero star ratings on the page\n\nAfter:\n✅ Says what it treats, on screen one\n✅ 4.9 from 882 reviews up top\n✅ One button, nothing on top of it",
+      "platform": "X",
+      "captionKey": "x_ba",
+      "chars": 268
+    },
+    "CRO-TOPICALS-X-ANNO": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_carousel_slide3.png",
+      "caption": "Homepage fix: Topicals.\n\nWhat a new visitor wonders:\n1 Is this for my skin?\n2 Does it actually work?\n3 Where do I tap?\n\nThe old page answered with a scratch card. Now the headline, the 4.9 rating and one red button answer them on screen one.",
+      "platform": "X",
+      "captionKey": "x_anno",
+      "chars": 241
+    },
+    "CRO-TOPICALS-X-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/topicals/koolestpro_topicals_homepage-hero_annotated.png",
+      "caption": "Topicals sells skincare for flare-ups. Their homepage never says so.\n\nI rebuilt it around what a flare-up shopper asks first: what do they sell, do people rate it, where do I start?\n\nFaded Serum has 4.9 stars from 882 reviews. That number now sits above the headline.",
+      "platform": "X",
+      "captionKey": "x_anno_graphic",
+      "chars": 267
+    }
+  },
+  "knownGaps": []
+}

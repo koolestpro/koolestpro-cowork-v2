@@ -1,0 +1,31 @@
+{
+  "brand": "Bala",
+  "slug": "bala_bangles-homepage",
+  "date": "2026-10-11",
+  "pipelineItemId": "cro-fix-bala_bangles-homepage-20261011",
+  "pageType": "Homepage",
+  "url": "https://shopbala.com/",
+  "images": {
+    "VARIANTS": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_variants-board.png",
+    "COVER": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide1.png",
+    "BA": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide2.png",
+    "ANNO": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide3.png",
+    "ANNO-GRAPHIC": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_annotated.png"
+  },
+  "carouselHtml": "outputs/cro-fixes/bala_bangles-homepage_carousel.html",
+  "annotationHtml": "outputs/cro-fixes/bala_bangles-homepage_annotation.html",
+  "variantsBoardHtml": "outputs/cro-fixes/bala_bangles-homepage_variants-board.html",
+  "heroVariants": "references-for-posts/homepage-hero-research-2026-10-11/bala-variants/",
+  "rebuildHtml": "outputs/cro-fixes/bala_bangles-homepage_rebuild.html",
+  "reviewPack": "outputs/cro-fixes/bala_bangles-homepage_content.html",
+  "audit": "outputs/audits/bala_bangles-homepage_audit.md",
+  "facts": "outputs/cro-fixes/bala_bangles-homepage_facts.json",
+  "brief": "outputs/cro-fixes/bala_bangles-homepage_build-brief.md",
+  "captions": "outputs/cro-fixes/bala/captions.txt",
+  "builders": [
+    ".ai-workflow/build_bala_rebuild.py",
+    ".ai-workflow/build_bala_carousel.py",
+    ".ai-workflow/build_bala_annotation.py"
+  ],
+  "exportedVia": "each page's own captureSlide()/captureSheet() (html2canvas, scale 2) driven by headless Playwright"
+}

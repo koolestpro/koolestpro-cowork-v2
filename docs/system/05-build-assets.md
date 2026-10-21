@@ -29,7 +29,7 @@ The raw material Content Production is made from: real built pages, multi-page s
 
 **`assets/frames/`** — calibrated real device bezels. `macbook-pro.svg`/`.png` and `macbook-pro-alt`, `iphone-frame.png`, and the notch-flank status-bar chips. Screen-rect coordinates were found by scanning alpha channels, not guessed, and are recorded in `CLAUDE.md`.
 
-**`.ai-workflow/skills/page-presentation-kit/scripts/`** — the mockup toolchain: `build_device_still.py`, `build_split_page.py`, `build_mobile_strip.py`, `frame_video.py`, `scroll_video_raw.py`, `status_bar_util.py`, `audit_mobile_strips.py`.
+**`.ai-workflow/skills/page-presentation-kit/scripts/`** — the mockup toolchain: `build_device_still.py`, `build_split_page.py`, `build_mobile_strip.py`, `frame_video.py`, `scroll_video_frames.py` (default video capture since 2026-10-10: frame-by-frame, smooth, no blank lead-in), `scroll_video_raw.py` (fallback only), `status_bar_util.py`, `audit_mobile_strips.py`.
 
 **Twelve `{brand}-social-content.json`/`.md` pairs** at the project root: bebemoss, gainful, halos, koolestpro, kura, lumora, materialkitchen, meridian, obvi, tapro, v1ce, versed. These are the durable source of truth for captions.
 

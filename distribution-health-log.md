@@ -8,49 +8,6 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 
 ---
 
-## 2026-09-08 ~14:00 WAT — Instagram carousel error investigation + fix (ad hoc, Ridwan present)
-
-Ridwan reported a Make.com error on today's Instagram post (a 7-slide Tips carousel, "thumb-zone-mobile-reach", scheduled 14:00) and asked for it to be investigated and fixed first, before anything else.
-
-**Root cause found:** execution `ddef648826f34f9f9c81fdb26c91a31c` failed with `400 Bad Request` on module 301 (`http:ActionSendData`, the Instagram single-image `/media` call). Confirmed via the scenario blueprint: module 301 only implements a single-image post (filter checks the string ends `.png`/`.jpg`/`.jpeg`, then sends the whole `asset_urls` value as one `image_url` field). There is no carousel branch. The row's `asset_urls` was 7 Cloudinary URLs joined with `"; "` — matched the filter (last URL ends `.png`) but was garbage as an actual `image_url`, so Instagram's Graph API correctly rejected it.
-
-**Fixed:**
-- Patched `asset_urls` on the stuck row (and 3 other overdue rows sharing the same bug) to just the first/cover image URL via a direct Sheets API write.
-- Found and fixed 13 MORE Instagram rows already in the sheet (dates through 2026-09-21) with the same multi-URL problem — all patched to single cover-image URLs. 17 rows total fixed.
-- Root-caused and fixed `.ai-workflow/tools/feed_media.py`: Instagram rows with 2+ non-video images now only ever get the first URL written to `asset_urls`, preventing recurrence for every future carousel-format Instagram row.
-- Discovered separately: the "Distribution Queue Reschedule" webhook scenario (id 7111659) had gone inactive — 9 reschedule calls for overdue Instagram rows returned HTTP 200 but silently did nothing until the scenario was reactivated. Reactivated it; all 9 rescheduled rows confirmed landed on re-read.
-- Pushed all 9 past-due (2026-09-01 through 2026-09-07), unposted Instagram rows forward to open 17:00 slots between 2026-09-19 and 2026-09-30.
-- Updated `koolestpro-distribution-health-check`'s SKILL.md: removed the "Instagram out of scope" rule, added Instagram to Posted/Missed/Upcoming/Blocked classification and slot-collision checks, added a permanent Step 1c (Instagram multi-image check) and a reschedule-scenario-liveness check as the first line of Step 2.
-- Updated CLAUDE.md with the full incident writeup under the Instagram publishing section.
-
-**Not done (flagged, not attempted):** real Instagram carousel support (child media containers + parent container + publish) does not exist in Make yet. Building it would mean hand-editing scenario 6565331's Instagram branch via a full-blueprint `scenarios_update`, which this project's own established doctrine treats as too risky to do blind on a production scenario — and there's no logged-in Make session available to do it via the UI either (no credentials entered on Ridwan's behalf). Until that's built, all Instagram carousel-format posts will go out as a single cover image rather than a swipeable multi-slide carousel. Flagged to Ridwan directly in chat.
-
-**TikTok:** confirmed no send/publish provision exists or is planned to exist through Make.com — `tiktok_push_draft.py` only pushes to Ridwan's TikTok draft inbox (`/inbox/video/init/`), he posts by hand. This is unchanged and was not touched this session.
-
-## 2026-09-29 15:40 UTC (16:40 WAT) — health check (scheduled task run)
-
-**Sheet read:** live Sheets API, 195 rows (113 Posted, 73 Ready, 9 Draft). Note: Make posts any `Ready` row whatever its `qa_status` (54 posted Twitter rows carry a Needs Review flag), so "Blocked" below means QA-flagged, not "won't fire". `Draft` rows never fire.
-
-**Twitter/LinkedIn missed rows:** 1. `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LinkedIn, 09-28 14:00) is Draft + Needs Review (claims to verify), so not rescheduled. LinkedIn already posted `tip-cold-warm-hot-which-page` that day, so moving it anywhere would need an open LinkedIn day anyway. No Twitter row missed.
-
-**Instagram missed rows:** 46 past-dated unposted rows (09-10 to 09-28), 44 QA-flagged. NOT rescheduled: Instagram is paused in Make (the `Instagrams` filter, per `.ai-workflow/tools/DISTRIBUTION.md`, 2026-09-27), so a new date would pass silently the same way. The 2 unflagged ones are `template-showcase-kura_pp-01-20260721-20260918-ig-1200` and `template-showcase-kura_li-03-20260721-20260904-ig-1200` ("not run through automated QA"). Same-time pile-ups at 17:00 on 09-12 to 09-20 (2-6 rows each) all sit in this past, paused set. Reschedule these as a batch when Instagram is switched back on.
-
-**Collisions / LinkedIn same-day violations (upcoming):** none. Upcoming Twitter slots are all distinct, and the 8 upcoming LinkedIn rows each have their own day (09-30, 10-01, 10-02, 10-03, 10-04, 10-06, 10-07, 10-08). Nothing rescheduled, so no webhook calls this run.
-
-**Step 1b, X char count:** 16 unposted Twitter captions checked. 1 over 280: `cro-fix-gainful_customize-your-protein-20260823-20260906-x-1800`, **319 chars, Ready, due 2026-09-30 14:00**. Already flagged in qa_status, so not a new finding, but it is Ready and will fire tomorrow and get rejected by X unless it's cut or set to Draft. No new over-limit captions.
-
-**Step 1c, Instagram multi-image:** 6 unposted IG rows have multi-URL `asset_urls` (1 upcoming: `cro-fix-caraway_fry-pan-pdp-20260907-20260923-ig-1200`, 3 URLs, 10-07). NOT trimmed. The trim rule in this task's SKILL.md is out of date: the 2026-09-27 Make change added a native IG carousel route (310-317), and `feed_media.py` now deliberately keeps the full list. Trimming would undo that. The SKILL.md Step 1c needs updating.
-
-**Step 1d, caption/image fit:** `caption_fit.py` reported 0 rows with problems (it reads local `queue.json`, which can lag the live Sheet).
-
-**Reschedule scenario 7111659:** active (isActive true, not paused). No reactivation needed.
-
-**Make health (6565331):** healthy. Every execution since 2026-09-27 13:00 UTC succeeded (latest 2026-09-29 13:25 UTC). The 10 runs on 09-26 ended "with warnings" on `MaxFileSizeExceededError` (http:ActionGetFile). That's the >5MB image issue fixed by the 09-27 Cloudinary transform, and it hasn't come back since.
-
-**Pacing (09-29 to 10-05):** 23 unposted rows (13 Twitter, 5 LinkedIn, 5 Instagram), 3.3/day raw. Realistically posting: 14 Ready Twitter+LinkedIn rows = **2.0/day** (Draft rows never fire, and Instagram is paused). About 7 more Ready Twitter/LinkedIn rows would get this week to 3/day. QA-clean: **0 of 23** in the window, and 1 of 35 across the whole upcoming backlog (97% flagged). Most flags are the recurring "claims to verify" and "manual-visual-pending" on Template Showcase rows. Clearing flags is still the biggest lever.
-
-**Verdict:** Make healthy, nothing overdue on X/LinkedIn that could be fixed, no collisions. Two things need Ridwan: the 319-char Gainful X post due tomorrow 14:00, and pacing at about 2 real posts/day with a backlog that's almost entirely QA-flagged. Separately, 46 Instagram rows are waiting to be rescheduled when IG is un-paused.
-
 ## 2026-10-05 08:40 UTC (09:40 WAT) — health check (scheduled task run)
 
 **Sheet read:** live Sheets API, 209 rows (125 Posted, 75 Ready, 9 Draft).
@@ -107,3 +64,60 @@ Ridwan reported a Make.com error on today's Instagram post (a 7-slide Tips carou
 **Pacing (10-07 to 10-13):** 12 unposted rows (5 X, 1 LI, 6 IG) = **1.7/day**; about 9 more rows needed for 3/day. Counting today's 4 already posted, 16 rows = 2.3/day. 10-12 and 10-13 have 1 post each (IG only). X runs out after 10-18; LI has only 3 rows to 10-21. QA: 0 of 12 clean in the window (3 IG rows "not run through automated QA"); backlog-wide 40 of 43 upcoming rows `Needs Review`. These Ready rows still fire (Make ignores qa_status).
 
 **Verdict:** Make healthy, no fixable gaps, no collisions, no over-limit captions. Needs Ridwan: thin queue (1.7/day this week, X empty after 10-18, LI only 3 rows), and 25 dead single-image/empty Instagram rows.
+
+## 2026-10-09 16:03 UTC (17:03 WAT) — health check (scheduled task run, fired late; slot was 08:35 UTC)
+
+**Sheet read:** live Sheets API, 205 rows (162 Posted incl. today's 3, 36 Ready, 7 Draft, 21 Retired ignored). Today's X 14:00, LI 14:00 and IG 17:00 all posted.
+
+**Missed rows:** 7 past-dated unposted, all Draft + Needs Review, so none rescheduled (blocked rule). X/LI: `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LI 09-28), `static-ad-caraway_fry-pan-20260909-20260929-x-1300` (X 09-29), both carried over. Instagram (5 Drafts, single image each, 09-12 to 10-05): obvi hero, versed x2, checkout payment order, listiku. No webhook calls needed for them.
+
+**Violation fixed (IG same-day):** `template-showcase-kura_pp-01-20260721-20260918-ig-1200` and `template-showcase-halos_ad-01-20260905-20260925-ig-1200` both sat on 2026-11-04 17:00. Moved the QA-clean one (kura_pp) to 2026-11-07 17:00. Reschedule webhook returned 200 "Accepted" but did NOT land (no execution in 7111659; hook queue 3 items). Applied the same two-cell change (E/F) directly through the Sheets API instead, re-read and confirmed. Re-check: no X/IG slot collisions, no IG >1/day, no LI same-day.
+
+**Reschedule scenario 7111659 / hook 3613242:** flagged active, not paused, but not consuming its queue. 3 payloads waiting: two from 2026-09-19 08:43 and 08:45 (stale, unknown content) plus today's. Last real execution was 2026-09-17. Not stop/started by this run, because doing so could replay the two stale 09-19 payloads onto the Sheet. Ridwan to inspect.
+
+**Step 1b, X char count:** 9 unposted Twitter captions checked, longest 271, 0 over 280, 0 empty, 0 new findings.
+**Step 1c, Instagram format:** 27 upcoming IG rows checked, 0 single-image, 0 empty, 0 over 10, 0 mixed. Nothing trimmed.
+**Step 1d:** `caption_fit.py`: 0 rows flagged.
+
+**Spacing:** `space_queue.py` dry-run then real: 0 changes applied (plan already matched). Brand-gap violations 0. Supply gap: 53 empty X slots in its window. `sort_distribution_queue.py` re-run.
+
+**Make health (6565331):** healthy. Active, executions every ~hour through 2026-10-09 16:01 UTC, all status 1, no errors since 10-03.
+
+**Pacing (10-09 to 10-15):** 10 unposted rows (4 X+LI, 6 IG) = 1.4/day raw; X+LI only 0.6/day. Days with zero X/LI: 10-09 (already posted), 10-11, 10-12, 10-15. Only 1 upcoming LinkedIn row (10-13); X ends 10-29. About 11 more rows needed for 3/day. QA: window 1 clean / 9 blocked; backlog-wide 33 of 36 upcoming `Needs Review`.
+
+**Verdict:** Make healthy, one IG violation fixed, no over-limit captions. Needs Ridwan: reschedule webhook queue stuck, queue nearly empty for X/LI, backlog 92% flagged.
+
+## 2026-10-11 08:40 UTC (09:40 WAT) — health check (scheduled task run)
+
+**Sheet read:** live Sheets API, 205 rows (152 Posted, 32 Ready unposted, 21 Retired ignored). No Draft rows left.
+
+**Missed rows:** none. Nothing unposted is dated before today, so no webhook calls and no reschedules.
+
+**Collisions / violations:** none. No X or IG same-slot collisions, no LinkedIn same-day, no IG more than 1/day.
+
+**Step 1b, X char count:** 7 unposted Twitter captions checked, longest 266, 0 over 280, 0 new findings.
+**Step 1c, Instagram format:** 24 upcoming IG rows checked: 22 single mp4 Reels, 2 image carousels (3 and 4 URLs). 0 single-image, 0 empty, 0 over 10, 0 mixed. Nothing trimmed.
+**Step 1d:** caption_fit.py: 0 rows flagged.
+
+**Reschedule scenario 7111659:** isActive = false now (was reported active on 10-09). Not reactivated, because no reschedule was needed this run and the hook queue still holds stale 09-19 payloads that could replay onto the Sheet. Ridwan to inspect before the next reschedule is needed.
+
+**Make health (6565331):** healthy. Active, not paused, 0 errors. Executions every ~25 min at slot times through 2026-10-10 22:25 UTC, all status 1. Next run 2026-10-11 13:00 UTC. Side note: new scenario "Khutba Clips - Daily Facebook Post" (7875574) shows 13 executions and 13 errors since 10-10. Out of scope here, flagging only.
+
+**Spacing:** no reschedules, so space_queue.py was only dry-run. 0 brand-gap violations. Supply gap: 50 empty X slots.
+
+**Pacing (10-11 to 10-17):** 8 unposted rows = 1.1/day (10-11 IG; 10-12 none; 10-13 X+LI; 10-14 X+IG; 10-15 to 10-17 IG). About 13 more rows for 3/day. Zero X/LI posts on 10-11, 10-12, 10-15, 10-16, 10-17. X has 7 rows left (ends 10-29), LI has 1 (10-13). QA: 29 of 32 upcoming rows are Needs Review (91%), 3 are "not run through automated QA". Make ignores qa_status so they still fire.
+
+**Verdict:** Make healthy, no fixable gaps. Needs Ridwan: queue nearly empty for X/LI, reschedule scenario 7111659 inactive, 91% of backlog flagged Needs Review.
+
+## 2026-10-17 09:45 UTC (10:45 WAT) — health check (scheduled task run)
+
+**MAKE UNHEALTHY:** main posting scenario 6565331 `isActive = false`. Executions list shows a manual "stop" by Ridwan on 2026-10-11 16:26 UTC; last execution 2026-10-11 16:25 UTC. Nothing has posted from the queue for ~6 days. Not reactivated by this run (a human stop, and the whole backlog is Needs Review). Reschedule scenario 7111659 also inactive (not reactivated, no reschedule done). Khutba Clips scenario 7875574 inactive and flagged invalid, out of scope.
+
+**Sheet read:** live Sheets API, 205 rows (158 Posted, 26 Ready unposted, 21 Retired ignored).
+**Missed:** 1, IG `template-showcase-halos_lp-01-2026-08-23-20260904-ig-1200` (was 2026-10-16 17:00), Needs Review so not rescheduled. The 10-17 17:00 IG slot will also be missed while Make is off.
+**Collisions / violations:** none (no X/IG slot collisions, no LI same-day, no IG >1/day).
+**Step 1b:** 5 unposted Twitter captions checked, 0 over 280.
+**Step 1c:** 21 unposted IG rows checked, 0 format problems.
+**Step 1d:** caption_fit.py run, see summary.
+**Spacing:** no reschedules, space_queue not run.
+**Pacing (10-17 to 10-23):** 7 rows = 1.0/day (IG 5, X 3 across window incl. ones listed). X ends 10-29, 0 LinkedIn rows left. All 26 upcoming rows are Needs Review / unreviewed QA.

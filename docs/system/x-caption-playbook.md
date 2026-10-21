@@ -19,7 +19,9 @@ Examples this is built from:
 1. **One-line hook.** A short declarative that ends in a period. Often a "same input, different
    result" frame. No clickbait, no question mark.
 2. **A single lens.** Name the one thing the page was redesigned around, in three or four words.
-3. **A scannable list in the middle.** Cross/check pairs, arrows, or numbers. Never a paragraph.
+3. **A scannable list in the middle.** Use ✅ for what works and ❌ for what's missing or wrong
+   in before/after and positive/negative lists. Arrows or numbers are fine for other lists.
+   Never use `OK` or `X` as list markers, and never turn a paragraph into a list without a reason.
 4. **A closing reframe.** A formula-like line that generalizes the fix so it reads as a lesson,
    not a portfolio entry.
 5. **No hashtags. Usually no link.** The graphic does the showing. The text does the teaching.
@@ -35,14 +37,14 @@ Sentences are short. Line breaks do the pacing. First person, plain words, no ma
 Same product. Different outcome.
 
 The first page:
-X No clear value
-X Weak CTA
-X No urgency
+❌ No clear value
+❌ Weak CTA
+❌ No urgency
 
 The second:
-OK Clear result
-OK Strong structure
-OK Better conversion triggers
+✅ Clear result
+✅ Strong structure
+✅ Better conversion triggers
 
 Most stores don't need more traffic...
 They need clarity.
@@ -112,11 +114,10 @@ Now they can edit anything, anytime.
 - **List:** 3 to 7 findings, or before/after pairs.
 - **Close:** the reframe ("Same product. Better answers = better conversion.").
 - **Always state the page type** in the opening line (PDP, homepage, landing page). Hard rule 6.
-- **Five X captions per audit (2026-09-27):** one for the 3-image carousel post and one for each
-  graphic posted alone (cover, before/after, dark annotation, clear-bg annotated graphic). Give each
-  a different angle that matches its image: the carousel teases the whole story, the cover uses the
-  measured #1 finding, the before/after uses the contrast pattern, the annotations use the question
-  pattern. Never reuse one tweet across two posts.
+- **CRO audit captions (updated 2026-10-15):** the carousel cover is never a standalone X post,
+  because it is already the first thing people see in the carousel. Write X captions for the
+  carousel, before/after graphic, dark annotation, clear-bg annotated graphic, and variants board.
+  Give each a different angle that matches its post. Never reuse one tweet across two posts.
 
 ### Template / page showcase
 - **Hook:** the objection the page removes, or plainly what the page is.

@@ -1,0 +1,68 @@
+{
+ "materialkitchen-first-screen-build-breakdown": {
+  "meta": {
+   "slug": "materialkitchen-first-screen-build-breakdown",
+   "title": "Same photo. New first screen.",
+   "lane": "Lane A: Build breakdown",
+   "page_title": "Material Kitchen first screen: build breakdown",
+   "folder": "outputs/tips/materialkitchen-first-screen-build-breakdown_2026-10-09.html",
+   "id": "tip-materialkitchen-first-screen-build-breakdown-20261009"
+  },
+  "tabs": {
+   "tab-linkedin": "Same hero photo. Different first screen.\n\nLeft is Material Kitchen's homepage on a phone, the way I captured it in July. Right is the first screen I rebuilt for it.\n\nThe original has a lovely photo, a headline and one green button. Then roughly 400px of empty cream before anything else shows up. No rating, no price. Their real 5-star reviews were sitting about two-thirds of the way down the page.\n\nI made three moves:\n1. A 5-star review line right under the subhead.\n2. The promises from their own announcement bar (guaranteed for life, 30-day trial, free shipping over $100) turned into chips.\n3. Their best seller, The Trio of Knives, with its price ($195, was $225) and an Add to cart, still above the fold.\n\nThe photo and the brand stayed. What changed is how much a first-time visitor can decide before they scroll.\n\nThis was an unsolicited redesign. Material Kitchen isn't a client.\n\nBefore Black Friday traffic lands, open your homepage on your phone and list the proof you already have further down. Move one piece up.\n\nWant a second pair of eyes on your first screen? koolestpro.com/services/cro-audit\n\n#Shopify #CRO #ShopifyDesign #Ecommerce #HomepageDesign",
+   "tab-hook": "Same photo. Different first screen.\n\nMaterial Kitchen's homepage had a great hero and then 400px of nothing. I moved a review line, their own guarantees and a priced best seller above the fold.\n\nWhat's sitting below your fold that should be above it?",
+   "tab-x-image": "Same hero photo, different first screen.\n\nMaterial Kitchen's homepage (left): photo, headline, button, then ~400px of empty space.\n\nMy rebuild (right): a review line, their own guarantees as chips, and a best seller with its price.\n\nUnsolicited redesign, not a client."
+  },
+  "slides": 1
+ },
+ "first-screen-leaks-before-bfcm": {
+  "meta": {
+   "slug": "first-screen-leaks-before-bfcm",
+   "title": "4 first-screen leaks to fix before Black Friday",
+   "lane": "Lane C: Save-worthy list (V4 carousel)",
+   "page_title": "4 first-screen leaks: carousel",
+   "folder": "outputs/tips/first-screen-leaks-before-bfcm_2026-10-09.html",
+   "id": "tip-first-screen-leaks-before-bfcm-20261009"
+  },
+  "tabs": {
+   "tab-linkedin": "4 first-screen leaks I found on real Shopify stores. All fixable before Black Friday.\n\nEvery slide is a real screenshot from audits I ran in August, so the live pages may have changed since.\n\n1. Two offers on one screen. Gainful showed \"Subscribe and Save 25%\" in the top bar and \"New Customers: 25% off w/ code FLAV25\" right under the logo. That's two different 25% deals before you've seen a product. Pick one for the first screen.\n\n2. A headline that isn't one. Obvi's biggest text was \"BACK IN STOCK!\". That only helps someone who already wanted the product. Say what it is and what it does, then add the restock note.\n\n3. An app sitting on the button. On mobile, Obvi's accessibility widget sat on top of the SHOP NOW button. Tap that corner and you get a settings panel instead of the store. Check your page with every app switched on.\n\n4. The quietest price on the page. Gainful's \"14 Servings | $31.47\" was small gray text next to the stars, on a page where every choice changes the total. Give the price its own line near the button.\n\nNone of these needs a redesign. They need someone to look at the first screen on an actual phone.\n\nWant me to look at yours before the sale weeks? koolestpro.com/services/cro-audit\n\n#Shopify #CRO #BlackFriday #Ecommerce #ShopifyTips",
+   "tab-hook": "4 first-screen leaks from real Shopify stores.\n\nTwo offers fighting. A headline that says nothing. An app on top of the buy button. A price nobody sees.\n\nWhich one is on yours?",
+   "tab-twitter-thread": "1/ 4 first-screen leaks I found auditing real Shopify stores. Each one is a screenshot. Fix them before Black Friday traffic lands:\n\n2/ Two offers, one screen. Gainful showed \"Subscribe and Save 25%\" up top and \"New Customers: 25% off w/ code FLAV25\" under the logo. Two 25% deals before any product. Keep one.\n\n3/ A headline that isn't one. Obvi's biggest text was \"BACK IN STOCK!\". Useful only if you already wanted it. Lead with what it is and what it does.\n\n4/ An app on the button. Obvi's accessibility widget sat on top of SHOP NOW on mobile. Tap the corner and a settings panel opens instead of the store. Test with every app on.\n\n5/ The quietest price on the page. Gainful's \"14 Servings | $31.47\" was small gray text beside the stars. Give the price its own line near the button.\n\n6/ All four are from August audits, so the pages may have changed. The check still works: open your store on a phone and look at the first screen only.",
+   "tab-twitter-angles": "X1 (slide 2, two offers)\nTwo 25% deals before you've seen a product.\n\n\"Subscribe and Save 25%\" up top. \"New Customers: 25% off w/ code FLAV25\" under the logo.\n\nWhich one do I get? A shopper shouldn't have to ask. One offer per first screen.\n\nX2 (slide 4, widget on the button)\nObvi's accessibility widget sat right on top of the SHOP NOW button on mobile.\n\nTap the corner and you get a settings panel instead of the store.\n\nCheck your first screen with every app switched on. Apps move things around.\n\nX3 (slide 5, quiet price)\nThe price was the quietest thing on this screen.\n\n\"14 Servings | $31.47\" in small gray type next to the stars, on a page where every choice changes the total.\n\nGive the price its own line, close to the button.",
+   "tab-ig": "4 first-screen leaks I found on real Shopify stores. Fix them before Black Friday.\n\n1. Two offers on one screen. Two different 25% deals before you see a product. Keep one.\n2. \"Back in stock\" as the headline. Say what it is and what it does first.\n3. An app widget sitting on top of the buy button on mobile. Test with every app on.\n4. A price in small gray type. Give it its own line near the button.\n\nScreenshots are from audits I ran in August, so the live pages may have changed.\n\nSave this for your pre-sale checklist. Follow @koolestpro for more Shopify CRO.\n\n#Shopify #ShopifyStore #CRO #BlackFriday #Ecommerce #ConversionRateOptimization #ShopifyDesign #UXDesign #OnlineStore #ShopifyTips"
+  },
+  "slides": 6
+ },
+ "extra-costs-top-checkout-killer": {
+  "meta": {
+   "slug": "extra-costs-top-checkout-killer",
+   "title": "40% of checkout quitters blame extra costs",
+   "lane": "Lane E: Sourced take",
+   "page_title": "Extra costs: sourced take",
+   "folder": "outputs/tips/extra-costs-top-checkout-killer_2026-10-09.html",
+   "id": "tip-extra-costs-top-checkout-killer-20261009"
+  },
+  "tabs": {
+   "tab-linkedin": "40% of US shoppers who quit at checkout say the extra costs were too high. Shipping, tax, fees.\n\nThat's from Baymard Institute's checkout abandonment research (page updated September 2025, with \"just browsing\" answers left out). It's the top reason by a wide margin. Slow delivery is second at 20%.\n\nMost of those costs exist long before anyone opens the cart. You already know your shipping rate, your free-shipping threshold and your duties. The shopper just meets them too late.\n\nSo a lot of the fix is timing. Show the cost where people decide, on the product page and in the cart, instead of on step three of checkout.\n\nWays I see stores do it well:\nA shipping line right next to the price.\nA free-shipping threshold with a progress bar in the cart.\nDuties and taxes stated up front for international orders.\n\nBlack Friday brings a lot of first-time buyers who don't know your shipping policy yet. Tell them before checkout does.\n\nSource: baymard.com/lists/cart-abandonment-rate\n\n#Shopify #CRO #Checkout #Ecommerce #BlackFriday",
+   "tab-hook": "The top reason people quit checkout isn't the checkout. It's the shipping cost they only meet there.\n\n40% of US checkout abandoners say extra costs were too high (Baymard Institute).\n\nWhere does your store first show the shipping cost?",
+   "tab-x-image": "40% of US shoppers who abandon at checkout say the extra costs were too high: shipping, tax, fees.\n\nThat's the #1 reason, double slow delivery (20%). Source: Baymard Institute.\n\nShow the cost on the product page, not on step three of checkout."
+  },
+  "slides": 1
+ },
+ "allbirds-shipping-next-to-price": {
+  "meta": {
+   "slug": "allbirds-shipping-next-to-price",
+   "title": "Allbirds puts shipping next to the price",
+   "lane": "Lane B: Found page",
+   "page_title": "Allbirds found page",
+   "folder": "outputs/tips/allbirds-shipping-next-to-price_2026-10-09.html",
+   "id": "tip-allbirds-shipping-next-to-price-20261009"
+  },
+  "tabs": {
+   "tab-linkedin": "Allbirds puts the shipping next to the price.\n\nOn the Men's Tree Runner page on mobile, the price reads \"$100 + FREE SHIPPING\", with the shipping as a chip right beside the number, above the product photo. I captured it today, 9 October.\n\nWhy it works: extra costs are the most common reason people quit checkout. Baymard's research puts it at 40% of US checkout abandonments. Allbirds answers that question before you've even picked a size.\n\nThey say it three times on the same screen: the announcement bar, the price chip, and a line under the size button. Each one sits where a decision happens.\n\nIf you offer free shipping over a threshold, say it next to the price. If you charge for shipping, show the rate there too. A cost people can see early is easier to accept than one that shows up at step three.\n\nAllbirds isn't a client. I just think this one is worth copying.\n\n#Shopify #CRO #ProductPage #Ecommerce",
+   "tab-hook": "One chip next to the price: \"+ FREE SHIPPING\".\n\nAllbirds answers the top checkout worry on the product page, before you pick a size.\n\nDoes your price tell me what I'll actually pay?",
+   "tab-x-image": "Allbirds puts \"+ FREE SHIPPING\" right next to the $100 price on its Tree Runner page.\n\nExtra costs are the #1 reason shoppers quit checkout (Baymard: 40% of US abandonments). This answers it before you've picked a size.\n\nNot a client. Worth copying."
+  },
+  "slides": 1
+ }
+}

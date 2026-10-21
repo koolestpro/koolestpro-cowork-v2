@@ -61,6 +61,13 @@ Read the dry-run output first and sanity-check it (row count, platforms) before 
 
 IF append_sheet_rows.py FAILS with an auth error (likely message: "invalid_grant" or a 401/403): the OAuth refresh token is short-lived (7 days) while the Google Cloud OAuth consent screen stays in "Testing" publishing status. This is expected to happen periodically until Ridwan switches that project's publishing status to "In production" (Google Cloud Console → "Google Auth Platform" → Audience — no Google verification review needed for a single-user personal app). If it fails: do NOT fall back to a full-sheet replace or any other risky write. Instead, fall back to Step 6's old safe behavior — produce a clean paste-ready block of just the new rows (columns: post_id, pipeline_item_id, stream, platform, scheduled_date, scheduled_time_local, intended_et, asset_paths, caption, caption_source_tab, status, qa_status, posted_at, content_system_folder, caption_json, asset_urls) and tell Ridwan plainly that the Sheets connection needs re-authorizing (point him at this project's 2026-08-02 build log entry in `docs/koolestpro-content-operating-plan.md` for the exact re-auth steps) and that in the meantime he should paste this block in himself.
 
+Step 6a — SPACE THE QUEUE (added 2026-10-08, Ridwan's standing instruction: no brand twice within 5 days, no same post type back to back, one hero post a day on LinkedIn + X (+ Instagram when on), X toward 3 a day). After Step 6 and BEFORE Step 6b run:
+
+    python3 .ai-workflow/tools/space_queue.py --project-root . --dry-run
+    python3 .ai-workflow/tools/space_queue.py --project-root .
+
+Read the dry-run first. It must report `brand-gap violations after plan: 0`. It only moves dates/times of Ready rows, never statuses. Report the empty-X-slot count (the supply gap) in the Step 8 digest. See `.ai-workflow/tools/DISTRIBUTION.md` "Spacing and variety rules".
+
 Step 6b — Keep the sheet's platform grouping intact (added 2026-08-27). ONLY if Step 6 actually pushed new rows via the real API call (skip this step entirely if Step 6 fell back to a manual-paste block, or if there were zero new rows) — run:
 
     python3 .ai-workflow/tools/sort_distribution_queue.py --project-root .
@@ -70,3 +77,5 @@ Ridwan's live sheet is organized Twitter block first, then LinkedIn, then Instag
 Step 7 — Never flip any row to "Ready" yourself. The Draft → Ready approval gate is Ridwan's alone, always has been, and this task does not change that.
 
 Step 8 — Finish with a short, scannable digest: how many new rows this run (broken down by platform), which source items they came from, whether they were pushed automatically to the Sheet or fell back to a manual-paste block (and why, if so), whether Step 6b's re-sort ran, and every row whose `qa_status` starts with "Needs Review" called out by name. Include a MOBILE STRIP line for every Template Showcase / Store Template item processed: whether its strip was already present, was recovered by you in Step 2b, or is genuinely missing, and confirming the X #5 row exists with a real asset path. Include a CAPTION LENGTH line from Step 3c: how many new Twitter rows were checked and how many (if any) are over 280 characters, named explicitly. If Step 1 found nothing new, this digest is just one sentence — don't pad it.
+## Step 6a addendum (2026-10-08)
+Run `space_queue.py --include-ig` (dry-run first, 0 violations required). Never access instagram.com via automation.

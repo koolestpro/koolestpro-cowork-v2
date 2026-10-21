@@ -671,3 +671,420 @@ Adding 40px of space above it: nothing got bigger, and it finally wins.
 ```
 Most "the page feels flat" feedback gets fixed with spacing, not font size. You keep reaching for the size picker because it's the only lever you've been taught.
 ```
+
+## TIP-KOOLESTPRO-MKFOLD | Same photo. New first screen. (Tips week pack 2026-10-09, lane A Build breakdown)
+
+Post file: `outputs/tips/materialkitchen-first-screen-build-breakdown_2026-10-09.html`
+Assets: `outputs/tips/materialkitchen-first-screen-build-breakdown-assets/slide1..1.png`
+Pipeline item: `tip-materialkitchen-first-screen-build-breakdown-20261009`
+
+| Key | Platform | Asset |
+|---|---|---|
+| TIP-KOOLESTPRO-MKFOLD-COVER | linkedin | `outputs/tips/materialkitchen-first-screen-build-breakdown-assets/slide1.png` |
+| TIP-KOOLESTPRO-MKFOLD-X1 | x | `outputs/tips/materialkitchen-first-screen-build-breakdown-assets/slide1.png` |
+
+### TIP-KOOLESTPRO-MKFOLD-COVER
+
+```
+Same hero photo. Different first screen.
+
+Left is Material Kitchen's homepage on a phone, the way I captured it in July. Right is the first screen I rebuilt for it.
+
+The original has a lovely photo, a headline and one green button. Then roughly 400px of empty cream before anything else shows up. No rating, no price. Their real 5-star reviews were sitting about two-thirds of the way down the page.
+
+I made three moves:
+1. A 5-star review line right under the subhead.
+2. The promises from their own announcement bar (guaranteed for life, 30-day trial, free shipping over $100) turned into chips.
+3. Their best seller, The Trio of Knives, with its price ($195, was $225) and an Add to cart, still above the fold.
+
+The photo and the brand stayed. What changed is how much a first-time visitor can decide before they scroll.
+
+This was an unsolicited redesign. Material Kitchen isn't a client.
+
+Before Black Friday traffic lands, open your homepage on your phone and list the proof you already have further down. Move one piece up.
+
+Want a second pair of eyes on your first screen? koolestpro.com/services/cro-audit
+
+#Shopify #CRO #ShopifyDesign #Ecommerce #HomepageDesign
+```
+
+### TIP-KOOLESTPRO-MKFOLD-X1
+
+```
+Same hero photo, different first screen.
+
+Material Kitchen's homepage (left): photo, headline, button, then ~400px of empty space.
+
+My rebuild (right): a review line, their own guarantees as chips, and a best seller with its price.
+
+Unsolicited redesign, not a client.
+```
+
+## TIP-KOOLESTPRO-LEAKS4 | 4 first-screen leaks to fix before Black Friday (Tips week pack 2026-10-09, lane C Save-worthy list (V4 carousel))
+
+Post file: `outputs/tips/first-screen-leaks-before-bfcm_2026-10-09.html`
+Assets: `outputs/tips/first-screen-leaks-before-bfcm-assets/slide1..6.png`
+Pipeline item: `tip-first-screen-leaks-before-bfcm-20261009`
+
+| Key | Platform | Asset |
+|---|---|---|
+| TIP-KOOLESTPRO-LEAKS4-COVER | linkedin | `outputs/tips/first-screen-leaks-before-bfcm-assets/slide1.png` |
+| TIP-KOOLESTPRO-LEAKS4-CAROUSEL | linkedin | slides 1-6 |
+| TIP-KOOLESTPRO-LEAKS4-IG | instagram | slides 1-6 |
+| TIP-KOOLESTPRO-LEAKS4-X-THREAD | x | text |
+| TIP-KOOLESTPRO-LEAKS4-X1 | x | `outputs/tips/first-screen-leaks-before-bfcm-assets/slide2.png` |
+| TIP-KOOLESTPRO-LEAKS4-X2 | x | `outputs/tips/first-screen-leaks-before-bfcm-assets/slide4.png` |
+| TIP-KOOLESTPRO-LEAKS4-X3 | x | `outputs/tips/first-screen-leaks-before-bfcm-assets/slide5.png` |
+
+### TIP-KOOLESTPRO-LEAKS4-COVER
+
+```
+4 first-screen leaks I found on real Shopify stores. All fixable before Black Friday.
+
+Every slide is a real screenshot from audits I ran in August, so the live pages may have changed since.
+
+1. Two offers on one screen. Gainful showed "Subscribe and Save 25%" in the top bar and "New Customers: 25% off w/ code FLAV25" right under the logo. That's two different 25% deals before you've seen a product. Pick one for the first screen.
+
+2. A headline that isn't one. Obvi's biggest text was "BACK IN STOCK!". That only helps someone who already wanted the product. Say what it is and what it does, then add the restock note.
+
+3. An app sitting on the button. On mobile, Obvi's accessibility widget sat on top of the SHOP NOW button. Tap that corner and you get a settings panel instead of the store. Check your page with every app switched on.
+
+4. The quietest price on the page. Gainful's "14 Servings | $31.47" was small gray text next to the stars, on a page where every choice changes the total. Give the price its own line near the button.
+
+None of these needs a redesign. They need someone to look at the first screen on an actual phone.
+
+Want me to look at yours before the sale weeks? koolestpro.com/services/cro-audit
+
+#Shopify #CRO #BlackFriday #Ecommerce #ShopifyTips
+```
+
+### TIP-KOOLESTPRO-LEAKS4-CAROUSEL
+
+```
+4 first-screen leaks I found on real Shopify stores. All fixable before Black Friday.
+
+Every slide is a real screenshot from audits I ran in August, so the live pages may have changed since.
+
+1. Two offers on one screen. Gainful showed "Subscribe and Save 25%" in the top bar and "New Customers: 25% off w/ code FLAV25" right under the logo. That's two different 25% deals before you've seen a product. Pick one for the first screen.
+
+2. A headline that isn't one. Obvi's biggest text was "BACK IN STOCK!". That only helps someone who already wanted the product. Say what it is and what it does, then add the restock note.
+
+3. An app sitting on the button. On mobile, Obvi's accessibility widget sat on top of the SHOP NOW button. Tap that corner and you get a settings panel instead of the store. Check your page with every app switched on.
+
+4. The quietest price on the page. Gainful's "14 Servings | $31.47" was small gray text next to the stars, on a page where every choice changes the total. Give the price its own line near the button.
+
+None of these needs a redesign. They need someone to look at the first screen on an actual phone.
+
+Want me to look at yours before the sale weeks? koolestpro.com/services/cro-audit
+
+#Shopify #CRO #BlackFriday #Ecommerce #ShopifyTips
+```
+
+### TIP-KOOLESTPRO-LEAKS4-IG
+
+```
+4 first-screen leaks I found on real Shopify stores. Fix them before Black Friday.
+
+1. Two offers on one screen. Two different 25% deals before you see a product. Keep one.
+2. "Back in stock" as the headline. Say what it is and what it does first.
+3. An app widget sitting on top of the buy button on mobile. Test with every app on.
+4. A price in small gray type. Give it its own line near the button.
+
+Screenshots are from audits I ran in August, so the live pages may have changed.
+
+Save this for your pre-sale checklist. Follow @koolestpro for more Shopify CRO.
+
+#Shopify #ShopifyStore #CRO #BlackFriday #Ecommerce #ConversionRateOptimization #ShopifyDesign #UXDesign #OnlineStore #ShopifyTips
+```
+
+### TIP-KOOLESTPRO-LEAKS4-X-THREAD
+
+```
+1/ 4 first-screen leaks I found auditing real Shopify stores. Each one is a screenshot. Fix them before Black Friday traffic lands:
+
+2/ Two offers, one screen. Gainful showed "Subscribe and Save 25%" up top and "New Customers: 25% off w/ code FLAV25" under the logo. Two 25% deals before any product. Keep one.
+
+3/ A headline that isn't one. Obvi's biggest text was "BACK IN STOCK!". Useful only if you already wanted it. Lead with what it is and what it does.
+
+4/ An app on the button. Obvi's accessibility widget sat on top of SHOP NOW on mobile. Tap the corner and a settings panel opens instead of the store. Test with every app on.
+
+5/ The quietest price on the page. Gainful's "14 Servings | $31.47" was small gray text beside the stars. Give the price its own line near the button.
+
+6/ All four are from August audits, so the pages may have changed. The check still works: open your store on a phone and look at the first screen only.
+```
+
+### TIP-KOOLESTPRO-LEAKS4-X1
+
+```
+Two 25% deals before you've seen a product.
+
+"Subscribe and Save 25%" up top. "New Customers: 25% off w/ code FLAV25" under the logo.
+
+Which one do I get? A shopper shouldn't have to ask. One offer per first screen.
+```
+
+### TIP-KOOLESTPRO-LEAKS4-X2
+
+```
+Obvi's accessibility widget sat right on top of the SHOP NOW button on mobile.
+
+Tap the corner and you get a settings panel instead of the store.
+
+Check your first screen with every app switched on. Apps move things around.
+```
+
+### TIP-KOOLESTPRO-LEAKS4-X3
+
+```
+The price was the quietest thing on this screen.
+
+"14 Servings | $31.47" in small gray type next to the stars, on a page where every choice changes the total.
+
+Give the price its own line, close to the button.
+```
+
+## TIP-KOOLESTPRO-COSTS40 | 40% of checkout quitters blame extra costs (Tips week pack 2026-10-09, lane E Sourced take)
+
+Post file: `outputs/tips/extra-costs-top-checkout-killer_2026-10-09.html`
+Assets: `outputs/tips/extra-costs-top-checkout-killer-assets/slide1..1.png`
+Pipeline item: `tip-extra-costs-top-checkout-killer-20261009`
+
+| Key | Platform | Asset |
+|---|---|---|
+| TIP-KOOLESTPRO-COSTS40-COVER | linkedin | `outputs/tips/extra-costs-top-checkout-killer-assets/slide1.png` |
+| TIP-KOOLESTPRO-COSTS40-X1 | x | `outputs/tips/extra-costs-top-checkout-killer-assets/slide1.png` |
+
+### TIP-KOOLESTPRO-COSTS40-COVER
+
+```
+40% of US shoppers who quit at checkout say the extra costs were too high. Shipping, tax, fees.
+
+That's from Baymard Institute's checkout abandonment research (page updated September 2025, with "just browsing" answers left out). It's the top reason by a wide margin. Slow delivery is second at 20%.
+
+Most of those costs exist long before anyone opens the cart. You already know your shipping rate, your free-shipping threshold and your duties. The shopper just meets them too late.
+
+So a lot of the fix is timing. Show the cost where people decide, on the product page and in the cart, instead of on step three of checkout.
+
+Ways I see stores do it well:
+A shipping line right next to the price.
+A free-shipping threshold with a progress bar in the cart.
+Duties and taxes stated up front for international orders.
+
+Black Friday brings a lot of first-time buyers who don't know your shipping policy yet. Tell them before checkout does.
+
+Source: baymard.com/lists/cart-abandonment-rate
+
+#Shopify #CRO #Checkout #Ecommerce #BlackFriday
+```
+
+### TIP-KOOLESTPRO-COSTS40-X1
+
+```
+40% of US shoppers who abandon at checkout say the extra costs were too high: shipping, tax, fees.
+
+That's the #1 reason, double slow delivery (20%). Source: Baymard Institute.
+
+Show the cost on the product page, not on step three of checkout.
+```
+
+## TIP-KOOLESTPRO-ALLBIRDSSHIP | Allbirds puts shipping next to the price (Tips week pack 2026-10-09, lane B Found page)
+
+Post file: `outputs/tips/allbirds-shipping-next-to-price_2026-10-09.html`
+Assets: `outputs/tips/allbirds-shipping-next-to-price-assets/slide1..1.png`
+Pipeline item: `tip-allbirds-shipping-next-to-price-20261009`
+
+| Key | Platform | Asset |
+|---|---|---|
+| TIP-KOOLESTPRO-ALLBIRDSSHIP-COVER | linkedin | `outputs/tips/allbirds-shipping-next-to-price-assets/slide1.png` |
+| TIP-KOOLESTPRO-ALLBIRDSSHIP-X1 | x | `outputs/tips/allbirds-shipping-next-to-price-assets/slide1.png` |
+
+### TIP-KOOLESTPRO-ALLBIRDSSHIP-COVER
+
+```
+Allbirds puts the shipping next to the price.
+
+On the Men's Tree Runner page on mobile, the price reads "$100 + FREE SHIPPING", with the shipping as a chip right beside the number, above the product photo. I captured it today, 9 October.
+
+Why it works: extra costs are the most common reason people quit checkout. Baymard's research puts it at 40% of US checkout abandonments. Allbirds answers that question before you've even picked a size.
+
+They say it three times on the same screen: the announcement bar, the price chip, and a line under the size button. Each one sits where a decision happens.
+
+If you offer free shipping over a threshold, say it next to the price. If you charge for shipping, show the rate there too. A cost people can see early is easier to accept than one that shows up at step three.
+
+Allbirds isn't a client. I just think this one is worth copying.
+
+#Shopify #CRO #ProductPage #Ecommerce
+```
+
+### TIP-KOOLESTPRO-ALLBIRDSSHIP-X1
+
+```
+Allbirds puts "+ FREE SHIPPING" right next to the $100 price on its Tree Runner page.
+
+Extra costs are the #1 reason shoppers quit checkout (Baymard: 40% of US abandonments). This answers it before you've picked a size.
+
+Not a client. Worth copying.
+```
+
+## TIP-KOOLESTPRO-CARAWAYPROOF | Price and proof before the scroll (Tips week pack 2026-10-16, lane A Build breakdown)
+
+Post file: `outputs/tips/caraway-product-page-proof-before-scroll_2026-10-16.html`
+Assets: `outputs/tips/caraway-product-page-proof-before-scroll-assets/slide1..1.png`
+Pipeline item: `tip-caraway-product-page-proof-before-scroll-20261016`
+
+| Key | Platform | Asset |
+|---|---|---|
+| TIP-KOOLESTPRO-CARAWAYPROOF-COVER | linkedin | `outputs/tips/caraway-product-page-proof-before-scroll-assets/slide1.png` |
+| TIP-KOOLESTPRO-CARAWAYPROOF-X1 | x | `outputs/tips/caraway-product-page-proof-before-scroll-assets/slide1.png` |
+
+### TIP-KOOLESTPRO-CARAWAYPROOF-COVER
+
+```
+This Caraway concept rebuild puts useful product details on the first screen.
+
+The first screen shows the $125 price, 4.7 stars from 18,886 reviews, four product benefits, shipping, returns and a 30-day trial.
+
+This is an unofficial concept rebuild, not client work. For a second look at your product page: koolestpro.com/services/cro-audit
+
+#Shopify #CRO #ProductPage
+```
+
+### TIP-KOOLESTPRO-CARAWAYPROOF-X1
+
+```
+This Caraway concept puts $125, 4.7 stars from 18,886 reviews, four product benefits, shipping, returns and a 30-day trial on one screen. Unofficial redesign, not client work.
+```
+
+## TIP-KOOLESTPRO-V1CETAP | V1CE explains the tap before the card (Tips week pack 2026-10-16, lane B Found page)
+
+Post file: `outputs/tips/v1ce-tap-card-explains-the-next-step_2026-10-16.html`
+Assets: `outputs/tips/v1ce-tap-card-explains-the-next-step-assets/slide1..1.png`
+Pipeline item: `tip-v1ce-tap-card-explains-the-next-step-20261016`
+
+| Key | Platform | Asset |
+|---|---|---|
+| TIP-KOOLESTPRO-V1CETAP-COVER | linkedin | `outputs/tips/v1ce-tap-card-explains-the-next-step-assets/slide1.png` |
+| TIP-KOOLESTPRO-V1CETAP-X1 | x | `outputs/tips/v1ce-tap-card-explains-the-next-step-assets/slide1.png` |
+
+### TIP-KOOLESTPRO-V1CETAP-COVER
+
+```
+V1CE tells you what the Tap Review Card does before the product photo.
+
+Tap the card to a customer's phone. Their review page opens. The page also shows a Trustpilot rating and verified review count near the top.
+
+The value is easy to understand before someone scrolls through the product details. Found on V1CE's live page, captured October 15. V1CE is not a client.
+
+For a second look at your product page: koolestpro.com/services/cro-audit
+
+#Shopify #CRO #ProductPage
+```
+
+### TIP-KOOLESTPRO-V1CETAP-X1
+
+```
+V1CE's Tap Review Card page explains the job before the product photo: tap the card and the review page opens. It also shows Trustpilot's 4.4 rating and 1,092 verified reviews near the top.
+```
+
+## TIP-KOOLESTPRO-MOBILECHECKS | Three mobile checks before you ship (Tips week pack 2026-10-16, lane C Save-worthy list (V4 carousel))
+
+Post file: `outputs/tips/three-mobile-checks-before-you-ship_2026-10-16.html`
+Assets: `outputs/tips/three-mobile-checks-before-you-ship-assets/slide1..6.png`
+Pipeline item: `tip-three-mobile-checks-before-you-ship-20261016`
+
+| Key | Platform | Asset |
+|---|---|---|
+| TIP-KOOLESTPRO-MOBILECHECKS-COVER | linkedin | `outputs/tips/three-mobile-checks-before-you-ship-assets/slide1.png` |
+| TIP-KOOLESTPRO-MOBILECHECKS-CAROUSEL | linkedin | slides 1-6 |
+| TIP-KOOLESTPRO-MOBILECHECKS-IG | instagram | slides 1-6 |
+| TIP-KOOLESTPRO-MOBILECHECKS-X1 | x | `outputs/tips/three-mobile-checks-before-you-ship-assets/slide2.png` |
+| TIP-KOOLESTPRO-MOBILECHECKS-X2 | x | `outputs/tips/three-mobile-checks-before-you-ship-assets/slide3.png` |
+| TIP-KOOLESTPRO-MOBILECHECKS-X3 | x | `outputs/tips/three-mobile-checks-before-you-ship-assets/slide4.png` |
+
+### TIP-KOOLESTPRO-MOBILECHECKS-COVER
+
+```
+Three mobile checks from public-site audits. Not client work.
+```
+
+### TIP-KOOLESTPRO-MOBILECHECKS-CAROUSEL
+
+```
+Three things from public-site audits:
+
+Bebemoss: a fixed discount tab covers a toy's name and price in the collection grid.
+TAPro: a search icon sits on its promo headline, while the header already has another.
+Kyte Baby: the size button looked disabled, though the audit found it was tappable.
+
+Different pages. Same useful habit: scroll to where the decision happens, then tap. Don't stop at the page load.
+
+These are public-site audit examples, not client work. For a CRO review of your store: koolestpro.com/services/cro-audit
+
+#Shopify #CRO #MobileUX
+```
+
+### TIP-KOOLESTPRO-MOBILECHECKS-IG
+
+```
+Three mobile checks before you ship:
+
+Bebemoss: a discount tab covers a product name and price.
+TAPro: a search icon overlaps the promo headline.
+Kyte Baby: the size button looked disabled, but it was tappable.
+
+Scroll to the decision. Tap the control. Watch what changes.
+
+Public-site audits, not client work.
+
+#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign
+```
+
+### TIP-KOOLESTPRO-MOBILECHECKS-X1
+
+```
+Bebemoss's fixed 10% tab covers a toy's name and price in the collection grid. Mobile audit, August 18, 2026.
+```
+
+### TIP-KOOLESTPRO-MOBILECHECKS-X2
+
+```
+TAPro's mobile screenshot shows a search icon sitting on the promo headline. The audit identified it as a duplicate control.
+```
+
+### TIP-KOOLESTPRO-MOBILECHECKS-X3
+
+```
+Kyte Baby's size button looked disabled, but the audit found it was tappable. The visual state is the problem.
+```
+
+## TIP-KOOLESTPRO-OWALAPDP | Owala: answer the product questions fast (Tips week pack 2026-10-16, lane D Expert remix)
+
+Post file: `outputs/tips/owala-product-page-answers-fast_2026-10-16.html`
+Assets: `outputs/tips/owala-product-page-answers-fast-assets/slide1..1.png`
+Pipeline item: `tip-owala-product-page-answers-fast-20261016`
+
+| Key | Platform | Asset |
+|---|---|---|
+| TIP-KOOLESTPRO-OWALAPDP-COVER | linkedin | `outputs/tips/owala-product-page-answers-fast-assets/slide1.png` |
+| TIP-KOOLESTPRO-OWALAPDP-X1 | x | `outputs/tips/owala-product-page-answers-fast-assets/slide1.png` |
+
+### TIP-KOOLESTPRO-OWALAPDP-COVER
+
+```
+Product pages should put key answers where shoppers can find them.
+
+Nielsen Norman Group's ecommerce product-page guidance makes that point. Owala's live FreeSip page gives a useful example: the product name, $39.99 price, 34,332 reviews and color choices appear in one phone view.
+
+That is a screen observation, not a conversion claim. Owala is not a client.
+
+Source: Nielsen Norman Group, "Ecommerce Product Pages".
+For a second look at your product page: koolestpro.com/services/cro-audit
+
+#Shopify #CRO #ProductPage
+```
+
+### TIP-KOOLESTPRO-OWALAPDP-X1
+
+```
+NN/g says product pages should help shoppers find information quickly. Owala's FreeSip page shows the name, $39.99 price, 34,332 reviews and color options in one mobile view. Not a conversion claim.
+```

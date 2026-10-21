@@ -1,0 +1,101 @@
+{
+  "brand": "Bala",
+  "page": "Homepage (first screen)",
+  "pageType": "Homepage",
+  "url": "https://shopbala.com/",
+  "checked": "2026-10-11",
+  "isClient": false,
+  "measuredMobile390x844": {
+    "h1": 523,
+    "bundleLine": 611,
+    "ghostCta": 653,
+    "categoryTabs": 791,
+    "firstPrice": 1173,
+    "banglesSection": 3431,
+    "rating": 3894
+  },
+  "liveHero": {
+    "h1": "FITNESS, BUT MAKE IT CUTE",
+    "sub": "Save 10% when you bundle your favorite Bala products.",
+    "cta": "SHOP BUNDLES",
+    "font": "ITCAvantGarde 400 31px uppercase over video"
+  },
+  "product": {
+    "title": "Bala Bangles",
+    "tagline": "Ankle & wrist weights for walking, Pilates & everyday movement",
+    "copy": "Bala Bangles add a constant but comfortable resistance to your workout. Wildly versatile, they can be worn on wrists or ankles.",
+    "weights": [
+      {
+        "w": "1 LB",
+        "price": 55
+      },
+      {
+        "w": "2 LB",
+        "price": 65,
+        "label": "Most popular"
+      },
+      {
+        "w": "3 LB",
+        "price": 79
+      }
+    ],
+    "soldIn": "pairs, with a color-matched carrying case",
+    "fit": "Adjustable strap fits 5.5\"-11\"",
+    "materials": "steel wrapped in silicone, patented design",
+    "payments": "Shop Pay, Klarna, HSA/FSA with Flex"
+  },
+  "rating": {
+    "value": 4.9,
+    "count": 1865
+  },
+  "shipping": "calculated at checkout; free US shipping with VIP membership ($96/yr). Not used as a claim on the rebuild.",
+  "bundles": "Save 10% when you bundle your favorite Bala products (live hero copy)",
+  "reviewQuotes": [
+    {
+      "who": "Rochell J.",
+      "text": "I thought they would feel heavy but they don't."
+    },
+    {
+      "who": "Megan C.",
+      "text": "Adds resistance when walking, using the stairs and during my workout"
+    },
+    {
+      "who": "Nikki W.",
+      "text": "They are so cute and comfortable to wear on ankles and wrists."
+    }
+  ],
+  "assets": {
+    "logo": "header inline SVG 84x34",
+    "hero": "The-Studio-to-Street-Kit-BLUSH.jpg (Bangles, Bala Bra, Flared Legging, Everyday Sweatshirt)",
+    "fonts": [
+      "Iskry-Bold.woff",
+      "Diatype-Regular.woff"
+    ]
+  },
+  "builder": "Fallback: Claude authored the page from the brief (unattended run, no page builder driven, same as the 2026-10-04 run).",
+  "range": [
+    {
+      "title": "Bala Bangles",
+      "price": "from $55"
+    },
+    {
+      "title": "The Wavy Roller",
+      "price": "$39"
+    },
+    {
+      "title": "The Bala Pilates Method",
+      "price": "from $99 ($99-$119)"
+    },
+    {
+      "title": "The Ab Roller",
+      "price": "$99"
+    }
+  ],
+  "revision": "2026-10-11 r3: researched homepage hero (range flatlay + labels, centered stack), see references-for-posts/homepage-hero-research-2026-10-11",
+  "press": [
+    "The Wall Street Journal",
+    "goop",
+    "Glamour"
+  ],
+  "heroImage": "The-Studio-to-Street-Kit-BLUSH.jpg (Bangles, Bala Bra, Flared Legging, Everyday Sweatshirt)"
+}

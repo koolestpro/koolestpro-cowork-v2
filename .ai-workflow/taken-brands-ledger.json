@@ -317,6 +317,26 @@
       "sourceQuery": "Area=Surulere, Lagos; Keyword=home decor store",
       "koolestflowId": "koolestflow-browseract-frink-d-home-decor",
       "takenAt": "2026-10-06T10:46:01.000Z"
+    },
+    "neutriherbs|lagos": {
+      "brandName": "Neutriherbs",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-neutriherbs",
+      "takenAt": "2026-10-07T18:14:43.000Z"
+    },
+    "faelifestylelagos|lagos": {
+      "brandName": "Faelifestyle lagos",
+      "city": "Lagos",
+      "country": "NG",
+      "websiteUrl": "",
+      "source": "apify-ad-library",
+      "sourceQuery": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
+      "koolestflowId": "koolestflow-adlibrary-faelifestyle-lagos",
+      "takenAt": "2026-10-07T18:14:43.000Z"
     }
   }
 }

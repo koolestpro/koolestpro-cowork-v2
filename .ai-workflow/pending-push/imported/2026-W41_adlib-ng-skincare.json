@@ -1,7 +1,7 @@
 {
   "meta": {
     "week": "2026-W41",
-    "ranAt": "2026-10-07T17:58:34.000Z",
+    "ranAt": "2026-10-07T18:06:08.000Z",
     "source": "apify-ad-library",
     "sourceQuery": "Country=NG; Keyword=skincare; Actor=curious_coder~facebook-ads-library-scraper",
     "country": "NG",

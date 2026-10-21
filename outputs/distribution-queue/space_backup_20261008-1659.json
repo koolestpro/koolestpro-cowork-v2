@@ -1,0 +1,122 @@
+[
+ {
+  "post_id": "cro-fix-flybyjing_chili-crisp-pdp-20261004-20261009-x-0900",
+  "row_number": 67,
+  "old": [
+   "2026-10-09",
+   "14:00"
+  ],
+  "new": [
+   "2026-10-13",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-flybyjing_chili-crisp-pdp-20261004-20261010-x-1300",
+  "row_number": 70,
+  "old": [
+   "2026-10-10",
+   "18:00"
+  ],
+  "new": [
+   "2026-10-18",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-flybyjing_chili-crisp-pdp-20261004-20261011-x-1800",
+  "row_number": 71,
+  "old": [
+   "2026-10-11",
+   "23:00"
+  ],
+  "new": [
+   "2026-10-23",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261007-x-1300",
+  "row_number": 73,
+  "old": [
+   "2026-10-14",
+   "18:00"
+  ],
+  "new": [
+   "2026-10-09",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261014-li-0900",
+  "row_number": 74,
+  "old": [
+   "2026-10-14",
+   "14:00"
+  ],
+  "new": [
+   "2026-10-09",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261008-x-0900",
+  "row_number": 75,
+  "old": [
+   "2026-10-15",
+   "14:00"
+  ],
+  "new": [
+   "2026-10-14",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261009-x-0900",
+  "row_number": 77,
+  "old": [
+   "2026-10-16",
+   "14:00"
+  ],
+  "new": [
+   "2026-10-19",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261010-x-1300",
+  "row_number": 78,
+  "old": [
+   "2026-10-17",
+   "18:00"
+  ],
+  "new": [
+   "2026-10-24",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-minimalist_niacinamide-10-serum-pdp-20260927-20261011-x-1800",
+  "row_number": 79,
+  "old": [
+   "2026-10-18",
+   "23:00"
+  ],
+  "new": [
+   "2026-10-29",
+   "14:00"
+  ]
+ },
+ {
+  "post_id": "cro-fix-flybyjing_chili-crisp-pdp-20261004-20261021-li-0900",
+  "row_number": 80,
+  "old": [
+   "2026-10-21",
+   "14:00"
+  ],
+  "new": [
+   "2026-10-13",
+   "14:00"
+  ]
+ }
+]

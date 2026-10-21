@@ -33,6 +33,10 @@ FONT_CSS = """
 @font-face{font-family:'Syne';font-style:normal;font-weight:600;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/syne@5.0.0/files/syne-latin-600-normal.woff2) format('woff2');}
 @font-face{font-family:'Syne';font-style:normal;font-weight:700;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/syne@5.0.0/files/syne-latin-700-normal.woff2) format('woff2');}
 @font-face{font-family:'Syne';font-style:normal;font-weight:800;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/syne@5.0.0/files/syne-latin-800-normal.woff2) format('woff2');}
+/* DM Sans added 2026-10-09: V4 Tips body font; without it every V4 export fell back to a system sans */
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/dm-sans@5.0.0/files/dm-sans-latin-400-normal.woff2) format('woff2');}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/dm-sans@5.0.0/files/dm-sans-latin-500-normal.woff2) format('woff2');}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/dm-sans@5.0.0/files/dm-sans-latin-700-normal.woff2) format('woff2');}
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:300;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/dm-mono@5.0.0/files/dm-mono-latin-300-normal.woff2) format('woff2');}
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/dm-mono@5.0.0/files/dm-mono-latin-400-normal.woff2) format('woff2');}
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:block;src:url(https://cdn.jsdelivr.net/npm/@fontsource/dm-mono@5.0.0/files/dm-mono-latin-500-normal.woff2) format('woff2');}

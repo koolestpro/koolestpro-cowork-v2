@@ -1,0 +1,93 @@
+LINKEDIN / INSTAGRAM
+
+HOMEPAGE: Bala's homepage, on a phone. Screen one is "Fitness, but make it cute" in a hairline font, a 10% bundle discount and an outline button. It never says what Bala sells.
+
+The blue bands on the model's ankles are Bala Bangles, the product the company is named after. Nothing on screen one says so.
+
+The Bangles first show up 3,431px down. Their rating, 4.9 stars from 1,865 reviews, sits at 3,894px.
+
+I rebuilt the first screen using only what was already on their site:
+
+1. Their own Studio to Street Kit photo up top: Bangles, a bra, leggings and a sweatshirt in one color. Each one is labelled on the image, so you see the range before you read anything.
+2. 4.9 stars from 1,865 Bangles reviews, right above the headline.
+3. A headline that keeps their voice and says what they sell: weights & activewear, but make it cute.
+4. One button, Shop best sellers, then Weights, Pilates props, Activewear and Bundles.
+5. Their own press logos under it: The Wall Street Journal, goop, Glamour.
+
+The mood stays. It just shows up with the products now.
+
+This is unofficial concept work. Bala isn't a client.
+
+X-VARIANTS (256 chars)
+
+Bala's homepage hero, 4 ways. Same brand, same products.
+
+A: the range, labelled
+B: lifestyle photo first
+C: full-bleed mood shot
+D: headline first
+
+Hot take: the prettiest one isn't the one that sells.
+
+Which would you ship, and why? My pick goes up next.
+
+X-CAROUSEL (167 chars)
+
+Homepage teardown: Bala.
+
+1 Cute slogan, no product named
+2 Same mood, now with products
+3 The questions screen one now answers
+
+Every number came from their own site.
+
+X-COVER (225 chars)
+
+Bala's homepage, on a phone:
+
+Screen one: "Fitness, but make it cute" and a bundle discount.
+Bala Bangles: 3,431px down.
+4.9 stars from 1,865 reviews: 3,894px down.
+
+The product the company is named after isn't on screen one.
+
+X-BA (251 chars)
+
+Bala homepage. Same Bangles, different first screen.
+
+Before:
+X A slogan that never names the product
+X No price
+X Rating 3,894px down
+
+After:
+OK The range in one labelled photo
+OK 4.9 stars up top
+OK One clear button
+
+Nothing invented. Just moved up.
+
+X-ANNO (213 chars)
+
+Homepage fix: Bala.
+
+A first-time visitor asks:
+1 What do they actually sell?
+2 Are they any good?
+3 Where do I start?
+
+The answers were all on the site. The first one was 3,431px down.
+
+Now they're on screen one.
+
+X-ANNO-GRAPHIC (247 chars)
+
+Redesigned Bala's homepage around 3 questions:
+
+1 What is this brand?
+2 Are they any good?
+3 Where do I start?
+
+Their site had the answers: weights and matching sets, 4.9 from 1,865 reviews, WSJ, goop and Glamour.
+
+None of them were on screen one.

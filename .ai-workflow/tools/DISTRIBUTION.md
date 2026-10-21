@@ -61,6 +61,30 @@ python3 .ai-workflow/tools/append_sheet_rows.py --project-root .
 python3 .ai-workflow/tools/sort_distribution_queue.py --project-root .
 ```
 
+
+## Spacing and variety rules (added 2026-10-08, Ridwan's instruction): `space_queue.py`
+
+Problem it fixes: a brand's whole package (carousel, before/after, annotated, cover...) used to land on consecutive days, so followers saw the same site five days running, and the same post type back to back.
+
+`space_queue.py` re-spaces every pending **Ready** Twitter/LinkedIn row (Instagram only with `--include-ig`) against the LIVE Sheet (the local queue.json lags the Sheet; the Sheet is the truth for what is Posted):
+
+1. **Brand cooldown:** the same brand/site (or same Tips topic) never posts on any platform within 5 days of another post of it (7 days is tried first). Only exception: the same item going out the same day as a hero bundle (LinkedIn + its best X row + Instagram).
+2. **No back-to-back same stream** on consecutive X slots when an alternative exists.
+3. **Daily shape:** one hero item a day (LinkedIn 14:00 + its best X 14:00 + IG 17:00 when IG is on), X filled toward 3/day at 14:00, 18:00, 23:00 Lagos. LinkedIn max 1/day.
+6. **Template Showcase volume (2026-10-10, Ridwan):** 2 pages are built (Wednesday) and 2 packaged (Saturday) every week, always different brands. Each page queues 4 LEAD posts (LinkedIn cover video, Instagram 6-slide carousel, X preview, X mobile strip) plus 4 SECONDARY rows (IG laptop reel, IG mobile reel, X mobile video, X full page) that `space_queue.py` schedules only after every lead row. About 8 fresh lead posts a week, spread over 4-5 brands under the brand cooldown.
+5. **Template Showcase variety (2026-10-10, Ridwan):** one page produces many assets (cover video, laptop video, mobile video, cover image, preview, full page, mobile strip, IG carousel). They must never go out one after another. The brand cooldown above already keeps any two posts of the same brand 5+ days apart on every platform. On top of that, `space_queue.py` ranks each page's lead assets (cover video, IG carousel, cover image, preview) ahead of its secondary cuts (laptop video, mobile video, full page, mobile strip), so the day after brand A's cover video the queue shows brand B's cover, never brand A's laptop or mobile version. A different brand always beats another page of the same brand. Same rule as CRO Fix and Static Ad.
+4. **Never break a rule to fill a slot.** If nothing qualifies the slot stays empty; the count of empty X slots is the supply gap the content lanes must fill.
+
+It only changes `scheduled_date` / `scheduled_time_local` of Ready, unposted rows. Draft, Posted and statuses are never touched. Backup of every move: `outputs/distribution-queue/space_backup_<stamp>.json`. Safe to re-run (deterministic; a second run changes nothing).
+
+```bash
+python3 .ai-workflow/tools/space_queue.py --project-root . --dry-run   # preview
+python3 .ai-workflow/tools/space_queue.py --project-root .             # apply: live Sheet + local queue
+python3 .ai-workflow/tools/sort_distribution_queue.py --project-root . # re-sort afterwards
+```
+
+Run it as the step after `append_sheet_rows.py` in every assembly run, and any time the health check reschedules missed rows. `protected_rows.json` still stops the *newer-build overwrite* from bumping a row, but it does NOT exempt a row from spacing: spacing is the newer instruction.
+
 ## Sheet organization — unposted-first, by date, then platform, then Ready-first (REWRITTEN 2026-09-19, Ridwan's instruction)
 
 **This replaces the 2026-08-27 platform-first sort described below the strikethrough note.** Ridwan wants to open the Sheet and see what's going out TODAY without scrolling, and to never have to hunt through a wall of already-posted rows to find live work. `.ai-workflow/tools/sort_distribution_queue.py` now sorts by, in order:
@@ -178,7 +202,7 @@ Ridwan can review. The Sheet is `outputs/distribution-queue/sheet.json` (id + ur
 
 - **LinkedIn** 9:00 ET — Mon Tips carousel · Wed CRO Fix 3-slide carousel · Fri Template Showcase video (+thumbnail). Never 2/day.
 - **Instagram** 12:00 ET — Mon Tips (cross-post) · Tue/Thu/Fri Template Showcase reels · Wed CRO 3-slide carousel · Sat Static Ad 4-image carousel · Sun filler single.
-- **Twitter** 9:00/13:00/18:00 ET — image singles/videos. **CRO Fix is the exception (2026-09-27, Ridwan):** its 3-slide carousel posts on X too (Wed 13:00, one post with 3 images), then each of its 4 graphics posts alone (Thu 09:00 cover, Fri 09:00 before/after, Sat 13:00 dark annotation, Sun 18:00 clear-bg annotation), each with its own caption key (`x_carousel`, `x_cover`, `x_ba`, `x_anno`, `x_anno_graphic`). **Resolved 2026-09-27:** Make now has a carousel route on X (modules 220-225: iterator over up to 4 URLs, media upload each, one tweet with all media_ids) and on Instagram (310-317: child containers, CAROUSEL parent, publish, 2-10 images). Any row whose `asset_urls` contains `; ` takes the carousel route; single-image routes now require no `; `. ~17-18 distinct/wk now, ramps to 21 with second-angle reposts as the library grows.
+- **Twitter** 9:00/13:00/18:00 ET — image singles/videos. **CRO Fix (updated 2026-10-15):** its 3-slide carousel posts on X too (Wed 13:00, one post with 3 images). Do not post the cover as a standalone: it is already the first carousel slide. Only the before/after (Thu 09:00), dark annotation (Fri 13:00), and clear-bg annotation (Sat 18:00) post alone, each with its own caption key (`x_ba`, `x_anno`, `x_anno_graphic`); the carousel uses `x_carousel`. **Resolved 2026-09-27:** Make now has a carousel route on X (modules 220-225: iterator over up to 4 URLs, media upload each, one tweet with all media_ids) and on Instagram (310-317: child containers, CAROUSEL parent, publish, 2-10 images). Any row whose `asset_urls` contains `; ` takes the carousel route; single-image routes now require no `; `. ~17-18 distinct/wk now, ramps to 21 with second-angle reposts as the library grows.
 - **Mobile-strip X post added to every showcase stream (2026-09-02, Ridwan's call):** "Template Showcase", "Store Template" and "Store Template (Paid)" each gained an X #5 slot (Sun 11:00 ET) matching `mobile-strip`, with its own `x_glance` caption key so it cannot draw a recycled variant from the shared `x` pool. The asset is `{slug}-mobile-strip.png` (the whole page at mobile width, sliced into ~6 side-by-side columns — see CLAUDE.md "CORRECTED v8"). Ridwan's instruction was that it must never be skipped, so it is enforced in three places besides the calendar: `resolve_assets()` now prefers a compressed `-x` sibling over its full-resolution original for ANY matcher (so an oversized PNG cannot reach Make's fetch limit, the 2026-08-01 Bebemoss failure), the Monday assembly task builds a missing strip rather than shipping one fewer row, and `audit_mobile_strips.py` sweeps sources/packages/queue rows weekly.
 
 - **Static Ad Twitter widened 3→5 (2026-08-19, Ridwan's call):** one post per distinct static-ad asset (4 individual angles + the combo showcase) instead of 3, scattered Mon/Tue/Wed/Fri/Sat at times no other stream already occupies — not clustered on Fri/Sat/Sun like before. Still only ~3 X caption variants get harvested per Static Ad run, so `populate_sheet.py`'s `caption_text()` reuses an earlier variant for the 4th/5th slot (flagged as a warning, not an error) until the static-ad-image skill starts writing more than 3.
@@ -356,3 +380,9 @@ slug+type rather than reconstructing the date.
 - Make 6565331 edited via full-blueprint `scenarios_update`, then re-fetched and diffed: only 3 changes. Router 300 filter `Instagrams` → `Instagram`. Single-image route 318 gets an impossible `platform = "Instagram-single-image-off"` condition in every OR group (single images stay off). Reel publish wait (305) 30s → 90s.
 - 26 overdue Ready IG carousels/videos rescheduled one per day at 17:00 (10-05 18:00 to 11-06), written to the live Sheet and local `queue.json`, verified on re-read, no same-slot collisions.
 - All pending Caraway CRO rows (`cro-fix-caraway_fry-pan-pdp-*`, 4 rows: 2 X, 1 LI, 1 IG) deleted from the Sheet and from `queue.json`/`queue.csv`. Backup: `outputs/distribution-queue/deleted/caraway-cro-rows-deleted-2026-10-05.json`. The one already-posted Caraway CRO row was kept.
+
+### Instagram and Retired status (added 2026-10-08)
+- Instagram is ACTIVE (posts publish at 17:00 local, max 1/day). Carousels (2-10 images) and videos only; single-image rows cannot publish (route 318 blocked) and are never rescheduled.
+- Run `space_queue.py --include-ig` to space IG rows (same brand gap rules as X/LinkedIn).
+- Status `Retired` = deliberately never posted (e.g. old Tips IG rows). It sinks with Posted in the sort and is ignored by health checks. Set via `space_queue.py --retire-tips-ig`.
+- STANDING RULE: never automate, scrape or script instagram.com (no Playwright, downloaders, browser automation). Research on Instagram uses screenshots the user supplies. Publishing goes only through the official Graph API client.

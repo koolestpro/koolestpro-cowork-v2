@@ -51,6 +51,11 @@ def render(f: dict) -> str:
 
     # The headline is the whole point of the standard, so it is called out.
     heads = f.get("headline_options") or []
+    # 2026-10-10 title rule: the real product title is the H1. Facts may override with `product_title`
+    # (use the full live title, size or variant included); it falls back to the page name.
+    product_title = f.get("product_title") or page
+    if not f.get("product_title"):
+        print(f"NOTE: facts has no product_title, using page name: {page!r}. Set it to the full live title.", file=sys.stderr)
     head_block = "\n".join(f"  {i+1}. {h}" for i, h in enumerate(heads)) or "  (none provided)"
 
     assets = f.get("assets") or []
@@ -92,7 +97,10 @@ The one job of this page: **{f.get('job','carry the whole buy decision on the fi
 - The real brand logo and the real product photo must be used as-is. Never
   recreate or redraw a logo.
 - No gradient text (CSS or SVG).
-- The first screen must carry the whole decision: outcome headline, price,
+- The page's only <h1> is the real product title: **{product_title}**. It sits at the top of
+  the first screen, under the header, above the price, bold, at least 22px. The outcome line
+  is an eyebrow or subhead, never the <h1>, never larger than the title.
+- The first screen must carry the whole decision: product title, outcome line, price,
   rating and review count, benefit reasons, a trust row, and the add to cart.
 
 ## Image decision (do this BEFORE you build)
@@ -114,7 +122,7 @@ Verify before publishing:
 
 {_bullets(f.get('verify') or [], prefix='- [ ] ')}
 
-## Outcome headline options (pick one, or improve on it)
+## Outcome line options (subhead under the product title; pick one, or improve on it)
 
 {head_block}
 

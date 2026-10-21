@@ -66,6 +66,7 @@ UNIFIED_TAB_MAP = {
     "tab-x-thread": "x_thread",
     # CRO Fix per-asset X captions (2026-09-27): carousel + 4 singles
     "tab-x-carousel": "x_carousel",
+    "tab-x-variants": "x_variants",
     "tab-x-cover": "x_cover",
     "tab-x-ba": "x_ba",
     "tab-x-anno": "x_anno",
@@ -90,6 +91,8 @@ BLOCK_TITLE_MAP = {
     # for ad-1 alone. It used to borrow the LinkedIn caption, which describes
     # all four ads ("Four static ad directions for...") on a one-image post.
     "instagram single": "ig_single",
+    # 2026-10-10: Template Showcase IG carousel (6 slides) gets its own caption.
+    "instagram carousel": "ig_carousel",
 }
 
 # 2026-09-28: per-image X captions for Static Ads. Each .x-post carries
@@ -103,6 +106,9 @@ STATIC_AD_ASSET_KEYS = {
     "ad-3": "x_proof",
     "ad-4": "x_offer",
     "combined-showcase": "x_combo",
+    # 2026-10-10: Template Showcase lead X posts are keyed to their image too.
+    "preview": "x_preview",
+    "mobile-strip": "x_glance",
 }
 
 
@@ -166,10 +172,12 @@ def clean(text):
 # check in qa_check.py/populate_sheet.py never fired because it only runs on
 # list values. Fix: recognize these multi-variant shapes and always emit a
 # LIST of individually-sized tweet strings, never one opaque blob.
-# Two label conventions confirmed in real output ("Tweet A (The Rule):" and
-# "ANGLE A:") — different generation runs of the same tab use different
-# wording, so match both rather than assuming one is canonical.
-TWEET_LABEL_RE = re.compile(r'^(?:Tweet|ANGLE)\s+[A-Z0-9]\b[^\n]*:[ \t]*\n', re.MULTILINE | re.IGNORECASE)
+# Label conventions confirmed in real output include "Tweet A (The Rule):",
+# "ANGLE A:", and Tips packs' "X1 (slide 2, ...)" headings.
+TWEET_LABEL_RE = re.compile(
+    r'^(?:(?:Tweet|ANGLE)\s+[A-Z0-9]\b[^\n]*:[ \t]*|X\d+\b[^\n]*)\n',
+    re.MULTILINE | re.IGNORECASE,
+)
 THREAD_LINE_RE = re.compile(r'(?=^\d+/[ \t])', re.MULTILINE)
 
 # Bug found 2026-09-08 on outputs/tips/cold-warm-hot-page-matching_2026-05-10.html

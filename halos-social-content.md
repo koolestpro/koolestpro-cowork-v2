@@ -393,3 +393,328 @@ Built the desktop and mobile version side by side for this one, a HALOS concept,
 ```
 
 ---
+
+
+## halos_li-02 (Listicle, "Five reasons people keep the HALOS Panel") - 2026-10-10
+
+Concept build, not a client. Review page: `outputs/templates/halos_li-02_2026-10-10/index.html`. All copy humanizer-passed, no em dashes, X captions under 280 chars.
+
+**TS-HALOS-LI02-COVER-VID - `halos_li-02 cover.mp4`** [linkedin, instagram]
+```
+Built a listicle page for HALOS, a red light therapy brand I made up. It's a concept build, not a client.
+
+The angle is "five reasons people keep the panel after the trial ends". Each reason answers a doubt a buyer has before paying for a panel: does it work, will I actually use it, is it well made, what else is it good for, what does it cost me over time.
+
+Only after that does the page start selling. Comparison table, offer, buy box, reviews, FAQ.
+
+Desktop and mobile run in the same order, and I didn't cut anything for the small screen.
+
+If your product needs a page like this, here's where to start: koolestpro.com/services/page-build
+
+#ecommerce #shopify #webdesign #landingpage
+```
+
+---
+
+**TS-HALOS-LI02-LAPTOP-VID - `halos_li-02 laptop.mp4`** [linkedin]
+```
+Desktop scroll-through of the HALOS listicle.
+
+Hero, then the five reasons, with a small nudge after reason two for people who are already sold. Then the comparison table, the offer, the buy box, reviews and the FAQ.
+
+Concept build, not a live client site.
+
+#webdesign #ecommerce
+```
+
+---
+
+**TS-HALOS-LI02-MOBILE-VID - `halos_li-02 mobile.mp4`** [instagram, x]
+```
+The HALOS listicle on a phone.
+
+Same five reasons, same order as desktop. The buy box comes right after the proof.
+
+Demo brand I made up, not a client. Want one for your product? DM me.
+
+#mobiledesign #ecommerce
+```
+
+---
+
+**TS-HALOS-LI02-COVER-IMG - `halos_li-02 cover.png`** [linkedin, instagram]
+```
+A listicle page for HALOS, a concept home red light panel.
+
+The reasons come first and the pitch comes after. I think that order is why listicles work for products people are unsure about.
+
+Need a page like this built? DM me.
+
+#ecommerce #shopify #uidesign
+```
+
+---
+
+**TS-HALOS-LI02-PREVIEW - `halos_li-02-preview.png`** [linkedin, instagram]
+```
+Three screens from the HALOS listicle on mobile: the hero, the comparison table running into the $20 offer, and the FAQ with the footer.
+
+Concept build, not a live client site.
+
+#webdesign #ecommerce
+```
+
+---
+
+**TS-HALOS-LI02-FULLPAGE - `halos_li-02-full-page.png`** [linkedin]
+```
+The whole HALOS listicle, split into two columns.
+
+The left column is the convincing part. Five reasons, each one a doubt answered, with a quote from a buyer at the end.
+
+The right column is where it sells. Comparison, offer, buy box, reviews, the why-we-built-it story, FAQ.
+
+A lot of product pages put the buy button first and hope the reasons get read later. This is the other way round. Concept build for a brand I made up.
+
+#ecommerce #webdesign #CRO
+```
+
+---
+
+**TS-HALOS-LI02-MOBILESTRIP - `halos_li-02-mobile-strip.png`** [x] (mandatory - full page at a glance, always posted to X per project standing rule)
+```
+Full page at a glance.
+
+The HALOS listicle on mobile, cut into four columns:
+-> hero
+-> five reasons
+-> comparison
+-> offer and buy box
+-> reviews
+
+I laid out every section for a thumb first.
+
+Demo brand, not a client.
+```
+
+---
+
+**TS-HALOS-LI02-X1 - `halos_li-02 cover.png`** [x]
+```
+Built a listicle page for a red light panel brand I made up.
+
+Five reasons people keep it:
+-> two wavelengths
+-> ten-minute sessions
+-> sixty diodes, evenly lit
+-> works on sore shoulders too
+-> no refills
+
+Then the buy box.
+
+Concept build, not a client.
+```
+
+---
+
+**TS-HALOS-LI02-X2 - `halos_li-02-preview.png`** [x]
+```
+Three screens from one mobile listicle.
+
+-> the hero asks for one thing
+-> the comparison table does the arguing
+-> the FAQ handles the last doubts
+
+HALOS is a demo brand I made up, not a client.
+
+Need a page like this? DM me.
+```
+
+---
+
+**TS-HALOS-LI02-X3 - `halos_li-02-full-page.png`** [x]
+```
+A whole desktop listicle in one image.
+
+Left column convinces. Right column sells.
+
+Reasons first, buy box second. Most product pages do it the other way round.
+
+Concept build for HALOS, a brand I made up.
+```
+
+---
+
+**TS-HALOS-LI02-IG-CAROUSEL - `ig-carousel/slide1-6.png`** [instagram]
+```
+Concept store build: a listicle page for HALOS, a red light panel brand I made up. Not a client.
+
+Swipe for the whole page, the mobile view, the hero and buy box up close, and what I built it with.
+
+Want your page built next? Link in bio.
+
+#shopify #ecommerce #webdesign #landingpage #shopifydesign
+```
+
+---
+
+
+
+## halos_pp-01 (Post-Purchase / Thank You (pp-01)) - 2026-10-17
+
+Concept build, not a client. Review page: `outputs/templates/halos_pp-01_2026-10-17/index.html`. All copy humanizer-passed, no em dashes, X captions under 280 chars.
+
+**TS-HALOS-PP01-COVER-VID - `halos_pp-01 cover.mp4`** [linkedin, instagram]
+```
+Built a post-purchase page for HALOS, a red light therapy brand I made up. It's a concept build, not a client.
+
+Most thank-you pages say thanks and stop. This one keeps going:
+✅ the order confirmation sits on top, so nobody wonders if it went through
+✅ a one-time offer for a second panel at $99, shipped in the same box
+✅ an honest timeline that admits week one does nothing
+✅ reviews, a short care guide and a three-email check-in signup
+
+Week one took the longest to write. Telling a new buyer they won't see anything yet feels risky, but I'd rather they hear it from the page than decide it's broken in week two.
+
+Need a store like this built? Start here: koolestpro.com/services/page-build
+
+#shopify #ecommerce #postpurchase #webdesign
+```
+
+---
+
+**TS-HALOS-PP01-LAPTOP-VID - `halos_pp-01 laptop.mp4`** [linkedin]
+```
+Desktop scroll-through of the HALOS order confirmation page.
+
+Confirmation, the second-panel offer, the eight-week timeline, reviews, the care guide and the check-in signup.
+
+Concept build, not a live client site.
+
+#webdesign #ecommerce
+```
+
+---
+
+**TS-HALOS-PP01-MOBILE-VID - `halos_pp-01 mobile.mp4`** [instagram, x]
+```
+The HALOS thank-you page on a phone.
+
+The receipt comes first. The offer for a second panel comes right after, while the buyer still has their card nearby.
+
+Demo brand I made up, not a client. Need a store like this built? DM me.
+```
+
+---
+
+**TS-HALOS-PP01-COVER-IMG - `halos_pp-01 cover.png`** [linkedin, instagram]
+```
+A post-purchase page for HALOS, a concept red light panel brand.
+
+The laptop shows the one-time offer. The phone shows the order confirmation it sits under.
+
+Need a store like this built? DM me.
+
+#shopify #webdesign #ecommerce
+```
+
+---
+
+**TS-HALOS-PP01-PREVIEW - `halos_pp-01-preview.png`** [linkedin, instagram]
+```
+Three screens from the HALOS post-purchase page on mobile: the order confirmation, the eight-week timeline, and the check-in signup with the footer.
+
+Concept build, not a live client site.
+
+#webdesign #ecommerce
+```
+
+---
+
+**TS-HALOS-PP01-FULLPAGE - `halos_pp-01-full-page.png`** [linkedin]
+```
+The whole HALOS thank-you page, split into two columns.
+
+Left column handles the moment after paying: the confirmation, a one-time offer for a second panel, and what the first eight weeks look like.
+
+Right column keeps them using it: three reviews, a do and avoid care guide, and three check-in emails over sixty days.
+
+Most stores stop at "thanks for your order". Concept build for a brand I made up.
+
+#ecommerce #webdesign #postpurchase
+```
+
+---
+
+**TS-HALOS-PP01-MOBILESTRIP - `halos_pp-01-mobile-strip.png`** [x] (mandatory - full page at a glance, always posted to X per project standing rule)
+```
+Full page at a glance.
+
+The HALOS post-purchase page on a phone, in three columns:
+-> the confirmation and the offer
+-> the second panel and weeks one to eight
+-> reviews and the care guide
+
+Built for someone who just paid, phone still in hand.
+
+Demo brand, not a client.
+```
+
+---
+
+**TS-HALOS-PP01-X1 - `halos_pp-01 cover.png`** [x]
+```
+Built a thank-you page for a red light panel brand I made up.
+
+After the sale it still has work to do:
+-> confirm the order
+-> offer a second panel in the same box
+-> warn them week one does nothing
+-> sign them up for three check-ins
+
+Concept build, not a client.
+```
+
+---
+
+**TS-HALOS-PP01-X2 - `halos_pp-01-preview.png`** [x]
+```
+Three screens from one post-purchase page.
+
+-> the confirmation, so nobody refreshes in a panic
+-> weeks one to eight, written honestly
+-> three check-in emails, then it leaves you alone
+
+HALOS is a demo brand I made up, not a client.
+
+Need a store like this built? DM me.
+```
+
+---
+
+**TS-HALOS-PP01-X3 - `halos_pp-01-full-page.png`** [x]
+```
+A whole thank-you page in one image.
+
+Left column: confirm, offer a second panel, set expectations.
+Right column: reviews, care guide, check-in emails.
+
+Most stores stop at "thanks for your order".
+
+Concept build for HALOS, a brand I made up.
+```
+
+---
+
+**TS-HALOS-PP01-IG-CAROUSEL - `ig-carousel/slide1-6.png`** [instagram]
+```
+Concept store build: a thank-you page for HALOS, a red light panel brand I made up. Not a client.
+
+Swipe for the whole page, the mobile view, the confirmation and the offer up close, and what I built it with.
+
+Need a store like this built? Link in bio.
+
+#shopify #ecommerce #webdesign #postpurchase #shopifydesign
+```
+
+---

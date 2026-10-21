@@ -1,0 +1,93 @@
+{
+  "brand": "Bala",
+  "brandSlug": "bala",
+  "isConceptBrand": false,
+  "note": "Real brand, unofficial portfolio/concept CRO work. Not a Bala client engagement.",
+  "pipelineItemId": "cro-fix-bala_bangles-homepage-20261011",
+  "items": {
+    "CRO-BALA-COVER": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide1.png",
+      "usedIn": "carousel slide 1 (cover: real crop of the live hero + AFTER phone, real logo)"
+    },
+    "CRO-BALA-BA": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide2.png",
+      "usedIn": "carousel slide 2, standalone before/after post",
+      "caption": "HOMEPAGE: Bala's homepage, on a phone. Screen one is \"Fitness, but make it cute\" in a hairline font, a 10% bundle discount and an outline button. It never says what Bala sells.\n\nThe blue bands on the model's ankles are Bala Bangles, the product the company is named after. Nothing on screen one says so.\n\nThe Bangles first show up 3,431px down. Their rating, 4.9 stars from 1,865 reviews, sits at 3,894px.\n\nI rebuilt the first screen using only what was already on their site:\n\n1. Their own Studio to Street Kit photo up top: Bangles, a bra, leggings and a sweatshirt in one color. Each one is labelled on the image, so you see the range before you read anything.\n2. 4.9 stars from 1,865 Bangles reviews, right above the headline.\n3. A headline that keeps their voice and says what they sell: weights & activewear, but make it cute.\n4. One button, Shop best sellers, then Weights, Pilates props, Activewear and Bundles.\n5. Their own press logos under it: The Wall Street Journal, goop, Glamour.\n\nThe mood stays. It just shows up with the products now.\n\nThis is unofficial concept work. Bala isn't a client."
+    },
+    "CRO-BALA-ANNO": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide3.png",
+      "usedIn": "carousel slide 3, standalone annotation post"
+    },
+    "CRO-BALA-VARIANTS": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_variants-board.png",
+      "usedIn": "variants board (4 hero directions A-D, neutral, no pick shown); X debate post that goes out BEFORE the carousel"
+    },
+    "CRO-BALA-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_annotated.png",
+      "usedIn": "standalone clear-background annotation graphic (1080x1080)"
+    },
+    "CRO-BALA-CAROUSEL": {
+      "assetPath": "outputs/cro-fixes/bala_bangles-homepage_carousel.html",
+      "usedIn": "the review/export HTML (all 3 slides + download panel)",
+      "captionOptions": [
+        {
+          "id": "linkedin",
+          "caption": "HOMEPAGE: Bala's homepage, on a phone. Screen one is \"Fitness, but make it cute\" in a hairline font, a 10% bundle discount and an outline button. It never says what Bala sells.\n\nThe blue bands on the model's ankles are Bala Bangles, the product the company is named after. Nothing on screen one says so.\n\nThe Bangles first show up 3,431px down. Their rating, 4.9 stars from 1,865 reviews, sits at 3,894px.\n\nI rebuilt the first screen using only what was already on their site:\n\n1. Their own Studio to Street Kit photo up top: Bangles, a bra, leggings and a sweatshirt in one color. Each one is labelled on the image, so you see the range before you read anything.\n2. 4.9 stars from 1,865 Bangles reviews, right above the headline.\n3. A headline that keeps their voice and says what they sell: weights & activewear, but make it cute.\n4. One button, Shop best sellers, then Weights, Pilates props, Activewear and Bundles.\n5. Their own press logos under it: The Wall Street Journal, goop, Glamour.\n\nThe mood stays. It just shows up with the products now.\n\nThis is unofficial concept work. Bala isn't a client.",
+          "hashtags": [
+            "#CRO",
+            "#Shopify",
+            "#EcommerceUX",
+            "#Homepage"
+          ]
+        }
+      ]
+    },
+    "CRO-BALA-X-VARIANTS": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_variants-board.png",
+      "caption": "Bala's homepage hero, 4 ways. Same brand, same products.\n\nA: the range, labelled\nB: lifestyle photo first\nC: full-bleed mood shot\nD: headline first\n\nHot take: the prettiest one isn't the one that sells.\n\nWhich would you ship, and why? My pick goes up next.",
+      "platform": "X",
+      "captionKey": "x_variants",
+      "chars": 256
+    },
+    "CRO-BALA-X-CAROUSEL": {
+      "assetPath": [
+        "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide1.png",
+        "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide2.png",
+        "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide3.png"
+      ],
+      "caption": "Homepage teardown: Bala.\n\n1 Cute slogan, no product named\n2 Same mood, now with products\n3 The questions screen one now answers\n\nEvery number came from their own site.",
+      "platform": "X",
+      "captionKey": "x_carousel",
+      "chars": 167
+    },
+    "CRO-BALA-X-COVER": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide1.png",
+      "caption": "Bala's homepage, on a phone:\n\nScreen one: \"Fitness, but make it cute\" and a bundle discount.\nBala Bangles: 3,431px down.\n4.9 stars from 1,865 reviews: 3,894px down.\n\nThe product the company is named after isn't on screen one.",
+      "platform": "X",
+      "captionKey": "x_cover",
+      "chars": 225
+    },
+    "CRO-BALA-X-BA": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide2.png",
+      "caption": "Bala homepage. Same Bangles, different first screen.\n\nBefore:\nX A slogan that never names the product\nX No price\nX Rating 3,894px down\n\nAfter:\nOK The range in one labelled photo\nOK 4.9 stars up top\nOK One clear button\n\nNothing invented. Just moved up.",
+      "platform": "X",
+      "captionKey": "x_ba",
+      "chars": 251
+    },
+    "CRO-BALA-X-ANNO": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_carousel_slide3.png",
+      "caption": "Homepage fix: Bala.\n\nA first-time visitor asks:\n1 What do they actually sell?\n2 Are they any good?\n3 Where do I start?\n\nThe answers were all on the site. The first one was 3,431px down.\n\nNow they're on screen one.",
+      "platform": "X",
+      "captionKey": "x_anno",
+      "chars": 213
+    },
+    "CRO-BALA-X-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/bala/koolestpro_bala_bangles-homepage_annotated.png",
+      "caption": "Redesigned Bala's homepage around 3 questions:\n\n1 What is this brand?\n2 Are they any good?\n3 Where do I start?\n\nTheir site had the answers: weights and matching sets, 4.9 from 1,865 reviews, WSJ, goop and Glamour.\n\nNone of them were on screen one.",
+      "platform": "X",
+      "captionKey": "x_anno_graphic",
+      "chars": 247
+    }
+  },
+  "knownGaps": []
+}

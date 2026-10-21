@@ -1,0 +1,88 @@
+{
+  "caraway-product-page-proof-before-scroll": {
+    "meta": {
+      "slug": "caraway-product-page-proof-before-scroll",
+      "title": "Price and proof before the scroll",
+      "lane": "A Build breakdown",
+      "page_title": "Caraway: price and proof before the scroll",
+      "folder": "outputs/tips/caraway-product-page-proof-before-scroll_2026-10-16.html",
+      "id": "tip-caraway-product-page-proof-before-scroll-20261016"
+    },
+    "slides": 1,
+    "tabs": {
+      "tab-linkedin": "This Caraway concept rebuild puts useful product details on the first screen.\n\nThe first screen shows the $125 price, 4.7 stars from 18,886 reviews, four product benefits, shipping, returns and a 30-day trial.\n\nThis is an unofficial concept rebuild, not client work.\n\n#Shopify #CRO #ProductPage",
+      "tab-x-image": "This Caraway concept puts $125, 4.7 stars from 18,886 reviews, four product benefits, shipping, returns and a 30-day trial on one screen. Unofficial redesign, not client work."
+    },
+    "lane": "A Build breakdown",
+    "xmap": {
+      "X1": 1
+    },
+    "notes": "<p><b>Lane A, build breakdown.</b> The source is the Caraway concept rebuild. The crop keeps the visible price, rating, benefit chips and shipping terms, and excludes an unverified testimonial. Caraway is not a client.</p><p>Evidence: <code>outputs/cro-fixes/caraway/_assets/phones/caraway_after_v2_phone.png</code>, captured in the concept build.</p>"
+  },
+  "v1ce-tap-card-explains-the-next-step": {
+    "meta": {
+      "slug": "v1ce-tap-card-explains-the-next-step",
+      "title": "V1CE explains the tap before the card",
+      "lane": "B Found page",
+      "page_title": "V1CE: explain the tap before the card",
+      "folder": "outputs/tips/v1ce-tap-card-explains-the-next-step_2026-10-16.html",
+      "id": "tip-v1ce-tap-card-explains-the-next-step-20261016"
+    },
+    "slides": 1,
+    "tabs": {
+      "tab-linkedin": "V1CE tells you what the Tap Review Card does before the product photo.\n\nTap the card to a customer's phone. Their review page opens. The page also shows a Trustpilot rating and verified review count near the top.\n\nThe value is easy to understand before someone scrolls through the product details. Found on V1CE's live page, captured October 15. V1CE is not a client.\n\n#Shopify #CRO #ProductPage",
+      "tab-x-image": "V1CE's Tap Review Card page explains the job before the product photo: tap the card and the review page opens. It also shows Trustpilot's 4.4 rating and 1,092 verified reviews near the top."
+    },
+    "lane": "B Found page",
+    "xmap": {
+      "X1": 1
+    },
+    "notes": "<p><b>Lane B, found page.</b> Fresh live capture from October 15. The screen shows the Tap Review Card title, the product explanation, a Trustpilot rating and review count, and the product image. V1CE is a public example, not a client.</p><p>Evidence: <code>https://v1ce.co/</code>, captured locally at <code>.ai-workflow/tips-weekly-2026-10-16/ev/v1ce_live.png</code>.</p>"
+  },
+  "three-mobile-checks-before-you-ship": {
+    "meta": {
+      "slug": "three-mobile-checks-before-you-ship",
+      "title": "Three mobile checks before you ship",
+      "lane": "C Save-worthy list (V4 carousel)",
+      "page_title": "Three mobile checks before you ship",
+      "folder": "outputs/tips/three-mobile-checks-before-you-ship_2026-10-16.html",
+      "id": "tip-three-mobile-checks-before-you-ship-20261016"
+    },
+    "slides": 6,
+    "tabs": {
+      "tab-linkedin-cover": "Three mobile checks from public-site audits. Not client work.",
+      "tab-linkedin": "Three things from public-site audits:\n\nBebemoss: a fixed discount tab covers a toy's name and price in the collection grid.\nTAPro: a search icon sits on its promo headline, while the header already has another.\nKyte Baby: the size button looked disabled, though the audit found it was tappable.\n\nDifferent pages. Same useful habit: scroll to where the decision happens, then tap. Don't stop at the page load.\n\nThese are public-site audit examples, not client work.\n\n#Shopify #CRO #MobileUX",
+      "tab-ig": "Three mobile checks before you ship:\n\nBebemoss: a discount tab covers a product name and price.\nTAPro: a search icon overlaps the promo headline.\nKyte Baby: the size button looked disabled, but it was tappable.\n\nScroll to the decision. Tap the control. Watch what changes.\n\nPublic-site audits, not client work.\n\n#ShopifyDesign #CRO #eCommerce #ShopifyDeveloper #ConversionOptimization #WebDesign #Shopify #UXDesign",
+      "tab-x1": "Bebemoss's fixed 10% tab covers a toy's name and price in the collection grid.",
+      "tab-x2": "TAPro's mobile screenshot shows a search icon sitting on the promo headline. The audit identified it as a duplicate control.",
+      "tab-x3": "Kyte Baby's size button looked disabled, but the audit found it was tappable. The visual state is the problem."
+    },
+    "lane": "C Save-worthy list (V4 carousel)",
+    "xmap": {
+      "X1": 2,
+      "X2": 3,
+      "X3": 4
+    },
+    "notes": "<p><b>Lane C, six-slide V4 carousel.</b> One audit screenshot per finding, followed by a phone QA sequence.</p><p>Evidence: Bebemoss audit, August 18, 2026, <code>outputs/audits/bebemoss_toys-collection_audit.md</code>; TAPro audit, August 31, 2026, <code>outputs/audits/tapro_audit.md</code>; Kyte Baby audit, September 20, 2026, <code>outputs/audits/kytebaby_sleep-bag-oat-1-0-pdp_audit.md</code>. All are public-site audits, not client work. Dates are kept here for provenance only.</p>"
+  },
+  "owala-product-page-answers-fast": {
+    "meta": {
+      "slug": "owala-product-page-answers-fast",
+      "title": "Owala: answer the product questions fast",
+      "lane": "D Expert remix",
+      "page_title": "Owala: answer the product questions fast",
+      "folder": "outputs/tips/owala-product-page-answers-fast_2026-10-16.html",
+      "id": "tip-owala-product-page-answers-fast-20261016"
+    },
+    "slides": 1,
+    "tabs": {
+      "tab-linkedin": "Product pages should put key answers where shoppers can find them.\n\nNielsen Norman Group's ecommerce product-page guidance makes that point. Owala's live FreeSip page gives a useful example: the product name, $39.99 price, 34,332 reviews and color choices appear in one phone view.\n\nThat is a screen observation, not a conversion claim. Owala is not a client.\n\nSource: Nielsen Norman Group, \"Ecommerce Product Pages\".\n#Shopify #CRO #ProductPage",
+      "tab-x-image": "NN/g says product pages should help shoppers find information quickly. Owala's FreeSip page shows the name, $39.99 price, 34,332 reviews and color options in one mobile view. Not a conversion claim."
+    },
+    "lane": "D Expert remix",
+    "xmap": {
+      "X1": 1
+    },
+    "notes": "<p><b>Lane D, expert remix.</b> Remixes Nielsen Norman Group's <a href=\"https://www.nngroup.com/articles/ecommerce-product-pages/\">Ecommerce Product Pages</a> guidance about answering product questions quickly. The Owala screenshot is a live public-page example, captured October 15. Owala is not a client.</p>"
+  }
+}

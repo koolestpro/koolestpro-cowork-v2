@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.0.0",
     "description": "Ranked pool of Shopify/DTC and DTC/B2B ecommerce targets for weekly CRO/static-ad/template content production. See docs/koolestpro-content-operating-plan.md Steps 1-2.",
-    "updatedAt": "2026-10-04T19:12:47+00:00",
+    "updatedAt": "2026-10-18T08:22:53+00:00",
     "recordSchema": {
       "id": "string, unique, e.g. target-<brand-slug>-<timestamp>",
       "brand": "string",
@@ -404,10 +404,17 @@
       "isRealBrand": true,
       "isClient": false,
       "status": "Available",
-      "usedFor": [],
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-10-18",
+          "pipelineItemId": "cro-fix-topicals_homepage-hero-20261018",
+          "note": "Zero prior cro-fix entries. Homepage (first screen). Beauty/skincare chosen to rotate away from fitness (previous run 10-11) and food (Fly By Jing, 10-04); Topicals tied Fishwife/Brightland on potential and had the longest-rested category. Hero changed since the 09-28 review (now a full-screen scratch-card modal on load, plus the Scratch to win pill over Shop now). #1 finding: a game gates screen one, no category statement, zero ratings on the homepage. Concept work only, Topicals is not a client."
+        }
+      ],
       "notes": "Founder-led skincare brand for chronic skin conditions, mid-size team without an obvious in-house CRO function. Reviewed 2026-09-28: homepage.",
       "addedAt": "2026-09-28T10:01:08+00:00",
-      "lastUsedAt": null
+      "lastUsedAt": "2026-10-18T08:22:53+00:00"
     },
     {
       "id": "target-bala-1790589668642",
@@ -421,10 +428,17 @@
       "isRealBrand": true,
       "isClient": false,
       "status": "Available",
-      "usedFor": [],
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-10-11",
+          "pipelineItemId": "cro-fix-bala_bangles-homepage-20261011",
+          "note": "Zero prior cro-fix entries. Homepage (first screen), Bala Bangles. Fitness/wellness chosen to rotate away from food/beverage (Fly By Jing, 10-04), beauty (Minimalist, 09-27) and baby (Kyte Baby, 09-20); also the first homepage after four PDPs. Note: the hero changed since the 09-28 review (now \"Fitness, but make it cute\" + Shop Bundles). #1 finding: screen one never names the product; Bala Bangles at 3,431px, its 4.9/1,865 rating at 3,894px. Concept work only, Bala is not a client."
+        }
+      ],
       "notes": "Design-led wearable weights brand (founder-run, Shark Tank alum), lean relative to its reach. Reviewed 2026-09-28: homepage.",
       "addedAt": "2026-09-28T10:01:08+00:00",
-      "lastUsedAt": null
+      "lastUsedAt": "2026-10-11T08:22:00+00:00"
     },
     {
       "id": "target-brightland-1790589668643",

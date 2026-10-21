@@ -1,0 +1,72 @@
+{
+  "brand": "Topicals",
+  "page": "Homepage (first screen)",
+  "pageType": "Homepage",
+  "url": "https://mytopicals.com/",
+  "checked": "2026-10-18",
+  "isClient": false,
+  "measuredMobile390x844": {
+    "scratchModalOnLoad": "full screen",
+    "visibleH1": 668,
+    "scratchPill": 776,
+    "shopNowButton": 784,
+    "firstProductCard": 991,
+    "starRatingsOnHomepage": 0
+  },
+  "liveHero": {
+    "h1": "Bright Eyes & Slick Lips",
+    "badge": "NEW SLICK SALVE",
+    "sub": "Meet Slick Salve in Fresa and Canela... A $45 value, yours for $30.",
+    "cta": "Shop now",
+    "overlay": "Scratch to win pill"
+  },
+  "category": "Skincare for Flare-Ups (title tag only)",
+  "ratings": {
+    "Faded Brightening + Clearing Serum": [
+      4.9,
+      882
+    ],
+    "Like Butter Moisturizer": [
+      4.9,
+      719
+    ],
+    "Faded Under Eye Masks": [
+      4.8,
+      721
+    ],
+    "Slather Exfoliating Body Serum": [
+      4.8,
+      676
+    ],
+    "Faded Dark Spot Kit": [
+      4.8,
+      401
+    ],
+    "Bright Eyes & Slick Lips Kit": [
+      5.0,
+      129
+    ]
+  },
+  "prices": {
+    "Bright Eyes & Slick Lips Kit": "$30 ($45 value)",
+    "Faded Dark Spot Kit": "$28 ($44 value)",
+    "Like Butter Moisturizer": "$34"
+  },
+  "shipping": "Free shipping on every order $50+ (PDP banner)",
+  "values": [
+    "Science-backed formulas & quality active ingredients",
+    "Skin shade and condition inclusivity",
+    "Vegan & cruelty free products"
+  ],
+  "assets": {
+    "logo": "header inline SVG, viewBox 0 0 133 15, rasterized to PNG",
+    "fonts": [
+      "Chalet",
+      "ChaletBook-Bold",
+      "ITCGaramondStd-LtCondIta"
+    ],
+    "hero": "Faded Dark Spot Kit lifestyle photo (cdn.sanity.io 23d37a4c...), full bleed with scrim (variant C, Ridwan's pick 2026-10-18). Packshots (backgrounds removed) used in the rails and variant A."
+  },
+  "builder": "Fallback: Claude authored the page from the brief (unattended run, no page builder driven, same as the 2026-10-04 and 2026-10-11 runs).",
+  "revision": "2026-10-18 r2: hero switched from A (labelled range) to C (full-bleed product) at Ridwan's request; review pack made self-contained."
+}

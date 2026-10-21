@@ -137,7 +137,7 @@ These apply in every rebuild regardless of scope or mode. No rebuild ships witho
 
 ### Above the fold (always the highest priority zone)
 - Product image: full-width, correct crop, object-position top center
-- Product name: clear, descriptive, readable at 20px+
+- Product title (PDP rebuilds): the real full product title from the live page, as the page's only `<h1>`, at the top of the first screen under the header/breadcrumb, above the price, bold, 22px+. A tagline or outcome line may sit above or below it as a smaller eyebrow/subhead, but never replaces the title, is never the `<h1>`, and never outranks it. Homepages and landing pages use the benefit headline as H1 instead.
 - Price: prominent, with shipping context
 - Star rating + review count: visible before the scroll
 - Scarcity/urgency signal: if applicable
@@ -550,6 +550,7 @@ Before delivering any rebuild:
 - [ ] CTA visible above the fold on mobile
 - [ ] CTA is full width on mobile (100%)
 - [ ] CTA passes WCAG AA contrast (4.5:1)
+- [ ] Real product title is the only `<h1>`, visible on the first screen above the price (not demoted below a slogan)
 - [ ] Rating + review count visible above the fold
 - [ ] Price and shipping context both visible above the fold
 - [ ] Trust signals present near the CTA

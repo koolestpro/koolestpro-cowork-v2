@@ -199,12 +199,29 @@ def content_density_profile(img_arr, smooth=15):
     return smoothed
 
 
+def ink_rows(img_arr, delta=38, min_px=3, spread=10):
+    """Rows that carry ANY real ink (text, icons), however small.
+
+    FIXED 2026-10-17 (moult_hp-01 run, Tier 1 QA): the std-dev profile alone
+    let a thin 11px eyebrow label ("ONE BRUSH. EVERY COAT.") read as dead
+    space, so excision sliced it in half. A row counts as inked when at least
+    `min_px` pixels differ from that row's median by more than `delta`, and
+    the flag is spread +/- `spread` rows so letter gaps don't break it up."""
+    gray = img_arr.mean(axis=2)
+    med = np.median(gray, axis=1, keepdims=True)
+    ink = (np.abs(gray - med) > delta).sum(axis=1) >= min_px
+    if spread:
+        k = np.ones(2 * spread + 1)
+        ink = np.convolve(ink.astype(float), k, mode="same") > 0
+    return ink
+
+
 def excise_dead_zones(img, profile, min_run=140, density_ratio=0.22, pad=24):
     """Splice out sustained near-uniform vertical runs before splitting at
     all — see module docstring. Same logic as build_mosaic.py."""
     page_avg = profile.mean()
     threshold = page_avg * density_ratio
-    below = profile < threshold
+    below = (profile < threshold) & ~ink_rows(np.asarray(img))
 
     runs = []
     start = None
@@ -241,8 +258,35 @@ def excise_dead_zones(img, profile, min_run=140, density_ratio=0.22, pad=24):
     return spliced, runs
 
 
+def _section_seam(img_arr, lo, hi, target, window, band=24, min_diff=28.0,
+                  max_imbalance=0.22):
+    """Row index where the page background switches colour (a section
+    boundary), nearest the midpoint and within `max_imbalance` of it. Both
+    sides of the seam must be ink-free for `band` rows so the cut never
+    touches text."""
+    ink = ink_rows(img_arr, spread=0)
+    gray = img_arr.mean(axis=2)
+    edge_mean = np.concatenate([gray[:, :40], gray[:, -40:]], axis=1).mean(axis=1)
+    h = len(edge_mean)
+    best = None
+    for y in range(max(lo, band), min(hi, h - band)):
+        a = edge_mean[y - band:y].mean()
+        b = edge_mean[y:y + band].mean()
+        if abs(a - b) < min_diff:
+            continue
+        if abs(edge_mean[y - 1] - edge_mean[y]) < min_diff * 0.6:
+            continue
+        if ink[y - 6:y + 6].any():
+            continue
+        if abs(y - target) > max_imbalance * h:
+            continue
+        if best is None or abs(y - target) < abs(best - target):
+            best = y
+    return best
+
+
 def choose_split_point(profile, search_frac=0.32, gap_ratio=0.40, proximity_weight=0.5,
-                       min_gap_run=40):
+                       min_gap_run=40, img_arr=None):
     """Find ONE cut point near the vertical midpoint, snapped to a real
     section gap (a run of low content density = whitespace/background
     between sections) rather than a rigid half point — this is what "not
@@ -263,6 +307,16 @@ def choose_split_point(profile, search_frac=0.32, gap_ratio=0.40, proximity_weig
     target = h // 2
     window = int(h * search_frac)
     lo, hi = max(target - window, 1), min(target + window, h - 1)
+
+    # ADDED 2026-10-17 (moult_hp-01 run): prefer a real SECTION SEAM, a row
+    # where the background colour changes between two sections, over a gap
+    # inside a section. The old run-centre logic cut the MOULT homepage just
+    # under a section heading, orphaning "Made for the Pets You Actually
+    # Have." at the foot of column 1 while its cards opened column 2.
+    if img_arr is not None:
+        seam = _section_seam(img_arr, lo, hi, target, window)
+        if seam is not None:
+            return seam
 
     page_avg = profile.mean()
     threshold = page_avg * gap_ratio
@@ -323,7 +377,7 @@ def build_split_page(png_bytes, out_path, width, pad=110, gap=48, bg=(238, 238, 
     h, w = arr.shape[:2]
     profile = content_density_profile(arr)
 
-    cut = choose_split_point(profile)
+    cut = choose_split_point(profile, img_arr=arr)
     col1 = img.crop((0, 0, w, cut))
     col2 = img.crop((0, cut, w, h))
 

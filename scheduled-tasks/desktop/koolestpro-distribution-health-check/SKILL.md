@@ -124,3 +124,11 @@ Also separately note how many of those upcoming rows are QA-blocked (`qa_status`
 Append a dated entry to `distribution-health-log.md` at the root of the koolestpro-cowork-v2 project (create it with a short header if it doesn't exist). Each entry: date/time of check, missed rows found and fixed (post_id, old date → new date, webhook result, confirmed-landed check), same-time collisions found and fixed (Twitter/Instagram), same-day LinkedIn violations found and fixed (post_id, old date → new date, webhook result), missed rows found but NOT fixed (e.g. blocked ones, or webhook failures) with reason, the Step 1b Twitter char-count rollup (checked/over-limit/new-findings), the Step 1c Instagram multi-image rollup (checked/found/trimmed), whether the reschedule scenario (7111659) was found inactive and reactivated, Make health verdict, 7-day pacing verdict (Twitter+LinkedIn+Instagram, plus the backlog-wide QA-clean/blocked split).
 
 Then end with a concise chat-style summary covering: what was found and fixed (including any collisions/violations and any Instagram multi-image trims), any new Twitter caption over 280 chars found in Step 1b, whether the reschedule webhook scenario needed reactivating, what's blocked and needs Ridwan's attention, Make health, and pacing verdict. No fluff. If everything is clean (no missed rows, no collisions, no LinkedIn violations, no new over-limit captions, no Instagram multi-image rows, reschedule scenario active, Make healthy, pacing fine), say so briefly.
+
+## Spacing rule for ALL rescheduling (added 2026-10-08, Ridwan's instruction)
+
+Never reschedule a missed row by hand into "the next free slot" if that puts the same brand within 5 days of another post of that brand, or the same post type back to back. After you reschedule anything, run `python3 .ai-workflow/tools/space_queue.py --project-root . --dry-run`, read it, then run it for real (it re-spaces all Ready rows consistently) and `sort_distribution_queue.py`. Report the supply gap (empty X slots) it prints, since the target is 3 X posts a day plus one hero post a day on LinkedIn and Instagram.
+
+## Retired rows and Instagram (2026-10-08)
+- Ignore rows with status `Retired` in missed/overdue classification.
+- Instagram is active; only carousel/video rows are publishable. Never open instagram.com with browser automation.

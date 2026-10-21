@@ -68,6 +68,8 @@ claims, and recognise a consistent point of view.
 
 - **No em dashes, anywhere** (project-wide, always). Rewrite as two sentences, a comma, or
   a colon.
+- **Caption list markers:** for before/after or positive/negative lists, mark improvements
+  with ✅ and missing or negative items with ❌. Do not use `OK` or `X` as substitutes.
 - **X captions: hard 280-character limit**, counted on the real string.
 - **Never fabricate** a result, quote, number, source, or testimonial. Never imply a
   concept brand (KURA / HALOS / MERIDIAN / Lumora) was a real client.

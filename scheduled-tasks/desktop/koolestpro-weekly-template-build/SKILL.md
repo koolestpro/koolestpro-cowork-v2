@@ -1,6 +1,6 @@
 ---
 name: koolestpro-weekly-template-build
-description: Weekly build for the replo-rebuilds portfolio system, Wednesdays ~09:21: builds one real brand-specific page for whichever brand needs one next, plus its mandatory mobile-strip presentation asset. A neutral [TOKEN] template is only created when no existing structure fits. No brand gets a second page in the same category.
+description: Weekly build for the replo-rebuilds portfolio system, Wednesdays ~09:21: builds TWO real brand-specific pages per run (two different brands, two different page types), rotating brand AND page type every run (never the same brand or category as the last two runs; a new brand beats a recent one), plus its mandatory mobile-strip presentation asset. A neutral [TOKEN] template is only created when no existing structure fits. No brand gets a second page in the same category.
 ---
 
 You build for Ridwan's `replo-rebuilds` portfolio system at `replo-rebuilds/` inside the connected `koolestpro-cowork-v2` folder. This replaces a manual OpenCode + DeepSeek workflow — build everything yourself, directly, in this session. No DeepSeek/OpenCode calls.
@@ -25,22 +25,26 @@ So there is now ONE job per run, not two:
 There is no more separate "grow the homepage template library" job. Homepage is just one of the six categories in the one list below, same as any other.
 
 ═══════════════════════════════════════════════
-STEP 1 — Pick the target brand
+STEP 1 — Pick the brand AND category together: ROTATE, never run one brand to completion (Ridwan, 2026-10-10)
 ═══════════════════════════════════════════════
 
-The six core categories every brand should eventually have one real page in, in this fixed order: **PDP, Homepage, Landing Page, Advertorial, Listicle, Post-Purchase.**
+⚠️⚠️ This REPLACES the old "fill one brand's six categories in order, then move to the next brand" rule. Ridwan: "it will not just focus on a single brand. After it is done there, it goes to the next brand. No, we want to mix things up... PDP for brand A, then landing page for brand B, then listicle for brand C, then advertorial for brand D." Back-to-back builds for the same brand (MOULT PDP on 2026-09-30, then MOULT homepage on 2026-10-07) are exactly what this rule stops.
 
-Read every `brands/{brand}/README.md` (currently `kura` and `halos`; there may be more by the time this runs, check `brands/` for any created after those two). For each brand, check its "Pages Built" table against the six categories above. A brand counts as having a category "filled" if it has AT LEAST ONE real page there — do not count a second page in the same category, and do not build one. A brand is "complete" once all six categories have one real page each.
+The six categories are still the target set for every brand: **PDP, Homepage, Landing Page, Advertorial, Listicle, Post-Purchase**, one real page per category per brand, never a second page in a filled category.
 
-Process brands in this fixed order: `kura`, then `halos`, then any brand created after those two, in creation order. Pick the first incomplete brand. If every existing brand is complete, go to Step 1b.
+**TWO PAGES PER RUN (Ridwan, 2026-10-10).** Every run builds two pages: Page A and Page B. Pick Page A with the rules below. Then pick Page B with the same rules, treating Page A as the most recent build, so Page B is always a different brand AND a different page type from Page A. Steps 3 to 6 (template choice, build, verify, mobile strip, present, docs) run once for each page; finish Page A completely (including its mobile strip) before starting Page B, so a timeout never leaves two half-built pages. Why: the distribution queue keeps any one brand 5+ days apart, so a week of showcase posts needs several brands with fresh pages, and the Saturday showcase task now packages two pages a week. If the run genuinely cannot fit the second page, ship Page A, say so at the top of the report, and name what Page B would have been.
 
-**Step 1b — New brand (only when every existing brand is complete).** Auto-pick a new, plausible dropship-style product in a niche none of the existing brands already cover (check every `brands/*/README.md`'s opening line for what's taken). Run the brand-identity phase the way `brands/kura/README.md` and `brands/halos/README.md` show: a distinct color palette, a font pairing, a one-line voice description, a tagline, and a brand name. Write `brands/{new-brand}/README.md` in the same format as those two files (Brand Identity table, Pages Built table starting empty, Pipeline Status table). This becomes the active brand for the rest of this run.
+**Build history.** Read `replo-rebuilds/build-rotation-log.json` (one entry per build: date, brand, category, page). If it is missing or stale, rebuild it from every `brands/*/README.md` "Pages Built" table (the Built column has the dates). Append this run's build to it at the end (Step 6).
 
-═══════════════════════════════════════════════
-STEP 2 — Pick the target category
-═══════════════════════════════════════════════
+**Rules, in priority order:**
+1. **Brand:** never the brand built in either of the last 2 runs. Among the remaining brands that still have an empty category, pick the one whose most recent build is OLDEST.
+2. **Category:** never the category built in either of the last 2 runs, for any brand. From the chosen brand's empty categories that pass this, take the first in the list order above. If every empty category of that brand was built in the last 2 runs, try the next brand from rule 1 before relaxing this rule.
+3. **New brand:** if no existing brand passes rules 1 and 2 (for example, the only brands with gaps were built in the last two runs, or every brand is complete), start a NEW brand (Step 1b) and give it a category that passes rule 2. Do this rather than giving a recent brand another page. Variety across brands beats finishing a brand.
+4. State the pick and the reason in the report ("built X for brand Y because last two runs were A/B and Z/W").
 
-For the active brand, find categories with zero real pages, walking the fixed order (PDP → Homepage → Landing Page → Advertorial → Listicle → Post-Purchase). Pick the first missing one. That is this run's target category.
+Worked example from the state on 2026-10-10: KURA and HALOS are complete, MOULT has PDP (2026-09-30) and Homepage (2026-10-07). MOULT was the last run's brand, so it is excluded. No other existing brand has gaps, so the next run creates a new brand and builds a category other than PDP or Homepage (for example a Landing Page). The run after that can go back to MOULT, with any category except the last two built.
+
+**Step 1b — New brand.** Auto-pick a new, plausible dropship-style product in a niche none of the existing brands already cover (check every `brands/*/README.md`'s opening line for what's taken). Run the brand-identity phase the way `brands/kura/README.md` and `brands/halos/README.md` show: a distinct color palette, a font pairing, a one-line voice description, a tagline, and a brand name. Write `brands/{new-brand}/README.md` in the same format as those files (Brand Identity table, Pages Built table starting empty, Pipeline Status table). Concept brand, never presented as a client.
 
 ═══════════════════════════════════════════════
 STEP 3 — Decide: reuse an existing template, or build a new structure
@@ -114,12 +118,12 @@ STEP 5c — Present the work
 STEP 6 — Update docs
 ═══════════════════════════════════════════════
 
-Add the new page as a row in `brands/{brand}/README.md`'s "Pages Built" table (Page / Template / Status / Built date / Case Study "Not started" / Social "Not started" — matching the existing row format exactly), and update that brand's Pipeline Status table. Note in the page's build entry that its mobile strip exists at `presentation/{page}-mobile-strip.png` so the showcase run knows to reuse rather than regenerate it. If Step 3 required a fresh Path B audit and new template, also add a row to `templates/{category}/README.md`'s status table for the new template ID, and update the root `README.md`'s Current Brands table if relevant.
+Append this build to `replo-rebuilds/build-rotation-log.json` (date, brand, category, page). Add the new page as a row in `brands/{brand}/README.md`'s "Pages Built" table (Page / Template / Status / Built date / Case Study "Not started" / Social "Not started" — matching the existing row format exactly), and update that brand's Pipeline Status table. Note in the page's build entry that its mobile strip exists at `presentation/{page}-mobile-strip.png` so the showcase run knows to reuse rather than regenerate it. If Step 3 required a fresh Path B audit and new template, also add a row to `templates/{category}/README.md`'s status table for the new template ID, and update the root `README.md`'s Current Brands table if relevant.
 
 ═══════════════════════════════════════════════
 Report
 ═══════════════════════════════════════════════
 
-End with a short summary: which brand and category got built, whether an existing template was reused or a new one had to be created (and if new, what real reference site it was audited from), any layout bug found and fixed during verification (and whether the fix was also patched upstream into the neutral template), an explicit MOBILE STRIP line confirming the strip was built and where it was saved (or stating loudly that it failed), and what's next (which brand/category is next in the fixed order, or "brand X is now complete, moving to brand Y next week" / "every existing brand is complete, a new brand will be created next run" as applicable).
+End with a short summary for EACH of the two pages: which brand and category got built, whether an existing template was reused or a new one had to be created (and if new, what real reference site it was audited from), any layout bug found and fixed during verification (and whether the fix was also patched upstream into the neutral template), an explicit MOBILE STRIP line confirming the strip was built and where it was saved (or stating loudly that it failed), and what's next under the rotation rule (which brand and category the next run should pick, and why).
 
 Do not touch anything outside `replo-rebuilds/`, except for the `presentation/` strip described in Step 5b and any neutral-template fix described in Step 3. Do not deploy or publish anything. Do not touch the koolestpro-cowork-v2 content pipeline (a separate system inside the same connected folder).

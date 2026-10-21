@@ -34,12 +34,18 @@ BA_WORDS_RE = re.compile(r"\bbefore\b|\bafter\b|\bwas\b.*\bnow\b|\bfrom\b.*\bto\
 
 def asset_kind(path):
     b = os.path.basename(path or "").lower()
-    if "before-after" in b or "_ba" in b or "carousel_slide2" in b:
+    # Order matters (fixed 2026-10-11): the old bare "_ba" substring test matched
+    # every Bala file ("koolestpro_bala_...") and called them all before/afters.
+    if "variants-board" in b:
+        return "variants"
+    if "carousel_slide2" in b:
         return "before-after"
     if "annotat" in b or "carousel_slide3" in b:
         return "annotated"
     if "carousel_slide1" in b or "cover" in b:
         return "cover"
+    if "before-after" in b or re.search(r"_ba(?=[._-]|$)", os.path.splitext(b)[0] + "."):
+        return "before-after"
     if "combined-showcase" in b:
         return "combo"
     m = re.search(r"ad-(\d)", b)
