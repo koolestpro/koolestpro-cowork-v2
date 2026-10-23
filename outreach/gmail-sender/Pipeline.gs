@@ -25,29 +25,54 @@ function prepareLeads_(interactive) {
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) return;
   const stats = { discovered: 0, emails: 0, verified: 0, profiles: 0, sequences: 0, problems: [], limited: false };
+  const started = Date.now();
+  const ps = PropertiesService.getScriptProperties();
   try {
     const S = settings_();
     if (isTrue_(S.PAUSED)) { if (interactive) toast_('PAUSED is TRUE in Settings.'); return; }
-    const started = Date.now();
-    const timeLeft = () => Date.now() - started < 4.5 * 60 * 1000;
+
+    // Runtime budget (2026-10-23). A consumer Google account gets about 90 minutes of trigger time a day for ALL triggers.
+    // Prep used to run ~5 minutes every 30 minutes on a backlog of 200+ unprepared leads, used the day's quota up, and then the
+    // send job and the 6pm report stopped running. Prep now gets a daily allowance, and stops when enough emails are already written.
+    const day = Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd');
+    if (ps.getProperty('PREP_DAY') !== day) { ps.setProperty('PREP_DAY', day); ps.setProperty('PREP_MS', '0'); }
+    const allowanceMs = Number(S.PREP_DAILY_MINUTES || 35) * 60000;
+    if (!interactive && Number(ps.getProperty('PREP_MS') || 0) >= allowanceMs) return;
+    const skipNew = !interactive && prepBacklogFull_(S);   // enough prepared leads already: only keep follow-ups written
+
+    const runMs = Number(S.PREP_RUN_MINUTES || 3) * 60 * 1000;
+    const timeLeft = () => Date.now() - started < runMs;
     S._started = started;
 
-    try { apifyImports_(stats, timeLeft); } catch (e) { stats.problems.push('apify: ' + e.message); }
-    try { importSources_(S, stats, timeLeft, false); } catch (e) { stats.problems.push('sources: ' + e.message); }
-    try { qualifyDiscovery_(S, stats, timeLeft); } catch (e) { stats.problems.push('discovery: ' + e.message); }
-    findEmails_(S, stats, timeLeft);
-    verifyEmails_(S, stats, timeLeft);
-    rescueEmails_(S, stats, timeLeft);
-    profileLeads_(S, stats, timeLeft);
-    writeSequences_(S, stats, timeLeft);
+    if (!skipNew) {
+      try { apifyImports_(stats, timeLeft); } catch (e) { stats.problems.push('apify: ' + e.message); }
+      try { importSources_(S, stats, timeLeft, false); } catch (e) { stats.problems.push('sources: ' + e.message); }
+      try { qualifyDiscovery_(S, stats, timeLeft); } catch (e) { stats.problems.push('discovery: ' + e.message); }
+      findEmails_(S, stats, timeLeft);
+      verifyEmails_(S, stats, timeLeft);
+      rescueEmails_(S, stats, timeLeft);
+      profileLeads_(S, stats, timeLeft);
+      writeSequences_(S, stats, timeLeft);
+    }
     try { writeFollowups_(S, stats, timeLeft); } catch (e) { stats.problems.push('follow-ups: ' + e.message); }
   } finally {
+    ps.setProperty('PREP_MS', String(Number(ps.getProperty('PREP_MS') || 0) + (Date.now() - started)));
     lock.releaseLock();
   }
   if (interactive) {
     toast_('Stores promoted: ' + stats.discovered + ', emails found: ' + stats.emails + ', verified: ' + stats.verified + ', profiles: ' + stats.profiles +
       ', sequences written: ' + stats.sequences + (stats.problems.length ? '. Problems: ' + stats.problems.slice(0, 3).join(' | ') : ''));
   }
+}
+
+/** True when enough leads already have their emails written and have not been contacted (PREP_BUFFER, default 40; 0 = never stop). */
+function prepBacklogFull_(S) {
+  const max = Number(S.PREP_BUFFER === undefined || S.PREP_BUFFER === '' ? 40 : S.PREP_BUFFER);
+  if (!max) return false;
+  const has1 = {};
+  read_('Sequence').rows.forEach(r => { if (Number(r.step) === 1 && r.status === 'Draft') has1[String(r.lead_id)] = true; });
+  const ready = read_('Leads').rows.filter(l => l.lead_id && ['New', ''].indexOf(String(l.stage)) !== -1 && Number(l.touch_count || 0) === 0 && has1[String(l.lead_id)]).length;
+  return ready >= max;
 }
 
 function candidates_(leads, filter, n) {
@@ -440,7 +465,7 @@ function profileLeads_(S, stats, timeLeft) {
 
 const SEQ_TASK_ = [
   'TASK: write a 5-email cold sequence from Ridwan to this lead. Use ONLY facts in the lead data and profile below plus the brief. Any observation in email 1 must be supported by the profile. If the profile has no solid observation, keep email 1 honest and general rather than inventing one.',
-  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE OFFER and THE PROBLEM, email 1 is built on them: show you understood how THIS business sells (their product, price point, how customers reach them), name the page, product or element from the evidence, say what the shopper or the ad click runs into, what that costs in plain words, and exactly what Ridwan would build (THE FIX). It must be specific enough that the founder can check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. A [SOFT] gap is asked, never stated: "is cold traffic going straight to the product page, or is there a pre-sell page I missed?". Mention page speed or load time ONLY when THE PROBLEM rests on a [SPEED] evidence line: then use its exact numbers and say it is Google\'s own measurement on phones, never a guess or a rounded-up claim. Never pitch a small fix (a size chart, a photo, a description) as the reason to talk. Never mention language, translation, currency, price display, country or market differences (stores adapt these to where the visitor browses from, and research browses from Google servers abroad, so what it sees is not what their customers see). Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it. Address the decision maker by first name when known, even when the email goes to a shared inbox.',
+  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE OFFER and THE PROBLEM, email 1 is built on them: show you understood how THIS business sells (their product, price point, how customers reach them), name the page, product or element from the evidence, say what the shopper or the ad click runs into, what that costs in plain words, and exactly what Ridwan would build (THE FIX). It must be specific enough that the founder can check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. A [SOFT] gap is asked, never stated: "is cold traffic going straight to the product page, or is there a pre-sell page I missed?". When THE PROBLEM or SECOND PROBLEM rests on a [LINKS] line, name each link by its visible label and where it sits ("the Best Sellers item in your top menu"), say plainly what happens when a visitor clicks it (404 page, or back to the homepage they are already on), and never paste a URL or path. Mention page speed or load time ONLY when THE PROBLEM rests on a [SPEED] evidence line: then use its exact numbers and say it is Google\'s own measurement on phones, never a guess or a rounded-up claim. Never pitch a small fix (a size chart, a photo, a description) as the reason to talk. Never mention language, translation, currency, price display, country or market differences (stores adapt these to where the visitor browses from, and research browses from Google servers abroad, so what it sees is not what their customers see). Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it. Address the decision maker by first name when known, even when the email goes to a shared inbox.',
   'Step 1: the observation, the problem it usually causes, what Ridwan does, one interest question. Steps 2 to 5 must each add something NEW and never say "just checking in" or "following up". Follow-ups NEVER make a new claim about their site: the only observations allowed are THE PROBLEM and SECOND PROBLEM. Without a SECOND PROBLEM, steps 2 to 5 add something about THE OFFER instead (how Ridwan would do it, one real proof line, a smaller first step, a lighter ask). Never write "one more thing I noticed". Step 3 may use one real proof line from the brief if it genuinely fits. Step 5 is a warm, clean close that leaves the door open.',
   'Every email under 100 words, plain text, no links, no signature (added by the system), no closing way-out line such as "no problem if not" or "tell me and I will stop" (the footer already carries the opt-out): end on the question. Steps 2 to 5 read as replies in the same thread: no subject.',
   'If Track is Launch (the store is behind a password or coming-soon page, so they are building it now): never describe the store behind the password, its products or design (nobody can see them). Open with what is visible (their coming-soon page, the launch timing, an email signup or the lack of one), then THE OFFER: launch_review = offer a free look at their product page before launch if they share the password; launch_build = help finish the store so it launches properly; waitlist_page = a coming-soon page that collects emails before launch; launch_creatives = launch ad creatives from their product photos. Good ask: whether they are building it themselves or someone is helping. Follow-ups stay about the launch.',

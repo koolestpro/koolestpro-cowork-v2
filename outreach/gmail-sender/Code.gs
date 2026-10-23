@@ -70,6 +70,9 @@ function defaultSettings_() {
     ['SIGNATURE_PARTNER', 'Ridwan Adekunle\nShopify development partner for agencies, Koolestpro\nkoolestpro.com', 'First email to an agency or studio (track Partner). Optional.'],
     ['MIN_FIT_SCORE', '55', 'Discovery: a store needs at least this score (0 to 100) to become a lead. Higher = pickier.'],
     ['MIN_PROBLEM_SCORE', '4', 'Research picks one offer per store (page rebuild, speed, advertorial, listicle, post-purchase, bundle builder, quiz, subscription, custom feature) and scores it from 1 (small fix or guesswork) to 5 (a real project backed by evidence). Below this, the lead is held and no emails are written. See Profiles > offer, problem and research.'],
+    ['PREP_DAILY_MINUTES', '35', 'Lead preparation (research, emails, sequences) stops for the day after this many minutes of Apps Script time. A Gmail account gets about 90 minutes of trigger time a day in total, shared with sending and the 6pm report. If sending or the report ever stops, lower this.'],
+    ['PREP_RUN_MINUTES', '3', 'Longest a single preparation run may take.'],
+    ['PREP_BUFFER', '40', 'Preparation pauses when this many leads already have their emails written and have not been contacted. 0 = never pause.'],
     ['SPEED_FIELD_LCP', '4', 'Speed is only pitched when obviously slow. With Google real-user data: the page or site must be rated SLOW with main content at or above this many seconds for 1 in 4 phone visits.'],
     ['SPEED_LAB_LCP', '8', 'Without real-user data: two lab test runs on a phone must both show main content at or above this many seconds and a score of 35/100 or less. Needs Script property PAGESPEED_API_KEY.'],
     ['BIG_BRAND_RANK', '1000000', 'Big brands are never emailed. A store inside this Tranco traffic rank (top 1 million sites, roughly more than 1,000 visits a day) is skipped at Discovery and marked Lost at research. Lower it (e.g. 300000) only if you want to allow mid-size stores.'],
@@ -340,12 +343,17 @@ function whyNotSending() {
 }
 
 /** Sends follow-ups that are due first, then new first emails, within today's cap. */
+/** Remembers what the last send run did, so the 6pm report can say why nothing went out. */
+function beat_(msg) {
+  try { PropertiesService.getScriptProperties().setProperty('SEND_LAST', Utilities.formatDate(new Date(), tz_(), 'EEE d MMM HH:mm') + ': ' + msg); } catch (e) {}
+}
+
 function sendDue(ignoreHours) {
   const lock = LockService.getScriptLock();
-  if (!lock.tryLock(30000)) return;
+  if (!lock.tryLock(150000)) { beat_('skipped, another job held the lock for 150 seconds'); return; }   // was 30s and silent: preparation and reply checks could starve sending
   try {
     const S = settings_();
-    if (isTrue_(S.PAUSED)) { if (ignoreHours === true) toast_('Nothing sent: PAUSED is TRUE in Settings.'); return; }
+    if (isTrue_(S.PAUSED)) { beat_('PAUSED is TRUE'); if (ignoreHours === true) toast_('Nothing sent: PAUSED is TRUE in Settings.'); return; }
 
     // Live: anything that was only ever sent as a TEST email goes back to the start first. Real progress is never touched.
     if (!isTrue_(S.TEST_MODE) && !isSecondary_() && typeof resetTestSends_ === 'function') { try { resetTestSends_(false); } catch (e) { Logger.log('resetTestSends_ failed: ' + e); } }
@@ -362,7 +370,7 @@ function sendDue(ignoreHours) {
     const quota = MailApp.getRemainingDailyQuota() - 5;
     let budget = Math.min(dailyCap_(S) - sentToday, Number(S.MAX_PER_RUN) || 2, quota);
     let hotBudget = Math.min(dailyCap_(S) + (Number(S.HOT_EXTRA_PER_DAY) || 5) - sentToday, Number(S.HOT_PER_RUN) || 4, quota);
-    if (budget <= 0 && hotBudget <= 0) { if (ignoreHours === true) toast_('Nothing sent: daily cap or per-run limit reached.'); return; }
+    if (budget <= 0 && hotBudget <= 0) { beat_('daily cap reached (' + sentToday + ' sent today)'); if (ignoreHours === true) toast_('Nothing sent: daily cap or per-run limit reached.'); return; }
 
     const now = new Date();
     const due = leads.rows.filter(l =>
@@ -437,6 +445,7 @@ function sendDue(ignoreHours) {
       hotBudget--; sent++;
       if (budget > 0 || hotBudget > 0) Utilities.sleep(20000 + Math.floor(Math.random() * 40000));
     }
+    beat_(sent + ' sent, ' + due.length + ' due inside working hours' + (sent === 0 && !due.length ? ' (none of the approved leads is inside its 9am to 5pm window right now)' : ''));
     if (ignoreHours === true) {
       if (sent > 0) toast_(sent + ' email(s) sent.');
       else {
@@ -456,6 +465,13 @@ function sendDue(ignoreHours) {
 
 /** Runs daily at 6pm: one email to ALERT_EMAIL with what happened today and what needs Ridwan. */
 function dailyReport() {
+  try { dailyReport_(); }
+  catch (e) {   // a broken report must never be silent
+    try { GmailApp.sendEmail(settings_().ALERT_EMAIL, 'Outreach report FAILED', 'The daily report crashed: ' + e + '\n\nOpen the Sheet > Extensions > Apps Script > Executions to see why.', { name: 'Koolestpro Outreach' }); } catch (e2) {}
+  }
+}
+
+function dailyReport_() {
   const S = settings_();
   if (!S.ALERT_EMAIL) return;
   const me = me_();
@@ -490,6 +506,14 @@ function dailyReport() {
     lines.push('', 'TODAY\'S REPLIES');
     repliesToday.slice(0, 10).forEach(m => lines.push('- ' + m.lead_id + ': ' + String(m.body).replace(/\s+/g, ' ').slice(0, 140)));
   }
+  const pr = PropertiesService.getScriptProperties();
+  const prepMin = Math.round(Number(pr.getProperty('PREP_MS') || 0) / 60000);
+  lines.push('', 'HEALTH', '- Last send run: ' + (pr.getProperty('SEND_LAST') || 'no record yet'),
+    '- Lead preparation today: ' + prepMin + ' of ' + Number(S.PREP_DAILY_MINUTES || 35) + ' minutes allowed',
+    '- Automation triggers installed: ' + (ScriptApp.getProjectTriggers().map(t => t.getHandlerFunction()).sort().join(', ') || 'NONE'));
+  const wd = Utilities.formatDate(now, tz_(), 'u');
+  if (!isTrue_(S.PAUSED) && waiting > 0 && sentToday.length === 0 && wd !== '6' && wd !== '7')
+    lines.push('', 'PROBLEM: ' + waiting + ' emails are approved and waiting but none went out today. Run Outreach > Why isn\'t it sending? and check Apps Script > Executions for errors.');
   const bad = drafts.rows.filter(d => String(d.model).indexOf('failed') === 0);
   if (bad.length) lines.push('', 'PROBLEM: ' + bad.length + ' draft(s) failed to generate. Check the model column in Drafts.');
   lines.push('', 'Sheet: ' + ss_().getUrl());
