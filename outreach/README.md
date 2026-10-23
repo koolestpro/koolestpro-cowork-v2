@@ -182,3 +182,20 @@ Flipping TEST_MODE to FALSE used to leave every lead that had only been test-ema
 **Speed:** unchanged policy from 2026-10-06 (only when obviously slow, `[SPEED]` line from Google data). It needs `PAGESPEED_API_KEY` in Script properties; without it nothing is ever pitched on speed. Levers if you want more speed leads: lower `SPEED_FIELD_LCP` (4) to 3, and the lab thresholds (8 seconds, score 35).
 
 **Mac:** run the one-time command from the 2026-10-11 section, then `tail -50 .ai-workflow/catchup.log` and `tail -50 outreach/scrapers/state/scrape.log` to see why the directory scrape has not stamped since 10-10. `.ai-workflow/.stamps/` was committed by an auto-sync although it is in `.gitignore`; it is untracked now so a pull can never overwrite the Mac's local stamps.
+
+## Bounces, auto-replies and replies in a new thread (2026-10-23, Ridwan)
+
+New file `gmail-sender/Inbound.gs` (add it as its own file in Apps Script and in every extra Gmail's copy, then paste the new `Code.gs`). Every inbound message is classified before anything happens:
+
+| Kind | How it is recognised | What happens |
+|---|---|---|
+| bounce (not delivered) | from mailer-daemon/postmaster, delivery-status content type, or "Address not found / Undeliverable" text | Hard bounce (5.x.x, no such user, domain not found): the lead goes back to step 1 with `email_status` invalid, approval removed, so the email rescue looks for another verified address on their site (once per lead). Rescue already used: stage Bounced, sequence stopped. Soft bounce or delay notice: held 2 days, nothing lost. No reply alert, no AI draft. |
+| ooo (out of office) | `Auto-Submitted` and similar headers or "out of office / on leave" text | Logged as `auto`. Next email moved to the return date it states (max 30 days, 7 if none). Sequence continues after. |
+| ack (support-desk auto-reply) | auto headers, noreply sender, or several acknowledgement phrases ("your inquiry is important", ticket number, "within 2-3 business days") with no real question | Logged as `auto`. Next email held past the response window it states (default 4 days, max 10). Never marks the lead Replied, no draft, no alert. Example: Originally Lovely, 2026-10-23 (held 6 days). |
+| human | everything else | As before: stage Replied, follow-ups stopped, AI draft, alert. A STOP-style message unsubscribes. |
+
+**New-thread replies.** `checkNewThreads_` runs in the 30 minute tick over the last 3 days of inbox mail that is not in a lead's original thread, and matches to leads this Gmail has emailed: (1) the reply headers (`In-Reply-To` or `References` contain our message id), (2) the exact sender address, (3) our subject from the same domain, and only then (4) the same domain alone when exactly one contacted lead has that domain. A domain-only match is never trusted: the lead is held 7 days and Ridwan gets a "Possible reply, check" alert, nothing else changes. Free-mail domains never match by domain. The alert subject says `[new thread, from address]`. When Ridwan approves the AI draft, it is sent to the person who actually wrote (Reply-To or From, never a noreply address), in that thread, not to the CS desk address in the original thread.
+
+`Messages.direction` is now `out`, `in`, `auto` or `bounce`; only `in` counts as a reply. The daily report shows how many auto-replies were held and not-delivered notices handled. Outreach > **Preview inbox classification** shows how the last 3 days of mail would be sorted without changing anything: run it once after pasting to check the sorting on real mail. Classification rules were tested in Node on the Originally Lovely auto-reply, the NLXL bounce, a mailbox-full bounce, a delay notice, an out-of-office with a return date, a ticket acknowledgement and two human replies; the Apps Script wiring has not been run in the real Sheet.
+
+Not handled: CS desks that reply from a ticket system with a different domain AND a changed subject AND without our message id in the headers cannot be matched; they show up only in Gmail.
