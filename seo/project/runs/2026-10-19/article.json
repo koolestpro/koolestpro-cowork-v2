@@ -1,0 +1,38 @@
+{
+  "slug": "shopify-landing-page-for-facebook-ads",
+  "title": "Shopify Landing Page for Facebook Ads: What to Build",
+  "h1": "What landing page should a Shopify store use for Facebook ads?",
+  "description": "Send cold Facebook traffic to a page that matches the ad. A simple test for product page vs landing page, and what to put above the fold.",
+  "targetQuestion": "What landing page should a Shopify store use for Facebook ads?",
+  "updated": "2026-10-19",
+  "readingMinutes": 4,
+  "pricesCheckedOn": "October 2026",
+  "blocks": [
+    {"type": "p", "text": "Use a landing page built for the ad when the ad makes a promise your product page does not show first. Use the product page when it already says the same thing in the first screen. The test is message match, not page type. This is how I decide before I build anything."},
+    {"type": "h2", "text": "Should Facebook ads go to a product page or a landing page?"},
+    {"type": "p", "text": "Send cold traffic to a page that repeats the ad's promise and has one job. Send warm traffic, such as people who already visited, to the product page, where reviews and variants help them decide."},
+    {"type": "p", "text": "A standard product page is built to list everything about one item. A cold visitor who clicked an ad for one reason can get lost in the rest."},
+    {"type": "h2", "text": "What should the page match from the ad?"},
+    {"type": "p", "text": "It should match the headline, the offer and the image the shopper just clicked. If the ad says one thing and the page opens with another, people assume they landed in the wrong place and leave."},
+    {"type": "ul", "items": ["The same outcome in the first headline", "The same product or hero image, not a different shot", "The same offer, price and any discount code", "The same tone, so it feels like one continuous message"]},
+    {"type": "h2", "text": "What goes above the fold?"},
+    {"type": "p", "text": "The first screen on a phone should carry the whole decision: the outcome, one piece of proof, the main benefit, the price and one button. Most Facebook traffic arrives on mobile, so check it on a real phone."},
+    {"type": "table", "head": ["Element", "What it should do"], "rows": [["Headline", "Say the outcome the ad promised"], ["Proof", "One real review, photo or guarantee, near the button"], ["Benefit", "One line on why this over alternatives"], ["Button", "One main action, reachable with a thumb"]]},
+    {"type": "h2", "text": "What should you cut from the page?"},
+    {"type": "p", "text": "Cut anything that sends the shopper away from the offer. That usually means the full navigation menu, unrelated collections and a long footer of links. Keep shipping, returns and contact details, because doubt about those stops purchases."},
+    {"type": "h2", "text": "How do you know which page works better?"},
+    {"type": "p", "text": "Run both against the same ad and audience and compare orders per click on your own store. Published conversion lifts for landing pages come from vendors who sell them, so treat those numbers as a guess about your store, not a result."},
+    {"type": "h2", "text": "When is it worth paying for a landing page build?"},
+    {"type": "p", "text": "It is worth it when you are spending on ads, the clicks arrive and orders do not, and your theme cannot be bent into a focused page. My single page build costs $600 to $900."},
+    {"type": "callout", "title": "Next steps", "text": "See what the single page build includes at /services/page-build. If you are not sure the page is the problem, the conversion audit at /services/cro-audit ranks what to fix first. Weighing who should build it? Read /resources/hire-a-replo-developer."},
+    {"type": "h2", "text": "What should you do first?"},
+    {"type": "p", "text": "Pick your best-spending ad and read it next to the page it points to. If the first screen does not repeat the ad's promise, fix that one page before you change the ad."}
+  ],
+  "faq": [
+    {"q": "Should I send Facebook ads to my Shopify homepage?", "a": "Rarely. A homepage serves many goals, so a cold visitor from a specific ad has to hunt for what they clicked. Point the ad at the page that matches it."},
+    {"q": "Can a product page work as a landing page?", "a": "Yes, if its first screen repeats the ad's promise and shows proof and a clear button. If not, it needs a focused version."},
+    {"q": "Do I need to remove the navigation menu?", "a": "For cold traffic it usually helps, because it keeps attention on the offer. Test it on your own store before committing."},
+    {"q": "How much does a Shopify landing page build cost?", "a": "My single page build is $600 to $900."}
+  ],
+  "cta": {"text": "Get a focused page built for your best ad, from $600.", "href": "/services/page-build", "label": "See the single page build"}
+}
