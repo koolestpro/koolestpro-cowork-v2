@@ -18,7 +18,7 @@ so there's always a buffer to swap something out if needed.
    any Playwright usage — idempotent, safe to run every time, handles the ARM64
    chromium/libXdamage setup from a cold sandbox.
 
-2. **Pick the next target.** Read `targets_pool.json`. Filter to `status == "Available"`
+2. **Pick the next target.** Read `targets_pool.json`. **Build queue first (2026-10-26):** pick from `buildQueue` in `outreach/scrapers/state/contactable_stores.json` (tier 1 said yes to the mockup, tier 2 emailed no reply, tier 3 not emailed) and rebuild the page the email is about (`buildPage`); the page-type rotation gives way to it. See the CRO Fix SKILL.md block "WHAT TO BUILD = THE BUILD QUEUE". **Contactable only (2026-10-26):** the target's domain must be on `outreach/scrapers/state/contactable_stores.json` (refresh it with `python3 outreach/scrapers/redesign_sync.py pull` if older than 3 days). If the Sheet is unreachable or no contactable target qualifies, fall back to the best eligible target already in `targets_pool.json`, flag it "FALLBACK: not a contactable store" in the summary and the usedFor note, and write no outreach hook. **First check `replo-rebuilds-pages.json` for a `kind: "real-redesign"` page built on Wednesday that has not been posted as a CRO Fix yet:** if one exists for a contactable store, use it (live page = before, its first screen = after) instead of building a new page. Filter to `status == "Available"`
    (never `"Backlog"`/`"Rejected"`) **and** whose `usedFor` array has no entry with
    `stream: "cro-fix"` — that per-stream check is what actually drives eligibility,
    not `status` (see "Reuse rule" below for why). Among those, prefer
@@ -53,6 +53,19 @@ so there's always a buffer to swap something out if needed.
    `feedback_verify_before_annotating` memory for why this matters (a rebuild that
    doesn't implement the claimed fix produces a before/after graphic showing two
    identical layouts with a false claim).
+
+   **Full page, every run (Ridwan, 2026-10-26).** Rebuild the WHOLE page, not just the
+   first screen: every section a real page of that type needs, per
+   `docs/system/cro-redesign-standard.md` "Full page rule". The audit's fixes decide the
+   first screen, and the graphics and carousel still focus on those fixes. The full page
+   is what lets this rebuild ship again as a Template Showcase. When the run is done, add
+   it to `replo-rebuilds-pages.json` with `kind: "real-redesign"`, `isRealBrand: true`,
+   `isClient: false`, `targetId`, `liveUrl`, `sourcePath: outputs/cro-fixes/{slug}_rebuild.html`,
+   `active: true`, `usedForTemplateShowcase: false` and the next free `sortOrder`. Build its
+   mobile strip with `build_mobile_strip.py` into `outputs/cro-fixes/{slug}_presentation/`.
+   If the target has `outreachLead: true`, append it to `outreach/redesign-hooks.json`, with the email comparison images
+   (`{slug}-compare.png` first screen live vs ours, `{slug}-compare-full.png` full mobile page live vs ours, both 390 wide,
+   labelled "Your page today" / "Concept redesign"; the carousel's before/after slide is a good base for the first).
 
    **Product photos and layout discipline (2026-09-01, see CLAUDE.md's "CAROUSEL
    COVERS, EVIDENCE SLIDES, PRODUCT PHOTOS & ABOVE-THE-FOLD" section for full

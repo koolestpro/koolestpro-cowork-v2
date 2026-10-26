@@ -398,6 +398,39 @@ Google Sheets and Make.com should act as the publishing and automation layer, no
 
 Tracks what has actually been built against this plan, so a future v2 pass knows exactly what exists and doesn't re-litigate settled decisions.
 
+### 2026-10-26 (night): Mockup offer, build queue, page matching, one branch
+
+- Email 1 keeps the one-problem format and ends with a mockup offer; a "yes" sets Leads `mockup_requested`.
+- Real-store builds (Wed Page B, Sun CRO Fix) pick from `buildQueue` (tier 1 asked for the mockup, tier 2 emailed with no reply, tier 3 not emailed) and build the page the email is about.
+- A finished page replaces the next follow-up (no extra email), queues one revival email for finished sequences, rewrites email 1 for new leads, or alerts Ridwan if they are already talking. If the built page differs from the email's page, emails say so honestly.
+- Branch: all work on `main`. The unmerged outreach fixes from `claude/email-pipeline-broken-links-5pr8ol` (2026-10-23) were applied into the working tree first. The Mac's last push to GitHub was 2026-10-21, so the hourly sync needs checking.
+
+### 2026-10-26 (evening): Static ads paused, pool fallback, email comparison images
+
+- Static ads paused by Ridwan (scheduled task off). Removed from the pool refresh's active streams; the static ad SKILL.md now stops if it ever runs.
+- Fallback: when the Sheet cannot be reached or no contactable target qualifies, CRO Fix / Page B / showcase use the best target already in `targets_pool.json`, flagged "FALLBACK" and with no outreach hook. Contactable stores still win.
+- Every real-store redesign that becomes an email hook also gets two comparison images (live vs ours, first screen and full mobile page, same width, labelled) so the store can compare against its own site.
+- Email approach recommended to Ridwan: "prove a point", not "replacement" or promotional (see outreach/README.md). Awaiting his confirmation.
+
+### 2026-10-26 (later): Contactable stores only, redesigns prioritised in cold email, no template ceiling
+
+Ridwan's decisions:
+- Real stores are only designed or posted about if we can email them: `outreach/scrapers/state/contactable_stores.json`, pulled hourly from the Sheet by `outreach/scrapers/redesign_sync.py` (33 stores on the first pull). Applied to the target pool refresh, Wednesday Page B, Sunday CRO Fix, Saturday showcase and Static Ad. The 17 existing targets were hand-picked brands that are not in the Sheet, so they are paused for real-store work until the pool refresh adds contactable ones.
+- Built redesigns go back to the Sheet (`set_redesign`): the email is rewritten around the redesign and those leads are prepared and sent first after hot leads. Apps Script files changed (Code.gs, Pipeline.gs, Research.gs, Api.gs, backups `.bak-2026-10-26`); Ridwan still has to paste them in and redeploy.
+- Every real-store page is postable both as a CRO Fix and as a Template Showcase. Sunday CRO Fix reuses an unposted Wednesday Page B redesign when one exists. Concept pages are never posted as CRO Fixes (no real before).
+- No template ceiling: templates are the starting point and the bar to beat. Each page starts from the business and 3+ live reference pages (`cro-redesign-standard.md`). Bar: the Fishwife collection CRO Fix.
+
+### 2026-10-26: Scrape feeds the target pool; real-store full-page redesigns feed Template Showcase
+
+Ridwan's decisions, 2026-10-26:
+- **Target pool source.** The target pool refresh takes candidates from the outreach directory scrape first (`outreach/scrapers/output/`), tagged `source: "outreach-directory-scrape"` and `outreachLead`. Still verified live per `cro-finding-rules.md`. `template-showcase` is now an active stream for the pool.
+- **Wednesday template build.** Page A stays a concept brand page. Page B is now a full-page CRO redesign of a real Shopify store from the pool (homepage, PDP, collection, advertorial or listicle), built under `replo-rebuilds/real-redesigns/`, kept private, real assets only.
+- **Sunday CRO Fix.** The rebuild is always the whole page now, and every one is registered in `replo-rebuilds-pages.json` as `kind: "real-redesign"` so it ships again as a Template Showcase 7+ days later.
+- **Saturday showcase.** Mixes one concept page and one real redesign per run when both are eligible. Real redesigns are framed "Concept redesign of {Brand}", not a client.
+- **Outreach.** A store that is also a cold-email lead gets its redesign used as the email hook (`outreach/redesign-hooks.json`, screenshots only, never a public link). Wiring into the Gmail sender is not built yet.
+- Files changed (backups `*.bak-2026-10-26`): the four scheduled-task SKILL.md files (target-pool-refresh, weekly-template-build, template-showcase-weekly, weekly-cro-fix), `.ai-workflow/weekly-pipeline.md`, `docs/system/cro-redesign-standard.md` (Full page rule), `CLAUDE.md` rule 4 + router, `targets_pool.json` schema, `replo-rebuilds-pages.json` kindNote, `outreach/README.md`, new `outreach/redesign-hooks.json`, `docs/system/03-prospect-intelligence.md`.
+- Same day: the ISO week 44 pool refresh ran and found the pool healthy (static-ad 11, cro-fix 4, template-showcase 16 untouched), so nothing was added.
+
 ### 2026-09-30: Cold email sender confirmed live; AI reply drafts, master brief, daily report
 
 Outreach Gmail sender confirmed working end to end in Ridwan's real account (TEST_MODE): send, follow-up, reply detection, alert. Fixed test-row seeding and row appends. Added AI reply drafting (Gemini free, then Claude Haiku, then DeepSeek; keys in Script Properties), lead memory summaries, a daily 6pm report email, and region-aware voice (Nigeria/Africa, UK, US/Canada, Europe). Master brief in `outreach/BRIEF.md`, compact AI version `outreach/brief-ai.md`, compiled to `outreach/gmail-sender/Brief.gs` by `outreach/build_brief.js`. Open decisions for Ridwan are in BRIEF.md section 12. Details: `outreach/README.md`.

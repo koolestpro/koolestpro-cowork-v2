@@ -94,3 +94,9 @@ Ridwan approved all four of these. Ordered cheapest and highest-certainty first.
 - **Nothing prevents a business existing in both pools.** No collision has happened; the ledger covers the outbound side only. Flagged rather than built.
 - **`leadPotential` in `dm_leads_pool.json` is an unvalidated heuristic** on rating and review count. A rough sort order, not a scoring system to trust.
 - **The pool is shallow.** 12 targets across three consuming streams. `koolestpro-target-pool-refresh` (Mon ~08:18) tops it up when a stream runs low, but the depth is worth watching on the status page.
+
+---
+
+## 2026-10-26: the outreach scrape now feeds `targets_pool.json`
+
+Ridwan's decision. The outreach directory scrape (merchantgenius, eachspy, zik, myip.ms Shopify page) already finds hundreds of real Shopify stores. The target pool refresh now takes candidates from it first (`outreach/scrapers/output/`), still verifying each one live under `cro-finding-rules.md`. Entries carry `source: "outreach-directory-scrape"` and `outreachLead`. This is a feed, not a merge: the Sheet keeps its copy, no `segment` field. `template-showcase` is now an active consumer of the pool, because real-store full-page redesigns (Wednesday Page B, every Sunday CRO Fix) feed the Saturday showcase. A store in both pools gets its redesign reused as the cold-email hook via `outreach/redesign-hooks.json`.

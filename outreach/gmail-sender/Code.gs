@@ -20,7 +20,7 @@ const TABS = {
   Settings: ['key', 'value', 'notes'],
   Leads: ['lead_id', 'brand', 'website', 'contact_name', 'email', 'email_status', 'country', 'time_zone',
     'niche', 'source', 'track', 'play', 'stage', 'approved', 'sender', 'touch_count', 'last_touch_at',
-    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model', 'signature', 'priority', 'signal_at', 'email_rescue'],
+    'next_touch_at', 'thread_id', 'first_message_id', 'subject', 'notes', 'created_at', 'prep_note', 'prep_tries', 'platform', 'business_model', 'signature', 'priority', 'signal_at', 'email_rescue', 'redesign', 'mockup_requested'],
   Profiles: ['lead_id', 'what_they_sell', 'audience', 'signal', 'site_notes', 'updated_at', 'problem', 'problem_evidence', 'problem_page', 'problem_worth', 'second_problem', 'research', 'socials', 'offer', 'decision_maker', 'team'],
   Sequence: ['lead_id', 'step', 'subject', 'body', 'status', 'sent_at'],
   Messages: ['logged_at', 'lead_id', 'direction', 'from', 'to', 'subject', 'body', 'sent_at', 'thread_id',
@@ -70,6 +70,9 @@ function defaultSettings_() {
     ['SIGNATURE_PARTNER', 'Ridwan Adekunle\nShopify development partner for agencies, Koolestpro\nkoolestpro.com', 'First email to an agency or studio (track Partner). Optional.'],
     ['MIN_FIT_SCORE', '55', 'Discovery: a store needs at least this score (0 to 100) to become a lead. Higher = pickier.'],
     ['MIN_PROBLEM_SCORE', '4', 'Research picks one offer per store (page rebuild, speed, advertorial, listicle, post-purchase, bundle builder, quiz, subscription, custom feature) and scores it from 1 (small fix or guesswork) to 5 (a real project backed by evidence). Below this, the lead is held and no emails are written. See Profiles > offer, problem and research.'],
+    ['PREP_DAILY_MINUTES', '35', 'Lead preparation (research, emails, sequences) stops for the day after this many minutes of Apps Script time. A Gmail account gets about 90 minutes of trigger time a day in total, shared with sending and the 6pm report. If sending or the report ever stops, lower this.'],
+    ['PREP_RUN_MINUTES', '3', 'Longest a single preparation run may take.'],
+    ['PREP_BUFFER', '40', 'Preparation pauses when this many leads already have their emails written and have not been contacted. 0 = never pause.'],
     ['SPEED_FIELD_LCP', '4', 'Speed is only pitched when obviously slow. With Google real-user data: the page or site must be rated SLOW with main content at or above this many seconds for 1 in 4 phone visits.'],
     ['SPEED_LAB_LCP', '8', 'Without real-user data: two lab test runs on a phone must both show main content at or above this many seconds and a score of 35/100 or less. Needs Script property PAGESPEED_API_KEY.'],
     ['BIG_BRAND_RANK', '1000000', 'Big brands are never emailed. A store inside this Tranco traffic rank (top 1 million sites, roughly more than 1,000 visits a day) is skipped at Discovery and marked Lost at research. Lower it (e.g. 300000) only if you want to allow mid-size stores.'],
@@ -273,6 +276,32 @@ function leadTz_(lead) {
   return COUNTRY_TZ_[lc_(lead.country)] || 'Africa/Lagos';
 }
 
+/** 1 if Ridwan already built a redesign of this store's page (set by the Mac via Api.gs set_redesign, 2026-10-26). Those emails go out first. */
+function hasRedesign_(lead) { return String((lead && lead.redesign) || '').trim() ? 1 : 0; }
+
+/** Rough page kind from a page name or URL: homepage, product, collection, new (advertorial/listicle/landing) or other. */
+function pageKind_(s) {
+  const t = lc_(s);
+  if (!t) return '';
+  if (/advertorial|listicle|landing/.test(t)) return 'new';
+  if (/collection|\/collections\/|category|shop[- ]all/.test(t)) return 'collection';
+  if (/product|pdp|\/products\//.test(t)) return 'product';
+  if (/home|^https?:\/\/[^\/]+\/?$|^\/$/.test(t)) return 'homepage';
+  return 'other';
+}
+
+/** The redesign's page type, from the `redesign` cell ("date | page type | path | note"). */
+function redesignType_(lead) { return String((lead && lead.redesign) || '').split('|')[1] ? String(lead.redesign).split('|')[1].trim() : ''; }
+
+/** Tells the AI whether the page we built is the page the email is about (2026-10-26: built PDP, email about homepage). */
+function redesignMatch_(lead, profile) {
+  const built = pageKind_(redesignType_(lead)), asked = pageKind_(profile && profile.problem_page);
+  if (!built) return '';
+  if (!asked) return 'PAGE MATCH: unknown (no problem page recorded). Name the page that was rebuilt (' + redesignType_(lead) + ') and do not claim it fixes a different page.';
+  return built === asked ? 'PAGE MATCH: yes, the rebuilt page IS the page THE PROBLEM is on.'
+    : (n => 'PAGE MATCH: NO. THE PROBLEM is on their ' + n + ', but the page already rebuilt is their ' + redesignType_(lead) + '. Keep THE PROBLEM about the ' + n + '. Mention the rebuilt ' + redesignType_(lead) + ' only as proof of how Ridwan works ("I already rebuilt your ' + redesignType_(lead) + ' as a concept, it shows the approach"), and offer to do the same for the ' + n + '. Never say the rebuilt page fixes the ' + n + ' problem.')({ homepage: 'homepage', product: 'product page', collection: 'collection page', new: 'landing page', other: 'page' }[asked]);
+}
+
 /** True if it is currently working hours (and a weekday, unless SEND_WEEKENDS) where the lead is. */
 /** True while a lead's live signal (public question, job post, feedback request) is fresh. Hot leads jump the queue. */
 function isHot_(lead, S) {
@@ -306,6 +335,7 @@ function whyNotSending() {
   out.push('TEST_MODE = ' + S.TEST_MODE + (isTrue_(S.TEST_MODE) ? '   (emails go to ALERT_EMAIL: ' + S.ALERT_EMAIL + ')' : '   (LIVE: emails go to real leads)'));
   out.push('ALERT_EMAIL = ' + (S.ALERT_EMAIL || '(empty)   <-- PROBLEM in test mode'));
   out.push('Sending as: ' + me);
+  out.push('Manual send: "Send due emails now" bypasses lead working hours. Safe for testing only when TEST_MODE = TRUE; with TEST_MODE = FALSE it sends to real leads.');
   out.push('Sent today by this Gmail: ' + sentToday + ' of ' + cap + ' allowed' + (sentToday >= cap ? '   <-- DAILY CAP REACHED. Nothing more goes out until tomorrow, or raise DAILY_CAP_START.' : ''));
   out.push('Gmail quota left today: ' + MailApp.getRemainingDailyQuota());
   const pr = PropertiesService.getScriptProperties();
@@ -325,14 +355,24 @@ function whyNotSending() {
     const touched = Number(l.touch_count || 0);
     if (touched > 0 && !(l.next_touch_at && new Date(l.next_touch_at) <= now)) why.push('already sent ' + touched + ' email(s); next one is not due until ' + (l.next_touch_at || '(no date)'));
     const steps = seq.rows.filter(r => String(r.lead_id) === String(l.lead_id));
-    const nextRow = steps.find(r => Number(r.step) === touched + 1 && r.status !== 'Sent' && r.status !== 'Stopped');
+    const nextRow = steps.find(r => Number(r.step) === touched + 1 &&
+      r.status !== 'Superseded' && r.status !== 'Sent' && r.status !== 'Stopped');
     if (!steps.length) why.push('NO EMAILS in the Sequence tab for this lead (run Prepare new leads now; see prep_note)');
-    else if (!nextRow) why.push('no unsent step ' + (touched + 1) + ' in Sequence');
+    else if (!nextRow) {
+      const step = touched + 1;
+      if (steps.some(r => Number(r.step) === step && r.status === 'Superseded')) {
+        why.push('step ' + step + ' is Superseded; run Prepare new leads now to create a replacement, then review and approve it');
+      } else {
+        why.push('no unsent step ' + step + ' in Sequence');
+      }
+    }
+    if (touched > 0 && nextRow && !l.thread_id) why.push('follow-up has no thread_id; it cannot be sent');
     const tz = leadTz_(l), hr = Utilities.formatDate(now, tz, 'H:mm EEE');
     const inWin = inLeadWindow_(l, S);
     if (why.length && l.prep_note) why.push('prep_note: ' + String(l.prep_note).slice(0, 420) + (Number(l.prep_tries || 0) >= 3 ? ' [gave up after 3 tries: set prep_tries to 0 to retry]' : ''));
     out.push((why.length ? 'X ' : 'OK ') + l.lead_id + ' (' + (l.brand || '') + ', ' + (l.country || 'no country') + '): ' +
-      (why.length ? why.join('; ') : 'ready to send. Click "Send due emails now" (ignores hours). The hourly automation only sends inside working hours: it is ' + hr + ' at the lead (' + tz + '), ' + (inWin ? 'inside the window' : 'OUTSIDE the window, so it waits')));
+      (why.length ? why.join('; ') : 'passes these checks; the sender still rechecks the address and live site. It is ' + hr + ' at the lead (' + tz + '), ' + (inWin ? 'inside the sending window' : 'OUTSIDE the sending window, so hourly automation waits') +
+        '. "Send due emails now" can test the send path now, bypassing hours; it sends to ALERT_EMAIL only when TEST_MODE = TRUE.'));
   });
   const text = out.join('\n');
   Logger.log(text);
@@ -340,12 +380,17 @@ function whyNotSending() {
 }
 
 /** Sends follow-ups that are due first, then new first emails, within today's cap. */
+/** Remembers what the last send run did, so the 6pm report can say why nothing went out. */
+function beat_(msg) {
+  try { PropertiesService.getScriptProperties().setProperty('SEND_LAST', Utilities.formatDate(new Date(), tz_(), 'EEE d MMM HH:mm') + ': ' + msg); } catch (e) {}
+}
+
 function sendDue(ignoreHours) {
   const lock = LockService.getScriptLock();
-  if (!lock.tryLock(30000)) return;
+  if (!lock.tryLock(150000)) { beat_('skipped, another job held the lock for 150 seconds'); return; }   // was 30s and silent: preparation and reply checks could starve sending
   try {
     const S = settings_();
-    if (isTrue_(S.PAUSED)) { if (ignoreHours === true) toast_('Nothing sent: PAUSED is TRUE in Settings.'); return; }
+    if (isTrue_(S.PAUSED)) { beat_('PAUSED is TRUE'); if (ignoreHours === true) toast_('Nothing sent: PAUSED is TRUE in Settings.'); return; }
 
     // Live: anything that was only ever sent as a TEST email goes back to the start first. Real progress is never touched.
     if (!isTrue_(S.TEST_MODE) && !isSecondary_() && typeof resetTestSends_ === 'function') { try { resetTestSends_(false); } catch (e) { Logger.log('resetTestSends_ failed: ' + e); } }
@@ -362,7 +407,7 @@ function sendDue(ignoreHours) {
     const quota = MailApp.getRemainingDailyQuota() - 5;
     let budget = Math.min(dailyCap_(S) - sentToday, Number(S.MAX_PER_RUN) || 2, quota);
     let hotBudget = Math.min(dailyCap_(S) + (Number(S.HOT_EXTRA_PER_DAY) || 5) - sentToday, Number(S.HOT_PER_RUN) || 4, quota);
-    if (budget <= 0 && hotBudget <= 0) { if (ignoreHours === true) toast_('Nothing sent: daily cap or per-run limit reached.'); return; }
+    if (budget <= 0 && hotBudget <= 0) { beat_('daily cap reached (' + sentToday + ' sent today)'); if (ignoreHours === true) toast_('Nothing sent: daily cap or per-run limit reached.'); return; }
 
     const now = new Date();
     const due = leads.rows.filter(l =>
@@ -373,7 +418,7 @@ function sendDue(ignoreHours) {
       !(isTrue_(S.TEST_MODE) && realOut[String(l.lead_id)]) &&
       (ignoreHours === true || inLeadWindow_(l, S, isHot_(l, S))) &&
       (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now)));
-    due.sort((a, b) => (isHot_(b, S) ? 1 : 0) - (isHot_(a, S) ? 1 : 0) || Number(b.touch_count || 0) - Number(a.touch_count || 0)); // hot leads first, then follow-ups
+    due.sort((a, b) => (isHot_(b, S) ? 1 : 0) - (isHot_(a, S) ? 1 : 0) || hasRedesign_(b) - hasRedesign_(a) || Number(b.touch_count || 0) - Number(a.touch_count || 0)); // hot leads first, then stores we built a redesign for (2026-10-26), then follow-ups
 
     const gaps = String(S.FOLLOWUP_GAPS).split(',').map(Number);
     let sent = 0;
@@ -437,6 +482,7 @@ function sendDue(ignoreHours) {
       hotBudget--; sent++;
       if (budget > 0 || hotBudget > 0) Utilities.sleep(20000 + Math.floor(Math.random() * 40000));
     }
+    beat_(sent + ' sent, ' + due.length + ' due inside working hours' + (sent === 0 && !due.length ? ' (none of the approved leads is inside its 9am to 5pm window right now)' : ''));
     if (ignoreHours === true) {
       if (sent > 0) toast_(sent + ' email(s) sent.');
       else {
@@ -456,6 +502,13 @@ function sendDue(ignoreHours) {
 
 /** Runs daily at 6pm: one email to ALERT_EMAIL with what happened today and what needs Ridwan. */
 function dailyReport() {
+  try { dailyReport_(); }
+  catch (e) {   // a broken report must never be silent
+    try { GmailApp.sendEmail(settings_().ALERT_EMAIL, 'Outreach report FAILED', 'The daily report crashed: ' + e + '\n\nOpen the Sheet > Extensions > Apps Script > Executions to see why.', { name: 'Koolestpro Outreach' }); } catch (e2) {}
+  }
+}
+
+function dailyReport_() {
   const S = settings_();
   if (!S.ALERT_EMAIL) return;
   const me = me_();
@@ -463,8 +516,28 @@ function dailyReport() {
   const sentToday = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && isToday_(m.sent_at));
   const repliesToday = msgs.rows.filter(m => m.direction === 'in' && isToday_(m.sent_at));
   const now = new Date();
-  const waiting = leads.rows.filter(l => isTrue_(l.approved) && ['New', 'Contacted', ''].indexOf(String(l.stage)) !== -1 &&
-    sendableStatus_(l.email_status, S) && (Number(l.touch_count || 0) === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now))).length;
+  const realOut = {};
+  msgs.rows.filter(m => lc_(m.direction) === 'out' && !/^\s*\[TEST to /i.test(String(m.subject || '')))
+    .forEach(m => { realOut[String(m.lead_id)] = true; });
+  let queueBlocked = 0;
+  const waiting = leads.rows.filter(l => {
+    const id = String(l.lead_id || '');
+    const touched = Number(l.touch_count || 0);
+    if (!isTrue_(l.approved) || ['New', 'Contacted', ''].indexOf(String(l.stage)) === -1 ||
+      !sendableStatus_(l.email_status, S) || !l.email ||
+      (l.sender && lc_(l.sender) !== me) ||
+      (isTrue_(S.TEST_MODE) && realOut[id]) ||
+      !(touched === 0 || (l.next_touch_at && new Date(l.next_touch_at) <= now))) return false;
+    const step = touched + 1;
+    const steps = seq.rows.filter(r => String(r.lead_id) === id);
+    const nextRow = steps.find(r => Number(r.step) === step &&
+      r.status !== 'Superseded' && r.status !== 'Sent' && r.status !== 'Stopped');
+    if (!nextRow || (step > 1 && !l.thread_id)) {
+      queueBlocked++;
+      return false;
+    }
+    return true;
+  }).length;
   const notApproved = leads.rows.filter(l => !isTrue_(l.approved) && ['New', ''].indexOf(String(l.stage)) !== -1).length;
   const toReview = drafts.rows.filter(d => d.status === 'Ready for review');
   const needsDraft = drafts.rows.filter(d => d.status === 'Needs draft');
@@ -482,7 +555,8 @@ function dailyReport() {
     '- Leads waiting for your approval tick: ' + notApproved,
     '',
     'QUEUE',
-    '- Approved and ready to send next: ' + waiting,
+    '- Approved with a sendable next step (before hours/caps): ' + waiting,
+    '- Otherwise-eligible approved leads blocked by a missing/superseded step or thread: ' + queueBlocked,
     '',
     'PIPELINE: ' + Object.keys(stages).map(k => k + ' ' + stages[k]).join(', '),
   ];
@@ -490,6 +564,14 @@ function dailyReport() {
     lines.push('', 'TODAY\'S REPLIES');
     repliesToday.slice(0, 10).forEach(m => lines.push('- ' + m.lead_id + ': ' + String(m.body).replace(/\s+/g, ' ').slice(0, 140)));
   }
+  const pr = PropertiesService.getScriptProperties();
+  const prepMin = Math.round(Number(pr.getProperty('PREP_MS') || 0) / 60000);
+  lines.push('', 'HEALTH', '- Last send run: ' + (pr.getProperty('SEND_LAST') || 'no record yet'),
+    '- Lead preparation today: ' + prepMin + ' of ' + Number(S.PREP_DAILY_MINUTES || 35) + ' minutes allowed',
+    '- Automation triggers installed: ' + (ScriptApp.getProjectTriggers().map(t => t.getHandlerFunction()).sort().join(', ') || 'NONE'));
+  const wd = Utilities.formatDate(now, tz_(), 'u');
+  if (!isTrue_(S.PAUSED) && waiting > 0 && sentToday.length === 0 && wd !== '6' && wd !== '7')
+    lines.push('', 'PROBLEM: ' + waiting + ' emails are approved and waiting but none went out today. Run Outreach > Why isn\'t it sending? and check Apps Script > Executions for errors.');
   const bad = drafts.rows.filter(d => String(d.model).indexOf('failed') === 0);
   if (bad.length) lines.push('', 'PROBLEM: ' + bad.length + ' draft(s) failed to generate. Check the model column in Drafts.');
   lines.push('', 'Sheet: ' + ss_().getUrl());
@@ -661,7 +743,9 @@ function draftReplies_(interactive) {
       'CONVERSATION (oldest first):',
       thread,
       '',
-      'Write the reply to the lead\'s latest message.',
+      hasRedesign_(lead) ? 'REDESIGN ALREADY BUILT: ' + lead.redesign + '. ' + redesignMatch_(lead, profile) + ' If they said yes to seeing it, the reply says the side-by-side (their page today next to the concept) is attached and adds a line [RIDWAN: attach the compare image and the private link] for Ridwan. No public link, no results promised.' :
+        (String(lead.mockup_requested || '').trim() ? 'They asked for the mockup on ' + lead.mockup_requested + ' and it is being built: say it will be with them within the week. Never say it is ready.' : ''),
+      'Write the reply to the lead\'s latest message. Then, on its own line, add <wants_mockup>yes</wants_mockup> if their latest message accepts or asks for the mockup, the redesign or to see the page, otherwise <wants_mockup>no</wants_mockup>.',
     ].join('\n');
 
     let out;
@@ -670,6 +754,7 @@ function draftReplies_(interactive) {
     const summary = clean_((out.text.match(/<memory>([\s\S]*?)<\/memory>/i) || [])[1] || '');
     if (!reply) { failed = 'AI returned no <reply> block'; set_(drafts, d, 'model', 'failed: no reply block'); continue; }
 
+    if (/<wants_mockup>\s*yes/i.test(out.text) && !String(lead.mockup_requested || '').trim()) set_(leads, lead, 'mockup_requested', Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd'));   // 2026-10-26: the Mac build queue picks this up first
     set_(drafts, d, 'draft_body', reply);
     set_(drafts, d, 'status', 'Ready for review');
     const flags = draftFlags_(reply);

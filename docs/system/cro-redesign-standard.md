@@ -105,3 +105,26 @@ even if every audit finding was addressed.
 ## Homepage rebuilds (2026-10-11)
 
 Research the hero before building it and follow `docs/system/homepage-hero-patterns.md`: image first and product/range-forward, facts as labels on the image, a short centered stack (proof line, 2-line H1 that says what the brand sells, one-line sub), one full-width CTA, then category pills and press/trust. Never narrow a multi-category brand to one product; no long left-aligned text block on the mobile hero. Build 3-4 directions on real assets, board them, record the choice.
+
+## Full page rule (2026-10-26, Ridwan)
+
+Every redesign of a real store (Sunday CRO Fix, Wednesday Page B) is a complete page, because the same page ships again as a Template Showcase. The first screen still carries the whole decision and is judged by the rubric above. Below it, build what a real page of that type needs, using only the store's real products, prices, photos and claims:
+
+- **Homepage:** hero (what the brand sells, proof, one CTA plus "Shop all"), shop-by category row, priced best-sellers rail, why-us or how-it-works, proof that the store actually shows (real reviews, real press), a featured product or bundle, FAQ, newsletter, footer.
+- **Product page:** first screen per the product title rule, then benefits, how to use, ingredients or specs, comparison, real reviews, FAQ, cross-sell, sticky mobile add to cart, footer.
+- **Collection page:** short header that says what the range is for, filter and sort bar, product grid with price and one key benefit, a mid-grid proof or guide block, FAQ or buying guide, footer.
+- **Advertorial / listicle:** a new page for the store, built on its real products: editorial hook, problem, the product as the answer, proof, offer block, FAQ, CTA. Only real facts. No invented customer stories or numbers.
+
+Never invent reviews, ratings, review counts, press logos, guarantees or stats the store does not show. If the store has no reviews, design the proof section around what is real (materials, origin, a real guarantee) rather than filling it with fake ones.
+
+## No template ceiling (2026-10-26, Ridwan)
+
+Our templates and past pages are the starting point and the level to beat, never the answer. Ridwan: "not award level websites, but websites that work, not cheap template designs."
+
+For every real-store redesign and every concept page:
+1. **Business first.** What it sells, the price point, how buyers arrive (ads, search, social), what they doubt, and what the brand already looks and sounds like. The structure follows from this, not from the last page we built.
+2. **Look before building.** Study 3 or more live, well-converting pages for this kind of business and page type: homepage and hero inspiration roundups, the store's competitors, strong DTC stores in the niche. Note what each does that our library has never done (a hero idea, a way of showing the range, a proof format, an interactive element). See `homepage-hero-patterns.md` for homepages.
+3. **Choose, then build.** Pick the structure and hero idea that suit this brand. Write the choice and the references in the build notes (`BUILD-NOTES.md` or the build brief).
+4. **Check against the bar.** Put it next to the latest CRO Fix (currently `outputs/cro-fixes/fishwife_shop-all-collection_rebuild.html`) and the template it started from. If it reads like a cheap theme, or like our last page in new colours, it is not done.
+
+Every real-store page is built so it can be posted both as a CRO Fix (its first screen) and as a Template Showcase (the whole page).

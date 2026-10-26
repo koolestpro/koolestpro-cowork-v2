@@ -1,0 +1,702 @@
+{
+ "brand": "HALOS",
+ "brandSlug": "halos",
+ "isRealBrand": false,
+ "isClient": false,
+ "created": "2026-07-31T16:23:56.000Z",
+ "updated": "2026-10-10T08:21:32.679494+00:00",
+ "howToUse": "Each key under 'assets' maps one generated image or video to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' \u2014 the exact relative path from the koolestpro-cowork-v2 project root \u2014 or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md). HALOS has no pre-written caption library like kura-social-content.md \u2014 this file IS that library, started fresh on the first HALOS Template Showcase run.",
+ "relatedPipelineItemIds": [
+  "template-showcase-halos_pdp-01-2026-07-31",
+  "template-showcase-halos_hp-01-2026-08-18",
+  "template-showcase-halos_lp-01-2026-08-23",
+  "template-showcase-halos_ad-01-20260905",
+  "template-showcase-halos_li-02-2026-10-10"
+ ],
+ "assets": {
+  "TS-HALOS-HP01-COVER-VID": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01 cover.mp4",
+   "caption": "Built a full homepage for HALOS, a red light therapy brand, from scratch. Hero, the daily ritual walkthrough, real customer shots, then the offer. Desktop and mobile, side by side. Portfolio build, not a live client site. Need a homepage like this for your brand? DM me.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-HP01-LAPTOP-VID": {
+   "platform": [
+    "linkedin"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01 laptop.mp4",
+   "caption": "Full scroll-through of the HALOS homepage on desktop. Hero, the daily ritual, why light heals, customer proof, then the offer. Every section has a job. Portfolio build, not a live client site.",
+   "hashtags": [
+    "#webdesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-HP01-MOBILE-VID": {
+   "platform": [
+    "instagram",
+    "x"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01 mobile.mp4",
+   "caption": "HALOS homepage, mobile view. Same flow as desktop, nothing cut for space. Building homepages like this. DM if you want one.",
+   "hashtags": [
+    "#mobiledesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-HP01-COVER-IMG": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01 cover.png",
+   "caption": "A red light panel and a homepage built to actually sell it. Hero, ritual, proof, offer, in that order. Need a homepage like this built for your brand? DM me.",
+   "hashtags": [
+    "#ecommerce",
+    "#shopify",
+    "#uidesign"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-HP01-PREVIEW": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01-preview.png",
+   "caption": "Three scroll depths of the same HALOS homepage: the hero, the feature breakdown, and the FAQ close. Every fold earns its place. Portfolio build, not a live client site.",
+   "hashtags": [
+    "#webdesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-HP01-FULLPAGE": {
+   "platform": [
+    "linkedin"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01-full-page.png",
+   "caption": "The whole HALOS homepage, top to bottom, split into two columns so you can read the flow. Hero, the daily ritual, why light heals, the device breakdown, customer proof, the offer, then FAQs. Most homepages are a hero image and a nav bar. This one walks the visitor through the story before it ever asks for the sale.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#CRO"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-HP01-X1": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01 cover.png",
+   "caption": "New homepage build: HALOS, a red light therapy brand. Hero, ritual walkthrough, proof wall, then the offer. Full scroll on desktop and mobile.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-HP01-X2": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01-preview.png",
+   "caption": "This is what a homepage looks like when it's built to sell, not just to look nice. HALOS, full scroll-through, hero to FAQ.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-HP01-X3": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_hp-01_2026-08-18/halos_hp-01-full-page.png",
+   "caption": "Concept build: HALOS homepage. Story first, offer last. That order matters more than people think.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-COVER-VID": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01 cover.mp4",
+   "caption": "Built a full product page for HALOS, a red light therapy brand, from scratch. Desktop and mobile, side by side. Portfolio build, not a live client site. Need a page like this for your brand? DM me.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LAPTOP-VID": {
+   "platform": [
+    "linkedin"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01 laptop.mp4",
+   "caption": "Full scroll-through of the HALOS product page on desktop: hero, the problem, the fix, social proof, before-and-after, then the comparison table. Every section has a job. Portfolio build, not a live client site.",
+   "hashtags": [
+    "#webdesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-MOBILE-VID": {
+   "platform": [
+    "instagram",
+    "x"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01 mobile.mp4",
+   "caption": "HALOS product page, mobile view. Same story-arc structure as desktop, nothing cut for space. Building stores like this. DM if you want one.",
+   "hashtags": [
+    "#mobiledesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-COVER-IMG": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01 cover.png",
+   "caption": "A red light therapy panel. $149. 4.8 stars. The page around it does the actual selling: problem, fix, proof, then the close. That's what a story-arc product page looks like. Need a page like this built? DM me.",
+   "hashtags": [
+    "#ecommerce",
+    "#shopify",
+    "#uidesign"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-PREVIEW": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01-preview.png",
+   "caption": "Three scroll depths of the same HALOS product page: the FAQs and why-choose block, the customer proof section, and the footer close. Every fold earns its place. Portfolio build, not a live client site.",
+   "hashtags": [
+    "#webdesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-FULLPAGE": {
+   "platform": [
+    "linkedin"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01-full-page.png",
+   "caption": "The whole HALOS product page, top to bottom, split into two columns so you can actually read the flow: hero, why-choose, the problem, the upgrade, testimonial, ritual, social proof, comparison table, FAQs, then the close. Most product pages are a photo and a price. This one walks the visitor through why they have a problem, why this fixes it, and proof it worked for other people, before ever asking for the sale.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#CRO"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-X1": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01 cover.png",
+   "caption": "Built HALOS's product page from scratch: hero shot, problem, fix, social proof, before and after, comparison table. Every section has a job. Portfolio build, not a live client site. Want one for your brand? DM me.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-X2": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01-preview.png",
+   "caption": "A red light therapy panel. $149. 4.8 stars. The page around it does the actual selling: problem, fix, proof, then the close. That's what a story-arc product page looks like. Need a page like this built? DM me.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-X3": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_pdp-01_2026-07-31/halos_pdp-01-full-page.png",
+   "caption": "Most product pages are a photo and a price. This HALOS build walks the visitor through why they have a problem, why this fixes it, and proof it worked for other people, before ever asking for the sale. Building stores like this. DM if you want one.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-COVER-VID": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01 cover.mp4",
+   "caption": "A direct response landing page built end to end for HALOS, a concept red light therapy brand. Desktop and mobile scrolling together, hero through to the FAQ. Portfolio build, not a live client site. Need a store like this for your brand? DM me.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-LAPTOP-VID": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01 laptop.mp4",
+   "caption": "Full desktop scroll of the HALOS landing page. One product, one price, and every section earning the right to ask for the sale. Concept build, not a live client site.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-MOBILE-VID": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01 mobile.mp4",
+   "caption": "The same HALOS landing page on mobile, full scroll. Most of the traffic arrives here, so this is the view that decides whether the page works. Concept build, not a live client site.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-COVER-IMG": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01 cover.png",
+   "caption": "HALOS, a direct response landing page for a red light therapy panel. Built and scrollable on desktop and mobile, not a Figma mockup. Concept build, no client attached.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-PREVIEW": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01-preview.png",
+   "caption": "Three scroll depths of the HALOS landing page: the hero and its offer, the benefit grid and proof wall, then the price and guarantee close. Concept build, not a live client site.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-FULLPAGE": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01-full-page.png",
+   "caption": "The whole HALOS landing page, top to bottom, split into two columns so the flow is readable in one image. Problem before product, mechanism before benefits, price last. Concept build, not a live client site.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-X1": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01 cover.png",
+   "caption": "Built a direct response landing page for HALOS, a concept red light therapy brand.\n\nOne product. One price. One decision.\n\nThe price does not appear until the reader has a reason to care what it is.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-X2": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01-preview.png",
+   "caption": "Objection handling belongs on the page, not in your DMs.\n\nThis landing page answers \"is this actually proven\", \"how is this different from a cheap LED mask\", and \"how long until I see results\" before it asks for the sale.\n\nConcept build, mine, no client.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LP01-X3": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_lp-01_2026-08-23/halos_lp-01-full-page.png",
+   "caption": "The whole HALOS landing page in two columns.\n\nHero, problem, mechanism, benefits, proof, ritual, guarantee, price, FAQ.\n\nNine sections and only one of them shows a price. Concept build. If you need a store built like this, my DMs are open.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-COVER-VID": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01 cover.mp4",
+   "caption": "Built a full editorial advertorial page for HALOS, a concept red light therapy brand. Desktop and mobile scrolling side by side, hero through the guarantee close. Portfolio build, not a live client site. Need a page like this for your brand? DM me.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#shopify"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-LAPTOP-VID": {
+   "platform": [
+    "linkedin"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01 laptop.mp4",
+   "caption": "Full desktop scroll-through of the HALOS advertorial: the health-story opener, the clinical advisor quote, the mechanism breakdown, specs, then the price and guarantee. Concept build, not a live client site.",
+   "hashtags": [
+    "#webdesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-MOBILE-VID": {
+   "platform": [
+    "instagram",
+    "x"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01 mobile.mp4",
+   "caption": "HALOS advertorial, mobile view. Same story-first structure as desktop, nothing cut for space. Building pages like this. DM if you want one.",
+   "hashtags": [
+    "#mobiledesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-COVER-IMG": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01 cover.png",
+   "caption": "An editorial-style advertorial for HALOS, a concept home red light panel. Reads like an article first, sells second. Need a page like this built? DM me.",
+   "hashtags": [
+    "#ecommerce",
+    "#shopify",
+    "#uidesign"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-PREVIEW": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01-preview.png",
+   "caption": "Three scroll depths of the same HALOS advertorial: the health-story hero, the mechanism and proof section, and the review wall close. Every fold earns its place. Portfolio build, not a live client site.",
+   "hashtags": [
+    "#webdesign",
+    "#ecommerce"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-FULLPAGE": {
+   "platform": [
+    "linkedin"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01-full-page.png",
+   "caption": "The whole HALOS advertorial, top to bottom, split into two columns so you can read the flow: the health story, the wavelength explainer, the clinical quote, mechanism, specs, guarantee, then reviews. Most product pages are a photo and a price. This one reads like an article that happens to sell something.",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#CRO"
+   ],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-MOBILESTRIP": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01-mobile-strip.png",
+   "caption": "Here's the entire HALOS page laid out end to end, six columns, so you can see the whole responsive build in one shot.\n\nHero to guarantee to reviews, nothing hidden behind a scroll.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-X1": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01 cover.png",
+   "caption": "Concept build: a full editorial advertorial page for HALOS, a home red light therapy panel.\n\nIt has to read like a real health article first, with the pitch woven in, not slapped over it.\n\nScreens below.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-X2": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01-preview.png",
+   "caption": "If you sell a recovery or wellness product and your page reads like a spec sheet, this is what the alternative looks like.\n\nStory first. Product second. Guarantee and reviews at the end, not the top.\n\nBuilt as a concept for HALOS, a home red light panel.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-AD01-X3": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_ad-01_2026-09-05/halos_ad-01-full-page.png",
+   "caption": "Every advertorial page gets the same gut check from me: does the pitch survive being read out loud like an article.\n\nBuilt the desktop and mobile version side by side for this one, a HALOS concept, then split the whole page into two columns to see the full structure at once.",
+   "hashtags": [],
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-COVER-VID": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 cover.mp4",
+   "hashtags": [
+    "#ecommerce",
+    "#shopify",
+    "#webdesign",
+    "#landingpage"
+   ],
+   "caption": "Built a listicle page for HALOS, a red light therapy brand I made up. It's a concept build, not a client.\n\nThe angle is \"five reasons people keep the panel after the trial ends\". Each reason answers a doubt a buyer has before paying for a panel: does it work, will I actually use it, is it well made, what else is it good for, what does it cost me over time.\n\nOnly after that does the page start selling. Comparison table, offer, buy box, reviews, FAQ.\n\nDesktop and mobile run in the same order, and I didn't cut anything for the small screen.\n\nIf your product needs a page like this, here's where to start: koolestpro.com/services/page-build",
+   "captionKey": "TS-HALOS-LI02-COVER-VID",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-LAPTOP-VID": {
+   "platform": [
+    "linkedin"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 laptop.mp4",
+   "hashtags": [
+    "#webdesign",
+    "#ecommerce"
+   ],
+   "caption": "Desktop scroll-through of the HALOS listicle.\n\nHero, then the five reasons, with a small nudge after reason two for people who are already sold. Then the comparison table, the offer, the buy box, reviews and the FAQ.\n\nConcept build, not a live client site.",
+   "captionKey": "TS-HALOS-LI02-LAPTOP-VID",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-MOBILE-VID": {
+   "platform": [
+    "instagram",
+    "x"
+   ],
+   "assetType": "video",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 mobile.mp4",
+   "hashtags": [
+    "#mobiledesign",
+    "#ecommerce"
+   ],
+   "caption": "The HALOS listicle on a phone.\n\nSame five reasons, same order as desktop. The buy box comes right after the proof.\n\nDemo brand I made up, not a client. Want one for your product? DM me.",
+   "captionKey": "TS-HALOS-LI02-MOBILE-VID",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-COVER-IMG": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 cover.png",
+   "hashtags": [
+    "#ecommerce",
+    "#shopify",
+    "#uidesign"
+   ],
+   "caption": "A listicle page for HALOS, a concept home red light panel.\n\nThe reasons come first and the pitch comes after. I think that order is why listicles work for products people are unsure about.\n\nNeed a page like this built? DM me.",
+   "captionKey": "TS-HALOS-LI02-COVER-IMG",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-PREVIEW": {
+   "platform": [
+    "linkedin",
+    "instagram"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-preview.png",
+   "hashtags": [
+    "#webdesign",
+    "#ecommerce"
+   ],
+   "caption": "Three screens from the HALOS listicle on mobile: the hero, the comparison table running into the $20 offer, and the FAQ with the footer.\n\nConcept build, not a live client site.",
+   "captionKey": "TS-HALOS-LI02-PREVIEW",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-FULLPAGE": {
+   "platform": [
+    "linkedin"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-full-page.png",
+   "hashtags": [
+    "#ecommerce",
+    "#webdesign",
+    "#CRO"
+   ],
+   "caption": "The whole HALOS listicle, split into two columns.\n\nThe left column is the convincing part. Five reasons, each one a doubt answered, with a quote from a buyer at the end.\n\nThe right column is where it sells. Comparison, offer, buy box, reviews, the why-we-built-it story, FAQ.\n\nA lot of product pages put the buy button first and hope the reasons get read later. This is the other way round. Concept build for a brand I made up.",
+   "captionKey": "TS-HALOS-LI02-FULLPAGE",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-MOBILESTRIP": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-mobile-strip.png",
+   "hashtags": [],
+   "caption": "Full page at a glance.\n\nThe HALOS listicle on mobile, cut into four columns:\n-> hero\n-> five reasons\n-> comparison\n-> offer and buy box\n-> reviews\n\nI laid out every section for a thumb first.\n\nDemo brand, not a client.",
+   "captionKey": "TS-HALOS-LI02-MOBILESTRIP",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-X1": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02 cover.png",
+   "hashtags": [],
+   "caption": "Built a listicle page for a red light panel brand I made up.\n\nFive reasons people keep it:\n-> two wavelengths\n-> ten-minute sessions\n-> sixty diodes, evenly lit\n-> works on sore shoulders too\n-> no refills\n\nThen the buy box.\n\nConcept build, not a client.",
+   "captionKey": "TS-HALOS-LI02-X1",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-X2": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-preview.png",
+   "hashtags": [],
+   "caption": "Three screens from one mobile listicle.\n\n-> the hero asks for one thing\n-> the comparison table does the arguing\n-> the FAQ handles the last doubts\n\nHALOS is a demo brand I made up, not a client.\n\nNeed a page like this? DM me.",
+   "captionKey": "TS-HALOS-LI02-X2",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-X3": {
+   "platform": [
+    "x"
+   ],
+   "assetType": "image",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/halos_li-02-full-page.png",
+   "hashtags": [],
+   "caption": "A whole desktop listicle in one image.\n\nLeft column convinces. Right column sells.\n\nReasons first, buy box second. Most product pages do it the other way round.\n\nConcept build for HALOS, a brand I made up.",
+   "captionKey": "TS-HALOS-LI02-X3",
+   "status": "Not Posted",
+   "postedAt": null
+  },
+  "TS-HALOS-LI02-IG-CAROUSEL": {
+   "platform": [
+    "instagram"
+   ],
+   "assetType": "carousel",
+   "assetPath": "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide1.png",
+   "assetPaths": [
+    "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide1.png",
+    "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide2.png",
+    "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide3.png",
+    "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide4.png",
+    "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide5.png",
+    "outputs/templates/halos_li-02_2026-10-10/ig-carousel/slide6.png"
+   ],
+   "hashtags": [
+    "#shopify",
+    "#ecommerce",
+    "#webdesign",
+    "#landingpage",
+    "#shopifydesign"
+   ],
+   "caption": "Concept store build: a listicle page for HALOS, a red light panel brand I made up. Not a client.\n\nSwipe for the whole page, the mobile view, the hero and buy box up close, and what I built it with.\n\nWant your page built next? Link in bio.",
+   "captionKey": "TS-HALOS-LI02-IG-CAROUSEL",
+   "status": "Not Posted",
+   "postedAt": null
+  }
+ }
+}

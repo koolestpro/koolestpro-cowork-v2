@@ -1,0 +1,33 @@
+{
+  "brand": "Fishwife",
+  "slug": "fishwife_shop-all-collection",
+  "date": "2026-10-25",
+  "pipelineItemId": "cro-fix-fishwife_shop-all-collection-20261025",
+  "pageType": "Collection Page",
+  "url": "https://eatfishwife.com/collections/all",
+  "images": {
+    "VARIANTS": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_variants-board.png",
+    "COVER": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide1.png",
+    "BA": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide2.png",
+    "ANNO": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide3.png",
+    "ANNO-GRAPHIC": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_annotated.png"
+  },
+  "carouselHtml": "outputs/cro-fixes/fishwife_shop-all-collection_carousel.html",
+  "annotationHtml": "outputs/cro-fixes/fishwife_shop-all-collection_annotation.html",
+  "variantsBoardHtml": "outputs/cro-fixes/fishwife_shop-all-collection_variants-board.html",
+  "heroVariants": "outputs/cro-fixes/fishwife/_variants/ (CHOICE.md)",
+  "rebuildHtml": "outputs/cro-fixes/fishwife_shop-all-collection_rebuild.html",
+  "reviewPack": "outputs/cro-fixes/fishwife_shop-all-collection_content.html",
+  "audit": "outputs/audits/fishwife_shop-all-collection_audit.md",
+  "facts": "outputs/cro-fixes/fishwife_shop-all-collection_facts.json",
+  "brief": "outputs/cro-fixes/fishwife_shop-all-collection_build-brief.md",
+  "captions": "outputs/cro-fixes/fishwife/captions.txt",
+  "builders": [
+    ".ai-workflow/prep_fishwife_assets.py",
+    ".ai-workflow/build_fishwife_rebuild.py",
+    ".ai-workflow/build_fishwife_phones.py",
+    ".ai-workflow/build_fishwife_carousel.py",
+    ".ai-workflow/build_fishwife_annotation.py"
+  ],
+  "exportedVia": "each page's own captureSlide()/captureSheet() (html2canvas, scale 2) driven by headless Playwright"
+}

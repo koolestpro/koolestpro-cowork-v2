@@ -1,0 +1,18 @@
+{
+  "_readme": "Redesigns of real stores that are ALSO cold-email leads (Ridwan, 2026-10-26: use the redesign in the email). Written by the Wednesday template build (Page B) and the Sunday CRO Fix. Before writing or sending that store's email, use the redesign as the offer hook: attach or embed screenshots / the mobile strip. Never send a public link to the page (real-brand rebuilds stay private). Status: ready -> used (set when the email goes out) -> replied.",
+  "recordSchema": {
+    "domain": "string",
+    "brand": "string",
+    "targetId": "targets_pool id",
+    "pageType": "Homepage | Product Page | Collection Page | Advertorial | Listicle",
+    "pagePath": "project-relative index.html",
+    "mobileStripPath": "project-relative png",
+    "builtBy": "template-build | cro-fix",
+    "date": "YYYY-MM-DD",
+    "status": "ready | used | replied",
+    "compareImagePath": "project-relative png: live first screen vs redesign first screen, same 390 width, labelled",
+    "compareFullPath": "project-relative png: full live mobile page vs full redesign, side by side"
+  },
+  "hooks": [],
+  "deliveryRule": "2026-10-26 recommendation: email 1 carries no link and no attachment (deliverability); it names the problem and asks if they want to see the redesign. Once they reply yes: attach compareImagePath inline (under ~1MB) and add a private, unlisted Cloudinary link to compareFullPath and the mobile strip. Never a public page URL."
+}

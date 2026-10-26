@@ -24,6 +24,49 @@ So there is now ONE job per run, not two:
 
 There is no more separate "grow the homepage template library" job. Homepage is just one of the six categories in the one list below, same as any other.
 
+⚠️⚠️ CONTACTABLE STORES ONLY (Ridwan, 2026-10-26). A real store is only designed, rebuilt or posted about if we can actually email it. The list is `outreach/scrapers/state/contactable_stores.json` (written hourly on the Mac by `outreach/scrapers/redesign_sync.py` from the cold email Sheet: sendable confirmed email, not Lost/Bounced/Unsubscribed/Won). A target whose domain is not on that list is NOT eligible for this run, whatever its other fields say. If the file is older than 3 days, run `python3 outreach/scrapers/redesign_sync.py pull` first (it reaches the Sheet from the Mac shell); if that fails, say so at the top of the summary. FALLBACK (Ridwan, 2026-10-26): when the Sheet cannot be reached, or no contactable target is eligible, do not skip the run: use the best eligible target already in `targets_pool.json` under the normal rotation rules, even though we cannot email it. Say "FALLBACK: not a contactable store" at the top of the summary, add `"fallback": true` to its usedFor note, and write no outreach hook for it. Contactable stores always win when there is one. Concept brands (HALOS, MOULT, KURA and new ones) are not affected.
+
+⚠️⚠️ NO TEMPLATE CEILING (Ridwan, 2026-10-26). Past templates and past pages are a starting point and the bar to BEAT, never the structure to copy. For every page: (1) decide what this business needs first (what it sells, price point, how buyers arrive, what they doubt, the brand's own look), (2) look at 3 or more real, live, well-converting pages for that kind of business and page type (homepage and hero inspiration roundups, competitors, strong DTC stores; not award showpieces, pages that sell) and note what each does that ours never has, (3) pick a structure and a hero idea for THIS brand, then build. Write the choice and the references in the build notes. A page that reads like a cheap theme or like our last page with new colours is not done. Bar: the latest CRO Fix (`outputs/cro-fixes/fishwife_shop-all-collection_rebuild.html`) and `docs/system/cro-redesign-standard.md` "No template ceiling".
+
+⚠️⚠️ EVERY REAL-STORE PAGE IS POSTABLE BOTH WAYS (Ridwan, 2026-10-26). A full-page redesign of a real store is one asset with two posts: the CRO Fix post (live page = before, our first screen = after) and the Template Showcase package (the whole page). Whichever task builds it, the other reuses it: a CRO Fix rebuild goes to the showcase manifest, and a Wednesday Page B redesign is eligible as the Sunday CRO Fix (capture the live page as the before, audit per `cro-finding-rules.md`, then make the carousel and graphics from the redesign's first screen) instead of building a new page. Concept brand pages have no real "before", so they are never posted as a CRO Fix.
+
+═══════════════════════════════════════════════
+PAGE B = A REAL-STORE REDESIGN (Ridwan, 2026-10-26). Read this before Step 1.
+═══════════════════════════════════════════════
+
+Ridwan: "instead of inventing products all the time, I want us to also make a redesign of some of those Shopify sites." So the two pages per run are now split:
+  - **Page A = concept brand page**, picked and built exactly as Steps 1 to 6 below describe (HALOS, MOULT, or a new concept brand).
+  - **Page B = a full-page CRO redesign of a REAL Shopify store** from `targets_pool.json` (most of these now come from the outreach directory scrape, `source: "outreach-directory-scrape"`). It is NOT a concept brand and NOT a client.
+
+⚠️⚠️ WHAT TO BUILD = THE BUILD QUEUE (Ridwan, 2026-10-26). Real-store pages are built for the leads most likely to reply, not at random. Read `buildQueue` in `outreach/scrapers/state/contactable_stores.json` and take the first entry that passes the content rules (`cro-finding-rules.md`, no vape/nicotine/tobacco/kratom/replica/weapons, not a big chain):
+  - tier 1 = they said yes to the mockup offer: build this week, before anything else.
+  - tier 2 = emailed, no reply yet, strongest problem first: the page lands as their next follow-up.
+  - tier 3 = not emailed yet, strongest problem first: their first email is written around the page.
+**Build the page the email is about** (`buildPage`, from the lead's problem page). The page-type rotation rules give way to this. Only when `buildPage` is empty choose the type yourself (prefer the page with the strongest visible problem). If the store is not in `targets_pool.json` yet, add it there first (live mobile check, record schema, `source: "outreach-directory-scrape"`, `outreachLead: true`). If the queue is empty or nothing in it passes, use the pool FALLBACK.
+**Page mismatch:** if a store already has a redesign of a DIFFERENT page than the one its email is about (for example we built its PDP from the pool, but the email is about its homepage), that is fine: the email code says so honestly (it offers the built page as proof of the approach and offers to do the problem page, and never claims one fixes the other). When that store reaches tier 1, build the page it actually asked about.
+Every real-store build writes its `outreach/redesign-hooks.json` entry with `pageType`, `problemPage` (from the queue), `compareImagePath` and `compareFullPath`. `redesign_sync.py push` (hourly) then hands it to the Sheet, which: rewrites email 1 if they have not been emailed; turns the next follow-up into the "I rebuilt it, want to see it?" email if they are mid-sequence; queues one extra email in the old thread if the sequence ended with no reply; or emails Ridwan to send it himself if they are already talking.
+
+How to pick Page B:
+  1. Eligible targets: domain on `contactable_stores.json`, `status: "Available"`, `isClient: false`, `visualPotential` not "Unrated", and no `usedFor` entry with stream "template-showcase" or "cro-fix" in the last 14 days. Prefer zero "template-showcase" entries.
+  2. Page type: the queue's `buildPage` when it has one (see above). Otherwise choose from Homepage, Product Page, Collection Page, Advertorial, Listicle. Never the same page type as Page A, and never the page type of the last real-store redesign (check `replo-rebuilds/build-rotation-log.json`, entries with `kind: "real-redesign"`). Homepage, PDP and collection are redesigns of the store's real page. Advertorial and listicle are NEW pages for that store (it usually has none), built around its real products.
+  3. Rotate category away from the last two real redesigns.
+
+How to build Page B (CLAUDE.md "AI Workflow Architecture" path 1 applies, because this is a real business's page):
+  - Audit the live page first at mobile and desktop with `docs/system/cro-finding-rules.md`. Write the findings to `replo-rebuilds/real-redesigns/{brand-slug}/AUDIT.md` (MEASURED / SEEN evidence lines). For an advertorial or listicle, write the angle and the real product facts it uses instead.
+  - Build the WHOLE page, not a hero: every section a real page of that type needs (see `docs/system/cro-redesign-standard.md`, "Full page rule"), CRO optimized, with the first screen still carrying the whole decision.
+  - Real assets only: the store's real logo file, real product photos, real prices and product names from the live site. Never invent reviews, ratings, review counts, press logos, guarantees or stats the store does not show. If the store shows none, design the section without a number.
+  - Builder: Lovable first (kept PRIVATE, never `deploy_project`, per the "Rebuilds of real businesses stay PRIVATE" rule), then Figma Make / v0, then Claude-authored HTML from the same brief if no builder is available. Either way the final file lands at `replo-rebuilds/real-redesigns/{brand-slug}/pages/{brand-slug}-{type}-01/index.html` with its own `images/` folder, and Steps 5 and 5b (verify + mobile strip) apply exactly as for Page A.
+  - No brand README, no brand-identity phase, no neutral template conversion for Page B. Its identity is the real store's.
+
+After Page B is built:
+  - Add it to `replo-rebuilds-pages.json` with `kind: "real-redesign"`, `isRealBrand: true`, `isClient: false`, `targetId` (the targets_pool id), `liveUrl`, `active: true`, `usedForTemplateShowcase: false`, and the next free `sortOrder`.
+  - Append to `replo-rebuilds/build-rotation-log.json` with `kind: "real-redesign"`.
+  - **Comparison image for the email (2026-10-26):** also save `presentation/{page}-compare.png`: the store's LIVE page and our redesign side by side at the same mobile width (390), same first screen, captured the same day, labelled "Your page today" / "Concept redesign", plus up to 3 numbered notes naming what changed and why. A second image `{page}-compare-full.png` puts the full live mobile page next to the full redesign. These are what the store gets after it says yes, so it can check our version against its own site in seconds. Record both paths in the redesign-hooks entry (`compareImagePath`, `compareFullPath`).
+  - Append a `usedFor` entry to that target in `targets_pool.json`: `{stream: "template-showcase", date, pipelineItemId: null, note: "Real-store full-page redesign built (Wed), awaiting Saturday showcase"}`.
+  - If the target has `outreachLead: true` (or the domain is in the Outreach Sheet), append a row to `outreach/redesign-hooks.json` (domain, brand, pageType, page path, mobile-strip path, date, status "ready"). Ridwan's decision 2026-10-26: the redesign becomes the hook in that store's cold email. Screenshots or the mobile strip go in the email; never a public link to the page.
+
+If no target is eligible for Page B, build two concept pages as before, say so at the top of the report, and flag that the target pool needs a refresh.
+
 ═══════════════════════════════════════════════
 STEP 1 — Pick the brand AND category together: ROTATE, never run one brand to completion (Ridwan, 2026-10-10)
 ═══════════════════════════════════════════════
@@ -51,6 +94,8 @@ STEP 3 — Decide: reuse an existing template, or build a new structure
 ═══════════════════════════════════════════════
 
 Look at `templates/{category}/README.md` and its subfolders. For each already-built template in that category (status "Built" — has a real `index.html`, not just a `BUILD-NOTES.md` spec), judge honestly whether its structure and persuasion angle genuinely fit the active brand's product. Examples: a review-forward, UGC-heavy PDP (`pdp-02-social-proof`) fits a product with strong social proof potential; a villain/hero narrative PDP (`pdp-01-story-arc`) fits a product solving a clear, nameable problem. Don't force a mismatch just because a template already exists.
+
+**2026-10-26 override (Ridwan): token-substitution builds are no longer the common case.** Run the NO TEMPLATE CEILING research above for every page, including when a template fits. An existing template may be the skeleton, but the hero, section order and at least the sections that carry this brand's argument are designed for this brand, and the result has to beat the template it started from. Save the new structure back as a template when it is genuinely different.
 
 **If a good-fit built template exists:** reuse it directly. Build the real brand page via token-substitution (read the neutral `templates/{category}/{id}/index.html`, replace every `[TOKEN]` with real brand copy, reuse or generate real images). This is the fast path and should be the common case once the library has a few templates in each category.
 
@@ -126,4 +171,4 @@ Report
 
 End with a short summary for EACH of the two pages: which brand and category got built, whether an existing template was reused or a new one had to be created (and if new, what real reference site it was audited from), any layout bug found and fixed during verification (and whether the fix was also patched upstream into the neutral template), an explicit MOBILE STRIP line confirming the strip was built and where it was saved (or stating loudly that it failed), and what's next under the rotation rule (which brand and category the next run should pick, and why).
 
-Do not touch anything outside `replo-rebuilds/`, except for the `presentation/` strip described in Step 5b and any neutral-template fix described in Step 3. Do not deploy or publish anything. Do not touch the koolestpro-cowork-v2 content pipeline (a separate system inside the same connected folder).
+Do not touch anything outside `replo-rebuilds/`, except for the `presentation/` strip described in Step 5b, any neutral-template fix described in Step 3, and Page B's three registration writes (`replo-rebuilds-pages.json`, the target's `usedFor` in `targets_pool.json`, and `outreach/redesign-hooks.json`). Do not deploy or publish anything. Do not touch the koolestpro-cowork-v2 content pipeline (a separate system inside the same connected folder).

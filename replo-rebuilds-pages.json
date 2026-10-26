@@ -293,11 +293,11 @@
       "usedForTikTokDate": null
     },
     {
-      "hasSocialContentDraft": false,
-      "socialContentFile": null,
-      "socialContentSection": null,
-      "usedForTemplateShowcase": false,
-      "usedForTemplateShowcaseDate": null,
+      "hasSocialContentDraft": true,
+      "socialContentFile": "moult-social-content.json",
+      "socialContentSection": "TS-MOULT-PDP01-*",
+      "usedForTemplateShowcase": true,
+      "usedForTemplateShowcaseDate": "2026-10-24",
       "active": true,
       "retired": false,
       "cachePathRetired": null,
@@ -345,5 +345,6 @@
   "relatedLibraries": {
     "storeTemplates": "store-templates.json — MERIDIAN (01-watches-luxury) and Lumora Skin (02-skincare-beauty) are multi-page store templates, a separate library with its own showcase packages already built at outputs/templates/meridian_store-template_2026-08-28 and outputs/templates/lumora_store-template_2026-08-28. Do NOT add them here; this manifest is replo-rebuilds single pages only.",
     "pageTemplates": "replo-rebuilds/templates/ holds unbranded page templates (hp-02-product-hero, hp-03-collection, pdp-02-social-proof, ad-01-editorial-story, etc). Only branded builds under brands/ are showcase-eligible."
-  }
+  },
+  "kindNote": "2026-10-26 (Ridwan): entries may carry kind \"real-redesign\" (a full-page CRO redesign of a real, non-client Shopify store, from Wednesday Page B under replo-rebuilds/real-redesigns/ or from a Sunday CRO Fix under outputs/cro-fixes/). They also carry isRealBrand, isClient:false, targetId and liveUrl. Entries without kind are concept brand pages. Showcase captions for real redesigns say \"Concept redesign of {Brand}\", never \"Concept store build\"."
 }

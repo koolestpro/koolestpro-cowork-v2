@@ -1,0 +1,86 @@
+{
+  "brand": "Fishwife",
+  "brandSlug": "fishwife",
+  "isConceptBrand": false,
+  "note": "Real brand, unofficial portfolio/concept CRO work. Not a Fishwife client engagement.",
+  "pipelineItemId": "cro-fix-fishwife_shop-all-collection-20261025",
+  "items": {
+    "CRO-FISHWIFE-COVER": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide1.png",
+      "usedIn": "carousel slide 1 (cover: BEFORE phone with the 400px banner and 863px marks + AFTER phone, real logo)"
+    },
+    "CRO-FISHWIFE-BA": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide2.png",
+      "usedIn": "carousel slide 2, standalone before/after post",
+      "caption": "COLLECTION PAGE: Fishwife's shop-all page has one job on a phone. Help someone pick a tin.\n\nOn a 390px screen, the first 400px under the header is a banner that says \"Shop Tinned Fish & More!\" The first product name shows up at 863px. The screen ends at 844.\n\nTwo product photos do peek in at the bottom. Both are new drops: Tuna Belly (21 reviews) and the Advent Calendar (2 reviews). The Fly By Jing smoked salmon, with 641 reviews, sits in row two. Gold Label, with 520, is in row three.\n\nThe cards also show a star average with no count. So 5.0 from 2 reviews looks exactly as safe as 4.9 from 641.\n\nSo I rebuilt screen one with what's already on their site:\n\n1. The banner shrinks from 400px to 118px. Same photo, same \"Everything Fishwife\" heading.\n2. Four tins fit above the fold, sorted by most reviewed. All four are in their own Best Sellers collection.\n3. Every rating shows its count: 4.9 (641), 4.9 (520), 4.9 (343), 4.9 (223).\n4. Pack size under each name, and an Add button on the card where it used to say Shop Now.\n5. The new drops still get a spot, right after the tins people already trust.\n\nThe packaging is half the reason people buy Fishwife, so I kept it big. I just wanted it sitting next to a name and a number.\n\nThis is unofficial concept work. Fishwife isn't a client."
+    },
+    "CRO-FISHWIFE-ANNO": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide3.png",
+      "usedIn": "carousel slide 3, standalone annotation post"
+    },
+    "CRO-FISHWIFE-VARIANTS": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_variants-board.png",
+      "usedIn": "variants board (4 hero directions A-D, neutral, no pick shown); X debate post that goes out BEFORE the carousel"
+    },
+    "CRO-FISHWIFE-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_annotated.png",
+      "usedIn": "standalone clear-background annotation graphic (1080x1080)"
+    },
+    "CRO-FISHWIFE-CAROUSEL": {
+      "assetPath": "outputs/cro-fixes/fishwife_shop-all-collection_carousel.html",
+      "usedIn": "the review/export HTML (all 3 slides + download panel)",
+      "captionOptions": [
+        {
+          "id": "linkedin",
+          "caption": "COLLECTION PAGE: Fishwife's shop-all page has one job on a phone. Help someone pick a tin.\n\nOn a 390px screen, the first 400px under the header is a banner that says \"Shop Tinned Fish & More!\" The first product name shows up at 863px. The screen ends at 844.\n\nTwo product photos do peek in at the bottom. Both are new drops: Tuna Belly (21 reviews) and the Advent Calendar (2 reviews). The Fly By Jing smoked salmon, with 641 reviews, sits in row two. Gold Label, with 520, is in row three.\n\nThe cards also show a star average with no count. So 5.0 from 2 reviews looks exactly as safe as 4.9 from 641.\n\nSo I rebuilt screen one with what's already on their site:\n\n1. The banner shrinks from 400px to 118px. Same photo, same \"Everything Fishwife\" heading.\n2. Four tins fit above the fold, sorted by most reviewed. All four are in their own Best Sellers collection.\n3. Every rating shows its count: 4.9 (641), 4.9 (520), 4.9 (343), 4.9 (223).\n4. Pack size under each name, and an Add button on the card where it used to say Shop Now.\n5. The new drops still get a spot, right after the tins people already trust.\n\nThe packaging is half the reason people buy Fishwife, so I kept it big. I just wanted it sitting next to a name and a number.\n\nThis is unofficial concept work. Fishwife isn't a client.",
+          "hashtags": [
+            "#CRO",
+            "#Shopify",
+            "#EcommerceUX",
+            "#CollectionPage"
+          ]
+        }
+      ]
+    },
+    "CRO-FISHWIFE-X-VARIANTS": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_variants-board.png",
+      "caption": "Fishwife's shop-all page, 4 ways. Same tins, same photos.\n\nA: grid first\nB: slim photo band\nC: shop by fish\nD: starter pack first\n\nHot take: a collection page should show products before it shows a banner.\n\nWhich would you ship? My pick goes up next.",
+      "platform": "X",
+      "captionKey": "x_variants",
+      "chars": 250
+    },
+    "CRO-FISHWIFE-X-CAROUSEL": {
+      "assetPath": [
+        "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide1.png",
+        "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide2.png",
+        "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide3.png"
+      ],
+      "caption": "Collection page teardown: Fishwife.\n\n1 Screen one is a 400px banner and no product names\n2 Same tins, four of them now above the fold\n3 The three questions a shopper asks before scrolling\n\nReview counts and prices came from their own site.",
+      "platform": "X",
+      "captionKey": "x_carousel",
+      "chars": 239
+    },
+    "CRO-FISHWIFE-X-BA": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide2.png",
+      "caption": "Fishwife shop-all page, before and after.\n\nBefore:\n❌ 400px banner on screen one\n❌ First product name at 863px\n❌ Stars with no review count\n\nAfter:\n✅ 4 tins above the fold\n✅ 4.9 (641), not just 4.9\n✅ An Add button on every card",
+      "platform": "X",
+      "captionKey": "x_ba",
+      "chars": 226
+    },
+    "CRO-FISHWIFE-X-ANNO": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_carousel_slide3.png",
+      "caption": "Collection page fix: Fishwife.\n\nWhat a shopper wonders on screen one:\n1 Where are the tins?\n2 Is this one any good?\n3 Can I just add it?\n\nThe old page answered with a banner. Now four tins, counted ratings and an Add button answer them.",
+      "platform": "X",
+      "captionKey": "x_anno",
+      "chars": 236
+    },
+    "CRO-FISHWIFE-X-ANNO-GRAPHIC": {
+      "assetPath": "outputs/cro-fixes/fishwife/koolestpro_fishwife_shop-all-collection_annotated.png",
+      "caption": "On Fishwife's shop-all page, the Advent Calendar shows 5.0 stars. That's from 2 reviews.\n\nThe Fly By Jing smoked salmon shows 4.9, from 641.\n\nWithout the count they look the same. So every rating in the rebuild shows it, and the most reviewed tins go first.",
+      "platform": "X",
+      "captionKey": "x_anno_graphic",
+      "chars": 257
+    }
+  },
+  "knownGaps": []
+}

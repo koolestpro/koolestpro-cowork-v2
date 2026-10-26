@@ -188,12 +188,15 @@ body{{background:{c['brand_bg']}}}
 
 
 def slide6(c):
-    fonts = "".join(f'<div class="fc"><div class="fn" style="font-family:\'{n}\',serif">{n}</div><div class="fr">{r}</div></div>' for n, r in c["fonts"])
+    fb = lambda r: "serif" if r.lower().startswith("head") else "sans-serif"  # py3.10-safe (no nested quotes in f-strings)
+    fonts = "".join(f'<div class="fc"><div class="fn" style="font-family:\'{n}\',{fb(r)}">{n}</div><div class="fr">{r}</div></div>' for n, r in c["fonts"])
     sw = "".join(f'<div class="sw"><div class="sq" style="background:{h}"></div><div class="hx">{h.upper()}</div></div>' for h in c["palette"])
     tools = "".join(f'<span class="tool">{t}</span>' for t in c["tools"])
-    fam = "|".join(n.replace(" ", "+") for n, _ in c["fonts"])
-    return f"""<style>{BASE_CSS}
-@import url('https://fonts.googleapis.com/css2?family={fam}&display=swap');
+    fam = "&family=".join(n.replace(" ", "+") for n, _ in c["fonts"])  # css2 API wants repeated family=, not "|"
+    # 2026-10-24: @import must be the first rule or the browser drops it
+    # (fonts were rendering in a fallback serif, Manrope included).
+    return f"""<style>@import url('https://fonts.googleapis.com/css2?family={fam}&display=swap');
+{BASE_CSS}
 body{{background:#0B0710;color:#fff}}
 .glow{{position:absolute;width:900px;height:900px;left:-360px;top:-380px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,.30),transparent 65%)}}
 .glow2{{position:absolute;width:900px;height:900px;right:-380px;bottom:-360px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,.45),transparent 65%)}}
@@ -206,8 +209,8 @@ body{{background:#0B0710;color:#fff}}
 .fn{{font-size:38px;white-space:nowrap}} .fr{{font-size:26px;color:rgba(255,255,255,.6);margin-top:4px}}
 .sw{{flex:1}} .sq{{height:76px;border-radius:12px;border:1px solid rgba(255,255,255,.2)}} .hx{{font-size:26px;color:rgba(255,255,255,.7);margin-top:8px}}
 .tool{{display:inline-block;font-size:30px;padding:10px 24px;border-radius:30px;border:1px solid rgba(255,255,255,.3);margin-right:12px}}
-.div{{height:1px;background:rgba(255,255,255,.15);margin:4px 0 28px}}
-.ct{{font-size:88px;margin-bottom:14px}}
+.div{{height:1px;background:rgba(255,255,255,.15);margin:0 0 22px}}
+.ct{{font-size:76px;line-height:1.02;margin-bottom:12px}}  /* 2026-10-24: 88px wrapped to 3 lines and pushed the button onto the footer */
 .cl{{font-size:40px;line-height:1.25;color:rgba(255,255,255,.75);margin-bottom:26px}}
 .btn{{display:inline-block;font-size:34px;font-weight:700;padding:20px 40px;border-radius:50px;background:linear-gradient(90deg,#FF9500,#E040A0,#7B2FBE)}}
 .foot{{color:rgba(255,255,255,.55);bottom:30px}}

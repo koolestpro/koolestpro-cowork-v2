@@ -433,3 +433,37 @@ Ridwan reported a Make.com error on today's Instagram post (a 7-slide Tips carou
 
 **Verdict:** Make healthy, nothing overdue on X/LinkedIn that could be fixed, no collisions. Two things need Ridwan: the 319-char Gainful X post due tomorrow 14:00, and pacing at about 2 real posts/day with a backlog that's almost entirely QA-flagged. Separately, 46 Instagram rows are waiting to be rescheduled when IG is un-paused.
 
+
+## 2026-10-05 08:40 UTC (09:40 WAT) — health check (scheduled task run)
+
+**Sheet read:** live Sheets API, 209 rows (125 Posted, 75 Ready, 9 Draft).
+
+**Twitter/LinkedIn missed rows:** 5, all Draft + Needs Review, so none rescheduled (Draft never fires; a new date won't fix the content):
+- `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LI, 09-28) — claims to verify (carried over from last run)
+- `static-ad-caraway_fry-pan-20260909-20260929-x-1300` (X, 09-29) — claims to verify ("18,878 reviews")
+- `cro-fix-caraway_fry-pan-pdp-20260907-20260923-x-1300` (X, 09-30), `...-li-0900` (LI, 09-30), `...-20260925-x-0900` (X, 10-02) — x_thread[3] variant 316 chars
+**Instagram missed rows:** 50 past-dated unposted (was 46). Not rescheduled: Instagram is still paused in Make (CLAUDE.md, 2026-09-18). Batch-reschedule when IG is switched back on.
+
+**Collisions / LinkedIn same-day violations (upcoming):** none. 5 upcoming LinkedIn rows each on their own day (10-06, 10-07, 10-08, 10-14, 10-21). No webhook calls this run.
+
+**Step 1b, X char count:** 18 unposted Twitter captions checked, 0 over 280, 0 empty. Last run's 319-char Gainful post (`...-20260906-x-1800`) is now marked Posted 2026-09-30 14:01 and the Make run succeeded, so X apparently accepted it.
+
+**Step 1c, Instagram multi-image:** 2 upcoming IG rows with 3 URLs (`cro-fix-flybyjing_chili-crisp-pdp-20261004-20261007-ig-1200`, `cro-fix-caraway_fry-pan-pdp-20260907-20260923-ig-1200`). NOT trimmed: Make has a native IG carousel route (310-317) since 2026-09-27, so the trim rule in this task's SKILL.md is obsolete (flagged last run too).
+
+**Step 1d, caption/image fit:** `caption_fit.py` reported 0 problem rows (reads local `queue.json`).
+
+**Reschedule scenario 7111659:** active, not paused. No reactivation needed.
+
+**Make health (6565331):** healthy. Active, not paused, next run 2026-10-05 13:00 UTC. All 50 executions from 09-28 22:00 UTC to 10-04 22:25 UTC succeeded (status 1), no warnings. Lifetime error count still 3 (old).
+
+**Pacing (10-05 to 10-11):** 18 unposted rows (10 X, 3 LI, 5 IG) = 2.6/day raw. Excluding paused Instagram: 13 X+LI rows = **1.9/day**; about 8 more Ready X/LI rows needed to reach 3/day. 10-11 has only 1 post. Beyond 10-11 the backlog is just 11 rows to 10-21, with nothing on 10-12, 10-19, 10-20. QA: 0 of 18 clean in the window, 1 of 29 across the whole upcoming backlog. These Ready-but-flagged rows still fire (Make ignores qa_status), so the flags are a review risk rather than a blocker.
+
+**Verdict:** Make healthy, no fixable gaps, no collisions. Needs Ridwan: pacing under 2 real posts/day with a thin queue after 10-11, 5 Draft X/LI rows waiting on caption/claim fixes, 50 Instagram rows parked until IG is unpaused, and the outdated Step 1c in the task SKILL.md.
+
+## 2026-10-05 ~10:20 WAT — Instagram re-enabled + Caraway CRO cleanup (ad hoc, Ridwan present)
+
+- Make 6565331: Instagram router filter fixed (`Instagram`), single-image route blocked, Reel wait 90s. Live blueprint diffed against intended: identical.
+- 26 overdue IG carousels/videos rescheduled 1/day at 17:00 (10-05 18:00 to 11-06). Verified landed. No IG same-slot collisions.
+- Deleted 4 pending Caraway CRO rows from the Sheet + local queue (backup in `outputs/distribution-queue/deleted/`).
+- IG token expires 2026-11-07, same week the rescheduled backlog ends.
+

@@ -314,9 +314,16 @@ def choose_split_point(profile, search_frac=0.32, gap_ratio=0.40, proximity_weig
     # under a section heading, orphaning "Made for the Pets You Actually
     # Have." at the foot of column 1 while its cards opened column 2.
     if img_arr is not None:
-        seam = _section_seam(img_arr, lo, hi, target, window)
-        if seam is not None:
-            return seam
+        # ADDED 2026-10-24 (moult_pdp-01 run): the strict pass alone cut the
+        # MOULT PDP at 67% (col1 5151px vs col2 2545px) because only the one
+        # dark section change cleared min_diff=28; the cream/beige seams near
+        # the middle are subtler. Try balanced seams first (strict, then
+        # subtle), and only accept a lopsided strict seam as a last resort.
+        for md, imb in ((28.0, 0.10), (7.0, 0.10), (28.0, 0.22)):
+            seam = _section_seam(img_arr, lo, hi, target, window, min_diff=md,
+                                 max_imbalance=imb)
+            if seam is not None:
+                return seam
 
     page_avg = profile.mean()
     threshold = page_avg * gap_ratio

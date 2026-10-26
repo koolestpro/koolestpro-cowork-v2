@@ -16,6 +16,7 @@ Do this signed in as **koolestpro@gmail.com**.
 0. No `test-001` row (or it's half-filled)? Outreach > **Create / reset test lead**. It rebuilds a complete one.
 1. In **Leads**, tick **approved** on the `test-001` row. Nothing is sent by ticking alone.
 2. Outreach > **Send due emails now**. If it says `0 sent`, the message tells you which requirement is missing (approved, `email_status` = `valid`, a step 1 row in **Sequence**). Step 1 lands in your main Gmail with `[TEST to ...]` in the subject.
+   This manual action bypasses the lead's working hours. Keep `TEST_MODE = TRUE` for testing; the email goes to `ALERT_EMAIL`, not to the lead. With `TEST_MODE = FALSE`, it can send to real leads immediately, even outside their normal sending window.
 3. Reply to that test email from your main Gmail. The alert email is sent only when a reply arrives, not on approval or send. Then Outreach > **Check replies now**. The lead moves to **Replied**, the follow-up is stopped, a row appears in **Drafts**, and you get an alert.
 4. In **Drafts**, type something in `draft_body`, set status to **Approved**, then **Check replies now** again. It sends in the same thread.
 

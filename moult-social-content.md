@@ -167,3 +167,148 @@ Need a store like this built? Link in bio.
 ```
 
 ---
+
+
+## moult_pdp-01 (Product Page (pdp-01)) - 2026-10-24
+
+Concept build, not a client. Review page: `outputs/templates/moult_pdp-01_2026-10-24/index.html`. All copy humanizer-passed, no em dashes, X captions under 280 chars.
+
+**TS-MOULT-PDP01-COVER-VID - `moult_pdp-01 cover.mp4`** [linkedin, instagram]
+```
+Built a product page for MOULT, a pet brush brand I made up. It's a concept build, not a client.
+
+The brush drops the fur in one clump when you press the button on top. So the page has one job: get someone with a shedding dog to believe that before they scroll past the price.
+
+How I laid it out:
+✅ title, price, sizes and the add to cart all sit on the first screen
+✅ the questions people ask first (will it hurt, how do I clean it, which size) are answered right under the button
+✅ the problem comes before the features: your brush is just moving fur around
+✅ then a before and after with the same dog, and the three steps: brush, press, bin it
+✅ on mobile, an add to cart bar follows you down the page
+
+The comparison table and the FAQ sit near the end, for the people who still need convincing.
+
+Need a product page like this built? Start here: koolestpro.com/services/page-build
+
+#shopify #ecommerce #webdesign #productpage
+```
+
+**TS-MOULT-PDP01-LAPTOP-VID - `moult_pdp-01 laptop.mp4`** [linkedin]
+```
+Desktop scroll-through of the MOULT product page.
+
+Buy box first. Then why it works, the problem with ordinary brushes, the brush up close, a before and after, the three steps, reviews, a comparison table, the FAQ and the newsletter.
+
+Concept build for a brand I made up, not a client site.
+
+#webdesign #shopify
+```
+
+**TS-MOULT-PDP01-MOBILE-VID - `moult_pdp-01 mobile.mp4`** [instagram, x]
+```
+The MOULT product page on a phone.
+
+Once you scroll past the main button, an add to cart bar sticks to the bottom of the screen. Buying stays one tap away the whole way down.
+
+Demo brand I made up, not a client. Need a store like this built? DM me.
+```
+
+**TS-MOULT-PDP01-COVER-IMG - `moult_pdp-01 cover.png`** [linkedin, instagram]
+```
+A product page for MOULT, a concept pet grooming brand.
+
+Same page on laptop and phone. The title, price, sizes and the button all land on the first screen, so nobody has to scroll to find out what it costs.
+
+Need a store like this built? DM me.
+
+#shopify #webdesign #ecommerce
+```
+
+**TS-MOULT-PDP01-X1 - `moult_pdp-01 cover.png`** [x]
+```
+Built a product page for a pet brush I made up.
+
+Everything you need to decide sits on the first screen:
+-> what it is
+-> what it costs
+-> which size
+-> the button
+
+The story comes after.
+
+Concept build, not a client.
+```
+
+**TS-MOULT-PDP01-PREVIEW - `moult_pdp-01-preview.png`** [linkedin, instagram]
+```
+Three screens from the MOULT product page on mobile: the buy box, the before and after, and the results block.
+
+Concept build, not a live client site. The ratings and percentages on the page are placeholder copy.
+
+#webdesign #ecommerce
+```
+
+**TS-MOULT-PDP01-X2 - `moult_pdp-01-preview.png`** [x]
+```
+Three screens from one mobile product page.
+
+-> the buy box, price and sizes up top
+-> a before and after with the same dog
+-> the results block in dark green so it breaks up the cream
+
+MOULT is a demo brand I made up, not a client.
+
+Need a store like this built? DM me.
+```
+
+**TS-MOULT-PDP01-FULLPAGE - `moult_pdp-01-full-page.png`** [linkedin]
+```
+The whole MOULT product page, split into two columns.
+
+Left column sells it: the buy box, why it works, the problem with normal brushes, the brush up close, a before and after.
+
+Right column deals with the doubts. How it works in three steps, reviews, a side by side with the brush you already own, the FAQ and the guarantee.
+
+I put the doubts second on purpose. People who are already sold shouldn't have to wade through them.
+
+Concept build for a brand I made up.
+
+#ecommerce #webdesign #shopify
+```
+
+**TS-MOULT-PDP01-X3 - `moult_pdp-01-full-page.png`** [x]
+```
+A whole desktop product page in one image.
+
+Left column sells the brush. Right column handles the doubts: how it works, reviews, a comparison table, the FAQ.
+
+If you're already sold, you never have to read the right side.
+
+Concept build for MOULT, a brand I made up.
+```
+
+**TS-MOULT-PDP01-MOBILESTRIP - `moult_pdp-01-mobile-strip.png`** [x]
+```
+Full page at a glance.
+
+The MOULT product page on a phone, in four columns:
+-> buy box and why it works
+-> the problem, then the brush
+-> before and after, three steps
+-> reviews and results
+
+Every section stacked for one thumb.
+
+Demo brand, not a client.
+```
+
+**TS-MOULT-PDP01-IG-CAROUSEL - `ig-carousel/slide1.png`** [instagram]
+```
+Concept store build: a product page for MOULT, a pet grooming brand I made up. Not a client.
+
+Swipe for the whole page, the mobile view, the buy box and comparison table up close, and what I built it with.
+
+Need a store like this built? Link in bio.
+
+#shopify #ecommerce #webdesign #shopifydesign #productpage
+```

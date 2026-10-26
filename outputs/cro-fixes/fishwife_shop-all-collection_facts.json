@@ -1,0 +1,18 @@
+{
+  "brand": "Fishwife", "url": "https://eatfishwife.com/collections/all", "pageType": "Collection Page",
+  "capturedAt": "2026-10-25", "viewport": "390x844@2",
+  "liveMeasurements": {"bannerY": [98, 498], "pillsY": 540, "collectionHeadingY": 588, "firstProductPhotoY": 664, "firstProductNameY": 863, "screenHeight": 844},
+  "products": [
+    {"name": "Smoked Salmon with Fly By Jing Chili Crisp (3-Pack)", "handle": "smoked-salmon-with-flybyjing-sichuan-chili-crisp", "rating": 4.9, "reviews": 641, "price": "40.00", "bestSellerCollection": true},
+    {"name": "Gold Label Smoked Salmon (3-Pack)", "handle": "smoked-atlantic-salmon", "rating": 4.9, "reviews": 520, "price": "37.00", "bestSellerCollection": true},
+    {"name": "The Starter Pack", "handle": "the-starter-pack", "rating": 4.9, "reviews": 343, "price": "88.00", "contents": "7 tins, 1 of each", "bestSellerCollection": true},
+    {"name": "Sardines with Preserved Lemon (3-Pack)", "handle": "sardines-with-preserved-lemon-3-pack", "rating": 4.9, "reviews": 223, "price": "32.00", "bestSellerCollection": true},
+    {"name": "Albacore Tuna in Olive Oil (3-Pack)", "handle": "tuna-3-pack", "rating": 4.9, "reviews": 198, "price": "32.00"},
+    {"name": "Smoked Salmon with Sweet & Spicy Zhong (3-Pack)", "handle": "the-fly-by-jing-zhong-smoked-salmon-trio-3-pack", "rating": 4.9, "reviews": 110, "price": "40.00"},
+    {"name": "The Spicy Trio", "handle": "the-spicy-trio-3-pack-2", "rating": 4.9, "reviews": 44, "price": "45.00"},
+    {"name": "Tuna Belly (3-Pack)", "handle": "tuna-belly-3-pack-2026", "rating": 4.5, "reviews": 21, "price": "75.00", "liveBadge": "JUST DROPPED!"},
+    {"name": "12 Days of Fishwife Advent Calendar", "handle": "12-days-of-fishwife-advent-calendar", "rating": 5.0, "reviews": 2, "price": "150.00", "liveBadge": "JUST DROPPED!"}
+  ],
+  "sources": {"ratings": "each PDP's JSON-LD aggregateRating (Okendo)", "prices": "/products.json", "bestSellers": "/collections/best-sellers/products.json"},
+  "assets": {"logo": "https://eatfishwife.com/cdn/shop/files/fishwife-logo.png (header <img>, real file)", "fonts": "Recoleta Medium/SemiBold + Albert Sans from the theme CDN", "banner": "Little_Sardines_Rainbow_Trout_3d41eea8...jpg (the live banner image)"}
+}

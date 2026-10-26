@@ -152,12 +152,16 @@ def render_frame_png(canvas_w, canvas_h, placements, out_path):
     canvas.save(out_path)
 
 
+OUT_FPS = 30  # 2026-10-24: match scroll_video_frames.py (30fps). Still-image inputs used to
+# default to 25fps, which made ffmpeg drop 1 frame in 6 and gave a periodic judder.
+
+
 def ffmpeg_compose(bg_png, frame_png, video_specs, out_path, canvas_w, canvas_h, duration=None):
     """video_specs: list of dicts with keys video, x, y, w, h"""
-    inputs = ["-i", bg_png]
+    inputs = ["-loop", "1", "-framerate", str(OUT_FPS), "-i", bg_png]
     for v in video_specs:
         inputs += ["-i", v["video"]]
-    inputs += ["-i", frame_png]
+    inputs += ["-loop", "1", "-framerate", str(OUT_FPS), "-i", frame_png]
 
     filter_parts = []
     last = "0:v"
@@ -169,17 +173,17 @@ def ffmpeg_compose(bg_png, frame_png, video_specs, out_path, canvas_w, canvas_h,
             f"crop={round(v['w'])}:{round(v['h'])}[{scaled}]"
         )
         nxt = f"lay{i}"
-        filter_parts.append(f"[{last}][{scaled}]overlay={round(v['x'])}:{round(v['y'])}[{nxt}]")
+        filter_parts.append(f"[{last}][{scaled}]overlay={round(v['x'])}:{round(v['y'])}:shortest=1[{nxt}]")
         last = nxt
 
     frame_idx = len(video_specs) + 1
-    filter_parts.append(f"[{last}][{frame_idx}:v]overlay=0:0:format=auto[outv]")
+    filter_parts.append(f"[{last}][{frame_idx}:v]overlay=0:0:format=auto:shortest=1[outv]")
 
     filter_complex = ";".join(filter_parts)
 
     cmd = ["ffmpeg", "-y"] + inputs + [
         "-filter_complex", filter_complex,
-        "-map", "[outv]",
+        "-map", "[outv]", "-r", str(OUT_FPS),
         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
     ]
     if duration:
@@ -288,20 +292,20 @@ def ffmpeg_compose_layers(bg_png, layers, out_path, canvas_w, canvas_h):
     Draws bg, then for each device its video THEN its own bezel, so a device
     later in the list sits fully on top of an earlier one (needed once the
     phone overlaps the laptop)."""
-    inputs = ["-i", bg_png]
+    inputs = ["-loop", "1", "-framerate", str(OUT_FPS), "-i", bg_png]
     for L in layers:
         if L.get("trim"):
             inputs += ["-ss", f"{L['trim']:.2f}"]
-        inputs += ["-i", L["video"], "-i", L["frame_png"]]
+        inputs += ["-i", L["video"]] + ["-loop", "1", "-framerate", str(OUT_FPS), "-i", L["frame_png"]]
     parts, last = [], "0:v"
     for i, L in enumerate(layers):
         vi, fi = 1 + 2 * i, 2 + 2 * i
         w, h = round(L["w"]), round(L["h"])
         parts.append(f"[{vi}:v]scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h}[v{i}]")
-        parts.append(f"[{last}][v{i}]overlay={round(L['x'])}:{round(L['y'])}[a{i}]")
-        parts.append(f"[a{i}][{fi}:v]overlay=0:0:format=auto[b{i}]")
+        parts.append(f"[{last}][v{i}]overlay={round(L['x'])}:{round(L['y'])}:shortest=1[a{i}]")
+        parts.append(f"[a{i}][{fi}:v]overlay=0:0:format=auto:shortest=1[b{i}]")
         last = f"b{i}"
-    cmd = ["ffmpeg", "-y"] + inputs + ["-filter_complex", ";".join(parts), "-map", f"[{last}]",
+    cmd = ["ffmpeg", "-y"] + inputs + ["-filter_complex", ";".join(parts), "-map", f"[{last}]", "-r", str(OUT_FPS),
            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart", out_path]
     subprocess.run(cmd, check=True, capture_output=True)
 

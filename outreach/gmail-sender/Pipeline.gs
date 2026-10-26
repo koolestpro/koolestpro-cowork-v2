@@ -25,23 +25,38 @@ function prepareLeads_(interactive) {
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) return;
   const stats = { discovered: 0, emails: 0, verified: 0, profiles: 0, sequences: 0, problems: [], limited: false };
+  const started = Date.now();
+  const ps = PropertiesService.getScriptProperties();
   try {
     const S = settings_();
     if (isTrue_(S.PAUSED)) { if (interactive) toast_('PAUSED is TRUE in Settings.'); return; }
-    const started = Date.now();
-    const timeLeft = () => Date.now() - started < 4.5 * 60 * 1000;
+
+    // Runtime budget (2026-10-23). A consumer Google account gets about 90 minutes of trigger time a day for ALL triggers.
+    // Prep used to run ~5 minutes every 30 minutes on a backlog of 200+ unprepared leads, used the day's quota up, and then the
+    // send job and the 6pm report stopped running. Prep now gets a daily allowance, and stops when enough emails are already written.
+    const day = Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd');
+    if (ps.getProperty('PREP_DAY') !== day) { ps.setProperty('PREP_DAY', day); ps.setProperty('PREP_MS', '0'); }
+    const allowanceMs = Number(S.PREP_DAILY_MINUTES || 35) * 60000;
+    if (!interactive && Number(ps.getProperty('PREP_MS') || 0) >= allowanceMs) return;
+    const skipNew = !interactive && prepBacklogFull_(S);   // enough prepared leads already: only keep follow-ups written
+
+    const runMs = Number(S.PREP_RUN_MINUTES || 3) * 60 * 1000;
+    const timeLeft = () => Date.now() - started < runMs;
     S._started = started;
 
-    try { apifyImports_(stats, timeLeft); } catch (e) { stats.problems.push('apify: ' + e.message); }
-    try { importSources_(S, stats, timeLeft, false); } catch (e) { stats.problems.push('sources: ' + e.message); }
-    try { qualifyDiscovery_(S, stats, timeLeft); } catch (e) { stats.problems.push('discovery: ' + e.message); }
-    findEmails_(S, stats, timeLeft);
-    verifyEmails_(S, stats, timeLeft);
-    rescueEmails_(S, stats, timeLeft);
-    profileLeads_(S, stats, timeLeft);
-    writeSequences_(S, stats, timeLeft);
+    if (!skipNew) {
+      try { apifyImports_(stats, timeLeft); } catch (e) { stats.problems.push('apify: ' + e.message); }
+      try { importSources_(S, stats, timeLeft, false); } catch (e) { stats.problems.push('sources: ' + e.message); }
+      try { qualifyDiscovery_(S, stats, timeLeft); } catch (e) { stats.problems.push('discovery: ' + e.message); }
+      findEmails_(S, stats, timeLeft);
+      verifyEmails_(S, stats, timeLeft);
+      rescueEmails_(S, stats, timeLeft);
+      profileLeads_(S, stats, timeLeft);
+      writeSequences_(S, stats, timeLeft);
+    }
     try { writeFollowups_(S, stats, timeLeft); } catch (e) { stats.problems.push('follow-ups: ' + e.message); }
   } finally {
+    ps.setProperty('PREP_MS', String(Number(ps.getProperty('PREP_MS') || 0) + (Date.now() - started)));
     lock.releaseLock();
   }
   if (interactive) {
@@ -50,10 +65,20 @@ function prepareLeads_(interactive) {
   }
 }
 
+/** True when enough leads already have their emails written and have not been contacted (PREP_BUFFER, default 40; 0 = never stop). */
+function prepBacklogFull_(S) {
+  const max = Number(S.PREP_BUFFER === undefined || S.PREP_BUFFER === '' ? 40 : S.PREP_BUFFER);
+  if (!max) return false;
+  const has1 = {};
+  read_('Sequence').rows.forEach(r => { if (Number(r.step) === 1 && r.status === 'Draft') has1[String(r.lead_id)] = true; });
+  const ready = read_('Leads').rows.filter(l => l.lead_id && ['New', ''].indexOf(String(l.stage)) !== -1 && Number(l.touch_count || 0) === 0 && has1[String(l.lead_id)]).length;
+  return ready >= max;
+}
+
 function candidates_(leads, filter, n) {
   return leads.rows.filter(l => l.lead_id && ['New', ''].indexOf(String(l.stage)) !== -1 &&
     Number(l.prep_tries || 0) < PREP_MAX_TRIES_ && filter(l))
-    .sort((a, b) => (isHot_(b) ? 1 : 0) - (isHot_(a) ? 1 : 0)).slice(0, n); // hot leads are prepared first
+    .sort((a, b) => (isHot_(b) ? 1 : 0) - (isHot_(a) ? 1 : 0) || hasRedesign_(b) - hasRedesign_(a)).slice(0, n); // hot leads first, then stores with a redesign built (2026-10-26)
 }
 
 function note_(leads, lead, msg, failed) {
@@ -440,8 +465,9 @@ function profileLeads_(S, stats, timeLeft) {
 
 const SEQ_TASK_ = [
   'TASK: write a 5-email cold sequence from Ridwan to this lead. Use ONLY facts in the lead data and profile below plus the brief. Any observation in email 1 must be supported by the profile. If the profile has no solid observation, keep email 1 honest and general rather than inventing one.',
-  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE OFFER and THE PROBLEM, email 1 is built on them: show you understood how THIS business sells (their product, price point, how customers reach them), name the page, product or element from the evidence, say what the shopper or the ad click runs into, what that costs in plain words, and exactly what Ridwan would build (THE FIX). It must be specific enough that the founder can check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. A [SOFT] gap is asked, never stated: "is cold traffic going straight to the product page, or is there a pre-sell page I missed?". Mention page speed or load time ONLY when THE PROBLEM rests on a [SPEED] evidence line: then use its exact numbers and say it is Google\'s own measurement on phones, never a guess or a rounded-up claim. Never pitch a small fix (a size chart, a photo, a description) as the reason to talk. Never mention language, translation, currency, price display, country or market differences (stores adapt these to where the visitor browses from, and research browses from Google servers abroad, so what it sees is not what their customers see). Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it. Address the decision maker by first name when known, even when the email goes to a shared inbox.',
+  'THE PROBLEM PARAGRAPH IS THE WHOLE EMAIL. When the lead data has THE OFFER and THE PROBLEM, email 1 is built on them: show you understood how THIS business sells (their product, price point, how customers reach them), name the page, product or element from the evidence, say what the shopper or the ad click runs into, what that costs in plain words, and exactly what Ridwan would build (THE FIX). It must be specific enough that the founder can check it in ten seconds. Never call something broken, missing or an error unless its evidence is [MEASURED] or [SEEN]. A [SOFT] gap is asked, never stated: "is cold traffic going straight to the product page, or is there a pre-sell page I missed?". When THE PROBLEM or SECOND PROBLEM rests on a [LINKS] line, name each link by its visible label and where it sits ("the Best Sellers item in your top menu"), say plainly what happens when a visitor clicks it (404 page, or back to the homepage they are already on), and never paste a URL or path. Mention page speed or load time ONLY when THE PROBLEM rests on a [SPEED] evidence line: then use its exact numbers and say it is Google\'s own measurement on phones, never a guess or a rounded-up claim. Never pitch a small fix (a size chart, a photo, a description) as the reason to talk. Never mention language, translation, currency, price display, country or market differences (stores adapt these to where the visitor browses from, and research browses from Google servers abroad, so what it sees is not what their customers see). Never use generic lines that could go to any store ("your site could convert better", "a few small tweaks", "some friction", "optimise your store"). If SECOND PROBLEM is given, step 2 uses it. Address the decision maker by first name when known, even when the email goes to a shared inbox.',
   'Step 1: the observation, the problem it usually causes, what Ridwan does, one interest question. Steps 2 to 5 must each add something NEW and never say "just checking in" or "following up". Follow-ups NEVER make a new claim about their site: the only observations allowed are THE PROBLEM and SECOND PROBLEM. Without a SECOND PROBLEM, steps 2 to 5 add something about THE OFFER instead (how Ridwan would do it, one real proof line, a smaller first step, a lighter ask). Never write "one more thing I noticed". Step 3 may use one real proof line from the brief if it genuinely fits. Step 5 is a warm, clean close that leaves the door open.',
+  'MOCKUP OFFER (2026-10-26): when Track is Fix and there is no REDESIGN ALREADY BUILT line, the interest question at the end of step 1 is an offer to mock up how that page would look fixed, for example "Want me to mock up how that page would look fixed, so you can see it before deciding anything?". Say "I can" or "want me to", never that it is already built. One follow-up may repeat the offer in different words.',
   'Every email under 100 words, plain text, no links, no signature (added by the system), no closing way-out line such as "no problem if not" or "tell me and I will stop" (the footer already carries the opt-out): end on the question. Steps 2 to 5 read as replies in the same thread: no subject.',
   'If Track is Launch (the store is behind a password or coming-soon page, so they are building it now): never describe the store behind the password, its products or design (nobody can see them). Open with what is visible (their coming-soon page, the launch timing, an email signup or the lack of one), then THE OFFER: launch_review = offer a free look at their product page before launch if they share the password; launch_build = help finish the store so it launches properly; waitlist_page = a coming-soon page that collects emails before launch; launch_creatives = launch ad creatives from their product photos. Good ask: whether they are building it themselves or someone is helping. Follow-ups stay about the launch.',
   'Greeting: use the contact name if given ("Hi Amina,"). If no name, start with "Hi," and the observation. For a Nigerian or African lead, email 1 must begin with exactly {{greeting}} followed by the name, e.g. "{{greeting}} Amina." and steps 2 to 5 begin "Hi Amina,". For everyone else, no greeting phrase.',
@@ -461,6 +487,9 @@ const SEQ_PARTNER_TASK_ = [
   'Every email under 100 words, plain text, no links, no signature, no closing way-out line (the footer already carries the opt-out): end on the question. Steps 2 to 5 read as replies in the same thread: no subject. Greeting: contact name if given ("Hi Sam,"), else "Hi,". For a Nigerian or African lead, email 1 begins with exactly {{greeting}} then the name; steps 2 to 5 begin "Hi Name,". Subject for step 1: short, lower case, specific ("overflow shopify builds for [agency]"), no clickbait.',
   'Output JSON only: {"basis":"one line: which profile facts the email-1 observation rests on","emails":[{"step":1,"subject":"...","body":"..."},{"step":2,"body":"..."},{"step":3,"body":"..."},{"step":4,"body":"..."},{"step":5,"body":"..."}]}',
 ].join('\n');
+
+// 2026-10-26 (Ridwan): when a redesign of the store's page already exists, it is the hook of the whole sequence.
+const REDESIGN_TASK_ = 'Ridwan has ALREADY redesigned one of this store\'s pages (named above) as a full concept page, unasked and unpaid. Follow the PAGE MATCH line exactly. If the pages match: email 1 rests on THE PROBLEM, then says he went ahead and rebuilt that page as a concept to show the fix, and asks if they want to see it (he will send a side-by-side of their page and the concept). If they do not match: email 1 still rests on THE PROBLEM on its own page, then mentions the rebuilt page only as proof of how he works and offers to send it and to do the same for the problem page. No link in email 1, never say it is live or published, never claim results, sales or conversion numbers, never imply they are a client. Follow-ups may offer to send it again, describe one real change on it (only changes that fix THE PROBLEM or SECOND PROBLEM), or offer to walk them through it on a short call.';
 
 function writeSequences_(S, stats, timeLeft) {
   const leads = read_('Leads');
@@ -485,7 +514,8 @@ function writeSequences_(S, stats, timeLeft) {
         '\nWhat they sell: ' + p.what_they_sell + '\nAudience: ' + p.audience + '\nSignal: ' + p.signal + '\nObservations: ' + p.site_notes +
         (p.offer ? '\nTHE OFFER: ' + p.offer : '') + (p.decision_maker ? '\nDecision maker: ' + p.decision_maker + '. Team: ' + (p.team || 'unknown') : '') +
         (p.problem ? '\nTHE PROBLEM (email 1 rests on this): ' + p.problem + '\nIts evidence, cost and THE FIX: ' + (p.problem_evidence || '') + '\nPage: ' + (p.problem_page || '') : '') +
-        (p.second_problem ? '\nSECOND PROBLEM (for step 2): ' + p.second_problem : '') + (p.socials ? '\nSocial (context only, never flatter or criticise the following): ' + String(p.socials).slice(0, 600) : '') +
+        (p.second_problem ? '\nSECOND PROBLEM (for step 2): ' + p.second_problem : '') +
+        (hasRedesign_(lead) ? '\nREDESIGN ALREADY BUILT: ' + lead.redesign + '\n' + redesignMatch_(lead, p) + '\n' + REDESIGN_TASK_ : '') + (p.socials ? '\nSocial (context only, never flatter or criticise the following): ' + String(p.socials).slice(0, 600) : '') +
         '\nNotes: ' + (lead.notes || '');
       const out = callAi_(S, sys, user, 1800);
       const j = parseJson_(out.text);
@@ -595,25 +625,31 @@ const FOLLOWUP_TASK_ = [
   'Output JSON only: {"emails":[{"step":N,"body":"..."}, ...]} with exactly the steps asked for.',
 ].join('\n');
 
+// 2026-10-26: a redesign was finished while this lead was mid-sequence (or after it ended). It replaces the next follow-up, so no extra email lands.
+const REDESIGN_FOLLOWUP_TASK_ = 'The FIRST step you write now (the next one to send) says Ridwan went ahead and rebuilt the page as a concept (follow the PAGE MATCH line about which page), and asks if they want to see it: he will send a side-by-side of their page today and the concept. No link, never live or published, no results claimed. The remaining steps follow the normal follow-up rules and may offer to send it again or walk them through it on a short call.';
+
 function writeFollowups_(S, stats, timeLeft) {
   const leads = read_('Leads'), profiles = read_('Profiles'), seq = read_('Sequence');
   const todo = leads.rows.filter(l => l.lead_id && lc_(l.stage) === 'contacted' && Number(l.touch_count || 0) >= 1).filter(l => {
     const rows = seq.rows.filter(r => String(r.lead_id) === String(l.lead_id) && r.status !== 'Superseded');
     const sent = rows.some(r => Number(r.step) === 1 && r.status === 'Sent');
     return sent && !rows.some(r => Number(r.step) === Number(l.touch_count) + 1);
-  }).slice(0, 2);
+  }).sort((a, b) => hasRedesign_(b) - hasRedesign_(a)).slice(0, 2);   // redesign emails first (2026-10-26)
   todo.forEach(lead => {
     if (!timeLeft() || stats.limited) return;
     try {
       const id = String(lead.lead_id), next = Number(lead.touch_count) + 1;
-      if (next > 5) return;
+      const revival = next === 6 && hasRedesign_(lead) && String(lead.notes || '').indexOf('REDESIGN REVIVAL') !== -1;   // one extra email after a finished sequence, once
+      if (next > 5 && !revival) return;
       const p = profiles.rows.find(x => String(x.lead_id) === id) || {};
       const first = seq.rows.find(r => String(r.lead_id) === id && Number(r.step) === 1 && r.status === 'Sent');
-      const steps = []; for (let s = next; s <= 5; s++) steps.push(s);
+      const steps = []; for (let s = next; s <= (revival ? 6 : 5); s++) steps.push(s);
       const sys = BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[regionKey_(lead.country)] + '\n\n' + FOLLOWUP_TASK_;
       const user = 'Write steps ' + steps.join(', ') + '.\nLEAD: ' + [lead.brand, lead.contact_name || '(no contact name)', lead.website].filter(String).join(' | ') + '. Country: ' + (lead.country || '') + '. Track: ' + (lead.track || '') +
         '\nEMAIL 1 THAT WAS SENT (subject "' + (first ? first.subject : '') + '"):\n' + (first ? String(first.body) : '') +
-        '\nWhat they sell: ' + (p.what_they_sell || '') + (p.offer ? '\nTHE OFFER: ' + p.offer : '') + (p.second_problem ? '\nSECOND PROBLEM: ' + p.second_problem : '');
+        '\nWhat they sell: ' + (p.what_they_sell || '') + (p.offer ? '\nTHE OFFER: ' + p.offer : '') + (p.second_problem ? '\nSECOND PROBLEM: ' + p.second_problem : '') +
+        (p.problem_page ? '\nPage email 1 was about: ' + p.problem_page : '') +
+        (hasRedesign_(lead) ? '\nREDESIGN ALREADY BUILT: ' + lead.redesign + '\n' + redesignMatch_(lead, p) + '\n' + REDESIGN_FOLLOWUP_TASK_ + (revival ? '\nThis is step 6: the sequence had ended with no reply. Write ONE short, friendly note in the same thread whose only point is the rebuilt page and the offer to send it. No pressure, no new claims about the site.' : '') : '');
       const out = callAi_(S, sys, user, 1200);
       const j = parseJson_(out.text);
       if (!j || !j.emails || !j.emails.length) throw new Error('follow-ups: AI returned no emails');

@@ -200,6 +200,120 @@ function speedCheck_(S, url) {
   return '[SPEED] [MEASURED] Google PageSpeed lab test on a phone, run twice, ' + url + ': main image or text appears after ' + one.lcp.toFixed(1) + 's and ' + two.lcp.toFixed(1) + 's (performance ' + one.score + ' and ' + two.score + ' out of 100).';
 }
 
+// ---------- Link check (2026-10-23, Ridwan) ----------
+
+/**
+ * Clicks the links a visitor would click on the homepage and one product page and reports two things that are plain facts:
+ *   - BROKEN: the link ends on a 404 or 410 page.
+ *   - HOME: the link ends on the homepage even though its path is not the homepage (a "Shop All" or "Best Sellers" item
+ *     that dumps the visitor back on the page they are already on). A "Shop now" style button whose address IS the homepage
+ *     counts the same way (SELF).
+ * Only 404, 410 and a redirect chain that ends on the homepage count. 403, 429 and 5xx are bot walls or outages, never findings.
+ * Every hit is fetched twice before it is reported. Skipped in the second half of a run (Apps Script's 6 minute limit).
+ */
+const LINK_SKIP_PATH_ = /^\/(account|cart|checkout|checkouts|search|password|apps|tools|challenge|services|cdn|wpm@)|^\/[a-z]{2}([-_][a-z]{2})?\/?$/i;
+const LINK_CTA_LABEL_ = /^(shop( now| all| the collection)?|buy( now)?|order( now)?|view all|see all|explore|discover|get started|shop collection|browse (all|the collection))$/i;
+const LINK_UA_ = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15' };
+
+function sameHost_(url, base) {
+  const m = String(url).match(/^https?:\/\/([^\/?#]+)/i);
+  return !!m && cleanDomain_(m[1]) === cleanDomain_(base);
+}
+function isHomeUrl_(url, base) {
+  if (!sameHost_(url, base)) return false;
+  const p = String(url).replace(/^https?:\/\/[^\/?#]+/i, '').replace(/[?#].*$/, '');
+  return p === '' || p === '/';
+}
+
+/** Internal links in a page: { url, path, label, where }. `where` is header menu, page body or footer. */
+function pageLinks_(html, base, pageName) {
+  const h = String(html || '').replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<!--[\s\S]*?-->/gi, ' ');
+  const spans = [];
+  [['header', 'header menu'], ['footer', 'footer']].forEach(t => {
+    const re = new RegExp('<' + t[0] + '\\b[\\s\\S]*?<\\/' + t[0] + '>', 'gi');
+    let m; while ((m = re.exec(h))) spans.push([m.index, m.index + m[0].length, t[1]]);
+  });
+  const out = [], seen = {};
+  const re = /<a\b([^>]*?)href=["']([^"'#][^"']*)["']([^>]*)>([\s\S]*?)<\/a>/gi;
+  let m;
+  while ((m = re.exec(h))) {
+    let href = m[2].trim().replace(/&amp;/g, '&');
+    if (/^(mailto:|tel:|javascript:|sms:|whatsapp:)/i.test(href)) continue;
+    let url;
+    if (/^\/\//.test(href)) url = 'https:' + href;
+    else if (/^\//.test(href)) url = 'https://' + base + href;
+    else if (/^https?:\/\//i.test(href)) url = href;
+    else continue;
+    if (!sameHost_(url, base)) continue;
+    url = url.replace(/#.*$/, '');
+    const path = url.replace(/^https?:\/\/[^\/?#]+/i, '') || '/';
+    const label = m[4].replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim().slice(0, 40);
+    const home = isHomeUrl_(url, base);
+    if (home && !LINK_CTA_LABEL_.test(label)) continue;   // the logo and "Home" link to the homepage on purpose
+    if (!home && LINK_SKIP_PATH_.test(path)) continue;
+    if (!label && !home) continue;
+    const key = path + '|' + label.toLowerCase();
+    if (seen[key]) continue;
+    seen[key] = true;
+    const sp = spans.filter(s => m.index >= s[0] && m.index < s[1])[0];
+    out.push({ url: url, path: path, label: label, home: home, where: sp ? sp[2] : 'page body', page: pageName || 'homepage' });
+  }
+  return out;
+}
+
+/** Follows redirects by hand (at most 4 hops). Returns { code, url } for where the link really ends. */
+function endOf_(url) {
+  let cur = url;
+  for (let i = 0; i < 5; i++) {
+    let r;
+    try { r = UrlFetchApp.fetch(cur, { muteHttpExceptions: true, followRedirects: false, headers: LINK_UA_ }); } catch (e) { return { code: 0, url: cur }; }
+    const code = r.getResponseCode();
+    if (code < 300 || code >= 400) return { code: code, url: cur };
+    const hd = r.getHeaders() || {};
+    const loc = String(hd.Location || hd.location || '');
+    if (!loc) return { code: code, url: cur };
+    cur = /^https?:\/\//i.test(loc) ? loc : (/^\/\//.test(loc) ? 'https:' + loc : cur.replace(/^(https?:\/\/[^\/?#]+).*$/i, '$1') + (loc.charAt(0) === '/' ? '' : '/') + loc);
+  }
+  return { code: 310, url: cur };
+}
+
+function judgeLink_(l, base) {
+  if (l.home) return 'self';   // a "Shop now" button that points at the homepage
+  const e = endOf_(l.url);
+  if (e.code === 404 || e.code === 410) return 'broken';
+  if (e.code >= 200 && e.code < 300 && isHomeUrl_(e.url, base) && !isHomeUrl_(l.url, base)) return 'home';
+  return '';
+}
+
+/** Returns { line, items } where items are confirmed findings. line is '' when everything checked out. */
+function linkCheck_(S, base, pages) {
+  const all = [];
+  pages.forEach(p => pageLinks_(p.html, base, p.name).forEach(l => { if (!all.some(x => x.path === l.path && x.label.toLowerCase() === l.label.toLowerCase())) all.push(l); }));
+  const rank = l => (l.where === 'header menu' ? 0 : l.home ? 1 : /^\/products\//.test(l.path) ? 4 : l.where === 'footer' ? 3 : 2);
+  const todo = all.sort((a, b) => rank(a) - rank(b)).slice(0, 26);
+  const items = [];
+  todo.forEach(l => {
+    const first = judgeLink_(l, base);
+    if (!first) return;
+    if (first !== 'self') { Utilities.sleep(1500); if (judgeLink_(l, base) !== first) return; }   // must repeat to count
+    items.push({ url: l.url, path: l.path, label: l.label, where: l.where, page: l.page, kind: first });
+  });
+  if (!todo.length) return { line: '', items: [], checked: 0 };
+  if (!items.length) return { line: '', items: [], checked: todo.length };
+  const desc = it => '"' + (it.label || 'image link') + '" (' + it.where + (it.page !== 'homepage' ? ' of the ' + it.page : '') + ', ' + it.path + ')';
+  const broken = items.filter(i => i.kind === 'broken'), home = items.filter(i => i.kind === 'home'), self = items.filter(i => i.kind === 'self');
+  const parts = [];
+  if (broken.length) parts.push('Lead to a page that does not exist (404): ' + broken.map(desc).join('; ') + '.');
+  if (home.length) parts.push('Send the visitor back to the homepage instead of the page the label promises: ' + home.map(desc).join('; ') + '.');
+  if (self.length) parts.push('Buttons whose address is the homepage itself, so clicking does nothing new: ' + self.map(desc).join('; ') + '.');
+  return { line: '[LINKS] [MEASURED] Clicked ' + todo.length + ' links on the homepage and a product page, each failure confirmed twice. ' + parts.join(' '), items: items, checked: todo.length };
+}
+
+/** Re-checks the stored findings right now. True if at least one is still wrong. */
+function linksStillBroken_(items, base) {
+  return (items || []).some(it => judgeLink_({ url: it.url, home: it.kind === 'self' }, base) === it.kind);
+}
+
 // ---------- Restricted categories: never emailed ----------
 
 /** Products Ridwan should not be selling services to (illegal to sell in many markets, payment-processor bans, or scam-prone). */
@@ -222,6 +336,10 @@ function factCheck_(S, claim, r) {
   if (!claim) return { holds: false, why: 'no claim' };
   if (PRICE_CLAIM_.test(claim)) return { holds: false, why: 'price amount or price display point: Shopify converts and formats prices per visitor country, and themes hide compare-at prices, so what research reads is not what shoppers see' };
   if (LOCALE_WORDS_.test(claim)) return { holds: false, why: 'language, translation or currency point: stores adapt these to the visitor\'s country and research browses from abroad, so it is never a reason to email' };
+  if (/\[LINKS\]|broken link|404|back to the home ?page|redirects? to the home ?page/i.test(claim)) {   // link findings are tested by clicking again, not by reading page text
+    if (!r.links || !r.links.length) return { holds: false, why: 'no link finding was measured for this store' };
+    return linksStillBroken_(r.links, r.base) ? { holds: true, why: 'links clicked again just now and still wrong' } : { holds: false, why: 'links no longer fail when clicked again' };
+  }
   if (/sold.?out|out of stock|unavailable|no stock/i.test(claim) && r.stock) {
     if (r.stock.available / r.stock.total > 0.5) return { holds: false, why: 'product feed shows ' + r.stock.available + ' of ' + r.stock.total + ' products in stock' };
   }
@@ -315,6 +433,15 @@ function researchStore_(S, lead, homePage) {
   const sp = (Date.now() - (S._started || Date.now()) < 3 * 60 * 1000) ? speedCheck_(S, pdpUrl || ('https://' + base)) : '';   // skipped late in a run (Apps Script's 6 minute limit)
   if (sp) ev.push(sp);
 
+  let linkItems = [];
+  if (Date.now() - (S._started || Date.now()) < 3 * 60 * 1000) {   // skipped late in a run (Apps Script's 6 minute limit)
+    try {
+      const lk = linkCheck_(S, base, [{ html: homePage.html, name: 'homepage' }].concat(pdpHtml ? [{ html: pdpHtml, name: 'product page' }] : []));
+      if (lk.line) { ev.push(lk.line); linkItems = lk.items; }
+      else if (lk.checked) ev.push('[MEASURED] link check: ' + lk.checked + ' homepage and product page links clicked, none broken and none sent back to the homepage');
+    } catch (e) { /* link check is a bonus, never blocks research */ }
+  }
+
   const f = funnel_(base, host, homePage.html, pdpHtml);
   f.ev.forEach(x => ev.push(x));
 
@@ -328,7 +455,7 @@ function researchStore_(S, lead, homePage) {
   if (links.instagram) { const ig = instagram_(S, links.instagram); if (ig) social.push(ig); }
   if (links.linkedin) social.push('LinkedIn page found (not read: LinkedIn needs a login). Use it only to know they are on LinkedIn.');
   const avail = products.filter(p => (p.variants || []).some(v => v.available !== false));
-  return { big: false, evidence: ev, social: social, pdpUrl: pdpUrl, hasPresell: f.hasPresell,
+  return { big: false, evidence: ev, social: social, pdpUrl: pdpUrl, hasPresell: f.hasPresell, links: linkItems, base: base,
     pages: { home: textOf_(homePage.html).slice(0, 6000), pdp: textOf_(pdpHtml).slice(0, 9000), about: about ? about.text : '' },
     stock: products.length ? { total: products.length, available: avail.length, soldOut: products.filter(p => avail.indexOf(p) === -1).map(p => p.title) } : null };
 }
@@ -383,6 +510,7 @@ const STORE_PROFILE_SYS_ = [
   '- quiz: a product finder quiz. Strong when there are many similar products and buyers must choose (skincare by skin type, supplements by goal).',
   '- subscription: subscribe and save. Strong for consumables with no subscription app.',
   '- speed: the store is obviously slow on phones. ONLY when the evidence has a [SPEED] line; quote its numbers exactly and say it is Google\'s own measurement. Strong when they run ads (every paid click waits).',
+  '- broken_links: ONLY when the evidence has a [LINKS] line (the links were clicked and each failure confirmed twice). A menu item, homepage button or product-page link that ends on a 404, or that sends the visitor back to the homepage, is something any shopper can click and see in ten seconds. Score 4 when it is in the header menu, a homepage button or a product link; 3 when it is only in the footer. The offer is a full link and navigation check across the whole buy path (the homepage is only where you looked) plus the fixes, never a ten minute patch. If a bigger offer fits this store better, use broken_links as the SECOND problem (it makes a strong step 2 or step 3), not the first.',
   '- custom_feature: a specific custom Shopify feature this business type needs (a configurator, a sample pack flow, a shorter checkout path); name it exactly.',
   'NEVER claim a page lacks something or leaves a doubt unanswered unless the evidence includes that page\'s visible text and it is truly absent there. A worry typical for the niche ("buyers of X usually wonder Y") is not evidence. Stock levels (sold-out items) are a supply decision, not a project: at most a supporting detail.',
   'NEVER pick a price amount, a sale or compare-at price, or how prices are shown (Shopify converts prices per visitor country and themes hide compare-at prices). NEVER build a point from menu or navigation link text (a "Stockholm Store" link is just a link). Not even as supporting details.',
@@ -392,13 +520,14 @@ const STORE_PROFILE_SYS_ = [
   'Score worth 1 to 5. 5: a clear project (page or feature to build) that fits how this business sells, backed by MEASURED or SEEN evidence. 4: a good project with slightly weaker evidence. 3: plausible but generic for the niche. 1 or 2: small fixes, guesses or soft gaps only. Be strict: an honest 2 is better than a dressed-up 4.',
   'Output JSON only: {"what_they_sell":"one short line","audience":"who buys, one short line","niche":"2 to 3 words","business":"one line: how they make money, price point, consumable or not, how they get customers","signal":"one line: why they fit","site_notes":"2 to 4 short, true observations",' +
   '"decision_maker":{"name":"First Last or empty","role":"Founder, Owner, CEO... or empty","basis":"the words in the about text, or empty"},"team":"solo|small|larger|unknown",' +
-  '"offer":"page_rebuild|speed|advertorial|listicle|post_purchase|bundle_builder|quiz|subscription|custom_feature","problem":"one sentence a founder would recognise: what is happening in their store or funnel and what the shopper or the ad click runs into","problem_evidence":"the exact evidence lines it rests on, with their labels","problem_page":"url",' +
+  '"offer":"page_rebuild|speed|broken_links|advertorial|listicle|post_purchase|bundle_builder|quiz|subscription|custom_feature","problem":"one sentence a founder would recognise: what is happening in their store or funnel and what the shopper or the ad click runs into","problem_evidence":"the exact evidence lines it rests on, with their labels","problem_page":"url",' +
   '"cost":"one line, what it costs them in plain words, no numbers","fix":"one line: exactly what Ridwan would build for them","worth":1-5,"second":{"offer":"...","problem":"a different angle for a follow-up","evidence":"labelled evidence","worth":1-5} or null,"rejected":"weaker points you considered and why not"}',
 ].join('\n');
 
 /** A sequence may be written only when the store has an offer worth emailing about (agencies and no-website leads are exempt). */
 function problemOk_(lead, profile, S) {
   if (['partner', 'build', 'launch'].indexOf(lc_(lead.track)) !== -1 || !String(lead.website).trim()) return true;   // Launch: the timing is the reason
+  if (hasRedesign_(lead)) return true;   // 2026-10-26: a full redesign of their page is already built, that is the reason to talk
   if (!profile || profile.problem_worth === undefined) return true;   // Profiles tab not upgraded yet: old behaviour
   return Number(profile.problem_worth || 0) >= Number(S.MIN_PROBLEM_SCORE || 4);
 }

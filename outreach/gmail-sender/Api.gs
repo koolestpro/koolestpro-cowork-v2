@@ -43,6 +43,7 @@ function apiRoute_(action, a) {
     case 'lead': return apiLead_(a);
     case 'discovery': return apiDiscovery_(a);
     case 'get_settings': return apiSettings_();
+    case 'contactable': return apiContactable_(a);
     case 'run_tick': tick(); return { ran: 'tick' };   // logs replies, drafts replies, sends approved drafts
     default: break;
   }
@@ -59,6 +60,7 @@ function apiRoute_(action, a) {
       case 'add_discovery_rows': return apiAddDiscoveryRows_(a);
       case 'add_signals': return apiAddSignals_(a);
       case 'set_settings': return apiSetSettings_(a);
+      case 'set_redesign': return apiSetRedesign_(a);
       default: throw new Error('unknown action: ' + action);
     }
   } finally {
@@ -174,6 +176,73 @@ function apiSetSettings_(a) {
     changed[k] = String(a.values[k]);
   });
   return { changed: changed };
+}
+
+/**
+ * 2026-10-26 (Ridwan): content is only designed for stores we can actually email.
+ * Returns stores whose lead has a sendable, confirmed email and is not Lost, Bounced, Unsubscribed or Won.
+ * No email addresses are returned, only what the content side needs.
+ */
+function apiContactable_(a) {
+  const S = settings_();
+  const dead = ['Lost', 'Bounced', 'Unsubscribed', 'Won'];
+  const rows = read_('Leads').rows.filter(l => l.lead_id && String(l.website || '').trim() && l.email &&
+    sendableStatus_(l.email_status, S) && emailOk_(l.email) && dead.indexOf(String(l.stage || 'New')) === -1 &&
+    String(l.notes || '').indexOf('UNCONFIRMED RECIPIENT') === -1);
+  const prof = {};
+  read_('Profiles').rows.forEach(p => { prof[String(p.lead_id)] = p; });
+  return {
+    total: rows.length,
+    stores: rows.map(l => { const p = prof[String(l.lead_id)] || {}; return {
+      domain: cleanDomain_(l.website), brand: l.brand, lead_id: String(l.lead_id), stage: l.stage || 'New',
+      email_status: l.email_status, touch_count: Number(l.touch_count || 0), niche: l.niche, country: l.country,
+      track: l.track, redesign: l.redesign || '', mockup_requested: String(l.mockup_requested || ''),
+      problem_page: p.problem_page || '', problem_kind: pageKind_(p.problem_page), problem_worth: Number(p.problem_worth || 0), offer: p.offer || '',
+    }; }),
+  };
+}
+
+/**
+ * 2026-10-26 (Ridwan): the Mac reports a redesign built for a store (outreach/redesign-hooks.json).
+ * Sets the lead's `redesign` cell. If no email has gone out yet, unsent emails are superseded and the lead is
+ * unapproved, so the next Prepare run rewrites the sequence around the redesign for Ridwan to review.
+ */
+function apiSetRedesign_(a) {
+  const d = cleanDomain_(a.domain || '');
+  if (!d) throw new Error('domain required');
+  const leads = read_('Leads');
+  const lead = leads.rows.find(l => cleanDomain_(l.website || '') === d);
+  if (!lead) return { domain: d, found: false };
+  const text = [a.date || '', a.page_type || '', a.page_path || '', a.note || ''].filter(String).join(' | ');
+  set_(leads, lead, 'redesign', text);
+  const stage = String(lead.stage || 'New'), touches = Number(lead.touch_count || 0), seq = read_('Sequence');
+  const unsent = seq.rows.filter(r => String(r.lead_id) === String(lead.lead_id) && r.status === 'Draft');
+  let action = 'recorded';
+  if (touches === 0 && ['New', ''].indexOf(String(lead.stage || '')) !== -1) {
+    // Not emailed yet: email 1 is rewritten around the redesign, Ridwan reviews it.
+    unsent.forEach(r => set_(seq, r, 'status', 'Superseded'));
+    if (unsent.length) set_(leads, lead, 'approved', false);
+    set_(leads, lead, 'prep_note', 'Redesign built ' + (a.date || '') + ': sequence will be rewritten around it' + (unsent.length ? ', approval removed until you review it' : ''));
+    action = 'first email rewritten';
+  } else if (stage === 'Contacted' && touches >= 1) {
+    // Mid-sequence: the next unsent follow-up becomes the redesign email (the rest are rewritten after it). Same timing, no extra email.
+    unsent.forEach(r => set_(seq, r, 'status', 'Superseded'));
+    action = 'next follow-up becomes the redesign email';
+  } else if (stage === 'Finished' && touches >= 1 && String(lead.notes || '').indexOf('REDESIGN REVIVAL') === -1) {
+    // Sequence ended with no reply: one extra email in the same thread, once, two days from now.
+    set_(leads, lead, 'stage', 'Contacted');
+    set_(leads, lead, 'next_touch_at', new Date(Date.now() + 2 * 86400000));
+    set_(leads, lead, 'notes', ('REDESIGN REVIVAL ' + (a.date || '') + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
+    action = 'one revival email queued';
+  } else if (['Replied', 'Talking', 'Call booked'].indexOf(stage) !== -1) {
+    // A real conversation: nothing automatic, tell Ridwan.
+    const S = settings_();
+    if (S.ALERT_EMAIL) GmailApp.sendEmail(S.ALERT_EMAIL, 'Redesign ready for ' + (lead.brand || d) + ': send it yourself',
+      'You are already talking to ' + (lead.brand || d) + ' (stage ' + stage + '). The ' + (a.page_type || 'page') + ' redesign is built:\n' + text +
+      '\n\nSend the side-by-side and a private link in your next reply. Nothing was sent automatically.', { name: 'Koolestpro Outreach' });
+    action = 'alerted Ridwan (in conversation)';
+  }
+  return { domain: d, found: true, lead_id: String(lead.lead_id), stage: stage, action: action };
 }
 
 function apiSetApproved_(a) {

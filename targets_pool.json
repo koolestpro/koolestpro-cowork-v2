@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.0.0",
     "description": "Ranked pool of Shopify/DTC and DTC/B2B ecommerce targets for weekly CRO/static-ad/template content production. See docs/koolestpro-content-operating-plan.md Steps 1-2.",
-    "updatedAt": "2026-10-18T08:22:53+00:00",
+    "updatedAt": "2026-10-26T07:58:15+00:00",
     "recordSchema": {
       "id": "string, unique, e.g. target-<brand-slug>-<timestamp>",
       "brand": "string",
@@ -18,8 +18,11 @@
       "usedFor": "array of {stream, date, pipelineItemId} - drives rotation logic in Step 2. A target having an entry for stream X does NOT permanently exclude it from stream X again later (established 2026-07-12) — selection logic should prefer targets with ZERO entries for the stream it's picking for, and only reuse a target that already has one when nothing else qualifies, using a different page/section/angle than the prior entry and noting that explicitly. It DOES mean the target won't be picked for that same stream on back-to-back or near-term runs while fresher options exist.",
       "notes": "string",
       "addedAt": "ISO timestamp",
-      "lastUsedAt": "ISO timestamp or null"
-    }
+      "lastUsedAt": "ISO timestamp or null",
+      "source": "optional string: \"outreach-directory-scrape\" when the candidate came from the outreach Shopify directory scrape (2026-10-26); absent on older hand-researched entries",
+      "outreachLead": "optional boolean or null: true if the same domain is in the cold-email Outreach Sheet, so a redesign of it can be reused as the email hook via outreach/redesign-hooks.json"
+    },
+    "sourcingNote": "2026-10-26 (Ridwan): new candidates come first from the outreach directory scrape (outreach/scrapers/output/*_directory_leads.csv). Real-store full-page redesigns (Wednesday Page B and every Sunday CRO Fix) also feed the template-showcase stream, so template-showcase is now an active stream for this pool."
   },
   "categories": [
     "beauty-skincare",
@@ -387,10 +390,17 @@
       "isRealBrand": true,
       "isClient": false,
       "status": "Available",
-      "usedFor": [],
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-10-25",
+          "pipelineItemId": "cro-fix-fishwife_shop-all-collection-20261025",
+          "note": "Zero prior cro-fix entries. Collection page (/collections/all, shop all), first screen. Food/beverage chosen to rotate away from beauty (Topicals 10-18) and fitness (Bala 10-11); last food pick was Fly By Jing 10-04. Fishwife had the highest lead potential among the zero-entry targets (High/Medium vs Brightland Medium/High). #1 finding: 400px banner on screen one, first product name at 863px; ratings show no review counts. A mystery-discount quiz popup also covers screen one on load but was not used as the lead (last week was a popup finding). Concept work only, Fishwife is not a client."
+        }
+      ],
       "notes": "Founder-led tinned fish brand with a lean team and heavy packaging-led brand. Reviewed 2026-09-28: /collections/all.",
       "addedAt": "2026-09-28T10:01:08+00:00",
-      "lastUsedAt": null
+      "lastUsedAt": "2026-10-25T08:25:20+00:00"
     },
     {
       "id": "target-topicals-1790589668641",

@@ -1,0 +1,183 @@
+{
+  "brand": "MOULT",
+  "brandSlug": "moult",
+  "isRealBrand": false,
+  "isClient": false,
+  "created": "2026-10-17T10:03:26.029782+00:00",
+  "updated": "2026-10-17T10:03:26.029782+00:00",
+  "howToUse": "Each key under 'assets' maps one generated image or video to its ready-to-post caption. Automation should join on 'assetPath' (relative to the koolestpro-cowork-v2 project root) or on the key. 'status' tracks whether that asset+caption pairing has been posted; it is separate from the pipeline item's status in ridwan_content_system_updated.html, which never reaches 'Published'. MOULT is a concept brand with no pre-written caption library; this file is that library, started on the first MOULT Template Showcase run (2026-10-17).",
+  "relatedPipelineItemIds": [
+    "template-showcase-moult_hp-01-2026-10-17"
+  ],
+  "assets": {
+    "TS-MOULT-HP01-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01 cover.mp4",
+      "hashtags": [
+        "#shopify",
+        "#ecommerce",
+        "#webdesign",
+        "#homepage"
+      ],
+      "caption": "Built a homepage for MOULT, a pet grooming brand I made up. It's a concept build, not a client.\n\nThe store sells one thing: a slicker brush that drops the fur in a single clump when you press a button. So the homepage has one job, getting a dog owner who is tired of lint rollers to that button.\n\nHow I laid it out:\n✅ the headline sells the clean sofa before it mentions the brush\n✅ the story section names the annoying part, cleaning the brush itself\n✅ the product card comes third, with the price and one button\n✅ dogs, cats and the clean-up each get a card, then reviews\n\nDesktop and mobile run in the same order. I didn't drop a section for the small screen.\n\nNeed a store like this built? Start here: koolestpro.com/services/page-build",
+      "captionKey": "TS-MOULT-HP01-COVER-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-LAPTOP-VID": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01 laptop.mp4",
+      "hashtags": [
+        "#webdesign",
+        "#shopify"
+      ],
+      "caption": "Desktop scroll-through of the MOULT homepage.\n\nHero, the why-we-made-it story, the product card, a card each for dogs, cats and the clean-up, reviews, then the footer.\n\nConcept build for a brand I made up, not a client site.",
+      "captionKey": "TS-MOULT-HP01-LAPTOP-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-MOBILE-VID": {
+      "platform": [
+        "instagram",
+        "x"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01 mobile.mp4",
+      "hashtags": [],
+      "caption": "The MOULT homepage on a phone.\n\nSame order as desktop. You hit the first buy button before your thumb has done much work.\n\nDemo brand I made up, not a client. Need a store like this built? DM me.",
+      "captionKey": "TS-MOULT-HP01-MOBILE-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-COVER-IMG": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01 cover.png",
+      "hashtags": [
+        "#shopify",
+        "#webdesign",
+        "#ecommerce"
+      ],
+      "caption": "A homepage for MOULT, a concept pet grooming brand.\n\nLaptop and phone, same page. The headline promises less fur on the sofa and only then gets to the brush.\n\nNeed a store like this built? DM me.",
+      "captionKey": "TS-MOULT-HP01-COVER-IMG",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-PREVIEW": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01-preview.png",
+      "hashtags": [
+        "#webdesign",
+        "#ecommerce"
+      ],
+      "caption": "Three screens from the MOULT homepage on mobile: the hero, the dog and cat cards, and the last push into the newsletter.\n\nConcept build, not a live client site.",
+      "captionKey": "TS-MOULT-HP01-PREVIEW",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-FULLPAGE": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01-full-page.png",
+      "hashtags": [
+        "#ecommerce",
+        "#webdesign",
+        "#shopify"
+      ],
+      "caption": "The whole MOULT homepage, split into two columns.\n\nLeft column makes the case: the sofa promise, the story about brushes that won't let go of fur, then the product and price.\n\nRight column answers \"will it work on my pet\". Dogs, cats, the clean-up, reviews, the three promises, the newsletter.\n\nI wanted the page to answer questions in the order a doubtful pet owner would ask them. Concept build for a brand I made up.",
+      "captionKey": "TS-MOULT-HP01-FULLPAGE",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-MOBILESTRIP": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01-mobile-strip.png",
+      "hashtags": [],
+      "caption": "Full page at a glance.\n\nThe MOULT homepage on a phone, in four columns:\n-> hero and the brand story\n-> the brush, then dogs and cats\n-> clean-up and reviews\n-> promises, newsletter, footer\n\nEvery section stacked for a thumb.\n\nDemo brand, not a client.",
+      "captionKey": "TS-MOULT-HP01-MOBILESTRIP",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01 cover.png",
+      "hashtags": [],
+      "caption": "Built a homepage for a pet brush brand I made up.\n\nThe headline doesn't sell the brush. It sells the sofa:\n-> less fur on the sofa\n-> more pet on it\n-> brush, press, done\n\nThe product only shows up third.\n\nConcept build, not a client.",
+      "captionKey": "TS-MOULT-HP01-X1",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01-preview.png",
+      "hashtags": [],
+      "caption": "Three screens from one mobile homepage.\n\n-> the hero leads with the result, not the product\n-> dogs and cats get their own cards\n-> one last \"less fur, more cuddle\" push before the newsletter\n\nMOULT is a demo brand I made up, not a client.\n\nNeed a store like this built? DM me.",
+      "captionKey": "TS-MOULT-HP01-X2",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/moult_hp-01-full-page.png",
+      "hashtags": [],
+      "caption": "A whole desktop homepage in one image.\n\nLeft column makes the case. Right column answers \"will it work on my pet\".\n\nThe questions come in the order a doubtful owner would ask them.\n\nConcept build for MOULT, a brand I made up.",
+      "captionKey": "TS-MOULT-HP01-X3",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-MOULT-HP01-IG-CAROUSEL": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": "outputs/templates/moult_hp-01_2026-10-17/ig-carousel/slide1.png",
+      "hashtags": [
+        "#shopify",
+        "#ecommerce",
+        "#webdesign",
+        "#shopifydesign",
+        "#petbrand"
+      ],
+      "caption": "Concept store build: a homepage for MOULT, a pet grooming brand I made up. Not a client.\n\nSwipe for the whole page, the mobile view, the hero and product section up close, and what I built it with.\n\nNeed a store like this built? Link in bio.",
+      "captionKey": "TS-MOULT-HP01-IG-CAROUSEL",
+      "status": "Not Posted",
+      "postedAt": null,
+      "assetPaths": [
+        "outputs/templates/moult_hp-01_2026-10-17/ig-carousel/slide1.png",
+        "outputs/templates/moult_hp-01_2026-10-17/ig-carousel/slide2.png",
+        "outputs/templates/moult_hp-01_2026-10-17/ig-carousel/slide3.png",
+        "outputs/templates/moult_hp-01_2026-10-17/ig-carousel/slide4.png",
+        "outputs/templates/moult_hp-01_2026-10-17/ig-carousel/slide5.png",
+        "outputs/templates/moult_hp-01_2026-10-17/ig-carousel/slide6.png"
+      ]
+    }
+  }
+}
