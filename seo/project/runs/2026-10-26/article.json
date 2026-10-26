@@ -1,0 +1,38 @@
+{
+  "slug": "landing-page-vs-product-page-facebook-ads-shopify",
+  "title": "Landing Page vs Product Page for Facebook Ads",
+  "h1": "Landing page or product page for Facebook ads on Shopify?",
+  "description": "Should Facebook ads go to a Shopify product page or a dedicated landing page? A simple rule for choosing, plus what a landing page costs.",
+  "targetQuestion": "Should Facebook ads on Shopify go to a landing page or a product page?",
+  "updated": "2026-10-26",
+  "readingMinutes": 4,
+  "pricesCheckedOn": "October 2026",
+  "blocks": [
+    {"type": "p", "text": "Send Facebook ad traffic to your product page if the page repeats the promise the ad made. Build a dedicated landing page if it does not. The test is message match, not a rule that landing pages always win. This is how I decide before I quote a page build."},
+    {"type": "h2", "text": "What is the difference between a landing page and a product page?"},
+    {"type": "p", "text": "A product page is the catalogue entry for one item and has to work for every visitor. A landing page is built for one campaign, one offer and one audience, so it can say exactly what the ad said."},
+    {"type": "h2", "text": "Which should Facebook ad traffic go to?"},
+    {"type": "p", "text": "It depends on how much the shopper already knows. Cold traffic needs the page to continue the ad. Warm traffic, such as past visitors and email subscribers, already knows you and can go straight to the product page."},
+    {"type": "table", "head": ["Traffic", "Usually send to", "Why"], "rows": [["Cold audience, new angle or offer", "Dedicated landing page", "The page can repeat the ad's hook and answer the first doubt"], ["Cold audience, simple product that sells itself", "Product page", "A clear product page already does the job"], ["Retargeting past visitors", "Product page", "They know the brand, so skip the pitch"], ["Bundle, discount or limited offer", "Landing page", "The offer needs room the product template does not have"]]},
+    {"type": "h2", "text": "When is the product page enough?"},
+    {"type": "p", "text": "When the headline, the first image and the price match what the ad showed. If someone clicks an ad about one benefit and sees that benefit in the first screen, the product page is doing a landing page's job."},
+    {"type": "ul", "items": ["The ad sells one product and the product page leads with the same benefit", "Reviews and shipping information sit near the button", "The page loads quickly and the button is easy to reach on a phone"]},
+    {"type": "h2", "text": "When is a dedicated landing page worth building?"},
+    {"type": "p", "text": "When the product template cannot carry the story the ad tells. That happens with a new angle, a bundle, a problem that needs explaining or an audience that has never heard of you."},
+    {"type": "p", "text": "A landing page lets you order the page around one decision: the hook from the ad, the proof, the objection, then the offer. Product templates are built for browsing, which pulls attention away from that order."},
+    {"type": "h2", "text": "How do you check message match before spending more?"},
+    {"type": "p", "text": "Put the ad and the page side by side on your phone. Click the ad, then ask whether the first screen repeats the same promise in the same words. If you have to scroll to find it, the match is weak."},
+    {"type": "h2", "text": "What does a Shopify landing page cost?"},
+    {"type": "p", "text": "My single page build is $600 to $900. If you are unsure whether your current page is the problem, my conversion audit is $150 to $250 and ranks what to fix first."},
+    {"type": "callout", "title": "Next steps", "text": "See the single page build at /services/page-build. Not sure the page is the problem? The conversion audit is at /services/cro-audit. Deciding who should build it? Read /resources/hire-a-replo-developer."},
+    {"type": "h2", "text": "What should you do this week?"},
+    {"type": "p", "text": "Do the side-by-side check on your best-spending ad. If the page does not repeat the ad's promise in the first screen, fix that page before you raise the budget."}
+  ],
+  "faq": [
+    {"q": "Should Facebook ads go to a product page or a landing page?", "a": "Use the product page if it repeats the ad's promise in the first screen. Use a dedicated landing page when the ad tells a story, offer or angle the product template cannot carry."},
+    {"q": "Can I send Facebook ads to my Shopify homepage?", "a": "You can, but a homepage serves many visitors at once. A page that continues the ad is usually a better match."},
+    {"q": "How much does a Shopify landing page cost?", "a": "My single page build is $600 to $900."},
+    {"q": "What is message match?", "a": "It means the page repeats the promise the ad made, in the first screen, in similar words."}
+  ],
+  "cta": {"text": "Get a landing page built around your best-performing ad, from $600.", "href": "/services/page-build", "label": "See the single page build"}
+}
