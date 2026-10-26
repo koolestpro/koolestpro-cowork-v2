@@ -98,7 +98,7 @@ Your main sending Gmail (the script inside the Sheet) does everything: research,
 For each extra Gmail (never your main personal Gmail):
 1. **Share the Sheet** with the new Gmail as an Editor (Share button in the Sheet).
 2. **Sign in to the new Gmail** in a separate browser profile, go to script.google.com and click **New project**. Name it "Outreach sender (that Gmail)".
-3. **Add the files.** Delete the empty `Code.gs`, then add each file from `outreach/gmail-sender/` with **+ > Script** and paste its contents: `Code.gs`, `Brief.gs`, `Pipeline.gs`, `Research.gs`, `Discovery.gs`, `Apify.gs`, `Api.gs`. Use the same names.
+3. **Add the files.** Delete the empty `Code.gs`, then add each file from `outreach/gmail-sender/` with **+ > Script** and paste its contents: `Code.gs`, `Brief.gs`, `Pipeline.gs`, `Research.gs`, `Inbound.gs`, `Discovery.gs`, `Apify.gs`, `Api.gs`. Use the same names.
 4. **Turn on the Gmail service:** left sidebar **Services (+)**, pick **Gmail API**, Add.
 5. **Copy the manifest:** Project Settings (gear) > tick "Show appsscript.json", then replace its contents with `outreach/gmail-sender/appsscript.json`.
 6. **Point it at the Sheet:** Project Settings > Script properties > Add `SHEET_ID` = the long ID in your Sheet's URL (between `/d/` and `/edit`). This property is what makes the copy an extra sender. Add `MYEMAILVERIFIER_API_KEY` too, so it can re-check addresses before sending. No AI keys are needed.
@@ -113,7 +113,7 @@ Tips: add one Gmail at a time, a few days apart. Give each a real name and profi
 
 0. **Paste `Code.gs` and `Research.gs`, reload the Sheet, then run Outreach > Reset test sends** (2026-10-17). A lead that only ever got TEST emails (subject starts `[TEST to `) goes back to step 1 with approval removed; a lead with any real email is never touched, however often TEST_MODE is switched. It also runs by itself every hour while TEST_MODE is FALSE, and in TEST_MODE a lead that already got a real email is not advanced by test sends.
 
-1. **Paste the latest files** into the main script (all seven `.gs` files from `outreach/gmail-sender/` on `main`), then run **Outreach > 1. Set up tabs**.
+1. **Paste the latest files** into the main script (all eight `.gs` files from `outreach/gmail-sender/`, including the new `Inbound.gs`), then run **Outreach > 1. Set up tabs**.
 2. **Script properties:** `GEMINI_API_KEY`, `MYEMAILVERIFIER_API_KEY` (required); `PAGESPEED_API_KEY` (speed checks); `HUNTER_API_KEY` (optional).
 3. **Reset the test leads:** run **Redo research + emails for unsent leads**, then **Rewrite unsent follow-ups (leads already emailed)**, then **Prepare new leads now** a few times.
 4. **One more test round** with `TEST_MODE` = TRUE: read 10 to 15 new emails and check each claim on the live site. Every email should end on its question (no "no worries if..." line) and no follow-up should start "One more thing I noticed". If any does, the old files are still running.

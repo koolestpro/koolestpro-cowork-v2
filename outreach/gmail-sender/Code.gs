@@ -97,6 +97,7 @@ function onOpen() {
     .addItem('Send due emails now', 'sendDueNow')
     .addItem('Why isn\'t it sending?', 'whyNotSending')
     .addItem('Check replies now', 'tick')
+    .addItem('Preview inbox classification (changes nothing)', 'inboundPreview')
     .addItem('Test AI', 'testAi')
     .addItem('Import store lists now', 'importSourcesNow')
     .addItem('Run Apify imports now', 'apifyImportsNow')
@@ -385,6 +386,26 @@ function beat_(msg) {
   try { PropertiesService.getScriptProperties().setProperty('SEND_LAST', Utilities.formatDate(new Date(), tz_(), 'EEE d MMM HH:mm') + ': ' + msg); } catch (e) {}
 }
 
+/** Counts why approved leads did NOT go out on this run, e.g. "outside lead window 12, no step row 9". Saved in SEND_LAST and shown in the 6pm report. */
+function sendBlockers_(S, leads, seq, me, now) {
+  const c = {};
+  const bump = k => { c[k] = (c[k] || 0) + 1; };
+  leads.rows.filter(l => l.lead_id && isTrue_(l.approved)).forEach(l => {
+    if (['New', 'Contacted', ''].indexOf(String(l.stage)) === -1) return bump('stage ' + l.stage);
+    if (!l.email) return bump('no email');
+    if (!sendableStatus_(l.email_status, S)) return bump('email_status ' + (l.email_status || 'empty'));
+    if (l.sender && lc_(l.sender) !== me) return bump('claimed by another Gmail');
+    const t = Number(l.touch_count || 0);
+    if (t > 0 && !(l.next_touch_at && new Date(l.next_touch_at) <= now)) return bump('follow-up not due yet');
+    const steps = seq.rows.filter(r => String(r.lead_id) === String(l.lead_id) && r.status !== 'Superseded');
+    if (!steps.some(r => Number(r.step) === t + 1 && r.status !== 'Sent' && r.status !== 'Stopped')) return bump('no unsent step ' + (t + 1) + ' row in Sequence');
+    if (t > 0 && !l.thread_id) return bump('follow-up without thread');
+    if (!inLeadWindow_(l, S, isHot_(l, S))) return bump('outside lead working hours');
+    bump('eligible');
+  });
+  return Object.keys(c).map(k => k + ' ' + c[k]).join(', ') || 'no approved leads';
+}
+
 function sendDue(ignoreHours) {
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(150000)) { beat_('skipped, another job held the lock for 150 seconds'); return; }   // was 30s and silent: preparation and reply checks could starve sending
@@ -450,10 +471,17 @@ function sendDue(ignoreHours) {
       const to = isTrue_(S.TEST_MODE) ? S.ALERT_EMAIL : String(lead.email).trim();
       const finalSubject = isTrue_(S.TEST_MODE) ? '[TEST to ' + lead.email + '] ' + subject : subject;
 
-      const res = sendRaw_({
-        to: to, subject: finalSubject, body: body, name: S.SENDER_NAME, from: me,
-        threadId: step > 1 ? lead.thread_id : null, inReplyTo: step > 1 ? lead.first_message_id : null, unsubscribe: true,
-      });
+      let res;
+      try {
+        res = sendRaw_({
+          to: to, subject: finalSubject, body: body, name: S.SENDER_NAME, from: me,
+          threadId: step > 1 ? lead.thread_id : null, inReplyTo: step > 1 ? lead.first_message_id : null, unsubscribe: true,
+        });
+      } catch (e) {   // one failing send must not stop the run, and the reason must be visible
+        PropertiesService.getScriptProperties().setProperty('SEND_ERR', Utilities.formatDate(new Date(), tz_(), 'EEE d MMM HH:mm') + ' ' + id + ': ' + String(e.message || e).slice(0, 250));
+        set_(leads, lead, 'prep_note', ('Send failed ' + Utilities.formatDate(new Date(), tz_(), 'd MMM HH:mm') + ': ' + String(e.message || e)).slice(0, 400));
+        continue;
+      }
 
       if (step === 1) {
         set_(leads, lead, 'sender', me);
@@ -482,7 +510,7 @@ function sendDue(ignoreHours) {
       hotBudget--; sent++;
       if (budget > 0 || hotBudget > 0) Utilities.sleep(20000 + Math.floor(Math.random() * 40000));
     }
-    beat_(sent + ' sent, ' + due.length + ' due inside working hours' + (sent === 0 && !due.length ? ' (none of the approved leads is inside its 9am to 5pm window right now)' : ''));
+    beat_(sent + ' sent, ' + due.length + ' due' + (sent === 0 ? '. Approved leads: ' + sendBlockers_(S, leads, seq, me, now) : ''));
     if (ignoreHours === true) {
       if (sent > 0) toast_(sent + ' email(s) sent.');
       else {
@@ -515,6 +543,8 @@ function dailyReport_() {
   const leads = read_('Leads'), msgs = read_('Messages'), drafts = read_('Drafts');
   const sentToday = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && isToday_(m.sent_at));
   const repliesToday = msgs.rows.filter(m => m.direction === 'in' && isToday_(m.sent_at));
+  const bouncesToday = msgs.rows.filter(m => m.direction === 'bounce' && isToday_(m.sent_at)).length;
+  const autoToday = msgs.rows.filter(m => m.direction === 'auto' && isToday_(m.sent_at)).length;
   const now = new Date();
   const realOut = {};
   msgs.rows.filter(m => lc_(m.direction) === 'out' && !/^\s*\[TEST to /i.test(String(m.subject || '')))
@@ -548,7 +578,7 @@ function dailyReport_() {
     'Outreach report for ' + Utilities.formatDate(now, tz_(), 'EEE d MMM') + (isTrue_(S.TEST_MODE) ? '  [TEST MODE: nothing went to real leads]' : ''),
     '',
     'Sent today from ' + me + ': ' + sentToday.length + ' of ' + cap + ' allowed',
-    'Replies received today: ' + repliesToday.length,
+    'Replies received today: ' + repliesToday.length + (autoToday || bouncesToday ? '  (plus ' + autoToday + ' auto-replies held, ' + bouncesToday + ' not-delivered notices handled)' : ''),
     '',
     'NEEDS YOU',
     '- Reply drafts to review: ' + toReview.length + (needsDraft.length ? ' (plus ' + needsDraft.length + ' still waiting for the AI)' : ''),
@@ -566,7 +596,7 @@ function dailyReport_() {
   }
   const pr = PropertiesService.getScriptProperties();
   const prepMin = Math.round(Number(pr.getProperty('PREP_MS') || 0) / 60000);
-  lines.push('', 'HEALTH', '- Last send run: ' + (pr.getProperty('SEND_LAST') || 'no record yet'),
+  lines.push('', 'HEALTH', '- Last send run: ' + (pr.getProperty('SEND_LAST') || 'no record yet'), '- Last send error: ' + (pr.getProperty('SEND_ERR') || 'none'),
     '- Lead preparation today: ' + prepMin + ' of ' + Number(S.PREP_DAILY_MINUTES || 35) + ' minutes allowed',
     '- Automation triggers installed: ' + (ScriptApp.getProjectTriggers().map(t => t.getHandlerFunction()).sort().join(', ') || 'NONE'));
   const wd = Utilities.formatDate(now, tz_(), 'u');
@@ -587,6 +617,7 @@ function tick() {
   if (!lock.tryLock(30000)) return;
   try {
     checkReplies_();
+    try { checkNewThreads_(); } catch (e) { Logger.log('checkNewThreads_: ' + e); }   // replies that start a new thread, bounces, auto-replies
     if (!isSecondary_()) { try { draftReplies_(); } catch (e) { Logger.log('draftReplies_: ' + e); } }   // one account writes drafts, so no duplicates
     sendApprovedDrafts_();
     checkBounces_();
@@ -601,6 +632,7 @@ function checkReplies_() {
   const leads = read_('Leads');
   const seq = read_('Sequence');
   const logged = new Set(read_('Messages').rows.map(m => String(m.message_id)));
+  const ctx = { S: S, me: me, leads: leads, seq: seq };
 
   for (const lead of leads.rows) {
     if (!lead.thread_id || lc_(lead.sender) !== me) continue;
@@ -612,45 +644,8 @@ function checkReplies_() {
       const mid = m.getId();
       if (logged.has(mid)) continue;
       logged.add(mid);
-      const fromEmail = lc_(extractEmail_(m.getFrom()));
-      const outbound = fromEmail === me;
-      appendObj_('Messages', {
-        logged_at: new Date(), lead_id: lead.lead_id, direction: outbound ? 'out' : 'in', from: m.getFrom(),
-        to: m.getTo(), subject: m.getSubject(), body: stripQuoted_(m.getPlainBody()), sent_at: m.getDate(),
-        thread_id: lead.thread_id, message_id: mid, sender_account: me,
-      });
-
-      if (outbound) {
-        // You replied from Gmail directly: keep the record current.
-        set_(leads, lead, 'last_touch_at', m.getDate());
-        continue;
-      }
-
-      // "STOP" and friends: end the sequence, never email again, no AI draft, no alert.
-      if (isOptOut_(stripQuoted_(m.getPlainBody()))) {
-        set_(leads, lead, 'stage', 'Unsubscribed');
-        set_(leads, lead, 'next_touch_at', '');
-        set_(leads, lead, 'approved', false);
-        seq.rows.filter(r => String(r.lead_id) === String(lead.lead_id) && r.status !== 'Sent')
-          .forEach(r => set_(seq, r, 'status', 'Stopped'));
-        set_(leads, lead, 'notes', (String(lead.notes || '') + ' | Unsubscribed ' + Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd')).replace(/^ \| /, ''));
-        continue;
-      }
-
-      // A reply from the lead: stop the sequence, queue a draft, alert.
-      if (['New', 'Contacted', 'Finished', ''].indexOf(String(lead.stage)) !== -1) set_(leads, lead, 'stage', 'Replied');
-      set_(leads, lead, 'next_touch_at', '');
-      seq.rows.filter(r => String(r.lead_id) === String(lead.lead_id) && r.status === 'Draft')
-        .forEach(r => set_(seq, r, 'status', 'Stopped'));
-      appendObj_('Drafts', { lead_id: lead.lead_id, created_at: new Date(), reply_to_message_id: mid,
-        draft_body: '', status: 'Needs draft' });
-
-      if (S.ALERT_EMAIL) {
-        const snippet = stripQuoted_(m.getPlainBody()).slice(0, 800);
-        GmailApp.sendEmail(S.ALERT_EMAIL, 'Reply from ' + (lead.brand || lead.email) + ' (' + (lead.contact_name || '') + ')',
-          snippet + '\n\n---\nLead: ' + lead.lead_id + '\nSheet: ' + ss_().getUrl() + '\nSent from: ' + me,
-          { name: 'Koolestpro Outreach' });
-      }
+      // Bounces, auto-replies and human replies are told apart in Inbound.gs (handleInbound_).
+      handleInbound_(ctx, lead, m, { threadId: lead.thread_id, match: 'thread' });
     }
   }
 }
@@ -893,13 +888,23 @@ function sendApprovedDrafts_() {
     const lead = leads.rows.find(l => String(l.lead_id) === String(d.lead_id));
     if (!lead || lc_(lead.sender) !== me || !lead.thread_id) continue;
 
-    const subject = 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
+    let subject = 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
+    let threadId = lead.thread_id, inReplyTo = lead.first_message_id, toAddr = String(lead.email).trim();
+    try {   // answer the message that was actually written to us: its sender, in its thread (a support desk often replies from another address in a new email)
+      const src = d.reply_to_message_id ? GmailApp.getMessageById(String(d.reply_to_message_id)) : null;
+      if (src) {
+        const addr = extractEmail_(src.getReplyTo() || src.getFrom());
+        const sameThread = String(src.getThread().getId()) === String(lead.thread_id);
+        if (!sameThread) { threadId = src.getThread().getId(); inReplyTo = src.getHeader('Message-ID'); subject = 'Re: ' + String(src.getSubject()).replace(/^(\s*(re|fwd?)\s*:\s*)+/i, ''); }
+        if (addr && emailOk_(addr) && lc_(addr) !== me && !/^(no-?reply|do-?not-?reply|donotreply|mailer-daemon|postmaster)/i.test(addr)) toAddr = addr;
+      }
+    } catch (e) { /* fall back to the original thread and the lead's address */ }
     const sig = signatureFor_(lead, S, true);
     const body = String(d.draft_body).trim() + (sig ? '\n\n' + sig : '');
-    const to = isTrue_(S.TEST_MODE) ? S.ALERT_EMAIL : String(lead.email).trim();
-    const finalSubject = isTrue_(S.TEST_MODE) ? '[TEST to ' + lead.email + '] ' + subject : subject;
+    const to = isTrue_(S.TEST_MODE) ? S.ALERT_EMAIL : toAddr;
+    const finalSubject = isTrue_(S.TEST_MODE) ? '[TEST to ' + toAddr + '] ' + subject : subject;
     const res = sendRaw_({ to: to, subject: finalSubject, body: body, name: S.SENDER_NAME, from: me,
-      threadId: lead.thread_id, inReplyTo: lead.first_message_id });
+      threadId: threadId, inReplyTo: inReplyTo });
     const now = new Date();
     set_(drafts, d, 'status', 'Sent');
     set_(drafts, d, 'sent_at', now);
@@ -910,22 +915,8 @@ function sendApprovedDrafts_() {
   }
 }
 
-/** Marks leads whose address bounced, so they never get another email. */
-function checkBounces_() {
-  const me = me_();
-  const leads = read_('Leads');
-  const open = leads.rows.filter(l => lc_(l.sender) === me && ['Contacted', 'Finished'].indexOf(String(l.stage)) !== -1 && l.email);
-  if (!open.length) return;
-  const threads = GmailApp.search('from:(mailer-daemon OR postmaster) newer_than:3d', 0, 30);
-  const text = threads.map(t => t.getMessages().map(m => m.getPlainBody()).join('\n')).join('\n').toLowerCase();
-  open.forEach(l => {
-    if (text.indexOf(lc_(l.email)) !== -1) {
-      set_(leads, l, 'stage', 'Bounced');
-      set_(leads, l, 'next_touch_at', '');
-      set_(leads, l, 'email_status', 'bounced');
-    }
-  });
-}
+/** Bounces are now classified per message in Inbound.gs (handleBounce_), so a soft bounce or a delay notice no longer kills a lead. Kept so old triggers still run. */
+function checkBounces_() {}
 
 // ---------- Gmail send (keeps follow-ups in the same thread) ----------
 
