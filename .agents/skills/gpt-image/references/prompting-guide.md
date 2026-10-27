@@ -2,29 +2,45 @@
 
 Condensed prompting patterns for `gpt-image-2`. Read this before writing any prompt.
 
+## The ChatGPT expansion rules
+
+ChatGPT rewrites a short request before it reaches the image model. Do the same
+before calling the script:
+
+1. **Expand** the request into 2–4 sentences of concrete detail (subject/action,
+   materials and textures, setting, framing, lighting, mood).
+2. **Do not use quality buzzwords**: *photorealistic, hyperrealistic, 4K, 8K,
+   stunning, beautiful, ultra-detailed, masterpiece, professional quality,
+   cinematic lighting*. Describe the causes of quality instead (lens, light,
+   texture, material, atmosphere).
+3. **Do not use negatives** ("no X", "without X"). Describe what is there.
+   "No text" → "plain, unmarked surfaces with clean negative space".
+4. **Quote literal text** and keep it to 1–4 words.
+5. **Order**: medium/style → subject/action → details/textures → environment →
+   lighting/mood.
+
+`scripts/prompt_expander.py` enforces rules 2–4 automatically; `--expand llm`
+performs the full rewrite.
+
 ## Prompt Structure
 
-Write prompts in this order: **background/scene → subject → key details → constraints**.
-Include the intended use (ad, UI mock, infographic) to set the visual "mode."
-For complex prompts, use labeled segments or line breaks instead of one dense paragraph.
+Follow the expansion order: **medium/style → subject/action → details/textures →
+environment → lighting/mood**. State the intended use (ad, UI mock, infographic) in
+the opening sentence to set the visual mode.
 
-## Format
-
-Use whatever format is easiest to maintain. All of these work:
-- Minimal one-liners
-- Descriptive paragraphs
-- Labeled sections / bullet lists
-- JSON-like structures
-
-For production, prioritize a skimmable template over clever syntax.
+Send the model 2–4 sentences of flowing prose. You can keep a labeled brief
+internally, but convert the labels to prose before generating: labels and bullet
+lists are for humans, not the image model.
 
 ## Specificity + Quality Cues
 
 Be concrete about materials, shapes, textures, and the visual medium (photo, watercolor, 3D render).
 Add targeted "quality levers" only when needed: *film grain*, *textured brushstrokes*, *macro detail*.
 
-For photorealism, include the word **"photorealistic"** directly. Similar phrases like "real photograph,"
-"taken on a real camera," "professional photography," or "iPhone photo" also help but are interpreted loosely.
+For photorealism, **do not write "photorealistic" or "hyperrealistic"** — ChatGPT's
+expansion layer avoids them. Describe the photograph instead: lens (35mm/85mm/macro),
+light direction and quality, depth of field, surface texture (pores, glaze, wood grain),
+and camera position. That produces the same realism with more control.
 
 ## Composition
 
@@ -46,16 +62,19 @@ Describe scale, body framing, gaze, and object interactions:
 
 ## Constraints (Change vs Preserve)
 
-State exclusions and invariants explicitly:
-- "no watermark," "no extra text," "no logos/trademarks"
-- "preserve identity/geometry/layout/brand elements"
+State invariants explicitly for edits: "keep the face, pose, framing, and lighting
+the same," "change only the jacket." Do **not** rely on negation for generation
+("no watermark," "no logos," "no extra text"): the model tends to focus on the
+thing you named. Describe the clean state instead — "plain, unmarked surfaces with
+clean negative space," "unbranded materials," "clean edges."
 
 For edits, use **"change only X" + "keep everything else the same"** and repeat the preserve list each iteration.
 
 ## Text in Images
 
-- Put literal text in **quotes** or **ALL CAPS**
-- Specify typography: font style, size, colour, placement
+- Put literal text in **double quotes** (e.g. `"OPEN DAILY"`)
+- Keep rendered text to **1–4 words**; longer strings garble
+- Specify typography: font style, size, colour, placement, weight, case
 - For tricky words/brand names, spell letter-by-letter
 - Use `medium` or `high` quality for small text, dense panels, multi-font layouts
 

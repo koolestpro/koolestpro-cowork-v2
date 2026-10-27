@@ -1,0 +1,540 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "last_updated": "2026-08-31",
+    "note": "Cost estimates are USD per 1024x1024 image at default quality unless noted. Prices change; verify before large batches."
+  },
+
+  "budget_modes": {
+    "cheap": {
+      "description": "Minimize cost. Accept slightly lower quality for drafts, previews, and high-volume batches.",
+      "max_cost_usd": 0.01,
+      "preferred_tiers": ["ultra_budget", "budget"]
+    },
+    "balanced": {
+      "description": "Best value. The default for most production work.",
+      "max_cost_usd": 0.05,
+      "preferred_tiers": ["standard", "budget"]
+    },
+    "premium": {
+      "description": "Maximize quality. Use for final client deliverables, hero assets, and text-critical work.",
+      "max_cost_usd": 0.10,
+      "preferred_tiers": ["standard", "premium"]
+    }
+  },
+
+  "providers": {
+    "openai": {
+      "name": "OpenAI",
+      "env_key": "OPENAI_API_KEY",
+      "base_url": "https://api.openai.com/v1/images/generations",
+      "models": {
+        "gpt-image-2": {
+          "tier": "premium",
+          "cost_per_image_usd": {
+            "1024x1024": { "low": 0.02, "medium": 0.04, "high": 0.08 },
+            "1024x1536": { "low": 0.03, "medium": 0.06, "high": 0.12 },
+            "1536x1024": { "low": 0.03, "medium": 0.06, "high": 0.12 }
+          },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["low", "medium", "high", "auto"],
+          "supports_edit": true,
+          "supports_multi_image_edit": true,
+          "max_input_images": 10,
+          "strengths": ["instruction_following", "consistency", "editing_precision", "multi_image_compositing"],
+          "weaknesses": ["text_accuracy", "price", "speed"],
+          "formats": ["png", "jpeg", "webp"]
+        }
+      }
+    },
+
+    "together": {
+      "name": "Together AI",
+      "env_key": "TOGETHER_API_KEY",
+      "base_url": "https://api.together.xyz/v1/images/generations",
+      "models": {
+        "flux-schnell": {
+          "tier": "ultra_budget",
+          "cost_per_image_usd": { "default": 0.003 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["speed", "cost", "photorealism", "general_purpose"],
+          "weaknesses": ["text_accuracy", "fine_detail", "editing"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Fastest and cheapest FLUX. Good for drafts, lifestyle shots, and concepts."
+        },
+        "flux-dev": {
+          "tier": "standard",
+          "cost_per_image_usd": { "default": 0.025 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["photorealism", "composition", "detail", "value"],
+          "weaknesses": ["text_accuracy", "editing"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Best value FLUX. Default workhorse for most visual-heavy tasks."
+        }
+      }
+    },
+
+    "fal": {
+      "name": "fal.ai",
+      "env_key": "FAL_KEY",
+      "base_url": "https://fal.run",
+      "models": {
+        "flux-pro": {
+          "tier": "premium",
+          "cost_per_image_usd": { "default": 0.055 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["best_photorealism", "detail", "composition", "aesthetic_quality"],
+          "weaknesses": ["price", "text_accuracy", "editing"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Highest quality FLUX. Use for final hero assets where visual quality is everything."
+        },
+        "flux-dev": {
+          "tier": "standard",
+          "cost_per_image_usd": { "default": 0.028 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["photorealism", "detail", "composition"],
+          "weaknesses": ["text_accuracy", "editing"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Slightly better than Together's flux-dev. Use when Together is down or for A/B comparison."
+        }
+      }
+    },
+
+    "ideogram": {
+      "name": "Ideogram",
+      "env_key": "IDEOGRAM_API_KEY",
+      "base_url": "https://api.ideogram.ai/api/v1/images/generate",
+      "models": {
+        "ideogram-v3": {
+          "tier": "standard",
+          "cost_per_image_usd": { "default": 0.025 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["text_accuracy", "typography", "ad_creative", "logo_design", "composition"],
+          "weaknesses": ["photorealism_vs_flux", "editing", "price_per_quality"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Best-in-class text rendering. The default for ANY image with readable text."
+        },
+        "ideogram-v2-turbo": {
+          "tier": "budget",
+          "cost_per_image_usd": { "default": 0.01 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["text_accuracy", "speed", "cost"],
+          "weaknesses": ["detail", "photorealism", "fine_control"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Cheaper Ideogram. Good for social graphics, quick text ads, and drafts."
+        }
+      }
+    },
+
+    "recraft": {
+      "name": "Recraft",
+      "env_key": "RECRAFT_API_KEY",
+      "base_url": "https://external.api.recraft.ai/v1/images/generate",
+      "models": {
+        "recraft-v3": {
+          "tier": "standard",
+          "cost_per_image_usd": { "default": 0.02 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["style_consistency", "vector_mode", "ui_mockups", "brand_design", "batch_cohesion"],
+          "weaknesses": ["photorealism_vs_flux", "editing", "freeform_text"],
+          "formats": ["png", "svg"],
+          "notes": "Designer-focused. Use for UI mockups, vector logos, and when you need 4 ads that look like a set."
+        }
+      }
+    },
+
+    "hyperbolic": {
+      "name": "Hyperbolic",
+      "env_key": "HYPERBOLIC_API_KEY",
+      "base_url": "https://api.hyperbolic.xyz/v1/images/generations",
+      "models": {
+        "flux-dev": {
+          "tier": "ultra_budget",
+          "cost_per_image_usd": { "default": 0.0015 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["cheapest_flux", "photorealism", "general_purpose"],
+          "weaknesses": ["reliability", "text_accuracy", "support", "editing"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Cheapest FLUX inference on the market. Great for bulk batches. Fallback if Together is down."
+        },
+        "flux-schnell": {
+          "tier": "ultra_budget",
+          "cost_per_image_usd": { "default": 0.0005 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["cheapest_possible", "speed"],
+          "weaknesses": ["detail", "text_accuracy", "reliability"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Half a cent per image. Use for massive bulk runs where quality is secondary."
+        }
+      }
+    },
+
+    "stability": {
+      "name": "Stability AI",
+      "env_key": "STABILITY_API_KEY",
+      "base_url": "https://api.stability.ai/v2beta/stable-image/generate",
+      "models": {
+        "sd-3-5-large": {
+          "tier": "premium",
+          "cost_per_image_usd": { "default": 0.065 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": true,
+          "supports_multi_image_edit": false,
+          "max_input_images": 1,
+          "strengths": ["photorealism", "editing", "style_variety", "professional_output"],
+          "weaknesses": ["price", "text_accuracy", "speed"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Expensive but excellent. Use for high-end photorealistic work where FLUX isn't right."
+        },
+        "sd-3-5-large-turbo": {
+          "tier": "budget",
+          "cost_per_image_usd": { "default": 0.004 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["speed", "cost", "decent_quality"],
+          "weaknesses": ["detail", "consistency", "text_accuracy"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Fast SD. Good for quick iterations and previews."
+        }
+      }
+    },
+
+    "google": {
+      "name": "Google Vertex AI (Imagen)",
+      "env_key": "GOOGLE_API_KEY",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict",
+      "models": {
+        "imagen-3": {
+          "tier": "standard",
+          "cost_per_image_usd": { "default": 0.03 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": true,
+          "supports_multi_image_edit": false,
+          "max_input_images": 1,
+          "strengths": ["photorealism", "instruction_following", "safety", "people_rendering"],
+          "weaknesses": ["text_accuracy", "creative_range", "editing_capabilities"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Great for realistic people and scenes. Conservative but reliable. Good portrait alternative."
+        }
+      }
+    },
+
+    "infsh": {
+      "name": "inference.sh",
+      "env_key": "INFSH_API_KEY",
+      "base_url": "https://api.inference.sh",
+      "models": {
+        "flux-dev": {
+          "tier": "standard",
+          "cost_per_image_usd": { "default": 0.03 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["photorealism", "composition", "detail", "uses_existing_credit"],
+          "weaknesses": ["text_accuracy", "async_polling", "slower_than_together", "editing"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "FLUX via inference.sh task queue. Slower than Together (10-30s poll) but uses credit you already have. Best fallback when Together has no funds."
+        },
+        "p-image": {
+          "tier": "budget",
+          "cost_per_image_usd": { "default": 0.02 },
+          "sizes": ["1024x1024", "1024x1536", "1536x1024"],
+          "qualities": ["auto"],
+          "supports_edit": false,
+          "supports_multi_image_edit": false,
+          "max_input_images": 0,
+          "strengths": ["speed", "cost", "uses_existing_credit"],
+          "weaknesses": ["detail", "text_accuracy", "async_polling"],
+          "formats": ["png", "jpeg", "webp"],
+          "notes": "Pruna's fast image model via inference.sh. Good for quick iterations using existing credit."
+        }
+      }
+    }
+  },
+
+  "image_types": {
+    "static-ad-text-heavy": {
+      "description": "Ads where text, headlines, CTAs, badges, or quotes are the primary visual element. Typography must be accurate and readable. NOTE: OpenAI is the ONLY provider that reliably renders text correctly. Ideogram is decent but makes spacing/casing errors. FLUX is unusable for readable text.",
+      "keywords": ["ad", "advertisement", "headline", "tagline", "cta", "call to action", "banner", "quote", "text overlay", "typography", "reading exactly", "label reading", "reads", "says", "poster", "flyer"],
+      "requirements": ["accurate_text", "typography_control", "high_contrast"],
+      "tier_ranking": {
+        "premium": ["openai_gpt-image-2_high", "openai_gpt-image-2_medium"],
+        "standard": ["openai_gpt-image-2_medium", "ideogram-v2"],
+        "budget": ["ideogram-v2", "openai_gpt-image-2_low"],
+        "ultra_budget": ["openai_gpt-image-2_low"]
+      },
+      "fallback": "openai_gpt-image-2_medium",
+      "example_use_cases": ["Static ad with headline on image", "Book cover with title", "Social quote card", "Promo poster"]
+    },
+
+    "static-ad-visual": {
+      "description": "Ads where the product photo or visual scene is the hero. Minimal text or text is secondary.",
+      "keywords": ["ad", "advertisement", "product shot", "hero image", "visual ad", "lifestyle ad", "campaign", "promo image", "marketing image"],
+      "requirements": ["photorealism", "composition", "lighting"],
+      "tier_ranking": {
+        "premium": ["flux-pro", "sd-3-5-large", "openai_gpt-image-2_high"],
+        "standard": ["flux-dev_together", "flux-dev_fal", "imagen-3"],
+        "budget": ["flux-schnell_together", "flux-dev_infsh", "sd-3-5-large-turbo"],
+        "ultra_budget": ["flux-schnell_hyperbolic", "flux-dev_hyperbolic", "p-image_infsh"]
+      },
+      "fallback": "flux-dev_infsh",
+      "example_use_cases": ["Product in scene ad", "Lifestyle campaign image", "Brand visual"]
+    },
+
+    "product-photoreal": {
+      "description": "Isolated product shots on clean backgrounds. Needs precise geometry, materials, and label legibility.",
+      "keywords": ["product", "mockup", "white background", "isolated", "studio shot", "product photo", "clean background", "ecommerce", "catalog", "packshot"],
+      "requirements": ["precision", "material_accuracy", "label_legibility"],
+      "tier_ranking": {
+        "premium": ["flux-pro", "sd-3-5-large", "openai_gpt-image-2_high"],
+        "standard": ["flux-dev_together", "imagen-3", "flux-dev_fal"],
+        "budget": ["flux-schnell_together", "flux-dev_infsh", "sd-3-5-large-turbo"],
+        "ultra_budget": ["flux-dev_hyperbolic", "flux-schnell_hyperbolic", "p-image_infsh"]
+      },
+      "fallback": "flux-dev_infsh",
+      "example_use_cases": ["Amazon listing photo", "Shopify product image", "White background product shot"]
+    },
+
+    "product-lifestyle": {
+      "description": "Product placed in a real-world context: on a table, in use, editorial setting.",
+      "keywords": ["lifestyle", "in use", "context", "scene", "editorial", "real world", "environment", "setting", "hands holding", "using product"],
+      "requirements": ["photorealism", "contextual_integration", "lighting_match"],
+      "tier_ranking": {
+        "premium": ["flux-pro", "sd-3-5-large", "openai_gpt-image-2_high"],
+        "standard": ["flux-dev_together", "imagen-3", "flux-dev_fal"],
+        "budget": ["flux-schnell_together", "flux-dev_infsh", "sd-3-5-large-turbo"],
+        "ultra_budget": ["flux-dev_hyperbolic", "p-image_infsh"]
+      },
+      "fallback": "flux-dev_infsh",
+      "example_use_cases": ["Coffee cup on desk", "Phone in hand", "Skincare on bathroom counter"]
+    },
+
+    "book-cover": {
+      "description": "Book or album covers. Needs readable title/author text plus strong compositional art. OpenAI is most reliable for title text. Ideogram is acceptable but may miss spaces or casing.",
+      "keywords": ["book cover", "album cover", "cover art", "title", "author", "spine", "published", "novel", "memoir", "ebook"],
+      "requirements": ["text_accuracy", "composition", "mood"],
+      "tier_ranking": {
+        "premium": ["openai_gpt-image-2_high", "openai_gpt-image-2_medium"],
+        "standard": ["openai_gpt-image-2_medium", "ideogram-v2"],
+        "budget": ["ideogram-v2", "openai_gpt-image-2_low"],
+        "ultra_budget": ["openai_gpt-image-2_low"]
+      },
+      "fallback": "openai_gpt-image-2_medium",
+      "example_use_cases": ["Novel cover with title", "Course thumbnail", "Album artwork"]
+    },
+
+    "ui-mockup": {
+      "description": "App or website screenshots, device frames, UI concepts.",
+      "keywords": ["ui", "ux", "mockup", "screenshot", "app screen", "website", "interface", "dashboard", "mobile app", "web app", "iphone frame", "macbook"],
+      "requirements": ["clean_layout", "typography", "component_accuracy"],
+      "tier_ranking": {
+        "premium": ["recraft-v3", "openai_gpt-image-2_high", "ideogram-v2"],
+        "standard": ["recraft-v3", "flux-dev_together", "ideogram-v2"],
+        "budget": ["flux-schnell_together", "ideogram-v2-turbo"],
+        "ultra_budget": ["flux-schnell_hyperbolic"]
+      },
+      "fallback": "recraft-v3",
+      "example_use_cases": ["Mobile app concept", "Website hero mockup", "Dashboard UI"]
+    },
+
+    "logo-brand": {
+      "description": "Logos, wordmarks, brand marks. Needs clean shapes, scalability, strong silhouette.",
+      "keywords": ["logo", "brand mark", "wordmark", "icon", "emblem", "badge", "symbol", "monogram", "trademark", "identity"],
+      "requirements": ["vector_cleanliness", "scalability", "simplicity"],
+      "tier_ranking": {
+        "premium": ["recraft-v3", "ideogram-v2", "openai_gpt-image-2_high"],
+        "standard": ["recraft-v3", "ideogram-v2", "flux-dev_together"],
+        "budget": ["ideogram-v2-turbo", "recraft-v3"],
+        "ultra_budget": ["ideogram-v2-turbo"]
+      },
+      "fallback": "recraft-v3",
+      "example_use_cases": ["Company logo", "App icon", "Brand badge"]
+    },
+
+    "social-graphic": {
+      "description": "Social media posts: quote cards, carousel slides, announcement graphics. Text must be accurate. OpenAI is most reliable; Ideogram acceptable for drafts.",
+      "keywords": ["social media", "carousel", "slide", "quote card", "announcement", "linkedin", "instagram", "twitter", "x post", "facebook", "engagement", "viral"],
+      "requirements": ["text_accuracy", "readability_at_small_size", "high_contrast"],
+      "tier_ranking": {
+        "premium": ["openai_gpt-image-2_high", "openai_gpt-image-2_medium"],
+        "standard": ["openai_gpt-image-2_medium", "ideogram-v2"],
+        "budget": ["ideogram-v2", "openai_gpt-image-2_low"],
+        "ultra_budget": ["openai_gpt-image-2_low"]
+      },
+      "fallback": "openai_gpt-image-2_low",
+      "example_use_cases": ["LinkedIn carousel slide", "Instagram quote card", "Tweet graphic"]
+    },
+
+    "lifestyle-photography": {
+      "description": "People, places, scenes. Editorial photography without product focus.",
+      "keywords": ["lifestyle", "people", "person", "woman", "man", "family", "scene", "editorial", "fashion", "interior", "travel", "food", "cafe", "office"],
+      "requirements": ["photorealism", "natural_lighting", "diversity"],
+      "tier_ranking": {
+        "premium": ["flux-pro", "sd-3-5-large", "imagen-3"],
+        "standard": ["flux-dev_together", "imagen-3", "flux-dev_fal"],
+        "budget": ["flux-schnell_together", "flux-dev_infsh", "sd-3-5-large-turbo"],
+        "ultra_budget": ["flux-dev_hyperbolic", "flux-schnell_hyperbolic", "p-image_infsh"]
+      },
+      "fallback": "flux-dev_infsh",
+      "example_use_cases": ["Lifestyle stock photo", "Team photo concept", "Travel scene"]
+    },
+
+    "illustration-artistic": {
+      "description": "Drawings, paintings, concept art, stylized visuals.",
+      "keywords": ["illustration", "drawing", "painting", "sketch", "watercolor", "oil painting", "digital art", "concept art", "anime", "cartoon", "vector art", "flat design", "minimalist"],
+      "requirements": ["style_fidelity", "creative_range", "aesthetic_quality"],
+      "tier_ranking": {
+        "premium": ["flux-pro", "sd-3-5-large", "openai_gpt-image-2_high"],
+        "standard": ["flux-dev_together", "flux-dev_fal", "recraft-v3"],
+        "budget": ["flux-schnell_together", "flux-dev_infsh", "sd-3-5-large-turbo"],
+        "ultra_budget": ["flux-schnell_hyperbolic", "flux-dev_hyperbolic", "p-image_infsh"]
+      },
+      "fallback": "flux-dev_infsh",
+      "example_use_cases": ["Blog hero illustration", "Concept art", "Stylized portrait"]
+    },
+
+    "infographic": {
+      "description": "Data visualization, charts, structured layouts combining text and graphics. Text accuracy is critical. OpenAI is the only reliable choice.",
+      "keywords": ["infographic", "chart", "graph", "data", "diagram", "flowchart", "stats", "statistics", "comparison", "timeline", "process"],
+      "requirements": ["text_accuracy", "structure", "readability"],
+      "tier_ranking": {
+        "premium": ["openai_gpt-image-2_high", "openai_gpt-image-2_medium"],
+        "standard": ["openai_gpt-image-2_medium", "openai_gpt-image-2_low"],
+        "budget": ["openai_gpt-image-2_low", "ideogram-v2"],
+        "ultra_budget": ["openai_gpt-image-2_low"]
+      },
+      "fallback": "openai_gpt-image-2_low",
+      "example_use_cases": ["Process diagram", "Stat graphic", "Comparison chart"]
+    },
+
+    "pattern-texture": {
+      "description": "Backgrounds, textures, repeating patterns, abstract fills.",
+      "keywords": ["pattern", "texture", "background", "wallpaper", "seamless", "abstract", "gradient", "marble", "fabric", "wood", "concrete", "tile"],
+      "requirements": ["seamlessness", "detail", "repeating"],
+      "tier_ranking": {
+        "premium": ["flux-pro", "sd-3-5-large"],
+        "standard": ["flux-dev_together", "flux-dev_fal"],
+        "budget": ["flux-schnell_together", "flux-dev_infsh", "sd-3-5-large-turbo"],
+        "ultra_budget": ["flux-schnell_hyperbolic", "flux-dev_hyperbolic", "p-image_infsh"]
+      },
+      "fallback": "flux-dev_infsh",
+      "example_use_cases": ["Website background", "Fabric texture", "Abstract wallpaper"]
+    },
+
+    "portrait": {
+      "description": "Headshots, avatars, people photography. Needs realistic faces and expressions.",
+      "keywords": ["portrait", "headshot", "face", "person", "avatar", "profile picture", "model", "character", "human"],
+      "requirements": ["facial_realism", "lighting", "expression"],
+      "tier_ranking": {
+        "premium": ["flux-pro", "sd-3-5-large", "imagen-3"],
+        "standard": ["flux-dev_together", "imagen-3", "flux-dev_fal"],
+        "budget": ["flux-schnell_together", "flux-dev_infsh", "sd-3-5-large-turbo"],
+        "ultra_budget": ["flux-dev_hyperbolic", "p-image_infsh"]
+      },
+      "fallback": "flux-dev_infsh",
+      "example_use_cases": ["Team headshot", "Character portrait", "Profile photo concept"]
+    },
+
+    "concept-sketch": {
+      "description": "Quick ideation, rough drafts, wireframes, early exploration.",
+      "keywords": ["sketch", "draft", "rough", "ideation", "wireframe", "quick", "exploration", "brainstorm", "lo-fi"],
+      "requirements": ["speed", "cost", "good_enough"],
+      "tier_ranking": {
+        "premium": ["flux-schnell_together", "sd-3-5-large-turbo"],
+        "standard": ["flux-schnell_together", "flux-dev_infsh"],
+        "budget": ["flux-schnell_hyperbolic", "p-image_infsh"],
+        "ultra_budget": ["flux-schnell_hyperbolic", "p-image_infsh"]
+      },
+      "fallback": "p-image_infsh",
+      "example_use_cases": ["Rough ad concept", "Quick visual idea", "Draft composition"]
+    }
+  },
+
+  "auto_detect_rules": {
+    "description": "Simple keyword-based prompt analysis to guess image type when --type is not provided.",
+    "method": "keyword_matching",
+    "priority_order": [
+      "static-ad-text-heavy",
+      "book-cover",
+      "logo-brand",
+      "infographic",
+      "social-graphic",
+      "concept-sketch",
+      "ui-mockup",
+      "product-photoreal",
+      "product-lifestyle",
+      "portrait",
+      "lifestyle-photography",
+      "illustration-artistic",
+      "pattern-texture",
+      "static-ad-visual"
+    ],
+    "notes": "The router scans the prompt for keywords from each type. First match wins. If no match, defaults to 'static-ad-visual' for generate and falls back to OpenAI for edit."
+  },
+
+  "cost_comparison": {
+    "description": "Approximate cost per 1000 images at 1024x1024",
+    "rankings": {
+      "cheapest_to_most_expensive": [
+        "flux-schnell_hyperbolic ($0.50)",
+        "flux-dev_hyperbolic ($1.50)",
+        "flux-schnell_together ($3.00)",
+        "sd-3-5-large-turbo ($4.00)",
+        "ideogram-v2-turbo ($10.00)",
+        "recraft-v3 ($20.00)",
+        "flux-dev_together ($25.00)",
+        "ideogram-v3 ($25.00)",
+        "imagen-3 ($30.00)",
+        "flux-dev_fal ($28.00)",
+        "openai_gpt-image-2_low ($20.00)",
+        "openai_gpt-image-2_medium ($40.00)",
+        "flux-pro ($55.00)",
+        "sd-3-5-large ($65.00)",
+        "openai_gpt-image-2_high ($80.00)"
+      ]
+    }
+  }
+}
