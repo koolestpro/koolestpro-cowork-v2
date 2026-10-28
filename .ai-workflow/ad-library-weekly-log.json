@@ -213,6 +213,37 @@
       },
       "status": "queued",
       "note": "10 raw ads for NG/skincare Lagos, 2 queued. Neutriherbs (Build, fit 95, 4,214 page likes) looks like the international Neutriherbs skincare brand sold via Amazon/AliExpress, not a small Lagos business - flag per rule 6; its instagram_url is the bare https://www.instagram.com/ with no handle, so the ad link captured no real profile. Faelifestyle lagos is Low Priority (fit 65): ad destination not captured, needs manual review for a contact route. Magicalmomentspa skipped at 116,789 page likes. 7 ads failed the Nigeria-signal check (Omowunmi Oniyide Abike Aderemi twice); Beauty Hut Africa is a known Nigerian beauty retailer and Omowunmi Oniyide reads Nigerian - worth an eyeball. Run executed on the Mac's Cowork shell (device tools); queued only, not pushed to KoolestFlow."
+    },
+    {
+      "week": "2026-W44",
+      "ranAt": "2026-10-28T21:31:25.000Z",
+      "countryUsed": "NG",
+      "keywordUsed": "kids",
+      "leadsScored": 0,
+      "leadsPushed": 0,
+      "pendingPushFile": null,
+      "brandsQueued": [],
+      "brandsSkipped": {
+        "megaBrand": [
+          "Nestlé"
+        ],
+        "noNigeriaSignal": [
+          "Personal transport",
+          "Onyeche cosmetic2 backup page",
+          "Icospeed Int'l",
+          "Toysenter",
+          "Stuch Sleepwears",
+          "Personal transport",
+          "12” Baguette"
+        ],
+        "marketplaceLowVolume": [],
+        "alreadyTaken": [
+          "Bookstheylove.ng",
+          "Bookstheylove.ng"
+        ]
+      },
+      "status": "skipped",
+      "note": "10 raw ads for NG/kids Lagos, 0 cleared filters, no queue file written. Nestlé (11.8M page likes) dropped as mega-brand; Bookstheylove.ng already in ledger (appeared twice); 7 ads (6 unique pages) had no Nigeria signal. The device shell kills background jobs and caps calls at 180s, which cut off the sync Apify call, so this run started the actor async (run E0uin0KabiJE7iYkH) and fed its dataset to the unchanged bridge script. Runs for W42/W43 are missing from this log (no entries since 2026-10-07 apart from this one)."
     }
   ]
 }
