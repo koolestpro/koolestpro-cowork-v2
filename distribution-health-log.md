@@ -113,3 +113,19 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 
 ---
 
+## 2026-10-29 ~10:30 UTC (11:30 WAT) — health check (scheduled task run)
+
+**MAKE UNHEALTHY:** main posting scenario 6565331 `isActive = false`. Executions list shows a manual "stop" by Ridwan on 2026-10-28 14:39 UTC; last auto execution 2026-10-28 13:25 UTC (success). Nothing has posted since, so the 10-28 17:00 and 10-29 slots are being missed. Not reactivated by this run (a human stop). Reschedule scenario 7111659 also inactive, not reactivated (no reschedule done). Khutba Clips 7875574 active, 27 errors total, out of scope.
+
+**Sheet read:** live Sheets API, 275 rows (194 Posted, 58 Ready, 1 Draft, 21 Retired ignored). 56 upcoming unposted (31 IG, 22 X, 3 LI).
+**Missed (3), all Needs Review, NOT rescheduled:** IG `tip-materialkitchen-first-screen-build-breakdown-20261009-20261019-ig-1200` (10-19 17:00); LI `tip-extra-costs-top-checkout-killer-20261009-20261102-li-0900` (Draft, 10-23 14:00); IG `cro-fix-fishwife_shop-all-collection-20261025-20261028-ig-1200` (10-28 17:00, new). No webhook calls.
+**Collisions / violations (found, unfixable: all rows Needs Review):** IG same-slot 11-04 17:00 (halos_ad ...0925 + halos_pp ...1117). IG >1/day also 11-02, 11-04, 11-05, 11-06, 11-12, 11-20. LinkedIn same-day: none.
+**Step 1b:** 22 unposted Twitter captions checked, longest 277, 0 over 280.
+**Step 1c:** same 5 single-image IG rows as 10-25 still unfixed (11-09, 11-16, 11-23, 11-30, 12-14). Flag only.
+**Step 1d:** caption_fit.py: 0 rows flagged.
+**Spacing:** no reschedules; space_queue dry run: 0 brand-gap violations, supply gap 89 empty X slots.
+**Pacing (10-29 to 11-04):** 18 rows = 2.6/day (10-29:1, 10-30:4, 10-31:1, 11-01:2, 11-02:4, 11-03:1, 11-04:5). About 3 more for 3/day. LinkedIn ends 11-04 (3 rows), X ends 12-04. QA: 54 of 56 upcoming Needs Review (96%), 2 not run through QA.
+
+**Verdict:** Make OFF since 10-28. Needs Ridwan: turn 6565331 back on if intended, 3 missed rows stuck in review, 5 single-image IG rows that won't post, IG 2/day on 7 dates, 7111659 inactive, 96% of backlog Needs Review.
+
+---
