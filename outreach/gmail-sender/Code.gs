@@ -540,7 +540,7 @@ function dailyReport_() {
   const S = settings_();
   if (!S.ALERT_EMAIL) return;
   const me = me_();
-  const leads = read_('Leads'), msgs = read_('Messages'), drafts = read_('Drafts');
+  const leads = read_('Leads'), msgs = read_('Messages'), drafts = read_('Drafts'), seq = read_('Sequence');
   const sentToday = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && isToday_(m.sent_at));
   const repliesToday = msgs.rows.filter(m => m.direction === 'in' && isToday_(m.sent_at));
   const bouncesToday = msgs.rows.filter(m => m.direction === 'bounce' && isToday_(m.sent_at)).length;
