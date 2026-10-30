@@ -232,3 +232,13 @@ Not handled: CS desks that reply from a ticket system with a different domain AN
 ## No sends 22 to 24 Oct, no reports since 21 Oct (2026-10-25)
 
 Gmail shows nothing from koolestpro@gmail.com after 2026-10-21 18:45 UTC: no 6pm report on the 22nd, 23rd or 24th. The report is a separate trigger from the send job, so ALL automation was dead, not just sending. Before that, the 20th and 21st showed `0 sent` with 25 approved leads, so sending was already blocked while triggers still ran. Causes cannot be seen from the cloud (Sheet owned by koolestpro@gmail.com). Added: `sendBlockers_` records per run how many approved leads are blocked and why (outside hours, no unsent step row, email_status, claimed by another Gmail, ...) in `SEND_LAST`, and a failing send now records `SEND_ERR` instead of aborting the run; both show in the 6pm report HEALTH block. To read the Sheet from the cloud: share it (Viewer) with sirridwan721@gmail.com.
+
+## Free email check replaces MyEmailVerifier (2026-10-30, Ridwan)
+
+MyEmailVerifier returned HTTP 403 / a 404 page, which left 119 leads stuck at `verify failed` and `unverified`. Mails.so costs money, so verification is now free and keyless (`verifyOne_` in `Pipeline.gs`):
+- **invalid:** bad format, or Google public DNS (dns.google) says the domain does not exist or takes no mail.
+- **valid:** the domain takes mail AND the address is published on the lead's own site (`siteEmails_`).
+- **risky (never sent):** anything else, including every guessed address (hello@, info@, first.last@) and directory addresses not on their site. A mailbox cannot be proven without a paid verifier, and bounces hurt the sending Gmail.
+- `guessEmail_` and `upgradeToDecisionMaker_` are switched off for the same reason. No API key is needed; `MYEMAILVERIFIER_API_KEY` is ignored.
+- Existing `unverified` leads are re-checked automatically, 20 per run. Leads already marked `risky`/`invalid` are only re-checked by the once-per-lead email rescue; clear `email_rescue` to retry one.
+- Expected effect: fewer sendable leads than a paid verifier would give, but every one is an address the store published. If volume is too low, the lever is `SEND_TO_CATCH_ALL` or accepting role addresses (hello@, info@) on domains with working mail, at the cost of some bounces.

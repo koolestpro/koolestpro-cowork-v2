@@ -552,7 +552,7 @@ function nameEmails_(name, host) {
 function upgradeToDecisionMaker_(S, leads, lead, name, role) {
   if (!name) return '';
   if (!String(lead.contact_name || '').trim()) set_(leads, lead, 'contact_name', name);
-  if (!sharedInbox_(lead.email) || !PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY')) return '';
+  if (!sharedInbox_(lead.email) || true) return '';   // 2026-10-30: a guessed personal address cannot be proven without a paid verifier, so the shared inbox stays
   const host = cleanDomain_(lead.website);
   const first = name.toLowerCase().split(/\s+/)[0];
   const hunter = hunterEmails_(host).filter(h => (h.name && h.name.toLowerCase().indexOf(first) !== -1) || /founder|owner|ceo|chief|director|president/i.test(h.position)).map(h => h.email);
@@ -677,9 +677,8 @@ function recipientCheck_(S, leads, lead) {
   const site = siteEmails_(lead.website);
   if (site.indexOf(email) !== -1) return 'recipient ok: ' + email + ' is published on their own site';
   const cands = site.filter(e => e !== email).sort((a, b) => (isOwnDomain_(b, host) ? 1 : 0) - (isOwnDomain_(a, host) ? 1 : 0) || rankEmail_(b, host, lead.contact_name) - rankEmail_(a, host, lead.contact_name));
-  const canVerify = !!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
   for (const c of cands.slice(0, 3)) {
-    const v = canVerify ? verifyOne_(c) : '';
+    const v = verifyOne_(c, lead.website);
     if (v === 'valid' || (v === 'catch-all' && isTrue_(S.SEND_TO_CATCH_ALL))) {
       set_(leads, lead, 'notes', ('Recipient fixed: ' + email + ' (from a directory, not on their site) replaced by ' + c + ' (published on ' + host + ', verifier: ' + v + ')' + (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
       set_(leads, lead, 'email', c);

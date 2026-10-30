@@ -119,17 +119,40 @@ function findEmails_(S, stats, timeLeft) {
   });
 }
 
-/** One verifier call. Returns 'valid' | 'invalid' | 'catch-all' | 'risky' | '' (no key or call failed). */
-function verifyOne_(email) {
-  const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
-  if (!key) return '';
+const MX_CACHE_ = {}, PUBLISHED_CACHE_ = {};
+
+/** Free check (2026-10-30, replaces MyEmailVerifier): can this domain receive mail? Google public DNS. Returns true, false, or null when DNS did not answer. */
+function domainHasMail_(domain) {
+  if (MX_CACHE_[domain] !== undefined) return MX_CACHE_[domain];
   try {
-    const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key), { muteHttpExceptions: true });
-    if (res.getResponseCode() !== 200) return '';
+    const res = UrlFetchApp.fetch('https://dns.google/resolve?name=' + encodeURIComponent(domain) + '&type=MX', { muteHttpExceptions: true });
+    if (res.getResponseCode() !== 200) return null;
     const j = JSON.parse(res.getContentText());
-    const st = lc_(j.Status || j.status || '');
-    return st === 'valid' ? 'valid' : (st === 'invalid' ? 'invalid' : (/catch/.test(st) ? 'catch-all' : 'risky'));
-  } catch (e) { return ''; }
+    if (j.Status === 3) return (MX_CACHE_[domain] = false);   // NXDOMAIN: the domain does not exist
+    if (j.Status !== 0) return null;
+    const mx = (j.Answer || []).filter(a => a.type === 15 && String(a.data || '').replace(/[\s.]/g, '') !== '0');   // a "null MX" (0 .) means the domain takes no mail
+    return (MX_CACHE_[domain] = mx.length > 0);
+  } catch (e) { return null; }
+}
+
+/**
+ * Free verification, no key. Returns 'valid' | 'invalid' | 'risky' | '' (DNS did not answer).
+ * invalid: bad format, or the domain cannot receive mail. valid: the domain takes mail AND the address is published on the lead's own site
+ * (website, or the address's own domain), so someone put it there to be contacted. Anything else (a guess, a directory address) is risky and
+ * never sent, because a mailbox cannot be proven without a paid verifier and bounces hurt the sending Gmail.
+ */
+function verifyOne_(email, website) {
+  const e = lc_(email);
+  if (!emailOk_(e)) return 'invalid';
+  const dom = e.split('@')[1];
+  const mail = domainHasMail_(dom);
+  if (mail === null) return '';
+  if (!mail) return 'invalid';
+  const site = String(website || '').trim() || (FREEMAIL_DOMAINS_.indexOf(dom) === -1 ? dom : '');
+  if (!site) return 'risky';
+  const key = cleanDomain_(site);
+  if (PUBLISHED_CACHE_[key] === undefined) { try { PUBLISHED_CACHE_[key] = siteEmails_(site); } catch (err) { PUBLISHED_CACHE_[key] = []; } }
+  return PUBLISHED_CACHE_[key].indexOf(e) !== -1 ? 'valid' : 'risky';
 }
 
 /** Asks the AI for the owner/founder name from the About text. Returns '' when it can't tell. */
@@ -154,7 +177,7 @@ function ownerName_(S, host) {
 
 /** No email on the site: find the owner's name, try likely addresses, keep the first one the verifier calls valid. */
 function guessEmail_(S, lead) {
-  if (!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY')) return { why: 'no verifier key' };
+  return { why: 'a guessed address cannot be proven without a paid verifier, so none is sent (2026-10-30)' };   // free checks only prove addresses the store published
   const host = String(lead.website).trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/^www\./i, '').toLowerCase();
   if (!host) return null;
   const name = ownerName_(S, host);
@@ -254,8 +277,8 @@ function rescueEmail_(S, leads, lead) {
   if (!cands.length) return 'no other address found for ' + host;
   const tried = [];
   for (const c of cands.slice(0, 5)) {
-    const v = verifyOne_(c.email);
-    if (!v) { tried.push(c.email + ': verifier did not answer'); break; }
+    const v = verifyOne_(c.email, lead.website);
+    if (!v) { tried.push(c.email + ': DNS did not answer'); break; }
     tried.push(c.email + ': ' + v);
     if (v === 'valid' || (v === 'catch-all' && isTrue_(S.SEND_TO_CATCH_ALL) && /their site/.test(c.source))) {
       set_(leads, lead, 'email', c.email);
@@ -269,7 +292,6 @@ function rescueEmail_(S, leads, lead) {
 }
 
 function rescueEmails_(S, stats, timeLeft) {
-  if (!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY')) return;
   const leads = read_('Leads');
   if (leads.headers.indexOf('email_rescue') === -1) return;   // run Outreach > Set up tabs once
   candidates_(leads, l => String(l.email).trim() && String(l.website).trim() && !String(l.email_rescue || '').trim() &&
@@ -286,37 +308,25 @@ function rescueEmails_(S, stats, timeLeft) {
 // ---------- 2. Verify ----------
 
 function verifyEmails_(S, stats, timeLeft) {
-  const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
   const leads = read_('Leads');
   candidates_(leads, l => String(l.email).trim() && ['', 'unverified'].indexOf(lc_(l.email_status)) !== -1, 20).forEach(lead => {
     if (!timeLeft()) return;
     const email = String(lead.email).trim();
     if (!emailOk_(email)) { set_(leads, lead, 'email_status', 'invalid'); return; }   // the rescue step then looks for a real address
-    if (!key) { set_(leads, lead, 'email_status', 'unverified'); note_(leads, lead, 'Script property MYEMAILVERIFIER_API_KEY not found (Apps Script > Project Settings > Script properties: name = MYEMAILVERIFIER_API_KEY, value = your key). Cannot verify.', false); return; }
     try {
-      const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key),
-        { muteHttpExceptions: true });
-      if (res.getResponseCode() !== 200) throw new Error('HTTP ' + res.getResponseCode());
-      const j = JSON.parse(res.getContentText());
-      const st = lc_(j.Status || j.status || '');
-      // valid and invalid are certain. Catch-all domains accept every address, so the mailbox can't be proven. Anything else (unknown, grey-listed, timeout) is risky.
-      const verdict = st === 'valid' ? 'valid' : (st === 'invalid' ? 'invalid' : (/catch/.test(st) ? 'catch-all' : 'risky'));
+      const verdict = verifyOne_(email, lead.website);
+      if (!verdict) throw new Error('DNS did not answer');
       set_(leads, lead, 'email_status', verdict);
-      note_(leads, lead, 'verifier said: ' + (j.Status || j.status || '?'), false);
+      note_(leads, lead, 'free check: ' + verdict + (verdict === 'risky' ? ' (domain takes mail, but the address is not published on their site)' : ''), false);
       stats.verified++;
     } catch (e) { note_(leads, lead, 'verify failed: ' + String(e.message || e).slice(0, 300), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
   });
 }
 
-/** Menu: tests the verifier key on your own alert email and shows the raw answer, so we can see the real response format. */
+/** Menu: runs the free check on your own alert email and shows the answer. */
 function testVerifier() {
-  const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
-  if (!key) { toast_('No Script property named MYEMAILVERIFIER_API_KEY. Add it in Project Settings > Script properties (value = your key).'); return; }
   const email = String(settings_().ALERT_EMAIL || '').trim();
-  const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key), { muteHttpExceptions: true });
-  const body = res.getContentText().slice(0, 300);
-  Logger.log(body);
-  toast_('HTTP ' + res.getResponseCode() + ': ' + body);
+  toast_('Free check for ' + email + ': ' + (verifyOne_(email, '') || 'DNS did not answer') + ' (risky is expected: a free-mail address is only valid when a store publishes it).');
 }
 
 // ---------- 3. Profile the store ----------
