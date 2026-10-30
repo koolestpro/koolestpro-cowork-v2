@@ -240,5 +240,5 @@ MyEmailVerifier returned HTTP 403 / a 404 page, which left 119 leads stuck at `v
 - **valid:** the domain takes mail AND the address is published on the lead's own site (`siteEmails_`).
 - **risky (never sent):** anything else, including every guessed address (hello@, info@, first.last@) and directory addresses not on their site. A mailbox cannot be proven without a paid verifier, and bounces hurt the sending Gmail.
 - `guessEmail_` and `upgradeToDecisionMaker_` are switched off for the same reason. No API key is needed; `MYEMAILVERIFIER_API_KEY` is ignored.
-- Existing `unverified` leads are re-checked automatically, 20 per run. Leads already marked `risky`/`invalid` are only re-checked by the once-per-lead email rescue; clear `email_rescue` to retry one.
+- Existing `unverified` leads are re-checked automatically, 10 per run (site pages are fetched in parallel with `fetchAll`; the one-by-one version exceeded the 6 minute limit). Leads already marked `risky`/`invalid` are only re-checked by the once-per-lead email rescue; clear `email_rescue` to retry one.
 - Expected effect: fewer sendable leads than a paid verifier would give, but every one is an address the store published. If volume is too low, the lever is `SEND_TO_CATCH_ALL` or accepting role addresses (hello@, info@) on domains with working mail, at the cost of some bounces.

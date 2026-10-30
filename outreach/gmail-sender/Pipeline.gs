@@ -219,14 +219,19 @@ function siteEmails_(website) {
   const host = base.replace(/^www\./i, '').toLowerCase();
   const paths = ['', '/pages/contact', '/contact', '/pages/contact-us', '/contact-us', '/policies/contact-information', '/pages/about', '/about', '/pages/about-us', '/pages/our-story', '/pages/faq', '/policies/refund-policy', '/policies/privacy-policy', '/policies/terms-of-service'];
   const found = {};
-  for (const p of paths) {
-    let page;
-    try { page = fetchPage_(base + p); } catch (e) { continue; }
-    if (!page.ok) continue;
-    const text = page.html.replace(/&#64;|&commat;/gi, '@').replace(/\s*\[at\]\s*/gi, '@').replace(/mailto:/gi, ' ');
+  // All pages in parallel (2026-10-30): fetching 14 pages one by one took minutes on slow or dead stores and blew the 6 minute limit.
+  let resps = [];
+  try {
+    resps = UrlFetchApp.fetchAll(paths.map(p => ({ url: 'https://' + base + p, muteHttpExceptions: true, followRedirects: true, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; KoolestproBot/1.0)' } })));
+  } catch (e) { return []; }   // unreachable domain: nothing is published
+  for (const res of resps) {
+    const code = res.getResponseCode();
+    if (code < 200 || code >= 300) continue;
+    const full = res.getContentText();
+    const html = full.length > 600000 ? full.slice(0, 350000) + '\n' + full.slice(-250000) : full;
+    const text = html.replace(/&#64;|&commat;/gi, '@').replace(/\s*\[at\]\s*/gi, '@').replace(/mailto:/gi, ' ');
     const matches = text.match(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g) || [];
     matches.forEach(m => { found[m.toLowerCase()] = true; });
-    if (Object.keys(found).length >= 3) break;
   }
   const bad = /\.(png|jpe?g|gif|svg|webp|css|js)$|sentry|wixpress|example\.|domain\.com|shopify\.com|cloudflare|noreply|no-reply|donotreply|@2x|schema\.org|yourdomain|email\.com$/i;
   const free = /@(gmail|yahoo|outlook|hotmail|icloud|proton|protonmail|live)\./i;
@@ -309,7 +314,7 @@ function rescueEmails_(S, stats, timeLeft) {
 
 function verifyEmails_(S, stats, timeLeft) {
   const leads = read_('Leads');
-  candidates_(leads, l => String(l.email).trim() && ['', 'unverified'].indexOf(lc_(l.email_status)) !== -1, 20).forEach(lead => {
+  candidates_(leads, l => String(l.email).trim() && ['', 'unverified'].indexOf(lc_(l.email_status)) !== -1, 10).forEach(lead => {
     if (!timeLeft()) return;
     const email = String(lead.email).trim();
     if (!emailOk_(email)) { set_(leads, lead, 'email_status', 'invalid'); return; }   // the rescue step then looks for a real address
