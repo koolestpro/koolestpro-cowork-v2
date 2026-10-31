@@ -14,6 +14,7 @@ config.json:
   "page": "/abs/path/to/index.html",
   "out_dir": "/abs/outputs/templates/{slug}_{date}/ig-carousel",
   "full_page_png": "/abs/.../{slug}-full-page.png",
+  "full_raw_png": "/abs/.../desktop-full.jpg",  (REQUIRED: raw 1440-wide full-page capture, used by slide 5)
   "mobile_shots": ["/abs/mob_hero.png", "/abs/mob_mid.png", "/abs/mob_foot.png"],
   "brand": "MOULT", "page_label": "homepage",
   "hero_selector": "section.hero",
@@ -157,10 +158,28 @@ body{{background:{c['brand_bg']}}}
 
 def slide4(c, secs):
     blocks = ""
-    for label, img in secs:
+    # 2026-10-31: crop height is derived from the space actually available
+    # (canvas minus top offset, footer, labels and gaps) instead of a fixed
+    # 0.44 ratio, which left a ~250px empty band at the bottom of the slide
+    # (kura_lp-01). 960 = content width (1080 - 2*60).
+    n = max(1, len(secs))
+    avail = H - 56 - 120 - n * (60 + 18) - n * 36
+    # Budget in rendered px (960 wide). A section shorter than its share keeps
+    # its natural height and hands the leftover to the taller ones, so the
+    # slide fills down to the footer instead of ending in an empty band.
+    nat = [img.height * 960 / img.width for _, img in secs]
+    budget = [min(h, 960 * 0.9) for h in nat]
+    share = avail / n
+    short = [i for i, h in enumerate(budget) if h <= share]
+    tall = [i for i in range(n) if i not in short]
+    if tall:
+        spare = avail - sum(budget[i] for i in short)
+        for i in tall:
+            budget[i] = min(budget[i], spare / len(tall))
+    for (label, img), bh in zip(secs, budget):
         im = img
-        if im.height / im.width > 0.44:
-            im = im.crop((0, 0, im.width, int(im.width * 0.44)))
+        if im.height * 960 / im.width > bh:
+            im = im.crop((0, 0, im.width, int(im.width * bh / 960)))
         blocks += f"""<div class="lab h">{label}</div><div class="crop"><img src="{b64(im)}"></div>"""
     return f"""<style>{BASE_CSS}
 body{{background:{c['light_bg']}}}

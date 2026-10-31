@@ -1,0 +1,56 @@
+{
+"page": "/Users/mac/koolestpro-cowork-v2/replo-rebuilds/brands/kura/pages/kura-lp-01/index.html",
+"out_dir": "/Users/mac/koolestpro-cowork-v2/outputs/templates/kura_lp-01_2026-10-31/ig-carousel",
+"full_page_png": "/Users/mac/koolestpro-cowork-v2/outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-full-page.png",
+"mobile_shots": [
+"(temporary capture, deleted after the run)",
+"(temporary capture, deleted after the run)",
+"(temporary capture, deleted after the run)"
+],
+"brand": "KURA",
+"page_label": "landing page",
+"hero_selector": "section.hero",
+"sections": [
+[
+"HERO SECTION",
+"section.hero"
+],
+[
+"OFFER SECTION",
+"section.final-cta"
+]
+],
+"cover_headline": "A landing page built to sell one board",
+"slide2_title": "The whole page in one view",
+"slide2_sub": "Problem first. Then the product, the proof and the offer.",
+"slide3_eyebrow": "MOBILE VIEW",
+"slide3_title": "Same page on a phone.",
+"brand_bg": "#2B3445",
+"brand_ink": "#F6EFE2",
+"accent": "#C47A3A",
+"accent_on_bg": "#D68F4A",
+"fonts": [
+[
+"Bebas Neue",
+"Headings"
+],
+[
+"DM Sans",
+"Body and UI"
+]
+],
+"palette": [
+"#2B3445",
+"#C47A3A",
+"#F6EFE2",
+"#181820"
+],
+"tools": [
+"HTML + CSS",
+"Claude"
+],
+"cta_title": "Want your store built next?",
+"cta_line": "I build Shopify pages for DTC brands.",
+"cta_url": "koolestpro.com/services/page-build",
+"full_raw_png": "(temporary capture, deleted after the run)"
+}

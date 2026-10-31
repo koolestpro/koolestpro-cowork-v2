@@ -281,6 +281,150 @@ Need your store built this way? DM me.
 
 ---
 
+## kura_lp-01 (Landing Page (lp-01)) - 2026-10-31
+
+Concept build, not a client. RETIRED-KURA FALLBACK page (no active manifest page left). Review page: `outputs/templates/kura_lp-01_2026-10-31/index.html`. All copy humanizer-passed, no em dashes, X captions under 280 chars.
+
+**TS-KURA-LP01-COVER-VID - `kura_lp-01 cover.mp4`** [linkedin, instagram]
+```
+Built a landing page for KURA, a stainless steel cutting board brand I made up. Concept build, not a client.
+
+A landing page gets one visitor, from one ad, with one question in their head. Here it's "why would I swap my wooden board?" So the page answers that before it tries to sell anything.
+
+How it runs, top to bottom:
+✅ the claim and the button on the first screen: a board that doesn't hold bacteria
+✅ the problem next. Knife grooves in wood and plastic trap stuff you can't scrub out
+✅ then the board itself, and six reasons in plain tiles
+✅ reviews, three steps, and the doubts people actually have (will it dull my knives? can it go in the dishwasher?)
+✅ the guarantee sits right above the price, so the risk is handled before the button comes back
+
+No nav menu. Nowhere to wander off to.
+
+Need a landing page like this built? koolestpro.com/services/page-build
+
+#shopify #ecommerce #landingpage #webdesign
+```
+
+**TS-KURA-LP01-LAPTOP-VID - `kura_lp-01 laptop.mp4`** [linkedin]
+```
+Desktop scroll-through of the KURA landing page.
+
+Hero, the problem with wooden boards, the board itself, six reasons, reviews, three steps, the knife and dishwasher questions, the guarantee, the offer, the FAQ.
+
+Concept build for a brand I made up, not a client site.
+
+#webdesign #landingpage
+```
+
+**TS-KURA-LP01-MOBILE-VID - `kura_lp-01 mobile.mp4`** [instagram, x]
+```
+The KURA landing page on a phone.
+
+Every section stacks into one column, and the copper button shows up twice: once at the top, once at the offer.
+
+Demo brand I made up, not a client. Need a store like this built? DM me.
+```
+
+**TS-KURA-LP01-COVER-IMG - `kura_lp-01 cover.png`** [linkedin, instagram]
+```
+A landing page for KURA, a concept cutting board brand.
+
+Same hero on laptop and phone. One claim, one photo, one copper button. Nothing else competes for the first look.
+
+Need a store like this built? DM me.
+
+#shopify #webdesign #landingpage
+```
+
+**TS-KURA-LP01-X1 - `kura_lp-01 cover.png`** [x]
+```
+Built a landing page for a cutting board I made up.
+
+The first screen:
+-> says what it is
+-> shows it in a real kitchen
+-> gives you the button
+
+The rest of the page is spent on why your wooden board is the problem.
+
+Concept build, not a client.
+```
+
+**TS-KURA-LP01-PREVIEW - `kura_lp-01-preview.png`** [linkedin, instagram]
+```
+Three screens from the KURA landing page on mobile: the hero, the product on its own, and the guarantee sitting right above the price.
+
+Concept build, not a live client site. The review count and prices on the page are placeholder copy.
+
+#webdesign #ecommerce
+```
+
+**TS-KURA-LP01-X2 - `kura_lp-01-preview.png`** [x]
+```
+Three screens from one mobile landing page.
+
+-> the hero, dark slate with one copper button
+-> the board on its own, no kitchen, no clutter
+-> the 30 day guarantee right above the price
+
+KURA is a demo brand I made up, not a client.
+
+Need a store like this built? DM me.
+```
+
+**TS-KURA-LP01-FULLPAGE - `kura_lp-01-full-page.png`** [linkedin]
+```
+The whole KURA landing page, split into two columns.
+
+Left column makes the case: the claim, why your current board is the problem, the board itself, six reasons to switch.
+
+Right column clears the way to buying: reviews, three steps, the questions people hesitate on, the guarantee, then the price.
+
+Landing pages don't need a menu. They need an order.
+
+Concept build for a brand I made up.
+
+#landingpage #webdesign #shopify
+```
+
+**TS-KURA-LP01-X3 - `kura_lp-01-full-page.png`** [x]
+```
+A whole desktop landing page in one image.
+
+Left column makes the case. Right column handles the doubts: reviews, the knife question, the dishwasher question, a 30 day guarantee.
+
+The price only shows up once the doubts are gone.
+
+Concept build for KURA, a brand I made up.
+```
+
+**TS-KURA-LP01-MOBILESTRIP - `kura_lp-01-mobile-strip.png`** [x]
+```
+Full page at a glance.
+
+The KURA landing page on a phone, in three columns:
+-> the hero and the problem
+-> the board and why it's better
+-> the last reasons, then reviews
+
+One thumb, top to bottom.
+
+Demo brand, not a client.
+```
+
+**TS-KURA-LP01-IG-CAROUSEL - `ig-carousel/slide1.png`** [instagram]
+```
+Concept store build: a landing page for KURA, a cutting board brand I made up. Not a client.
+
+Swipe for the whole page, the mobile view, the hero and offer up close, and what I built it with.
+
+Need a store like this built? Link in bio.
+
+#shopify #ecommerce #webdesign #shopifydesign #landingpage
+```
+
+---
+
 ## KNOWN GAPS
 
 `kura_hp-01-full-mosaic.png` has 2 of its 8 sliced bands under-rendered (plain dark panels — a couple of scroll-triggered sections needed a longer capture dwell time than this run gave them). This is flagged on the companion review page too. Worth a longer-dwell recapture before this specific image goes into a real post.

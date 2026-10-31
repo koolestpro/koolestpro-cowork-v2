@@ -4,7 +4,8 @@
   "relatedPipelineItemIds": [
     "template-showcase-kura_hp-01-20260713",
     "template-showcase-kura_pdp-01-2026-08-31",
-    "template-showcase-kura_pdp-02-20260919"
+    "template-showcase-kura_pdp-02-20260919",
+    "template-showcase-kura_lp-01-2026-10-31"
   ],
   "createdAt": "2026-07-13T06:30:00.000Z",
   "note": "First koolestpro-cowork-v2-native social-content record for KURA. A separate cached reference copy of the brand's original replo-rebuilds caption library lives at replo-pages-cache/kura-social-content.md for read-only reference — this file is this project's own durable, growing record per CLAUDE.md's Per-Brand Social Content Library convention, and is the one future autopost tooling should read. | 2026-09-19 CORRECTION: an earlier pass this session wrongly marked every KURA asset here 'Posted' — reverted. 'Posted' in this project means sent to the live Google Sheet / actually gone out, which is tracked in the Sheet itself (or via sync_content_system.py), not guessed locally. Real distribution status for KURA content lives in the 'Koolestpro Distribution Queue' Sheet.",
@@ -612,6 +613,175 @@
       "status": "Not Posted",
       "postedAt": null,
       "note": "Primary active pick 2026-09-19 (sortOrder 5, lowest eligible unused entry in replo-rebuilds-pages.json), not a fallback. kura-pdp-02 postdates the 2026-07-18 KURA retirement so it stays active on its own merit."
+    },
+    "TS-KURA-LP01-COVER-VID": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 cover.mp4",
+      "hashtags": [
+        "#shopify",
+        "#ecommerce",
+        "#landingpage",
+        "#webdesign"
+      ],
+      "caption": "Built a landing page for KURA, a stainless steel cutting board brand I made up. Concept build, not a client.\n\nA landing page gets one visitor, from one ad, with one question in their head. Here it's \"why would I swap my wooden board?\" So the page answers that before it tries to sell anything.\n\nHow it runs, top to bottom:\n✅ the claim and the button on the first screen: a board that doesn't hold bacteria\n✅ the problem next. Knife grooves in wood and plastic trap stuff you can't scrub out\n✅ then the board itself, and six reasons in plain tiles\n✅ reviews, three steps, and the doubts people actually have (will it dull my knives? can it go in the dishwasher?)\n✅ the guarantee sits right above the price, so the risk is handled before the button comes back\n\nNo nav menu. Nowhere to wander off to.\n\nNeed a landing page like this built? koolestpro.com/services/page-build",
+      "captionKey": "TS-KURA-LP01-COVER-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-LAPTOP-VID": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 laptop.mp4",
+      "hashtags": [
+        "#webdesign",
+        "#landingpage"
+      ],
+      "caption": "Desktop scroll-through of the KURA landing page.\n\nHero, the problem with wooden boards, the board itself, six reasons, reviews, three steps, the knife and dishwasher questions, the guarantee, the offer, the FAQ.\n\nConcept build for a brand I made up, not a client site.",
+      "captionKey": "TS-KURA-LP01-LAPTOP-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-MOBILE-VID": {
+      "platform": [
+        "instagram",
+        "x"
+      ],
+      "assetType": "video",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 mobile.mp4",
+      "hashtags": [],
+      "caption": "The KURA landing page on a phone.\n\nEvery section stacks into one column, and the copper button shows up twice: once at the top, once at the offer.\n\nDemo brand I made up, not a client. Need a store like this built? DM me.",
+      "captionKey": "TS-KURA-LP01-MOBILE-VID",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-COVER-IMG": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 cover.png",
+      "hashtags": [
+        "#shopify",
+        "#webdesign",
+        "#landingpage"
+      ],
+      "caption": "A landing page for KURA, a concept cutting board brand.\n\nSame hero on laptop and phone. One claim, one photo, one copper button. Nothing else competes for the first look.\n\nNeed a store like this built? DM me.",
+      "captionKey": "TS-KURA-LP01-COVER-IMG",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-X1": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 cover.png",
+      "hashtags": [],
+      "caption": "Built a landing page for a cutting board I made up.\n\nThe first screen:\n-> says what it is\n-> shows it in a real kitchen\n-> gives you the button\n\nThe rest of the page is spent on why your wooden board is the problem.\n\nConcept build, not a client.",
+      "captionKey": "TS-KURA-LP01-X1",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-PREVIEW": {
+      "platform": [
+        "linkedin",
+        "instagram"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-preview.png",
+      "hashtags": [
+        "#webdesign",
+        "#ecommerce"
+      ],
+      "caption": "Three screens from the KURA landing page on mobile: the hero, the product on its own, and the guarantee sitting right above the price.\n\nConcept build, not a live client site. The review count and prices on the page are placeholder copy.",
+      "captionKey": "TS-KURA-LP01-PREVIEW",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-X2": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-preview.png",
+      "hashtags": [],
+      "caption": "Three screens from one mobile landing page.\n\n-> the hero, dark slate with one copper button\n-> the board on its own, no kitchen, no clutter\n-> the 30 day guarantee right above the price\n\nKURA is a demo brand I made up, not a client.\n\nNeed a store like this built? DM me.",
+      "captionKey": "TS-KURA-LP01-X2",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-FULLPAGE": {
+      "platform": [
+        "linkedin"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-full-page.png",
+      "hashtags": [
+        "#landingpage",
+        "#webdesign",
+        "#shopify"
+      ],
+      "caption": "The whole KURA landing page, split into two columns.\n\nLeft column makes the case: the claim, why your current board is the problem, the board itself, six reasons to switch.\n\nRight column clears the way to buying: reviews, three steps, the questions people hesitate on, the guarantee, then the price.\n\nLanding pages don't need a menu. They need an order.\n\nConcept build for a brand I made up.",
+      "captionKey": "TS-KURA-LP01-FULLPAGE",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-X3": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-full-page.png",
+      "hashtags": [],
+      "caption": "A whole desktop landing page in one image.\n\nLeft column makes the case. Right column handles the doubts: reviews, the knife question, the dishwasher question, a 30 day guarantee.\n\nThe price only shows up once the doubts are gone.\n\nConcept build for KURA, a brand I made up.",
+      "captionKey": "TS-KURA-LP01-X3",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-MOBILESTRIP": {
+      "platform": [
+        "x"
+      ],
+      "assetType": "image",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-mobile-strip.png",
+      "hashtags": [],
+      "caption": "Full page at a glance.\n\nThe KURA landing page on a phone, in three columns:\n-> the hero and the problem\n-> the board and why it's better\n-> the last reasons, then reviews\n\nOne thumb, top to bottom.\n\nDemo brand, not a client.",
+      "captionKey": "TS-KURA-LP01-MOBILESTRIP",
+      "status": "Not Posted",
+      "postedAt": null
+    },
+    "TS-KURA-LP01-IG-CAROUSEL": {
+      "platform": [
+        "instagram"
+      ],
+      "assetType": "carousel",
+      "assetPath": "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide1.png",
+      "hashtags": [
+        "#shopify",
+        "#ecommerce",
+        "#webdesign",
+        "#shopifydesign",
+        "#landingpage"
+      ],
+      "caption": "Concept store build: a landing page for KURA, a cutting board brand I made up. Not a client.\n\nSwipe for the whole page, the mobile view, the hero and offer up close, and what I built it with.\n\nNeed a store like this built? Link in bio.",
+      "captionKey": "TS-KURA-LP01-IG-CAROUSEL",
+      "status": "Not Posted",
+      "postedAt": null,
+      "assetPaths": [
+        "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide1.png",
+        "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide2.png",
+        "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide3.png",
+        "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide4.png",
+        "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide5.png",
+        "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide6.png"
+      ]
     }
   },
   "knownGaps": "kura_hp-01-full-mosaic.png has 2 of its 8 sliced bands under-rendered (plain dark panels, scroll-triggered sections that needed a longer capture dwell time). Flagged on the review page (outputs/templates/kura_hp-01_2026-07-13/index.html); worth a longer-dwell recapture before this specific image gets used in a real post. | 2026-07-21: pdp/advertorial/listicle/post-purchase have video assets only (Cloudinary-hosted, confirmed by Ridwan). No local stills exist for these 4 pages; Ridwan says stills live in the replo-rebuilds folder, not connected in this session -- revisit once that folder is connected to add TS-KURA-{PAGE}-PREVIEW/-MOSAIC image entries."

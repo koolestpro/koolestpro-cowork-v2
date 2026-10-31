@@ -1,0 +1,61 @@
+{
+  "pipeline_item_id": "template-showcase-kura_lp-01-2026-10-31",
+  "brand": "KURA",
+  "slug": "kura_lp-01",
+  "type": "Template Showcase",
+  "content_system_folder": "outputs/templates/",
+  "companion_html": "outputs/templates/kura_lp-01_2026-10-31/index.html",
+  "harvested_at": "2026-10-31T09:01:48.626173+00:00",
+  "captions": {
+    "linkedin": "Built a landing page for KURA, a stainless steel cutting board brand I made up. Concept build, not a client.\n\nA landing page gets one visitor, from one ad, with one question in their head. Here it's \"why would I swap my wooden board?\" So the page answers that before it tries to sell anything.\n\nHow it runs, top to bottom:\n✅ the claim and the button on the first screen: a board that doesn't hold bacteria\n✅ the problem next. Knife grooves in wood and plastic trap stuff you can't scrub out\n✅ then the board itself, and six reasons in plain tiles\n✅ reviews, three steps, and the doubts people actually have (will it dull my knives? can it go in the dishwasher?)\n✅ the guarantee sits right above the price, so the risk is handled before the button comes back\n\nNo nav menu. Nowhere to wander off to.\n\nNeed a landing page like this built? koolestpro.com/services/page-build\n\n#shopify #ecommerce #landingpage #webdesign",
+    "x": [
+      "Built a landing page for a cutting board I made up.\n\nThe first screen:\n-> says what it is\n-> shows it in a real kitchen\n-> gives you the button\n\nThe rest of the page is spent on why your wooden board is the problem.\n\nConcept build, not a client.",
+      "A whole desktop landing page in one image.\n\nLeft column makes the case. Right column handles the doubts: reviews, the knife question, the dishwasher question, a 30 day guarantee.\n\nThe price only shows up once the doubts are gone.\n\nConcept build for KURA, a brand I made up."
+    ]
+  },
+  "captions_full": {
+    "linkedin": {
+      "text": "Built a landing page for KURA, a stainless steel cutting board brand I made up. Concept build, not a client.\n\nA landing page gets one visitor, from one ad, with one question in their head. Here it's \"why would I swap my wooden board?\" So the page answers that before it tries to sell anything.\n\nHow it runs, top to bottom:\n✅ the claim and the button on the first screen: a board that doesn't hold bacteria\n✅ the problem next. Knife grooves in wood and plastic trap stuff you can't scrub out\n✅ then the board itself, and six reasons in plain tiles\n✅ reviews, three steps, and the doubts people actually have (will it dull my knives? can it go in the dishwasher?)\n✅ the guarantee sits right above the price, so the risk is handled before the button comes back\n\nNo nav menu. Nowhere to wander off to.\n\nNeed a landing page like this built? koolestpro.com/services/page-build\n\n#shopify #ecommerce #landingpage #webdesign",
+      "source_tab": "copy-block:LinkedIn Caption"
+    },
+    "x_preview": {
+      "text": "Three screens from one mobile landing page.\n\n-> the hero, dark slate with one copper button\n-> the board on its own, no kitchen, no clutter\n-> the 30 day guarantee right above the price\n\nKURA is a demo brand I made up, not a client.\n\nNeed a store like this built? DM me.",
+      "source_tab": "copy-block:X Posts[data-asset=preview]"
+    },
+    "x_glance": {
+      "text": "Full page at a glance.\n\nThe KURA landing page on a phone, in three columns:\n-> the hero and the problem\n-> the board and why it's better\n-> the last reasons, then reviews\n\nOne thumb, top to bottom.\n\nDemo brand, not a client.",
+      "source_tab": "copy-block:X Posts[data-asset=mobile-strip]"
+    },
+    "x": {
+      "text": [
+        "Built a landing page for a cutting board I made up.\n\nThe first screen:\n-> says what it is\n-> shows it in a real kitchen\n-> gives you the button\n\nThe rest of the page is spent on why your wooden board is the problem.\n\nConcept build, not a client.",
+        "A whole desktop landing page in one image.\n\nLeft column makes the case. Right column handles the doubts: reviews, the knife question, the dishwasher question, a 30 day guarantee.\n\nThe price only shows up once the doubts are gone.\n\nConcept build for KURA, a brand I made up."
+      ],
+      "source_tab": "copy-block:X Posts"
+    },
+    "ig_carousel": {
+      "text": "Concept store build: a landing page for KURA, a cutting board brand I made up. Not a client.\n\nSwipe for the whole page, the mobile view, the hero and offer up close, and what I built it with.\n\nNeed a store like this built? Link in bio.\n\n#shopify #ecommerce #webdesign #shopifydesign #landingpage",
+      "source_tab": "copy-block:Instagram Carousel (6 slides, 1080x1350) · TS-KURA-LP01-IG-CAROUSEL"
+    }
+  },
+  "assets": {
+    "images": [
+      "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide1.png",
+      "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide2.png",
+      "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide3.png",
+      "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide4.png",
+      "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide5.png",
+      "outputs/templates/kura_lp-01_2026-10-31/ig-carousel/slide6.png",
+      "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 cover.png",
+      "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-full-page.png",
+      "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-mobile-strip.png",
+      "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01-preview.png"
+    ],
+    "video": [
+      "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 cover.mp4",
+      "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 laptop.mp4",
+      "outputs/templates/kura_lp-01_2026-10-31/kura_lp-01 mobile.mp4"
+    ]
+  },
+  "warnings": []
+}

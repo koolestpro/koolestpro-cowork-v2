@@ -141,8 +141,8 @@
       "hasSocialContentDraft": false,
       "socialContentFile": null,
       "socialContentSection": null,
-      "usedForTemplateShowcase": false,
-      "usedForTemplateShowcaseDate": null,
+      "usedForTemplateShowcase": true,
+      "usedForTemplateShowcaseDate": "2026-10-31",
       "active": false,
       "retired": true,
       "cachePathRetired": null,
@@ -158,7 +158,8 @@
       "retiredNote": "Retired by the same 2026-07-18 KURA cutoff as the other pre-cutoff KURA pages in this manifest. Fallback only — usable if every active HALOS/newer-KURA page has been showcased.",
       "socialContentNote": "kura-social-content.md may or may not have a section for lp-01 — check before assuming, write fresh captions if not.",
       "usedForTikTok": false,
-      "usedForTikTokDate": null
+      "usedForTikTokDate": null,
+      "showcaseNote": "2026-10-31: showcased as a RETIRED-KURA FALLBACK (every active page already used, no real-redesign registered). Stays active:false."
     },
     {
       "brand": "KURA",
