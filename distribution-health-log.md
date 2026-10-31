@@ -8,52 +8,6 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 
 ---
 
-## 2026-10-07 ~18:00 UTC (~19:00 WAT) — health check (scheduled task run, fired late; slot was 08:35 UTC)
-
-**Sheet read:** live Sheets API, 205 rows (135 Posted, 63 Ready, 7 Draft). Today's 4 rows (X 14:00, X 18:00, LI 14:00, IG 17:00) all posted.
-
-**Missed rows:** 27 past-dated unposted, all `Needs Review`, so none rescheduled (blocked rule). No webhook calls this run.
-- X/LI (2, both Draft, carried over): `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LI 09-28), `static-ad-caraway_fry-pan-20260909-20260929-x-1300` (X 09-29). (The Caraway CRO X/LI rows from last run were deleted on 10-05.)
-- Instagram (25): every one is a single image (23) or has empty `asset_urls` (2: `tip-the-conversion-layer-1777028149144-20260824-ig-1200`, `idea-why-your-pdp-loses-sales-at-60-scroll-...-20260826-ig-1200`). The single-image route is blocked, so these can never post as-is. They're the leftovers from the 10-05 carousel/video reschedule. Ridwan to decide: rebuild as carousels or mark them dead.
-
-**Collisions / LinkedIn same-day / IG same-day:** none. Upcoming LinkedIn rows on 10-08, 10-14, 10-21, one each. IG one per day 10-08 to 11-06, all 17:00. No same-template video on consecutive days.
-
-**Step 1b, X char count:** 11 unposted Twitter captions checked (10 upcoming + 1 missed Draft). Longest 271. 0 over 280, 0 empty, 0 new findings.
-
-**Step 1c, Instagram format:** 30 upcoming IG rows checked. 24 single .mp4 Reels, 6 image carousels (3-8 URLs). 0 single-image, 0 empty, 0 over 10, 0 mixed. Nothing trimmed.
-
-**Step 1d, caption/image fit:** `caption_fit.py`: 0 rows flagged (reads local `queue.json`).
-
-**Reschedule scenario 7111659:** active, not paused. No reactivation needed.
-
-**Make health (6565331):** healthy. 33 executions 10-04 13:00 UTC to 10-07 17:25 UTC, all status 1 (success), no warnings. Latest 2026-10-07 17:25 UTC. One manual run by Ridwan 10-06 16:40 UTC.
-
-**Pacing (10-07 to 10-13):** 12 unposted rows (5 X, 1 LI, 6 IG) = **1.7/day**; about 9 more rows needed for 3/day. Counting today's 4 already posted, 16 rows = 2.3/day. 10-12 and 10-13 have 1 post each (IG only). X runs out after 10-18; LI has only 3 rows to 10-21. QA: 0 of 12 clean in the window (3 IG rows "not run through automated QA"); backlog-wide 40 of 43 upcoming rows `Needs Review`. These Ready rows still fire (Make ignores qa_status).
-
-**Verdict:** Make healthy, no fixable gaps, no collisions, no over-limit captions. Needs Ridwan: thin queue (1.7/day this week, X empty after 10-18, LI only 3 rows), and 25 dead single-image/empty Instagram rows.
-
-## 2026-10-09 16:03 UTC (17:03 WAT) — health check (scheduled task run, fired late; slot was 08:35 UTC)
-
-**Sheet read:** live Sheets API, 205 rows (162 Posted incl. today's 3, 36 Ready, 7 Draft, 21 Retired ignored). Today's X 14:00, LI 14:00 and IG 17:00 all posted.
-
-**Missed rows:** 7 past-dated unposted, all Draft + Needs Review, so none rescheduled (blocked rule). X/LI: `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LI 09-28), `static-ad-caraway_fry-pan-20260909-20260929-x-1300` (X 09-29), both carried over. Instagram (5 Drafts, single image each, 09-12 to 10-05): obvi hero, versed x2, checkout payment order, listiku. No webhook calls needed for them.
-
-**Violation fixed (IG same-day):** `template-showcase-kura_pp-01-20260721-20260918-ig-1200` and `template-showcase-halos_ad-01-20260905-20260925-ig-1200` both sat on 2026-11-04 17:00. Moved the QA-clean one (kura_pp) to 2026-11-07 17:00. Reschedule webhook returned 200 "Accepted" but did NOT land (no execution in 7111659; hook queue 3 items). Applied the same two-cell change (E/F) directly through the Sheets API instead, re-read and confirmed. Re-check: no X/IG slot collisions, no IG >1/day, no LI same-day.
-
-**Reschedule scenario 7111659 / hook 3613242:** flagged active, not paused, but not consuming its queue. 3 payloads waiting: two from 2026-09-19 08:43 and 08:45 (stale, unknown content) plus today's. Last real execution was 2026-09-17. Not stop/started by this run, because doing so could replay the two stale 09-19 payloads onto the Sheet. Ridwan to inspect.
-
-**Step 1b, X char count:** 9 unposted Twitter captions checked, longest 271, 0 over 280, 0 empty, 0 new findings.
-**Step 1c, Instagram format:** 27 upcoming IG rows checked, 0 single-image, 0 empty, 0 over 10, 0 mixed. Nothing trimmed.
-**Step 1d:** `caption_fit.py`: 0 rows flagged.
-
-**Spacing:** `space_queue.py` dry-run then real: 0 changes applied (plan already matched). Brand-gap violations 0. Supply gap: 53 empty X slots in its window. `sort_distribution_queue.py` re-run.
-
-**Make health (6565331):** healthy. Active, executions every ~hour through 2026-10-09 16:01 UTC, all status 1, no errors since 10-03.
-
-**Pacing (10-09 to 10-15):** 10 unposted rows (4 X+LI, 6 IG) = 1.4/day raw; X+LI only 0.6/day. Days with zero X/LI: 10-09 (already posted), 10-11, 10-12, 10-15. Only 1 upcoming LinkedIn row (10-13); X ends 10-29. About 11 more rows needed for 3/day. QA: window 1 clean / 9 blocked; backlog-wide 33 of 36 upcoming `Needs Review`.
-
-**Verdict:** Make healthy, one IG violation fixed, no over-limit captions. Needs Ridwan: reschedule webhook queue stuck, queue nearly empty for X/LI, backlog 92% flagged.
-
 ## 2026-10-11 08:40 UTC (09:40 WAT) — health check (scheduled task run)
 
 **Sheet read:** live Sheets API, 205 rows (152 Posted, 32 Ready unposted, 21 Retired ignored). No Draft rows left.
@@ -127,5 +81,24 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 **Pacing (10-29 to 11-04):** 18 rows = 2.6/day (10-29:1, 10-30:4, 10-31:1, 11-01:2, 11-02:4, 11-03:1, 11-04:5). About 3 more for 3/day. LinkedIn ends 11-04 (3 rows), X ends 12-04. QA: 54 of 56 upcoming Needs Review (96%), 2 not run through QA.
 
 **Verdict:** Make OFF since 10-28. Needs Ridwan: turn 6565331 back on if intended, 3 missed rows stuck in review, 5 single-image IG rows that won't post, IG 2/day on 7 dates, 7111659 inactive, 96% of backlog Needs Review.
+
+---
+
+## 2026-10-31 ~12:00 UTC (13:00 WAT) — health check (scheduled task run)
+
+**Sheet read:** live Sheets API, 275 rows (198 Posted, 54 Ready, 1 Draft, 21 Retired ignored). 51 upcoming unposted (29 IG, 20 X, 2 LI).
+**Missed (4), all Needs Review, NOT rescheduled:** IG `tip-materialkitchen-first-screen-build-breakdown-20261009-20261019-ig-1200` (10-19 17:00); LI `tip-extra-costs-top-checkout-killer-20261009-20261102-li-0900` (Draft, 10-23 14:00); IG `cro-fix-fishwife_shop-all-collection-20261025-20261028-ig-1200` (10-28 17:00); IG `template-showcase-halos_lp-01-2026-08-23-20260901-ig-1200` (10-29 17:00, new, missed while Make was off). No webhook calls.
+**Collisions / violations (found, unfixable: every row Needs Review):** IG same-slot 11-04 17:00 (halos_ad ...0925 + halos_pp ...1117). IG >1/day on 11-02, 11-04, 11-05, 11-06, 11-12, 11-20. X: no same-slot collisions. LinkedIn same-day: none.
+**Step 1b:** 20 unposted Twitter captions checked, longest 277, 0 over 280.
+**Step 1c:** single-image IG rows (will never post, flag only): 11-02 tip-first-screen-leaks-before-bfcm ...; 11-04 template-showcase-halos_pp ...1117; 11-09 tip-extra-costs ...; 11-16 tip-allbirds ...; 11-23 tip-caraway ...; 11-30 tip-v1ce ...; 12-07 tip-three-mobile-checks ...; 12-14 tip-owala ... (8 upcoming, up from 5 on 10-29). Plus the 2 single-image missed rows above.
+**Step 1d:** caption_fit.py: 0 rows flagged.
+**Spacing:** no reschedules; space_queue dry run: 0 brand-gap violations, supply gap 85 empty X slots.
+
+**Reschedule scenario 7111659:** inactive, not reactivated (no reschedule needed).
+**Make 6565331:** healthy. Active, not paused, 0 errors. Ridwan restarted it 10-30 16:07 UTC; every execution since is success (last 10-30 22:25 UTC). Next run 10-31 13:00 UTC. Khutba Clips 7875574 inactive, out of scope.
+
+**Pacing (10-31 to 11-06):** 19 rows = 2.7/day (10-31:1, 11-01:2, 11-02:4, 11-03:1, 11-04:5, 11-05:2, 11-06:4). About 2 more for 3/day. LinkedIn ends 11-04 (2 rows left), X ends 12-04. QA: 49 of 51 upcoming Needs Review (96%), 2 not run through QA.
+
+**Verdict:** Make healthy again. Needs Ridwan: 4 missed rows stuck in review, 8 upcoming single-image IG rows that won't post, IG 2/day on 6 dates, LinkedIn queue nearly empty (2 rows), 7111659 inactive, 96% of backlog Needs Review.
 
 ---

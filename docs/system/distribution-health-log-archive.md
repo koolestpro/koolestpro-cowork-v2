@@ -467,3 +467,50 @@ Ridwan reported a Make.com error on today's Instagram post (a 7-slide Tips carou
 - Deleted 4 pending Caraway CRO rows from the Sheet + local queue (backup in `outputs/distribution-queue/deleted/`).
 - IG token expires 2026-11-07, same week the rescheduled backlog ends.
 
+
+## 2026-10-07 ~18:00 UTC (~19:00 WAT) — health check (scheduled task run, fired late; slot was 08:35 UTC)
+
+**Sheet read:** live Sheets API, 205 rows (135 Posted, 63 Ready, 7 Draft). Today's 4 rows (X 14:00, X 18:00, LI 14:00, IG 17:00) all posted.
+
+**Missed rows:** 27 past-dated unposted, all `Needs Review`, so none rescheduled (blocked rule). No webhook calls this run.
+- X/LI (2, both Draft, carried over): `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LI 09-28), `static-ad-caraway_fry-pan-20260909-20260929-x-1300` (X 09-29). (The Caraway CRO X/LI rows from last run were deleted on 10-05.)
+- Instagram (25): every one is a single image (23) or has empty `asset_urls` (2: `tip-the-conversion-layer-1777028149144-20260824-ig-1200`, `idea-why-your-pdp-loses-sales-at-60-scroll-...-20260826-ig-1200`). The single-image route is blocked, so these can never post as-is. They're the leftovers from the 10-05 carousel/video reschedule. Ridwan to decide: rebuild as carousels or mark them dead.
+
+**Collisions / LinkedIn same-day / IG same-day:** none. Upcoming LinkedIn rows on 10-08, 10-14, 10-21, one each. IG one per day 10-08 to 11-06, all 17:00. No same-template video on consecutive days.
+
+**Step 1b, X char count:** 11 unposted Twitter captions checked (10 upcoming + 1 missed Draft). Longest 271. 0 over 280, 0 empty, 0 new findings.
+
+**Step 1c, Instagram format:** 30 upcoming IG rows checked. 24 single .mp4 Reels, 6 image carousels (3-8 URLs). 0 single-image, 0 empty, 0 over 10, 0 mixed. Nothing trimmed.
+
+**Step 1d, caption/image fit:** `caption_fit.py`: 0 rows flagged (reads local `queue.json`).
+
+**Reschedule scenario 7111659:** active, not paused. No reactivation needed.
+
+**Make health (6565331):** healthy. 33 executions 10-04 13:00 UTC to 10-07 17:25 UTC, all status 1 (success), no warnings. Latest 2026-10-07 17:25 UTC. One manual run by Ridwan 10-06 16:40 UTC.
+
+**Pacing (10-07 to 10-13):** 12 unposted rows (5 X, 1 LI, 6 IG) = **1.7/day**; about 9 more rows needed for 3/day. Counting today's 4 already posted, 16 rows = 2.3/day. 10-12 and 10-13 have 1 post each (IG only). X runs out after 10-18; LI has only 3 rows to 10-21. QA: 0 of 12 clean in the window (3 IG rows "not run through automated QA"); backlog-wide 40 of 43 upcoming rows `Needs Review`. These Ready rows still fire (Make ignores qa_status).
+
+**Verdict:** Make healthy, no fixable gaps, no collisions, no over-limit captions. Needs Ridwan: thin queue (1.7/day this week, X empty after 10-18, LI only 3 rows), and 25 dead single-image/empty Instagram rows.
+
+## 2026-10-09 16:03 UTC (17:03 WAT) — health check (scheduled task run, fired late; slot was 08:35 UTC)
+
+**Sheet read:** live Sheets API, 205 rows (162 Posted incl. today's 3, 36 Ready, 7 Draft, 21 Retired ignored). Today's X 14:00, LI 14:00 and IG 17:00 all posted.
+
+**Missed rows:** 7 past-dated unposted, all Draft + Needs Review, so none rescheduled (blocked rule). X/LI: `tip-listiku-copy-presell-5-elements-20260510-20260928-li-0900` (LI 09-28), `static-ad-caraway_fry-pan-20260909-20260929-x-1300` (X 09-29), both carried over. Instagram (5 Drafts, single image each, 09-12 to 10-05): obvi hero, versed x2, checkout payment order, listiku. No webhook calls needed for them.
+
+**Violation fixed (IG same-day):** `template-showcase-kura_pp-01-20260721-20260918-ig-1200` and `template-showcase-halos_ad-01-20260905-20260925-ig-1200` both sat on 2026-11-04 17:00. Moved the QA-clean one (kura_pp) to 2026-11-07 17:00. Reschedule webhook returned 200 "Accepted" but did NOT land (no execution in 7111659; hook queue 3 items). Applied the same two-cell change (E/F) directly through the Sheets API instead, re-read and confirmed. Re-check: no X/IG slot collisions, no IG >1/day, no LI same-day.
+
+**Reschedule scenario 7111659 / hook 3613242:** flagged active, not paused, but not consuming its queue. 3 payloads waiting: two from 2026-09-19 08:43 and 08:45 (stale, unknown content) plus today's. Last real execution was 2026-09-17. Not stop/started by this run, because doing so could replay the two stale 09-19 payloads onto the Sheet. Ridwan to inspect.
+
+**Step 1b, X char count:** 9 unposted Twitter captions checked, longest 271, 0 over 280, 0 empty, 0 new findings.
+**Step 1c, Instagram format:** 27 upcoming IG rows checked, 0 single-image, 0 empty, 0 over 10, 0 mixed. Nothing trimmed.
+**Step 1d:** `caption_fit.py`: 0 rows flagged.
+
+**Spacing:** `space_queue.py` dry-run then real: 0 changes applied (plan already matched). Brand-gap violations 0. Supply gap: 53 empty X slots in its window. `sort_distribution_queue.py` re-run.
+
+**Make health (6565331):** healthy. Active, executions every ~hour through 2026-10-09 16:01 UTC, all status 1, no errors since 10-03.
+
+**Pacing (10-09 to 10-15):** 10 unposted rows (4 X+LI, 6 IG) = 1.4/day raw; X+LI only 0.6/day. Days with zero X/LI: 10-09 (already posted), 10-11, 10-12, 10-15. Only 1 upcoming LinkedIn row (10-13); X ends 10-29. About 11 more rows needed for 3/day. QA: window 1 clean / 9 blocked; backlog-wide 33 of 36 upcoming `Needs Review`.
+
+**Verdict:** Make healthy, one IG violation fixed, no over-limit captions. Needs Ridwan: reschedule webhook queue stuck, queue nearly empty for X/LI, backlog 92% flagged.
+
