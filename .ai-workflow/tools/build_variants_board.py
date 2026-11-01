@@ -13,6 +13,9 @@ Usage:
     --phones outputs/cro-fixes/bala/_variants/v1_phone.png ... (3 or 4, compose_mobile_flat output) \
     --labels "Range + labels" "Lifestyle first" "Full-bleed mood" "Headline first" \
     --headline "Same brand. 4 homepage heroes." --question "Which one would you ship?"
+Default since 2026-11-01 (Ridwan): NO heading text on the image (no headline, question, page-type line
+or "Reply A, B or C" pill), only 2-3 variants, phones as large as the 1600x900 sheet allows. The
+question goes in the X caption. --headline/--question are still accepted but only used with --legacy-header.
 Then export with the page's own captureSheet() (see .ai-workflow/tools/export_sheet.py) to
 outputs/cro-fixes/{brand-dir}/koolestpro_{slug}_variants-board.png
 """
@@ -42,7 +45,7 @@ body{background:#0b0b0b;padding:30px;font-family:'DM Mono',monospace;}
 .head h1{font-family:'Syne',sans-serif;font-weight:800;font-size:54px;line-height:1.05;letter-spacing:-1px;color:#fff;}
 .head h1 em{font-style:normal;color:#FA9C0F;}
 .head .pt{margin-top:14px;font-size:15px;letter-spacing:2.4px;text-transform:uppercase;color:rgba(255,255,255,.55);}
-.row{position:absolute;top:286px;left:0;right:0;display:flex;justify-content:center;gap:__GAP__px;z-index:2;}
+.row{position:absolute;top:__ROWTOP__px;left:0;right:0;display:flex;justify-content:center;gap:__GAP__px;z-index:2;}
 .col{display:flex;flex-direction:column;align-items:center;}
 .letter{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:32px;color:#141414;background:#FA9C0F;box-shadow:0 8px 22px rgba(0,0,0,.45);margin-bottom:-22px;position:relative;z-index:3;}
 .phone{display:block;width:__PW__px;height:__PH__px;filter:drop-shadow(0 22px 40px rgba(0,0,0,.7));}
@@ -54,7 +57,7 @@ body{background:#0b0b0b;padding:30px;font-family:'DM Mono',monospace;}
 </style></head><body>
 <div id="sheet">
   <div class="bg"></div><div class="glow"></div>
-  <div class="head"><h1>__HEADLINE__<br><em>__QUESTION__</em></h1><div class="pt">__PAGETYPE__ &middot; __BRAND__ &middot; concept, not a client</div><div class="askpill">Reply <b>__LETTERS__</b></div></div>
+  __HEAD__
   <div class="row">__COLS__</div>
   <div class="lock"><div class="handle">@koolestpro</div></div>
 </div>
@@ -75,19 +78,26 @@ def main():
     ap.add_argument("--page-type", required=True)
     ap.add_argument("--phones", nargs="+", required=True)
     ap.add_argument("--labels", nargs="+", required=True)
-    ap.add_argument("--headline", required=True)
+    ap.add_argument("--headline", default="")
+    ap.add_argument("--legacy-header", action="store_true", help="old layout: headline + question + reply pill, 3-4 variants")
     ap.add_argument("--question", default="Which one would you ship?")
     a = ap.parse_args()
-    assert 3 <= len(a.phones) <= 4 and len(a.phones) == len(a.labels), "need 3-4 phones, one label each"
     n = len(a.phones)
-    pw = 238 if n == 4 else 280
+    assert n == len(a.labels), "one label per phone"
+    if a.legacy_header:
+        assert 3 <= n <= 4, "legacy layout takes 3-4 phones"
+        pw = 238 if n == 4 else 280; gap = 78 if n == 4 else 100; rowtop = 286
+    else:
+        assert 2 <= n <= 3, "2-3 variants max (Ridwan, 2026-11-01)"
+        pw = 350; gap = 120 if n == 3 else 200; rowtop = 26
     ph = round(pw * 974 / 450)
-    gap = 78 if n == 4 else 100
+    head = ('<div class="head"><h1>__HEADLINE__<br><em>__QUESTION__</em></h1><div class="pt">__PAGETYPE__ &middot; __BRAND__ &middot; concept, not a client</div>'
+            '<div class="askpill">Reply <b>__LETTERS__</b></div></div>') if a.legacy_header else ""
     letters = "ABCD"[:n]
     cols = "".join(
         f'<div class="col"><div class="letter">{letters[i]}</div><img class="phone" src="{uri(ROOT / p)}">'
         f'<div class="lab">{html.escape(l)}</div></div>' for i, (p, l) in enumerate(zip(a.phones, a.labels)))
-    out = (TPL.replace("__BG__", uri(BG)).replace("__COLS__", cols).replace("__PW__", str(pw)).replace("__PH__", str(ph))
+    out = (TPL.replace("__HEAD__", head).replace("__ROWTOP__", str(rowtop)).replace("__BG__", uri(BG)).replace("__COLS__", cols).replace("__PW__", str(pw)).replace("__PH__", str(ph))
            .replace("__GAP__", str(gap)).replace("__HEADLINE__", html.escape(a.headline))
            .replace("__QUESTION__", html.escape(a.question)).replace("__PAGETYPE__", html.escape(a.page_type))
            .replace("__BRAND__", html.escape(a.brand)).replace("__LETTERS__", ", ".join(letters[:-1]) + " or " + letters[-1]))

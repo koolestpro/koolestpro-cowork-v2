@@ -16,6 +16,10 @@ def cutout(p):
     border = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
     region = np.isin(lab, list(border)) & (cand == 1)
     alpha = np.full((h, w), 255, np.float32); alpha[region] = 0
+    # keep only the largest opaque blob (drops leftover specks from the painted-out app icons)
+    n2, lab2, st, _ = cv2.connectedComponentsWithStats((alpha > 30).astype(np.uint8), connectivity=8)
+    if n2 > 2:
+        keep = 1 + int(np.argmax(st[1:, cv2.CC_STAT_AREA])); alpha[(lab2 != keep) & (lab2 != 0)] = 0
     alpha = cv2.GaussianBlur(alpha, (3, 3), 0)
     out = np.dstack([im.astype(np.uint8), alpha.clip(0, 255).astype(np.uint8)])
     img = Image.fromarray(out, "RGBA")

@@ -20,7 +20,7 @@
     },
     "CRO-FLEEMOTO-VARIANTS": {
       "assetPath": "outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_variants-board.png",
-      "usedIn": "variants board (4 hero directions A-D, neutral, no pick shown); X debate post that goes out BEFORE the carousel"
+      "usedIn": "variants board (3 product-page first screens A-C, no heading text on the image, neutral, no pick shown); X debate post that goes out BEFORE the carousel"
     },
     "CRO-FLEEMOTO-ANNO-GRAPHIC": {
       "assetPath": "outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_annotated.png",
@@ -44,10 +44,10 @@
     },
     "CRO-FLEEMOTO-X-VARIANTS": {
       "assetPath": "outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_variants-board.png",
-      "caption": "Product page, 4 ways: FleeMoto's $319.99 supermoto wheel set. Same photos, same facts.\n\nA: studio shot + fit box\nB: on-bike photo\nC: fitment first\nD: photo grid\n\nMy take: a parts page should answer \"will it fit?\" before it asks for money.\n\nWhich would you ship?",
+      "caption": "Product page, 3 ways: FleeMoto's $319.99 supermoto wheel set. Same photos, same facts.\n\nA: studio shot + fit box\nB: gallery + thumbnails\nC: photo grid\n\nMy take: a parts page should answer \"will it fit?\" before it asks for money.\n\nWhich would you ship? A, B or C?",
       "platform": "X",
       "captionKey": "x_variants",
-      "chars": 261
+      "chars": 262
     },
     "CRO-FLEEMOTO-X-CAROUSEL": {
       "assetPath": [

@@ -9,10 +9,10 @@ Pipeline item: `cro-fix-fleemoto_supermoto-wheels-pdp-20261101`
 | `CRO-FLEEMOTO-COVER` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide1.png` | carousel slide 1 (cover: BEFORE phone with the title-only first screen and the 903px price mark + AFTER phone, real header wordmark) |
 | `CRO-FLEEMOTO-BA` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide2.png` | carousel slide 2, standalone before/after post |
 | `CRO-FLEEMOTO-ANNO` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide3.png` | carousel slide 3, standalone annotation post |
-| `CRO-FLEEMOTO-VARIANTS` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_variants-board.png` | variants board (4 hero directions A-D, neutral, no pick shown); X debate post that goes out BEFORE the carousel |
+| `CRO-FLEEMOTO-VARIANTS` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_variants-board.png` | variants board (3 product-page first screens A-C, no heading text on the image, neutral, no pick shown); X debate post that goes out BEFORE the carousel |
 | `CRO-FLEEMOTO-ANNO-GRAPHIC` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_annotated.png` | standalone clear-background annotation graphic (1080x1080) |
 | `CRO-FLEEMOTO-CAROUSEL` | `outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_carousel.html` | the review/export HTML (all 3 slides + download panel) |
-| `CRO-FLEEMOTO-X-VARIANTS` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_variants-board.png` | X caption, 261 chars |
+| `CRO-FLEEMOTO-X-VARIANTS` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_variants-board.png` | X caption, 262 chars |
 | `CRO-FLEEMOTO-X-CAROUSEL` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide1.png, outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide2.png, outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide3.png` | X caption, 246 chars |
 | `CRO-FLEEMOTO-X-BA` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide2.png` | X caption, 266 chars |
 | `CRO-FLEEMOTO-X-ANNO` | `outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide3.png` | X caption, 264 chars |
@@ -50,19 +50,18 @@ This is unofficial concept work. FleeMoto isn't a client.
 
 ## X captions (no hashtags, each under 280)
 
-### CRO-FLEEMOTO-X-VARIANTS (261 chars)
+### CRO-FLEEMOTO-X-VARIANTS (262 chars)
 
 ```
-Product page, 4 ways: FleeMoto's $319.99 supermoto wheel set. Same photos, same facts.
+Product page, 3 ways: FleeMoto's $319.99 supermoto wheel set. Same photos, same facts.
 
 A: studio shot + fit box
-B: on-bike photo
-C: fitment first
-D: photo grid
+B: gallery + thumbnails
+C: photo grid
 
 My take: a parts page should answer "will it fit?" before it asks for money.
 
-Which would you ship?
+Which would you ship? A, B or C?
 ```
 
 ### CRO-FLEEMOTO-X-CAROUSEL (246 chars)

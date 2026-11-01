@@ -21,7 +21,7 @@ give Instagram/LinkedIn variants:
 3. The **before/after (slide 2), dark annotation (slide 3), and clear-background annotated graphic**
    are each posted on their own on X.
 
-**Variants board first (2026-10-11, Ridwan):** before any of the above, the neutral A/B/C/D board of the hero directions we explored posts alone on X to start a debate; the carousel is the reveal. Full rule: `docs/system/variants-board-post.md`. With this board, an audit has **7 posts** total and **5 X captions** (x_variants + the four below).
+**Variants board first (2026-10-11, Ridwan):** before any of the above, the neutral A/B/C board of the hero directions we explored posts alone on X to start a debate; the carousel is the reveal. Full rule: `docs/system/variants-board-post.md`. With this board, an audit has **7 posts** total and **5 X captions** (x_variants + the four below).
 
 That is 3 carousel posts + 3 X singles + the variants-board post = 7 posts per audit, so every run
 writes **5 X captions**: one for the variants board, one for the X carousel, and one for each of

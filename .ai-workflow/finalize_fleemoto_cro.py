@@ -46,16 +46,15 @@ There are no reviews on the redesign, because the store doesn't show any yet. I 
 This is unofficial concept work. FleeMoto isn't a client."""
 
 XC = {
- "x_variants": """Product page, 4 ways: FleeMoto's $319.99 supermoto wheel set. Same photos, same facts.
+ "x_variants": """Product page, 3 ways: FleeMoto's $319.99 supermoto wheel set. Same photos, same facts.
 
 A: studio shot + fit box
-B: on-bike photo
-C: fitment first
-D: photo grid
+B: gallery + thumbnails
+C: photo grid
 
 My take: a parts page should answer "will it fit?" before it asks for money.
 
-Which would you ship?""",
+Which would you ship? A, B or C?""",
  "x_carousel": """PDP teardown: FleeMoto's $319.99 wheel set.
 
 1 The price sits 903px down. A phone screen is 844
@@ -113,7 +112,7 @@ items = {
  f"{K}-COVER": {"assetPath": IMG["COVER"], "usedIn": "carousel slide 1 (cover: BEFORE phone with the title-only first screen and the 903px price mark + AFTER phone, real header wordmark)"},
  f"{K}-BA": {"assetPath": IMG["BA"], "usedIn": "carousel slide 2, standalone before/after post", "caption": LINKEDIN},
  f"{K}-ANNO": {"assetPath": IMG["ANNO"], "usedIn": "carousel slide 3, standalone annotation post"},
- f"{K}-VARIANTS": {"assetPath": IMG["VARIANTS"], "usedIn": "variants board (4 hero directions A-D, neutral, no pick shown); X debate post that goes out BEFORE the carousel"},
+ f"{K}-VARIANTS": {"assetPath": IMG["VARIANTS"], "usedIn": "variants board (3 product-page first screens A-C, no heading text on the image, neutral, no pick shown); X debate post that goes out BEFORE the carousel"},
  f"{K}-ANNO-GRAPHIC": {"assetPath": IMG["ANNO-GRAPHIC"], "usedIn": "standalone clear-background annotation graphic (1080x1080)"},
  f"{K}-CAROUSEL": {"assetPath": CAROUSEL, "usedIn": "the review/export HTML (all 3 slides + download panel)",
                    "captionOptions": [{"id": "linkedin", "caption": LINKEDIN, "hashtags": ["#CRO", "#Shopify", "#EcommerceUX", "#ProductPage"]}]},

@@ -19,11 +19,11 @@ Research + reference board: `references-for-posts/homepage-hero-research-2026-10
 
 ## Process
 
-- Build 3-4 directions from the families (image top + stack / text first + band / full-bleed
+- Build 2-3 directions from the families (image top + stack / text first + band / full-bleed
   scrim) on the brand's real assets, put them on one board, pick one and write why
   (`CHOICE.md`). Keep the runner-up as an A/B challenger.
 - Check every photo for things the shopper can't buy (sold-out collabs) before using it.
 
 ## Variants are mandatory, every CRO Fix (2026-10-11)
 
-Homepage or PDP, every run builds 3-4 hero variants and a board. The board is also a post: it goes out on X before the carousel as a neutral "which would you ship?" debate. See `docs/system/variants-board-post.md`.
+Homepage or PDP, every run builds 2-3 hero variants (each a real page of the audited type) and a board with no heading text on the image. The board is also a post: it goes out on X before the carousel as a neutral "which would you ship?" debate. See `docs/system/variants-board-post.md`.

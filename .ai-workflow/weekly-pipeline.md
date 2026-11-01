@@ -91,7 +91,7 @@ so there's always a buffer to swap something out if needed.
    fixed" pitch. If the real file truly can't be retrieved, say so in the run
    summary rather than inventing one silently.
 
-4b. **Hero variants + variants board (2026-10-11, mandatory).** Before settling the rebuild, build 3-4 hero directions on the brand's real assets (families in `docs/system/homepage-hero-patterns.md`), board them, record the pick in `CHOICE.md`. Then build the neutral X debate post with `.ai-workflow/tools/build_variants_board.py` + `.ai-workflow/tools/export_sheet.py` -> `outputs/cro-fixes/{brand}/koolestpro_{slug}_variants-board.png`, caption in the review pack tab `tab-x-variants` (key `x_variants`). It posts on X BEFORE the carousel. Rule: `docs/system/variants-board-post.md`. Reference run: Bala homepage, 2026-10-11 (`.ai-workflow/build_bala_hero_variants.py`).
+4b. **Hero variants + variants board (2026-10-11, mandatory).** Before settling the rebuild, build 2-3 hero directions (every one a real page of the audited type) on the brand's real assets (families in `docs/system/homepage-hero-patterns.md`), board them, record the pick in `CHOICE.md`. Then build the neutral X debate post with `.ai-workflow/tools/build_variants_board.py` + `.ai-workflow/tools/export_sheet.py` -> `outputs/cro-fixes/{brand}/koolestpro_{slug}_variants-board.png`, caption in the review pack tab `tab-x-variants` (key `x_variants`). It posts on X BEFORE the carousel. Rule: `docs/system/variants-board-post.md`. Reference run: Bala homepage, 2026-10-11 (`.ai-workflow/build_bala_hero_variants.py`).
 
 5. **Real screenshots**, not mockups. Use `.ai-workflow/tools/screenshot.py` against
    the live "before" URL and the local "after" rebuild HTML. Both at the same

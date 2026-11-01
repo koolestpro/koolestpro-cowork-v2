@@ -24,18 +24,17 @@ There are no reviews on the redesign, because the store doesn't show any yet. I 
 
 This is unofficial concept work. FleeMoto isn't a client.
 
-X-VARIANTS (261 chars)
+X-VARIANTS (262 chars)
 
-Product page, 4 ways: FleeMoto's $319.99 supermoto wheel set. Same photos, same facts.
+Product page, 3 ways: FleeMoto's $319.99 supermoto wheel set. Same photos, same facts.
 
 A: studio shot + fit box
-B: on-bike photo
-C: fitment first
-D: photo grid
+B: gallery + thumbnails
+C: photo grid
 
 My take: a parts page should answer "will it fit?" before it asks for money.
 
-Which would you ship?
+Which would you ship? A, B or C?
 
 X-CAROUSEL (246 chars)
 

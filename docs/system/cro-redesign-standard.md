@@ -104,7 +104,7 @@ even if every audit finding was addressed.
 
 ## Homepage rebuilds (2026-10-11)
 
-Research the hero before building it and follow `docs/system/homepage-hero-patterns.md`: image first and product/range-forward, facts as labels on the image, a short centered stack (proof line, 2-line H1 that says what the brand sells, one-line sub), one full-width CTA, then category pills and press/trust. Never narrow a multi-category brand to one product; no long left-aligned text block on the mobile hero. Build 3-4 directions on real assets, board them, record the choice.
+Research the hero before building it and follow `docs/system/homepage-hero-patterns.md`: image first and product/range-forward, facts as labels on the image, a short centered stack (proof line, 2-line H1 that says what the brand sells, one-line sub), one full-width CTA, then category pills and press/trust. Never narrow a multi-category brand to one product; no long left-aligned text block on the mobile hero. Build 2-3 directions on real assets, board them, record the choice.
 
 ## Full page rule (2026-10-26, Ridwan)
 

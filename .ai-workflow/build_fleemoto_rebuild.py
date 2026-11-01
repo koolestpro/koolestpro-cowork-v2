@@ -10,7 +10,7 @@ warranty or shipping promises are shown because the store shows none.
 Logo: the live header is text only ("FleeMoto", Inter 600), carried over as-is (no logo file exists).
 
 Usage: python3 build_fleemoto_rebuild.py             -> full page (variant A)
-       python3 build_fleemoto_rebuild.py --variants  -> 4 first-screen variants in fleemoto/_variants/
+       python3 build_fleemoto_rebuild.py --variants  -> 3 first-screen variants in fleemoto/_variants/
 """
 import base64, json, pathlib, sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -181,10 +181,19 @@ def below():
 <script>(function(){{var b=document.getElementById('buy'),s=document.getElementById('sticky');if(!b||!s)return;
 function u(){{var r=b.getBoundingClientRect();s.classList.toggle('on',r.bottom<0);}}addEventListener('scroll',u,{{passive:true}});u();}})();</script>"""
 
+def hero_E():  # classic gallery PDP: main product shot + thumbnail strip of all 4 real photos
+    th = "".join(f'<div style="flex:1;height:58px;border-radius:9px;overflow:hidden;background:{bg};border:{bd};"><img src="{uri(src)}" style="width:100%;height:100%;object-fit:{fit};display:block;"></div>'
+                 for src, fit, bg, bd in [(A/'cut/pair.webp','contain','#f4f4f4','2px solid #0d0d0d'),(A/'cut/single.webp','contain','#f4f4f4','1px solid #e6e6e6'),
+                                          (A/'photo/wall.webp','cover','#111','1px solid #e6e6e6'),(A/'photo/sunset.webp','cover','#111','1px solid #e6e6e6')])
+    return f"""<div class="crumb">Home / Shop all / Wheels</div>
+<div style="margin:8px 16px 0;height:212px;border-radius:14px;background:#f4f4f4;display:flex;align-items:center;justify-content:center;"><img src="{uri(A/'cut/pair.webp')}" style="width:78%;height:88%;object-fit:contain;"></div>
+<div style="display:flex;gap:6px;padding:6px 16px 0;">{th}</div>
+{buyblock(sub=False)}"""
+
 def main():
     if "--variants" in sys.argv:
         VOUT.mkdir(parents=True, exist_ok=True)
-        for i, fn in enumerate([hero_A, hero_B, hero_C, hero_D], 1):
+        for i, fn in enumerate([hero_A, hero_E, hero_D], 1):  # 2026-11-01: B (on-bike photo) and C (fitment first) dropped, they did not read as product pages
             (VOUT / f"v{i}.html").write_text(head(f"FleeMoto PDP variant {i}") + chrome() + fn() + "</body></html>", encoding="utf-8")
             print("variant", i)
         return
