@@ -1,0 +1,42 @@
+[
+ {
+  "handle": "glossy-motocutz-style-front-plate",
+  "title": "Glossy Motocutz Style Front Plate",
+  "price": "19.99",
+  "img": "xs/glossy-motocutz-style-front-plate.webp",
+  "size": [
+   399,
+   400
+  ]
+ },
+ {
+  "handle": "fork-lock",
+  "title": "Fork lock",
+  "price": "18.99",
+  "img": "xs/fork-lock.webp",
+  "size": [
+   300,
+   400
+  ]
+ },
+ {
+  "handle": "battery-powered-surron-horn",
+  "title": "Battery Powered Surron Horn",
+  "price": "32.99",
+  "img": "xs/battery-powered-surron-horn.webp",
+  "size": [
+   400,
+   319
+  ]
+ },
+ {
+  "handle": "kyb-front-fork-stickers",
+  "title": "KYB Front Fork Stickers",
+  "price": "7.99",
+  "img": "xs/kyb-front-fork-stickers.webp",
+  "size": [
+   400,
+   300
+  ]
+ }
+]

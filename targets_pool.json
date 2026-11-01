@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.0.0",
     "description": "Ranked pool of Shopify/DTC and DTC/B2B ecommerce targets for weekly CRO/static-ad/template content production. See docs/koolestpro-content-operating-plan.md Steps 1-2.",
-    "updatedAt": "2026-10-26T07:58:15+00:00",
+    "updatedAt": "2026-11-01T08:36:50+00:00",
     "recordSchema": {
       "id": "string, unique, e.g. target-<brand-slug>-<timestamp>",
       "brand": "string",
@@ -466,6 +466,32 @@
       "notes": "Founder-led California olive oil brand, small team. Reviewed 2026-09-28: homepage.",
       "addedAt": "2026-09-28T10:01:08+00:00",
       "lastUsedAt": null
+    },
+    {
+      "id": "target-fleemoto-20261101",
+      "brand": "FleeMoto",
+      "url": "https://fleemoto.shop/products/17-14-chrome-super-moto-wheels-set-for-yozma-in-10-tuttio-valintinsu",
+      "category": "other",
+      "pageType": "Product Page",
+      "leadPotential": "High",
+      "visualPotential": "Medium",
+      "mobileIssueSummary": "PDP (mobile, 390x844, checked 2026-11-01): title at 626px, Add to cart at 895px and price at 903px, past the screen; the fit list sits ~200px under the buy buttons and the 2-week pre-order note is under them too. Description stops mid-sentence. No reviews shown.",
+      "isRealBrand": true,
+      "isClient": false,
+      "status": "Available",
+      "usedFor": [
+        {
+          "stream": "cro-fix",
+          "date": "2026-11-01",
+          "pipelineItemId": "cro-fix-fleemoto_supermoto-wheels-pdp-20261101",
+          "note": "Build queue pick (tier 2: emailed, no reply, problemWorth 3, buildPage Product Page). First cro-fix entry for this brand. Auto/moto parts rotates away from food (Fishwife 10-25), beauty (Topicals 10-18) and fitness (Bala 10-11). #1 finding: price 903px down and Add to cart 895px on a 844px screen; fit list ~200px under the buy buttons. Contactable store, outreach hook written. Concept work only, FleeMoto is not a client."
+        }
+      ],
+      "source": "outreach-directory-scrape",
+      "outreachLead": true,
+      "notes": "Small e-moto parts store (8 products, Horizon theme, text-only logo). Added 2026-11-01 from buildQueue (tier 2, contactable).",
+      "addedAt": "2026-11-01T08:36:50+00:00",
+      "lastUsedAt": "2026-11-01T08:36:50+00:00"
     }
   ]
 }

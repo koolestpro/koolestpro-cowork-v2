@@ -1,0 +1,36 @@
+{
+  "brand": "FleeMoto",
+  "slug": "fleemoto_supermoto-wheels-pdp",
+  "date": "2026-11-01",
+  "pipelineItemId": "cro-fix-fleemoto_supermoto-wheels-pdp-20261101",
+  "pageType": "Product Page (PDP)",
+  "url": "https://fleemoto.shop/products/17-14-chrome-super-moto-wheels-set-for-yozma-in-10-tuttio-valintinsu",
+  "images": {
+    "VARIANTS": "outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_variants-board.png",
+    "COVER": "outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide1.png",
+    "BA": "outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide2.png",
+    "ANNO": "outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_carousel_slide3.png",
+    "ANNO-GRAPHIC": "outputs/cro-fixes/fleemoto/koolestpro_fleemoto_supermoto-wheels-pdp_annotated.png"
+  },
+  "carouselHtml": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_carousel.html",
+  "annotationHtml": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_annotation.html",
+  "variantsBoardHtml": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_variants-board.html",
+  "heroVariants": "outputs/cro-fixes/fleemoto/_variants/ (CHOICE.md)",
+  "presentation": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_presentation/",
+  "rebuildHtml": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_rebuild.html",
+  "reviewPack": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_content.html",
+  "audit": "outputs/audits/fleemoto_supermoto-wheels-pdp_audit.md",
+  "facts": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_facts.json",
+  "brief": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_build-brief.md",
+  "captions": "outputs/cro-fixes/fleemoto/captions.txt",
+  "builders": [
+    ".ai-workflow/prep_fleemoto_assets.py",
+    ".ai-workflow/build_fleemoto_rebuild.py",
+    ".ai-workflow/build_fleemoto_phones.py",
+    ".ai-workflow/build_fleemoto_carousel.py",
+    ".ai-workflow/build_fleemoto_annotation.py",
+    ".ai-workflow/build_fleemoto_compare.py",
+    ".ai-workflow/finalize_fleemoto_cro.py"
+  ],
+  "exportedVia": "each page's own captureSlide()/captureSheet() (html2canvas, scale 2) driven by headless Playwright"
+}

@@ -1,0 +1,18 @@
+{
+  "brand": "FleeMoto", "domain": "fleemoto.shop", "pageType": "Product Page (PDP)",
+  "url": "https://fleemoto.shop/products/17-14-chrome-super-moto-wheels-set-for-yozma-in-10-tuttio-valintinsu",
+  "checkedAt": "2026-11-01",
+  "title": "17/14 chrome super moto wheels set for yozma in 10/tuttio/valintinsu",
+  "price": "$319.99",
+  "preorder": "pre-orders will ship 2 weeks after order",
+  "compatibility": ["Yozma in 10", "valintinsu em5", "tuttio"],
+  "descriptionAsShown": "These 17/14 inch chrome super moto",
+  "measuredAt390x844": {"h1Top": 626, "addToCartTop": 895, "priceTop": 903, "preorderTop": 1021, "compatibilityTop": 1093, "pageHeight": 2137},
+  "photos": ["IMG_8201.jpg bike on wall", "IMG_8202.jpg bike at dusk", "IMG_7899.jpg single wheel white bg", "IMG_7898.jpg wheel pair white bg"],
+  "payment": "Add to cart + Buy with Shop Pay + More payment options",
+  "reviews": "none shown",
+  "logo": "text only in header (Inter 600), no image file",
+  "youMayAlsoLike": [["Glossy Motocutz Style Front Plate", "$19.99"], ["Fork lock", "$18.99"], ["Battery Powered Surron Horn", "$32.99"], ["KYB Front Fork Stickers", "$7.99"]],
+  "homepageLine": "Premium parts for serious riders",
+  "newsletterLine": "Get exclusive deals and early access to new products."
+}

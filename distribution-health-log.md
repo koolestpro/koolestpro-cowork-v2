@@ -8,28 +8,6 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 
 ---
 
-## 2026-10-11 08:40 UTC (09:40 WAT) — health check (scheduled task run)
-
-**Sheet read:** live Sheets API, 205 rows (152 Posted, 32 Ready unposted, 21 Retired ignored). No Draft rows left.
-
-**Missed rows:** none. Nothing unposted is dated before today, so no webhook calls and no reschedules.
-
-**Collisions / violations:** none. No X or IG same-slot collisions, no LinkedIn same-day, no IG more than 1/day.
-
-**Step 1b, X char count:** 7 unposted Twitter captions checked, longest 266, 0 over 280, 0 new findings.
-**Step 1c, Instagram format:** 24 upcoming IG rows checked: 22 single mp4 Reels, 2 image carousels (3 and 4 URLs). 0 single-image, 0 empty, 0 over 10, 0 mixed. Nothing trimmed.
-**Step 1d:** caption_fit.py: 0 rows flagged.
-
-**Reschedule scenario 7111659:** isActive = false now (was reported active on 10-09). Not reactivated, because no reschedule was needed this run and the hook queue still holds stale 09-19 payloads that could replay onto the Sheet. Ridwan to inspect before the next reschedule is needed.
-
-**Make health (6565331):** healthy. Active, not paused, 0 errors. Executions every ~25 min at slot times through 2026-10-10 22:25 UTC, all status 1. Next run 2026-10-11 13:00 UTC. Side note: new scenario "Khutba Clips - Daily Facebook Post" (7875574) shows 13 executions and 13 errors since 10-10. Out of scope here, flagging only.
-
-**Spacing:** no reschedules, so space_queue.py was only dry-run. 0 brand-gap violations. Supply gap: 50 empty X slots.
-
-**Pacing (10-11 to 10-17):** 8 unposted rows = 1.1/day (10-11 IG; 10-12 none; 10-13 X+LI; 10-14 X+IG; 10-15 to 10-17 IG). About 13 more rows for 3/day. Zero X/LI posts on 10-11, 10-12, 10-15, 10-16, 10-17. X has 7 rows left (ends 10-29), LI has 1 (10-13). QA: 29 of 32 upcoming rows are Needs Review (91%), 3 are "not run through automated QA". Make ignores qa_status so they still fire.
-
-**Verdict:** Make healthy, no fixable gaps. Needs Ridwan: queue nearly empty for X/LI, reschedule scenario 7111659 inactive, 91% of backlog flagged Needs Review.
-
 ## 2026-10-17 09:45 UTC (10:45 WAT) — health check (scheduled task run)
 
 **MAKE UNHEALTHY:** main posting scenario 6565331 `isActive = false`. Executions list shows a manual "stop" by Ridwan on 2026-10-11 16:26 UTC; last execution 2026-10-11 16:25 UTC. Nothing has posted from the queue for ~6 days. Not reactivated by this run (a human stop, and the whole backlog is Needs Review). Reschedule scenario 7111659 also inactive (not reactivated, no reschedule done). Khutba Clips scenario 7875574 inactive and flagged invalid, out of scope.
@@ -42,6 +20,7 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 **Step 1d:** caption_fit.py run, see summary.
 **Spacing:** no reschedules, space_queue not run.
 **Pacing (10-17 to 10-23):** 7 rows = 1.0/day (IG 5, X 3 across window incl. ones listed). X ends 10-29, 0 LinkedIn rows left. All 26 upcoming rows are Needs Review / unreviewed QA.
+
 ## 2026-10-25 08:40 UTC (09:40 WAT) — health check (scheduled task run)
 
 **Sheet read:** live Sheets API, 259 rows (182 Posted, 55 Ready, 1 Draft, 21 Retired ignored). 54 upcoming unposted (31 IG, 19 X, 4 LI).
@@ -100,5 +79,24 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 **Pacing (10-31 to 11-06):** 19 rows = 2.7/day (10-31:1, 11-01:2, 11-02:4, 11-03:1, 11-04:5, 11-05:2, 11-06:4). About 2 more for 3/day. LinkedIn ends 11-04 (2 rows left), X ends 12-04. QA: 49 of 51 upcoming Needs Review (96%), 2 not run through QA.
 
 **Verdict:** Make healthy again. Needs Ridwan: 4 missed rows stuck in review, 8 upcoming single-image IG rows that won't post, IG 2/day on 6 dates, LinkedIn queue nearly empty (2 rows), 7111659 inactive, 96% of backlog Needs Review.
+
+---
+
+## 2026-11-01 ~08:40 UTC (09:40 WAT) — health check (scheduled task run)
+
+**Sheet read:** live Sheets API, 275 rows (199 Posted, 53 Ready, 1 Draft, 21 Retired ignored). 50 upcoming unposted (28 IG, 20 X, 2 LI).
+**Missed (4), all Needs Review, NOT rescheduled (same 4 as 10-31):** IG `tip-materialkitchen-first-screen-build-breakdown-20261009-20261019-ig-1200` (10-19); LI `tip-extra-costs-top-checkout-killer-20261009-20261102-li-0900` (Draft, 10-23); IG `cro-fix-fishwife_shop-all-collection-20261025-20261028-ig-1200` (10-28); IG `template-showcase-halos_lp-01-2026-08-23-20260901-ig-1200` (10-29). No webhook calls.
+**Collisions / violations (found, unfixable: every row Needs Review):** IG same-slot 11-04 17:00 (halos_ad ...0925 + halos_pp ...1117). IG >1/day on 11-02, 11-04, 11-05, 11-06, 11-12, 11-20. X: no same-slot collisions. LinkedIn same-day: none.
+**Step 1b:** 20 unposted Twitter captions checked, longest 277, 0 over 280.
+**Step 1c:** 5 upcoming IG rows are a single PDF, will never post as carousel/video (flag only): 11-09 tip-extra-costs, 11-16 tip-allbirds, 11-23 tip-caraway, 11-30 tip-v1ce, 12-14 tip-owala. The 10-31 entry also listed 11-02, 11-04 and 12-07 rows; this run they parse as multi-URL (`; `-separated slide images), so treated as carousels. 0 mixed or >10-URL carousels.
+**Step 1d:** caption_fit.py: 0 rows flagged.
+**Spacing:** no reschedules, so space_queue not run for real; dry run: 0 brand-gap violations, supply gap 85 empty X slots.
+
+**Reschedule scenario 7111659:** inactive, not reactivated (no reschedule needed).
+**Make 6565331:** healthy. Active, not paused, 0 errors, 181 executions total. 29 executions since 10-30 restart, all success, last 10-31 22:25 UTC. Next run 11-01 13:00 UTC. Khutba Clips 7875574 inactive, out of scope.
+
+**Pacing (11-01 to 11-07):** 20 rows = 2.9/day (11-01:2, 11-02:4, 11-03:1, 11-04:5, 11-05:2, 11-06:4, 11-07:2). About 1 more for 3/day. LinkedIn ends 11-04 (2 rows left), X ends 12-04. QA: 48 of 50 upcoming Needs Review (96%), 2 not run through QA.
+
+**Verdict:** Make healthy. Needs Ridwan: 4 missed rows stuck in review, 5 PDF-only IG rows that won't post, IG 2/day on 6 dates (1 same-slot), LinkedIn queue nearly empty (last post 11-04), 7111659 inactive, 96% of backlog Needs Review.
 
 ---

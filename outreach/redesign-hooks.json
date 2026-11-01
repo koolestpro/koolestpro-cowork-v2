@@ -13,6 +13,22 @@
     "compareImagePath": "project-relative png: live first screen vs redesign first screen, same 390 width, labelled",
     "compareFullPath": "project-relative png: full live mobile page vs full redesign, side by side"
   },
-  "hooks": [],
+  "hooks": [
+    {
+      "domain": "fleemoto.shop",
+      "brand": "FleeMoto",
+      "targetId": "target-fleemoto-20261101",
+      "pageType": "Product Page",
+      "problemPage": "https://fleemoto.shop/products/17-14-chrome-super-moto-wheels-set-for-yozma-in-10-tuttio-valintinsu",
+      "pagePath": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_rebuild.html",
+      "mobileStripPath": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_presentation/fleemoto-mobile-strip.png",
+      "builtBy": "cro-fix",
+      "date": "2026-11-01",
+      "status": "ready",
+      "compareImagePath": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_presentation/fleemoto-compare.png",
+      "compareFullPath": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_presentation/fleemoto-compare-full.png",
+      "emailAngle": "The price (903px) and Add to cart (895px) sit below a phone's first screen, and the list of bikes the set fits is under the buy buttons. The redesign puts price, fit and one Pre-order button on screen one."
+    }
+  ],
   "deliveryRule": "2026-10-26 recommendation: email 1 carries no link and no attachment (deliverability); it names the problem and asks if they want to see the redesign. Once they reply yes: attach compareImagePath inline (under ~1MB) and add a private, unlisted Cloudinary link to compareFullPath and the mobile strip. Never a public page URL."
 }

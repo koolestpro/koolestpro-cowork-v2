@@ -336,6 +336,26 @@
       "socialContentNote": "MOULT has no pre-written caption library. The weekly task writes captions itself, runs them through the humanizer skill, and stores them on the companion page, the pipeline record and moult-social-content.json/.md.",
       "usedForTikTok": false,
       "usedForTikTokDate": null
+    },
+    {
+      "kind": "real-redesign",
+      "isRealBrand": true,
+      "isClient": false,
+      "targetId": "target-fleemoto-20261101",
+      "liveUrl": "https://fleemoto.shop/products/17-14-chrome-super-moto-wheels-set-for-yozma-in-10-tuttio-valintinsu",
+      "brand": "FleeMoto",
+      "brandSlug": "fleemoto",
+      "pageType": "Product Page",
+      "showcaseSlug": "fleemoto_supermoto-wheels-pdp",
+      "sourcePath": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_rebuild.html",
+      "presentationDir": "outputs/cro-fixes/fleemoto_supermoto-wheels-pdp_presentation/",
+      "active": true,
+      "retired": false,
+      "usedForTemplateShowcase": false,
+      "sortOrder": 91,
+      "builtBy": "cro-fix",
+      "date": "2026-11-01",
+      "notes": "Sunday CRO Fix 2026-11-01. Full PDP redesign of fleemoto.shop's 17/14 chrome super moto wheel set. Every fact from the live page; no reviews shown (store has none). Header logo is text-only on the live site, carried over as text. Showcase caption must say 'Concept redesign of FleeMoto'."
     }
   ],
   "activeBrand": "HALOS and MOULT (active brands as of 2026-10-05)",
