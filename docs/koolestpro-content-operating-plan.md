@@ -398,6 +398,17 @@ Google Sheets and Make.com should act as the publishing and automation layer, no
 
 Tracks what has actually been built against this plan, so a future v2 pass knows exactly what exists and doesn't re-litigate settled decisions.
 
+### 2026-11-02: Target pool refresh (cro-fix at 0 fresh)
+
+- ISO week 45 (odd), run anyway under the 0-fresh exception. Fresh counts before (Available, no usedFor for the stream, contactable): cro-fix 0, template-showcase 1 (FleeMoto). After: cro-fix 5, template-showcase 6.
+- 5 added, all from `contactable_stores.json` buildQueue tier 2 (3 also in the directory CSVs: myip.ms, merchantgenius, eachspy; 2 only via the Sheet), each checked live at 390x844:
+  - VISIONALED (other, PDP): discount quiz popup and cookie bar cover the page on load; in-page add to cart at 2503px.
+  - NO BACK GAP (fashion-apparel, PDP): tall header pushes title to 939px; 16 size buttons push add to cart to 1646px.
+  - ARLO THOMPSON (fashion-apparel, PDP): urgency counters, discount box and a T&C checkbox stacked before add to cart at 1363px.
+  - MEILENIS (home-kitchen, PDP): big logo header; add to cart at 1031px, below the fold.
+  - WAER (beauty-skincare, Homepage Section): first product carousel has no prices or add buttons; first price at 4475px.
+- Checked and skipped: cedarique.com (store unavailable, 423), boldwellness.shop (only a tiny logo, a ten-minute fix), rollnjack.com and myhdiet.com (buy button close to the fold or a sticky bar already covers it), kurvoraatelier.com (only a leftover Halloween banner), originallylovely.com (nothing clear).
+
 ### 2026-10-26 (night): Mockup offer, build queue, page matching, one branch
 
 - Email 1 keeps the one-problem format and ends with a mockup offer; a "yes" sets Leads `mockup_requested`.
