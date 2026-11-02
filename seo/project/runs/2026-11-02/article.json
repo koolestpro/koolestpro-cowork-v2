@@ -1,0 +1,47 @@
+{
+  "slug": "gempages-vs-replo",
+  "title": "GemPages vs Replo: Which Fits Your Shopify Store?",
+  "h1": "GemPages vs Replo: which should you use for Shopify pages?",
+  "description": "GemPages vs Replo for Shopify landing pages: where each fits, how pricing differs, and when to hand the build to a Replo developer.",
+  "targetQuestion": "Is GemPages or Replo better for Shopify landing pages?",
+  "updated": "2026-11-02",
+  "readingMinutes": 4,
+  "pricesCheckedOn": "November 2026",
+  "blocks": [
+    {"type": "p", "text": "Choose GemPages if you will edit pages yourself and want a low monthly cost. Choose Replo if you run paid traffic and want pages built around one offer, usually with a designer or developer doing the build. I build in Replo for clients, so I will say plainly where my hands-on experience stops: I have not shipped client pages in GemPages, and the GemPages points below come from its public pricing and positioning."},
+    {"type": "h2", "text": "What is the main difference between GemPages and Replo?"},
+    {"type": "p", "text": "GemPages is pitched at store owners who want a no-code drag-and-drop editor at a low price. Replo is pitched at teams that want more design control for campaign pages. The tools overlap, but the buyer is different."},
+    {"type": "table", "head": ["Question", "GemPages", "Replo"], "rows": [
+      ["Who it is aimed at", "Store owners editing their own pages", "Teams and designers building campaign pages"],
+      ["Entry price (approximate)", "Free tier, paid plans from the mid-$20s a month", "Paid plans from roughly $99 a month"],
+      ["Best fit", "Simple pages and a tight budget", "Paid traffic pages with a specific offer"],
+      ["Who usually builds", "You", "A designer or developer, or you with practice"]
+    ]},
+    {"type": "p", "text": "Prices are approximate bands as of November 2026 and vendors change plans often. Check the GemPages and Replo pricing pages before you decide."},
+    {"type": "h2", "text": "Which is cheaper, GemPages or Replo?"},
+    {"type": "p", "text": "GemPages is cheaper on the monthly plan. Replo costs more per month, so it only pays off if the pages you build with it convert better or ship faster than what you have now."},
+    {"type": "p", "text": "The subscription is often the smaller cost. A page that sends Facebook or Google traffic to the wrong message costs more in ad spend than the difference between the two plans."},
+    {"type": "h2", "text": "When is GemPages the better choice?"},
+    {"type": "ul", "items": [
+      "You are editing pages yourself and want to keep the monthly cost low",
+      "You need a few simple pages, not a library of campaign pages",
+      "You are not yet running enough paid traffic for page tests to matter"
+    ]},
+    {"type": "h2", "text": "When is Replo the better choice?"},
+    {"type": "p", "text": "When you run paid traffic and want each campaign to have its own page, with the headline and offer matching the ad. That is the work I do in Replo, and it is where the higher plan price is easiest to justify."},
+    {"type": "p", "text": "If you are comparing Replo with other builders, I wrote up how it differs from PageFly, Shogun and Instant in separate comparisons."},
+    {"type": "h2", "text": "Does the builder matter more than the page?"},
+    {"type": "p", "text": "Usually not. A clear hero, proof near the button and a fast mobile page matter more than which editor you used. A weak page built in either tool stays weak."},
+    {"type": "p", "text": "If you are unsure whether the page is the problem, a conversion audit ranks what to fix first. It is $150 to $250."},
+    {"type": "callout", "title": "Next steps", "text": "Want a page built in Replo around your best ad? See the single page build at /services/page-build, from $600. Not sure the page is the problem? The conversion audit is at /services/cro-audit. Weighing a freelancer? Read /resources/hire-a-replo-developer."},
+    {"type": "h2", "text": "What should you do this week?"},
+    {"type": "p", "text": "Write down how many campaign pages you need over the next three months. One or two simple pages points to the cheaper tool. A page per campaign points to Replo, or to someone who builds in it for you."}
+  ],
+  "faq": [
+    {"q": "Is GemPages or Replo better for Shopify?", "a": "GemPages suits owners editing simple pages on a small budget. Replo suits teams building campaign pages for paid traffic."},
+    {"q": "Is Replo more expensive than GemPages?", "a": "Yes. Replo's paid plans start around $99 a month, while GemPages plans start in the mid-$20s. Check both pricing pages for current figures."},
+    {"q": "Can I hire someone to build my pages in Replo?", "a": "Yes. My single page build is $600 to $900."},
+    {"q": "Does the page builder affect conversion rate?", "a": "Less than the page itself. Message match, proof near the button and mobile speed matter more than the editor."}
+  ],
+  "cta": {"text": "Get a Replo page built around your best-performing ad, from $600.", "href": "/services/page-build", "label": "See the single page build"}
+}

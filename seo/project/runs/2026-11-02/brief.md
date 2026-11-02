@@ -1,0 +1,2 @@
+# Brief: gempages vs replo
+Intent: comparison, buyer deciding between a cheap editor and a premium builder. Format: answer-first H2 questions, table, FAQ (matches existing resources). Money page /services/page-build via callout and CTA (inline links unsupported). Honesty constraint: Ridwan has no stated GemPages client experience, so the article says so and uses only public pricing bands, dated. No lift claims. Related links in callout: /services/cro-audit, /resources/hire-a-replo-developer.
