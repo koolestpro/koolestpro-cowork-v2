@@ -464,10 +464,10 @@ function sendDue(ignoreHours) {
         }
       }
 
-      const subject = step === 1 ? String(row.subject) : 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
+      const subject = step === 1 ? withDomainSubject_(String(row.subject), lead) : 'Re: ' + String(lead.subject).replace(/^Re:\s*/i, '');
       const sig = signatureFor_(lead, S, step > 1);
       const foot = complianceFooter_(S);
-      const body = String(row.body).replace(/\{\{greeting\}\}/g, localGreeting_(lead)).trim() + (sig ? '\n\n' + sig : '') + (foot ? '\n\n' + foot : '');
+      const body = withDomainBody_(String(row.body).replace(/\{\{greeting\}\}/g, localGreeting_(lead)).trim(), lead, step) + (sig ? '\n\n' + sig : '') + (foot ? '\n\n' + foot : '');
       const to = isTrue_(S.TEST_MODE) ? S.ALERT_EMAIL : String(lead.email).trim();
       const finalSubject = isTrue_(S.TEST_MODE) ? '[TEST to ' + lead.email + '] ' + subject : subject;
 
@@ -597,6 +597,7 @@ function dailyReport_() {
   const pr = PropertiesService.getScriptProperties();
   const prepMin = Math.round(Number(pr.getProperty('PREP_MS') || 0) / 60000);
   lines.push('', 'HEALTH', '- Last send run: ' + (pr.getProperty('SEND_LAST') || 'no record yet'), '- Last send error: ' + (pr.getProperty('SEND_ERR') || 'none'),
+    '- Email verifier: ' + (pr.getProperty('VERIFIER_ERR') ? 'FAILING since ' + pr.getProperty('VERIFIER_ERR') + '. New leads cannot get a first email until the MyEmailVerifier key or credits are fixed (Outreach > Test email verifier key).' : 'ok'),
     '- Lead preparation today: ' + prepMin + ' of ' + Number(S.PREP_DAILY_MINUTES || 35) + ' minutes allowed',
     '- Automation triggers installed: ' + (ScriptApp.getProjectTriggers().map(t => t.getHandlerFunction()).sort().join(', ') || 'NONE'));
   const wd = Utilities.formatDate(now, tz_(), 'u');
@@ -685,6 +686,28 @@ function aiSystem_(S, lead) {
   const ex = String(S.VOICE_EXAMPLES || '').trim();
   return BRIEF_.core + '\n\nREGIONAL VOICE FOR THIS LEAD:\n' + BRIEF_.regions[key] + '\n\n' + AI_TASK_ +
     (ex ? '\n\nReal replies written by Ridwan. Match their voice, length and rhythm closely:\n' + ex : '');
+}
+
+/**
+ * Every email names the store it is about (Ridwan, 2026-11-06): owners often run several stores and many leads
+ * read from Gmail or Outlook, so the address alone does not say which site we mean. The step 1 subject always
+ * carries the domain (follow-ups reuse it as "Re: ..."), and the body names it when the subject of the thread does not
+ * (leads emailed before this rule). This runs
+ * at send time, so sequences written before the rule are covered too. Plain domain only, never a URL.
+ */
+function storeDomain_(lead) {
+  return String(lead.website || '').trim() ? cleanDomain_(lead.website) : '';
+}
+function withDomainSubject_(subject, lead) {
+  const d = storeDomain_(lead);
+  if (!d || lc_(subject).indexOf(d) !== -1) return subject;
+  return (String(subject).trim() + ' (' + d + ')').trim();
+}
+function withDomainBody_(body, lead, step) {
+  const d = storeDomain_(lead);
+  if (!d || lc_(body).indexOf(d) !== -1) return body;
+  if (step > 1 && lc_(lead.subject).indexOf(d) !== -1) return body;   // the thread subject already names it
+  return body + '\n\n(This is about ' + d + '.)';
 }
 
 /** "Good morning/afternoon/evening" for the lead's own clock (used for Nigerian and West African leads). */

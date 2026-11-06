@@ -232,3 +232,18 @@ Not handled: CS desks that reply from a ticket system with a different domain AN
 ## No sends 22 to 24 Oct, no reports since 21 Oct (2026-10-25)
 
 Gmail shows nothing from koolestpro@gmail.com after 2026-10-21 18:45 UTC: no 6pm report on the 22nd, 23rd or 24th. The report is a separate trigger from the send job, so ALL automation was dead, not just sending. Before that, the 20th and 21st showed `0 sent` with 25 approved leads, so sending was already blocked while triggers still ran. Causes cannot be seen from the cloud (Sheet owned by koolestpro@gmail.com). Added: `sendBlockers_` records per run how many approved leads are blocked and why (outside hours, no unsent step row, email_status, claimed by another Gmail, ...) in `SEND_LAST`, and a failing send now records `SEND_ERR` instead of aborting the run; both show in the 6pm report HEALTH block. To read the Sheet from the cloud: share it (Viewer) with sirridwan721@gmail.com.
+
+## Few new emails, store link in every email, myip.ms small stores (2026-11-06, Ridwan)
+
+**Why almost only follow-ups went out (checked in the Sheet and the 6pm reports, 3 to 6 Nov):**
+1. **Email verifier refusing every call.** About 95 leads sit at `verify failed: HTTP 403` (MyEmailVerifier key rejected or credits gone). Unverified leads are never sent, so no new first emails could go out. Fix (Ridwan): Outreach > Test email verifier key, then renew the key/credits in MyEmailVerifier and update the Script property `MYEMAILVERIFIER_API_KEY`. Code now stops calling after the first 401/402/403 in a run (no wasted retries) and the 6pm report HEALTH block shows `Email verifier: FAILING since ...`.
+2. **Directory scraper dead since 2026-10-10.** Playwright's browser was missing after an update; the catch-up job failed 924 times. Fixed on the Mac 2026-11-06 (`playwright install chromium`); a dry run found 600 new stores (295 with an email).
+3. **23 written first emails are waiting for the approval tick** (`AUTO_APPROVE` is FALSE).
+
+**Every email names the store (Ridwan):** owners run several stores and many leads read on Gmail or Outlook. At send time (`withDomainSubject_`, `withDomainBody_` in Code.gs) the step 1 subject gets the domain in brackets when it lacks it (follow-ups reuse it as `Re:`), and a body without the domain gets `(This is about domain.com.)`; leads already mid-sequence get that line on follow-ups because their subject cannot change. The sequence prompts now ask the AI to name the domain naturally in email 1. Plain domain only, never a URL. Paste `Code.gs` and `Pipeline.gs` into Apps Script (main account and every secondary sender copy).
+
+**myip.ms:** it shows a "click to prove you're not a robot" page to any automated browser, which the old code did not recognise, so it returned almost nothing. The scraper never clicks it. Run once in Mac Terminal and click it yourself in the window that opens:
+
+    outreach/scrapers/.venv/bin/python outreach/scrapers/directory_scrape.py --sources myipms --headed --myipms-wait 300 --days 40 --myipms-max-visits 33
+
+The browser profile is now persistent (`scrapers/state/browser-profile`), so the passed check carries over to later runs while the cookie lasts. `--myipms-max-visits` is visitors a DAY (33 ~ 1,000/month, 17 ~ 500/month); while a whole page is above it, the run jumps deeper (x1.4) and saves its place. The first run logs the table header: confirm a visitors column was found (`visitors/day on page ...`); if the log says `no visitor count`, the filter cannot work yet and the parser needs that header.

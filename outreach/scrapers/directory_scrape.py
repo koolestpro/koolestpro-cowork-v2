@@ -10,7 +10,8 @@ Sites handled (verified 2026-10-04):
   merchantgenius  /shop/date/YYYY-MM-DD, ~500 new stores a day, some with email and phone
   zik             list of new Shopify stores, renders with JavaScript (first page only)
   eachspy         country pages (top and newly added stores, ~40 domains each)
-  myipms          Shopify IP-owner page on myip.ms (sorted by world rank, so mostly big brands; those are dropped)
+  myipms          Shopify IP-owner page on myip.ms, filtered to small stores by visitors a day (--myipms-max-visits).
+                  It shows a human-verification button: run with --headed --myipms-wait 300 and click it yourself.
 Sites NOT handled, on purpose:
   cro.media        blocks even a normal browser (Cloudflare)
   builtwith        shows a CAPTCHA. We never bypass those. Export by hand if you want it.
@@ -111,7 +112,9 @@ def rec(domain, source, **kw):
 
 MG_SCRAPED = set()
 MY_LAST = [0]
-OPTS = {"mg_min_age": 45, "zik_min": 1000, "zik_max": 25000, "myipms_url": "", "myipms_start": 400}
+OPTS = {"mg_min_age": 45, "zik_min": 1000, "zik_max": 25000, "myipms_url": "", "myipms_start": 400,
+        "myipms_max_visits": 33, "myipms_wait": 0}
+VERIFY_RE = re.compile(r"captcha|verify you are human|human verification|not a robot|robot", re.I)
 
 
 def money(txt):
@@ -236,33 +239,92 @@ def scrape_eachspy(page, days, log):
     return rows
 
 
+def visits_per_day(cells, vcol):
+    """Visitors a day for one myip.ms row: the column whose header says 'visit' (a bare number counts there),
+    else any 'N visitors' text anywhere in the row. None when the row has no count."""
+    def num(x):
+        return int(re.sub(r"[^\d]", "", x)) if re.search(r"\d", x) else None
+    if vcol is not None and vcol < len(cells):
+        m = re.search(r"\d{1,3}(?:,\d{3})+|\d+", cells[vcol])
+        if m:
+            return num(m.group(0))
+    m = re.search(r"(?<![\d.,])(\d{1,3}(?:,\d{3})+|\d+)\s*(?:visitors|visits)", " ".join(cells), re.I)
+    return num(m.group(1)) if m else None
+
+
+def wait_for_human(page, log):
+    """myip.ms shows a 'click to prove you're not a robot' page. We never click it or work around it.
+    With --myipms-wait N and --headed, YOU click it in the window; we wait up to N seconds for the list to appear."""
+    if not VERIFY_RE.search(page.inner_text("body")[:3000]):
+        return True
+    if not OPTS["myipms_wait"]:
+        log("myipms: human verification shown. Stopping. Run once with --headed --myipms-wait 300 and click the button yourself.")
+        return False
+    log(f"myipms: human verification shown. Click the button in the browser window (waiting up to {OPTS['myipms_wait']}s)...")
+    t0 = time.time()
+    while time.time() - t0 < OPTS["myipms_wait"]:
+        page.wait_for_timeout(3000)
+        try:
+            if not VERIFY_RE.search(page.inner_text("body")[:3000]):
+                log("myipms: verification passed by you, continuing.")
+                return True
+        except Exception:
+            pass
+    log("myipms: nobody clicked the verification in time. Stopping.")
+    return False
+
+
 def scrape_myipms(page, days, log):
-    """Shopify, Inc IP-owner list, browsed by page number. Pages are sorted by popularity, so page 1 is huge brands.
-    Start deep (--myipms-start 400 is about 1,000 visitors a day) and walk `days` pages from there."""
+    """Shopify, Inc IP-owner list on myip.ms, browsed by page number, sorted by popularity (page 1 = huge brands).
+    Keeps only stores at or under --myipms-max-visits visitors a DAY (default 33, about 1,000 a month; 17 is about 500).
+    While every store on a page is still too big, it jumps deeper (x1.4) instead of walking page by page, and saves
+    where it got to in state/myipms_next.json so the next run starts there."""
     base = OPTS["myipms_url"] or "https://myip.ms/browse/sites/{n}/ownerID/376714/ownerIDii/376714"
-    start, rows = max(OPTS["myipms_start"], load_json(STATE / "myipms_next.json", 0) or 0), []
-    for pg in range(start, start + max(1, days)):
+    pg, rows, cap = max(OPTS["myipms_start"], load_json(STATE / "myipms_next.json", 0) or 0), [], OPTS["myipms_max_visits"]
+    walked = 0
+    while walked < max(1, days):
         url = base.format(n=pg) if "{n}" in base else re.sub(r"/sites/\d+/", f"/sites/{pg}/", base)
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_timeout(2500)
-        if re.search(r"captcha|verify you are human|robot", page.inner_text("body")[:2000], re.I):
-            log("myipms: CAPTCHA shown. Stopping (not bypassed).")
+        if not wait_for_human(page, log):
             break
         table = page.eval_on_selector_all(
-            "table tr", "els => els.map(r => [...r.querySelectorAll('td')].map(c => c.innerText.trim()))")
-        n = 0
+            "table tr", "els => els.map(r => [...r.querySelectorAll('th,td')].map(c => c.innerText.trim()))")
+        header = next((r for r in table if any(re.search(r"web ?site", c, re.I) for c in r) and len(r) > 3), [])
+        vcol = next((i for i, c in enumerate(header) if re.search(r"visit", c, re.I)), None)
+        n = too_big = no_count = 0
+        seen_v = []
         for cells in table:
+            if cells is header:
+                continue
             m = next((DOMAIN_RE.search(c) for c in cells[:4] if DOMAIN_RE.search(c)), None)
             if not m:
                 continue
             d = clean(m.group(0))
             if not is_store_domain(d) or any(r["domain"] == d for r in rows):
                 continue
+            v = visits_per_day(cells, vcol)
+            if v is None:
+                no_count += 1
+            else:
+                seen_v.append(v)
+                if v > cap:
+                    too_big += 1
+                    continue
             joined = " | ".join(c.replace("\n", " ") for c in cells if c)[:300]
-            rows.append(rec(m.group(0), "myip.ms shopify ips", signals=f"myip.ms page {pg}", data=joined))
+            rows.append(rec(m.group(0), "myip.ms shopify ips",
+                            signals=f"myip.ms page {pg}" + (f", about {v} visitors a day (~{v * 30}/month)" if v is not None else ""),
+                            data=joined))
             n += 1
-        log(f"myipms page {pg}: {n} sites")
-        MY_LAST[0] = pg + 1
+        log(f"myipms page {pg}: kept {n}, too big {too_big}, no visitor count {no_count}"
+            + (f", visitors/day on page {min(seen_v)}-{max(seen_v)}" if seen_v else "")
+            + (f", header: {header}" if walked == 0 else ""))
+        walked += 1
+        if seen_v and min(seen_v) > cap:          # whole page still above the cap: jump deeper
+            pg = int(pg * 1.4) + 1
+        else:
+            pg += 1
+        MY_LAST[0] = pg
         pause(3, 6)
     return rows
 
@@ -300,6 +362,8 @@ def main():
     ap.add_argument("--zik-max", type=float, default=25000, help="zik: max est. revenue ($)")
     ap.add_argument("--myipms-url", default="", help="myip.ms: start from this list page instead of page 1")
     ap.add_argument("--myipms-start", type=int, default=400, help="myip.ms: first list page (50 sites per page)")
+    ap.add_argument("--myipms-max-visits", type=int, default=33, help="myip.ms: keep stores with at most this many visitors a DAY (33 ~ 1,000/month, 17 ~ 500/month)")
+    ap.add_argument("--myipms-wait", type=int, default=0, help="myip.ms: with --headed, wait this many seconds for YOU to click its human-verification button (never clicked by the script)")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--headed", action="store_true")
     args = ap.parse_args()
@@ -312,16 +376,19 @@ def main():
     except ImportError:
         raise SystemExit("Playwright missing. Run outreach/scrapers/install_mac.sh first.")
 
-    OPTS.update(mg_min_age=args.mg_min_age, zik_min=args.zik_min, zik_max=args.zik_max, myipms_url=args.myipms_url, myipms_start=args.myipms_start)
+    OPTS.update(mg_min_age=args.mg_min_age, zik_min=args.zik_min, zik_max=args.zik_max, myipms_url=args.myipms_url, myipms_start=args.myipms_start,
+                myipms_max_visits=args.myipms_max_visits, myipms_wait=args.myipms_wait)
     env = load_env()
     seen = set(load_json(STATE / "seen_domains.json", []))
     seen_src = load_json(STATE / "seen_sources.json", {})   # domain -> sources that found it
     taken = ledger_domains()
     found = []
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=not args.headed)
-        ctx = browser.new_context(viewport={"width": 1366, "height": 900}, locale="en-GB")
-        page = ctx.new_page()
+        # Persistent profile: a verification YOU passed in a headed run keeps its cookie for later runs.
+        ctx = pw.chromium.launch_persistent_context(str(STATE / "browser-profile"), headless=not args.headed,
+                                                    viewport={"width": 1366, "height": 900}, locale="en-GB")
+        browser = ctx
+        page = ctx.pages[0] if ctx.pages else ctx.new_page()
         for name in [s.strip() for s in args.sources.split(",") if s.strip()]:
             fn = SOURCES.get(name)
             if not fn:

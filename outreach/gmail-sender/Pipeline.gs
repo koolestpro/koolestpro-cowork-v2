@@ -288,15 +288,24 @@ function rescueEmails_(S, stats, timeLeft) {
 function verifyEmails_(S, stats, timeLeft) {
   const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
   const leads = read_('Leads');
+  let verifierDown = '';   // set on the first 401/402/403: the rest of this run skips the calls
   candidates_(leads, l => String(l.email).trim() && ['', 'unverified'].indexOf(lc_(l.email_status)) !== -1, 20).forEach(lead => {
-    if (!timeLeft()) return;
+    if (!timeLeft() || verifierDown) return;
     const email = String(lead.email).trim();
     if (!emailOk_(email)) { set_(leads, lead, 'email_status', 'invalid'); return; }   // the rescue step then looks for a real address
     if (!key) { set_(leads, lead, 'email_status', 'unverified'); note_(leads, lead, 'Script property MYEMAILVERIFIER_API_KEY not found (Apps Script > Project Settings > Script properties: name = MYEMAILVERIFIER_API_KEY, value = your key). Cannot verify.', false); return; }
     try {
       const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key),
         { muteHttpExceptions: true });
-      if (res.getResponseCode() !== 200) throw new Error('HTTP ' + res.getResponseCode());
+      const code = res.getResponseCode();
+      if (code === 401 || code === 402 || code === 403) {   // key rejected or credits used up: an account problem, not this lead's (2026-11-06)
+        verifierDown = 'HTTP ' + code + ' ' + String(res.getContentText()).slice(0, 160);
+        PropertiesService.getScriptProperties().setProperty('VERIFIER_ERR', Utilities.formatDate(new Date(), tz_(), 'EEE d MMM HH:mm') + ' ' + verifierDown);
+        set_(leads, lead, 'prep_note', 'waiting for the email verifier (' + verifierDown.slice(0, 60) + '): fix the MyEmailVerifier key or credits, then it retries by itself');
+        return;
+      }
+      if (code !== 200) throw new Error('HTTP ' + code);
+      PropertiesService.getScriptProperties().deleteProperty('VERIFIER_ERR');
       const j = JSON.parse(res.getContentText());
       const st = lc_(j.Status || j.status || '');
       // valid and invalid are certain. Catch-all domains accept every address, so the mailbox can't be proven. Anything else (unknown, grey-listed, timeout) is risky.
@@ -473,6 +482,7 @@ const SEQ_TASK_ = [
   'Greeting: use the contact name if given ("Hi Amina,"). If no name, start with "Hi," and the observation. For a Nigerian or African lead, email 1 must begin with exactly {{greeting}} followed by the name, e.g. "{{greeting}} Amina." and steps 2 to 5 begin "Hi Amina,". For everyone else, no greeting phrase.',
   'If Track is Build (the business has no website): the observation comes from the notes (what they sell and how, for example orders by DM or on a marketplace); pitch a simple online store; email 1 offers a free ad creative made from their own product photos, nothing owed. Do not offer a free website in the sequence: that comes only if they reply.',
   'PLATFORM and BUSINESS MODEL change the pitch. Own-brand: pitch conversion, trust and the brand story. Dropship-likely: pitch only product-page conversion and trust (their money comes from ads sending traffic to a page); do not assume they make the product, do not pitch a brand-building retainer. Print-on-demand: pitch product pages and brand polish. Reseller (many brands): pitch catalogue navigation, collection filters and search. Unknown: keep it generic. If the platform is not Shopify, Ridwan works mainly in Shopify: offer a CRO review of the current site, or a move to Shopify, and never claim skills on that platform. Never say you detected their business model; just fit the pitch to it.',
+  'NAME THE STORE (2026-11-06, Ridwan): many owners run more than one store and many leads read from a Gmail or Outlook address, so email 1 must name the store by its domain exactly as written in the LEAD line (for example "I was on glowbox.com yesterday"), in plain text, early in the body. Any follow-up that brings in THE PROBLEM, SECOND PROBLEM or a page again names the domain once too. Plain domain only: never https://, www. or a path.',
   'Subject for step 1: short, lower case, specific, no clickbait, no brand-name-only.',
   'Output JSON only: {"basis":"one line: which profile facts the email-1 observation rests on","emails":[{"step":1,"subject":"...","body":"..."},{"step":2,"body":"..."},{"step":3,"body":"..."},{"step":4,"body":"..."},{"step":5,"body":"..."}]}',
 ].join('\n');
@@ -484,6 +494,7 @@ const SEQ_PARTNER_TASK_ = [
   'Step 3: the founding partner offer: the first few agencies get partner rates locked for 12 months and the first small task as a paid pilot at half the partner rate, so there is almost no risk. Rates are shared on request, not in the email.',
   'Step 4: honest proof: Ridwan builds Shopify stores for real DTC brands (name one real project from the brief, as direct client work, never as white-label). Say plainly that the partner programme is new. Offer to scope one small task.',
   'Step 5: a warm, clean close that leaves the door open.',
+  'NAME THE STORE (2026-11-06, Ridwan): many owners run more than one store and many leads read from a Gmail or Outlook address, so email 1 must name the store by its domain exactly as written in the LEAD line (for example "I was on glowbox.com yesterday"), in plain text, early in the body. Any follow-up that brings in their work or a page again names the domain once too. Plain domain only: never https://, www. or a path.',
   'Every email under 100 words, plain text, no links, no signature, no closing way-out line (the footer already carries the opt-out): end on the question. Steps 2 to 5 read as replies in the same thread: no subject. Greeting: contact name if given ("Hi Sam,"), else "Hi,". For a Nigerian or African lead, email 1 begins with exactly {{greeting}} then the name; steps 2 to 5 begin "Hi Name,". Subject for step 1: short, lower case, specific ("overflow shopify builds for [agency]"), no clickbait.',
   'Output JSON only: {"basis":"one line: which profile facts the email-1 observation rests on","emails":[{"step":1,"subject":"...","body":"..."},{"step":2,"body":"..."},{"step":3,"body":"..."},{"step":4,"body":"..."},{"step":5,"body":"..."}]}',
 ].join('\n');
@@ -621,6 +632,7 @@ function alsoOn_(rows, lead) {
 const FOLLOWUP_TASK_ = [
   'TASK: email 1 (below) was already sent to this lead. Write the REMAINING follow-ups only, as replies in the same thread: no subject.',
   'Follow-ups NEVER make a new claim about their site. The only observations allowed are what email 1 already said and SECOND PROBLEM if given. Otherwise each follow-up adds something about the offer: how Ridwan would do it, one real proof line from the brief, a smaller first step, a lighter ask. Never write "one more thing I noticed", "just checking in" or "following up". The last one is a warm, clean close.',
+  'Any follow-up that brings in THE PROBLEM, SECOND PROBLEM or a page names the store domain once, plain text (for example glowbox.com), never https://, www. or a path.',
   'Every email under 90 words, plain text, no links, no signature. No closing way-out line (the footer already carries the opt-out): end on the question. Never mention prices, currencies, languages or page speed unless the lead data has a [SPEED] line. Greeting: the contact name if given ("Hi Amina,"), else "Hi,".',
   'Output JSON only: {"emails":[{"step":N,"body":"..."}, ...]} with exactly the steps asked for.',
 ].join('\n');
