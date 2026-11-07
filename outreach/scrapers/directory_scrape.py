@@ -267,7 +267,7 @@ def wait_for_human(page, log):
         try:
             if not VERIFY_RE.search(page.inner_text("body")[:3000]):
                 log("myipms: verification passed by you, continuing.")
-                return True
+                return "clicked"
         except Exception:
             pass
     log("myipms: nobody clicked the verification in time. Stopping.")
@@ -286,18 +286,31 @@ def scrape_myipms(page, days, log):
         url = base.format(n=pg) if "{n}" in base else re.sub(r"/sites/\d+/", f"/sites/{pg}/", base)
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_timeout(2500)
-        if not wait_for_human(page, log):
+        ok = wait_for_human(page, log)
+        if not ok:
             break
-        # Only rows of the innermost tables: the page wraps everything in an outer table whose single huge cell
-        # also contains "Web Site" and "Visitors", which made the old code read the row number as visitors.
+        if ok == "clicked":                        # the list loads on a fresh request after the check
+            page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            page.wait_for_timeout(3500)
+            if not wait_for_human(page, log):
+                break
+        try:
+            page.wait_for_function("() => [...document.querySelectorAll('tr')].some(r => /\\b\\d+\\b/.test((r.cells[0]||{}).innerText||'') && /[a-z0-9-]+\\.[a-z]{2,}/i.test(r.innerText))", timeout=10000)
+        except Exception:
+            pass
+        # Innermost rows only: the page wraps everything in an outer table whose one big cell also says
+        # "Web Site" and "Visitors" (that made the first version read the row number as visitors).
         table = page.eval_on_selector_all(
             "table tr", "els => els.filter(r => !r.querySelector('table')).map(r => [...r.querySelectorAll('th,td')].map(c => c.innerText.trim()))")
-        header = next((r for r in table if len(r) > 3 and all(len(c) < 60 for c in r)
-                       and any(re.fullmatch(r"web ?site", c, re.I) for c in r)), [])
+        site_rows = [r for r in table if len(r) >= 3 and re.fullmatch(r"[\d,]+", r[0] or "")
+                     and any(DOMAIN_RE.fullmatch(clean(c.split()[0])) for c in r[1:3] if c.split())]
+        width = max(set(len(r) for r in site_rows), key=[len(r) for r in site_rows].count) if site_rows else 0
+        header = next((r for r in table if len(r) == width and any(re.search(r"web ?site", c, re.I) for c in r)
+                       and all(len(c) < 120 for c in r)), [])
         vcol = next((i for i, c in enumerate(header) if re.search(r"visit", c, re.I)), None)
+        body_rows = [r for r in site_rows if len(r) == width]
         n = too_big = no_count = 0
         seen_v = []
-        body_rows = [r for r in table if header and len(r) == len(header) and r is not header]
         for cells in body_rows:
             m = next((DOMAIN_RE.search(c) for c in cells[1:3] if DOMAIN_RE.search(c)), None)
             if not m:
@@ -325,8 +338,11 @@ def scrape_myipms(page, days, log):
         log(f"myipms page {pg}: kept {n}, too big {too_big}, no visitor count {no_count}"
             + (f", visitors/day on page {min(seen_v)}-{max(seen_v)}" if seen_v else ""))
         if not body_rows:                          # past the end of what myip.ms lists for free: stop, step back next run
-            log(f"myipms page {pg}: no rows (past the end of the free list). Stopping.")
-            MY_LAST[0] = max(OPTS["myipms_start"], int(pg / 1.4))
+            (STATE / "myipms_debug.html").write_text(page.content())
+            log(f"myipms page {pg}: no store rows found. Page saved to {STATE / 'myipms_debug.html'} so the layout can be checked. "
+                f"Sample rows: {[r for r in table if len(r) > 2][:3]}. Stopping.")
+            if walked:                             # we jumped past the end: step back next run
+                MY_LAST[0] = max(OPTS["myipms_start"], int(pg / 1.4))
             break
         walked += 1
         if seen_v and min(seen_v) > cap:          # whole page still above the cap: jump deeper
