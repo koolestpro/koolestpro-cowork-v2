@@ -105,7 +105,7 @@ function apiSummary_() {
     stages: stages,
     discovery: discovery,
     keys: { gemini: !!PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY'), deepseek: !!PropertiesService.getScriptProperties().getProperty('DEEPSEEK_API_KEY'),
-      verifier: !!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY') },
+      verifier: !!(PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY') || PropertiesService.getScriptProperties().getProperty('HUNTER_API_KEY')) },
   };
 }
 

@@ -590,6 +590,24 @@ function dailyReport_() {
     '',
     'PIPELINE: ' + Object.keys(stages).map(k => k + ' ' + stages[k]).join(', '),
   ];
+  // PACE (2026-11-07): the target is DAILY_CAP x 5 weekdays a week (20 x 5 = 100). Each lead gets up to 5 emails,
+  // so a full week needs fresh first emails coming in, or the cap fills with follow-ups only and then runs dry.
+  const dow = Number(Utilities.formatDate(now, tz_(), 'u'));   // 1 = Monday
+  const monday = new Date(Utilities.formatDate(new Date(now.getTime() - (dow - 1) * 86400000), tz_(), 'yyyy-MM-dd') + 'T00:00:00');
+  const weekOut = msgs.rows.filter(m => m.direction === 'out' && lc_(m.sender_account) === me && m.sent_at && new Date(m.sent_at) >= monday && !/^\s*\[TEST to /i.test(String(m.subject || '')));
+  const weekFirst = weekOut.filter(m => !/^\s*re:/i.test(String(m.subject || ''))).length;
+  const seqRows = read_('Sequence').rows;
+  const draft1 = {};
+  seqRows.forEach(r => { if (Number(r.step) === 1 && r.status === 'Draft') draft1[String(r.lead_id)] = true; });
+  const readyFirst = leads.rows.filter(l => ['New', ''].indexOf(String(l.stage)) !== -1 && Number(l.touch_count || 0) === 0 && draft1[String(l.lead_id)] && sendableStatus_(l.email_status, S));
+  const readyApproved = readyFirst.filter(l => isTrue_(l.approved)).length;
+  const target = cap * 5;
+  lines.push('', 'PACE THIS WEEK',
+    '- Sent since Monday: ' + weekOut.length + ' of ' + target + ' (' + weekFirst + ' first emails, ' + (weekOut.length - weekFirst) + ' follow-ups)',
+    '- First emails ready to go (written, verified address): ' + readyFirst.length + ', of which approved: ' + readyApproved +
+      (readyFirst.length - readyApproved ? '. Tick the other ' + (readyFirst.length - readyApproved) + ' in Leads > approved.' : ''),
+    '- Keeping ' + target + '/week full takes about ' + Math.ceil(target / 5) + ' new first emails a week (each lead gets up to 5). ' +
+      (readyFirst.length < Math.ceil(target / 5) ? 'SHORT: fewer ready than that. Check the verifier line below and Discovery.' : 'On track.'));
   if (repliesToday.length) {
     lines.push('', 'TODAY\'S REPLIES');
     repliesToday.slice(0, 10).forEach(m => lines.push('- ' + m.lead_id + ': ' + String(m.body).replace(/\s+/g, ' ').slice(0, 140)));
@@ -597,7 +615,7 @@ function dailyReport_() {
   const pr = PropertiesService.getScriptProperties();
   const prepMin = Math.round(Number(pr.getProperty('PREP_MS') || 0) / 60000);
   lines.push('', 'HEALTH', '- Last send run: ' + (pr.getProperty('SEND_LAST') || 'no record yet'), '- Last send error: ' + (pr.getProperty('SEND_ERR') || 'none'),
-    '- Email verifier: ' + (pr.getProperty('VERIFIER_ERR') ? 'FAILING since ' + pr.getProperty('VERIFIER_ERR') + '. New leads cannot get a first email until the MyEmailVerifier key or credits are fixed (Outreach > Test email verifier key).' : 'ok'),
+    '- Email verifier: ' + (pr.getProperty('VERIFIER_ERR') ? 'FAILING since ' + pr.getProperty('VERIFIER_ERR') + '. New leads cannot get a first email until MyEmailVerifier has credits or HUNTER_API_KEY is set (Outreach > Test email verifier key).' : 'ok'),
     '- Lead preparation today: ' + prepMin + ' of ' + Number(S.PREP_DAILY_MINUTES || 35) + ' minutes allowed',
     '- Automation triggers installed: ' + (ScriptApp.getProjectTriggers().map(t => t.getHandlerFunction()).sort().join(', ') || 'NONE'));
   const wd = Utilities.formatDate(now, tz_(), 'u');

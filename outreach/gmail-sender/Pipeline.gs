@@ -10,7 +10,7 @@
  *   4. writes the 5-email sequence in Ridwan's voice for the lead's market, into the Sequence tab
  * Then the lead waits for your `approved` tick (or is auto-approved if AUTO_APPROVE = TRUE and no check flagged it).
  *
- * Uses helpers from Code.gs and Brief.gs. Keys (Script Properties): MYEMAILVERIFIER_API_KEY plus the AI keys.
+ * Uses helpers from Code.gs and Brief.gs. Keys (Script Properties): MYEMAILVERIFIER_API_KEY and/or HUNTER_API_KEY (verifier fallback) plus the AI keys.
  */
 
 const PREP_BATCH_ = { email: 5, profile: 2, sequence: 3, rescue: 3 }; // per run, keeps each run under Apps Script's 6 minute limit (profiles include PageSpeed runs)
@@ -71,7 +71,9 @@ function prepBacklogFull_(S) {
   if (!max) return false;
   const has1 = {};
   read_('Sequence').rows.forEach(r => { if (Number(r.step) === 1 && r.status === 'Draft') has1[String(r.lead_id)] = true; });
-  const ready = read_('Leads').rows.filter(l => l.lead_id && ['New', ''].indexOf(String(l.stage)) !== -1 && Number(l.touch_count || 0) === 0 && has1[String(l.lead_id)]).length;
+  // Only leads that can actually be sent count (2026-11-07): ~100 drafts on unverified or empty addresses made the buffer
+  // look full, so research stopped and lead prep used 3 of its 35 daily minutes.
+  const ready = read_('Leads').rows.filter(l => l.lead_id && ['New', ''].indexOf(String(l.stage)) !== -1 && Number(l.touch_count || 0) === 0 && has1[String(l.lead_id)] && sendableStatus_(l.email_status, S)).length;
   return ready >= max;
 }
 
@@ -119,17 +121,10 @@ function findEmails_(S, stats, timeLeft) {
   });
 }
 
-/** One verifier call. Returns 'valid' | 'invalid' | 'catch-all' | 'risky' | '' (no key or call failed). */
+/** One verifier call. Returns 'valid' | 'invalid' | 'catch-all' | 'risky' | '' (no verifier could answer). */
 function verifyOne_(email) {
-  const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
-  if (!key) return '';
-  try {
-    const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key), { muteHttpExceptions: true });
-    if (res.getResponseCode() !== 200) return '';
-    const j = JSON.parse(res.getContentText());
-    const st = lc_(j.Status || j.status || '');
-    return st === 'valid' ? 'valid' : (st === 'invalid' ? 'invalid' : (/catch/.test(st) ? 'catch-all' : 'risky'));
-  } catch (e) { return ''; }
+  const r = verifyAddress_(email);
+  return r.down ? '' : r.verdict;
 }
 
 /** Asks the AI for the owner/founder name from the About text. Returns '' when it can't tell. */
@@ -154,7 +149,8 @@ function ownerName_(S, host) {
 
 /** No email on the site: find the owner's name, try likely addresses, keep the first one the verifier calls valid. */
 function guessEmail_(S, lead) {
-  if (!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY')) return { why: 'no verifier key' };
+  const pk = PropertiesService.getScriptProperties();
+  if (!pk.getProperty('MYEMAILVERIFIER_API_KEY') && !pk.getProperty('HUNTER_API_KEY')) return { why: 'no verifier key' };
   const host = String(lead.website).trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/^www\./i, '').toLowerCase();
   if (!host) return null;
   const name = ownerName_(S, host);
@@ -269,63 +265,120 @@ function rescueEmail_(S, leads, lead) {
 }
 
 function rescueEmails_(S, stats, timeLeft) {
-  if (!PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY')) return;
+  const pr = PropertiesService.getScriptProperties();
+  if (!pr.getProperty('MYEMAILVERIFIER_API_KEY') && !pr.getProperty('HUNTER_API_KEY')) return;
+  if (pr.getProperty('VERIFIER_ERR')) return;   // no verifier answering: rescuing would only burn retries
   const leads = read_('Leads');
   if (leads.headers.indexOf('email_rescue') === -1) return;   // run Outreach > Set up tabs once
-  candidates_(leads, l => String(l.email).trim() && String(l.website).trim() && !String(l.email_rescue || '').trim() &&
+  const prof = {};
+  try { read_('Profiles').rows.forEach(p => { prof[String(p.lead_id)] = p; }); } catch (e) { /* no Profiles tab yet */ }
+  candidates_(leads, l => String(l.email).trim() && String(l.website).trim() && !String(l.email_rescue || '').trim() && worthVerifying_(l, prof[String(l.lead_id)], S) &&
     ['invalid', 'risky'].concat(isTrue_(S.SEND_TO_CATCH_ALL) ? [] : ['catch-all']).indexOf(lc_(l.email_status)) !== -1, PREP_BATCH_.rescue).forEach(lead => {
     if (!timeLeft()) return;
     try {
       const msg = rescueEmail_(S, leads, lead);
       if (/^swapped/.test(msg)) stats.emails++;
       note_(leads, lead, 'email check: ' + msg, false);
+      autoApproveIfPending_(leads, lead, S);
     } catch (e) { stats.problems.push(lead.lead_id + ' rescue: ' + e.message); }
   });
 }
 
 // ---------- 2. Verify ----------
 
+/**
+ * Verifier chain (2026-11-07). MyEmailVerifier first; if it refuses (401/402/403: key or credits) Hunter's email verifier
+ * (Script property HUNTER_API_KEY, free plan has a small monthly allowance) is tried. Returns
+ * { verdict: 'valid'|'invalid'|'catch-all'|'risky', by } or { down: 'why' } when no verifier can answer right now.
+ */
+function verifyAddress_(email) {
+  const pr = PropertiesService.getScriptProperties();
+  const mev = pr.getProperty('MYEMAILVERIFIER_API_KEY'), hunter = pr.getProperty('HUNTER_API_KEY');
+  const why = [];
+  if (mev) {
+    try {
+      const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(mev), { muteHttpExceptions: true });
+      const code = res.getResponseCode();
+      if (code === 200) {
+        const j = JSON.parse(res.getContentText());
+        const st = lc_(j.Status || j.status || '');
+        // valid and invalid are certain. Catch-all domains accept every address, so the mailbox can't be proven. Anything else is risky.
+        return { verdict: st === 'valid' ? 'valid' : (st === 'invalid' ? 'invalid' : (/catch/.test(st) ? 'catch-all' : 'risky')), by: 'myemailverifier: ' + (j.Status || j.status || '?') };
+      }
+      why.push('MyEmailVerifier HTTP ' + code + (code === 403 || code === 402 ? ' (credits used up or key rejected)' : '') + ' ' + String(res.getContentText()).slice(0, 80));
+    } catch (e) { why.push('MyEmailVerifier: ' + String(e.message || e).slice(0, 80)); }
+  } else why.push('no MYEMAILVERIFIER_API_KEY');
+  if (hunter) {
+    try {
+      const res = UrlFetchApp.fetch('https://api.hunter.io/v2/email-verifier?email=' + encodeURIComponent(email) + '&api_key=' + encodeURIComponent(hunter), { muteHttpExceptions: true });
+      const code = res.getResponseCode();
+      if (code === 200) {
+        const d = (JSON.parse(res.getContentText()).data) || {};
+        const st = lc_(d.status), rs = lc_(d.result);
+        const verdict = st === 'valid' ? 'valid' : (st === 'invalid' || rs === 'undeliverable' ? 'invalid' : (st === 'accept_all' ? 'catch-all' : (rs === 'deliverable' ? 'valid' : 'risky')));
+        return { verdict: verdict, by: 'hunter: ' + (d.status || '?') + '/' + (d.result || '?') };
+      }
+      why.push('Hunter HTTP ' + code + ' ' + String(res.getContentText()).slice(0, 80));
+    } catch (e) { why.push('Hunter: ' + String(e.message || e).slice(0, 80)); }
+  } else why.push('no HUNTER_API_KEY');
+  return { down: why.join('; ') };
+}
+
+/**
+ * AUTO_APPROVE with verify-after-research (2026-11-07): a clean sequence is usually written before its address is checked,
+ * so writeSequences_ tags it AUTO_PENDING_ and the lead is approved here once the address comes back sendable.
+ * Anything flagged at writing time never gets the tag, so it still waits for a manual tick.
+ */
+const AUTO_PENDING_ = '[AUTO-APPROVE when verified]';
+function autoApproveIfPending_(leads, lead, S) {
+  const notes = String(lead.notes || '');
+  if (notes.indexOf(AUTO_PENDING_) === -1) return;
+  if (!isTrue_(S.AUTO_APPROVE) || !sendableStatus_(lead.email_status, S)) return;
+  if (String(lead.notes).indexOf(UNCONFIRMED_TAG_) !== -1) return;   // recipient not on their site: a human looks first
+  set_(leads, lead, 'approved', true);
+  set_(leads, lead, 'notes', notes.replace(AUTO_PENDING_, '[auto-approved ' + Utilities.formatDate(new Date(), tz_(), 'd MMM') + ']').slice(0, 900));
+}
+
+/** Worth spending a verification credit on: Maps/no-website leads, Launch and Partner leads, or a store whose research passed. */
+function worthVerifying_(lead, profile, S) {
+  if (!String(lead.website).trim()) return true;
+  if (!profile) return false;   // research first
+  if (['partner', 'build', 'launch'].indexOf(lc_(lead.track)) !== -1) return true;
+  return String(profile.problem_worth) !== '' && problemOk_(lead, profile, S);
+}
+
 function verifyEmails_(S, stats, timeLeft) {
-  const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
   const leads = read_('Leads');
-  let verifierDown = '';   // set on the first 401/402/403: the rest of this run skips the calls
-  candidates_(leads, l => String(l.email).trim() && ['', 'unverified'].indexOf(lc_(l.email_status)) !== -1, 20).forEach(lead => {
+  const prof = {};
+  try { read_('Profiles').rows.forEach(p => { prof[String(p.lead_id)] = p; }); } catch (e) { /* no Profiles tab yet */ }
+  // 2026-11-07: verify AFTER research, only leads we will actually email. Verifying every scraped address used up the
+  // 100 free MyEmailVerifier credits on stores that research later held or marked Lost.
+  let verifierDown = '';
+  candidates_(leads, l => String(l.email).trim() && ['', 'unverified'].indexOf(lc_(l.email_status)) !== -1 && worthVerifying_(l, prof[String(l.lead_id)], S), 10).forEach(lead => {
     if (!timeLeft() || verifierDown) return;
     const email = String(lead.email).trim();
     if (!emailOk_(email)) { set_(leads, lead, 'email_status', 'invalid'); return; }   // the rescue step then looks for a real address
-    if (!key) { set_(leads, lead, 'email_status', 'unverified'); note_(leads, lead, 'Script property MYEMAILVERIFIER_API_KEY not found (Apps Script > Project Settings > Script properties: name = MYEMAILVERIFIER_API_KEY, value = your key). Cannot verify.', false); return; }
-    try {
-      const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key),
-        { muteHttpExceptions: true });
-      const code = res.getResponseCode();
-      if (code === 401 || code === 402 || code === 403) {   // key rejected or credits used up: an account problem, not this lead's (2026-11-06)
-        verifierDown = 'HTTP ' + code + ' ' + String(res.getContentText()).slice(0, 160);
-        PropertiesService.getScriptProperties().setProperty('VERIFIER_ERR', Utilities.formatDate(new Date(), tz_(), 'EEE d MMM HH:mm') + ' ' + verifierDown);
-        set_(leads, lead, 'prep_note', 'waiting for the email verifier (' + verifierDown.slice(0, 60) + '): fix the MyEmailVerifier key or credits, then it retries by itself');
-        return;
-      }
-      if (code !== 200) throw new Error('HTTP ' + code);
-      PropertiesService.getScriptProperties().deleteProperty('VERIFIER_ERR');
-      const j = JSON.parse(res.getContentText());
-      const st = lc_(j.Status || j.status || '');
-      // valid and invalid are certain. Catch-all domains accept every address, so the mailbox can't be proven. Anything else (unknown, grey-listed, timeout) is risky.
-      const verdict = st === 'valid' ? 'valid' : (st === 'invalid' ? 'invalid' : (/catch/.test(st) ? 'catch-all' : 'risky'));
-      set_(leads, lead, 'email_status', verdict);
-      note_(leads, lead, 'verifier said: ' + (j.Status || j.status || '?'), false);
-      stats.verified++;
-    } catch (e) { note_(leads, lead, 'verify failed: ' + String(e.message || e).slice(0, 300), true); stats.problems.push(lead.lead_id + ': ' + e.message); }
+    const r = verifyAddress_(email);
+    if (r.down) {
+      verifierDown = r.down;
+      PropertiesService.getScriptProperties().setProperty('VERIFIER_ERR', Utilities.formatDate(new Date(), tz_(), 'EEE d MMM HH:mm') + ' ' + r.down.slice(0, 200));
+      set_(leads, lead, 'prep_note', 'waiting for an email verifier (' + r.down.slice(0, 120) + '): add credits or a key, then it retries by itself');
+      return;
+    }
+    PropertiesService.getScriptProperties().deleteProperty('VERIFIER_ERR');
+    set_(leads, lead, 'email_status', r.verdict);
+    note_(leads, lead, 'verifier said: ' + r.by, false);
+    autoApproveIfPending_(leads, lead, S);
+    stats.verified++;
   });
 }
 
 /** Menu: tests the verifier key on your own alert email and shows the raw answer, so we can see the real response format. */
 function testVerifier() {
-  const key = PropertiesService.getScriptProperties().getProperty('MYEMAILVERIFIER_API_KEY');
-  if (!key) { toast_('No Script property named MYEMAILVERIFIER_API_KEY. Add it in Project Settings > Script properties (value = your key).'); return; }
   const email = String(settings_().ALERT_EMAIL || '').trim();
-  const res = UrlFetchApp.fetch('https://client.myemailverifier.com/verifier/validate_single/' + encodeURIComponent(email) + '/' + encodeURIComponent(key), { muteHttpExceptions: true });
-  const body = res.getContentText().slice(0, 300);
-  Logger.log(body);
-  toast_('HTTP ' + res.getResponseCode() + ': ' + body);
+  const r = verifyAddress_(email);
+  Logger.log(JSON.stringify(r));
+  toast_(r.down ? 'No verifier answered: ' + r.down : 'OK, ' + r.by + ' -> ' + r.verdict + ' (tested on ' + email + ')');
 }
 
 // ---------- 3. Profile the store ----------
@@ -549,7 +602,10 @@ function writeSequences_(S, stats, timeLeft) {
       if (p.team && lc_(p.team) !== 'solo' && sharedInbox_(lead.email)) flags.push('email goes to a shared inbox (' + lead.email + '), not the decision maker' + (p.decision_maker ? ' (' + String(p.decision_maker).split(' (')[0] + ')' : '') + ': find their own address before approving');
       set_(leads, lead, 'notes', ('Observation basis: ' + (j.basis || '?') + ' [' + out.provider + ']' + (flags.length ? ' | CHECK: ' + flags.join('; ') : '') +
         (lead.notes ? ' | ' + lead.notes : '')).slice(0, 900));
-      if (isTrue_(S.AUTO_APPROVE) && !flags.length && sendableStatus_(lead.email_status, S)) set_(leads, lead, 'approved', true);
+      if (isTrue_(S.AUTO_APPROVE) && !flags.length) {
+        if (sendableStatus_(lead.email_status, S)) set_(leads, lead, 'approved', true);
+        else set_(leads, lead, 'notes', (AUTO_PENDING_ + ' ' + String(lead.notes || '')).slice(0, 900));   // address checked later: approve then
+      }
       has1[String(lead.lead_id)] = true;
       stats.sequences++;
       Utilities.sleep(6000);

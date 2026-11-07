@@ -113,7 +113,7 @@ def rec(domain, source, **kw):
 MG_SCRAPED = set()
 MY_LAST = [0]
 OPTS = {"mg_min_age": 45, "zik_min": 1000, "zik_max": 25000, "myipms_url": "", "myipms_start": 400,
-        "myipms_max_visits": 33, "myipms_wait": 0}
+        "myipms_max_visits": 33, "myipms_wait": 0, "myipms_min_rank": 3000000}
 VERIFY_RE = re.compile(r"captcha|verify you are human|human verification|not a robot|robot", re.I)
 
 
@@ -308,9 +308,13 @@ def scrape_myipms(page, days, log):
         header = next((r for r in table if len(r) == width and any(re.search(r"web ?site", c, re.I) for c in r)
                        and all(len(c) < 120 for c in r)), [])
         vcol = next((i for i, c in enumerate(header) if re.search(r"visit", c, re.I)), None)
+        # The free list has no visitor numbers, only "World Site Popular Rating" (# 6,104,131). A higher number is a
+        # smaller site. Stores ranked above --myipms-min-rank (bigger sites) are skipped.
+        rcol = next((i for i, c in enumerate(header) if re.search(r"rating|rank", c, re.I)), None)
+        min_rank = OPTS["myipms_min_rank"]
         body_rows = [r for r in site_rows if len(r) == width]
         n = too_big = no_count = 0
-        seen_v = []
+        seen_v, seen_r = [], []
         for cells in body_rows:
             m = next((DOMAIN_RE.search(c) for c in cells[1:3] if DOMAIN_RE.search(c)), None)
             if not m:
@@ -318,6 +322,13 @@ def scrape_myipms(page, days, log):
             d = clean(m.group(0))
             if not is_store_domain(d) or any(r["domain"] == d for r in rows):
                 continue
+            rk = None
+            if rcol is not None and rcol < len(cells) and re.search(r"\d", cells[rcol]):
+                rk = int(re.sub(r"[^\d]", "", cells[rcol]))
+                seen_r.append(rk)
+                if rk < min_rank:
+                    too_big += 1
+                    continue
             v = visits_per_day(cells, vcol)
             if v is None:
                 no_count += 1
@@ -328,7 +339,8 @@ def scrape_myipms(page, days, log):
                     continue
             joined = " | ".join(c.replace("\n", " ") for c in cells if c)[:300]
             rows.append(rec(m.group(0), "myip.ms shopify ips",
-                            signals=f"myip.ms page {pg}" + (f", about {v} visitors a day (~{v * 30}/month)" if v is not None else ""),
+                            signals=f"myip.ms page {pg}" + (f", world rank #{rk:,}" if rk else "")
+                                    + (f", about {v} visitors a day (~{v * 30}/month)" if v is not None else ""),
                             data=joined))
             n += 1
         if walked == 0:
@@ -336,7 +348,8 @@ def scrape_myipms(page, days, log):
             if body_rows:
                 log(f"myipms first row: {body_rows[0]}")
         log(f"myipms page {pg}: kept {n}, too big {too_big}, no visitor count {no_count}"
-            + (f", visitors/day on page {min(seen_v)}-{max(seen_v)}" if seen_v else ""))
+            + (f", visitors/day on page {min(seen_v)}-{max(seen_v)}" if seen_v else "")
+            + (f", world rank on page #{min(seen_r):,}-#{max(seen_r):,}" if seen_r else ""))
         if not body_rows:                          # past the end of what myip.ms lists for free: stop, step back next run
             (STATE / "myipms_debug.html").write_text(page.content())
             log(f"myipms page {pg}: no store rows found. Page saved to {STATE / 'myipms_debug.html'} so the layout can be checked. "
@@ -345,7 +358,7 @@ def scrape_myipms(page, days, log):
                 MY_LAST[0] = max(OPTS["myipms_start"], int(pg / 1.4))
             break
         walked += 1
-        if seen_v and min(seen_v) > cap:          # whole page still above the cap: jump deeper
+        if (seen_v and min(seen_v) > cap) or (seen_r and max(seen_r) < min_rank):   # whole page still too big: jump deeper
             pg = int(pg * 1.4) + 1
         else:
             pg += 1
@@ -388,6 +401,7 @@ def main():
     ap.add_argument("--myipms-url", default="", help="myip.ms: start from this list page instead of page 1")
     ap.add_argument("--myipms-start", type=int, default=400, help="myip.ms: first list page (50 sites per page)")
     ap.add_argument("--myipms-max-visits", type=int, default=33, help="myip.ms: keep stores with at most this many visitors a DAY (33 ~ 1,000/month, 17 ~ 500/month)")
+    ap.add_argument("--myipms-min-rank", type=int, default=3000000, help="myip.ms: skip sites ranked above this world rank (bigger sites). Its free list shows rank, not visitors")
     ap.add_argument("--myipms-wait", type=int, default=0, help="myip.ms: with --headed, wait this many seconds for YOU to click its human-verification button (never clicked by the script)")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--headed", action="store_true")
@@ -402,7 +416,8 @@ def main():
         raise SystemExit("Playwright missing. Run outreach/scrapers/install_mac.sh first.")
 
     OPTS.update(mg_min_age=args.mg_min_age, zik_min=args.zik_min, zik_max=args.zik_max, myipms_url=args.myipms_url, myipms_start=args.myipms_start,
-                myipms_max_visits=args.myipms_max_visits, myipms_wait=args.myipms_wait)
+                myipms_max_visits=args.myipms_max_visits, myipms_wait=args.myipms_wait,
+                myipms_min_rank=args.myipms_min_rank)
     env = load_env()
     seen = set(load_json(STATE / "seen_domains.json", []))
     seen_src = load_json(STATE / "seen_sources.json", {})   # domain -> sources that found it
