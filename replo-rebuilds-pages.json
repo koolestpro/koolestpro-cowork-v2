@@ -113,7 +113,9 @@
       "socialContentNote": "kura-social-content.md predates this page and has no section for pdp-02 — write fresh captions rather than reusing the pdp-01 block.",
       "usedForTikTok": false,
       "usedForTikTokDate": null,
-      "retiredNote": "RETIRED 2026-09-19: Ridwan's standing instruction — NO MORE KURA content, this brand is fully discontinued from the Template Showcase rotation (not just the pre-2026-07-18 pages). Do not select any KURA entry again regardless of active/eligible status."
+      "retiredNote": "RETIRED 2026-09-19: Ridwan's standing instruction — NO MORE KURA content, this brand is fully discontinued from the Template Showcase rotation (not just the pre-2026-07-18 pages). Do not select any KURA entry again regardless of active/eligible status.",
+      "banned": true,
+      "bannedNote": "BANNED 2026-11-07 (Ridwan): \"stop using kura, do not ever use it no more. I don't want kura in anything.\" Never select, showcase, rebuild, caption or queue any KURA page, not even as a fallback."
     },
     {
       "hasSocialContentDraft": true,
@@ -159,7 +161,9 @@
       "socialContentNote": "kura-social-content.md may or may not have a section for lp-01 — check before assuming, write fresh captions if not.",
       "usedForTikTok": false,
       "usedForTikTokDate": null,
-      "showcaseNote": "2026-10-31: showcased as a RETIRED-KURA FALLBACK (every active page already used, no real-redesign registered). Stays active:false."
+      "showcaseNote": "2026-10-31: showcased as a RETIRED-KURA FALLBACK (every active page already used, no real-redesign registered). Stays active:false.",
+      "banned": true,
+      "bannedNote": "BANNED 2026-11-07 (Ridwan): \"stop using kura, do not ever use it no more. I don't want kura in anything.\" Never select, showcase, rebuild, caption or queue any KURA page, not even as a fallback."
     },
     {
       "brand": "KURA",
@@ -170,10 +174,10 @@
       "sourcePath": "replo-rebuilds/brands/kura/pages/kura-ad-01/index.html",
       "notes": null,
       "hasSocialContentDraft": true,
-      "socialContentFile": "replo-pages-cache/kura-social-content.md",
-      "socialContentSection": "ADVERTORIAL (ad-01) / LI-AD / IG-AD",
-      "usedForTemplateShowcase": false,
-      "usedForTemplateShowcaseDate": null,
+      "socialContentFile": "kura-social-content.md",
+      "socialContentSection": "kura_ad-01 (Advertorial (ad-01)) - 2026-11-07",
+      "usedForTemplateShowcase": true,
+      "usedForTemplateShowcaseDate": "2026-11-07",
       "active": false,
       "retired": true,
       "retiredNote": "Retired 2026-07-18 when HALOS replaced KURA as the active showcase brand. Fallback only — usable if every active HALOS page has been showcased.",
@@ -181,7 +185,10 @@
       "cachePathRetired": "replo-pages-cache/kura-ad-01/index.html",
       "cacheFolderRetired": "replo-pages-cache/kura-ad-01",
       "usedForTikTok": false,
-      "usedForTikTokDate": null
+      "usedForTikTokDate": null,
+      "showcaseNote": "2026-11-07: showcased as a RETIRED-KURA FALLBACK (every active concept page used; FleeMoto real redesign held back by the 7 day CRO Fix spacing rule, CRO Fix 2026-11-01). Stays active:false.",
+      "banned": true,
+      "bannedNote": "BANNED 2026-11-07 (Ridwan): \"stop using kura, do not ever use it no more. I don't want kura in anything.\" Never select, showcase, rebuild, caption or queue any KURA page, not even as a fallback."
     },
     {
       "brand": "KURA",
@@ -203,7 +210,9 @@
       "cachePathRetired": "replo-pages-cache/kura-hp-01/index.html",
       "cacheFolderRetired": "replo-pages-cache/kura-hp-01",
       "usedForTikTok": false,
-      "usedForTikTokDate": null
+      "usedForTikTokDate": null,
+      "banned": true,
+      "bannedNote": "BANNED 2026-11-07 (Ridwan): \"stop using kura, do not ever use it no more. I don't want kura in anything.\" Never select, showcase, rebuild, caption or queue any KURA page, not even as a fallback."
     },
     {
       "brand": "KURA",
@@ -225,7 +234,9 @@
       "cachePathRetired": "replo-pages-cache/kura-listicle-li03/index.html",
       "cacheFolderRetired": "replo-pages-cache/kura-listicle-li03",
       "usedForTikTok": false,
-      "usedForTikTokDate": null
+      "usedForTikTokDate": null,
+      "banned": true,
+      "bannedNote": "BANNED 2026-11-07 (Ridwan): \"stop using kura, do not ever use it no more. I don't want kura in anything.\" Never select, showcase, rebuild, caption or queue any KURA page, not even as a fallback."
     },
     {
       "brand": "KURA",
@@ -247,7 +258,9 @@
       "cachePathRetired": "replo-pages-cache/kuda-pdp-01/index_1.html",
       "cacheFolderRetired": "replo-pages-cache/kuda-pdp-01",
       "usedForTikTok": false,
-      "usedForTikTokDate": null
+      "usedForTikTokDate": null,
+      "banned": true,
+      "bannedNote": "BANNED 2026-11-07 (Ridwan): \"stop using kura, do not ever use it no more. I don't want kura in anything.\" Never select, showcase, rebuild, caption or queue any KURA page, not even as a fallback."
     },
     {
       "brand": "KURA",
@@ -269,7 +282,9 @@
       "cachePathRetired": "replo-pages-cache/kura-pp-01/index.html",
       "cacheFolderRetired": "replo-pages-cache/kura-pp-01",
       "usedForTikTok": false,
-      "usedForTikTokDate": null
+      "usedForTikTokDate": null,
+      "banned": true,
+      "bannedNote": "BANNED 2026-11-07 (Ridwan): \"stop using kura, do not ever use it no more. I don't want kura in anything.\" Never select, showcase, rebuild, caption or queue any KURA page, not even as a fallback."
     },
     {
       "hasSocialContentDraft": true,
@@ -367,5 +382,6 @@
     "storeTemplates": "store-templates.json — MERIDIAN (01-watches-luxury) and Lumora Skin (02-skincare-beauty) are multi-page store templates, a separate library with its own showcase packages already built at outputs/templates/meridian_store-template_2026-08-28 and outputs/templates/lumora_store-template_2026-08-28. Do NOT add them here; this manifest is replo-rebuilds single pages only.",
     "pageTemplates": "replo-rebuilds/templates/ holds unbranded page templates (hp-02-product-hero, hp-03-collection, pdp-02-social-proof, ad-01-editorial-story, etc). Only branded builds under brands/ are showcase-eligible."
   },
-  "kindNote": "2026-10-26 (Ridwan): entries may carry kind \"real-redesign\" (a full-page CRO redesign of a real, non-client Shopify store, from Wednesday Page B under replo-rebuilds/real-redesigns/ or from a Sunday CRO Fix under outputs/cro-fixes/). They also carry isRealBrand, isClient:false, targetId and liveUrl. Entries without kind are concept brand pages. Showcase captions for real redesigns say \"Concept redesign of {Brand}\", never \"Concept store build\"."
+  "kindNote": "2026-10-26 (Ridwan): entries may carry kind \"real-redesign\" (a full-page CRO redesign of a real, non-client Shopify store, from Wednesday Page B under replo-rebuilds/real-redesigns/ or from a Sunday CRO Fix under outputs/cro-fixes/). They also carry isRealBrand, isClient:false, targetId and liveUrl. Entries without kind are concept brand pages. Showcase captions for real redesigns say \"Concept redesign of {Brand}\", never \"Concept store build\".",
+  "kuraBan": "2026-11-07 (Ridwan): KURA is banned from everything. Every KURA entry carries banned:true. No fallback to KURA pages ever, retired or not."
 }

@@ -18,7 +18,7 @@ Make now posts native Instagram carousels (scenario 6565331, route 310-317, 2-10
 ## Rules
 
 - 1080×1350 every slide; text sizes follow the Tips V4 floors (headline ≥88px, body ≥40px, footer ≥26px).
-- Real page captures only; never recreated. Concept brands (KURA, HALOS, MERIDIAN, Lumora) labelled as concept builds on slide 1 and in the caption.
+- Real page captures only; never recreated. Concept brands (HALOS, MOULT, MERIDIAN, Lumora; KURA is banned 2026-11-07) labelled as concept builds on slide 1 and in the caption.
 - No em dashes, humanizer pass on every line, no gradient text.
 - Export to `outputs/templates/{slug}_{date}/ig-carousel/slide{1..6}.png`; register key `TS-{BRAND}-IG-CAROUSEL` in `{brand}-social-content.md/.json`; the Instagram queue row's `asset_paths` lists all 6 in order (feed_media.py hosts each and joins them; Make builds the carousel).
 - Look at all 6 PNGs at phone size before calling the run done (same "verify by exporting" rule as everything else).

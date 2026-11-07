@@ -100,3 +100,22 @@ Recurring health check for the Koolestpro Distribution Queue (Google Sheet) and 
 **Verdict:** Make healthy. Needs Ridwan: 4 missed rows stuck in review, 5 PDF-only IG rows that won't post, IG 2/day on 6 dates (1 same-slot), LinkedIn queue nearly empty (last post 11-04), 7111659 inactive, 96% of backlog Needs Review.
 
 ---
+
+---
+
+## 2026-11-07 ~08:45 UTC (09:45 WAT) — health check (scheduled task run)
+
+**Sheet read:** live Sheets API, 275 rows (202 Posted, 44 Ready, 1 Draft, 27 Retired ignored). 28 upcoming unposted (15 IG, 13 X, 0 LI). Last post on the sheet: 11-02 14:00.
+**Missed (17), ALL Needs Review, NOT rescheduled (content not ready):** IG 10-19, 10-28, 10-29, 11-02, 11-04 x2, 11-05 x2, 11-06 x2; LI 10-23 (Draft), 11-02, 11-04; X 11-04 x2 (bala_bangles, halos_li-02), 11-06 x2 (topicals, fishwife). No webhook calls.
+**Collisions / violations:** X same-slot: none. LinkedIn same-day: none (no LinkedIn rows upcoming at all). IG 2 on 11-20 (both Needs Review, unfixable).
+**Step 1b:** 13 unposted Twitter captions checked, longest 272, 0 over 280.
+**Step 1c:** single-PDF IG rows (will never post, flag only): 10-19 materialkitchen (missed), 11-09 extra-costs, 11-16 allbirds, 11-23 caraway, 11-30 v1ce, 12-14 owala. Carousels/videos otherwise OK; 0 mixed or >10.
+**Step 1d:** caption_fit.py: 0 flagged.
+**Spacing:** no reschedules; space_queue dry run: 0 brand-gap violations, supply gap 76 empty X slots.
+
+**Reschedule scenario 7111659:** inactive, not reactivated (no reschedule needed).
+**Make 6565331 (main posting): UNHEALTHY.** isActive=false, isinvalid=true (flagged invalid by Make), 141 executions total, 0 executions since 11-04. Nothing has posted since 11-02. Needs Ridwan to open the scenario in Make, fix the invalid module/connection and re-activate. Not touched here (rule: no blueprint edits). Khutba Clips 7875574 inactive, out of scope.
+
+**Pacing (11-07 to 11-13):** 8 rows = 1.1/day. About 13 more for 3/day. LinkedIn queue empty, X ends 12-04. QA: 28 of 28 upcoming Needs Review (100%).
+
+**Verdict:** Make main scenario inactive + invalid, posting stopped. 100% of backlog stuck in Needs Review.

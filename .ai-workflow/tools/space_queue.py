@@ -398,12 +398,19 @@ def main():
                     help="set status Retired on every Ready Instagram Tip row (Ridwan 2026-10-08: old Tips are not wanted)")
     ap.add_argument("--retire-dead-ig", action="store_true",
                     help="set Retired on Ready, unposted Instagram rows that can never publish (single-image/no-url/mixed/too-many) and are past-dated")
+    ap.add_argument("--retire-brand", metavar="BRAND",
+                    help="set Retired on every unposted (Ready/Draft) row whose pipeline/post id names BRAND "
+                         "(Ridwan 2026-11-07: KURA banned from everything)")
     a = ap.parse_args()
     now_local = dt.datetime.now(LAGOS)
     today = now_local.date()
     token, rows = fetch(a.project_root)
-    if a.retire_tips_ig or a.retire_dead_ig:
-        if a.retire_dead_ig:
+    if a.retire_tips_ig or a.retire_dead_ig or a.retire_brand:
+        if a.retire_brand:
+            b = a.retire_brand.lower()
+            tgt = [r for r in rows if r["status"] in ("Ready", "Draft")
+                   and (b in (r["pipeline_item_id"] or "").lower() or b in (r["post_id"] or "").lower())]
+        elif a.retire_dead_ig:
             tgt = [r for r in rows if r["platform"] == "Instagram" and r["status"] == "Ready"
                    and ig_kind(r["urls"]) not in ("video", "carousel") and r["date"] < today]
         else:
@@ -414,7 +421,7 @@ def main():
             qdir = Path(a.project_root) / "outputs" / "distribution-queue"
             stamp = now_local.strftime("%Y%m%d-%H%M")
             (qdir / f"retire_backup_{stamp}.json").write_text(json.dumps(
-                [dict(post_id=r["post_id"], row_number=r["row_number"], old_status="Ready") for r in tgt], indent=1))
+                [dict(post_id=r["post_id"], row_number=r["row_number"], old_status=r["status"]) for r in tgt], indent=1))
             ps._http_json(f"https://sheets.googleapis.com/v4/spreadsheets/{ps.SHEET_ID}/values:batchUpdate",
                           data={"valueInputOption": "USER_ENTERED",
                                 "data": [{"range": f"{ps.SHEET_TAB}!K{r['row_number']}", "values": [["Retired"]]} for r in tgt]},
@@ -427,7 +434,7 @@ def main():
                     if row["post_id"] in ids:
                         row["status"] = "Retired"
                 qj.write_text(json.dumps(q, indent=2, ensure_ascii=False))
-            print(f"retired {len(tgt)} Instagram Tip rows (backup written)")
+            print(f"retired {len(tgt)} rows (backup written)")
         return
     movable, assign, day_log, gaps, unplaced, history = build_plan(rows, today, now_local, a)
     print(f"today {today} | movable Ready rows {len(movable)} | placed {len(assign)} | unplaced {len(unplaced)}")

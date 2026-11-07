@@ -5,7 +5,7 @@
   "isClient": false,
   "created": "2026-07-31T16:23:56.000Z",
   "updated": "2026-10-17T10:03:26.029782+00:00",
-  "howToUse": "Each key under 'assets' maps one generated image or video to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' — the exact relative path from the koolestpro-cowork-v2 project root — or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md). HALOS has no pre-written caption library like kura-social-content.md — this file IS that library, started fresh on the first HALOS Template Showcase run.",
+  "howToUse": "Each key under 'assets' maps one generated image or video to its ready-to-post caption. Automation (Make.com/Sheets or any future autopost step) should join on 'assetPath' — the exact relative path from the koolestpro-cowork-v2 project root — or on the key itself if working key-first. 'status' tracks whether that specific asset+caption pairing has actually been posted; it is separate from, and does not affect, the pipeline item's own status in ridwan_content_system_updated.html (which only ever reaches 'Ready', never 'Published', per CLAUDE.md). HALOS has no pre-written caption library; this file IS that library, started fresh on the first HALOS Template Showcase run.",
   "relatedPipelineItemIds": [
     "template-showcase-halos_pdp-01-2026-07-31",
     "template-showcase-halos_hp-01-2026-08-18",

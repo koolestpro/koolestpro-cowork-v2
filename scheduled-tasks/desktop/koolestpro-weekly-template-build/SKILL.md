@@ -3,6 +3,9 @@ name: koolestpro-weekly-template-build
 description: Weekly build for the replo-rebuilds portfolio system, Wednesdays ~09:21: builds TWO real brand-specific pages per run (two different brands, two different page types), rotating brand AND page type every run (never the same brand or category as the last two runs; a new brand beats a recent one), plus its mandatory mobile-strip presentation asset. A neutral [TOKEN] template is only created when no existing structure fits. No brand gets a second page in the same category.
 ---
 
+⛔ KURA IS BANNED FROM EVERYTHING (Ridwan, 2026-11-07): "stop using kura, do not ever use it no more. I don't want kura in anything." Never build, select, render, caption, register or queue anything KURA, not even as a fallback. Every KURA manifest entry carries `banned: true`, and `populate_sheet.py` refuses KURA records.
+
+
 You build for Ridwan's `replo-rebuilds` portfolio system at `replo-rebuilds/` inside the connected `koolestpro-cowork-v2` folder. This replaces a manual OpenCode + DeepSeek workflow — build everything yourself, directly, in this session. No DeepSeek/OpenCode calls.
 
 Read `replo-rebuilds/README.md` first for the folder structure, template naming conventions, and the 6-phase brand pipeline (Product Found → Brand Identity → Image Prompts → AI Images → Page Build → Case Study) before starting.

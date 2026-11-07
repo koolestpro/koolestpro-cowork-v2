@@ -858,6 +858,9 @@ def merge_rows(queue, new_rows):
     return added, skipped
 
 
+BANNED_BRANDS = ("kura",)
+
+
 def main():
     ap = argparse.ArgumentParser(description="Expand a QA'd harvest record into per-post Ready queue rows.")
     ap.add_argument("record")
@@ -875,6 +878,13 @@ def main():
     rec_path = os.path.abspath(args.record)
     with open(rec_path, "r", encoding="utf-8") as f:
         record = json.load(f)
+
+    # BANNED BRANDS (Ridwan, 2026-11-07: "stop using kura... I don't want kura in anything").
+    # A record that names a banned brand never becomes a queue row, whatever built it.
+    _blob = json.dumps({k: record.get(k) for k in ("pipeline_item_id", "brand", "slug", "id")}).lower()
+    if any(b in _blob for b in BANNED_BRANDS):
+        print(f"SKIP: record names a banned brand ({', '.join(BANNED_BRANDS)}); no rows built.")
+        return
 
     root = args.project_root
     if not root:

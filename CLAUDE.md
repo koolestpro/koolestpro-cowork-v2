@@ -61,7 +61,7 @@ Every task reads its own scoped doc instead of this whole file. When a task is d
 ## The four project-wide rules (highest stakes)
 
 1. **Every content CTA points at a real destination** — a service page or case study on the domain, not at engagement.
-2. **Never invent a client result, and never imply a concept brand was a client.** KURA, HALOS, MERIDIAN, Lumora are concept builds and must always be labelled as such. Highest-stakes rule in the project.
+2. **Never invent a client result, and never imply a concept brand was a client.** HALOS, MOULT, MERIDIAN, Lumora are concept builds and must always be labelled as such. **KURA is banned from everything (Ridwan, 2026-11-07): never build, show, caption or queue it, not even as a fallback.** Highest-stakes rule in the project.
 3. **Local-first, including the CRM.** `outreach_tracker.json` is the outbound (DM) system of record. No Notion. Exception, Ridwan's decision 2026-09-27: cold email lives in the outreach Google Sheet (see `outreach/README.md`).
 4. **Two prospect pools, never merged, never given a `segment` field.** Which file a prospect is in already says market + motion:
    - **`targets_pool.json`** = content-production pool. International DTC/Shopify brands with a real, live, auditable `url`. Every entry has one; that is what makes it eligible. Rotation tracked in `usedFor`, not `status`.
@@ -227,7 +227,8 @@ Moved out of CLAUDE.md on 2026-09-27 to keep the always-loaded rulebook small. F
 * A cloud bash call dies near **178 seconds** (not 45s), and **background processes do not survive between calls** — each call gets a fresh PID namespace, so `nohup ... &` is silently reaped. Run slow scripts directly in a normal terminal, not Claude's chat loop.
 * **Never auto-publish.** Every generator stops at status `Created`.
 * **Instagram: carousels + videos ONLY (re-enabled 2026-10-05, Ridwan).** Make 6565331: router 300 filter = `Instagram`; carousel route 310-317 and Reels route 319/304-306 live (Reel publish wait 90s); single-image route 318 deliberately blocked by an impossible `platform = Instagram-single-image-off` condition. Do not turn single images back on until Ridwan says so. Pace: max 1 IG post/day at 17:00. The IG token in `.env` expires 2026-11-07, refresh before then. **No automated browser (Claude in Chrome, computer use, BrowserAct profiles, downloader extensions) may ever load instagram.com in Ridwan's logged-in session.** Background: `docs/system/instagram-warning-investigation-2026-09-18.md`.
-* **Never invent a client result**; never imply a concept brand was a client (KURA/HALOS/MERIDIAN/Lumora).
+* **Never invent a client result**; never imply a concept brand was a client (HALOS/MOULT/MERIDIAN/Lumora).
+* **KURA is banned (2026-11-07).** No KURA in any output, fallback, caption or queue row.
 * **Never recreate a real brand's logo** — pull the real file.
 * **No em dashes** in any generated copy; run everything through `humanizer`.
 * **No gradient text**, CSS or SVG — solid colours only (breaks html2canvas).

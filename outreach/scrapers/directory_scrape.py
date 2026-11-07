@@ -288,16 +288,18 @@ def scrape_myipms(page, days, log):
         page.wait_for_timeout(2500)
         if not wait_for_human(page, log):
             break
+        # Only rows of the innermost tables: the page wraps everything in an outer table whose single huge cell
+        # also contains "Web Site" and "Visitors", which made the old code read the row number as visitors.
         table = page.eval_on_selector_all(
-            "table tr", "els => els.map(r => [...r.querySelectorAll('th,td')].map(c => c.innerText.trim()))")
-        header = next((r for r in table if any(re.search(r"web ?site", c, re.I) for c in r) and len(r) > 3), [])
+            "table tr", "els => els.filter(r => !r.querySelector('table')).map(r => [...r.querySelectorAll('th,td')].map(c => c.innerText.trim()))")
+        header = next((r for r in table if len(r) > 3 and all(len(c) < 60 for c in r)
+                       and any(re.fullmatch(r"web ?site", c, re.I) for c in r)), [])
         vcol = next((i for i, c in enumerate(header) if re.search(r"visit", c, re.I)), None)
         n = too_big = no_count = 0
         seen_v = []
-        for cells in table:
-            if cells is header:
-                continue
-            m = next((DOMAIN_RE.search(c) for c in cells[:4] if DOMAIN_RE.search(c)), None)
+        body_rows = [r for r in table if header and len(r) == len(header) and r is not header]
+        for cells in body_rows:
+            m = next((DOMAIN_RE.search(c) for c in cells[1:3] if DOMAIN_RE.search(c)), None)
             if not m:
                 continue
             d = clean(m.group(0))
@@ -316,9 +318,16 @@ def scrape_myipms(page, days, log):
                             signals=f"myip.ms page {pg}" + (f", about {v} visitors a day (~{v * 30}/month)" if v is not None else ""),
                             data=joined))
             n += 1
+        if walked == 0:
+            log(f"myipms header: {header or 'NOT FOUND'} | visitors column: {header[vcol] if vcol is not None else 'NONE'}")
+            if body_rows:
+                log(f"myipms first row: {body_rows[0]}")
         log(f"myipms page {pg}: kept {n}, too big {too_big}, no visitor count {no_count}"
-            + (f", visitors/day on page {min(seen_v)}-{max(seen_v)}" if seen_v else "")
-            + (f", header: {header}" if walked == 0 else ""))
+            + (f", visitors/day on page {min(seen_v)}-{max(seen_v)}" if seen_v else ""))
+        if not body_rows:                          # past the end of what myip.ms lists for free: stop, step back next run
+            log(f"myipms page {pg}: no rows (past the end of the free list). Stopping.")
+            MY_LAST[0] = max(OPTS["myipms_start"], int(pg / 1.4))
+            break
         walked += 1
         if seen_v and min(seen_v) > cap:          # whole page still above the cap: jump deeper
             pg = int(pg * 1.4) + 1

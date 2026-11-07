@@ -3,6 +3,9 @@ name: koolestpro-tiktok-weekly
 description: Weekly 1080x1920 TikTok build video from the next unused replo-rebuilds page, pushed to Ridwan's TikTok draft inbox. Never auto-publishes.
 ---
 
+⛔ KURA IS BANNED FROM EVERYTHING (Ridwan, 2026-11-07): "stop using kura, do not ever use it no more. I don't want kura in anything." Never build, select, render, caption, register or queue anything KURA, not even as a fallback. Every KURA manifest entry carries `banned: true`, and `populate_sheet.py` refuses KURA records.
+
+
 Build this week's TikTok video for the koolestpro-cowork-v2 project and push it to Ridwan's TikTok draft inbox.
 
 Work in the project folder (the connected koolestpro-cowork-v2 directory).
@@ -13,7 +16,7 @@ The short version, so you know what you are walking into:
 
 1. `source .ai-workflow/tools/bootstrap_env.sh` — a cold sandbox needs several bash calls to finish the browser downloads. That is normal, they resume. Never substitute `python3 -m playwright install`, which cannot resume and will loop against the command ceiling.
 2. Pick the next page from `replo-rebuilds-pages.json`: `active: true` and `usedForTikTok: false`, lowest `sortOrder`. TikTok rotation is independent of `usedForTemplateShowcase` on purpose.
-3. Read the actual page, then write a hook and CTA specific to what that page fixes. No em dashes anywhere. Run the copy through the `humanizer` skill. Never invent a client result and never imply HALOS or KURA was a real client; they are concept builds.
+3. Read the actual page, then write a hook and CTA specific to what that page fixes. No em dashes anywhere. Run the copy through the `humanizer` skill. Never invent a client result and never imply HALOS or MOULT was a real client; they are concept builds.
 4. Build with `.ai-workflow/tools/build_tiktok_video.py`.
 5. Extract frames across the finished video and LOOK at them before shipping. Confirm the scroll genuinely progresses rather than stalling, the hook is readable, and the end card lands. A stalled scroll has shipped undetected before on this pipeline and a file listing will not reveal it.
 6. Push with `.ai-workflow/tools/tiktok_push_draft.py`. Terminal status `SEND_TO_USER_INBOX` means it landed in his inbox.
